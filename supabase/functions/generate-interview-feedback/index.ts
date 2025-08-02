@@ -28,7 +28,7 @@ serve(async (req) => {
 
     const systemPrompt = `You are an expert evaluator for 11+ private school admissions interviews. You MUST respond with valid JSON only.
 
-SCORING RUBRIC (Each section scored 1-5, total out of 20):
+SCORING RUBRIC (Each section scored 0-5, total out of 20):
 
 Section 1: Personal Insight and Expression (5 marks)
 - 5: Exceptionally articulate and self-reflective; demonstrates emotional intelligence and authenticity well beyond age expectations
@@ -36,6 +36,7 @@ Section 1: Personal Insight and Expression (5 marks)
 - 3: Reasonably confident; responses may be general or rehearsed but competently delivered
 - 2: Hesitant or vague; limited depth or connection to own experience
 - 1: Minimal response; lacks reflection, self-awareness, or engagement
+- 0: No response or completely inappropriate/incoherent response
 
 Section 2: Reasoning and Intellectual Agility (5 marks)
 - 5: Demonstrates elegant and flexible reasoning, explaining their logic clearly even under challenge
@@ -43,6 +44,7 @@ Section 2: Reasoning and Intellectual Agility (5 marks)
 - 3: Attempts to reason through problems but may rely on guesswork or lack a clear process
 - 2: Struggles with reasoning tasks or retreats quickly from uncertainty
 - 1: Unable to engage meaningfully with reasoning questions
+- 0: No attempt at reasoning or completely illogical responses
 
 Section 3: Extracurricular Engagement and Depth (5 marks)
 - 5: Deep, sustained commitment to one or more pursuits; evidence of self-driven learning or leadership
@@ -50,6 +52,7 @@ Section 3: Extracurricular Engagement and Depth (5 marks)
 - 3: Mentions several activities but without much depth or individual agency
 - 2: Involvement appears shallow or externally driven (heavily parent-led)
 - 1: No meaningful extracurricular interests mentioned or evident
+- 0: No response or completely inappropriate discussion of activities
 
 Section 4: Current Awareness and Moral Reasoning (5 marks)
 - 5: Offers a nuanced, thoughtful view on global or ethical matters; demonstrates empathy and conceptual depth
@@ -57,6 +60,7 @@ Section 4: Current Awareness and Moral Reasoning (5 marks)
 - 3: Basic awareness with limited reasoning or oversimplified conclusions
 - 2: Minimal engagement with the world beyond school or family; unclear or confused views
 - 1: No relevant awareness or ability to discuss broader issues meaningfully
+- 0: No response or completely inappropriate/uninformed views
 
 SCORING BANDS:
 18-20: Outstanding candidate; scholarship-level potential
@@ -69,11 +73,11 @@ CRITICAL: You MUST respond ONLY with a valid JSON object. No explanations, no ma
 
 Required JSON structure:
 {
-  "personal_insight_score": 1,
-  "reasoning_score": 1,
-  "extracurricular_score": 1,
-  "current_awareness_score": 1,
-  "total_score": 4,
+  "personal_insight_score": 0,
+  "reasoning_score": 0,
+  "extracurricular_score": 0,
+  "current_awareness_score": 0,
+  "total_score": 0,
   "detailed_feedback": {
     "personal_insight": "Brief feedback here",
     "reasoning": "Brief feedback here",
@@ -156,8 +160,8 @@ Required JSON structure:
       // Validate and ensure all required fields exist with proper types
       const requiredFields = ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score', 'total_score'];
       for (const field of requiredFields) {
-        if (typeof feedbackData[field] !== 'number' || feedbackData[field] < 1 || feedbackData[field] > 5) {
-          throw new Error(`Invalid or missing ${field}: must be a number between 1-5`);
+        if (typeof feedbackData[field] !== 'number' || feedbackData[field] < 0 || feedbackData[field] > 5) {
+          throw new Error(`Invalid or missing ${field}: must be a number between 0-5`);
         }
       }
       
