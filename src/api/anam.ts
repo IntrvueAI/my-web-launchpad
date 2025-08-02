@@ -7,8 +7,9 @@ interface PersonaConfig {
   name: string;
   avatarId: string;
   voiceId: string;
-  llmId: string;
+  brainType: string;
   systemPrompt: string;
+  maxSessionLengthSeconds?: number;
 }
 
 interface SessionTokenRequest {
@@ -63,7 +64,8 @@ export const DEFAULT_INTERVIEW_PERSONA: PersonaConfig = {
   // Note: These are placeholder IDs - replace with actual anam.ai persona IDs
   avatarId: "bb4f5306-ffdb-4437-a837-da6fdc23cbff",
   voiceId: "04965b9e-ff4c-4b54-a4dc-fba6e458c760",
-  llmId: "0934d97d-0c3a-4f33-91b0-5e136a0ef466",
+  brainType: "ANAM_GPT_4O_MINI_V1",
+  maxSessionLengthSeconds: 1800,
   systemPrompt: `You are a professional interview assistant specializing in 11+ school entrance interviews in the UK.
 
 Your role is to:

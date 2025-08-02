@@ -10,7 +10,7 @@ interface PersonaConfig {
   name: string;
   avatarId: string;
   voiceId: string;
-  llmId: string;
+  brainType: string;
   systemPrompt: string;
   maxSessionLengthSeconds?: number;
 }
@@ -31,6 +31,10 @@ serve(async (req) => {
     const { personaConfig }: { personaConfig: PersonaConfig } = await req.json();
 
     console.log('Getting Anam session token for persona:', personaConfig.name);
+    console.log('Full persona configuration being sent:', JSON.stringify(personaConfig, null, 2));
+
+    const requestBody = { personaConfig };
+    console.log('Request body being sent to Anam API:', JSON.stringify(requestBody, null, 2));
 
     const response = await fetch('https://api.anam.ai/v1/auth/session-token', {
       method: 'POST',
@@ -38,9 +42,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${anamApiKey}`,
       },
-      body: JSON.stringify({
-        personaConfig,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
@@ -51,6 +53,7 @@ serve(async (req) => {
 
     const data = await response.json();
     console.log('Successfully obtained Anam session token');
+    console.log('Anam API response:', JSON.stringify(data, null, 2));
 
     return new Response(JSON.stringify({ sessionToken: data.sessionToken }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
