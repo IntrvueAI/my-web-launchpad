@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Play, Square, Mic, MicOff } from 'lucide-react';
+import { InterviewTimer } from './InterviewTimer';
 
 /**
  * Main Interview Platform Component
@@ -215,6 +216,18 @@ export const InterviewPlatform: React.FC = () => {
             />
           </div>
         )}
+
+        {/* Interview Timer - Fixed Position */}
+        <InterviewTimer 
+          isActive={isStreaming}
+          onTimeUp={() => {
+            toast({
+              title: "Time's Up!",
+              description: "Your 30-minute interview session has ended.",
+              variant: "destructive",
+            });
+          }}
+        />
       </div>
     </div>
   );
