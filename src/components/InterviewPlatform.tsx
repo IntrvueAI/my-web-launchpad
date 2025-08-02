@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { InterviewControls } from './InterviewControls';
 import { InterviewStatus } from './InterviewStatus';
 import { InterviewFeedback } from './InterviewFeedback';
+import { LiveTranscription } from './LiveTranscription';
 import { useInterviewSession } from '@/hooks/useInterviewSession';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -27,6 +28,7 @@ export const InterviewPlatform: React.FC = () => {
     isConnected,
     isStreaming,
     error,
+    liveTranscription,
     startInterview,
     stopInterview,
     sessionStatus
@@ -193,6 +195,12 @@ export const InterviewPlatform: React.FC = () => {
               onStartInterview={handleStartInterview}
               onStopInterview={handleStopInterview}
               disabled={!!error}
+            />
+
+            {/* Live Transcription */}
+            <LiveTranscription 
+              transcription={liveTranscription}
+              isStreaming={isStreaming}
             />
 
             {/* Interview Tips */}

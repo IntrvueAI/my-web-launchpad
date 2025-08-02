@@ -13,6 +13,7 @@ interface UseInterviewSessionReturn {
   isStreaming: boolean;
   error: string | null;
   sessionStatus: SessionStatus;
+  liveTranscription: string;
   startInterview: () => Promise<void>;
   stopInterview: () => Promise<string | null>;
 }
@@ -29,6 +30,7 @@ export const useInterviewSession = (
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sessionStatus, setSessionStatus] = useState<SessionStatus>('idle');
+  const [liveTranscription, setLiveTranscription] = useState<string>('');
   
   // Ref to store the anam client instance and messages
   const clientRef = useRef<any>(null);
@@ -97,6 +99,18 @@ export const useInterviewSession = (
         messagesRef.current = messages;
       });
 
+      // Add event listener for live transcription updates
+      client.addListener(AnamEvent.MESSAGE_STREAM_EVENT_RECEIVED, (event: any) => {
+        console.log('MESSAGE_STREAM_EVENT_RECEIVED:', event);
+        if (event.role === "persona") {
+          // Show persona speaking in real-time
+          setLiveTranscription(`Interviewer: ${event.content}`);
+        } else if (event.role === "user") {
+          // Clear persona transcript when user speaks
+          setLiveTranscription('');
+        }
+      });
+
       // Start streaming to video element
       await client.streamToVideoElement('interview-video');
 
@@ -148,6 +162,7 @@ export const useInterviewSession = (
       setIsStreaming(false);
       setSessionStatus('idle');
       setError(null);
+      setLiveTranscription('');
 
       console.log('Interview session stopped, transcription:', transcription);
       return transcription;
@@ -174,6 +189,7 @@ export const useInterviewSession = (
     isStreaming,
     error,
     sessionStatus,
+    liveTranscription,
     startInterview,
     stopInterview,
   };
