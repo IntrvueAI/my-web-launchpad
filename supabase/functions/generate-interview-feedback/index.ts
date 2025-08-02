@@ -71,7 +71,7 @@ TASK: Analyze the interview transcription and provide:
 3. Overall comments and improvement suggestions
 4. Total score and band assessment
 
-Respond in JSON format:
+Respond ONLY in valid JSON format with no additional text or markdown:
 {
   "personal_insight_score": number,
   "reasoning_score": number,
@@ -96,12 +96,13 @@ Respond in JSON format:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-4.1-2025-04-14',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Please evaluate this interview transcription:\n\n${transcription}` }
         ],
-        temperature: 0.3,
+        temperature: 0.1,
+        response_format: { type: "json_object" },
       }),
     });
 
@@ -112,12 +113,31 @@ Respond in JSON format:
     const data = await response.json();
     const feedbackText = data.choices[0].message.content;
     
-    // Parse the JSON response
+    console.log('Raw AI response:', feedbackText);
+    
+    // Parse the JSON response with improved error handling
     let feedbackData;
     try {
-      feedbackData = JSON.parse(feedbackText);
+      // Clean the response text - remove any markdown formatting or extra text
+      const cleanedText = feedbackText.trim();
+      
+      // Try to extract JSON if it's wrapped in markdown
+      const jsonMatch = cleanedText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
+      const jsonString = jsonMatch ? jsonMatch[1] : cleanedText;
+      
+      feedbackData = JSON.parse(jsonString);
+      
+      // Validate required fields
+      if (!feedbackData.personal_insight_score || !feedbackData.reasoning_score || 
+          !feedbackData.extracurricular_score || !feedbackData.current_awareness_score ||
+          !feedbackData.total_score || !feedbackData.detailed_feedback) {
+        throw new Error('Missing required fields in AI response');
+      }
+      
     } catch (e) {
-      throw new Error('Failed to parse AI response as JSON');
+      console.error('JSON parsing error:', e);
+      console.error('Failed to parse response:', feedbackText);
+      throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
     }
 
     // Save feedback to database
