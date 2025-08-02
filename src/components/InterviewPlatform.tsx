@@ -184,58 +184,24 @@ export const InterviewPlatform: React.FC = () => {
                 </div>
               </div>
             </Card>
+
+            {/* Interview Controls - moved below video */}
+            <div className="mt-6">
+              <InterviewControls
+                isStreaming={isStreaming}
+                onStartInterview={handleStartInterview}
+                onStopInterview={handleStopInterview}
+                disabled={!!error}
+              />
+            </div>
           </div>
 
-          {/* Controls and Information Panel */}
-          <div className="space-y-6">
-            
-            {/* Interview Controls */}
-            <InterviewControls
-              isStreaming={isStreaming}
-              onStartInterview={handleStartInterview}
-              onStopInterview={handleStopInterview}
-              disabled={!!error}
-            />
-
-            {/* Live Transcription */}
+          {/* Live Transcription Panel */}
+          <div>
             <LiveTranscription 
               transcription={liveTranscription}
               isStreaming={isStreaming}
             />
-
-            {/* Interview Tips */}
-            <Card className="p-6">
-              <h3 className="font-semibold text-primary mb-4">Interview Tips</h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  <p>Speak clearly and maintain good posture</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  <p>Take your time to think before answering</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  <p>Show enthusiasm for learning</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  <p>Ask questions when appropriate</p>
-                </div>
-              </div>
-            </Card>
-
-            {/* Technical Requirements */}
-            <Card className="p-6">
-              <h3 className="font-semibold text-primary mb-4">Technical Setup</h3>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p>✓ Camera and microphone access required</p>
-                <p>✓ Stable internet connection recommended</p>
-                <p>✓ Quiet environment preferred</p>
-                <p>✓ Chrome or Safari browser supported</p>
-              </div>
-            </Card>
           </div>
         </div>
 
