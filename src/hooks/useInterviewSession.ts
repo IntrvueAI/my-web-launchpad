@@ -53,9 +53,10 @@ export const useInterviewSession = (
           personaConfig: {
             name: "Interview Assistant",
             // Using placeholder IDs - replace these with actual anam.ai persona IDs from your dashboard
-            avatarId: "30fa96d0-26c4-4e55-94a0-517025942e18",
-            voiceId: "6bfbe25a-979d-40f3-a92b-5394170af54b", 
+            avatarId: "bb4f5306-ffdb-4437-a837-da6fdc23cbff",
+            voiceId: "04965b9e-ff4c-4b54-a4dc-fba6e458c760", 
             llmId: "0934d97d-0c3a-4f33-91b0-5e136a0ef466",
+            maxSessionLengthSeconds: 1800,
             systemPrompt: systemPromptText
           },
         },
