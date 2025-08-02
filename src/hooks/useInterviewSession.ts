@@ -115,7 +115,22 @@ export const useInterviewSession = (
       if (clientRef.current) {
         // Get transcription before stopping
         try {
-          transcription = await clientRef.current.getTranscription?.();
+          console.log('Attempting to get transcription...');
+          console.log('Client methods:', Object.getOwnPropertyNames(clientRef.current));
+          
+          // Try different possible method names for getting transcription
+          if (typeof clientRef.current.getTranscription === 'function') {
+            transcription = await clientRef.current.getTranscription();
+            console.log('Got transcription via getTranscription:', transcription);
+          } else if (typeof clientRef.current.getSessionTranscript === 'function') {
+            transcription = await clientRef.current.getSessionTranscript();
+            console.log('Got transcription via getSessionTranscript:', transcription);
+          } else if (typeof clientRef.current.getConversationHistory === 'function') {
+            transcription = await clientRef.current.getConversationHistory();
+            console.log('Got transcription via getConversationHistory:', transcription);
+          } else {
+            console.log('No transcription method found on client');
+          }
         } catch (transcriptionError) {
           console.warn('Could not get transcription:', transcriptionError);
         }
@@ -129,7 +144,7 @@ export const useInterviewSession = (
       setSessionStatus('idle');
       setError(null);
 
-      console.log('Interview session stopped');
+      console.log('Interview session stopped, transcription:', transcription);
       return transcription;
     } catch (err) {
       console.error('Failed to stop interview:', err);
