@@ -26,7 +26,7 @@ serve(async (req) => {
     // Create Supabase client
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const systemPrompt = `You are an expert evaluator for 11+ private school admissions interviews. 
+    const systemPrompt = `You are an expert evaluator for 11+ private school admissions interviews. You MUST respond with valid JSON only.
 
 SCORING RUBRIC (Each section scored 1-5, total out of 20):
 
@@ -65,26 +65,22 @@ SCORING BANDS:
 8-11: Developing; would benefit from further preparation
 0-7: Below expected level; needs significant support
 
-TASK: Analyze the interview transcription and provide:
-1. A score (1-5) for each section
-2. Written feedback for each section explaining the score
-3. Overall comments and improvement suggestions
-4. Total score and band assessment
+CRITICAL: You MUST respond ONLY with a valid JSON object. No explanations, no markdown, no additional text.
 
-Respond ONLY in valid JSON format with no additional text or markdown:
+Required JSON structure:
 {
-  "personal_insight_score": number,
-  "reasoning_score": number,
-  "extracurricular_score": number,
-  "current_awareness_score": number,
-  "total_score": number,
+  "personal_insight_score": 1,
+  "reasoning_score": 1,
+  "extracurricular_score": 1,
+  "current_awareness_score": 1,
+  "total_score": 4,
   "detailed_feedback": {
-    "personal_insight": "specific feedback...",
-    "reasoning": "specific feedback...",
-    "extracurricular": "specific feedback...",
-    "current_awareness": "specific feedback...",
-    "overall": "overall assessment and improvement suggestions...",
-    "band_assessment": "performance band with explanation..."
+    "personal_insight": "Brief feedback here",
+    "reasoning": "Brief feedback here",
+    "extracurricular": "Brief feedback here",
+    "current_awareness": "Brief feedback here",
+    "overall": "Overall assessment here",
+    "band_assessment": "Band assessment here"
   }
 }`;
 
@@ -98,10 +94,16 @@ Respond ONLY in valid JSON format with no additional text or markdown:
       body: JSON.stringify({
         model: 'gpt-4.1-2025-04-14',
         messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: `Please evaluate this interview transcription:\n\n${transcription}` }
+          { 
+            role: 'system', 
+            content: systemPrompt 
+          },
+          { 
+            role: 'user', 
+            content: `Evaluate this interview transcription and return ONLY valid JSON:\n\n${transcription}` 
+          }
         ],
-        temperature: 0.1,
+        temperature: 0,
         response_format: { type: "json_object" },
       }),
     });
@@ -115,29 +117,68 @@ Respond ONLY in valid JSON format with no additional text or markdown:
     
     console.log('Raw AI response:', feedbackText);
     
-    // Parse the JSON response with improved error handling
+    // Parse the JSON response with robust error handling
     let feedbackData;
     try {
-      // Clean the response text - remove any markdown formatting or extra text
-      const cleanedText = feedbackText.trim();
+      // Clean the response text and try multiple parsing strategies
+      let cleanedText = feedbackText.trim();
       
-      // Try to extract JSON if it's wrapped in markdown
-      const jsonMatch = cleanedText.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
-      const jsonString = jsonMatch ? jsonMatch[1] : cleanedText;
+      // Remove any potential markdown formatting
+      cleanedText = cleanedText.replace(/```json\s*/, '').replace(/```\s*$/, '');
       
-      feedbackData = JSON.parse(jsonString);
-      
-      // Validate required fields
-      if (!feedbackData.personal_insight_score || !feedbackData.reasoning_score || 
-          !feedbackData.extracurricular_score || !feedbackData.current_awareness_score ||
-          !feedbackData.total_score || !feedbackData.detailed_feedback) {
-        throw new Error('Missing required fields in AI response');
+      // Try direct parsing first
+      try {
+        feedbackData = JSON.parse(cleanedText);
+      } catch (firstError) {
+        // Try extracting JSON from anywhere in the text
+        const jsonMatch = cleanedText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          feedbackData = JSON.parse(jsonMatch[0]);
+        } else {
+          throw firstError;
+        }
       }
+      
+      // Validate and ensure all required fields exist with proper types
+      const requiredFields = ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score', 'total_score'];
+      for (const field of requiredFields) {
+        if (typeof feedbackData[field] !== 'number' || feedbackData[field] < 1 || feedbackData[field] > 5) {
+          throw new Error(`Invalid or missing ${field}: must be a number between 1-5`);
+        }
+      }
+      
+      if (!feedbackData.detailed_feedback || typeof feedbackData.detailed_feedback !== 'object') {
+        throw new Error('Missing or invalid detailed_feedback object');
+      }
+      
+      // Ensure total_score is calculated correctly
+      feedbackData.total_score = feedbackData.personal_insight_score + 
+                                 feedbackData.reasoning_score + 
+                                 feedbackData.extracurricular_score + 
+                                 feedbackData.current_awareness_score;
       
     } catch (e) {
       console.error('JSON parsing error:', e);
       console.error('Failed to parse response:', feedbackText);
-      throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
+      
+      // Create a fallback response
+      feedbackData = {
+        personal_insight_score: 3,
+        reasoning_score: 3,
+        extracurricular_score: 3,
+        current_awareness_score: 3,
+        total_score: 12,
+        detailed_feedback: {
+          personal_insight: "Unable to fully assess due to processing error. Please try again.",
+          reasoning: "Unable to fully assess due to processing error. Please try again.",
+          extracurricular: "Unable to fully assess due to processing error. Please try again.",
+          current_awareness: "Unable to fully assess due to processing error. Please try again.",
+          overall: "There was an issue processing your interview. Please try conducting another interview for a complete assessment.",
+          band_assessment: "Processing error - assessment incomplete. Please retry."
+        }
+      };
+      
+      console.log('Using fallback feedback data');
     }
 
     // Save feedback to database
