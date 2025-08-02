@@ -12,6 +12,7 @@ interface PersonaConfig {
   voiceId: string;
   llmId: string;
   systemPrompt: string;
+  maxSessionLengthSeconds?: number;
 }
 
 serve(async (req) => {
