@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { createClient } from '@anam-ai/js-sdk';
+import { supabase } from '@/integrations/supabase/client';
 
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
@@ -30,26 +31,13 @@ export const useInterviewSession = (
   const clientRef = useRef<any>(null);
 
   /**
-   * Get session token from anam.ai API
-   * In production, this should be done via your backend API to keep API keys secure
-   * For development, we'll make the call directly (API key should be in env vars)
+   * Get session token from secure Supabase Edge Function
+   * API keys are stored securely in Supabase secrets
    */
   const getSessionToken = async (): Promise<string> => {
-    // Check if we have an API key available
-    const apiKey = import.meta.env.VITE_ANAM_API_KEY;
-    
-    if (!apiKey) {
-      throw new Error('ANAM_API_KEY not found. Please add VITE_ANAM_API_KEY to your .env file');
-    }
-
     try {
-      const response = await fetch('https://api.anam.ai/v1/auth/session-token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke('get-anam-session-token', {
+        body: {
           personaConfig: {
             name: "Interview Assistant",
             // Using placeholder IDs - replace these with actual anam.ai persona IDs from your dashboard
@@ -81,22 +69,24 @@ export const useInterviewSession = (
             
             Begin by introducing yourself and making the student feel comfortable, then proceed with interview questions.`
           },
-        }),
+        },
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Anam API error: ${response.status} ${response.statusText} - ${errorText}`);
+      if (error) {
+        throw new Error(`Edge function error: ${error.message}`);
       }
 
-      const data = await response.json();
+      if (!data?.sessionToken) {
+        throw new Error('No session token received from server');
+      }
+
       return data.sessionToken;
     } catch (err) {
       console.error('Error getting session token:', err);
       if (err instanceof Error) {
         throw new Error(`Unable to connect to interview service: ${err.message}`);
       }
-      throw new Error('Unable to connect to interview service. Please check your API key and try again.');
+      throw new Error('Unable to connect to interview service. Please try again.');
     }
   };
 

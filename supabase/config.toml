@@ -1,1 +1,4 @@
 project_id = "fjkuuzfuysemrofcmnvd"
+
+[functions.get-anam-session-token]
+verify_jwt = false
