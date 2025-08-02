@@ -40,17 +40,15 @@ export const InterviewTimer: React.FC<InterviewTimerProps> = ({
   const isLowTime = timeLeft <= 300; // Last 5 minutes
 
   return (
-    <Card className={`absolute bottom-4 right-4 p-3 z-10 shadow-lg border transition-colors ${
-      isLowTime ? 'border-destructive bg-destructive/5' : 'border-border bg-card'
+    <div className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-colors ${
+      isLowTime ? 'border-destructive bg-destructive/5' : 'border-border bg-muted/50'
     }`}>
-      <div className="flex items-center gap-2">
-        <Clock className={`w-4 h-4 ${isLowTime ? 'text-destructive' : 'text-muted-foreground'}`} />
-        <span className={`font-mono text-sm font-medium ${
-          isLowTime ? 'text-destructive' : 'text-foreground'
-        }`}>
-          {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-        </span>
-      </div>
-    </Card>
+      <Clock className={`w-4 h-4 ${isLowTime ? 'text-destructive' : 'text-muted-foreground'}`} />
+      <span className={`font-mono text-sm font-medium ${
+        isLowTime ? 'text-destructive' : 'text-foreground'
+      }`}>
+        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+      </span>
+    </div>
   );
 };

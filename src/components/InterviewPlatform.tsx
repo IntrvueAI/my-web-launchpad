@@ -160,22 +160,10 @@ export const InterviewPlatform: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  
-                  {/* Interview Timer */}
-                  <InterviewTimer 
-                    isActive={isStreaming}
-                    onTimeUp={() => {
-                      toast({
-                        title: "Time's Up!",
-                        description: "Your 30-minute interview session has ended.",
-                        variant: "destructive",
-                      });
-                    }}
-                  />
                 </div>
 
-                {/* Audio Controls */}
-                <div className="flex justify-center">
+                {/* Audio Controls and Timer */}
+                <div className="flex justify-between items-center">
                   <Button
                     variant="outline"
                     size="sm"
@@ -194,6 +182,17 @@ export const InterviewPlatform: React.FC = () => {
                       </>
                     )}
                   </Button>
+                  
+                  <InterviewTimer 
+                    isActive={isStreaming}
+                    onTimeUp={() => {
+                      toast({
+                        title: "Time's Up!",
+                        description: "Your 30-minute interview session has ended.",
+                        variant: "destructive",
+                      });
+                    }}
+                  />
                 </div>
               </div>
             </Card>
