@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
+import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Video, History } from 'lucide-react';
 
 /**
  * Main Index Page - 11+ Interview Preparation Platform
@@ -12,6 +14,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 const Index = () => {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
+  const [currentView, setCurrentView] = useState<'interview' | 'history'>('interview');
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -60,7 +63,29 @@ const Index = () => {
     <div className="min-h-screen">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center justify-between">
-          <h1 className="text-lg font-semibold">11+ Interview Prep</h1>
+          <div className="flex items-center gap-6">
+            <h1 className="text-lg font-semibold">11+ Interview Prep</h1>
+            <nav className="flex gap-2">
+              <Button 
+                variant={currentView === 'interview' ? 'default' : 'ghost'} 
+                size="sm"
+                onClick={() => setCurrentView('interview')}
+                className="gap-2"
+              >
+                <Video className="w-4 h-4" />
+                Interview
+              </Button>
+              <Button 
+                variant={currentView === 'history' ? 'default' : 'ghost'} 
+                size="sm"
+                onClick={() => setCurrentView('history')}
+                className="gap-2"
+              >
+                <History className="w-4 h-4" />
+                History
+              </Button>
+            </nav>
+          </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground">
               Welcome, {user.email}
@@ -72,7 +97,13 @@ const Index = () => {
         </div>
       </header>
       <main>
-        <InterviewPlatform />
+        {currentView === 'interview' ? (
+          <InterviewPlatform />
+        ) : (
+          <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <FeedbackHistory />
+          </div>
+        )}
       </main>
     </div>
   );

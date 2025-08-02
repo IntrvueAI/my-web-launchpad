@@ -12,7 +12,7 @@ interface UseInterviewSessionReturn {
   error: string | null;
   sessionStatus: SessionStatus;
   startInterview: () => Promise<void>;
-  stopInterview: () => Promise<void>;
+  stopInterview: () => Promise<string | null>;
 }
 
 /**
@@ -106,11 +106,20 @@ export const useInterviewSession = (
   }, [videoRef]);
 
   /**
-   * Stop the interview session
+   * Stop the interview session and get transcription
    */
-  const stopInterview = useCallback(async () => {
+  const stopInterview = useCallback(async (): Promise<string | null> => {
     try {
+      let transcription = null;
+      
       if (clientRef.current) {
+        // Get transcription before stopping
+        try {
+          transcription = await clientRef.current.getTranscription?.();
+        } catch (transcriptionError) {
+          console.warn('Could not get transcription:', transcriptionError);
+        }
+        
         await clientRef.current.stopStreaming();
         clientRef.current = null;
       }
@@ -121,9 +130,11 @@ export const useInterviewSession = (
       setError(null);
 
       console.log('Interview session stopped');
+      return transcription;
     } catch (err) {
       console.error('Failed to stop interview:', err);
       setError(err instanceof Error ? err.message : 'Failed to stop interview');
+      return null;
     }
   }, []);
 

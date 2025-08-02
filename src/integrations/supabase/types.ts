@@ -17,26 +17,47 @@ export type Database = {
       feedback: {
         Row: {
           created_at: string
+          current_awareness_score: number | null
+          detailed_feedback: Json | null
+          extracurricular_score: number | null
           feedback_content: string
           id: string
           interview_session_id: string | null
+          personal_insight_score: number | null
           rating: number | null
+          reasoning_score: number | null
+          total_score: number | null
+          transcription: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
+          current_awareness_score?: number | null
+          detailed_feedback?: Json | null
+          extracurricular_score?: number | null
           feedback_content: string
           id?: string
           interview_session_id?: string | null
+          personal_insight_score?: number | null
           rating?: number | null
+          reasoning_score?: number | null
+          total_score?: number | null
+          transcription?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
+          current_awareness_score?: number | null
+          detailed_feedback?: Json | null
+          extracurricular_score?: number | null
           feedback_content?: string
           id?: string
           interview_session_id?: string | null
+          personal_insight_score?: number | null
           rating?: number | null
+          reasoning_score?: number | null
+          total_score?: number | null
+          transcription?: string | null
           user_id?: string
         }
         Relationships: []

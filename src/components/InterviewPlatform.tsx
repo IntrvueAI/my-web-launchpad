@@ -3,7 +3,11 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InterviewControls } from './InterviewControls';
 import { InterviewStatus } from './InterviewStatus';
+import { InterviewFeedback } from './InterviewFeedback';
 import { useInterviewSession } from '@/hooks/useInterviewSession';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import { Play, Square, Mic, MicOff } from 'lucide-react';
 
 /**
@@ -13,6 +17,10 @@ import { Play, Square, Mic, MicOff } from 'lucide-react';
 export const InterviewPlatform: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+  const [feedback, setFeedback] = useState(null);
+  const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
+  const { user } = useAuth();
+  const { toast } = useToast();
   
   // Custom hook to manage anam.ai interview session
   const {
@@ -33,14 +41,56 @@ export const InterviewPlatform: React.FC = () => {
     }
   }, [startInterview]);
 
-  // Handle stopping the interview session
+  // Handle stopping the interview session and generate feedback
   const handleStopInterview = useCallback(async () => {
     try {
-      await stopInterview();
+      setIsGeneratingFeedback(true);
+      
+      // Stop the interview and get transcription
+      const transcription = await stopInterview();
+      
+      if (transcription && user) {
+        // Generate feedback using the edge function
+        const { data, error } = await supabase.functions.invoke('generate-interview-feedback', {
+          body: {
+            transcription: transcription,
+            sessionId: Date.now().toString(), // Simple session ID
+            userId: user.id,
+          },
+        });
+
+        if (error) {
+          console.error('Failed to generate feedback:', error);
+          toast({
+            title: "Feedback Generation Failed",
+            description: "We couldn't generate feedback for your interview. Please try again.",
+            variant: "destructive",
+          });
+        } else {
+          setFeedback(data);
+          toast({
+            title: "Feedback Generated",
+            description: "Your interview has been analyzed and feedback is ready!",
+          });
+        }
+      } else if (!transcription) {
+        toast({
+          title: "No Transcription Available",
+          description: "Unable to generate feedback without interview transcription.",
+          variant: "destructive",
+        });
+      }
     } catch (err) {
       console.error('Failed to stop interview:', err);
+      toast({
+        title: "Interview Stop Failed",
+        description: "There was an error stopping the interview.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingFeedback(false);
     }
-  }, [stopInterview]);
+  }, [stopInterview, user, toast]);
 
   // Toggle audio input (microphone)
   const toggleAudio = useCallback(() => {
@@ -180,6 +230,17 @@ export const InterviewPlatform: React.FC = () => {
             </Card>
           </div>
         </div>
+
+        {/* Feedback Section */}
+        {(feedback || isGeneratingFeedback) && (
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold text-center mb-8">Your Interview Feedback</h2>
+            <InterviewFeedback 
+              feedback={feedback} 
+              isLoading={isGeneratingFeedback}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
