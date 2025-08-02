@@ -114,24 +114,44 @@ export const useInterviewSession = (
       let transcription = null;
       
       if (clientRef.current) {
-        // Get transcription before stopping using messageHistoryClient
+        // Get transcription before stopping - check what methods are available
         try {
           console.log('Attempting to get transcription...');
+          console.log('Client object keys:', Object.keys(clientRef.current));
+          console.log('Client object methods:', Object.getOwnPropertyNames(clientRef.current));
           
-          // Access the message history through messageHistoryClient
-          if (clientRef.current.messageHistoryClient) {
-            const messages = await clientRef.current.messageHistoryClient.getMessages();
-            console.log('Got messages from messageHistoryClient:', messages);
-            
-            // Convert messages to a readable transcription format
+          // Check if client has a messages property or method
+          if (clientRef.current.messages) {
+            console.log('Found messages property:', clientRef.current.messages);
+            transcription = clientRef.current.messages.map((msg: any) => {
+              const speaker = msg.role === 'user' ? 'Student' : 'Interviewer';
+              return `${speaker}: ${msg.content}`;
+            }).join('\n\n');
+          } else if (typeof clientRef.current.getMessages === 'function') {
+            const messages = await clientRef.current.getMessages();
+            console.log('Got messages from getMessages:', messages);
             if (messages && messages.length > 0) {
               transcription = messages.map((msg: any) => {
                 const speaker = msg.role === 'user' ? 'Student' : 'Interviewer';
                 return `${speaker}: ${msg.content}`;
               }).join('\n\n');
             }
+          } else if (clientRef.current.messageHistoryClient) {
+            console.log('messageHistoryClient found:', clientRef.current.messageHistoryClient);
+            console.log('messageHistoryClient methods:', Object.getOwnPropertyNames(clientRef.current.messageHistoryClient));
+            
+            if (typeof clientRef.current.messageHistoryClient.getMessages === 'function') {
+              const messages = await clientRef.current.messageHistoryClient.getMessages();
+              console.log('Got messages from messageHistoryClient:', messages);
+              if (messages && messages.length > 0) {
+                transcription = messages.map((msg: any) => {
+                  const speaker = msg.role === 'user' ? 'Student' : 'Interviewer';
+                  return `${speaker}: ${msg.content}`;
+                }).join('\n\n');
+              }
+            }
           } else {
-            console.log('No messageHistoryClient found on client');
+            console.log('No message methods found on client');
           }
         } catch (transcriptionError) {
           console.warn('Could not get transcription:', transcriptionError);
