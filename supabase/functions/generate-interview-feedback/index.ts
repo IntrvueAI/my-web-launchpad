@@ -17,10 +17,39 @@ serve(async (req) => {
   }
 
   try {
-    const { transcription, sessionId, userId } = await req.json();
+    // Input validation and sanitization
+    const requestBody = await req.json();
+    const { transcription, sessionId, userId } = requestBody;
 
-    if (!transcription || !userId) {
-      throw new Error('Transcription and userId are required');
+    // Validate required fields
+    if (!transcription || typeof transcription !== 'string') {
+      return new Response(JSON.stringify({ error: 'Valid transcription is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (!userId || typeof userId !== 'string') {
+      return new Response(JSON.stringify({ error: 'Valid userId is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Sanitize and validate transcription length
+    const sanitizedTranscription = transcription.trim();
+    if (sanitizedTranscription.length < 10) {
+      return new Response(JSON.stringify({ error: 'Transcription too short for meaningful analysis' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (sanitizedTranscription.length > 50000) {
+      return new Response(JSON.stringify({ error: 'Transcription too long - maximum 50,000 characters allowed' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Create Supabase client
@@ -88,10 +117,11 @@ Required JSON structure:
   }
 }`;
 
-    console.log('Preparing OpenAI request...');
-    console.log('API Key exists:', !!openAIApiKey);
-    console.log('API Key length:', openAIApiKey ? openAIApiKey.length : 0);
-    console.log('Transcription length:', transcription.length);
+    // Reduced logging for production security
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('Preparing OpenAI request...');
+      console.log('Transcription length:', sanitizedTranscription.length);
+    }
 
     const requestBody = {
       model: 'gpt-4o',  // Using more widely available model
@@ -102,14 +132,26 @@ Required JSON structure:
         },
         { 
           role: 'user', 
-          content: `Evaluate this interview transcription and return ONLY valid JSON:\n\n${transcription}` 
+          content: `Evaluate this interview transcription and return ONLY valid JSON:\n\n${sanitizedTranscription}` 
         }
       ],
       temperature: 0,
       response_format: { type: "json_object" },
     };
 
-    console.log('Making OpenAI request with model:', requestBody.model);
+    // Add security headers
+    const securityHeaders = {
+      ...corsHeaders,
+      'Content-Type': 'application/json',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin'
+    };
+
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('Making OpenAI request with model:', requestBody.model);
+    }
     
     // Generate feedback using OpenAI
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -121,19 +163,25 @@ Required JSON structure:
       body: JSON.stringify(requestBody),
     });
 
-    console.log('OpenAI response status:', response.status);
-    console.log('OpenAI response ok:', response.ok);
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('OpenAI response status:', response.status);
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error details:', errorText);
-      throw new Error(`OpenAI API error: ${response.status} ${response.statusText} - ${errorText}`);
+      console.error('OpenAI API error status:', response.status);
+      return new Response(JSON.stringify({ error: 'Failed to generate feedback' }), {
+        status: 500,
+        headers: securityHeaders,
+      });
     }
 
     const data = await response.json();
     const feedbackText = data.choices[0].message.content;
     
-    console.log('Raw AI response:', feedbackText);
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('AI response received successfully');
+    }
     
     // Parse the JSON response with robust error handling
     let feedbackData;
@@ -176,8 +224,7 @@ Required JSON structure:
                                  feedbackData.current_awareness_score;
       
     } catch (e) {
-      console.error('JSON parsing error:', e);
-      console.error('Failed to parse response:', feedbackText);
+      console.error('JSON parsing error:', e.message);
       
       // Create a fallback response
       feedbackData = {
@@ -196,16 +243,18 @@ Required JSON structure:
         }
       };
       
-      console.log('Using fallback feedback data');
+      if (Deno.env.get('NODE_ENV') !== 'production') {
+        console.log('Using fallback feedback data');
+      }
     }
 
-    // Save feedback to database
+    // Save feedback to database with additional validation
     const { data: feedbackRecord, error: insertError } = await supabase
       .from('feedback')
       .insert({
         user_id: userId,
-        interview_session_id: sessionId,
-        transcription: transcription,
+        interview_session_id: sessionId || `session_${Date.now()}`,
+        transcription: sanitizedTranscription,
         personal_insight_score: feedbackData.personal_insight_score,
         reasoning_score: feedbackData.reasoning_score,
         extracurricular_score: feedbackData.extracurricular_score,
@@ -213,25 +262,33 @@ Required JSON structure:
         total_score: feedbackData.total_score,
         detailed_feedback: feedbackData.detailed_feedback,
         feedback_content: JSON.stringify(feedbackData.detailed_feedback),
-        rating: Math.round(feedbackData.total_score) // Convert to 1-5 scale roughly
+        rating: Math.min(5, Math.max(1, Math.round(feedbackData.total_score / 4))) // Convert to 1-5 scale
       })
       .select()
       .single();
 
     if (insertError) {
-      console.error('Database error:', insertError);
-      throw new Error('Failed to save feedback to database');
+      console.error('Database error:', insertError.message);
+      return new Response(JSON.stringify({ error: 'Failed to save feedback' }), {
+        status: 500,
+        headers: securityHeaders,
+      });
     }
 
     return new Response(JSON.stringify(feedbackData), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: securityHeaders,
     });
 
   } catch (error) {
-    console.error('Error in generate-interview-feedback function:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('Error in generate-interview-feedback function:', error.message);
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'application/json',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY'
+      },
     });
   }
 });

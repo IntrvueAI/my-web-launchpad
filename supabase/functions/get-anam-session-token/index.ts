@@ -28,13 +28,45 @@ serve(async (req) => {
       throw new Error('ANAM_API_KEY is not configured in Supabase secrets');
     }
 
-    const { personaConfig }: { personaConfig: PersonaConfig } = await req.json();
+    // Input validation and sanitization
+    const requestBody = await req.json();
+    const { personaConfig } = requestBody;
 
-    console.log('Getting Anam session token for persona:', personaConfig.name);
-    console.log('Full persona configuration being sent:', JSON.stringify(personaConfig, null, 2));
+    if (!personaConfig || typeof personaConfig !== 'object') {
+      return new Response(JSON.stringify({ error: 'Valid personaConfig is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate required persona config fields
+    const requiredFields = ['name', 'avatarId', 'voiceId', 'brainType', 'systemPrompt'];
+    for (const field of requiredFields) {
+      if (!personaConfig[field] || typeof personaConfig[field] !== 'string') {
+        return new Response(JSON.stringify({ error: `Valid ${field} is required in personaConfig` }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
+    // Sanitize system prompt length
+    if (personaConfig.systemPrompt.length > 10000) {
+      return new Response(JSON.stringify({ error: 'System prompt too long - maximum 10,000 characters allowed' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('Getting Anam session token for persona:', personaConfig.name);
+    }
 
     const requestBody = { personaConfig };
-    console.log('Request body being sent to Anam API:', JSON.stringify(requestBody, null, 2));
+    
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('Request body being sent to Anam API:', JSON.stringify(requestBody, null, 2));
+    }
 
     const response = await fetch('https://api.anam.ai/v1/auth/session-token', {
       method: 'POST',
@@ -47,24 +79,43 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Anam API error:', response.status, response.statusText, errorText);
-      throw new Error(`Anam API error: ${response.status} ${response.statusText} - ${errorText}`);
+      console.error('Anam API error:', response.status, response.statusText);
+      return new Response(JSON.stringify({ error: 'Failed to generate session token' }), {
+        status: 500,
+        headers: { 
+          ...corsHeaders, 
+          'Content-Type': 'application/json',
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'DENY'
+        },
+      });
     }
 
     const data = await response.json();
-    console.log('Successfully obtained Anam session token');
-    console.log('Anam API response:', JSON.stringify(data, null, 2));
+    
+    if (Deno.env.get('NODE_ENV') !== 'production') {
+      console.log('Successfully obtained Anam session token');
+    }
 
     return new Response(JSON.stringify({ sessionToken: data.sessionToken }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/json',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'X-XSS-Protection': '1; mode=block'
+      },
     });
   } catch (error) {
-    console.error('Error in get-anam-session-token function:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Unknown error occurred' 
-    }), {
+    console.error('Error in get-anam-session-token function:', error.message);
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/json',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY'
+      },
     });
   }
 });
