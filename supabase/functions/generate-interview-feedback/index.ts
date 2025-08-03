@@ -158,7 +158,7 @@ serve(async (req) => {
   try {
     // Input validation and sanitization
     const inputBody = await req.json();
-    const { transcription, sessionId, userId, interviewType, scoringSystem } = inputBody;
+    const { transcription, sessionId, userId, interviewType, interviewCategory, scoringSystem } = inputBody;
 
     // Validate required fields
     if (!transcription || typeof transcription !== 'string') {
@@ -370,6 +370,9 @@ serve(async (req) => {
       total_score: feedbackData.total_score,
       detailed_feedback: feedbackData.detailed_feedback,
       feedback_content: JSON.stringify(feedbackData.detailed_feedback),
+      interview_type: interviewType || '11-plus',
+      interview_category: interviewCategory || 'academic', 
+      scoring_system: scoringSystem || '0-5',
     };
 
     // Add type-specific scores
