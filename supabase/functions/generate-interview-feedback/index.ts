@@ -18,8 +18,8 @@ serve(async (req) => {
 
   try {
     // Input validation and sanitization
-    const requestBody = await req.json();
-    const { transcription, sessionId, userId } = requestBody;
+    const inputBody = await req.json();
+    const { transcription, sessionId, userId } = inputBody;
 
     // Validate required fields
     if (!transcription || typeof transcription !== 'string') {
