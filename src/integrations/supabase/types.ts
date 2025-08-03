@@ -32,6 +32,7 @@ export type Database = {
           pronunciation_score: number | null
           rating: number | null
           reasoning_score: number | null
+          scores: Json | null
           scoring_system: string | null
           total_score: number | null
           transcription: string | null
@@ -54,6 +55,7 @@ export type Database = {
           pronunciation_score?: number | null
           rating?: number | null
           reasoning_score?: number | null
+          scores?: Json | null
           scoring_system?: string | null
           total_score?: number | null
           transcription?: string | null
@@ -76,6 +78,7 @@ export type Database = {
           pronunciation_score?: number | null
           rating?: number | null
           reasoning_score?: number | null
+          scores?: Json | null
           scoring_system?: string | null
           total_score?: number | null
           transcription?: string | null

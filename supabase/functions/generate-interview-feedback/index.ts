@@ -16,8 +16,39 @@ const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-// System prompts for different interview types
+// Import interview configuration for dynamic prompt generation
+const INTERVIEW_TYPES: Record<string, any> = {
+  '11-plus': {
+    id: '11-plus',
+    name: '11+ School Interview',
+    category: 'academic',
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Personal Insight & Self-Awareness',
+      'Reasoning & Problem-Solving', 
+      'Extracurricular Activities & Leadership',
+      'Current Awareness & Curiosity'
+    ]
+  },
+  'ielts': {
+    id: 'ielts',
+    name: 'IELTS Speaking Test',
+    category: 'language',
+    scoringSystem: '0-9',
+    scoringCriteria: [
+      'Fluency and Coherence',
+      'Lexical Resource',
+      'Grammatical Range and Accuracy',
+      'Pronunciation'
+    ]
+  }
+};
+
+// Dynamic system prompt generation based on interview configuration
 const getSystemPrompt = (interviewType: string, scoringSystem: string): string => {
+  const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
+  
+  // For IELTS, keep existing detailed prompt for accuracy
   if (interviewType === 'ielts') {
     return `You are an **official IELTS Speaking examiner**. Using the **IELTS Speaking Band Descriptors**, evaluate the following interview transcript. Assess **all four criteria** and assign **band scores (0–9)** based on the reference descriptions below.
 
@@ -91,7 +122,7 @@ Required JSON structure:
 }`;
   }
   
-  // Default to 11+ prompt
+  // For 11+ keep existing detailed prompt
   return `You are an expert evaluator for 11+ private school admissions interviews. You MUST respond with valid JSON only.
 
 SCORING RUBRIC (Each section scored 0-5, total out of 20):
@@ -367,7 +398,28 @@ serve(async (req) => {
       }
     }
 
-    // Save feedback to database with additional validation
+    // Build flexible scores object for new JSONB column
+    const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
+    const flexibleScores: Record<string, number> = {};
+    
+    // Generate criteria keys and map scores
+    const criteriaKeys = config.scoringCriteria.map((criteria: string) => 
+      criteria.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '')
+    );
+    
+    if (interviewType === 'ielts') {
+      flexibleScores.fluency_and_coherence = feedbackData.fluency_coherence_score;
+      flexibleScores.lexical_resource = feedbackData.lexical_resource_score;
+      flexibleScores.grammatical_range_and_accuracy = feedbackData.grammatical_range_score;
+      flexibleScores.pronunciation = feedbackData.pronunciation_score;
+    } else {
+      flexibleScores.personal_insight_self_awareness = feedbackData.personal_insight_score;
+      flexibleScores.reasoning_problem_solving = feedbackData.reasoning_score;
+      flexibleScores.extracurricular_activities_leadership = feedbackData.extracurricular_score;
+      flexibleScores.current_awareness_curiosity = feedbackData.current_awareness_score;
+    }
+
+    // Save feedback to database with flexible scoring
     const insertData: any = {
       user_id: userId,
       interview_session_id: sessionId || `session_${Date.now()}`,
@@ -376,11 +428,12 @@ serve(async (req) => {
       detailed_feedback: feedbackData.detailed_feedback,
       feedback_content: JSON.stringify(feedbackData.detailed_feedback),
       interview_type: interviewType || '11-plus',
-      interview_category: interviewCategory || 'academic', 
-      scoring_system: scoringSystem || '0-5',
+      interview_category: config.category, 
+      scoring_system: config.scoringSystem,
+      scores: flexibleScores, // New flexible JSONB scores
     };
 
-    // Add type-specific scores
+    // Keep legacy columns for backward compatibility
     if (interviewType === 'ielts') {
       insertData.fluency_coherence_score = feedbackData.fluency_coherence_score;
       insertData.lexical_resource_score = feedbackData.lexical_resource_score;
