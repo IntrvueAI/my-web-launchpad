@@ -12,8 +12,8 @@ export const loadSystemPrompt = async (interviewTypeId: string): Promise<string>
       return loadSystemPrompt('11-plus');
     }
 
-    // Dynamic import of markdown files
-    const promptModule = await import(`/src/prompts/${interviewType.promptFile}?raw`);
+    // Dynamic import of markdown files  
+    const promptModule = await import(`../prompts/${interviewType.promptFile}?raw`);
     return promptModule.default;
     
   } catch (error) {

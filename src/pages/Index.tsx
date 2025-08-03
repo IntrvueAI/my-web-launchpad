@@ -91,7 +91,7 @@ const Index = () => {
               )}
               <h1 className="text-lg font-semibold">
                 {currentView === 'interview' && selectedInterviewType 
-                  ? selectedInterviewType.name
+                  ? `${selectedInterviewType.name} Practice`
                   : 'Interview Preparation Platform'
                 }
               </h1>
