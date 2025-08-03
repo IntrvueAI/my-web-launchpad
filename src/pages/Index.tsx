@@ -56,7 +56,7 @@ const Index = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
         <Card className="w-full max-w-md text-center">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">11+ Interview Prep</CardTitle>
+            <CardTitle className="text-2xl font-bold">Intrvue AI</CardTitle>
             <CardDescription>
               AI-powered interview practice for UK school admissions
             </CardDescription>
@@ -91,8 +91,8 @@ const Index = () => {
               )}
               <h1 className="text-lg font-semibold">
                 {currentView === 'interview' && selectedInterviewType 
-                  ? `${selectedInterviewType.name} Practice`
-                  : 'Interview Preparation Platform'
+                 ? `${selectedInterviewType.name} Practice`
+                  : 'Intrvue AI'
                 }
               </h1>
             </div>
