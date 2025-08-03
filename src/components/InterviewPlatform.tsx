@@ -238,6 +238,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             <InterviewFeedback 
               feedback={feedback} 
               isLoading={isGeneratingFeedback}
+              interviewType={interviewType.id}
+              scoringSystem={interviewType.scoringSystem}
             />
           </div>
         )}

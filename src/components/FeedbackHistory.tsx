@@ -11,12 +11,18 @@ interface FeedbackRecord {
   id: string;
   created_at: string;
   total_score: number;
-  personal_insight_score: number;
-  reasoning_score: number;
-  extracurricular_score: number;
-  current_awareness_score: number;
+  personal_insight_score?: number;
+  reasoning_score?: number;
+  extracurricular_score?: number;
+  current_awareness_score?: number;
+  fluency_coherence_score?: number;
+  lexical_resource_score?: number;
+  grammatical_range_score?: number;
+  pronunciation_score?: number;
   detailed_feedback: any;
   interview_session_id: string;
+  interview_type?: string;
+  scoring_system?: string;
 }
 
 export const FeedbackHistory: React.FC = () => {
@@ -50,7 +56,16 @@ export const FeedbackHistory: React.FC = () => {
     }
   };
 
-  const getBandLabel = (score: number) => {
+  const getBandLabel = (score: number, interviewType?: string, scoringSystem?: string) => {
+    if (interviewType === 'ielts') {
+      if (score >= 8.5) return 'Expert User';
+      if (score >= 7.5) return 'Very Good User';
+      if (score >= 6.5) return 'Good User';
+      if (score >= 5.5) return 'Competent User';
+      if (score >= 4.5) return 'Modest User';
+      return 'Limited User';
+    }
+    // 11+ labels
     if (score >= 18) return 'Outstanding';
     if (score >= 15) return 'Strong';
     if (score >= 12) return 'Sound';
@@ -58,11 +73,13 @@ export const FeedbackHistory: React.FC = () => {
     return 'Needs Support';
   };
 
-  const getBandColor = (score: number) => {
-    if (score >= 18) return 'bg-emerald-500';
-    if (score >= 15) return 'bg-green-500';
-    if (score >= 12) return 'bg-blue-500';
-    if (score >= 8) return 'bg-yellow-500';
+  const getBandColor = (score: number, interviewType?: string, maxScore?: number) => {
+    const max = interviewType === 'ielts' ? 9 : (maxScore || 20);
+    const percentage = (score / max) * 100;
+    if (percentage >= 90) return 'bg-emerald-500';
+    if (percentage >= 75) return 'bg-green-500';
+    if (percentage >= 60) return 'bg-blue-500';
+    if (percentage >= 40) return 'bg-yellow-500';
     return 'bg-red-500';
   };
 
@@ -83,13 +100,22 @@ export const FeedbackHistory: React.FC = () => {
         
         <InterviewFeedback 
           feedback={{
+            // 11+ scores
             personal_insight_score: selectedFeedback.personal_insight_score,
             reasoning_score: selectedFeedback.reasoning_score,
             extracurricular_score: selectedFeedback.extracurricular_score,
             current_awareness_score: selectedFeedback.current_awareness_score,
+            // IELTS scores
+            fluency_coherence_score: selectedFeedback.fluency_coherence_score,
+            lexical_resource_score: selectedFeedback.lexical_resource_score,
+            grammatical_range_score: selectedFeedback.grammatical_range_score,
+            pronunciation_score: selectedFeedback.pronunciation_score,
+            // Common fields
             total_score: selectedFeedback.total_score,
             detailed_feedback: selectedFeedback.detailed_feedback
           }}
+          interviewType={selectedFeedback.interview_type || '11-plus'}
+          scoringSystem={selectedFeedback.scoring_system || '0-5'}
         />
       </div>
     );
@@ -128,8 +154,11 @@ export const FeedbackHistory: React.FC = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
-                    <CardTitle className="text-lg">
+                    <CardTitle className="text-lg flex items-center gap-2">
                       Interview Session
+                      <Badge variant="outline" className="text-xs">
+                        {feedback.interview_type?.toUpperCase() || '11+'}
+                      </Badge>
                     </CardTitle>
                     <CardDescription className="flex items-center gap-2">
                       <CalendarDays className="w-4 h-4" />
@@ -145,10 +174,13 @@ export const FeedbackHistory: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="text-right">
                       <div className="text-2xl font-bold text-primary">
-                        {feedback.total_score}/20
+                        {feedback.interview_type === 'ielts' 
+                          ? `${feedback.total_score}/9.0` 
+                          : `${feedback.total_score}/20`
+                        }
                       </div>
-                      <Badge className={`${getBandColor(feedback.total_score)} text-white text-xs`}>
-                        {getBandLabel(feedback.total_score)}
+                      <Badge className={`${getBandColor(feedback.total_score, feedback.interview_type)} text-white text-xs`}>
+                        {getBandLabel(feedback.total_score, feedback.interview_type, feedback.scoring_system)}
                       </Badge>
                     </div>
                     <Button 
@@ -162,24 +194,45 @@ export const FeedbackHistory: React.FC = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-4 gap-4 text-sm">
-                  <div className="text-center">
-                    <div className="font-semibold text-primary">{feedback.personal_insight_score}/5</div>
-                    <div className="text-muted-foreground">Personal</div>
+                {feedback.interview_type === 'ielts' ? (
+                  <div className="grid grid-cols-4 gap-4 text-sm">
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.fluency_coherence_score || 0}/9</div>
+                      <div className="text-muted-foreground">Fluency</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.lexical_resource_score || 0}/9</div>
+                      <div className="text-muted-foreground">Vocabulary</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.grammatical_range_score || 0}/9</div>
+                      <div className="text-muted-foreground">Grammar</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.pronunciation_score || 0}/9</div>
+                      <div className="text-muted-foreground">Pronunciation</div>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <div className="font-semibold text-primary">{feedback.reasoning_score}/5</div>
-                    <div className="text-muted-foreground">Reasoning</div>
+                ) : (
+                  <div className="grid grid-cols-4 gap-4 text-sm">
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.personal_insight_score || 0}/5</div>
+                      <div className="text-muted-foreground">Personal</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.reasoning_score || 0}/5</div>
+                      <div className="text-muted-foreground">Reasoning</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.extracurricular_score || 0}/5</div>
+                      <div className="text-muted-foreground">Activities</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-semibold text-primary">{feedback.current_awareness_score || 0}/5</div>
+                      <div className="text-muted-foreground">Awareness</div>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <div className="font-semibold text-primary">{feedback.extracurricular_score}/5</div>
-                    <div className="text-muted-foreground">Activities</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold text-primary">{feedback.current_awareness_score}/5</div>
-                    <div className="text-muted-foreground">Awareness</div>
-                  </div>
-                </div>
+                )}
               </CardContent>
             </Card>
           ))}

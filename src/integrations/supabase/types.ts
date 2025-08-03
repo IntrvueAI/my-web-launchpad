@@ -21,11 +21,15 @@ export type Database = {
           detailed_feedback: Json | null
           extracurricular_score: number | null
           feedback_content: string
+          fluency_coherence_score: number | null
+          grammatical_range_score: number | null
           id: string
           interview_category: string | null
           interview_session_id: string | null
           interview_type: string | null
+          lexical_resource_score: number | null
           personal_insight_score: number | null
+          pronunciation_score: number | null
           rating: number | null
           reasoning_score: number | null
           scoring_system: string | null
@@ -39,11 +43,15 @@ export type Database = {
           detailed_feedback?: Json | null
           extracurricular_score?: number | null
           feedback_content: string
+          fluency_coherence_score?: number | null
+          grammatical_range_score?: number | null
           id?: string
           interview_category?: string | null
           interview_session_id?: string | null
           interview_type?: string | null
+          lexical_resource_score?: number | null
           personal_insight_score?: number | null
+          pronunciation_score?: number | null
           rating?: number | null
           reasoning_score?: number | null
           scoring_system?: string | null
@@ -57,11 +65,15 @@ export type Database = {
           detailed_feedback?: Json | null
           extracurricular_score?: number | null
           feedback_content?: string
+          fluency_coherence_score?: number | null
+          grammatical_range_score?: number | null
           id?: string
           interview_category?: string | null
           interview_session_id?: string | null
           interview_type?: string | null
+          lexical_resource_score?: number | null
           personal_insight_score?: number | null
+          pronunciation_score?: number | null
           rating?: number | null
           reasoning_score?: number | null
           scoring_system?: string | null
