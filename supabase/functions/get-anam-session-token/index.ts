@@ -60,11 +60,6 @@ serve(async (req) => {
 
     if (Deno.env.get('NODE_ENV') !== 'production') {
       console.log('Getting Anam session token for persona:', personaConfig.name);
-    }
-
-    const requestBody = { personaConfig };
-    
-    if (Deno.env.get('NODE_ENV') !== 'production') {
       console.log('Request body being sent to Anam API:', JSON.stringify(requestBody, null, 2));
     }
 
@@ -74,7 +69,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${anamApiKey}`,
       },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({ personaConfig }),
     });
 
     if (!response.ok) {
