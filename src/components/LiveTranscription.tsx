@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import DOMPurify from 'dompurify';
 
 interface LiveTranscriptionProps {
   transcription: string;
@@ -11,6 +12,14 @@ export const LiveTranscription: React.FC<LiveTranscriptionProps> = ({
   transcription,
   isStreaming
 }) => {
+  // Sanitize transcription content to prevent XSS
+  const sanitizedTranscription = transcription 
+    ? DOMPurify.sanitize(transcription, { 
+        ALLOWED_TAGS: [],
+        ALLOWED_ATTR: []
+      })
+    : '';
+
   return (
     <Card className="h-48">
       <CardHeader className="pb-3">
@@ -23,9 +32,9 @@ export const LiveTranscription: React.FC<LiveTranscriptionProps> = ({
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-32">
-          {transcription ? (
+          {sanitizedTranscription ? (
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {transcription}
+              {sanitizedTranscription}
             </p>
           ) : (
             <p className="text-sm text-muted-foreground/50 italic">
