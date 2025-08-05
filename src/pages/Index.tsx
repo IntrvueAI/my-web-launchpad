@@ -30,12 +30,7 @@ const Index = () => {
   const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history'>('selection');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
 
-  // Redirect to auth if not logged in
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/auth');
-    }
-  }, [user, loading, navigate]);
+  // No automatic redirect - let unauthenticated users see the landing page
 
   const handleSignOut = async () => {
     await signOut();
