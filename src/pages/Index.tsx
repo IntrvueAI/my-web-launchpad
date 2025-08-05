@@ -5,9 +5,20 @@ import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { InterviewSelection } from '@/components/InterviewSelection';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Video, History, ArrowLeft } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
+
+// Landing page components
+import { LandingHero } from '@/components/landing/LandingHero';
+import { LandingFeatures } from '@/components/landing/LandingFeatures';
+import { LandingProcess } from '@/components/landing/LandingProcess';
+import { LandingDemo } from '@/components/landing/LandingDemo';
+import { LandingTestimonials } from '@/components/landing/LandingTestimonials';
+import { LandingPricing } from '@/components/landing/LandingPricing';
+import { LandingShowcase } from '@/components/landing/LandingShowcase';
+import { LandingFAQ } from '@/components/landing/LandingFAQ';
+import { LandingCTA } from '@/components/landing/LandingCTA';
+import { LandingFooter } from '@/components/landing/LandingFooter';
 
 /**
  * Main Index Page - 11+ Interview Preparation Platform
@@ -50,23 +61,20 @@ const Index = () => {
     );
   }
 
-  // Show welcome screen if not authenticated
+  // Show landing page if not authenticated
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
-        <Card className="w-full max-w-md text-center">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Intrvue AI</CardTitle>
-            <CardDescription>
-              AI-powered interview practice for UK school admissions
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => navigate('/auth')} className="w-full">
-              Get Started
-            </Button>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen">
+        <LandingHero onSignUp={() => navigate('/auth')} />
+        <LandingFeatures />
+        <LandingProcess />
+        <LandingShowcase />
+        <LandingDemo />
+        <LandingTestimonials />
+        <LandingPricing onSignUp={() => navigate('/auth')} />
+        <LandingFAQ />
+        <LandingCTA onSignUp={() => navigate('/auth')} />
+        <LandingFooter />
       </div>
     );
   }
