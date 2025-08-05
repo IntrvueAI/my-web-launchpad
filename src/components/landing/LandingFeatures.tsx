@@ -12,8 +12,8 @@ export const LandingFeatures = () => {
     {
       icon: DollarSign,
       title: "Cost Effective",
-      description: "Get unlimited practice sessions at a fraction of the cost of hiring human interview coaches or tutors for one-on-one sessions.",
-      comparison: "Human coaches cost £50-100+ per hour - get unlimited practice for less"
+      description: "Practice sessions start at just $8-15 per interview compared to $50-100+ per hour for human interview coaches.",
+      comparison: "Human coaches cost $50-100+ per hour - our complete interviews cost just $8-15"
     },
     {
       icon: Clock,
