@@ -14,9 +14,8 @@ import { LandingInterviewTypes } from '@/components/landing/LandingInterviewType
 import { LandingFeatures } from '@/components/landing/LandingFeatures';
 import { LandingProcess } from '@/components/landing/LandingProcess';
 import { LandingDemo } from '@/components/landing/LandingDemo';
-import { LandingTestimonials } from '@/components/landing/LandingTestimonials';
 import { LandingPricing } from '@/components/landing/LandingPricing';
-import { LandingShowcase } from '@/components/landing/LandingShowcase';
+import { LandingTruth } from '@/components/landing/LandingTruth';
 import { LandingFAQ } from '@/components/landing/LandingFAQ';
 import { LandingCTA } from '@/components/landing/LandingCTA';
 import { LandingFooter } from '@/components/landing/LandingFooter';
@@ -65,9 +64,8 @@ const Index = () => {
         <LandingInterviewTypes />
         <LandingFeatures />
         <LandingProcess />
-        <LandingShowcase />
         <LandingDemo />
-        <LandingTestimonials />
+        <LandingTruth />
         <LandingPricing onSignUp={() => navigate('/auth')} />
         <LandingFAQ />
         <LandingCTA onSignUp={() => navigate('/auth')} />

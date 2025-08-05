@@ -130,7 +130,7 @@ export const LandingFooter = () => {
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <span>© 2024 Intrvue.AI. All rights reserved.</span>
+            <span>© 2025 Intrvue.AI. All rights reserved.</span>
             <div className="hidden md:flex items-center gap-2">
               <div className="w-2 h-2 bg-success rounded-full" />
               <span>All systems operational</span>
