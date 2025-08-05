@@ -56,7 +56,10 @@ const Index = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
         <Card className="w-full max-w-md text-center">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">Intrvue AI</CardTitle>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <img src="/lovable-uploads/logo.png" alt="Intrvue.AI Logo" className="w-8 h-8" />
+              <CardTitle className="text-2xl font-bold">Intrvue.AI</CardTitle>
+            </div>
             <CardDescription>
               AI-powered interview practice for UK school admissions
             </CardDescription>
@@ -89,12 +92,15 @@ const Index = () => {
                   Back
                 </Button>
               )}
-              <h1 className="text-lg font-semibold">
-                {currentView === 'interview' && selectedInterviewType 
-                 ? `${selectedInterviewType.name} Practice`
-                  : 'Intrvue AI'
-                }
-              </h1>
+              <div className="flex items-center gap-2">
+                <img src="/lovable-uploads/logo.png" alt="Intrvue.AI Logo" className="w-6 h-6" />
+                <h1 className="text-lg font-semibold">
+                  {currentView === 'interview' && selectedInterviewType 
+                   ? `${selectedInterviewType.name} Practice`
+                    : 'Intrvue.AI'
+                  }
+                </h1>
+              </div>
             </div>
             {currentView !== 'interview' && (
               <nav className="flex gap-2">
