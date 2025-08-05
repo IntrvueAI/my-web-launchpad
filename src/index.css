@@ -18,10 +18,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    /* Primary: Deep professional navy for interview platform */
-    --primary: 215 45% 25%;
+    /* Primary: Material Design Blue #1976D2 */
+    --primary: 210 88% 46%;
     --primary-foreground: 210 40% 98%;
-    --primary-soft: 215 35% 35%;
+    --primary-soft: 210 75% 55%;
 
     /* Secondary: Soft professional gray */
     --secondary: 210 20% 94%;
@@ -48,7 +48,7 @@
     /* Interface elements */
     --border: 215 20% 88%;
     --input: 215 20% 96%;
-    --ring: 215 45% 35%;
+    --ring: 210 88% 46%;
 
     /* Professional rounded corners */
     --radius: 0.75rem;
@@ -65,18 +65,18 @@
     --shadow-strong: 215 25% 25% / 0.12;
 
     /* Professional gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(215 45% 25%), hsl(215 35% 35%));
+    --gradient-primary: linear-gradient(135deg, hsl(210 88% 46%), hsl(210 75% 55%));
     --gradient-background: linear-gradient(180deg, hsl(210 15% 98%), hsl(210 20% 96%));
     
     /* Sidebar elements - keeping minimal since not used */
     --sidebar-background: 210 15% 98%;
     --sidebar-foreground: 215 25% 25%;
-    --sidebar-primary: 215 45% 25%;
+    --sidebar-primary: 210 88% 46%;
     --sidebar-primary-foreground: 210 40% 98%;
     --sidebar-accent: 210 20% 94%;
     --sidebar-accent-foreground: 215 25% 25%;
     --sidebar-border: 215 20% 88%;
-    --sidebar-ring: 215 45% 35%;
+    --sidebar-ring: 210 88% 46%;
   }
 
   .dark {
@@ -90,9 +90,9 @@
     --popover: 215 25% 10%;
     --popover-foreground: 210 20% 92%;
 
-    --primary: 210 40% 85%;
+    --primary: 210 88% 70%;
     --primary-foreground: 215 25% 15%;
-    --primary-soft: 210 35% 75%;
+    --primary-soft: 210 75% 60%;
 
     --secondary: 215 20% 15%;
     --secondary-foreground: 210 20% 85%;
@@ -114,7 +114,7 @@
 
     --border: 215 20% 18%;
     --input: 215 20% 15%;
-    --ring: 210 40% 75%;
+    --ring: 210 88% 70%;
     
     --interview-active: 145 40% 60%;
     --interview-active-foreground: 145 40% 10%;
@@ -125,17 +125,17 @@
     --shadow-medium: 215 25% 5% / 0.3;
     --shadow-strong: 215 25% 5% / 0.4;
 
-    --gradient-primary: linear-gradient(135deg, hsl(210 40% 75%), hsl(210 35% 85%));
+    --gradient-primary: linear-gradient(135deg, hsl(210 88% 70%), hsl(210 75% 60%));
     --gradient-background: linear-gradient(180deg, hsl(215 25% 8%), hsl(215 20% 10%));
     
     --sidebar-background: 215 25% 8%;
     --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 210 40% 75%;
+    --sidebar-primary: 210 88% 70%;
     --sidebar-primary-foreground: 215 25% 15%;
     --sidebar-accent: 215 20% 15%;
     --sidebar-accent-foreground: 210 20% 85%;
     --sidebar-border: 215 20% 18%;
-    --sidebar-ring: 210 40% 75%;
+    --sidebar-ring: 210 88% 70%;
   }
 }
 
