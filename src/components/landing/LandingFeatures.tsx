@@ -1,43 +1,25 @@
-import { Shield, Clock, Target, Users, BookOpen, DollarSign } from 'lucide-react';
+import { Shield, Clock, DollarSign } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 export const LandingFeatures = () => {
   const features = [
     {
       icon: Shield,
-      title: "Always Reliable Interviews",
+      title: "More Reliable",
       description: "Unlike human interviewers who may be tired, distracted, or inconsistent, our digital humans provide the same high-quality experience every single time.",
       comparison: "Human interviewers can have off days - digital humans never do"
     },
     {
-      icon: Target,
-      title: "Always Reliable Instant Feedback",
-      description: "Get immediate, detailed feedback after every session. No waiting days or weeks for human feedback that might be subjective or incomplete.",
-      comparison: "Human feedback takes time and varies by person - ours is instant and consistent"
-    },
-    {
-      icon: Clock,
-      title: "24/7 with Progress Tracking",
-      description: "Practice anytime, day or night, with comprehensive progress tracking. No need to book appointments or work around someone else's schedule.",
-      comparison: "Human interviewers have limited availability - we're always here when you need us"
-    },
-    {
       icon: DollarSign,
-      title: "More Cost Effective",
+      title: "Cost Effective",
       description: "Get unlimited practice sessions at a fraction of the cost of hiring human interview coaches or tutors for one-on-one sessions.",
       comparison: "Human coaches cost £50-100+ per hour - get unlimited practice for less"
     },
     {
-      icon: BookOpen,
-      title: "Multiple Interview Types",
-      description: "Practice 11+ interviews, IELTS speaking tests, and more - all with the same platform. No need to find different specialists for each type.",
-      comparison: "One human expert per interview type - we cover them all in one place"
-    },
-    {
-      icon: Users,
-      title: "Safe Practice Environment",
-      description: "Make mistakes without judgment, practice sensitive topics comfortably, and build confidence in a pressure-free environment.",
-      comparison: "Human interviews can feel intimidating - practice safely without fear of judgment"
+      icon: Clock,
+      title: "24/7",
+      description: "Practice anytime, day or night, with comprehensive progress tracking. No need to book appointments or work around someone else's schedule.",
+      comparison: "Human interviewers have limited availability - we're always here when you need us"
     }
   ];
 
@@ -53,7 +35,7 @@ export const LandingFeatures = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
