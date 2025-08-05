@@ -1,43 +1,43 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Bot, Zap, Target, TrendingUp, Clock, Shield } from 'lucide-react';
+import { Shield, Clock, Target, Users, BookOpen, DollarSign } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 export const LandingFeatures = () => {
   const features = [
     {
-      icon: Bot,
-      title: 'Realistic Digital Humans',
-      description: 'Practice with lifelike digital interviewers that respond naturally to your answers and provide human-like interaction.',
-      image: '/api/placeholder/400/250'
-    },
-    {
-      icon: Zap,
-      title: 'Instant Feedback',
-      description: 'Get detailed performance analysis immediately after each session, including scoring and personalized improvement tips.',
-      image: '/api/placeholder/400/250'
+      icon: Shield,
+      title: "Always Reliable Interviews",
+      description: "Unlike human interviewers who may be tired, distracted, or inconsistent, our digital humans provide the same high-quality experience every single time.",
+      comparison: "Human interviewers can have off days - digital humans never do"
     },
     {
       icon: Target,
-      title: 'Multiple Interview Types',
-      description: 'Support for academic (11+), language (IELTS), and professional interviews with specialized question sets.',
-      image: '/api/placeholder/400/250'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Progress Tracking',
-      description: 'Monitor your improvement over time with detailed analytics and performance metrics across all sessions.',
-      image: '/api/placeholder/400/250'
+      title: "Always Reliable Instant Feedback",
+      description: "Get immediate, detailed feedback after every session. No waiting days or weeks for human feedback that might be subjective or incomplete.",
+      comparison: "Human feedback takes time and varies by person - ours is instant and consistent"
     },
     {
       icon: Clock,
-      title: 'Available 24/7',
-      description: 'Practice anytime, anywhere with our cloud-based platform. No scheduling required, no time constraints.',
-      image: '/api/placeholder/400/250'
+      title: "24/7 with Progress Tracking",
+      description: "Practice anytime, day or night, with comprehensive progress tracking. No need to book appointments or work around someone else's schedule.",
+      comparison: "Human interviewers have limited availability - we're always here when you need us"
     },
     {
-      icon: Shield,
-      title: 'Safe Practice Environment',
-      description: 'Build confidence in a judgment-free environment where you can make mistakes and learn without pressure.',
-      image: '/api/placeholder/400/250'
+      icon: DollarSign,
+      title: "More Cost Effective",
+      description: "Get unlimited practice sessions at a fraction of the cost of hiring human interview coaches or tutors for one-on-one sessions.",
+      comparison: "Human coaches cost £50-100+ per hour - get unlimited practice for less"
+    },
+    {
+      icon: BookOpen,
+      title: "Multiple Interview Types",
+      description: "Practice 11+ interviews, IELTS speaking tests, and more - all with the same platform. No need to find different specialists for each type.",
+      comparison: "One human expert per interview type - we cover them all in one place"
+    },
+    {
+      icon: Users,
+      title: "Safe Practice Environment",
+      description: "Make mistakes without judgment, practice sensitive topics comfortably, and build confidence in a pressure-free environment.",
+      comparison: "Human interviews can feel intimidating - practice safely without fear of judgment"
     }
   ];
 
@@ -49,32 +49,33 @@ export const LandingFeatures = () => {
             Why Choose Digital Human Interviews?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Experience the future of interview preparation with our cutting-edge technology that combines realism with instant feedback.
+            Our digital humans provide consistent, reliable interview practice that's better than traditional human coaching in every way.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20">
-              <CardHeader className="space-y-4">
-                <div className="w-full h-48 bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center">
-                  <div className="text-center space-y-2">
-                    <feature.icon className="w-12 h-12 text-primary mx-auto" />
-                    <p className="text-sm text-muted-foreground">Feature Preview</p>
+          {features.map((feature, index) => {
+            const IconComponent = feature.icon;
+            return (
+              <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <IconComponent className="w-6 h-6 text-primary" />
                   </div>
-                </div>
-                <CardTitle className="flex items-center gap-3">
-                  <feature.icon className="w-6 h-6 text-primary" />
-                  {feature.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {feature.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
+                  
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed mb-3">
+                      {feature.description}
+                    </p>
+                    <p className="text-sm font-medium text-primary/80 italic">
+                      {feature.comparison}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

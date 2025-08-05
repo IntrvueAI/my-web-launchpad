@@ -41,16 +41,16 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
 
             <div className="flex items-center gap-8 pt-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">10k+</div>
-                <div className="text-sm text-muted-foreground">Practice Sessions</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">95%</div>
-                <div className="text-sm text-muted-foreground">Satisfaction Rate</div>
-              </div>
-              <div className="text-center">
                 <div className="text-2xl font-bold text-primary">24/7</div>
                 <div className="text-sm text-muted-foreground">Available</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">Instant</div>
+                <div className="text-sm text-muted-foreground">Feedback</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">Safe</div>
+                <div className="text-sm text-muted-foreground">Practice</div>
               </div>
             </div>
           </div>

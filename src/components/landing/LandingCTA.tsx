@@ -65,7 +65,7 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Award className="w-4 h-4 text-primary" />
-                  <span>Trusted by 10k+ students</span>
+                  <span>Professional digital interview platform</span>
                 </div>
               </div>
 
