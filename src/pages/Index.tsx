@@ -10,6 +10,7 @@ import { InterviewType } from '@/config/interviewTypes';
 
 // Landing page components
 import { LandingHero } from '@/components/landing/LandingHero';
+import { LandingInterviewTypes } from '@/components/landing/LandingInterviewTypes';
 import { LandingFeatures } from '@/components/landing/LandingFeatures';
 import { LandingProcess } from '@/components/landing/LandingProcess';
 import { LandingDemo } from '@/components/landing/LandingDemo';
@@ -61,6 +62,7 @@ const Index = () => {
     return (
       <div className="min-h-screen">
         <LandingHero onSignUp={() => navigate('/auth')} />
+        <LandingInterviewTypes />
         <LandingFeatures />
         <LandingProcess />
         <LandingShowcase />
