@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Play, MessageSquare, BarChart3 } from 'lucide-react';
+import { ArrowRight, Play, MessageSquare, BarChart3, Clock } from 'lucide-react';
 
 export const LandingProcess = () => {
   const steps = [
@@ -8,21 +8,21 @@ export const LandingProcess = () => {
       icon: Play,
       title: 'Choose Your Interview',
       description: 'Select from academic, language, or professional interviews based on your goals and requirements.',
-      visual: 'Interface showing interview selection screen'
+      image: '/lovable-uploads/9dfda919-9c48-45a8-b6a2-7d3000d4352a.png'
     },
     {
       number: '02',
       icon: MessageSquare,
       title: 'Practice with Digital Humans',
       description: 'Engage in realistic interview scenarios with our advanced digital human interviewers.',
-      visual: 'Digital human interviewer in conversation'
+      image: '/lovable-uploads/602524ba-c5ae-437f-8628-4f4ba1ba091e.png'
     },
     {
       number: '03',
       icon: BarChart3,
       title: 'Get Instant Feedback',
       description: 'Receive detailed performance analysis and personalized improvement recommendations immediately.',
-      visual: 'Detailed feedback and scoring interface'
+      image: '/lovable-uploads/cba63a0e-9ba9-49f7-9e2c-405eeb522d48.png'
     }
   ];
 
@@ -48,14 +48,13 @@ export const LandingProcess = () => {
                     {step.number}
                   </div>
                   
-                  {/* Visual Placeholder */}
-                  <div className="w-full h-48 bg-gradient-to-br from-primary/5 to-primary/20 rounded-lg flex items-center justify-center">
-                    <div className="text-center space-y-3">
-                      <step.icon className="w-12 h-12 text-primary mx-auto" />
-                      <p className="text-sm text-muted-foreground px-4">
-                        {step.visual}
-                      </p>
-                    </div>
+                  {/* Step Image */}
+                  <div className="w-full h-48 rounded-lg overflow-hidden border">
+                    <img 
+                      src={step.image} 
+                      alt={step.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   
                   <CardTitle className="text-xl">
@@ -91,4 +90,3 @@ export const LandingProcess = () => {
   );
 };
 
-import { Clock } from 'lucide-react';
