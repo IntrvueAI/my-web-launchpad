@@ -11,7 +11,7 @@ import { InterviewType } from '@/config/interviewTypes';
 // Landing page components
 import { LandingHero } from '@/components/landing/LandingHero';
 import { LandingInterviewTypes } from '@/components/landing/LandingInterviewTypes';
-import { LandingFeatures } from '@/components/landing/LandingFeatures';
+
 import { LandingProcess } from '@/components/landing/LandingProcess';
 import { LandingPricing } from '@/components/landing/LandingPricing';
 import { LandingTruth } from '@/components/landing/LandingTruth';
@@ -59,7 +59,6 @@ const Index = () => {
       <div className="min-h-screen">
         <LandingHero onSignUp={() => navigate('/auth')} />
         <LandingInterviewTypes />
-        <LandingFeatures />
         <LandingProcess />
         <LandingTruth />
         <LandingPricing onSignUp={() => navigate('/auth')} />
