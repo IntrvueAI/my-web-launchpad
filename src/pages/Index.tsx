@@ -120,6 +120,11 @@ const Index = () => {
             <Button variant="outline" size="sm" onClick={handleSignOut}>
               Sign Out
             </Button>
+            <img 
+              src="/lovable-uploads/logo.png" 
+              alt="Intrvue.ai Logo" 
+              className="h-8 w-auto"
+            />
           </div>
         </div>
       </header>
