@@ -113,7 +113,7 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
                 </blockquote>
                 <div className="text-muted-foreground">
                   <div className="font-semibold">Maria Rodriguez</div>
-                  <div className="text-sm">Achieved band 7.5, now studying in Canada</div>
+                  <div className="text-sm">Achieved band 8.0, now studying in Canada</div>
                 </div>
               </div>
             </div>
