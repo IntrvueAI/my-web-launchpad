@@ -1,25 +1,19 @@
-
 import { Button } from '@/components/ui/button';
 import { Play, BookOpen, Brain, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-
 interface LandingHeroProps {
   onSignUp: () => void;
 }
-
-export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
-  return (
-    <>
+export const LandingHero = ({
+  onSignUp
+}: LandingHeroProps) => {
+  return <>
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-sm border-b border-border/50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img 
-              src="/lovable-uploads/logo.png" 
-              alt="Intrvue.ai Logo" 
-              className="h-8 w-auto"
-            />
-            <span className="text-lg font-semibold">Intrvue AI</span>
+            <img src="/lovable-uploads/logo.png" alt="Intrvue.ai Logo" className="h-8 w-auto" />
+            
           </div>
           <Button variant="outline" size="sm" onClick={onSignUp}>
             Sign In
@@ -59,19 +53,11 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Button 
-              size="lg" 
-              onClick={onSignUp}
-              className="text-lg px-8 py-4 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
+            <Button size="lg" onClick={onSignUp} className="text-lg px-8 py-4 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <BookOpen className="w-5 h-5 mr-2" />
               Start IELTS Practice Free
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="text-lg px-8 py-4 h-auto border-2 hover:bg-primary/5 transition-all duration-300"
-            >
+            <Button variant="outline" size="lg" className="text-lg px-8 py-4 h-auto border-2 hover:bg-primary/5 transition-all duration-300">
               <Play className="w-5 h-5 mr-2" />
               Watch Demo
             </Button>
@@ -141,6 +127,5 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
         </div>
       </div>
     </section>
-    </>
-  );
+    </>;
 };
