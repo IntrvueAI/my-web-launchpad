@@ -13,7 +13,6 @@ import { LandingHero } from '@/components/landing/LandingHero';
 import { LandingInterviewTypes } from '@/components/landing/LandingInterviewTypes';
 import { LandingFeatures } from '@/components/landing/LandingFeatures';
 import { LandingProcess } from '@/components/landing/LandingProcess';
-import { LandingDemo } from '@/components/landing/LandingDemo';
 import { LandingPricing } from '@/components/landing/LandingPricing';
 import { LandingTruth } from '@/components/landing/LandingTruth';
 import { LandingFAQ } from '@/components/landing/LandingFAQ';
@@ -29,8 +28,6 @@ const Index = () => {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history'>('selection');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
-
-  // No automatic redirect - let unauthenticated users see the landing page
 
   const handleSignOut = async () => {
     await signOut();
@@ -64,7 +61,6 @@ const Index = () => {
         <LandingInterviewTypes />
         <LandingFeatures />
         <LandingProcess />
-        <LandingDemo />
         <LandingTruth />
         <LandingPricing onSignUp={() => navigate('/auth')} />
         <LandingFAQ />
