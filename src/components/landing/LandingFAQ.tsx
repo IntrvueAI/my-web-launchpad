@@ -28,10 +28,6 @@ export const LandingFAQ = () => {
       answer: 'Absolutely. We use bank-level encryption to protect your data. Interview recordings are processed securely and automatically deleted after generating your feedback. We never share personal information with third parties and comply with GDPR regulations.'
     },
     {
-      question: 'What if I\'m not satisfied with my purchase?',
-      answer: 'We offer a 30-day money-back guarantee. If you\'re not completely satisfied with your interview experience or feedback quality, contact our support team for a full refund. We\'re confident you\'ll find our platform valuable.'
-    },
-    {
       question: 'Do you offer discounts for schools or bulk purchases?',
       answer: 'Yes! We offer special pricing for educational institutions, tutoring centers, and bulk purchases. Contact our team to discuss custom packages that meet your organization\'s needs.'
     }
