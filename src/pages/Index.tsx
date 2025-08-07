@@ -19,10 +19,6 @@ import { LandingFAQ } from '@/components/landing/LandingFAQ';
 import { LandingCTA } from '@/components/landing/LandingCTA';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 
-/**
- * Main Index Page - 11+ Interview Preparation Platform
- * Entry point for the interview preparation application
- */
 const Index = () => {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
