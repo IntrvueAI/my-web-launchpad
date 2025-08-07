@@ -72,6 +72,11 @@ const Index = () => {
         <div className="container flex h-14 items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
+              <img 
+                src="/lovable-uploads/logo.png" 
+                alt="Intrvue.ai Logo" 
+                className="h-8 w-auto"
+              />
               {currentView === 'interview' && selectedInterviewType && (
                 <Button 
                   variant="ghost" 
@@ -120,11 +125,6 @@ const Index = () => {
             <Button variant="outline" size="sm" onClick={handleSignOut}>
               Sign Out
             </Button>
-            <img 
-              src="/lovable-uploads/logo.png" 
-              alt="Intrvue.ai Logo" 
-              className="h-8 w-auto"
-            />
           </div>
         </div>
       </header>
