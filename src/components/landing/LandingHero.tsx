@@ -9,7 +9,25 @@ interface LandingHeroProps {
 
 export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-accent/10 to-primary/5 overflow-hidden">
+    <>
+      {/* Header */}
+      <header className="absolute top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-sm border-b border-border/50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/logo.png" 
+              alt="Intrvue.ai Logo" 
+              className="h-8 w-auto"
+            />
+            <span className="text-lg font-semibold">Intrvue AI</span>
+          </div>
+          <Button variant="outline" size="sm" onClick={onSignUp}>
+            Sign In
+          </Button>
+        </div>
+      </header>
+      
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-accent/10 to-primary/5 overflow-hidden pt-20">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-pulse" />
@@ -123,5 +141,6 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
         </div>
       </div>
     </section>
+    </>
   );
 };
