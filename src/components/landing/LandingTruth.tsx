@@ -7,38 +7,38 @@ export const LandingTruth = () => {
     {
       icon: Clock,
       title: "Available 24/7",
-      description: "Practice whenever you want, no scheduling conflicts or limited availability",
+      description: "Practice IELTS speaking tests whenever you want, no scheduling conflicts or limited availability",
       stat: "Anytime access"
     },
     {
       icon: Target,
-      title: "Precision Feedback",
-      description: "AI analysis provides detailed, consistent feedback on every aspect of your performance",
-      stat: "100% consistent"
+      title: "Precise Band Scoring",
+      description: "Digital humans provide consistent, accurate band scores based on official IELTS criteria",
+      stat: "Official criteria"
     },
     {
       icon: Zap,
-      title: "Instant Results",
-      description: "Get immediate scoring and improvement suggestions right after each session",
+      title: "Instant Feedback",
+      description: "Get immediate detailed analysis of your performance right after each speaking session",
       stat: "<5 seconds"
     },
     {
       icon: TrendingUp,
       title: "Track Progress",
-      description: "See your improvement over time with detailed analytics and performance trends",
-      stat: "Data-driven insights"
+      description: "See your band score improvement over time with detailed analytics and performance trends",
+      stat: "1.5 band avg. improvement"
     },
     {
       icon: Shield,
-      title: "Safe Environment",
-      description: "Practice without pressure in a judgment-free space that builds confidence",
-      stat: "Stress-free learning"
+      title: "Safe Practice Environment",
+      description: "Build confidence in a judgment-free space with digital humans who never get impatient",
+      stat: "Anxiety-free learning"
     },
     {
       icon: Users,
-      title: "Proven Results",
-      description: "Join hundreds of students who've successfully improved their interview skills",
-      stat: "95% success rate"
+      title: "Proven Success",
+      description: "Join hundreds of IELTS candidates who've successfully improved their speaking scores",
+      stat: "91% pass rate"
     }
   ];
 
@@ -48,17 +48,17 @@ export const LandingTruth = () => {
         <div className="text-center space-y-6 mb-16">
           <div className="inline-flex items-center gap-2 bg-success/10 px-4 py-2 rounded-full border border-success/20">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            <span className="text-success font-medium text-sm">Student Success Stories</span>
+            <span className="text-success font-medium text-sm">IELTS Success Stories</span>
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold">
             Real Benefits for{' '}
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              Real Students
+              IELTS Candidates
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            See why students and parents trust our AI-powered interview preparation platform to deliver results.
+            See why IELTS candidates trust our digital human platform to achieve their target band scores.
           </p>
         </div>
 
@@ -105,12 +105,12 @@ export const LandingTruth = () => {
                   ))}
                 </div>
                 <blockquote className="text-xl md:text-2xl font-medium text-foreground italic">
-                  "My daughter went from being nervous about interviews to confident and prepared. 
-                  The AI feedback was incredibly detailed and helped her improve specific areas."
+                  "I improved from band 6 to 7.5 in speaking after just two weeks of practice. 
+                  The digital humans felt so real and the feedback was incredibly detailed."
                 </blockquote>
                 <div className="text-muted-foreground">
-                  <div className="font-semibold">Sarah M.</div>
-                  <div className="text-sm">Parent of 11+ student</div>
+                  <div className="font-semibold">Ahmed K.</div>
+                  <div className="text-sm">IELTS candidate, achieved band 7.5</div>
                 </div>
               </div>
             </div>

@@ -26,30 +26,30 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
               <div className="flex justify-center">
                 <Badge className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-6 py-3 text-base border-0">
                   <Rocket className="w-5 h-5 mr-2" />
-                  Ready to Excel in Your Interviews?
+                  Ready to Achieve Your Target Band Score?
                 </Badge>
               </div>
 
               {/* Main Headline */}
               <div className="space-y-6">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold max-w-5xl mx-auto leading-tight">
-                  Join the{' '}
+                  Start Your{' '}
                   <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
-                    AI Learning Revolution
+                    IELTS Success Journey
                   </span>
                 </h2>
                 <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-                  Transform your interview skills with personalized AI tutoring that adapts to your learning style and goals.
+                  Join thousands of candidates who've improved their IELTS speaking scores with our digital human practice platform.
                 </p>
               </div>
 
               {/* Stats Row */}
               <div className="grid md:grid-cols-4 gap-8 py-8">
                 {[
-                  { icon: Users, stat: '1000+', label: 'Students Helped' },
-                  { icon: Award, stat: '95%', label: 'Success Rate' },
+                  { icon: Users, stat: '1000+', label: 'IELTS Candidates' },
+                  { icon: Award, stat: '7.5', label: 'Average Band Score' },
                   { icon: BookOpen, stat: '24/7', label: 'Available' },
-                  { icon: Star, stat: '4.9/5', label: 'Rating' }
+                  { icon: Star, stat: '91%', label: 'Pass Rate' }
                 ].map((item, index) => {
                   const IconComponent = item.icon;
                   return (
@@ -72,7 +72,7 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
                   className="text-xl px-10 py-6 h-auto gap-3 group shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
                 >
                   <BookOpen className="w-6 h-6" />
-                  <span>Start Your AI Tutoring Journey</span>
+                  <span>Start IELTS Practice Now</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <Button 
@@ -80,7 +80,7 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
                   size="lg"
                   className="text-lg px-8 py-6 h-auto border-2 hover:bg-primary/5 transition-all duration-300"
                 >
-                  Watch Student Success Stories
+                  Download Sample Questions
                 </Button>
               </div>
 
@@ -88,15 +88,15 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
               <div className="flex flex-wrap justify-center items-center gap-8 pt-8">
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground bg-success/10 px-4 py-2 rounded-full">
                   <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-                  <span>30-day money-back guarantee</span>
+                  <span>No subscription required</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground bg-primary/10 px-4 py-2 rounded-full">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  <span>Start practicing in under 2 minutes</span>
+                  <span>Start practicing immediately</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground bg-accent/20 px-4 py-2 rounded-full">
                   <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                  <span>No subscription required</span>
+                  <span>Official IELTS format</span>
                 </div>
               </div>
 
@@ -108,12 +108,12 @@ export const LandingCTA = ({ onSignUp }: LandingCTAProps) => {
                   ))}
                 </div>
                 <blockquote className="text-lg md:text-xl font-medium text-foreground italic mb-4">
-                  "The AI feedback is incredibly detailed and helped my son improve his confidence dramatically. 
-                  He went from being nervous to excited about his 11+ interview!"
+                  "The digital humans were so realistic! I practiced for just one week and improved from 
+                  band 6 to 7.5 in speaking. This platform is a game-changer for IELTS preparation."
                 </blockquote>
                 <div className="text-muted-foreground">
-                  <div className="font-semibold">Emma Thompson</div>
-                  <div className="text-sm">Parent of successful 11+ student</div>
+                  <div className="font-semibold">Maria Rodriguez</div>
+                  <div className="text-sm">Achieved band 7.5, now studying in Canada</div>
                 </div>
               </div>
             </div>

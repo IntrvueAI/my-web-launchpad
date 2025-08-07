@@ -6,39 +6,39 @@ export const LandingFeatures = () => {
   const features = [
     {
       icon: Brain,
-      title: "AI-Powered Coaching",
-      description: "Advanced AI tutors provide personalized feedback tailored to your learning style and goals.",
-      highlight: "Smarter than traditional methods"
+      title: "Digital Human Examiners",
+      description: "Realistic digital humans that conduct authentic IELTS speaking tests with natural conversation flow.",
+      highlight: "Feels like the real exam"
     },
     {
       icon: Zap,
-      title: "Instant Results",
-      description: "Get immediate, detailed feedback on your performance with actionable improvement suggestions.",
-      highlight: "No waiting, immediate learning"
+      title: "Instant Band Scoring",
+      description: "Get immediate detailed feedback on all four criteria with specific improvement suggestions.",
+      highlight: "Know your score instantly"
     },
     {
       icon: Clock,
-      title: "Learn Anytime",
-      description: "Practice 24/7 with AI tutors that never get tired, ensuring consistent high-quality sessions.",
+      title: "Practice Anytime",
+      description: "Available 24/7 for unlimited IELTS speaking practice sessions whenever you need them.",
       highlight: "Your schedule, your pace"
     },
     {
       icon: Target,
-      title: "Exam-Focused",
-      description: "Specifically designed for 11+ interviews and IELTS speaking tests with authentic question formats.",
-      highlight: "Real exam preparation"
+      title: "Exam-Authentic Format",
+      description: "All three parts of the IELTS speaking test with official question types and timing.",
+      highlight: "Real IELTS experience"
     },
     {
       icon: Award,
-      title: "Proven Success",
-      description: "Students using our platform show 40% better performance in actual interviews and tests.",
-      highlight: "Track record of results"
+      title: "Proven Results",
+      description: "Students improve their speaking band scores by an average of 1.5 bands using our platform.",
+      highlight: "Track record of success"
     },
     {
       icon: Users,
-      title: "Safe Learning Space",
-      description: "Practice without judgment in a supportive AI environment that builds confidence naturally.",
-      highlight: "Stress-free improvement"
+      title: "Confidence Building",
+      description: "Practice without pressure in a supportive environment that builds natural speaking confidence.",
+      highlight: "Overcome speaking anxiety"
     }
   ];
 
@@ -48,14 +48,14 @@ export const LandingFeatures = () => {
         <div className="text-center space-y-6 mb-16">
           <div className="inline-block">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Why Students Choose Our{' '}
+              Why Choose Our{' '}
               <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                AI Platform
+                IELTS Platform
               </span>
             </h2>
           </div>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Experience the next generation of interview preparation with AI tutors that understand your unique learning needs.
+            Experience the most realistic IELTS speaking practice with digital human examiners that understand your goals.
           </p>
         </div>
 
@@ -99,7 +99,7 @@ export const LandingFeatures = () => {
           <div className="inline-flex items-center gap-2 bg-success/10 px-6 py-3 rounded-full border border-success/20">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
             <span className="text-success-foreground font-medium">
-              Join thousands of successful students today
+              Join thousands of successful IELTS candidates today
             </span>
           </div>
         </div>

@@ -22,20 +22,20 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
           {/* Badge */}
           <Badge className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 text-sm font-medium border-0">
             <Brain className="w-4 h-4 mr-2" />
-            Powered by Advanced AI Technology
+            Powered by Advanced Digital Human Technology
           </Badge>
 
           {/* Main Headline */}
           <div className="space-y-6">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mx-auto">
-              Practice Interviews with{' '}
+              Master IELTS Speaking with{' '}
               <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
-                AI Tutors
+                Digital Humans
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Master 11+ interviews and IELTS speaking tests with personalized AI feedback. 
-              Build confidence through unlimited practice sessions.
+              Practice IELTS Speaking tests with realistic digital human examiners. 
+              Get instant feedback and improve your band score with unlimited mock tests.
             </p>
           </div>
           
@@ -47,7 +47,7 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
               className="text-lg px-8 py-4 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               <BookOpen className="w-5 h-5 mr-2" />
-              Start Learning Free
+              Start IELTS Practice Free
             </Button>
             <Button 
               variant="outline" 
@@ -63,11 +63,11 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
           <div className="flex flex-wrap justify-center items-center gap-8 pt-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-primary" />
-              <span>Trusted by 1000+ students</span>
+              <span>Trusted by 1000+ IELTS candidates</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-              <span>95% success rate</span>
+              <span>Average 1.5 band improvement</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -76,19 +76,19 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
           </div>
         </div>
 
-        {/* Hero Visual */}
+        {/* Demo Video Placeholder */}
         <div className="relative max-w-4xl mx-auto">
           <div className="relative bg-card/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-border/50 overflow-hidden group hover:shadow-3xl transition-all duration-500">
             <div className="aspect-video bg-gradient-to-br from-primary/5 via-accent/10 to-primary/5 flex items-center justify-center relative">
-              {/* Mock Interview Interface */}
+              {/* Demo Video Container */}
               <div className="absolute inset-4 bg-background/95 rounded-2xl border flex flex-col">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b">
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-success rounded-full animate-pulse" />
-                    <span className="text-sm font-medium">11+ Interview Practice</span>
+                    <span className="text-sm font-medium">IELTS Speaking Practice</span>
                   </div>
-                  <div className="text-sm text-muted-foreground">AI Interviewer</div>
+                  <div className="text-sm text-muted-foreground">Digital Human Examiner</div>
                 </div>
                 
                 {/* Content */}
@@ -98,8 +98,9 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
                       <Play className="w-10 h-10 text-primary ml-1" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-lg font-semibold">Interactive AI Interview</h3>
-                      <p className="text-muted-foreground text-sm">Click to start your practice session</p>
+                      <h3 className="text-lg font-semibold">Watch IELTS Demo</h3>
+                      <p className="text-muted-foreground text-sm">See how digital humans conduct realistic speaking tests</p>
+                      <p className="text-xs text-muted-foreground">~3 minute demonstration</p>
                     </div>
                   </div>
                 </div>
@@ -107,9 +108,9 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
                 {/* Footer */}
                 <div className="p-4 border-t bg-accent/5">
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Real-time feedback</span>
-                    <span>Personalized scoring</span>
-                    <span>Unlimited attempts</span>
+                    <span>All 3 parts covered</span>
+                    <span>Instant band scoring</span>
+                    <span>Detailed feedback</span>
                   </div>
                 </div>
               </div>
