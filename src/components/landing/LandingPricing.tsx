@@ -15,7 +15,7 @@ export const LandingPricing = ({ onSignUp }: LandingPricingProps) => {
       name: 'Try It Out',
       credits: 1,
       price: 14.99,
-      description: 'Perfect for testing our AI tutoring platform',
+      description: 'Perfect for testing our Digital Humans Interviewers platform',
       features: [
         '1 Complete AI Interview',
         'Instant Detailed Feedback',
@@ -228,7 +228,7 @@ export const LandingPricing = ({ onSignUp }: LandingPricingProps) => {
           
           <div className="max-w-2xl mx-auto">
             <p className="text-sm text-muted-foreground">
-              All plans include access to our complete AI tutoring platform with personalized feedback, 
+              All plans include access to our complete Digital Humans Interviewers platform with personalized feedback, 
               progress tracking, and detailed performance analytics. Credits never expire within their validity period.
             </p>
           </div>
