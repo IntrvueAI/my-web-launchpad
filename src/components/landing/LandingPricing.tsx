@@ -93,10 +93,8 @@ export const LandingPricing = ({ onSignUp }: LandingPricingProps) => {
           <div className="inline-flex items-center gap-4 bg-success/10 px-6 py-3 rounded-full border border-success/20">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-              <span className="text-success font-medium text-sm">30-day money-back guarantee</span>
+              <span className="text-success font-medium text-sm">No subscription required</span>
             </div>
-            <div className="w-px h-4 bg-border" />
-            <span className="text-sm text-muted-foreground">No subscription required</span>
           </div>
         </div>
 
@@ -118,7 +116,7 @@ export const LandingPricing = ({ onSignUp }: LandingPricingProps) => {
                 )}
                 
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
                     <Badge className="bg-primary text-primary-foreground px-4 py-2 shadow-lg">
                       <Star className="w-3 h-3 mr-1" />
                       Most Popular

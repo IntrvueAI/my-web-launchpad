@@ -38,7 +38,7 @@ export const LandingTruth = () => {
       icon: Users,
       title: "Proven Success",
       description: "Join hundreds of IELTS candidates who've successfully improved their speaking scores",
-      stat: "91% pass rate"
+      stat: "High success rate"
     }
   ];
 
@@ -105,12 +105,12 @@ export const LandingTruth = () => {
                   ))}
                 </div>
                 <blockquote className="text-xl md:text-2xl font-medium text-foreground italic">
-                  "I improved from band 6 to 7.5 in speaking after just two weeks of practice. 
+                  "I improved from band 4.5 to 8.5 in speaking after just two weeks of practice. 
                   The digital humans felt so real and the feedback was incredibly detailed."
                 </blockquote>
                 <div className="text-muted-foreground">
-                  <div className="font-semibold">Ahmed K.</div>
-                  <div className="text-sm">IELTS candidate, achieved band 7.5</div>
+                  <div className="font-semibold">Tony Liu</div>
+                  <div className="text-sm">IELTS candidate, achieved band 8.5</div>
                 </div>
               </div>
             </div>

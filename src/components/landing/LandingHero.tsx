@@ -67,7 +67,7 @@ export const LandingHero = ({ onSignUp }: LandingHeroProps) => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-              <span>Average 1.5 band improvement</span>
+              <span>Expert digital human technology</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />

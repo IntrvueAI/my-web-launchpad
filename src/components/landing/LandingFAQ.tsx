@@ -84,7 +84,7 @@ export const LandingFAQ = () => {
               </div>
               <div className="space-y-2 text-sm">
                 <div className="text-muted-foreground">
-                  <strong>Email:</strong> support@intrvue.ai
+                  <strong>Email:</strong> founders@intrvue.ai
                 </div>
                 <div className="text-muted-foreground">
                   <strong>Response time:</strong> Within 24 hours
