@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional 11+ Interview Platform Design System */
-/* Clean, academic aesthetic with professional colors for education */
-
 @layer base {
   :root {
     /* Professional academic color palette */
