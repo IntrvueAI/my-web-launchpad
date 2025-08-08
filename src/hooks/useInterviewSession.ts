@@ -150,15 +150,55 @@ export const useInterviewSession = (
           console.log('Attempting to get transcription from stored messages...');
           console.log('Stored messages:', messagesRef.current);
           
-          if (messagesRef.current && messagesRef.current.length > 0) {
-            transcription = messagesRef.current.map((msg: any) => {
-              const speaker = msg.role === 'user' ? 'Student' : 'Interviewer';
-              return `${speaker}: ${msg.content}`;
-            }).join('\n\n');
-            console.log('Generated transcription:', transcription);
-          } else {
-            console.log('No messages available in stored messages');
-          }
+            if (messagesRef.current && messagesRef.current.length > 0) {
+              // Normalize roles and robustly extract text content from various message shapes
+              const normalizeRole = (role: string) => {
+                const r = (role || '').toLowerCase();
+                if (['user', 'human', 'student'].includes(r)) return 'Student';
+                return 'Interviewer';
+              };
+
+              const extractText = (msg: any): string => {
+                const c = msg?.content;
+                if (!c) return '';
+                if (typeof c === 'string') return c;
+                if (Array.isArray(c)) {
+                  return c.map((item: any) => {
+                    if (!item) return '';
+                    if (typeof item === 'string') return item;
+                    if (typeof item.text === 'string') return item.text;
+                    if (typeof item.content === 'string') return item.content;
+                    if (typeof item.value === 'string') return item.value;
+                    return '';
+                  }).filter(Boolean).join(' ');
+                }
+                if (typeof c === 'object') {
+                  if (typeof c.text === 'string') return c.text;
+                  if (typeof c.content === 'string') return c.content;
+                  if (typeof c.value === 'string') return c.value;
+                }
+                return '';
+              };
+
+              const lines = messagesRef.current
+                .map((msg: any) => {
+                  const text = extractText(msg).trim();
+                  if (!text) return null;
+                  const speaker = normalizeRole(msg.role);
+                  return `${speaker}: ${text}`;
+                })
+                .filter(Boolean) as string[];
+
+              // Join lines and warn if we detected no student responses
+              const hasStudent = lines.some((line: string) => line.startsWith('Student:'));
+              transcription = lines.join('\n\n');
+              if (!hasStudent) {
+                console.warn('No student responses detected in messages; transcription may be incomplete.');
+              }
+              console.log('Transcription built with', lines.length, 'lines');
+            } else {
+              console.log('No messages available in stored messages');
+            }
         } catch (transcriptionError) {
           console.warn('Could not get transcription:', transcriptionError);
         }
