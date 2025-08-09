@@ -67,9 +67,7 @@ export const InterviewSelection = ({
           <Button variant={selectedCategory === null ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(null)}>
             All Categories
           </Button>
-          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => <Button key={key} variant={selectedCategory === key ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(key)}>
-              {category.name}
-            </Button>)}
+          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => {})}
         </div>
       </div>
 
@@ -110,7 +108,7 @@ export const InterviewSelection = ({
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-muted-foreground" />
-                      <span>{interview.duration} minutes</span>
+                      <span>15 minutes</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Target className="h-4 w-4 text-muted-foreground" />
