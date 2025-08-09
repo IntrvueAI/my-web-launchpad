@@ -8,6 +8,8 @@ export interface Annotation {
   category: AnnotationCategory;
   explanation: string;
   suggestion?: string;
+  start?: number;
+  end?: number;
 }
 
 interface AnnotatedTranscriptProps {
@@ -38,7 +40,48 @@ export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transc
     .sort((a, b) => b.quote.length - a.quote.length);
 
   const renderWithHighlights = () => {
+    // Prefer precise index-based annotations when available
+    const ranged = (annotations || []).filter((a) => (
+      typeof a.start === 'number' && typeof a.end === 'number' &&
+      a.start! >= 0 && a.end! > a.start! && a.end! <= transcript.length
+    )).sort((a, b) => (a.start! - b.start!));
+
+    if (ranged.length > 0) {
+      const nodes: React.ReactNode[] = [];
+      let cursor = 0;
+      ranged.forEach((ann, idx) => {
+        const s = ann.start!;
+        const e = ann.end!;
+        if (s < cursor) return; // skip overlaps
+        if (s > cursor) nodes.push(transcript.slice(cursor, s));
+        const matched = transcript.slice(s, e);
+        nodes.push(
+          <TooltipProvider key={`ann-${idx}-${s}`}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className={categoryStyles[ann.category]}> {matched} </span>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <div className="text-sm font-medium capitalize mb-1">{ann.category}</div>
+                <p className="text-sm mb-1">{ann.explanation}</p>
+                {ann.suggestion && (
+                  <p className="text-sm text-muted-foreground">Suggestion: {ann.suggestion}</p>
+                )}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+        cursor = e;
+      });
+      if (cursor < transcript.length) nodes.push(transcript.slice(cursor));
+      return nodes;
+    }
+
+    // Fallback: flexible regex matching when indices are not provided
     let nodes: React.ReactNode[] = [transcript];
+    const sorted = [...(annotations || [])]
+      .filter(a => a && a.quote && a.quote.trim().length > 2)
+      .sort((a, b) => b.quote.length - a.quote.length);
 
     sorted.forEach((ann, idx) => {
       const regex = buildFlexiblePattern(ann.quote);
@@ -72,7 +115,7 @@ export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transc
             </TooltipProvider>
           );
           lastIndex = end;
-          if (regex.lastIndex === start) regex.lastIndex++; // prevent infinite loop on zero-length
+          if (regex.lastIndex === start) regex.lastIndex++;
         }
         if (lastIndex < text.length) next.push(text.slice(lastIndex));
       });

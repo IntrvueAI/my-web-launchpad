@@ -84,6 +84,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           });
         } else {
           setFeedback(data);
+          console.log('Feedback received:', { totalScore: (data as any)?.total_score, annotations: (data as any)?.annotations?.length, hasTranscript: Boolean((data as any)?.transcription) });
           toast({
             title: "Feedback Generated",
             description: "Your interview has been analyzed and feedback is ready!",

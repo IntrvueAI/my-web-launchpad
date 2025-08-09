@@ -398,13 +398,13 @@ serve(async (req) => {
     // Generate annotated highlights for the transcript (Student-only)
     let annotations: any[] = [];
     try {
-      const annotationSystemPrompt = `You are an expert speaking examiner. Given a transcript of an interview, extract short quoted spans from ONLY the Student's lines that represent either strengths or issues.
+      const annotationSystemPrompt = `You are an expert speaking examiner. Given a transcript string, extract short quoted spans from ONLY the Student's lines that represent either strengths or issues.
 
 - Categories: "strength", "grammar", "fluency", "lexical"
-- IMPORTANT: For each quote, COPY-PASTE the exact substring from the transcript (preserve casing, punctuation, and spacing) so it can be highlighted precisely.
-- For each item provide: { "quote": string, "category": one of the four, "explanation": string, "suggestion": string }
-- Keep quotes short (3–15 words) and precise.
-- Focus on the most relevant 8–15 items.
+- IMPORTANT: For each quote, COPY the exact substring from the transcript (preserve casing/punctuation/spacing) and include character indexes.
+- For each item provide: { "quote": string, "category": one of the four, "explanation": string, "suggestion": string, "start": number, "end": number }
+- start/end are 0-based character offsets into the full transcript string, such that transcript.slice(start, end) === quote.
+- Keep quotes short (3–15 words) and precise. Focus on the most relevant 8–15 items.
 - Return ONLY valid JSON with shape: { "annotations": Annotation[] }`;
 
       const annotationRequest = {
@@ -445,6 +445,8 @@ serve(async (req) => {
             } catch { /* ignore */ }
           }
         }
+      } else {
+        console.warn('Annotation API error status:', annotationResp.status);
       }
     } catch (e) {
       console.warn('Annotation generation failed:', e?.message || e);
