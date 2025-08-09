@@ -249,9 +249,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     onTimeUp={() => {
                       toast({
                         title: "Time's Up!",
-                        description: "Your 30-minute interview session has ended.",
+                        description: `Your ${interviewType.duration}-minute interview session has ended.`,
                         variant: "destructive",
                       });
+                      // Automatically stop the interview and generate feedback
+                      handleStopInterview();
                     }}
                   />
                 </div>
