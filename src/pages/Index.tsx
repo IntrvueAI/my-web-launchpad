@@ -4,8 +4,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { InterviewSelection } from '@/components/InterviewSelection';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
+import { UserSettings } from '@/components/UserSettings';
 import { Button } from '@/components/ui/button';
-import { Video, History, ArrowLeft } from 'lucide-react';
+import { Video, History, ArrowLeft, Settings } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 
 // Landing page components
@@ -24,7 +25,7 @@ const Index = () => {
     signOut
   } = useAuth();
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history'>('selection');
+  const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history' | 'settings'>('selection');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const handleSignOut = async () => {
     await signOut();
@@ -82,6 +83,10 @@ const Index = () => {
                   <History className="w-4 h-4" />
                   History
                 </Button>
+                <Button variant={currentView === 'settings' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('settings')} className="gap-2">
+                  <Settings className="w-4 h-4" />
+                  Settings
+                </Button>
               </nav>}
           </div>
           <div className="flex items-center gap-4">
@@ -97,8 +102,10 @@ const Index = () => {
       <main>
         {currentView === 'selection' ? <div className="container mx-auto px-4 py-8 max-w-6xl">
             <InterviewSelection onSelectInterview={handleSelectInterview} />
-          </div> : currentView === 'interview' ? <InterviewPlatform selectedInterviewType={selectedInterviewType} /> : <div className="container mx-auto px-4 py-8 max-w-4xl">
+          </div> : currentView === 'interview' ? <InterviewPlatform selectedInterviewType={selectedInterviewType} /> : currentView === 'history' ? <div className="container mx-auto px-4 py-8 max-w-4xl">
             <FeedbackHistory />
+          </div> : <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <UserSettings />
           </div>}
       </main>
     </div>;
