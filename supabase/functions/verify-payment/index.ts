@@ -44,15 +44,20 @@ if (userErr || !userData?.user) {
   return cors(new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 }), req.headers.get("origin") || "*");
 }
 
-    // Retrieve session from Stripe
-    const session = await stripe.checkout.sessions.retrieve(session_id);
-    if (!session) {
-      return cors(new Response(JSON.stringify({ error: "Session not found" }), { status: 404 }));
-    }
+// Retrieve session from Stripe
+const session = await stripe.checkout.sessions.retrieve(session_id);
+if (!session) {
+  return cors(new Response(JSON.stringify({ error: "Session not found" }), { status: 404 }), req.headers.get("origin") || "*");
+}
 
-    if (session.payment_status !== "paid") {
-      return cors(new Response(JSON.stringify({ error: "Payment not completed" }), { status: 400 }));
-    }
+if (session.payment_status !== "paid") {
+  return cors(new Response(JSON.stringify({ error: "Payment not completed" }), { status: 400 }), req.headers.get("origin") || "*");
+}
+
+// Ensure the Stripe session belongs to the authenticated user via client_reference_id
+if (session.client_reference_id && session.client_reference_id !== userData.user.id) {
+  return cors(new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 }), req.headers.get("origin") || "*");
+}
 
     const service = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY); const anon = createClient(SUPABASE_URL, Deno.env.get("SUPABASE_ANON_KEY")!);
 

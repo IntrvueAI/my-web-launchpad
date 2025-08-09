@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -134,29 +135,49 @@ const getSubject = (type: string) => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
+  const origin = req.headers.get('origin') || '*';
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin } });
   }
 
-  if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method not allowed" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
+if (req.method !== "POST") {
+  return new Response(JSON.stringify({ error: "Method not allowed" }), {
+    status: 405,
+    headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
+  });
+}
+
+try {
+  // Require auth; only allow sending to the authenticated user
+  const authHeader = req.headers.get('Authorization') || '';
+  const token = authHeader.replace('Bearer ', '');
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { data: userData, error: userErr } = await supabase.auth.getUser(token);
+  if (userErr || !userData?.user) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
     });
   }
 
-  try {
-    const { email, type, confirmationUrl, resetUrl, from }: AuthEmailRequest = await req.json();
+  const { email, type, confirmationUrl, resetUrl, from }: AuthEmailRequest = await req.json();
 
-    if (!email || !type) {
-      return new Response(
-        JSON.stringify({ error: "Missing required fields: email, type" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
+if (!email || !type) {
+  return new Response(
+    JSON.stringify({ error: "Missing required fields: email, type" }),
+    {
+      status: 400,
+      headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
     }
+  );
+}
+
+if (email.toLowerCase() !== userData.user.email?.toLowerCase()) {
+  return new Response(JSON.stringify({ error: 'Forbidden' }), {
+    status: 403,
+    headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
+  });
+}
 
     const html = getEmailTemplate(type, { confirmationUrl, resetUrl });
     const subject = getSubject(type);
@@ -170,19 +191,19 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Auth email sent successfully:", emailResponse);
 
-    return new Response(JSON.stringify(emailResponse), {
-      status: 200,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+return new Response(JSON.stringify(emailResponse), {
+  status: 200,
+  headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
+});
   } catch (error: any) {
-    console.error("Error sending auth email:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
+console.error("Error sending auth email:", error);
+return new Response(
+  JSON.stringify({ error: (error as any).message }),
+  {
+    status: 500,
+    headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
+  }
+);
   }
 };
 
