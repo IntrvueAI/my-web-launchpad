@@ -452,7 +452,7 @@ serve(async (req) => {
       console.warn('Annotation generation failed:', e?.message || e);
     }
 
-    // Post-process annotations: normalize categories, compute indices when missing, constrain to transcript bounds
+    // Post-process annotations: normalize categories, compute indices constrained to Student lines, and constrain to transcript bounds
     const allowedCategories = new Set(['strength', 'grammar', 'fluency', 'lexical']);
     const normalizeCategory = (c: string) => {
       const s = String(c || '').toLowerCase();
@@ -462,52 +462,102 @@ serve(async (req) => {
       if (s.includes('strength') || s.includes('good') || s.includes('strong') || s.includes('positive')) return 'strength';
       return 'grammar';
     };
+
+    // Build ranges that only include the Student's responses in the full transcript
+    const buildStudentRanges = (text: string) => {
+      const ranges: Array<{ start: number; end: number }> = [];
+      try {
+        const re = /(^|\n)Student:\s?([\s\S]*?)(?=(\nInterviewer:)|$)/g;
+        let m: RegExpExecArray | null;
+        while ((m = re.exec(text)) !== null) {
+          const prefixLen = (m[1] || '').length; // '' or '\n'
+          const labelLen = 'Student:'.length;
+          let start = (m.index || 0) + prefixLen + labelLen;
+          if (text[start] === ' ') start += 1; // skip single space after label if present
+          const content = m[2] || '';
+          const end = start + content.length;
+          if (end > start) ranges.push({ start, end });
+        }
+      } catch {}
+      return ranges;
+    };
+
+    const studentRanges = buildStudentRanges(sanitizedTranscription);
+
+    const isWithinStudentRange = (start: number, end: number) => {
+      return studentRanges.some(r => start >= r.start && end <= r.end);
+    };
+
     const computeIndex = (quote: string) => {
       if (!quote) return null as any;
+      const tryInRange = (segStart: number, segEnd: number) => {
+        const segment = sanitizedTranscription.slice(segStart, segEnd);
+        let idx = segment.indexOf(quote);
+        if (idx !== -1) return { start: segStart + idx, end: segStart + idx + quote.length };
+        idx = segment.toLowerCase().indexOf(quote.toLowerCase());
+        if (idx !== -1) return { start: segStart + idx, end: segStart + idx + quote.length };
+        try {
+          const words = quote.trim().split(/\s+/).filter(Boolean).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+          if (words.length) {
+            const re = new RegExp(words.join('\\W+'), 'i');
+            const m = re.exec(segment);
+            if (m && typeof m.index === 'number') {
+              return { start: segStart + m.index, end: segStart + m.index + m[0].length };
+            }
+          }
+        } catch {}
+        return null as any;
+      };
+      for (const r of studentRanges) {
+        const pos = tryInRange(r.start, r.end);
+        if (pos) return pos;
+      }
+      // Final fallback (should rarely be used)
       const exact = sanitizedTranscription.indexOf(quote);
       if (exact !== -1) return { start: exact, end: exact + quote.length };
       const ci = sanitizedTranscription.toLowerCase().indexOf(quote.toLowerCase());
       if (ci !== -1) return { start: ci, end: ci + quote.length };
-      try {
-        const words = quote.trim().split(/\s+/).filter(Boolean).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-        if (words.length) {
-          const re = new RegExp(words.join('\\W+'), 'i');
-          const m = re.exec(sanitizedTranscription);
-          if (m && typeof m.index === 'number') {
-            return { start: m.index, end: m.index + m[0].length };
-          }
-        }
-      } catch {}
       return null as any;
+    };
+
+    const sanitizeAnnotation = (a: any) => {
+      const quote = typeof a?.quote === 'string' ? a.quote : '';
+      let start = Number.isFinite(a?.start) ? a.start : undefined as number | undefined;
+      let end = Number.isFinite(a?.end) ? a.end : undefined as number | undefined;
+
+      // If provided indices are invalid or outside student ranges, recompute
+      const providedValid = Number.isFinite(start) && Number.isFinite(end) && (end as number) > (start as number) && isWithinStudentRange(start as number, end as number) && sanitizedTranscription.slice(start as number, end as number).length > 0;
+      if (!providedValid) {
+        const pos = computeIndex(quote);
+        if (pos) { start = pos.start; end = pos.end; }
+      }
+
+      // Final validation
+      if (!(Number.isFinite(start) && Number.isFinite(end) && (end as number) > (start as number))) return null;
+      if (!isWithinStudentRange(start as number, end as number)) return null;
+
+      const categoryRaw = (a?.category ?? '') as string;
+      const category = allowedCategories.has(categoryRaw as any) ? categoryRaw : normalizeCategory(categoryRaw);
+      const explanation = typeof a?.explanation === 'string' ? a.explanation : '';
+      const suggestion = typeof a?.suggestion === 'string' ? a.suggestion : undefined;
+      return { quote: quote || sanitizedTranscription.slice(start as number, end as number), category, explanation, suggestion, start, end };
     };
 
     annotations = Array.isArray(annotations) ? annotations : [];
     annotations = annotations
-      .map((a: any) => {
-        const quote = typeof a?.quote === 'string' ? a.quote : '';
-        let start = Number.isFinite(a?.start) ? a.start : undefined as number | undefined;
-        let end = Number.isFinite(a?.end) ? a.end : undefined as number | undefined;
-        if (!(Number.isFinite(start) && Number.isFinite(end) && (end as number) > (start as number))) {
-          const pos = computeIndex(quote);
-          if (pos) { start = pos.start; end = pos.end; }
-        }
-        const categoryRaw = (a?.category ?? '') as string;
-        const category = allowedCategories.has(categoryRaw as any) ? categoryRaw : normalizeCategory(categoryRaw);
-        const explanation = typeof a?.explanation === 'string' ? a.explanation : '';
-        const suggestion = typeof a?.suggestion === 'string' ? a.suggestion : undefined;
-        return { quote, category, explanation, suggestion, start, end };
-      })
-      .filter((a: any) => a.quote && typeof a.start === 'number' && typeof a.end === 'number' && a.start >= 0 && a.end > a.start && a.end <= sanitizedTranscription.length);
+      .map(sanitizeAnnotation)
+      .filter((a: any) => !!a)
+      .slice(0, 20) as any[];
 
-    // If still empty, try a backup generation pass
+    // If still empty, try a backup generation pass limited to Student content only
     if (annotations.length === 0) {
       try {
-        const backupPrompt = `Extract 6 to 12 short quotes from ONLY Student lines in the transcript that reflect strengths or issues. Categories: strength, grammar, fluency, lexical. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end slice the exact quote from the transcript string.`;
+        const backupPrompt = `Extract 6 to 12 short quotes from ONLY Student lines in the transcript that reflect strengths or issues. Categories: strength, grammar, fluency, lexical. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
         const backupReq = {
           model: 'gpt-4o',
           messages: [
             { role: 'system', content: backupPrompt },
-            { role: 'user', content: `Transcript:\n\n${sanitizedTranscription}` }
+            { role: 'user', content: `Original Transcript (includes Interviewer labels):\n\n${sanitizedTranscription}` }
           ],
           temperature: 0,
           response_format: { type: 'json_object' },
@@ -523,17 +573,7 @@ serve(async (req) => {
           try {
             const parsed = JSON.parse(txt);
             if (parsed && Array.isArray(parsed.annotations)) {
-              annotations = parsed.annotations.map((a: any) => {
-                const quote = typeof a?.quote === 'string' ? a.quote : '';
-                let st = Number.isFinite(a?.start) ? a.start : undefined as number | undefined;
-                let en = Number.isFinite(a?.end) ? a.end : undefined as number | undefined;
-                if (!(Number.isFinite(st) && Number.isFinite(en) && (en as number) > (st as number))) {
-                  const pos = computeIndex(quote);
-                  if (pos) { st = pos.start; en = pos.end; }
-                }
-                const cat = allowedCategories.has(a?.category) ? a.category : normalizeCategory(a?.category);
-                return { quote: quote || (typeof st === 'number' && typeof en === 'number' ? sanitizedTranscription.slice(st, en) : ''), category: cat, explanation: a?.explanation || '', suggestion: a?.suggestion, start: st, end: en };
-              }).filter((a: any) => a.quote && typeof a.start === 'number' && typeof a.end === 'number');
+              annotations = parsed.annotations.map(sanitizeAnnotation).filter((a: any) => !!a);
             }
           } catch {}
         }
