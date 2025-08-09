@@ -623,6 +623,7 @@ serve(async (req) => {
       interview_category: config.category, 
       scoring_system: config.scoringSystem,
       scores: flexibleScores, // New flexible JSONB scores
+      annotations: annotations,
     };
 
     // Keep legacy columns for backward compatibility

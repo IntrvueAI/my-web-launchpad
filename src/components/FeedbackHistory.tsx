@@ -23,6 +23,8 @@ interface FeedbackRecord {
   interview_session_id: string;
   interview_type?: string;
   scoring_system?: string;
+  transcription?: string;
+  annotations?: any[];
 }
 
 export const FeedbackHistory: React.FC = () => {
@@ -112,7 +114,10 @@ export const FeedbackHistory: React.FC = () => {
             pronunciation_score: selectedFeedback.pronunciation_score,
             // Common fields
             total_score: selectedFeedback.total_score,
-            detailed_feedback: selectedFeedback.detailed_feedback
+            detailed_feedback: selectedFeedback.detailed_feedback,
+            // Annotated transcript
+            transcription: selectedFeedback.transcription,
+            annotations: (selectedFeedback as any).annotations || []
           }}
           interviewType={selectedFeedback.interview_type || '11-plus'}
           scoringSystem={selectedFeedback.scoring_system || '0-5'}
