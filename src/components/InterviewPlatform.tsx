@@ -9,7 +9,7 @@ import { useInterviewSession } from '@/hooks/useInterviewSession';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Play, Square, Mic, MicOff } from 'lucide-react';
+import { Play, Square, Mic, MicOff, RotateCcw } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
 import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes';
 
@@ -107,6 +107,51 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       setIsGeneratingFeedback(false);
     }
   }, [stopInterview, user, toast]);
+
+  // Regenerate feedback from existing transcript
+  const handleRegenerateFeedback = useCallback(async () => {
+    try {
+      const t = (feedback as any)?.transcription;
+      if (!t || !user) {
+        toast({
+          title: 'Cannot Regenerate',
+          description: 'Missing transcript or user session.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      setIsGeneratingFeedback(true);
+      const { data, error } = await supabase.functions.invoke('generate-interview-feedback', {
+        body: {
+          transcription: t,
+          sessionId: Date.now().toString(),
+          userId: user.id,
+          interviewType: interviewType.id,
+          interviewCategory: interviewType.category,
+          scoringSystem: interviewType.scoringSystem,
+        },
+      });
+      if (error) {
+        console.error('Failed to regenerate feedback:', error);
+        toast({
+          title: 'Regeneration Failed',
+          description: 'Please try again in a moment.',
+          variant: 'destructive',
+        });
+      } else {
+        setFeedback(data);
+        toast({
+          title: 'Feedback Regenerated',
+          description: 'We re-analyzed your interview and updated the feedback.',
+        });
+      }
+    } catch (err) {
+      console.error('Error during regeneration:', err);
+      toast({ title: 'Error', description: 'Unexpected error occurred.', variant: 'destructive' });
+    } finally {
+      setIsGeneratingFeedback(false);
+    }
+  }, [feedback, user, interviewType, toast]);
 
   // Toggle audio input (microphone)
   const toggleAudio = useCallback(() => {
@@ -234,7 +279,18 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         {/* Feedback Section */}
         {(feedback || isGeneratingFeedback) && (
           <div className="mt-12">
-            <h2 className="text-2xl font-bold text-center mb-8">Your Interview Feedback</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">Your Interview Feedback</h2>
+              <Button
+                variant="secondary"
+                onClick={handleRegenerateFeedback}
+                disabled={isGeneratingFeedback || !feedback}
+                className="gap-2"
+              >
+                <RotateCcw className="w-4 h-4" />
+                {isGeneratingFeedback ? 'Regenerating…' : 'Regenerate Feedback'}
+              </Button>
+            </div>
             <InterviewFeedback 
               feedback={feedback} 
               isLoading={isGeneratingFeedback}
