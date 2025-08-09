@@ -98,7 +98,7 @@ export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProp
       {/* Interview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredInterviewTypes.map((interview) => {
-          const scoreRange = getScoreRange(interview.scoringSystem);
+          const scoreRange = getScoreRange(interview.scoringSystem, interview.id);
           
           return (
             <Card 

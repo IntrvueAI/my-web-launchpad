@@ -16,7 +16,12 @@ export interface ScoreBand {
 /**
  * Get score range for an interview type
  */
-export const getScoreRange = (scoringSystem: InterviewType['scoringSystem']): ScoreRange => {
+export const getScoreRange = (scoringSystem: InterviewType['scoringSystem'], interviewId?: string): ScoreRange => {
+  // Special case for 11+ which has 4 sections of 0-5 each (total 0-20)
+  if (interviewId === '11-plus') {
+    return { min: 0, max: 20, type: '0-5' };
+  }
+  
   switch (scoringSystem) {
     case '0-5':
       return { min: 0, max: 5, type: '0-5' };
