@@ -50,7 +50,11 @@ export const FeedbackHistory: React.FC = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setFeedbackHistory(data || []);
+      const normalized = (data || []).map((row: any) => ({
+        ...row,
+        annotations: Array.isArray(row.annotations) ? row.annotations : [],
+      }));
+      setFeedbackHistory(normalized as FeedbackRecord[]);
     } catch (error) {
       console.error('Error fetching feedback history:', error);
     } finally {

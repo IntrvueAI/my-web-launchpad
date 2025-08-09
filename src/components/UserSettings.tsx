@@ -80,6 +80,14 @@ export const UserSettings = () => {
 
       if (profileError) throw profileError;
 
+      // Update auth metadata name if changed so greetings reflect correctly
+      if (formData.fullName !== profile.full_name) {
+        const { error: metaError } = await supabase.auth.updateUser({
+          data: { full_name: formData.fullName }
+        });
+        if (metaError) throw metaError;
+      }
+
       // Update email in auth if it changed
       if (formData.email !== user.email) {
         const { error: emailError } = await supabase.auth.updateUser({
@@ -143,7 +151,7 @@ export const UserSettings = () => {
     setDeleting(true);
     try {
       // Delete the user account - this will cascade to profiles table
-      const { error } = await supabase.rpc('delete_user');
+      const { error } = await (supabase as any).rpc('delete_user');
       
       if (error) {
         // Fallback: try direct auth deletion (this requires admin privileges)

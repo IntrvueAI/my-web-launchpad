@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       feedback: {
         Row: {
+          annotations: Json | null
           created_at: string
           current_awareness_score: number | null
           detailed_feedback: Json | null
@@ -39,6 +40,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          annotations?: Json | null
           created_at?: string
           current_awareness_score?: number | null
           detailed_feedback?: Json | null
@@ -62,6 +64,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          annotations?: Json | null
           created_at?: string
           current_awareness_score?: number | null
           detailed_feedback?: Json | null
@@ -118,7 +121,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_user: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
