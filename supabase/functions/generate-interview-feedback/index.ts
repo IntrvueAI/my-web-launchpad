@@ -398,17 +398,17 @@ serve(async (req) => {
     // Generate annotated highlights for the transcript (Student-only)
     let annotations: any[] = [];
     try {
-      const annotationSystemPrompt = `You are an expert speaking examiner. Given a transcript string, extract short quoted spans from ONLY the Student's lines that represent either strengths or issues.
+      const annotationSystemPrompt = `You are an expert speaking examiner. Given a transcript string, extract short quoted spans from ONLY the Student's lines.
 
 - Categories: "strength", "grammar", "fluency", "lexical"
 - IMPORTANT: For each quote, COPY the exact substring from the transcript (preserve casing/punctuation/spacing) and include character indexes.
 - For each item provide: { "quote": string, "category": one of the four, "explanation": string, "suggestion": string, "start": number, "end": number }
 - start/end are 0-based character offsets into the full transcript string, such that transcript.slice(start, end) === quote.
-- Keep quotes short (3–15 words) and precise. Focus on the most relevant 8–15 items.
+- Keep quotes short (3–15 words) and precise. Return between 6 and 12 items.
 - Return ONLY valid JSON with shape: { "annotations": Annotation[] }`;
 
       const annotationRequest = {
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: [
           { role: 'system', content: annotationSystemPrompt },
           { role: 'user', content: `Transcript to annotate (only highlight Student lines):\n\n${sanitizedTranscription}` }
@@ -452,10 +452,99 @@ serve(async (req) => {
       console.warn('Annotation generation failed:', e?.message || e);
     }
 
+    // Post-process annotations: normalize categories, compute indices when missing, constrain to transcript bounds
+    const allowedCategories = new Set(['strength', 'grammar', 'fluency', 'lexical']);
+    const normalizeCategory = (c: string) => {
+      const s = String(c || '').toLowerCase();
+      if (s.includes('lexical')) return 'lexical';
+      if (s.includes('grammar')) return 'grammar';
+      if (s.includes('fluency')) return 'fluency';
+      if (s.includes('strength') || s.includes('good') || s.includes('strong') || s.includes('positive')) return 'strength';
+      return 'grammar';
+    };
+    const computeIndex = (quote: string) => {
+      if (!quote) return null as any;
+      const exact = sanitizedTranscription.indexOf(quote);
+      if (exact !== -1) return { start: exact, end: exact + quote.length };
+      const ci = sanitizedTranscription.toLowerCase().indexOf(quote.toLowerCase());
+      if (ci !== -1) return { start: ci, end: ci + quote.length };
+      try {
+        const words = quote.trim().split(/\s+/).filter(Boolean).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        if (words.length) {
+          const re = new RegExp(words.join('\\W+'), 'i');
+          const m = re.exec(sanitizedTranscription);
+          if (m && typeof m.index === 'number') {
+            return { start: m.index, end: m.index + m[0].length };
+          }
+        }
+      } catch {}
+      return null as any;
+    };
+
+    annotations = Array.isArray(annotations) ? annotations : [];
+    annotations = annotations
+      .map((a: any) => {
+        const quote = typeof a?.quote === 'string' ? a.quote : '';
+        let start = Number.isFinite(a?.start) ? a.start : undefined as number | undefined;
+        let end = Number.isFinite(a?.end) ? a.end : undefined as number | undefined;
+        if (!(Number.isFinite(start) && Number.isFinite(end) && (end as number) > (start as number))) {
+          const pos = computeIndex(quote);
+          if (pos) { start = pos.start; end = pos.end; }
+        }
+        const categoryRaw = (a?.category ?? '') as string;
+        const category = allowedCategories.has(categoryRaw as any) ? categoryRaw : normalizeCategory(categoryRaw);
+        const explanation = typeof a?.explanation === 'string' ? a.explanation : '';
+        const suggestion = typeof a?.suggestion === 'string' ? a.suggestion : undefined;
+        return { quote, category, explanation, suggestion, start, end };
+      })
+      .filter((a: any) => a.quote && typeof a.start === 'number' && typeof a.end === 'number' && a.start >= 0 && a.end > a.start && a.end <= sanitizedTranscription.length);
+
+    // If still empty, try a backup generation pass
+    if (annotations.length === 0) {
+      try {
+        const backupPrompt = `Extract 6 to 12 short quotes from ONLY Student lines in the transcript that reflect strengths or issues. Categories: strength, grammar, fluency, lexical. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end slice the exact quote from the transcript string.`;
+        const backupReq = {
+          model: 'gpt-4o',
+          messages: [
+            { role: 'system', content: backupPrompt },
+            { role: 'user', content: `Transcript:\n\n${sanitizedTranscription}` }
+          ],
+          temperature: 0,
+          response_format: { type: 'json_object' },
+        } as const;
+        const backupRes = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${openAIApiKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify(backupReq),
+        });
+        if (backupRes.ok) {
+          const b = await backupRes.json();
+          const txt = (b.choices?.[0]?.message?.content || '').trim();
+          try {
+            const parsed = JSON.parse(txt);
+            if (parsed && Array.isArray(parsed.annotations)) {
+              annotations = parsed.annotations.map((a: any) => {
+                const quote = typeof a?.quote === 'string' ? a.quote : '';
+                let st = Number.isFinite(a?.start) ? a.start : undefined as number | undefined;
+                let en = Number.isFinite(a?.end) ? a.end : undefined as number | undefined;
+                if (!(Number.isFinite(st) && Number.isFinite(en) && (en as number) > (st as number))) {
+                  const pos = computeIndex(quote);
+                  if (pos) { st = pos.start; en = pos.end; }
+                }
+                const cat = allowedCategories.has(a?.category) ? a.category : normalizeCategory(a?.category);
+                return { quote: quote || (typeof st === 'number' && typeof en === 'number' ? sanitizedTranscription.slice(st, en) : ''), category: cat, explanation: a?.explanation || '', suggestion: a?.suggestion, start: st, end: en };
+              }).filter((a: any) => a.quote && typeof a.start === 'number' && typeof a.end === 'number');
+            }
+          } catch {}
+        }
+      } catch (e) {
+        console.warn('Backup annotations generation failed:', (e as any)?.message || e);
+      }
+    }
+
     // Attach raw transcription and annotations to response
     feedbackData.transcription = sanitizedTranscription;
     feedbackData.annotations = annotations;
-
     // Build flexible scores object for new JSONB column
     const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
     const flexibleScores: Record<string, number> = {};

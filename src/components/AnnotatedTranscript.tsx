@@ -59,7 +59,7 @@ export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transc
           <TooltipProvider key={`ann-${idx}-${s}`}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className={categoryStyles[ann.category]}> {matched} </span>
+                <span className={categoryStyles[ann.category]}>{matched}</span>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
                 <div className="text-sm font-medium capitalize mb-1">{ann.category}</div>
@@ -102,7 +102,7 @@ export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transc
             <TooltipProvider key={`ann-${idx}-${start}`}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className={categoryStyles[ann.category]}> {matched} </span>
+                  <span className={categoryStyles[ann.category]}>{matched}</span>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
                   <div className="text-sm font-medium capitalize mb-1">{ann.category}</div>

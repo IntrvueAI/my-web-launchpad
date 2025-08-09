@@ -9,6 +9,8 @@ interface Annotation {
   category: 'strength' | 'grammar' | 'fluency' | 'lexical';
   explanation: string;
   suggestion?: string;
+  start?: number;
+  end?: number;
 }
 
 interface FeedbackData {
