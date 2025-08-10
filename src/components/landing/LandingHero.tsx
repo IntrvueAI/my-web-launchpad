@@ -91,42 +91,18 @@ export const LandingHero = ({
         {/* Demo Video Placeholder */}
         <div className="relative max-w-4xl mx-auto">
           <div className="relative bg-card/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-border/50 overflow-hidden group hover:shadow-3xl transition-all duration-500">
-            <div className="aspect-video bg-gradient-to-br from-primary/5 via-accent/10 to-primary/5 flex items-center justify-center relative">
-              {/* Demo Video Container */}
-              <div className="absolute inset-4 bg-background/95 rounded-2xl border flex flex-col">
-                {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-success rounded-full animate-pulse" />
-                    <span className="text-sm font-medium">IELTS Speaking Practice</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground">Digital Human Examiner</div>
-                </div>
-                
-                {/* Content */}
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="text-center space-y-4">
-                    <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500">
-                      <Play className="w-10 h-10 text-primary ml-1" />
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-lg font-semibold">Watch IELTS Demo</h3>
-                      <p className="text-muted-foreground text-sm">See how digital humans conduct realistic speaking tests</p>
-                      <p className="text-xs text-muted-foreground">~3 minute demonstration</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer */}
-                <div className="p-4 border-t bg-accent/5">
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>All 3 parts covered</span>
-                    <span>Instant band scoring</span>
-                    <span>Detailed feedback</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="aspect-video bg-gradient-to-br from-primary/5 via-accent/10 to-primary/5 flex items-center justify-center relative">
+            <video
+              className="absolute inset-4 rounded-2xl border object-cover"
+              controls
+              preload="metadata"
+              playsInline
+              aria-label="IELTS Speaking demo video"
+            >
+              <source src="/lovable-uploads/DemoVideo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
             
             {/* Floating elements */}
             <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
