@@ -52,7 +52,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   },
   'demo': {
     id: 'demo',
-    name: '2-Minute Demo Interview',
+    name: 'Free Demo Interview',
     description: 'Try a free 2-minute demo interview. Practice the flow and see feedback without using any credits.',
     category: 'language',
     promptFile: 'demo/demo.md',
