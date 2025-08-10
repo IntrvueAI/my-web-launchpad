@@ -112,7 +112,7 @@ export const LandingPricing = ({
                         {plan.credits} {plan.credits === 1 ? 'Interview Credit' : 'Interview Credits'}
                       </div>
                       <div className="text-xs text-muted-foreground">
-                        ${(plan.price / plan.credits).toFixed(2)} per interview session
+                        ${Math.round(plan.price / plan.credits)} per interview session
                       </div>
                     </div>
                   </div>
