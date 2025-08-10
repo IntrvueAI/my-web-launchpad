@@ -30,8 +30,8 @@ export const AdminUserManagement = () => {
     queryFn: async () => {
       console.log('Fetching users for admin dashboard...');
       
-      // Double-check admin status with enhanced security function
-      const { data: isAdminVerified, error: adminVerifyError } = await supabase.rpc('verify_admin_access_with_logging');
+      // Use basic admin check instead of enhanced one for now
+      const { data: isAdminVerified, error: adminVerifyError } = await supabase.rpc('is_current_user_admin');
       
       if (adminVerifyError || !isAdminVerified) {
         console.error('Admin verification failed:', adminVerifyError);

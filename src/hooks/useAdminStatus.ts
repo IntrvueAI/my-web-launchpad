@@ -8,19 +8,33 @@ export const useAdminStatus = () => {
   const query = useQuery({
     queryKey: ["admin-status", user?.id],
     queryFn: async () => {
-      if (!user) return false;
-      
-      console.log('Checking admin status for user:', user.email);
-      
-      const { data, error } = await supabase.rpc('is_current_user_admin');
-      
-      if (error) {
-        console.error("Failed to check admin status:", error);
+      if (!user) {
+        console.log('No user found, returning false');
         return false;
       }
       
-      console.log('Admin status result:', data);
-      return data as boolean;
+      console.log('Checking admin status for user:', user.email, 'User ID:', user.id);
+      
+      // Check if user is authenticated properly
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !sessionData.session) {
+        console.error('No valid session found:', sessionError);
+        return false;
+      }
+      
+      console.log('Session valid, checking admin status...');
+      
+      // Try the basic admin check first
+      const { data: basicCheck, error: basicError } = await supabase.rpc('is_current_user_admin');
+      
+      if (basicError) {
+        console.error("Failed basic admin check:", basicError);
+        return false;
+      }
+      
+      console.log('Basic admin check result:', basicCheck, 'for user:', user.email);
+      
+      return basicCheck as boolean;
     },
     enabled: !!user,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
@@ -30,5 +44,6 @@ export const useAdminStatus = () => {
     isAdmin: query.data ?? false,
     isLoading: query.isLoading,
     refetch: query.refetch,
+    error: query.error,
   };
 };

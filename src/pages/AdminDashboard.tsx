@@ -9,7 +9,12 @@ import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
 import { Shield, AlertTriangle } from 'lucide-react';
 
 export default function AdminDashboard() {
-  const { isAdmin, isLoading } = useAdminStatus();
+  const { isAdmin, isLoading, error } = useAdminStatus();
+
+  // Add error logging
+  if (error) {
+    console.error('Admin status check error:', error);
+  }
 
   if (isLoading) {
     return (
