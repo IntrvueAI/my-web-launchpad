@@ -2,6 +2,14 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
+// Read required environment variables from Supabase secrets
+const supabaseUrl = Deno.env.get('SUPABASE_URL');
+const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY in Supabase secrets');
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -43,6 +51,14 @@ try {
 // Authenticate caller
 const authHeader = req.headers.get('Authorization') || '';
 const token = authHeader.replace('Bearer ', '');
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  return new Response(JSON.stringify({ error: 'Server misconfiguration: missing SUPABASE_URL or SUPABASE_ANON_KEY' }), {
+    status: 500,
+    headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
+  });
+}
+
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const { data: userData, error: userErr } = await supabase.auth.getUser(token);
 if (userErr || !userData?.user) {
