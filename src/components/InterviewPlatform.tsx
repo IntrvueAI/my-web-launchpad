@@ -34,6 +34,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   // Attention cues for ending early
   const [highlightEnd, setHighlightEnd] = useState(false);
   const [attentionNudged, setAttentionNudged] = useState(false);
+  const [endHintText, setEndHintText] = useState<string>('');
   const controlsContainerRef = useRef<HTMLDivElement>(null);
   
   // Use selected interview type or default to 11-plus
@@ -55,24 +56,65 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     if (!isStreaming) {
       setHighlightEnd(false);
       setAttentionNudged(false);
+      setEndHintText('');
       return;
     }
-    const lastAssistant = [...chatHistory].reverse().find(m => m.role === 'assistant')?.content?.toLowerCase() || '';
-    const patterns = [
+
+    const assistantMessages = chatHistory
+      .filter(m => m.role === 'assistant')
+      .map(m => (m.content || '').toLowerCase());
+    const recent = assistantMessages.slice(-3);
+    const combined = recent.join(' • ');
+
+    const wrapUpPhrases = [
       "that's all for today",
+      "that's all for now",
       'this concludes',
+      'that concludes',
       'we are done',
       "we're done",
-      'final question',
-      'wrap up',
-      'to wrap up',
-      'thank you for your time',
+      'we have reached the end',
       'this ends the interview',
-      'we have reached the end'
+      'we will stop here',
+      "we'll stop here",
+      "let's end here",
+      'let us end here',
+      "let's wrap up",
+      'to wrap up',
+      'we will conclude',
+      "we'll conclude",
+      'this demo is complete',
+      'the demo is complete',
+      "that's the end of our demo",
+      'thank you for your time today',
+      'thanks for your time today',
     ];
-    const isWrapUp = patterns.some(p => lastAssistant.includes(p));
-    if (isWrapUp) {
-      setHighlightEnd(true);
+
+    const primingPhrases = [
+      'final question',
+      'last question',
+      'one last question',
+      'final prompt',
+      'final topic',
+    ];
+
+    const regexes: RegExp[] = [
+      /thank(s| you)?[^.!?]{0,40}\b(time|today|chat|speaking|conversation)\b/i,
+      /\b(time('?s)?\s*up|out of time|nearly out of time)\b/i,
+      /\b(conclude|conclusion|wrap\s*up|end here|stop here)\b/i,
+      /\b(this (?:ends|concludes) (?:the )?(?:interview|session|demo))\b/i,
+    ];
+
+    const matchedWrapUp = wrapUpPhrases.find(p => combined.includes(p));
+    const matchedPriming = primingPhrases.find(p => combined.includes(p));
+    const matchedRegex = regexes.find(r => r.test(combined));
+
+    const shouldNudge = Boolean(matchedWrapUp || matchedRegex);
+    const shouldPrime = Boolean(matchedPriming);
+
+    if (shouldNudge) {
+      if (!highlightEnd) setHighlightEnd(true);
+      setEndHintText('Looks like the interviewer finished. Click "End Interview" to get feedback.');
       if (!attentionNudged) {
         setAttentionNudged(true);
         setTimeout(() => {
@@ -84,17 +126,27 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           description: 'Tap End Interview to finish and get your feedback.',
           duration: 8000,
           action: (
-            <Button variant="outline" size="sm" onClick={() => {
-              controlsContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              document.getElementById('end-interview-button')?.focus();
-            }}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                controlsContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document.getElementById('end-interview-button')?.focus();
+              }}
+            >
               End now
             </Button>
-          )
+          ),
         });
       }
+      console.debug('[InterviewPlatform] wrap-up detected', { combined, matchedWrapUp, matchedRegex: matchedRegex?.toString() });
+    } else if (shouldPrime && !highlightEnd) {
+      setHighlightEnd(true);
+      setEndHintText('Final question. When you finish, click "End Interview" to get feedback.');
+      console.debug('[InterviewPlatform] final-question priming detected', { combined, matchedPriming });
     }
-  }, [chatHistory, isStreaming, attentionNudged, toast]);
+  }, [chatHistory, isStreaming, attentionNudged, highlightEnd, toast]);
+
 
   // Handle starting the interview session
   const handleStartInterview = useCallback(async () => {

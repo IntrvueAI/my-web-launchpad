@@ -76,7 +76,7 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
               <Button
                 id="end-interview-button"
                 disabled={isLoading}
-                className={`w-full interview-button-stop gap-2 ${highlightEnd ? 'ring-2 ring-primary shadow-lg pulse' : ''}`}
+                className={`w-full interview-button-stop gap-2 ${highlightEnd ? 'ring-2 ring-primary shadow-lg animate-pulse' : ''}`}
                 size="lg"
               >
                 <Square className="w-5 h-5" />
