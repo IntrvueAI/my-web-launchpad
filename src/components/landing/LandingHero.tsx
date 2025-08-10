@@ -53,20 +53,14 @@ export const LandingHero = ({
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center pt-4 px-4">
-            <Button 
-              size="lg" 
-              onClick={onSignUp} 
-              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
+            <Button size="lg" onClick={onSignUp} className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <BookOpen className="w-4 md:w-5 h-4 md:h-5 mr-2" />
               <span className="whitespace-nowrap">Start IELTS Practice Free</span>
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              onClick={() => document.getElementById('demo-video')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] border-2 hover:bg-primary/5 transition-all duration-300"
-            >
+            <Button variant="outline" size="lg" onClick={() => document.getElementById('demo-video')?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            })} className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] border-2 hover:bg-primary/5 transition-all duration-300">
               <Play className="w-4 md:w-5 h-4 md:h-5 mr-2" />
               <span className="whitespace-nowrap">Watch Demo</span>
             </Button>
@@ -91,17 +85,11 @@ export const LandingHero = ({
 
         {/* Demo Video */}
         <div id="demo-video" className="relative max-w-4xl mx-auto">
-          <h2 className="text-xl md:text-2xl font-semibold text-center mb-4">Demo Video</h2>
+          <h2 className="text-xl md:text-2xl font-semibold text-center mb-4">Check it out...</h2>
           <div className="relative bg-card/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-border/50 overflow-hidden group hover:shadow-3xl transition-all duration-500">
             <div className="aspect-video bg-gradient-to-br from-primary/5 via-accent/10 to-primary/5 relative">
               <div className="absolute inset-0 p-4">
-                <video
-                  className="w-full h-full rounded-2xl border object-contain bg-white z-10 pointer-events-auto"
-                  controls
-                  preload="metadata"
-                  playsInline
-                  aria-label="IELTS Speaking demo video"
-                >
+                <video className="w-full h-full rounded-2xl border object-contain bg-white z-10 pointer-events-auto" controls preload="metadata" playsInline aria-label="IELTS Speaking demo video">
                   <source src="/lovable-uploads/DemoVideo.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
