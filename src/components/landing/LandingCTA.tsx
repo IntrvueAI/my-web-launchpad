@@ -78,9 +78,7 @@ export const LandingCTA = ({
                   <span>Start IELTS Practice Now</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 h-auto border-2 hover:bg-primary/5 transition-all duration-300">
-                  Download Sample Questions
-                </Button>
+                
               </div>
 
               {/* Trust Signals */}
