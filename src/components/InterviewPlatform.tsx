@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InterviewControls } from './InterviewControls';
@@ -31,6 +31,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const { user } = useAuth();
   const { toast } = useToast();
   
+  // Attention cues for ending early
+  const [highlightEnd, setHighlightEnd] = useState(false);
+  const [attentionNudged, setAttentionNudged] = useState(false);
+  const controlsContainerRef = useRef<HTMLDivElement>(null);
+  
   // Use selected interview type or default to 11-plus
   const interviewType = selectedInterviewType || getDefaultInterviewType();
   
@@ -44,6 +49,52 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     stopInterview,
     sessionStatus
   } = useInterviewSession(videoRef, interviewType);
+
+  // Detect when interviewer wraps up and nudge user to end
+  useEffect(() => {
+    if (!isStreaming) {
+      setHighlightEnd(false);
+      setAttentionNudged(false);
+      return;
+    }
+    const lastAssistant = [...chatHistory].reverse().find(m => m.role === 'assistant')?.content?.toLowerCase() || '';
+    const patterns = [
+      "that's all for today",
+      'this concludes',
+      'we are done',
+      "we're done",
+      'final question',
+      'wrap up',
+      'to wrap up',
+      'thank you for your time',
+      'this ends the interview',
+      'we have reached the end'
+    ];
+    const isWrapUp = patterns.some(p => lastAssistant.includes(p));
+    if (isWrapUp) {
+      setHighlightEnd(true);
+      if (!attentionNudged) {
+        setAttentionNudged(true);
+        setTimeout(() => {
+          controlsContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          document.getElementById('end-interview-button')?.focus();
+        }, 150);
+        toast({
+          title: 'Interview complete',
+          description: 'Tap End Interview to finish and get your feedback.',
+          duration: 8000,
+          action: (
+            <Button variant="outline" size="sm" onClick={() => {
+              controlsContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              document.getElementById('end-interview-button')?.focus();
+            }}>
+              End now
+            </Button>
+          )
+        });
+      }
+    }
+  }, [chatHistory, isStreaming, attentionNudged, toast]);
 
   // Handle starting the interview session
   const handleStartInterview = useCallback(async () => {
@@ -261,12 +312,13 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             </Card>
 
             {/* Interview Controls - moved below video */}
-            <div className="mt-6">
+            <div className="mt-6" ref={controlsContainerRef} id="interview-controls">
               <InterviewControls
                 isStreaming={isStreaming}
                 onStartInterview={handleStartInterview}
                 onStopInterview={handleStopInterview}
                 disabled={!!error}
+                highlightEnd={highlightEnd}
               />
             </div>
           </div>

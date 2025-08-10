@@ -8,6 +8,8 @@ interface InterviewControlsProps {
   onStartInterview: () => Promise<void>;
   onStopInterview: () => Promise<void>;
   disabled?: boolean;
+  highlightEnd?: boolean;
+  endHint?: string;
 }
 
 /**
@@ -18,7 +20,9 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
   isStreaming,
   onStartInterview,
   onStopInterview,
-  disabled = false
+  disabled = false,
+  highlightEnd = false,
+  endHint = 'Interview seems complete. Tap "End Interview" to generate feedback.'
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -70,8 +74,9 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
+                id="end-interview-button"
                 disabled={isLoading}
-                className="w-full interview-button-stop gap-2"
+                className={`w-full interview-button-stop gap-2 ${highlightEnd ? 'ring-2 ring-primary shadow-lg pulse' : ''}`}
                 size="lg"
               >
                 <Square className="w-5 h-5" />
@@ -99,7 +104,13 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
-          </AlertDialog>
+        </AlertDialog>
+        )}
+
+        {isStreaming && highlightEnd && (
+          <p className="text-xs text-muted-foreground text-center" aria-live="polite">
+            {endHint}
+          </p>
         )}
 
         {/* Interview Duration */}
