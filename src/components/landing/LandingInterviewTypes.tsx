@@ -3,6 +3,7 @@ import { MessageCircle, Clock, Users, Star, CheckCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 export const LandingInterviewTypes = () => {
   const testParts = [
@@ -110,9 +111,11 @@ export const LandingInterviewTypes = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
-          <Button size="lg" className="text-lg px-8 py-4 h-auto gap-2">
-            <MessageCircle className="w-5 h-5" />
-            Start Complete IELTS Practice
+          <Button asChild size="lg" className="text-lg px-8 py-4 h-auto gap-2">
+            <Link to="/auth" aria-label="Start IELTS practice - sign in or sign up">
+              <MessageCircle className="w-5 h-5" />
+              Start Complete IELTS Practice
+            </Link>
           </Button>
           <div className="mt-6">
             <div className="inline-flex items-center gap-2 bg-accent/20 px-6 py-3 rounded-full">
