@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { getAllInterviewTypes, getInterviewTypesByCategory, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
 import { getScoreRange } from '@/utils/scoringSystem';
 import { Search, Clock, Target, Star } from 'lucide-react';
+import { useCredits } from '@/hooks/useCredits';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 interface InterviewSelectionProps {
   onSelectInterview: (interviewType: InterviewType) => void;
 }
@@ -15,6 +17,9 @@ export const InterviewSelection = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const allInterviewTypes = getAllInterviewTypes();
+  const { credits } = useCredits();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingInterview, setPendingInterview] = useState<InterviewType | null>(null);
 
   // Filter interview types based on search and category
   const filteredInterviewTypes = allInterviewTypes.filter(interview => {
@@ -131,7 +136,12 @@ export const InterviewSelection = ({
                   {/* Start Button */}
                   <Button className="w-full group-hover:bg-primary/90 transition-colors" onClick={e => {
                 e.stopPropagation();
-                onSelectInterview(interview);
+                if ((credits ?? 0) > 0) {
+                  setPendingInterview(interview);
+                  setConfirmOpen(true);
+                } else {
+                  onSelectInterview(interview);
+                }
               }}>
                     Start {interview.name}
                   </Button>
@@ -146,5 +156,31 @@ export const InterviewSelection = ({
             No interviews match your search criteria. Try adjusting your search or filters.
           </p>
         </div>}
+
+      {/* Confirm consume credit dialog */}
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Use 1 credit to start?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Starting this interview will deduct 1 credit from your balance. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (pendingInterview) {
+                  onSelectInterview(pendingInterview);
+                  setPendingInterview(null);
+                }
+                setConfirmOpen(false);
+              }}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>;
 };
