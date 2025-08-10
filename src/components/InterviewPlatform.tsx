@@ -283,12 +283,12 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           </p>
         </div>
 
-        {/* Main Interview Interface */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        {/* Main Interview Interface - Mobile First Layout */}
+        <div className="space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
           
           {/* Video Interview Area */}
           <div className="lg:col-span-2">
-            <Card className="p-6 shadow-medium">
+            <Card className="p-4 md:p-6 shadow-medium">
               <div className="space-y-4">
                 
                 {/* Interview Status */}
@@ -299,8 +299,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   error={error}
                 />
                 
-                {/* Video Element for AI Interviewer */}
-                <div className="relative bg-muted rounded-lg overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                {/* Video Element for AI Interviewer - Mobile Optimized Aspect Ratio */}
+                <div className="relative bg-muted rounded-lg overflow-hidden aspect-video md:aspect-[16/10] lg:aspect-[16/9]">
                   <video
                     ref={videoRef}
                     id="interview-video"
@@ -314,10 +314,10 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   {!isStreaming && (
                     <div className="absolute inset-0 bg-muted flex items-center justify-center">
                       <div className="text-center space-y-4">
-                        <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                          <Mic className="w-12 h-12 text-primary" />
+                        <div className="w-16 h-16 md:w-24 md:h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                          <Mic className="w-8 h-8 md:w-12 md:h-12 text-primary" />
                         </div>
-                        <p className="text-muted-foreground font-medium">
+                        <p className="text-sm md:text-base text-muted-foreground font-medium px-4">
                           {isConnected ? 'Ready to start interview' : 'Connect to begin'}
                         </p>
                       </div>
@@ -325,46 +325,48 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   )}
                 </div>
 
-                {/* Audio Controls and Timer */}
-                <div className="flex justify-between items-center">
+                {/* Audio Controls and Timer - Mobile Optimized */}
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={toggleAudio}
-                    className="gap-2"
+                    className="gap-2 w-full sm:w-auto min-h-[44px]"
                   >
                     {isAudioEnabled ? (
                       <>
                         <Mic className="w-4 h-4" />
-                        Microphone On
+                        <span className="text-sm">Microphone On</span>
                       </>
                     ) : (
                       <>
                         <MicOff className="w-4 h-4" />
-                        Microphone Off
+                        <span className="text-sm">Microphone Off</span>
                       </>
                     )}
                   </Button>
                   
-                  <InterviewTimer 
-                    isActive={isStreaming}
-                    duration={interviewType.duration}
-                    onTimeUp={() => {
-                      toast({
-                        title: "Time's Up!",
-                        description: `Your ${interviewType.duration}-minute interview session has ended.`,
-                        variant: "destructive",
-                      });
-                      // Automatically stop the interview and generate feedback
-                      handleStopInterview();
-                    }}
-                  />
+                  <div className="w-full sm:w-auto">
+                    <InterviewTimer 
+                      isActive={isStreaming}
+                      duration={interviewType.duration}
+                      onTimeUp={() => {
+                        toast({
+                          title: "Time's Up!",
+                          description: `Your ${interviewType.duration}-minute interview session has ended.`,
+                          variant: "destructive",
+                        });
+                        // Automatically stop the interview and generate feedback
+                        handleStopInterview();
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </Card>
 
-            {/* Interview Controls - moved below video */}
-            <div className="mt-6" ref={controlsContainerRef} id="interview-controls">
+            {/* Interview Controls - Mobile Optimized */}
+            <div className="mt-4 md:mt-6" ref={controlsContainerRef} id="interview-controls">
               <InterviewControls
                 isStreaming={isStreaming}
                 onStartInterview={handleStartInterview}
@@ -375,8 +377,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             </div>
           </div>
 
-          {/* Chat History Panel */}
-          <div>
+          {/* Chat History Panel - Collapsible on Mobile */}
+          <div className="lg:block">
             <ChatHistory 
               messages={chatHistory}
               isStreaming={isStreaming}

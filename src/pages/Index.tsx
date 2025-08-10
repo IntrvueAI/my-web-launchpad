@@ -13,6 +13,7 @@ import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
 
 // Landing page components
 import { LandingHero } from '@/components/landing/LandingHero';
@@ -25,6 +26,8 @@ import { LandingCTA } from '@/components/landing/LandingCTA';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 import { CreditsStore } from '@/components/credits/CreditsStore';
 import { PaymentSuccess } from '@/components/PaymentSuccess';
+import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
   const {
@@ -38,6 +41,7 @@ const Index = () => {
 
   const { credits, refetchCredits } = useCredits();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const handleSignOut = async () => {
     await signOut();
@@ -147,17 +151,23 @@ const Index = () => {
   // Show main app for authenticated users
   return <div className="min-h-screen">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3 rounded-none">
-              <img src="/lovable-uploads/logo.png" alt="Intrvue.ai Logo" className="h-8 w-auto" />
-              {currentView === 'interview' && selectedInterviewType && <Button variant="ghost" size="sm" onClick={handleBackToSelection} className="gap-2">
+        <div className="container flex h-14 items-center justify-between px-4">
+          {/* Mobile Layout */}
+          <div className="flex items-center gap-2 md:gap-6 w-full">
+            {/* Logo and Back Button */}
+            <div className="flex items-center gap-2 md:gap-3">
+              <img src="/lovable-uploads/logo.png" alt="Intrvue.ai Logo" className="h-6 md:h-8 w-auto" />
+              {currentView === 'interview' && selectedInterviewType && (
+                <Button variant="ghost" size="sm" onClick={handleBackToSelection} className="gap-1 md:gap-2 px-2 md:px-3">
                   <ArrowLeft className="w-4 h-4" />
-                  Back
-                </Button>}
-              
+                  <span className="hidden sm:inline">Back</span>
+                </Button>
+              )}
             </div>
-            {currentView !== 'interview' && <nav className="flex gap-2">
+            
+            {/* Desktop Navigation */}
+            {currentView !== 'interview' && (
+              <nav className="hidden lg:flex gap-2">
                 <Button variant={currentView === 'selection' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('selection')} className="gap-2">
                   <Video className="w-4 h-4" />
                   Practice
@@ -174,25 +184,89 @@ const Index = () => {
                   <Settings className="w-4 h-4" />
                   Settings
                 </Button>
-              </nav>}
+              </nav>
+            )}
+            
+            {/* Mobile Navigation - Icons Only */}
+            {currentView !== 'interview' && (
+              <nav className="flex lg:hidden gap-1 ml-auto">
+                <Button 
+                  variant={currentView === 'selection' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setCurrentView('selection')} 
+                  className="p-2"
+                  aria-label="Practice"
+                >
+                  <Video className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant={currentView === 'history' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setCurrentView('history')} 
+                  className="p-2"
+                  aria-label="History"
+                >
+                  <History className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant={currentView === 'credits' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setCurrentView('credits')} 
+                  className="p-2"
+                  aria-label="Credits"
+                >
+                  <Wallet className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant={currentView === 'settings' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setCurrentView('settings')} 
+                  className="p-2"
+                  aria-label="Settings"
+                >
+                  <Settings className="w-4 h-4" />
+                </Button>
+              </nav>
+            )}
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">
-              Welcome, {user.user_metadata?.full_name || user.email}
+          
+          {/* Desktop User Info */}
+          <div className="hidden md:flex items-center gap-2 lg:gap-4">
+            <span className="text-xs lg:text-sm text-muted-foreground truncate max-w-32 lg:max-w-none">
+              {user.user_metadata?.full_name || user.email}
             </span>
             <Badge variant="outline" className="text-xs">
-              Credits: {credits ?? 0}
+              {credits ?? 0}
             </Badge>
-            <Button variant="outline" size="sm" onClick={() => setCurrentView('credits')}>
+            <Button variant="outline" size="sm" onClick={() => setCurrentView('credits')} className="hidden lg:flex">
               Buy Credits
             </Button>
             <Button variant="outline" size="sm" onClick={handleSignOut}>
-              Sign Out
+              <span className="hidden lg:inline">Sign Out</span>
+              <span className="lg:hidden">Out</span>
             </Button>
+          </div>
+          
+          {/* Mobile User Info - Credits Badge Only */}
+          <div className="md:hidden">
+            <Badge variant="outline" className="text-xs">
+              {credits ?? 0}
+            </Badge>
           </div>
         </div>
       </header>
-      <main>
+      
+      {/* Mobile Bottom Navigation */}
+      {isMobile && (
+        <MobileBottomNav
+          currentView={currentView}
+          credits={credits ?? 0}
+          onViewChange={setCurrentView}
+          onSignOut={handleSignOut}
+        />
+      )}
+      
+      <main className={cn("pb-safe", isMobile && "pb-20")}>
         {showPaymentSuccess ? (
           <div className="container mx-auto px-4 py-8 max-w-3xl">
             <PaymentSuccess onGoToPractice={() => setCurrentView('selection')} />

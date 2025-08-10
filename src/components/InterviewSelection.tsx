@@ -67,87 +67,106 @@ export const InterviewSelection = ({
           <Input placeholder="Search interviews by name, description, or tags..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" />
         </div>
 
-        {/* Category Filters */}
+         {/* Category Filters - Mobile Optimized */}
         <div className="flex flex-wrap gap-2">
-          <Button variant={selectedCategory === null ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(null)}>
+          <Button 
+            variant={selectedCategory === null ? "default" : "outline"} 
+            size="sm" 
+            onClick={() => setSelectedCategory(null)}
+            className="min-h-[36px] text-xs md:text-sm"
+          >
             All Categories
           </Button>
-          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => <Button key={key} variant={selectedCategory === key ? "default" : "outline"} size="sm" onClick={() => setSelectedCategory(key)}>
+          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => 
+            <Button 
+              key={key} 
+              variant={selectedCategory === key ? "default" : "outline"} 
+              size="sm" 
+              onClick={() => setSelectedCategory(key)}
+              className="min-h-[36px] text-xs md:text-sm"
+            >
               {category.name}
-            </Button>)}
+            </Button>
+          )}
         </div>
       </div>
 
-      {/* Interview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Interview Cards - Mobile Optimized Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
         {filteredInterviewTypes.map(interview => {
         const scoreRange = getScoreRange(interview.scoringSystem, interview.id);
-        return <Card key={interview.id} className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={() => onSelectInterview(interview)}>
-              <CardHeader>
+        return <Card key={interview.id} className="hover:shadow-lg transition-shadow group border-2 hover:border-primary/30">
+              <CardHeader className="p-4 md:p-6">
                 <div className="flex items-start justify-between">
-                  <div className="space-y-1 flex-1">
-                    <CardTitle className="flex items-center gap-2">
-                      {interview.name}
-                      {interview.id === '11-plus' && <Badge variant="secondary" className="text-xs">
+                  <div className="space-y-2 flex-1">
+                    <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-lg leading-tight">
+                      <span>{interview.name}</span>
+                      {interview.id === '11-plus' && <Badge variant="secondary" className="text-xs w-fit">
                           <Star className="h-3 w-3 mr-1" />
                           Popular
                         </Badge>}
                     </CardTitle>
-                    <CardDescription>{interview.description}</CardDescription>
+                    <CardDescription className="text-sm leading-relaxed">{interview.description}</CardDescription>
                   </div>
                 </div>
                 
-                {/* Interview Details */}
+                {/* Interview Details - Mobile Optimized */}
                 <div className="flex flex-wrap gap-2 mt-3">
-                  <Badge variant="outline" className={`bg-${INTERVIEW_CATEGORIES[interview.category].color}-50 text-${INTERVIEW_CATEGORIES[interview.category].color}-700 border-${INTERVIEW_CATEGORIES[interview.category].color}-200`}>
+                  <Badge variant="outline" className="text-xs">
                     {INTERVIEW_CATEGORIES[interview.category].name}
                   </Badge>
-                  
-                  <Badge variant="outline" className={`bg-${getDifficultyColor(interview.difficultyLevel)}-50 text-${getDifficultyColor(interview.difficultyLevel)}-700 border-${getDifficultyColor(interview.difficultyLevel)}-200`}>
+                  <Badge variant="outline" className="text-xs">
                     {getDifficultyLabel(interview.difficultyLevel)}
                   </Badge>
                 </div>
               </CardHeader>
               
-              <CardContent>
+              <CardContent className="p-4 md:p-6 pt-0">
                 <div className="space-y-4">
-                  {/* Interview Info */}
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                  {/* Interview Info - Mobile Responsive */}
+                  <div className="grid grid-cols-2 gap-3 md:gap-4 text-sm">
                     <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-muted-foreground" />
-                      <span>{interview.duration} minutes</span>
+                      <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                      <span className="text-xs md:text-sm">{interview.duration} min</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Target className="h-4 w-4 text-muted-foreground" />
-                      <span>Score: {scoreRange.min}-{scoreRange.max}</span>
+                      <Target className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                      <span className="text-xs md:text-sm">{scoreRange.min}-{scoreRange.max}</span>
                     </div>
                   </div>
 
-                  {/* Assessment Criteria */}
+                  {/* Assessment Criteria - Mobile Optimized */}
                   <div>
-                    <h4 className="text-sm font-medium mb-2">Assessment Areas:</h4>
+                    <h4 className="text-xs md:text-sm font-medium mb-2">Assessment Areas:</h4>
                     <div className="flex flex-wrap gap-1">
-                      {interview.scoringCriteria.map((criteria, index) => <Badge key={index} variant="secondary" className="text-xs">
-                          {criteria}
+                      {interview.scoringCriteria.slice(0, 4).map((criteria, index) => <Badge key={index} variant="secondary" className="text-xs">
+                          {criteria.length > 12 ? `${criteria.substring(0, 12)}...` : criteria}
                         </Badge>)}
+                      {interview.scoringCriteria.length > 4 && (
+                        <Badge variant="secondary" className="text-xs">
+                          +{interview.scoringCriteria.length - 4}
+                        </Badge>
+                      )}
                     </div>
                   </div>
 
-                  {/* Start Button */}
-                  <Button className="w-full group-hover:bg-primary/90 transition-colors" onClick={e => {
-                e.stopPropagation();
-                const cost = interview.costCredits ?? 1;
-                if (cost === 0) {
-                  onSelectInterview(interview);
-                  return;
-                }
-                if ((credits ?? 0) > 0) {
-                  setPendingInterview(interview);
-                  setConfirmOpen(true);
-                } else {
-                  onSelectInterview(interview);
-                }
-              }}>
+                  {/* Start Button - Mobile Touch Optimized */}
+                  <Button 
+                    className="w-full min-h-[44px] text-sm font-medium transition-colors" 
+                    onClick={e => {
+                      e.stopPropagation();
+                      const cost = interview.costCredits ?? 1;
+                      if (cost === 0) {
+                        onSelectInterview(interview);
+                        return;
+                      }
+                      if ((credits ?? 0) > 0) {
+                        setPendingInterview(interview);
+                        setConfirmOpen(true);
+                      } else {
+                        onSelectInterview(interview);
+                      }
+                    }}>
                     Start {interview.name}
                   </Button>
                 </div>
@@ -162,18 +181,19 @@ export const InterviewSelection = ({
           </p>
         </div>}
 
-      {/* Confirm consume credit dialog */}
+      {/* Confirm consume credit dialog - Mobile Optimized */}
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="mx-4 max-w-[calc(100vw-2rem)] md:max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle>Use 1 credit to start?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-lg">Use 1 credit to start?</AlertDialogTitle>
+            <AlertDialogDescription className="text-sm leading-relaxed">
               Starting this interview will deduct 1 credit from your balance. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogFooter className="flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+            <AlertDialogCancel className="w-full sm:w-auto min-h-[44px]">Cancel</AlertDialogCancel>
             <AlertDialogAction
+              className="w-full sm:w-auto min-h-[44px]"
               onClick={() => {
                 if (pendingInterview) {
                   onSelectInterview(pendingInterview);

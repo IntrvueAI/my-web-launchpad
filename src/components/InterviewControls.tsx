@@ -47,26 +47,26 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
   };
 
   return (
-    <Card className="p-6">
-      <h3 className="font-semibold text-primary mb-4">Interview Controls</h3>
+    <Card className="p-4 md:p-6">
+      <h3 className="font-semibold text-primary mb-4 text-sm md:text-base">Interview Controls</h3>
       
       <div className="space-y-4">
         {!isStreaming ? (
           <Button
             onClick={handleStart}
             disabled={disabled || isLoading}
-            className="w-full interview-button-start gap-2"
+            className="w-full interview-button-start gap-2 min-h-[48px] text-base font-medium"
             size="lg"
           >
             {isLoading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Connecting...
+                <span>Connecting...</span>
               </>
             ) : (
               <>
                 <Play className="w-5 h-5" />
-                Start Interview
+                <span>Start Interview</span>
               </>
             )}
           </Button>
@@ -76,30 +76,33 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
               <Button
                 id="end-interview-button"
                 disabled={isLoading}
-                className={`w-full interview-button-stop gap-2 ${highlightEnd ? 'ring-2 ring-primary shadow-lg animate-pulse' : ''}`}
+                className={`w-full interview-button-stop gap-2 min-h-[48px] text-base font-medium ${highlightEnd ? 'ring-2 ring-primary shadow-lg animate-pulse' : ''}`}
                 size="lg"
               >
                 <Square className="w-5 h-5" />
-                End Interview
+                <span>End Interview</span>
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="mx-4 max-w-[calc(100vw-2rem)] md:max-w-md">
               <AlertDialogHeader>
-                <AlertDialogTitle>End interview?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialogTitle className="text-lg">End interview?</AlertDialogTitle>
+                <AlertDialogDescription className="text-sm leading-relaxed">
                   Are you sure you want to end the interview now? We will stop the call and start generating your feedback.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleStop}>
+              <AlertDialogFooter className="flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                <AlertDialogCancel className="w-full sm:w-auto min-h-[44px]">Cancel</AlertDialogCancel>
+                <AlertDialogAction 
+                  onClick={handleStop}
+                  className="w-full sm:w-auto min-h-[44px]"
+                >
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Ending...
+                      <span>Ending...</span>
                     </>
                   ) : (
-                    'End Interview'
+                    <span>End Interview</span>
                   )}
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -108,14 +111,14 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
         )}
 
         {isStreaming && highlightEnd && (
-          <p className="text-xs text-muted-foreground text-center" aria-live="polite">
+          <p className="text-xs md:text-sm text-muted-foreground text-center px-2" aria-live="polite">
             {endHint}
           </p>
         )}
 
         {/* Interview Duration */}
         {isStreaming && (
-          <div className="text-center">
+          <div className="text-center px-2">
             <p className="text-sm text-muted-foreground">
               Interview in progress...
             </p>
@@ -127,7 +130,7 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
 
         {/* Pre-interview Information */}
         {!isStreaming && (
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-2 px-2">
             <p className="text-sm text-muted-foreground">
               Click "Start Interview" when you're ready to begin
             </p>

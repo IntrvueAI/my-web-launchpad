@@ -38,28 +38,36 @@ export const LandingHero = ({
           </Badge>
 
           {/* Main Headline */}
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mx-auto">
+          <div className="space-y-4 md:space-y-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mx-auto leading-tight">
               Master IELTS Speaking with{' '}
               <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
                 Digital Humans
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 md:px-0">
               Practice IELTS Speaking tests with realistic digital human examiners. 
               Get instant feedback and improve your band score with unlimited mock tests.
             </p>
           </div>
           
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Button size="lg" onClick={onSignUp} className="text-lg px-8 py-4 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <BookOpen className="w-5 h-5 mr-2" />
-              Start IELTS Practice Free
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center pt-4 px-4">
+            <Button 
+              size="lg" 
+              onClick={onSignUp} 
+              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <BookOpen className="w-4 md:w-5 h-4 md:h-5 mr-2" />
+              <span className="whitespace-nowrap">Start IELTS Practice Free</span>
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4 h-auto border-2 hover:bg-primary/5 transition-all duration-300">
-              <Play className="w-5 h-5 mr-2" />
-              Watch Demo
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] border-2 hover:bg-primary/5 transition-all duration-300"
+            >
+              <Play className="w-4 md:w-5 h-4 md:h-5 mr-2" />
+              <span className="whitespace-nowrap">Watch Demo</span>
             </Button>
           </div>
 
