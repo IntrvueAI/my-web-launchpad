@@ -24,6 +24,13 @@ serve(async (req) => {
       throw new Error('No authorization header');
     }
 
+    // Create a user-context client to evaluate RLS/policies with the caller's JWT
+    const supabaseUser = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_ANON_KEY')!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
     // Get the user from the JWT token
     const { data: { user }, error: authError } = await supabase.auth.getUser(
       authHeader.replace('Bearer ', '')
@@ -34,7 +41,7 @@ serve(async (req) => {
     }
 
     // Check if user is admin
-    const { data: isAdmin, error: adminError } = await supabase.rpc('is_current_user_admin');
+    const { data: isAdmin, error: adminError } = await supabaseUser.rpc('is_current_user_admin');
     
     if (adminError || !isAdmin) {
       return new Response(
