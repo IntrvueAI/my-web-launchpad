@@ -340,32 +340,40 @@ try {
         
         // Validate and ensure all required fields exist with proper types
         if (interviewType === 'ielts') {
-          const requiredFields = ['fluency_coherence_score', 'lexical_resource_score', 'grammatical_range_score', 'pronunciation_score', 'total_score'];
+          const requiredFields = ['fluency_coherence_score', 'lexical_resource_score', 'grammatical_range_score', 'pronunciation_score'];
           for (const field of requiredFields) {
-            if (typeof feedbackData[field] !== 'number' || feedbackData[field] < 0 || feedbackData[field] > 9) {
+            // Convert to number if it's a string
+            if (typeof feedbackData[field] === 'string') {
+              feedbackData[field] = parseFloat(feedbackData[field]);
+            }
+            if (typeof feedbackData[field] !== 'number' || isNaN(feedbackData[field]) || feedbackData[field] < 0 || feedbackData[field] > 9) {
               throw new Error(`Invalid or missing ${field}: must be a number between 0-9`);
             }
           }
-          // Note: Keep precise total in response; store integer in DB later
+          // Calculate total_score from individual scores
           feedbackData.total_score = Math.round(((feedbackData.fluency_coherence_score + 
                                                  feedbackData.lexical_resource_score + 
                                                  feedbackData.grammatical_range_score + 
                                                  feedbackData.pronunciation_score) / 4) * 2) / 2; // 0.5 step
         } else {
-        // 11+ validation
-        const requiredFields = ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score', 'total_score'];
-        for (const field of requiredFields) {
-          if (typeof feedbackData[field] !== 'number' || feedbackData[field] < 0 || feedbackData[field] > 5) {
-            throw new Error(`Invalid or missing ${field}: must be a number between 0-5`);
+          // 11+ validation
+          const requiredFields = ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score'];
+          for (const field of requiredFields) {
+            // Convert to number if it's a string
+            if (typeof feedbackData[field] === 'string') {
+              feedbackData[field] = parseFloat(feedbackData[field]);
+            }
+            if (typeof feedbackData[field] !== 'number' || isNaN(feedbackData[field]) || feedbackData[field] < 0 || feedbackData[field] > 5) {
+              throw new Error(`Invalid or missing ${field}: must be a number between 0-5`);
+            }
           }
+          
+          // Calculate total_score from individual scores
+          feedbackData.total_score = feedbackData.personal_insight_score + 
+                                     feedbackData.reasoning_score + 
+                                     feedbackData.extracurricular_score + 
+                                     feedbackData.current_awareness_score;
         }
-        
-        // Ensure total_score is calculated correctly
-        feedbackData.total_score = feedbackData.personal_insight_score + 
-                                   feedbackData.reasoning_score + 
-                                   feedbackData.extracurricular_score + 
-                                   feedbackData.current_awareness_score;
-      }
       
       if (!feedbackData.detailed_feedback || typeof feedbackData.detailed_feedback !== 'object') {
         throw new Error('Missing or invalid detailed_feedback object');
