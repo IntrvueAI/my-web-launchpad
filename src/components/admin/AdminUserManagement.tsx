@@ -30,6 +30,14 @@ export const AdminUserManagement = () => {
     queryFn: async () => {
       console.log('Fetching users for admin dashboard...');
       
+      // Double-check admin status with enhanced security function
+      const { data: isAdminVerified, error: adminVerifyError } = await supabase.rpc('verify_admin_access_with_logging');
+      
+      if (adminVerifyError || !isAdminVerified) {
+        console.error('Admin verification failed:', adminVerifyError);
+        throw new Error('Unauthorized: Admin access verification failed');
+      }
+      
       let query = supabase
         .from('profiles')
         .select(`
@@ -51,7 +59,7 @@ export const AdminUserManagement = () => {
         throw profilesError;
       }
 
-      console.log('Profiles data:', profilesData);
+      console.log('Profiles data retrieved by admin');
 
       // Get credits for all users separately
       const { data: creditsData, error: creditsError } = await supabase
@@ -63,7 +71,7 @@ export const AdminUserManagement = () => {
         // Don't throw error for credits, just log it
       }
 
-      console.log('Credits data:', creditsData);
+      console.log('Credits data retrieved by admin');
 
       // Map profiles with their credits
       const usersWithCredits = profilesData?.map(user => {
@@ -77,7 +85,7 @@ export const AdminUserManagement = () => {
         };
       }) || [];
 
-      console.log('Final users with credits:', usersWithCredits);
+      console.log(`Admin accessed ${usersWithCredits.length} user records`);
       return usersWithCredits as UserWithCredits[];
     },
     refetchInterval: 30000,

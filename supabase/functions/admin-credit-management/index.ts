@@ -40,10 +40,26 @@ serve(async (req) => {
       throw new Error('Invalid authentication');
     }
 
-    // Check if user is admin
-    const { data: isAdmin, error: adminError } = await supabaseUser.rpc('is_current_user_admin');
+    // Enhanced admin verification with security logging
+    const { data: isAdmin, error: adminError } = await supabaseUser.rpc('verify_admin_access_with_logging');
     
     if (adminError || !isAdmin) {
+      console.warn(`Unauthorized admin access attempt by user ${user.email} from IP: ${req.headers.get('x-forwarded-for') || 'unknown'}`);
+      
+      // Log security incident
+      await supabase
+        .from('admin_audit_log')
+        .insert({
+          admin_user_id: user.id,
+          admin_email: user.email!,
+          action: 'unauthorized_admin_attempt',
+          details: {
+            timestamp: new Date().toISOString(),
+            ip_address: req.headers.get('x-forwarded-for') || 'unknown',
+            user_agent: req.headers.get('user-agent') || 'unknown'
+          }
+        });
+      
       return new Response(
         JSON.stringify({ error: 'Unauthorized: Admin access required' }),
         { 
@@ -67,6 +83,18 @@ serve(async (req) => {
     }
 
     console.log(`Admin ${user.email} attempting to ${action} ${amount} credits for user ${targetUserEmail}`);
+    
+    // Additional validation: Prevent excessive credit operations
+    if (amount > 1000) {
+      console.warn(`Admin ${user.email} attempted to ${action} excessive amount: ${amount} credits`);
+      return new Response(
+        JSON.stringify({ error: 'Credit amount exceeds maximum allowed limit (1000)' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
 
     // Get or create credits balance for the user
     const { data: existingBalance, error: balanceError } = await supabase
