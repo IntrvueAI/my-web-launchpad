@@ -29,7 +29,7 @@ export const AdminOverview = () => {
       const { data: ordersData } = await supabase
         .from('orders')
         .select('amount, status')
-        .eq('status', 'completed');
+        .in('status', ['paid', 'completed']);
 
       const totalRevenue = ordersData?.reduce((sum, order) => sum + order.amount, 0) || 0;
 
