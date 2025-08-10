@@ -175,7 +175,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           <p className="interview-instruction max-w-2xl mx-auto">
             {interviewType.id === 'ielts' 
               ? 'Practice your IELTS Speaking test with our AI examiner. Get Band Score feedback (0-9) on all four assessment criteria: Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, and Pronunciation.'
-              : 'Prepare for your 11+ school interview with realistic practice sessions. Our AI interviewer will ask questions commonly used in entrance interviews and provide instant feedback to help you improve.'
+              : 'Prepare for your interview with realistic practice sessions. Our AI interviewer will ask questions commonly used in entrance interviews and provide instant feedback to help you improve.'
             }
           </p>
         </div>
