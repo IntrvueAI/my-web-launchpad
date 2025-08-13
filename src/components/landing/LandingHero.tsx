@@ -40,14 +40,14 @@ export const LandingHero = ({
           {/* Main Headline */}
           <div className="space-y-4 md:space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mx-auto leading-tight">
-              Master IELTS Speaking with{' '}
+              Master 11+ Interviews with{' '}
               <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
                 Digital Humans
               </span>
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 md:px-0">
-              Practice IELTS Speaking tests with realistic digital human examiners. 
-              Get instant feedback and improve your band score with unlimited mock tests.
+              Practice 11+ interviews with realistic digital human interviewers. 
+              Get instant feedback and ace your UK private and grammar school admissions.
             </p>
           </div>
           
@@ -55,7 +55,7 @@ export const LandingHero = ({
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center pt-4 px-4">
             <Button size="lg" onClick={onSignUp} className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-auto min-h-[48px] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <BookOpen className="w-4 md:w-5 h-4 md:h-5 mr-2" />
-              <span className="whitespace-nowrap">Start IELTS Practice Free</span>
+              <span className="whitespace-nowrap">Start 11+ Practice Free</span>
             </Button>
             <Button variant="outline" size="lg" onClick={() => document.getElementById('demo-video')?.scrollIntoView({
               behavior: 'smooth',
@@ -70,7 +70,7 @@ export const LandingHero = ({
           <div className="flex flex-wrap justify-center items-center gap-8 pt-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-primary" />
-              <span>Trusted by 1000+ IELTS candidates</span>
+              <span>Trusted by 1000+ students</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
@@ -89,7 +89,7 @@ export const LandingHero = ({
           <div className="relative bg-card/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-border/50 overflow-hidden group hover:shadow-3xl transition-all duration-500">
             <div className="aspect-video bg-gradient-to-br from-primary/5 via-accent/10 to-primary/5 relative">
               <div className="absolute inset-0 p-4">
-                <video className="w-full h-full rounded-2xl border object-contain bg-white z-10 pointer-events-auto" controls preload="metadata" playsInline aria-label="IELTS Speaking demo video">
+                <video className="w-full h-full rounded-2xl border object-contain bg-white z-10 pointer-events-auto" controls preload="metadata" playsInline aria-label="11+ Interview demo video">
                   <source src="/lovable-uploads/DemoVideo.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>

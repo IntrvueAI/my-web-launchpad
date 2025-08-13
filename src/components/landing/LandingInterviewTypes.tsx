@@ -9,26 +9,26 @@ export const LandingInterviewTypes = () => {
   const testParts = [
     {
       icon: MessageCircle,
-      title: "Part 1: Introduction",
-      description: "Personal questions about yourself, your home, work, studies and familiar topics",
-      duration: "4-5 minutes",
-      features: ["Personal background", "Familiar topics", "General conversation", "Warm-up questions"],
+      title: "Personal Background",
+      description: "Questions about yourself, your family, hobbies, and interests to build rapport",
+      duration: "5-8 minutes",
+      features: ["Personal introduction", "Family discussions", "Hobby exploration", "Confidence building"],
       difficulty: "Beginner"
     },
     {
       icon: Clock,
-      title: "Part 2: Individual Talk",
-      description: "Speak for 2 minutes on a given topic with 1 minute preparation time",
-      duration: "3-4 minutes",
-      features: ["Cue card topic", "Preparation time", "Extended speaking", "Follow-up questions"],
+      title: "Academic & Reasoning",
+      description: "Problem-solving questions, puzzles, and academic discussions to test thinking",
+      duration: "8-10 minutes",
+      features: ["Logical puzzles", "Problem solving", "Academic discussions", "Critical thinking"],
       difficulty: "Intermediate"
     },
     {
       icon: Users,
-      title: "Part 3: Discussion",
-      description: "Abstract discussion related to Part 2 topic with more complex questions",
-      duration: "4-5 minutes", 
-      features: ["Abstract concepts", "Complex ideas", "Opinion justification", "Future predictions"],
+      title: "Values & Aspirations",
+      description: "Ethical scenarios, school expectations, and future goals to assess fit",
+      duration: "7-12 minutes", 
+      features: ["Ethical reasoning", "Value assessment", "Future planning", "School alignment"],
       difficulty: "Advanced"
     }
   ];
@@ -39,14 +39,14 @@ export const LandingInterviewTypes = () => {
         <div className="text-center space-y-6 mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full">
             <MessageCircle className="w-4 h-4 text-primary" />
-            <span className="text-primary font-medium text-sm">Complete IELTS Speaking Test</span>
+            <span className="text-primary font-medium text-sm">Complete 11+ Interview Preparation</span>
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold">
-            Practice All Three Parts
+            Master Every Interview Section
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Our digital humans guide you through the complete IELTS speaking test experience, covering all parts with authentic timing and questions.
+            Our digital humans guide you through comprehensive 11+ interview practice, covering all sections with authentic timing and school-style questions.
           </p>
         </div>
 
@@ -112,16 +112,16 @@ export const LandingInterviewTypes = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-12">
           <Button asChild size="lg" className="text-lg px-8 py-4 h-auto gap-2">
-            <Link to="/auth" aria-label="Start IELTS practice - sign in or sign up">
+            <Link to="/auth" aria-label="Start 11+ practice - sign in or sign up">
               <MessageCircle className="w-5 h-5" />
-              Start Complete IELTS Practice
+              Start Complete 11+ Practice
             </Link>
           </Button>
           <div className="mt-6">
             <div className="inline-flex items-center gap-2 bg-accent/20 px-6 py-3 rounded-full">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               <span className="text-sm font-medium">
-                Full test takes 11-14 minutes - just like the real exam
+                Full interview takes 20-30 minutes - just like real school interviews
               </span>
             </div>
           </div>

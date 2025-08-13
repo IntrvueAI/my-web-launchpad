@@ -33,11 +33,11 @@ export const LandingCTA = ({
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold max-w-5xl mx-auto leading-tight">
                   Start Your{' '}
                   <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
-                    IELTS Success Journey
+                    11+ Success Journey
                   </span>
                 </h2>
                 <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-                  Join thousands of candidates who've improved their IELTS speaking scores with our digital human practice platform.
+                  Join hundreds of students who've secured places at top UK private and grammar schools with our digital human practice platform.
                 </p>
               </div>
 
@@ -45,20 +45,20 @@ export const LandingCTA = ({
               <div className="grid md:grid-cols-4 gap-8 py-8">
                 {[{
                 icon: Users,
-                stat: '1000+',
-                label: 'IELTS Candidates'
+                stat: '1200+',
+                label: 'Students Helped'
               }, {
                 icon: Award,
-                stat: '7.5',
-                label: 'Average Band Score'
+                stat: '85%',
+                label: 'Success Rate'
               }, {
                 icon: BookOpen,
                 stat: '24/7',
                 label: 'Available'
               }, {
                 icon: Star,
-                stat: '91%',
-                label: 'Pass Rate'
+                stat: '150+',
+                label: 'Schools Covered'
               }].map((item, index) => {
                 const IconComponent = item.icon;
                 return <div key={index} className="text-center space-y-2">
@@ -75,7 +75,7 @@ export const LandingCTA = ({
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
                 <Button size="lg" onClick={onSignUp} className="text-xl px-10 py-6 h-auto gap-3 group shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                   <BookOpen className="w-6 h-6" />
-                  <span>Start IELTS Practice Now</span>
+                  <span>Start 11+ Practice Now</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 
@@ -93,7 +93,7 @@ export const LandingCTA = ({
                 </div>
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground bg-accent/20 px-4 py-2 rounded-full">
                   <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                  <span>Official IELTS format</span>
+                  <span>Official school format</span>
                 </div>
               </div>
 
@@ -102,10 +102,10 @@ export const LandingCTA = ({
                 <div className="flex justify-center mb-4">
                   {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 text-primary fill-current" />)}
                 </div>
-                <blockquote className="text-lg md:text-xl font-medium text-foreground italic mb-4">"The digital humans were so realistic! I practiced for just one week and improved from band 4.0 to 8.0 in speaking. This platform is a game-changer for IELTS preparation."</blockquote>
+                <blockquote className="text-lg md:text-xl font-medium text-foreground italic mb-4">"The digital humans were so realistic! I practiced for just one week and felt completely confident for my Westminster interview. This platform is a game-changer for 11+ preparation."</blockquote>
                 <div className="text-muted-foreground">
-                  <div className="font-semibold">Maria Rodriguez</div>
-                  <div className="text-sm">Achieved band 8.0, now studying in Canada</div>
+                  <div className="font-semibold">Oliver Johnson</div>
+                  <div className="text-sm">Westminster School student</div>
                 </div>
               </div>
             </div>

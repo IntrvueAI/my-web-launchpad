@@ -17,7 +17,7 @@ export const LandingFAQ = () => {
     },
     {
       question: 'How accurate is the scoring system?',
-      answer: 'Our scoring system is based on established assessment criteria used by real institutions. For academic interviews, we follow school admission standards. For IELTS, we align with official band descriptors. The system is continuously refined based on real-world outcomes.'
+      answer: 'Our scoring system is based on established assessment criteria used by top UK private and grammar schools. We follow real school admission standards and interview frameworks. The system is continuously refined based on actual interview outcomes and feedback from admissions tutors.'
     },
     {
       question: 'Can I practice multiple times with the same credit?',

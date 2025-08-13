@@ -7,26 +7,26 @@ export const LandingTruth = () => {
     {
       icon: Clock,
       title: "Available 24/7",
-      description: "Practice IELTS speaking tests whenever you want, no scheduling conflicts or limited availability",
+      description: "Practice 11+ interviews whenever you want, no scheduling conflicts or limited availability",
       stat: "Anytime access"
     },
     {
       icon: Target,
-      title: "Precise Band Scoring",
-      description: "Digital humans provide consistent, accurate band scores based on official IELTS criteria",
+      title: "School-Aligned Assessment",
+      description: "Digital humans provide consistent feedback based on real UK private and grammar school criteria",
       stat: "Official criteria"
     },
     {
       icon: Zap,
       title: "Instant Feedback",
-      description: "Get immediate detailed analysis of your performance right after each speaking session",
+      description: "Get immediate detailed analysis of your interview performance right after each session",
       stat: "<5 seconds"
     },
     {
       icon: TrendingUp,
       title: "Track Progress",
-      description: "See your band score improvement over time with detailed analytics and performance trends",
-      stat: "3.0 band avg. improvement"
+      description: "See your interview skills improvement over time with detailed analytics and performance trends",
+      stat: "85% success rate"
     },
     {
       icon: Shield,
@@ -37,8 +37,8 @@ export const LandingTruth = () => {
     {
       icon: Users,
       title: "Proven Success",
-      description: "Join hundreds of IELTS candidates who've successfully improved their speaking scores",
-      stat: "High success rate"
+      description: "Join hundreds of students who've successfully secured places at top UK schools",
+      stat: "150+ schools"
     }
   ];
 
@@ -48,17 +48,17 @@ export const LandingTruth = () => {
         <div className="text-center space-y-6 mb-16">
           <div className="inline-flex items-center gap-2 bg-success/10 px-4 py-2 rounded-full border border-success/20">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            <span className="text-success font-medium text-sm">IELTS Success Stories</span>
+            <span className="text-success font-medium text-sm">11+ Success Stories</span>
           </div>
           
           <h2 className="text-3xl md:text-4xl font-bold">
             Real Benefits for{' '}
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              IELTS Candidates
+              11+ Students
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            See why IELTS candidates trust our digital human platform to achieve their target band scores.
+            See why students trust our digital human platform to secure places at top UK schools.
           </p>
         </div>
 
@@ -105,12 +105,12 @@ export const LandingTruth = () => {
                   ))}
                 </div>
                 <blockquote className="text-xl md:text-2xl font-medium text-foreground italic">
-                  "I improved from band 4.5 to 8.5 in speaking after just two weeks of practice. 
-                  The digital humans felt so real and the feedback was incredibly detailed."
+                  "I was so nervous about my Harrow interview, but after practicing here I felt completely prepared. 
+                  The digital humans felt so real and the feedback was incredibly detailed. I got my offer!"
                 </blockquote>
                 <div className="text-muted-foreground">
-                  <div className="font-semibold">Tony Liu</div>
-                  <div className="text-sm">IELTS candidate, achieved band 8.5</div>
+                  <div className="font-semibold">Sophie Chen</div>
+                  <div className="text-sm">Harrow School student</div>
                 </div>
               </div>
             </div>
