@@ -32,24 +32,6 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school'],
     icon: 'GraduationCap'
   },
-  'ielts': {
-    id: 'ielts',
-    name: 'IELTS Speaking Test',
-    description: 'Practice IELTS Speaking tests with Band Score feedback (0-9)',
-    category: 'language',
-    promptFile: 'language/ielts.md',
-    duration: 15,
-    scoringSystem: '0-9',
-    scoringCriteria: [
-      'Fluency and Coherence',
-      'Lexical Resource',
-      'Grammatical Range and Accuracy',
-      'Pronunciation'
-    ],
-    difficultyLevel: 3,
-    tags: ['IELTS', 'English proficiency', 'speaking test', 'band score'],
-    icon: 'MessageSquare'
-  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
