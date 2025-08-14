@@ -316,13 +316,21 @@ try {
     // Generate annotated highlights for the transcript (Student-only)
     let annotations: any[] = [];
     try {
-      const annotationSystemPrompt = `You are an expert speaking examiner. Given a transcript string, extract short quoted spans from ONLY the Student's lines.
+      const annotationSystemPrompt = `You are an expert speaking examiner providing comprehensive feedback. Given a transcript string, extract quoted spans from ONLY the Student's lines throughout the ENTIRE conversation.
 
 - Categories: "strength", "grammar", "fluency", "lexical"
 - IMPORTANT: For each quote, COPY the exact substring from the transcript (preserve casing/punctuation/spacing) and include character indexes.
 - For each item provide: { "quote": string, "category": one of the four, "explanation": string, "suggestion": string, "start": number, "end": number }
 - start/end are 0-based character offsets into the full transcript string, such that transcript.slice(start, end) === quote.
-- Keep quotes short (3–15 words) and precise. Return between 6 and 12 items.
+- Keep quotes varied in length (2-20 words) to cover different aspects. Return between 15 and 25 items to provide comprehensive coverage.
+- Analyze the ENTIRE student transcript systematically:
+  * Beginning, middle, and end portions
+  * Different types of responses (short answers, longer explanations)
+  * Various grammatical structures used
+  * Vocabulary choices throughout
+  * Fluency patterns across the conversation
+  * Both strengths and areas for improvement
+- Ensure good distribution across all four categories
 - Return ONLY valid JSON with shape: { "annotations": Annotation[] }`;
 
       const annotationRequest = {
@@ -465,12 +473,12 @@ try {
     annotations = annotations
       .map(sanitizeAnnotation)
       .filter((a: any) => !!a)
-      .slice(0, 20) as any[];
+      .slice(0, 30) as any[];
 
     // If still empty, try a backup generation pass limited to Student content only
     if (annotations.length === 0) {
       try {
-        const backupPrompt = `Extract 6 to 12 short quotes from ONLY Student lines in the transcript that reflect strengths or issues. Categories: strength, grammar, fluency, lexical. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
+        const backupPrompt = `Extract 15 to 25 quotes from ONLY Student lines throughout the ENTIRE transcript that reflect strengths or issues. Analyze the complete conversation systematically from beginning to end. Categories: strength, grammar, fluency, lexical. Ensure good distribution across all categories and conversation portions. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
         const backupReq = {
           model: 'gpt-4o',
           messages: [
