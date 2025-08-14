@@ -322,7 +322,7 @@ export const UserSettings = () => {
             </div>
 
             <div>
-              <Label>Interview date</Label>
+              <Label>First Interview Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
