@@ -75,7 +75,7 @@ export const FeedbackHistory: React.FC = () => {
     // 11+ labels
     if (score >= 18) return 'Outstanding';
     if (score >= 15) return 'Strong';
-    if (score >= 12) return 'Sound';
+    if (score >= 12) return 'Good';
     if (score >= 8) return 'Developing';
     return 'Needs Support';
   };

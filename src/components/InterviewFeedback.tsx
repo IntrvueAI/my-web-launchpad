@@ -79,7 +79,7 @@ const getBandLabel = (score: number, maxScore: number, interviewType?: string) =
   const percentage = (score / maxScore) * 100;
   if (percentage >= 90) return 'Outstanding';
   if (percentage >= 75) return 'Strong';
-  if (percentage >= 60) return 'Sound';
+  if (percentage >= 60) return 'Good';
   if (percentage >= 40) return 'Developing';
   return 'Needs Support';
 };
