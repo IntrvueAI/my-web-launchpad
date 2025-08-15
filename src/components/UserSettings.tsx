@@ -79,15 +79,12 @@ export const UserSettings = () => {
 
     setUpdating(true);
     try {
-      // Update profile in database
-      const filteredSchools = formData.schools.filter(school => school.trim() !== '');
+      // Update profile in database (name and email only)
       const { error: profileError } = await supabase
         .from('profiles')
         .update({
           full_name: formData.fullName,
           email: formData.email,
-          schools: filteredSchools.length > 0 ? filteredSchools : null,
-          interview_date: formData.interviewDate ? formData.interviewDate.toISOString().split('T')[0] : null,
         })
         .eq('id', user.id);
 
@@ -124,6 +121,41 @@ export const UserSettings = () => {
     } catch (error: any) {
       toast({
         title: "Error updating profile",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleUpdateInterviewInfo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user || !profile) return;
+
+    setUpdating(true);
+    try {
+      // Update interview information in database
+      const filteredSchools = formData.schools.filter(school => school.trim() !== '');
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          schools: filteredSchools.length > 0 ? filteredSchools : null,
+          interview_date: formData.interviewDate ? formData.interviewDate.toISOString().split('T')[0] : null,
+        })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
+
+      toast({
+        title: "Interview information updated",
+        description: "Your schools and interview date have been saved successfully.",
+      });
+
+      await loadProfile();
+    } catch (error: any) {
+      toast({
+        title: "Error updating interview information",
         description: error.message,
         variant: "destructive"
       });
@@ -287,65 +319,78 @@ export const UserSettings = () => {
               Manage your school applications and interview dates.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label htmlFor="schools">Schools you're applying to</Label>
-              <div className="space-y-2 mt-2">
-                {formData.schools.map((school, index) => (
-                  <div key={index} className="flex gap-2">
-                    <Input
-                      value={school}
-                      onChange={(e) => updateSchool(index, e.target.value)}
-                      placeholder="Enter school name"
-                    />
-                    {formData.schools.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        onClick={() => removeSchoolField(index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                ))}
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={addSchoolField}
-                  className="w-full"
-                >
-                  Add another school
-                </Button>
-              </div>
-            </div>
-
-            <div>
-              <Label>First Interview Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
+          <CardContent>
+            <form onSubmit={handleUpdateInterviewInfo} className="space-y-4">
+              <div>
+                <Label htmlFor="schools">Schools you're applying to</Label>
+                <div className="space-y-2 mt-2">
+                  {formData.schools.map((school, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Input
+                        value={school}
+                        onChange={(e) => updateSchool(index, e.target.value)}
+                        placeholder="Enter school name"
+                      />
+                      {formData.schools.length > 1 && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          onClick={() => removeSchoolField(index)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
                   <Button
+                    type="button"
                     variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal mt-2",
-                      !formData.interviewDate && "text-muted-foreground"
-                    )}
+                    onClick={addSchoolField}
+                    className="w-full"
                   >
-                    <Calendar className="mr-2 h-4 w-4" />
-                    {formData.interviewDate ? format(formData.interviewDate, "PPP") : "Select interview date"}
+                    Add another school
                   </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <CalendarComponent
-                    mode="single"
-                    selected={formData.interviewDate}
-                    onSelect={(date) => setFormData(prev => ({ ...prev, interviewDate: date }))}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
+                </div>
+              </div>
+
+              <div>
+                <Label>First Interview Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal mt-2",
+                        !formData.interviewDate && "text-muted-foreground"
+                      )}
+                    >
+                      <Calendar className="mr-2 h-4 w-4" />
+                      {formData.interviewDate ? format(formData.interviewDate, "PPP") : "Select interview date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <CalendarComponent
+                      mode="single"
+                      selected={formData.interviewDate}
+                      onSelect={(date) => setFormData(prev => ({ ...prev, interviewDate: date }))}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <Button type="submit" disabled={updating}>
+                {updating ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save Interview Information'
+                )}
+              </Button>
+            </form>
           </CardContent>
         </Card>
 
