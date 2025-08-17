@@ -239,42 +239,6 @@ export type Database = {
         }
         Relationships: []
       }
-      user_feedback: {
-        Row: {
-          admin_response: string | null
-          category: string
-          created_at: string
-          id: string
-          message: string
-          status: string
-          subject: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          admin_response?: string | null
-          category?: string
-          created_at?: string
-          id?: string
-          message: string
-          status?: string
-          subject?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          admin_response?: string | null
-          category?: string
-          created_at?: string
-          id?: string
-          message?: string
-          status?: string
-          subject?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never

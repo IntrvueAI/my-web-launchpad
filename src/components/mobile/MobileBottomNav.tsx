@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Video, History, Wallet, Settings, LogOut, MessageSquare } from 'lucide-react';
+import { Video, History, Wallet, Settings, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MobileBottomNavProps {
-  currentView: 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'feedback' | 'feedback-history';
+  currentView: 'selection' | 'interview' | 'history' | 'settings' | 'credits';
   credits: number;
-  onViewChange: (view: 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'feedback' | 'feedback-history') => void;
+  onViewChange: (view: 'selection' | 'interview' | 'history' | 'settings' | 'credits') => void;
   onSignOut: () => void;
   className?: string;
 }
@@ -60,17 +60,6 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             <Badge variant="outline" className="absolute -top-1 -right-1 text-xs h-5 w-5 p-0 flex items-center justify-center">
               {credits}
             </Badge>
-          </Button>
-
-          {/* Feedback */}
-          <Button
-            variant={currentView === 'feedback' || currentView === 'feedback-history' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => onViewChange('feedback')}
-            className="flex-col h-auto py-2 px-3 gap-1 min-w-0"
-          >
-            <MessageSquare className="w-4 h-4" />
-            <span className="text-xs">Feedback</span>
           </Button>
 
           {/* Settings */}
