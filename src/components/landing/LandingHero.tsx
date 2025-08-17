@@ -38,10 +38,7 @@ export const LandingHero = ({
           </Badge>
 
           {/* Technology Badge */}
-          <Badge className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 text-sm font-medium border-0">
-            <Brain className="w-4 h-4 mr-2" />
-            Powered by Advanced Digital Human Technology
-          </Badge>
+          
 
           {/* Main Headline */}
           <div className="space-y-4 md:space-y-6">
