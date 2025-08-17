@@ -5,11 +5,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
-import { FeedbackHistory } from '@/components/FeedbackHistory';
+import UserFeedback from '@/components/UserFeedback';
+import FeedbackHistory from '@/components/FeedbackHistory';
 import { UserSettings } from '@/components/UserSettings';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Video, History, ArrowLeft, Settings, Wallet } from 'lucide-react';
+import { Video, History, ArrowLeft, Settings, Wallet, MessageSquare } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -39,7 +40,7 @@ const Index = () => {
     setShowPostSignupForm
   } = useAuth();
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history' | 'settings' | 'credits'>('selection');
+  const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'feedback' | 'feedback-history'>('selection');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
 
   const { credits, refetchCredits } = useCredits();
@@ -183,6 +184,10 @@ const Index = () => {
                   <Wallet className="w-4 h-4" />
                   Credits
                 </Button>
+                <Button variant={currentView === 'feedback' || currentView === 'feedback-history' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('feedback')} className="gap-2">
+                  <MessageSquare className="w-4 h-4" />
+                  Feedback
+                </Button>
                 <Button variant={currentView === 'settings' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('settings')} className="gap-2">
                   <Settings className="w-4 h-4" />
                   Settings
@@ -219,6 +224,15 @@ const Index = () => {
                   aria-label="Credits"
                 >
                   <Wallet className="w-4 h-4" />
+                </Button>
+                <Button 
+                  variant={currentView === 'feedback' || currentView === 'feedback-history' ? 'default' : 'ghost'} 
+                  size="sm" 
+                  onClick={() => setCurrentView('feedback')} 
+                  className="p-2"
+                  aria-label="Feedback"
+                >
+                  <MessageSquare className="w-4 h-4" />
                 </Button>
                 <Button 
                   variant={currentView === 'settings' ? 'default' : 'ghost'} 
@@ -296,6 +310,10 @@ const Index = () => {
               <CreditsStore />
             </div>
           </div>
+        ) : currentView === 'feedback' ? (
+          <UserFeedback onBack={() => setCurrentView('selection')} />
+        ) : currentView === 'feedback-history' ? (
+          <FeedbackHistory onBack={() => setCurrentView('selection')} />
         ) : (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
             <UserSettings />

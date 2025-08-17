@@ -6,6 +6,7 @@ import { AdminOverview } from '@/components/admin/AdminOverview';
 import { AdminUserManagement } from '@/components/admin/AdminUserManagement';
 import { AdminSystemHealth } from '@/components/admin/AdminSystemHealth';
 import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
+import AdminUserFeedback from '@/components/admin/AdminUserFeedback';
 import { Shield, AlertTriangle } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -59,11 +60,12 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="users">User Management</TabsTrigger>
-            <TabsTrigger value="system">System Health</TabsTrigger>
-            <TabsTrigger value="audit">Audit Log</TabsTrigger>
+            <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="feedback">Feedback</TabsTrigger>
+            <TabsTrigger value="system">System</TabsTrigger>
+            <TabsTrigger value="audit">Audit</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -72,6 +74,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="users">
             <AdminUserManagement />
+          </TabsContent>
+
+          <TabsContent value="feedback">
+            <AdminUserFeedback />
           </TabsContent>
 
           <TabsContent value="system">

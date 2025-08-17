@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { InterviewFeedback } from './InterviewFeedback';
-import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { MessageSquare, ArrowLeft, Calendar, User, Clock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { CalendarDays, ChevronRight } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { formatDistanceToNow } from 'date-fns';
 
-interface FeedbackRecord {
+interface FeedbackItem {
   id: string;
+  subject: string | null;
+  message: string;
+  category: string;
+  status: string;
+  admin_response: string | null;
   created_at: string;
-  total_score: number;
-  personal_insight_score?: number;
-  reasoning_score?: number;
-  extracurricular_score?: number;
-  current_awareness_score?: number;
-  fluency_coherence_score?: number;
-  lexical_resource_score?: number;
-  grammatical_range_score?: number;
-  pronunciation_score?: number;
-  detailed_feedback: any;
-  interview_session_id: string;
-  interview_type?: string;
-  scoring_system?: string;
-  transcription?: string;
-  annotations?: any[];
-  overall_improvement_feedback?: string;
+  updated_at: string;
 }
 
-export const FeedbackHistory: React.FC = () => {
-  const [feedbackHistory, setFeedbackHistory] = useState<FeedbackRecord[]>([]);
-  const [selectedFeedback, setSelectedFeedback] = useState<FeedbackRecord | null>(null);
+interface FeedbackHistoryProps {
+  onBack: () => void;
+}
+
+const FeedbackHistory: React.FC<FeedbackHistoryProps> = ({ onBack }) => {
+  const [feedbackHistory, setFeedbackHistory] = useState<FeedbackItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (user) {
@@ -41,215 +36,164 @@ export const FeedbackHistory: React.FC = () => {
   }, [user]);
 
   const fetchFeedbackHistory = async () => {
-    if (!user) return;
-    
     try {
       const { data, error } = await supabase
-        .from('feedback')
+        .from('user_feedback')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', user?.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      const normalized = (data || []).map((row: any) => ({
-        ...row,
-        annotations: Array.isArray(row.annotations) ? row.annotations : [],
-      }));
-      setFeedbackHistory(normalized as FeedbackRecord[]);
-    } catch (error) {
+      setFeedbackHistory(data || []);
+    } catch (error: any) {
       console.error('Error fetching feedback history:', error);
+      toast({
+        title: "Error loading feedback history",
+        description: error.message || "Please try again later.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const getBandLabel = (score: number, interviewType?: string, scoringSystem?: string) => {
-    if (interviewType === 'ielts') {
-      if (score >= 8.5) return 'Expert User';
-      if (score >= 7.5) return 'Very Good User';
-      if (score >= 6.5) return 'Good User';
-      if (score >= 5.5) return 'Competent User';
-      if (score >= 4.5) return 'Modest User';
-      return 'Limited User';
+  const getStatusBadgeVariant = (status: string) => {
+    switch (status) {
+      case 'new': return 'default';
+      case 'reviewed': return 'secondary';
+      case 'in_progress': return 'outline';
+      case 'resolved': return 'default';
+      case 'closed': return 'secondary';
+      default: return 'default';
     }
-    // 11+ labels
-    if (score >= 18) return 'Outstanding';
-    if (score >= 15) return 'Strong';
-    if (score >= 12) return 'Good';
-    if (score >= 8) return 'Developing';
-    return 'Needs Support';
   };
 
-  const getBandColor = (score: number, interviewType?: string, maxScore?: number) => {
-    const max = interviewType === 'ielts' ? 9 : (maxScore || 20);
-    const percentage = (score / max) * 100;
-    if (percentage >= 90) return 'bg-emerald-500';
-    if (percentage >= 75) return 'bg-green-500';
-    if (percentage >= 60) return 'bg-blue-500';
-    if (percentage >= 40) return 'bg-yellow-500';
-    return 'bg-red-500';
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case 'bug_report': return 'Bug Report';
+      case 'feature_request': return 'Feature Request';
+      case 'general': return 'General';
+      case 'other': return 'Other';
+      default: return category;
+    }
   };
 
-  if (selectedFeedback) {
+  const formatStatus = (status: string) => {
+    switch (status) {
+      case 'new': return 'New';
+      case 'reviewed': return 'Reviewed';
+      case 'in_progress': return 'In Progress';
+      case 'resolved': return 'Resolved';
+      case 'closed': return 'Closed';
+      default: return status;
+    }
+  };
+
+  if (loading) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
-            onClick={() => setSelectedFeedback(null)}
-          >
-            ← Back to History
-          </Button>
-          <h2 className="text-xl font-semibold">
-            Interview from {new Date(selectedFeedback.created_at).toLocaleDateString()}
-          </h2>
+      <div className="min-h-screen bg-background p-4 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading your feedback history...</p>
         </div>
-        
-        <InterviewFeedback 
-          feedback={{
-            // 11+ scores
-            personal_insight_score: selectedFeedback.personal_insight_score,
-            reasoning_score: selectedFeedback.reasoning_score,
-            extracurricular_score: selectedFeedback.extracurricular_score,
-            current_awareness_score: selectedFeedback.current_awareness_score,
-            // IELTS scores
-            fluency_coherence_score: selectedFeedback.fluency_coherence_score,
-            lexical_resource_score: selectedFeedback.lexical_resource_score,
-            grammatical_range_score: selectedFeedback.grammatical_range_score,
-            pronunciation_score: selectedFeedback.pronunciation_score,
-            // Common fields
-            total_score: selectedFeedback.total_score,
-            detailed_feedback: selectedFeedback.detailed_feedback,
-            // Annotated transcript
-            transcription: selectedFeedback.transcription,
-            annotations: (selectedFeedback as any).annotations || [],
-            // Overall improvement feedback
-            overall_improvement_feedback: selectedFeedback.overall_improvement_feedback
-          }}
-          interviewType={selectedFeedback.interview_type || '11-plus'}
-          scoringSystem={selectedFeedback.scoring_system || '0-5'}
-        />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2">Feedback History</h2>
-        <p className="text-muted-foreground">
-          Review your past interview performances and track your progress.
-        </p>
-      </div>
-
-      {loading ? (
-        <div className="text-center py-8">
-          <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-muted rounded w-3/4 mx-auto"></div>
-            <div className="h-4 bg-muted rounded w-1/2 mx-auto"></div>
+    <div className="min-h-screen bg-background p-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            onClick={onBack}
+            className="mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          
+          <div className="flex items-center gap-3 mb-2">
+            <MessageSquare className="w-6 h-6 text-primary" />
+            <h1 className="text-2xl font-bold">Your Feedback History</h1>
           </div>
+          <p className="text-muted-foreground">
+            View all your submitted feedback and track their status.
+          </p>
         </div>
-      ) : feedbackHistory.length === 0 ? (
-        <Card>
-          <CardContent className="text-center py-8">
-            <CalendarDays className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No feedback yet</h3>
-            <p className="text-muted-foreground">
-              Complete an interview to see your feedback and track your progress.
-            </p>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-4">
-          {feedbackHistory.map((feedback) => (
-            <Card key={feedback.id} className="hover:shadow-md transition-shadow">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      Interview Session
-                      <Badge variant="outline" className="text-xs">
-                        {feedback.interview_type?.toUpperCase() || '11+'}
-                      </Badge>
-                    </CardTitle>
-                    <CardDescription className="flex items-center gap-2">
-                      <CalendarDays className="w-4 h-4" />
-                      {new Date(feedback.created_at).toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </CardDescription>
+
+        {feedbackHistory.length === 0 ? (
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <MessageSquare className="w-16 h-16 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-semibold mb-2">No feedback submitted yet</h3>
+              <p className="text-muted-foreground text-center mb-4">
+                You haven't submitted any feedback yet. We'd love to hear your thoughts!
+              </p>
+              <Button onClick={onBack}>
+                Submit Your First Feedback
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="space-y-4">
+            {feedbackHistory.map((feedback) => (
+              <Card key={feedback.id}>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">
+                        {feedback.subject || `${getCategoryLabel(feedback.category)} Feedback`}
+                      </CardTitle>
+                      <CardDescription className="flex items-center gap-4 mt-2">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {formatDistanceToNow(new Date(feedback.created_at), { addSuffix: true })}
+                        </span>
+                        <Badge variant="outline">{getCategoryLabel(feedback.category)}</Badge>
+                      </CardDescription>
+                    </div>
+                    <Badge variant={getStatusBadgeVariant(feedback.status)}>
+                      {formatStatus(feedback.status)}
+                    </Badge>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">
-                        {feedback.interview_type === 'ielts' 
-                          ? `${feedback.total_score}/9.0` 
-                          : `${feedback.total_score}/20`
-                        }
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium mb-2 flex items-center gap-2">
+                        <User className="w-4 h-4" />
+                        Your Message
+                      </h4>
+                      <p className="text-sm text-muted-foreground bg-muted p-3 rounded-md">
+                        {feedback.message}
+                      </p>
+                    </div>
+                    
+                    {feedback.admin_response && (
+                      <div>
+                        <h4 className="font-medium mb-2 flex items-center gap-2">
+                          <MessageSquare className="w-4 h-4" />
+                          Admin Response
+                        </h4>
+                        <p className="text-sm bg-primary/5 border border-primary/20 p-3 rounded-md">
+                          {feedback.admin_response}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          Updated {formatDistanceToNow(new Date(feedback.updated_at), { addSuffix: true })}
+                        </p>
                       </div>
-                      <Badge className={`${getBandColor(feedback.total_score, feedback.interview_type)} text-white text-xs`}>
-                        {getBandLabel(feedback.total_score, feedback.interview_type, feedback.scoring_system)}
-                      </Badge>
-                    </div>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => setSelectedFeedback(feedback)}
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
+                    )}
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {feedback.interview_type === 'ielts' ? (
-                  <div className="grid grid-cols-4 gap-4 text-sm">
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.fluency_coherence_score || 0}/9</div>
-                      <div className="text-muted-foreground">Fluency</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.lexical_resource_score || 0}/9</div>
-                      <div className="text-muted-foreground">Vocabulary</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.grammatical_range_score || 0}/9</div>
-                      <div className="text-muted-foreground">Grammar</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.pronunciation_score || 0}/9</div>
-                      <div className="text-muted-foreground">Pronunciation</div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-4 gap-4 text-sm">
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.personal_insight_score || 0}/5</div>
-                      <div className="text-muted-foreground">Personal</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.reasoning_score || 0}/5</div>
-                      <div className="text-muted-foreground">Reasoning</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.extracurricular_score || 0}/5</div>
-                      <div className="text-muted-foreground">Activities</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-primary">{feedback.current_awareness_score || 0}/5</div>
-                      <div className="text-muted-foreground">Awareness</div>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
+
+export default FeedbackHistory;
