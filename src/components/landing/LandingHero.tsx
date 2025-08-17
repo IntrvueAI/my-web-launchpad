@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Play, BookOpen, Brain, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { SparklesText } from '@/components/ui/sparkles-text';
 interface LandingHeroProps {
   onSignUp: () => void;
 }
@@ -32,9 +33,14 @@ export const LandingHero = ({
       <div className="container mx-auto px-4 py-20 max-w-7xl relative z-10">
         <div className="text-center space-y-8 mb-16">
           {/* St. Paul's School Badge */}
-          <Badge className="bg-white text-[#FF7F50] hover:bg-gray-50 px-4 py-2 text-sm font-medium border border-[#FF7F50]/40">
+          <Badge className="bg-white text-[#FF7F50] hover:bg-gray-50 px-4 py-2 text-sm font-medium border border-[#FF7F50]/40 relative overflow-hidden">
             <BookOpen className="w-4 h-4 mr-2" />
-            Designed by Students & Teachers from St. Paul's School, London
+            <SparklesText 
+              text="Designed by Students & Teachers from St. Paul's School, London"
+              className="text-sm font-medium"
+              sparklesCount={5}
+              colors={{ first: "#FF7F50", second: "#FFB347" }}
+            />
           </Badge>
 
           {/* Technology Badge */}
