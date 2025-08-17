@@ -236,26 +236,71 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
         </Card>
       )}
 
-      {/* Overall Improvement Feedback */}
+      {/* Comprehensive Overall Feedback Summary */}
       {feedback.overall_improvement_feedback && (
-        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg text-primary">
-              <Target className="w-5 h-5" />
-              Your Action Plan for Improvement
+        <Card className="border-secondary/30 bg-gradient-to-br from-secondary/10 to-orange-50/50 shadow-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-3 text-xl text-secondary">
+              <Target className="w-6 h-6" />
+              Overall Feedback Summary & Action Plan
             </CardTitle>
-            <CardDescription>Specific steps to boost your performance in your next interview</CardDescription>
+            <CardDescription className="text-base">
+              Comprehensive analysis of your performance with targeted improvement strategies
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="prose prose-sm max-w-none text-muted-foreground">
-              {feedback.overall_improvement_feedback.split('\n').map((paragraph, index) => {
-                if (paragraph.trim() === '') return null;
-                return (
-                  <p key={index} className="mb-3 leading-relaxed">
-                    {paragraph}
-                  </p>
-                );
-              })}
+          <CardContent className="space-y-6">
+            {/* Key Performance Insights */}
+            <div className="bg-white/70 rounded-lg p-4 border border-secondary/20">
+              <h4 className="font-semibold text-secondary mb-3 flex items-center gap-2">
+                <Brain className="w-4 h-4" />
+                Key Performance Analysis
+              </h4>
+              <div className="prose prose-sm max-w-none text-muted-foreground">
+                {feedback.overall_improvement_feedback.split('\n').slice(0, 3).map((paragraph, index) => {
+                  if (paragraph.trim() === '') return null;
+                  return (
+                    <p key={index} className="mb-2 leading-relaxed">
+                      {paragraph}
+                    </p>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Action Steps */}
+            <div className="bg-white/70 rounded-lg p-4 border border-secondary/20">
+              <h4 className="font-semibold text-secondary mb-3 flex items-center gap-2">
+                <Target className="w-4 h-4" />
+                Immediate Action Steps
+              </h4>
+              <div className="prose prose-sm max-w-none text-muted-foreground">
+                {feedback.overall_improvement_feedback.split('\n').slice(3).map((paragraph, index) => {
+                  if (paragraph.trim() === '') return null;
+                  
+                  // Check if it's a bullet point or numbered item
+                  const isBulletPoint = paragraph.trim().match(/^[•\-\*]\s/) || paragraph.trim().match(/^\d+\.\s/);
+                  
+                  return (
+                    <div key={index} className={`mb-2 leading-relaxed ${isBulletPoint ? 'ml-4' : ''}`}>
+                      {isBulletPoint ? (
+                        <div className="flex items-start gap-2">
+                          <span className="text-secondary font-semibold">→</span>
+                          <span>{paragraph.replace(/^[•\-\*]\s/, '').replace(/^\d+\.\s/, '')}</span>
+                        </div>
+                      ) : (
+                        <p>{paragraph}</p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Success Reminder */}
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
+              <p className="text-sm text-green-700 font-medium text-center">
+                💡 Remember: Every interview is a learning opportunity. Focus on progress, not perfection!
+              </p>
             </div>
           </CardContent>
         </Card>
