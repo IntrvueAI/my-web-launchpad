@@ -31,7 +31,13 @@ export const LandingHero = ({
 
       <div className="container mx-auto px-4 py-20 max-w-7xl relative z-10">
         <div className="text-center space-y-8 mb-16">
-          {/* Badge */}
+          {/* St. Paul's School Badge */}
+          <Badge className="bg-accent/20 text-accent-foreground hover:bg-accent/30 px-4 py-2 text-sm font-medium border border-accent/40">
+            <BookOpen className="w-4 h-4 mr-2" />
+            Designed by Students & Teachers from St. Paul's School, London
+          </Badge>
+
+          {/* Technology Badge */}
           <Badge className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 text-sm font-medium border-0">
             <Brain className="w-4 h-4 mr-2" />
             Powered by Advanced Digital Human Technology
