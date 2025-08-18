@@ -1,8 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, Brain, Activity, Globe, MessageSquare, Languages, FileText, Volume2, Target } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { BookOpen, Brain, Activity, Globe, MessageSquare, Languages, FileText, Volume2, Target, ChevronDown } from 'lucide-react';
 import { AnnotatedTranscript } from './AnnotatedTranscript';
+import { useState } from 'react';
 
 interface Annotation {
   quote: string;
@@ -85,6 +87,8 @@ const getBandLabel = (score: number, maxScore: number, interviewType?: string) =
 };
 
 export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plus', scoringSystem = '0-5' }: InterviewFeedbackProps) => {
+  const [isTranscriptOpen, setIsTranscriptOpen] = useState(false);
+
   if (isLoading) {
     return (
       <Card className="w-full">
@@ -223,16 +227,31 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
       {/* Annotated Transcript */}
       {feedback.transcription && (
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Annotated Transcript</CardTitle>
-            <CardDescription>Full transcript with highlighted strengths and areas to improve</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <AnnotatedTranscript 
-              transcript={feedback.transcription}
-              annotations={feedback.annotations || []}
-            />
-          </CardContent>
+          <Collapsible open={isTranscriptOpen} onOpenChange={setIsTranscriptOpen}>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-lg">Annotated Transcript</CardTitle>
+                    <CardDescription>Full transcript with highlighted strengths and areas to improve</CardDescription>
+                  </div>
+                  <ChevronDown 
+                    className={`h-5 w-5 transition-transform duration-200 ${
+                      isTranscriptOpen ? 'transform rotate-180' : ''
+                    }`}
+                  />
+                </div>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent>
+                <AnnotatedTranscript 
+                  transcript={feedback.transcription}
+                  annotations={feedback.annotations || []}
+                />
+              </CardContent>
+            </CollapsibleContent>
+          </Collapsible>
         </Card>
       )}
 
