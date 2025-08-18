@@ -107,18 +107,32 @@ export const useInterviewSession = (
       setError(null);
       setSessionStatus('connecting');
 
-      // Start session logging
-      const sessionRef = await sessionLogger.startSession(interviewType, userId);
-      await sessionLogger.logEvent('session_start', 'Interview session initialization started');
+      console.log('🚀 Starting interview session...');
+
+      // Start session logging (non-blocking)
+      sessionLogger.startSession(interviewType, userId)
+        .then((sessionRef) => {
+          console.log('✅ Session logging started:', sessionRef);
+          sessionLogger.logEvent('session_start', 'Interview session initialization started');
+        })
+        .catch((err) => {
+          console.warn('⚠️ Session logging failed (continuing anyway):', err);
+        });
 
       // Start connection health monitoring
       connectionHealth.startMonitoring();
 
       // Get session token from backend
+      console.log('🔑 Getting session token...');
       const sessionToken = await getSessionToken();
-      await sessionLogger.logEvent('anam_token', 'Successfully obtained Anam session token');
+      console.log('✅ Session token obtained');
+
+      // Log token success (non-blocking)
+      sessionLogger.logEvent('anam_token', 'Successfully obtained Anam session token')
+        .catch(err => console.warn('Failed to log token event:', err));
 
       // Create anam client
+      console.log('🤖 Creating Anam client...');
       const client = createClient(sessionToken);
       clientRef.current = client;
 
@@ -137,30 +151,41 @@ export const useInterviewSession = (
         
         setChatHistory(formattedMessages);
         
-        // Update activity and log conversation progress
-        sessionLogger.updateActivity();
-        sessionLogger.logEvent('message_update', `Received ${messages.length} messages in conversation`);
+        // Update activity and log conversation progress (non-blocking)
+        sessionLogger.updateActivity().catch(err => console.warn('Failed to update activity:', err));
+        sessionLogger.logEvent('message_update', `Received ${messages.length} messages in conversation`)
+          .catch(err => console.warn('Failed to log message update:', err));
       });
 
       // Add error listener
       client.addListener(AnamEvent.CONNECTION_CLOSED, () => {
-        sessionLogger.logError('Anam connection closed unexpectedly');
+        sessionLogger.logError('Anam connection closed unexpectedly')
+          .catch(err => console.warn('Failed to log connection closed:', err));
         console.warn('Anam connection closed');
       });
 
       // Start streaming to video element
+      console.log('📹 Starting video stream...');
       await client.streamToVideoElement('interview-video');
+      console.log('✅ Video streaming started');
 
       setIsConnected(true);
       setIsStreaming(true);
       setSessionStatus('streaming');
 
-      await sessionLogger.logEvent('streaming_start', 'Video streaming started successfully');
-      console.log('Interview session started successfully');
+      // Log streaming success (non-blocking)
+      sessionLogger.logEvent('streaming_start', 'Video streaming started successfully')
+        .catch(err => console.warn('Failed to log streaming start:', err));
+      
+      console.log('🎉 Interview session started successfully');
     } catch (err) {
-      console.error('Failed to start interview:', err);
+      console.error('❌ Failed to start interview:', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to start interview';
-      await sessionLogger.logError(`Failed to start interview: ${errorMessage}`);
+      
+      // Log error (non-blocking)
+      sessionLogger.logError(`Failed to start interview: ${errorMessage}`)
+        .catch(logErr => console.warn('Failed to log error:', logErr));
+      
       setError(errorMessage);
       setSessionStatus('error');
       setIsConnected(false);

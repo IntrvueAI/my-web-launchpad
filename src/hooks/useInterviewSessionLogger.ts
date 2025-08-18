@@ -19,7 +19,13 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
     try {
       // Generate session reference
       const { data: sessionRef, error: refError } = await supabase.rpc('generate_session_reference');
-      if (refError) throw refError;
+      if (refError) {
+        console.warn('Failed to generate session reference:', refError);
+        // Fallback to timestamp-based reference
+        const fallbackRef = `S${Date.now().toString(36).toUpperCase()}`;
+        sessionReferenceRef.current = fallbackRef;
+        return fallbackRef;
+      }
 
       // Create session record
       const { data, error } = await supabase
@@ -44,7 +50,13 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
         .select('id, session_reference')
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.warn('Failed to create session record:', error);
+        // Still return a reference for tracking
+        const fallbackRef = sessionRef || `S${Date.now().toString(36).toUpperCase()}`;
+        sessionReferenceRef.current = fallbackRef;
+        return fallbackRef;
+      }
 
       sessionIdRef.current = data.id;
       sessionReferenceRef.current = data.session_reference;
@@ -52,8 +64,11 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
       console.log('🟢 Interview session started:', data.session_reference);
       return data.session_reference;
     } catch (error) {
-      console.error('Failed to start session logging:', error);
-      throw error;
+      console.warn('Session logging failed - using fallback:', error);
+      // Always provide a fallback reference
+      const fallbackRef = `F${Date.now().toString(36).toUpperCase()}`;
+      sessionReferenceRef.current = fallbackRef;
+      return fallbackRef;
     }
   }, []);
 
@@ -63,7 +78,10 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
     level: 'info' | 'warn' | 'error' = 'info',
     metadata: Record<string, any> = {}
   ): Promise<void> => {
-    if (!sessionIdRef.current) return;
+    if (!sessionIdRef.current) {
+      console.warn('No session ID - skipping log event:', type, message);
+      return;
+    }
 
     try {
       await supabase
@@ -80,7 +98,7 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
           }
         });
     } catch (error) {
-      console.error('Failed to log event:', error);
+      console.warn('Failed to log event (continuing):', error);
     }
   }, []);
 
@@ -89,7 +107,10 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
   }, [logEvent]);
 
   const updateActivity = useCallback(async (): Promise<void> => {
-    if (!sessionIdRef.current) return;
+    if (!sessionIdRef.current) {
+      console.warn('No session ID - skipping activity update');
+      return;
+    }
 
     try {
       await supabase
@@ -97,12 +118,15 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
         .update({ last_activity_at: new Date().toISOString() })
         .eq('id', sessionIdRef.current);
     } catch (error) {
-      console.error('Failed to update activity:', error);
+      console.warn('Failed to update activity (continuing):', error);
     }
   }, []);
 
   const endSession = useCallback(async (status: 'completed' | 'error' | 'timeout' = 'completed'): Promise<void> => {
-    if (!sessionIdRef.current) return;
+    if (!sessionIdRef.current) {
+      console.warn('No session ID - skipping end session');
+      return;
+    }
 
     try {
       await supabase
@@ -117,7 +141,7 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
       
       console.log('🔴 Interview session ended:', sessionReferenceRef.current, 'Status:', status);
     } catch (error) {
-      console.error('Failed to end session:', error);
+      console.warn('Failed to end session (continuing):', error);
     }
   }, [logEvent]);
 
