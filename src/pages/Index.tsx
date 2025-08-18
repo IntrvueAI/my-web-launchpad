@@ -41,6 +41,7 @@ const Index = () => {
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history' | 'settings' | 'credits'>('selection');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
+  const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
 
   const { credits, refetchCredits } = useCredits();
   const { toast } = useToast();
@@ -119,9 +120,10 @@ const Index = () => {
   // Detect payment success via URL and display success page
   const showPaymentSuccess = useMemo(() => {
     if (typeof window === 'undefined') return false;
+    if (paymentSuccessDismissed) return false;
     const params = new URLSearchParams(window.location.search);
     return params.get('view') === 'payment-success' || !!params.get('session_id');
-  }, [typeof window]);
+  }, [typeof window, paymentSuccessDismissed]);
 
   useEffect(() => {
     // If we just paid, refresh credits once landing back
@@ -129,6 +131,19 @@ const Index = () => {
       refetchCredits();
     }
   }, [showPaymentSuccess, refetchCredits]);
+
+  // Function to clear URL parameters and dismiss payment success
+  const clearPaymentSuccessAndNavigate = (view: 'selection' | 'interview' | 'history' | 'settings' | 'credits') => {
+    // Clear URL parameters
+    const url = new URL(window.location.href);
+    url.searchParams.delete('session_id');
+    url.searchParams.delete('view');
+    window.history.replaceState({}, '', url.toString());
+    
+    // Dismiss payment success and navigate
+    setPaymentSuccessDismissed(true);
+    setCurrentView(view);
+  };
 
   // Show loading spinner while checking auth
   if (loading) {
@@ -171,19 +186,19 @@ const Index = () => {
             {/* Desktop Navigation */}
             {currentView !== 'interview' && (
               <nav className="hidden lg:flex gap-2">
-                <Button variant={currentView === 'selection' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('selection')} className="gap-2">
+                <Button variant={currentView === 'selection' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')} className="gap-2">
                   <Video className="w-4 h-4" />
                   Practice
                 </Button>
-                <Button variant={currentView === 'history' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('history')} className="gap-2">
+                <Button variant={currentView === 'history' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('history') : setCurrentView('history')} className="gap-2">
                   <History className="w-4 h-4" />
                   History
                 </Button>
-                <Button variant={currentView === 'credits' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('credits')} className="gap-2">
+                <Button variant={currentView === 'credits' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('credits') : setCurrentView('credits')} className="gap-2">
                   <Wallet className="w-4 h-4" />
                   Credits
                 </Button>
-                <Button variant={currentView === 'settings' ? 'default' : 'ghost'} size="sm" onClick={() => setCurrentView('settings')} className="gap-2">
+                <Button variant={currentView === 'settings' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('settings') : setCurrentView('settings')} className="gap-2">
                   <Settings className="w-4 h-4" />
                   Settings
                 </Button>
@@ -196,7 +211,7 @@ const Index = () => {
                 <Button 
                   variant={currentView === 'selection' ? 'default' : 'ghost'} 
                   size="sm" 
-                  onClick={() => setCurrentView('selection')} 
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')} 
                   className="p-2"
                   aria-label="Practice"
                 >
@@ -205,7 +220,7 @@ const Index = () => {
                 <Button 
                   variant={currentView === 'history' ? 'default' : 'ghost'} 
                   size="sm" 
-                  onClick={() => setCurrentView('history')} 
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('history') : setCurrentView('history')} 
                   className="p-2"
                   aria-label="History"
                 >
@@ -214,7 +229,7 @@ const Index = () => {
                 <Button 
                   variant={currentView === 'credits' ? 'default' : 'ghost'} 
                   size="sm" 
-                  onClick={() => setCurrentView('credits')} 
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('credits') : setCurrentView('credits')} 
                   className="p-2"
                   aria-label="Credits"
                 >
@@ -223,7 +238,7 @@ const Index = () => {
                 <Button 
                   variant={currentView === 'settings' ? 'default' : 'ghost'} 
                   size="sm" 
-                  onClick={() => setCurrentView('settings')} 
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('settings') : setCurrentView('settings')} 
                   className="p-2"
                   aria-label="Settings"
                 >
@@ -264,7 +279,7 @@ const Index = () => {
         <MobileBottomNav
           currentView={currentView}
           credits={credits ?? 0}
-          onViewChange={setCurrentView}
+          onViewChange={showPaymentSuccess ? clearPaymentSuccessAndNavigate : setCurrentView}
           onSignOut={handleSignOut}
         />
       )}
@@ -273,8 +288,8 @@ const Index = () => {
         {showPaymentSuccess ? (
           <div className="container mx-auto px-4 py-8 max-w-3xl">
             <PaymentSuccess 
-              onGoToPractice={() => setCurrentView('selection')} 
-              onGoToCredits={() => setCurrentView('credits')}
+              onGoToPractice={() => clearPaymentSuccessAndNavigate('selection')} 
+              onGoToCredits={() => clearPaymentSuccessAndNavigate('credits')}
             />
           </div>
         ) : currentView === 'selection' ? (
