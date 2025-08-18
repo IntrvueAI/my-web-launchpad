@@ -15,7 +15,7 @@ export interface InterviewType {
   id: string;
   name: string;
   description: string;
-  category: 'academic' | 'language' | 'professional';
+  category: 'academic' | 'logic' | 'behaviour' | 'maths' | 'school_specific' | 'other' | 'free';
   promptFile: string;
   duration: number; // in minutes
   scoringSystem: '0-5' | '0-9' | '0-10' | '0-7';
@@ -49,7 +49,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     id: 'logic-puzzles',
     name: '11+ Logic Puzzles',
     description: 'Focused practice on logic puzzles and reasoning problems for 11+ preparation',
-    category: 'academic',
+    category: 'logic',
     promptFile: 'academic/logic-puzzles.md',
     duration: 30,
     scoringSystem: '0-5',
@@ -67,7 +67,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     id: 'demo',
     name: 'Free Demo Interview',
     description: 'Try a free 2-minute demo interview. Practice the flow and see feedback without using any credits.',
-    category: 'language',
+    category: 'free',
     promptFile: 'demo/demo.md',
     duration: 2,
     scoringSystem: '0-5',
@@ -86,19 +86,39 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
 
 export const INTERVIEW_CATEGORIES = {
   academic: {
-    name: 'Academic Interviews',
-    description: 'School and university admission interviews',
+    name: 'Full Interviews',
+    description: 'Complete comprehensive interview practice',
     color: 'blue'
   },
-  language: {
-    name: 'Language Tests',
-    description: 'Language proficiency and speaking tests',
+  logic: {
+    name: 'Logic',
+    description: 'Logic puzzles and reasoning challenges',
+    color: 'purple'
+  },
+  behaviour: {
+    name: 'Behaviour',
+    description: 'Behavioral and situational interview questions',
     color: 'green'
   },
-  professional: {
-    name: 'Professional Interviews',
-    description: 'Job interviews and career assessments',
-    color: 'purple'
+  maths: {
+    name: 'Maths',
+    description: 'Mathematical problem-solving interviews',
+    color: 'orange'
+  },
+  school_specific: {
+    name: 'School Specific',
+    description: 'Interviews tailored for specific schools',
+    color: 'red'
+  },
+  other: {
+    name: 'Other',
+    description: 'Specialized and unique interview formats',
+    color: 'gray'
+  },
+  free: {
+    name: 'Free',
+    description: 'Free demo and trial interviews',
+    color: 'emerald'
   }
 } as const;
 
