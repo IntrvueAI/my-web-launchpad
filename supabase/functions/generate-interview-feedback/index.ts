@@ -127,7 +127,7 @@ serve(async (req) => {
 try {
   // Input validation and sanitization
   const inputBody = await req.json();
-  const { transcription, sessionId, userId, interviewType, interviewCategory, scoringSystem } = inputBody;
+  const { transcription, sessionId, userId, interviewType, interviewCategory, scoringSystem, sessionReference } = inputBody;
 
   // Validate required fields
   if (!transcription || typeof transcription !== 'string') {
@@ -690,6 +690,7 @@ STUDENT PERFORMANCE DATA:`;
     const insertData: any = {
       user_id: userId,
       interview_session_id: sessionId || `session_${Date.now()}`,
+      session_reference: sessionReference || null, // Add session reference to the feedback
       transcription: sanitizedTranscription,
       total_score: dbTotalScore,
       detailed_feedback: feedbackData.detailed_feedback,

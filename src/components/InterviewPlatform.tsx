@@ -186,6 +186,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             interviewType: interviewType.id,
             interviewCategory: interviewType.category,
             scoringSystem: interviewType.scoringSystem,
+            sessionReference: sessionReference, // Include session reference
           },
         });
 
@@ -244,6 +245,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           interviewType: interviewType.id,
           interviewCategory: interviewType.category,
           scoringSystem: interviewType.scoringSystem,
+          sessionReference: sessionReference, // Include session reference for regeneration
         },
       });
       if (error) {

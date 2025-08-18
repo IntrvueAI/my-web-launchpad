@@ -111,6 +111,7 @@ export type Database = {
           reasoning_score: number | null
           scores: Json | null
           scoring_system: string | null
+          session_reference: string | null
           total_score: number | null
           transcription: string | null
           user_id: string
@@ -136,6 +137,7 @@ export type Database = {
           reasoning_score?: number | null
           scores?: Json | null
           scoring_system?: string | null
+          session_reference?: string | null
           total_score?: number | null
           transcription?: string | null
           user_id: string
@@ -161,6 +163,7 @@ export type Database = {
           reasoning_score?: number | null
           scores?: Json | null
           scoring_system?: string | null
+          session_reference?: string | null
           total_score?: number | null
           transcription?: string | null
           user_id?: string
