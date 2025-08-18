@@ -131,7 +131,7 @@ export const InterviewSelection = ({
                     </div>
                     <div className="flex items-center gap-2">
                       <Target className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <span className="text-xs md:text-sm">{scoreRange.min}-{scoreRange.max}</span>
+                      <span className="text-xs md:text-sm">0-20</span>
                     </div>
                   </div>
 
