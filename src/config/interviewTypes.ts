@@ -52,11 +52,12 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     category: 'academic',
     promptFile: 'academic/logic-puzzles.md',
     duration: 30,
-    scoringSystem: '0-7',
+    scoringSystem: '0-5',
     scoringCriteria: [
       'Pattern Recognition & Sequences',
       'Logical Deduction & Reasoning',
-      'Mathematical Logic & Word Problems'
+      'Mathematical Logic & World Problems',
+      'Clarity of Thought'
     ],
     difficultyLevel: 3,
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
@@ -203,13 +204,13 @@ const IELTS_CONFIG: InterviewTypeConfig = {
   ]
 };
 
-// Logic Puzzles Configuration (20 points total: 7+7+6)
+// Logic Puzzles Configuration (20 points total: 5+5+5+5)
 const LOGIC_PUZZLES_CONFIG: InterviewTypeConfig = {
   name: 'Logic Puzzles Interview',
   description: 'Focused assessment of logical reasoning through voice-based puzzles',
-  scoringSystem: '0-7',
+  scoringSystem: '0-5',
   maxTotalScore: 20,
-  maxSectionScore: 7,
+  maxSectionScore: 5,
   sections: [
     {
       id: 'pattern-recognition',
@@ -229,11 +230,19 @@ const LOGIC_PUZZLES_CONFIG: InterviewTypeConfig = {
     },
     {
       id: 'mathematical-logic',
-      title: 'Mathematical Logic & Word Problems',
+      title: 'Mathematical Logic & World Problems',
       iconName: 'Calculator',
       description: 'Mathematical reasoning and word problem solving',
       scoreField: 'mathematical_logic_score',
       feedbackField: 'mathematical_logic'
+    },
+    {
+      id: 'clarity-of-thought',
+      title: 'Clarity of Thought',
+      iconName: 'MessageCircle',
+      description: 'Ability to articulate reasoning clearly and logically',
+      scoreField: 'clarity_of_thought_score',
+      feedbackField: 'clarity_of_thought'
     }
   ],
   bandThresholds: [

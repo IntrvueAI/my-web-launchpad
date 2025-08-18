@@ -104,6 +104,7 @@ export interface FeedbackScores {
   pattern_recognition_score?: number;
   logical_deduction_score?: number;
   mathematical_logic_score?: number;
+  clarity_of_thought_score?: number;
   
   // Common fields
   total_score: number;
@@ -129,6 +130,7 @@ export interface DetailedFeedback {
   pattern_recognition?: string;
   logical_deduction?: string;
   mathematical_logic?: string;
+  clarity_of_thought?: string;
   
   // Common feedback
   overall: string;

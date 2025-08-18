@@ -47,6 +47,7 @@ interface InterviewFeedbackProps {
     pattern_recognition_score?: number;
     logical_deduction_score?: number;
     mathematical_logic_score?: number;
+    clarity_of_thought_score?: number;
     // Common fields
     total_score: number;
     detailed_feedback: {
@@ -64,6 +65,7 @@ interface InterviewFeedbackProps {
       pattern_recognition?: string;
       logical_deduction?: string;
       mathematical_logic?: string;
+      clarity_of_thought?: string;
       // Common feedback
       overall: string;
       band_assessment: string;
@@ -162,7 +164,7 @@ export const InterviewFeedback = ({
     maxIndividualScore = 9;
   } else if (isLogicPuzzles) {
     maxScore = 20;
-    maxIndividualScore = 7;
+    maxIndividualScore = 5;
   } else {
     maxScore = scoringSystem === '0-5' ? 20 : 5;
     maxIndividualScore = 5;
@@ -212,10 +214,16 @@ export const InterviewFeedback = ({
         feedback: feedback.detailed_feedback.logical_deduction || '',
       },
       {
-        title: 'Mathematical Logic & Word Problems',
+        title: 'Mathematical Logic & World Problems',
         icon: 'Calculator',
         score: feedback.mathematical_logic_score || 0,
         feedback: feedback.detailed_feedback.mathematical_logic || '',
+      },
+      {
+        title: 'Clarity of Thought',
+        icon: 'MessageCircle',
+        score: feedback.clarity_of_thought_score || 0,
+        feedback: feedback.detailed_feedback.clarity_of_thought || '',
       },
     ];
   } else {

@@ -92,6 +92,7 @@ export type Database = {
       feedback: {
         Row: {
           annotations: Json | null
+          clarity_of_thought_score: number | null
           created_at: string
           current_awareness_score: number | null
           detailed_feedback: Json | null
@@ -121,6 +122,7 @@ export type Database = {
         }
         Insert: {
           annotations?: Json | null
+          clarity_of_thought_score?: number | null
           created_at?: string
           current_awareness_score?: number | null
           detailed_feedback?: Json | null
@@ -150,6 +152,7 @@ export type Database = {
         }
         Update: {
           annotations?: Json | null
+          clarity_of_thought_score?: number | null
           created_at?: string
           current_awareness_score?: number | null
           detailed_feedback?: Json | null
