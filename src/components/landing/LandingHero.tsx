@@ -36,7 +36,7 @@ export const LandingHero = ({
           {/* St. Paul's School Badge */}
           <Badge className="bg-white text-[#FF7F50] hover:bg-gray-50 px-4 py-2 text-sm font-medium border border-[#FF7F50]/40 relative overflow-hidden">
             <BookOpen className="w-4 h-4 mr-2" />
-            <SparklesText text="Designed by Students & Teachers from St. Paul's School, London" className="text-sm font-medium" sparklesCount={5} colors={{
+            <SparklesText text="Designed by former Students & Teachers from St. Paul's School, London" className="text-sm font-medium" sparklesCount={5} colors={{
               first: "#FF7F50",
               second: "#FFB347"
             }} />
