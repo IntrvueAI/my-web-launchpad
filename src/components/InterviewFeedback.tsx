@@ -43,6 +43,10 @@ interface InterviewFeedbackProps {
     lexical_resource_score?: number;
     grammatical_range_score?: number;
     pronunciation_score?: number;
+    // Logic puzzles scores
+    pattern_recognition_score?: number;
+    logical_deduction_score?: number;
+    mathematical_logic_score?: number;
     // Common fields
     total_score: number;
     detailed_feedback: {
@@ -56,6 +60,10 @@ interface InterviewFeedbackProps {
       lexical_resource?: string;
       grammatical_range?: string;
       pronunciation?: string;
+      // Logic puzzles feedback
+      pattern_recognition?: string;
+      logical_deduction?: string;
+      mathematical_logic?: string;
       // Common feedback
       overall: string;
       band_assessment: string;
@@ -146,62 +154,99 @@ export const InterviewFeedback = ({
 
   // Calculate scoring parameters based on interview type
   const isIELTS = interviewType === 'ielts';
-  const maxScore = isIELTS ? 9 : (scoringSystem === '0-5' ? 20 : 5);
-  const maxIndividualScore = isIELTS ? 9 : 5;
+  const isLogicPuzzles = interviewType === 'logic-puzzles';
+  
+  let maxScore, maxIndividualScore;
+  if (isIELTS) {
+    maxScore = 9;
+    maxIndividualScore = 9;
+  } else if (isLogicPuzzles) {
+    maxScore = 20;
+    maxIndividualScore = 7;
+  } else {
+    maxScore = scoringSystem === '0-5' ? 20 : 5;
+    maxIndividualScore = 5;
+  }
 
-  // Legacy sections configuration - maintaining backward compatibility
-  // TODO: Migrate to use getInterviewTypeConfig() from the new modular system
-  const sections = isIELTS ? [
-    {
-      title: 'Fluency & Coherence',
-      icon: 'MessageSquare',
-      score: feedback.fluency_coherence_score || 0,
-      feedback: feedback.detailed_feedback.fluency_coherence || '',
-    },
-    {
-      title: 'Lexical Resource',
-      icon: 'Languages', 
-      score: feedback.lexical_resource_score || 0,
-      feedback: feedback.detailed_feedback.lexical_resource || '',
-    },
-    {
-      title: 'Grammatical Range & Accuracy',
-      icon: 'FileText',
-      score: feedback.grammatical_range_score || 0,
-      feedback: feedback.detailed_feedback.grammatical_range || '',
-    },
-    {
-      title: 'Pronunciation',
-      icon: 'Volume2',
-      score: feedback.pronunciation_score || 0,
-      feedback: feedback.detailed_feedback.pronunciation || '',
-    },
-  ] : [
-    {
-      title: 'Personal Insight & Expression',
-      icon: 'BookOpen',
-      score: feedback.personal_insight_score || 0,
-      feedback: feedback.detailed_feedback.personal_insight || '',
-    },
-    {
-      title: 'Reasoning & Intellectual Agility',
-      icon: 'Brain',
-      score: feedback.reasoning_score || 0,
-      feedback: feedback.detailed_feedback.reasoning || '',
-    },
-    {
-      title: 'Extracurricular Engagement',
-      icon: 'Activity',
-      score: feedback.extracurricular_score || 0,
-      feedback: feedback.detailed_feedback.extracurricular || '',
-    },
-    {
-      title: 'Current Awareness & Moral Reasoning',
-      icon: 'Globe',
-      score: feedback.current_awareness_score || 0,
-      feedback: feedback.detailed_feedback.current_awareness || '',
-    },
-  ];
+  // Dynamic sections configuration based on interview type
+  let sections;
+  if (isIELTS) {
+    sections = [
+      {
+        title: 'Fluency & Coherence',
+        icon: 'MessageSquare',
+        score: feedback.fluency_coherence_score || 0,
+        feedback: feedback.detailed_feedback.fluency_coherence || '',
+      },
+      {
+        title: 'Lexical Resource',
+        icon: 'Languages', 
+        score: feedback.lexical_resource_score || 0,
+        feedback: feedback.detailed_feedback.lexical_resource || '',
+      },
+      {
+        title: 'Grammatical Range & Accuracy',
+        icon: 'FileText',
+        score: feedback.grammatical_range_score || 0,
+        feedback: feedback.detailed_feedback.grammatical_range || '',
+      },
+      {
+        title: 'Pronunciation',
+        icon: 'Volume2',
+        score: feedback.pronunciation_score || 0,
+        feedback: feedback.detailed_feedback.pronunciation || '',
+      },
+    ];
+  } else if (isLogicPuzzles) {
+    sections = [
+      {
+        title: 'Pattern Recognition & Sequences',
+        icon: 'TrendingUp',
+        score: feedback.pattern_recognition_score || 0,
+        feedback: feedback.detailed_feedback.pattern_recognition || '',
+      },
+      {
+        title: 'Logical Deduction & Reasoning',
+        icon: 'Brain',
+        score: feedback.logical_deduction_score || 0,
+        feedback: feedback.detailed_feedback.logical_deduction || '',
+      },
+      {
+        title: 'Mathematical Logic & Word Problems',
+        icon: 'Calculator',
+        score: feedback.mathematical_logic_score || 0,
+        feedback: feedback.detailed_feedback.mathematical_logic || '',
+      },
+    ];
+  } else {
+    // Default 11+ sections
+    sections = [
+      {
+        title: 'Personal Insight & Expression',
+        icon: 'BookOpen',
+        score: feedback.personal_insight_score || 0,
+        feedback: feedback.detailed_feedback.personal_insight || '',
+      },
+      {
+        title: 'Reasoning & Intellectual Agility',
+        icon: 'Brain',
+        score: feedback.reasoning_score || 0,
+        feedback: feedback.detailed_feedback.reasoning || '',
+      },
+      {
+        title: 'Extracurricular Engagement',
+        icon: 'Activity',
+        score: feedback.extracurricular_score || 0,
+        feedback: feedback.detailed_feedback.extracurricular || '',
+      },
+      {
+        title: 'Current Awareness & Moral Reasoning',
+        icon: 'Globe',
+        score: feedback.current_awareness_score || 0,
+        feedback: feedback.detailed_feedback.current_awareness || '',
+      },
+    ];
+  }
 
   return (
     <div className="space-y-6">
