@@ -7,7 +7,7 @@
  */
 
 // Core interview system types
-export type InterviewType = '11-plus' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship';
+export type InterviewType = '11-plus' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles';
 export type ScoringSystem = '0-5' | '0-9' | '0-20';
 export type AnnotationCategory = 'strength' | 'grammar' | 'fluency' | 'lexical';
 
@@ -100,6 +100,11 @@ export interface FeedbackScores {
   grammatical_range_score?: number;
   pronunciation_score?: number;
   
+  // Logic puzzles specific scores
+  pattern_recognition_score?: number;
+  logical_deduction_score?: number;
+  mathematical_logic_score?: number;
+  
   // Common fields
   total_score: number;
 }
@@ -119,6 +124,11 @@ export interface DetailedFeedback {
   lexical_resource?: string;
   grammatical_range?: string;
   pronunciation?: string;
+  
+  // Logic puzzles feedback sections
+  pattern_recognition?: string;
+  logical_deduction?: string;
+  mathematical_logic?: string;
   
   // Common feedback
   overall: string;

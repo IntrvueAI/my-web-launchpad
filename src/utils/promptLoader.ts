@@ -2,11 +2,13 @@ import { getInterviewType } from '@/config/interviewTypes';
 
 // Import all prompts statically to avoid dynamic import issues
 import elevenPlusPrompt from '../prompts/academic/11-plus.md?raw';
+import logicPuzzlesPrompt from '../prompts/academic/logic-puzzles.md?raw';
 import demoPrompt from '../prompts/demo/demo.md?raw';
 
 // Static mapping of prompts
 const SYSTEM_PROMPTS: Record<string, string> = {
   '11-plus': elevenPlusPrompt,
+  'logic-puzzles': logicPuzzlesPrompt,
   'demo': demoPrompt,
 };
 
