@@ -39,6 +39,29 @@ export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transc
     .filter(a => a && a.quote && a.quote.trim().length > 2)
     .sort((a, b) => b.quote.length - a.quote.length);
 
+  const formatSpeakerTags = (text: string): React.ReactNode[] => {
+    // Split by speaker tags and format them
+    const parts = text.split(/(\b(?:Student|Interviewer):\s*)/gi);
+    const result: React.ReactNode[] = [];
+    
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      if (part.match(/\b(?:Student|Interviewer):\s*/i)) {
+        const speaker = part.toLowerCase().includes('student') ? 'Student' : 'Interviewer';
+        const color = speaker === 'Student' ? 'text-primary' : 'text-secondary';
+        result.push(
+          <span key={i} className={`font-semibold ${color}`}>
+            {speaker}:
+          </span>
+        );
+      } else if (part) {
+        result.push(part);
+      }
+    }
+    
+    return result;
+  };
+
   const renderWithHighlights = () => {
     // Prefer precise index-based annotations when available
     const ranged = (annotations || []).filter((a) => (
@@ -147,7 +170,16 @@ export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transc
       </div>
 
       <div className="whitespace-pre-wrap leading-relaxed text-sm text-foreground/90">
-        {renderWithHighlights()}
+        {(() => {
+          const highlighted = renderWithHighlights();
+          // Apply speaker tag formatting to the final result
+          return highlighted.map((node, index) => {
+            if (typeof node === 'string') {
+              return <span key={index}>{formatSpeakerTags(node)}</span>;
+            }
+            return node;
+          });
+        })()}
       </div>
     </div>
   );
