@@ -1,3 +1,17 @@
+/**
+ * FeedbackHistory Component
+ * 
+ * Displays a list of previous interview feedback records and allows users to
+ * view detailed feedback for each session. This component now uses the modular
+ * feedback system while maintaining backward compatibility.
+ * 
+ * Features:
+ * - Historical feedback records with scores and metadata
+ * - Session reference numbers for easy identification
+ * - Detailed view using the enhanced InterviewFeedback component
+ * - Support for different interview types and scoring systems
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +21,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { CalendarDays, ChevronRight } from 'lucide-react';
 
-interface FeedbackRecord {
+// Import new modular utilities
+import { FeedbackRecord } from '@/types/interview';
+import { getBandLabel, getBandColor } from '@/utils/interviewHelpers';
+import { FEEDBACK_DEFAULTS } from '@/constants/feedback';
+
+/**
+ * Legacy interface for backward compatibility
+ * TODO: Migrate to use FeedbackRecord from types/interview.ts
+ */
+interface LegacyFeedbackRecord {
   id: string;
   created_at: string;
   total_score: number;
@@ -29,9 +52,12 @@ interface FeedbackRecord {
   session_reference?: string;
 }
 
+/**
+ * Main FeedbackHistory component
+ */
 export const FeedbackHistory: React.FC = () => {
-  const [feedbackHistory, setFeedbackHistory] = useState<FeedbackRecord[]>([]);
-  const [selectedFeedback, setSelectedFeedback] = useState<FeedbackRecord | null>(null);
+  const [feedbackHistory, setFeedbackHistory] = useState<LegacyFeedbackRecord[]>([]);
+  const [selectedFeedback, setSelectedFeedback] = useState<LegacyFeedbackRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
@@ -41,6 +67,9 @@ export const FeedbackHistory: React.FC = () => {
     }
   }, [user]);
 
+  /**
+   * Fetches the user's feedback history from the database
+   */
   const fetchFeedbackHistory = async () => {
     if (!user) return;
     
@@ -52,11 +81,14 @@ export const FeedbackHistory: React.FC = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
+      
+      // Normalize annotations data structure
       const normalized = (data || []).map((row: any) => ({
         ...row,
         annotations: Array.isArray(row.annotations) ? row.annotations : [],
       }));
-      setFeedbackHistory(normalized as FeedbackRecord[]);
+      
+      setFeedbackHistory(normalized as LegacyFeedbackRecord[]);
     } catch (error) {
       console.error('Error fetching feedback history:', error);
     } finally {
@@ -64,7 +96,11 @@ export const FeedbackHistory: React.FC = () => {
     }
   };
 
-  const getBandLabel = (score: number, interviewType?: string, scoringSystem?: string) => {
+  /**
+   * Legacy band label function - maintaining backward compatibility
+   * TODO: Use getBandLabel from utils/interviewHelpers.ts
+   */
+  const getLegacyBandLabel = (score: number, interviewType?: string, scoringSystem?: string) => {
     if (interviewType === 'ielts') {
       if (score >= 8.5) return 'Expert User';
       if (score >= 7.5) return 'Very Good User';
@@ -81,7 +117,11 @@ export const FeedbackHistory: React.FC = () => {
     return 'Needs Support';
   };
 
-  const getBandColor = (score: number, interviewType?: string, maxScore?: number) => {
+  /**
+   * Legacy band color function - maintaining backward compatibility
+   * TODO: Use getBandColor from utils/interviewHelpers.ts
+   */
+  const getLegacyBandColor = (score: number, interviewType?: string, maxScore?: number) => {
     const max = interviewType === 'ielts' ? 9 : (maxScore || 20);
     const percentage = (score / max) * 100;
     if (percentage >= 90) return 'bg-emerald-500';
@@ -91,6 +131,7 @@ export const FeedbackHistory: React.FC = () => {
     return 'bg-red-500';
   };
 
+  // Handle detailed feedback view
   if (selectedFeedback) {
     return (
       <div className="space-y-6">
@@ -103,9 +144,15 @@ export const FeedbackHistory: React.FC = () => {
           </Button>
           <h2 className="text-xl font-semibold">
             Interview from {new Date(selectedFeedback.created_at).toLocaleDateString()}
+            {selectedFeedback.session_reference && (
+              <Badge variant="secondary" className="ml-2 text-xs font-mono">
+                {selectedFeedback.session_reference}
+              </Badge>
+            )}
           </h2>
         </div>
         
+        {/* Use the enhanced InterviewFeedback component */}
         <InterviewFeedback 
           feedback={{
             // 11+ scores
@@ -123,17 +170,18 @@ export const FeedbackHistory: React.FC = () => {
             detailed_feedback: selectedFeedback.detailed_feedback,
             // Annotated transcript
             transcription: selectedFeedback.transcription,
-            annotations: (selectedFeedback as any).annotations || [],
+            annotations: selectedFeedback.annotations || [],
             // Overall improvement feedback
             overall_improvement_feedback: selectedFeedback.overall_improvement_feedback
           }}
-          interviewType={selectedFeedback.interview_type || '11-plus'}
-          scoringSystem={selectedFeedback.scoring_system || '0-5'}
+          interviewType={selectedFeedback.interview_type || FEEDBACK_DEFAULTS.INTERVIEW_TYPE}
+          scoringSystem={selectedFeedback.scoring_system || FEEDBACK_DEFAULTS.SCORING_SYSTEM}
         />
       </div>
     );
   }
 
+  // Main feedback history list view
   return (
     <div className="space-y-6">
       <div>
@@ -197,8 +245,8 @@ export const FeedbackHistory: React.FC = () => {
                           : `${feedback.total_score}/20`
                         }
                       </div>
-                      <Badge className={`${getBandColor(feedback.total_score, feedback.interview_type)} text-white text-xs`}>
-                        {getBandLabel(feedback.total_score, feedback.interview_type, feedback.scoring_system)}
+                      <Badge className={`${getLegacyBandColor(feedback.total_score, feedback.interview_type)} text-white text-xs`}>
+                        {getLegacyBandLabel(feedback.total_score, feedback.interview_type, feedback.scoring_system)}
                       </Badge>
                     </div>
                     <Button 

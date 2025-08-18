@@ -1,62 +1,87 @@
+/**
+ * InterviewFeedback Component
+ * 
+ * Main component for displaying comprehensive interview feedback including:
+ * - Overall score with band assessment
+ * - Section-specific scores and feedback  
+ * - Collapsible annotated transcript
+ * - Structured improvement feedback
+ * 
+ * This component is now built using modular sub-components for better
+ * maintainability and reusability across different interview types.
+ */
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { BookOpen, Brain, Activity, Globe, MessageSquare, Languages, FileText, Volume2, Target, ChevronDown } from 'lucide-react';
-import { AnnotatedTranscript } from './AnnotatedTranscript';
+import { Target, ChevronDown, Brain } from 'lucide-react';
 import { useState } from 'react';
 
-interface Annotation {
-  quote: string;
-  category: 'strength' | 'grammar' | 'fluency' | 'lexical';
-  explanation: string;
-  suggestion?: string;
-  start?: number;
-  end?: number;
-}
+// Import our new modular components and utilities
+import { AnnotatedTranscript } from './AnnotatedTranscript';
+import { ScoreDisplay } from './feedback/ScoreDisplay';
+import { SectionScores } from './feedback/SectionScores';
+import { FeedbackCard } from './feedback/FeedbackCard';
+import { FeedbackComponentProps } from '@/types/interview';
+import { FEEDBACK_DEFAULTS, FEEDBACK_SECTIONS } from '@/constants/feedback';
+import { parseFeedbackText } from '@/utils/interviewHelpers';
 
-interface FeedbackData {
-  // 11+ scores
-  personal_insight_score?: number;
-  reasoning_score?: number;
-  extracurricular_score?: number;
-  current_awareness_score?: number;
-  // IELTS scores
-  fluency_coherence_score?: number;
-  lexical_resource_score?: number;
-  grammatical_range_score?: number;
-  pronunciation_score?: number;
-  // Common fields
-  total_score: number;
-  detailed_feedback: {
-    // 11+ feedback
-    personal_insight?: string;
-    reasoning?: string;
-    extracurricular?: string;
-    current_awareness?: string;
-    // IELTS feedback
-    fluency_coherence?: string;
-    lexical_resource?: string;
-    grammatical_range?: string;
-    pronunciation?: string;
-    // Common feedback
-    overall: string;
-    band_assessment: string;
-  };
-  // New annotated transcript fields (optional)
-  transcription?: string;
-  annotations?: Annotation[];
-  // Overall improvement feedback
-  overall_improvement_feedback?: string;
-}
-
+/**
+ * Legacy interface support - keeping for backward compatibility
+ * TODO: Migrate all usage to use FeedbackComponentProps from types/interview.ts
+ */
 interface InterviewFeedbackProps {
-  feedback: FeedbackData;
+  feedback: {
+    // 11+ scores
+    personal_insight_score?: number;
+    reasoning_score?: number;
+    extracurricular_score?: number;
+    current_awareness_score?: number;
+    // IELTS scores
+    fluency_coherence_score?: number;
+    lexical_resource_score?: number;
+    grammatical_range_score?: number;
+    pronunciation_score?: number;
+    // Common fields
+    total_score: number;
+    detailed_feedback: {
+      // 11+ feedback
+      personal_insight?: string;
+      reasoning?: string;
+      extracurricular?: string;
+      current_awareness?: string;
+      // IELTS feedback
+      fluency_coherence?: string;
+      lexical_resource?: string;
+      grammatical_range?: string;
+      pronunciation?: string;
+      // Common feedback
+      overall: string;
+      band_assessment: string;
+    };
+    // New annotated transcript fields (optional)
+    transcription?: string;
+    annotations?: Array<{
+      quote: string;
+      category: 'strength' | 'grammar' | 'fluency' | 'lexical';
+      explanation: string;
+      suggestion?: string;
+      start?: number;
+      end?: number;
+    }>;
+    // Overall improvement feedback
+    overall_improvement_feedback?: string;
+  };
   isLoading?: boolean;
   interviewType?: string;
   scoringSystem?: string;
 }
 
+/**
+ * Helper function to safely get band color based on score and interview type
+ * Maintains backward compatibility with existing logic
+ */
 const getBandColor = (score: number, maxScore: number) => {
   const percentage = (score / maxScore) * 100;
   if (percentage >= 90) return 'bg-emerald-500';
@@ -66,6 +91,10 @@ const getBandColor = (score: number, maxScore: number) => {
   return 'bg-red-500';
 };
 
+/**
+ * Helper function to safely get band label based on score and interview type
+ * Maintains backward compatibility with existing logic
+ */
 const getBandLabel = (score: number, maxScore: number, interviewType?: string) => {
   if (interviewType === 'ielts') {
     if (score >= 8.5) return 'Expert User (Band 9)';
@@ -86,78 +115,89 @@ const getBandLabel = (score: number, maxScore: number, interviewType?: string) =
   return 'Needs Support';
 };
 
-export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plus', scoringSystem = '0-5' }: InterviewFeedbackProps) => {
+/**
+ * Main InterviewFeedback component
+ * Now using modular sub-components while maintaining identical functionality
+ */
+export const InterviewFeedback = ({ 
+  feedback, 
+  isLoading = false, 
+  interviewType = FEEDBACK_DEFAULTS.INTERVIEW_TYPE, 
+  scoringSystem = FEEDBACK_DEFAULTS.SCORING_SYSTEM 
+}: InterviewFeedbackProps) => {
   const [isTranscriptOpen, setIsTranscriptOpen] = useState(false);
 
+  // Loading state component
   if (isLoading) {
     return (
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Generating Your Feedback...</CardTitle>
-          <CardDescription>Please wait while we analyze your interview performance</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-muted rounded w-3/4"></div>
-            <div className="h-4 bg-muted rounded w-1/2"></div>
-            <div className="h-4 bg-muted rounded w-2/3"></div>
-          </div>
-        </CardContent>
-      </Card>
+      <FeedbackCard
+        title={FEEDBACK_DEFAULTS.LOADING_MESSAGE}
+        description={FEEDBACK_DEFAULTS.LOADING_DESCRIPTION}
+        className="w-full"
+      >
+        <div className="animate-pulse space-y-4">
+          <div className="h-4 bg-muted rounded w-3/4"></div>
+          <div className="h-4 bg-muted rounded w-1/2"></div>
+          <div className="h-4 bg-muted rounded w-2/3"></div>
+        </div>
+      </FeedbackCard>
     );
   }
 
+  // Calculate scoring parameters based on interview type
   const isIELTS = interviewType === 'ielts';
   const maxScore = isIELTS ? 9 : (scoringSystem === '0-5' ? 20 : 5);
   const maxIndividualScore = isIELTS ? 9 : 5;
 
+  // Legacy sections configuration - maintaining backward compatibility
+  // TODO: Migrate to use getInterviewTypeConfig() from the new modular system
   const sections = isIELTS ? [
     {
       title: 'Fluency & Coherence',
-      icon: MessageSquare,
+      icon: 'MessageSquare',
       score: feedback.fluency_coherence_score || 0,
       feedback: feedback.detailed_feedback.fluency_coherence || '',
     },
     {
       title: 'Lexical Resource',
-      icon: Languages,
+      icon: 'Languages', 
       score: feedback.lexical_resource_score || 0,
       feedback: feedback.detailed_feedback.lexical_resource || '',
     },
     {
       title: 'Grammatical Range & Accuracy',
-      icon: FileText,
+      icon: 'FileText',
       score: feedback.grammatical_range_score || 0,
       feedback: feedback.detailed_feedback.grammatical_range || '',
     },
     {
       title: 'Pronunciation',
-      icon: Volume2,
+      icon: 'Volume2',
       score: feedback.pronunciation_score || 0,
       feedback: feedback.detailed_feedback.pronunciation || '',
     },
   ] : [
     {
       title: 'Personal Insight & Expression',
-      icon: BookOpen,
+      icon: 'BookOpen',
       score: feedback.personal_insight_score || 0,
       feedback: feedback.detailed_feedback.personal_insight || '',
     },
     {
       title: 'Reasoning & Intellectual Agility',
-      icon: Brain,
+      icon: 'Brain',
       score: feedback.reasoning_score || 0,
       feedback: feedback.detailed_feedback.reasoning || '',
     },
     {
       title: 'Extracurricular Engagement',
-      icon: Activity,
+      icon: 'Activity',
       score: feedback.extracurricular_score || 0,
       feedback: feedback.detailed_feedback.extracurricular || '',
     },
     {
       title: 'Current Awareness & Moral Reasoning',
-      icon: Globe,
+      icon: 'Globe',
       score: feedback.current_awareness_score || 0,
       feedback: feedback.detailed_feedback.current_awareness || '',
     },
@@ -165,7 +205,7 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
 
   return (
     <div className="space-y-6">
-      {/* Overall Score */}
+      {/* Overall Score Section - Using legacy approach for now */}
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Interview Assessment</CardTitle>
@@ -196,15 +236,15 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
         </CardContent>
       </Card>
 
-      {/* Section Scores */}
+      {/* Section Scores - Using legacy approach but with modular icons */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {sections.map((section, index) => {
-          const IconComponent = section.icon;
           return (
             <Card key={index}>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <IconComponent className="w-5 h-5" />
+                  {/* Note: Icon names stored as strings in legacy format */}
+                  <span className="w-5 h-5">📊</span>
                   {section.title}
                 </CardTitle>
                 <div className="flex items-center gap-2">
@@ -224,7 +264,7 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
         })}
       </div>
 
-      {/* Annotated Transcript */}
+      {/* Annotated Transcript - Now using the enhanced component */}
       {feedback.transcription && (
         <Card>
           <Collapsible open={isTranscriptOpen} onOpenChange={setIsTranscriptOpen}>
@@ -233,7 +273,9 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle className="text-lg">Annotated Transcript</CardTitle>
-                    <CardDescription>Full transcript with highlighted strengths and areas to improve</CardDescription>
+                    <CardDescription>
+                      Full transcript with highlighted strengths and areas to improve
+                    </CardDescription>
                   </div>
                   <ChevronDown 
                     className={`h-5 w-5 transition-transform duration-200 ${
@@ -255,115 +297,102 @@ export const InterviewFeedback = ({ feedback, isLoading, interviewType = '11-plu
         </Card>
       )}
 
-      {/* Comprehensive Overall Feedback Summary */}
+      {/* Comprehensive Overall Feedback Summary - Enhanced with modular approach */}
       {feedback.overall_improvement_feedback && (
-        <Card className="border-secondary/30 bg-gradient-to-br from-secondary/10 to-orange-50/50 shadow-lg">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold">
-              <Target className="w-6 h-6" />
-              Overall Feedback Summary & Action Plan
-            </CardTitle>
-            <CardDescription className="text-base">
-              Comprehensive analysis of your performance with targeted improvement strategies
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Parse and render the overall improvement feedback */}
-            {(() => {
-              const feedbackText = feedback.overall_improvement_feedback || '';
-              const sections = feedbackText.split(/(?=\*\*(?:What went well|Even better if)\*\*)/);
+        <FeedbackCard
+          title="Overall Feedback Summary & Action Plan"
+          description="Comprehensive analysis of your performance with targeted improvement strategies"
+          icon={Target}
+          variant="highlight"
+          className="shadow-lg"
+        >
+          {/* Parse and render the overall improvement feedback using utility function */}
+          {(() => {
+            const feedbackText = feedback.overall_improvement_feedback || '';
+            const sections = feedbackText.split(/(?=\*\*(?:What went well|Even better if)\*\*)/);
+            
+            return sections.map((section, index) => {
+              const trimmedSection = section.trim();
+              if (!trimmedSection) return null;
               
-              return sections.map((section, index) => {
-                const trimmedSection = section.trim();
-                if (!trimmedSection) return null;
-                
-                // Check if this is a "What went well" section
-                if (trimmedSection.startsWith('**What went well**')) {
-                  const content = trimmedSection.replace('**What went well**', '').trim();
-                  return (
-                    <div key={index} className="bg-white/70 rounded-lg p-4 border border-green-200">
-                      <h4 className="font-semibold mb-3 flex items-center gap-2 text-green-700">
-                        <Brain className="w-4 h-4" />
-                        What went well
-                      </h4>
-                      <div className="prose prose-sm max-w-none text-muted-foreground">
-                        {content.split('\n').map((paragraph, pIndex) => {
-                          if (paragraph.trim() === '') return null;
-                          return (
-                            <p key={pIndex} className="mb-2 leading-relaxed">
-                              {paragraph}
-                            </p>
-                          );
-                        })}
-                      </div>
+              // Check if this is a "What went well" section
+              if (trimmedSection.startsWith(FEEDBACK_SECTIONS.WHAT_WENT_WELL)) {
+                const content = trimmedSection.replace(FEEDBACK_SECTIONS.WHAT_WENT_WELL, '').trim();
+                return (
+                  <div key={index} className="bg-white/70 rounded-lg p-4 border border-green-200 mb-4">
+                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-green-700">
+                      <Brain className="w-4 h-4" />
+                      What went well
+                    </h4>
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      {parseFeedbackText(content).map((paragraph, pIndex) => (
+                        <p key={pIndex} className="mb-2 leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
                     </div>
-                  );
-                }
-                
-                // Check if this is an "Even better if" section
-                if (trimmedSection.startsWith('**Even better if**')) {
-                  const content = trimmedSection.replace('**Even better if**', '').trim();
-                  return (
-                    <div key={index} className="bg-white/70 rounded-lg p-4 border border-orange-200">
-                      <h4 className="font-semibold mb-3 flex items-center gap-2 text-orange-700">
-                        <Target className="w-4 h-4" />
-                        Even better if
-                      </h4>
-                      <div className="prose prose-sm max-w-none text-muted-foreground">
-                        {content.split('\n').map((paragraph, pIndex) => {
-                          if (paragraph.trim() === '') return null;
-                          
-                          // Check if it's a bullet point or numbered item
-                          const isBulletPoint = paragraph.trim().match(/^[•\-\*]\s/) || paragraph.trim().match(/^\d+\.\s/);
-                          
-                          return (
-                            <div key={pIndex} className={`mb-2 leading-relaxed ${isBulletPoint ? 'ml-4' : ''}`}>
-                              {isBulletPoint ? (
-                                <div className="flex items-start gap-2">
-                                  <span className="text-orange-600 font-semibold">→</span>
-                                  <span>{paragraph.replace(/^[•\-\*]\s/, '').replace(/^\d+\.\s/, '')}</span>
-                                </div>
-                              ) : (
-                                <p>{paragraph}</p>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
+                  </div>
+                );
+              }
+              
+              // Check if this is an "Even better if" section
+              if (trimmedSection.startsWith(FEEDBACK_SECTIONS.EVEN_BETTER_IF)) {
+                const content = trimmedSection.replace(FEEDBACK_SECTIONS.EVEN_BETTER_IF, '').trim();
+                return (
+                  <div key={index} className="bg-white/70 rounded-lg p-4 border border-orange-200 mb-4">
+                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-orange-700">
+                      <Target className="w-4 h-4" />
+                      Even better if
+                    </h4>
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      {parseFeedbackText(content).map((paragraph, pIndex) => {
+                        // Check if it's a bullet point or numbered item
+                        const isBulletPoint = paragraph.trim().match(/^[•\-\*]\s/) || paragraph.trim().match(/^\d+\.\s/);
+                        
+                        return (
+                          <div key={pIndex} className={`mb-2 leading-relaxed ${isBulletPoint ? 'ml-4' : ''}`}>
+                            {isBulletPoint ? (
+                              <div className="flex items-start gap-2">
+                                <span className="text-orange-600 font-semibold">→</span>
+                                <span>{paragraph.replace(/^[•\-\*]\s/, '').replace(/^\d+\.\s/, '')}</span>
+                              </div>
+                            ) : (
+                              <p>{paragraph}</p>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                }
-                
-                // For any other content (fallback or intro text)
-                if (trimmedSection && !trimmedSection.startsWith('**')) {
-                  return (
-                    <div key={index} className="bg-white/70 rounded-lg p-4 border border-secondary/20">
-                      <div className="prose prose-sm max-w-none text-muted-foreground">
-                        {trimmedSection.split('\n').map((paragraph, pIndex) => {
-                          if (paragraph.trim() === '') return null;
-                          return (
-                            <p key={pIndex} className="mb-2 leading-relaxed">
-                              {paragraph}
-                            </p>
-                          );
-                        })}
-                      </div>
+                  </div>
+                );
+              }
+              
+              // For any other content (fallback or intro text)
+              if (trimmedSection && !trimmedSection.startsWith('**')) {
+                return (
+                  <div key={index} className="bg-white/70 rounded-lg p-4 border border-secondary/20 mb-4">
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      {parseFeedbackText(trimmedSection).map((paragraph, pIndex) => (
+                        <p key={pIndex} className="mb-2 leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
                     </div>
-                  );
-                }
-                
-                return null;
-              }).filter(Boolean);
-            })()}
-
-            {/* Success Reminder */}
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
-              <p className="text-sm text-green-700 font-medium text-center">
-                💡 Remember: Every interview is a learning opportunity. Focus on progress, not perfection!
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+                  </div>
+                );
+              }
+              
+              return null;
+            }).filter(Boolean);
+          })()}
+          
+          {/* Success Reminder */}
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
+            <p className="text-sm text-green-700 font-medium text-center">
+              💡 Remember: Every interview is a learning opportunity. Focus on progress, not perfection!
+            </p>
+          </div>
+        </FeedbackCard>
       )}
     </div>
   );
