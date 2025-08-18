@@ -54,8 +54,7 @@ export const LandingHero = ({
               </span>
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 md:px-0">
-              Practice 11+ interviews with realistic digital human interviewers. 
-              Get instant feedback and admissions insight from St. Paul's School, Westminster School, & Eton College to maximise results.
+              Get instant feedback and admissions insights aligned with former students, educators, and interview tutors with over 20 years' experience at St. Paul's, Westminster, & Eton College.
             </p>
           </div>
           
