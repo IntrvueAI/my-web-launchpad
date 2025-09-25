@@ -37,7 +37,7 @@ export const LandingCTA = ({
                   </span>
                 </h2>
                 <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-                  Join 100s of students around the world who have secured places at top UK and international independent schools with our digital human practice platform.
+                  Join 100+ students around the world who have secured places at top UK and international independent schools with our digital human practice platform.
                 </p>
               </div>
 
