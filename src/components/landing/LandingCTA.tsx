@@ -37,7 +37,7 @@ export const LandingCTA = ({
                   </span>
                 </h2>
                 <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-                  Join hundreds of students who've secured places at top UK private and grammar schools with our digital human practice platform.
+                  Join 100+ students who've secured places at top UK private and grammar schools with our digital human practice platform.
                 </p>
               </div>
 
@@ -45,7 +45,7 @@ export const LandingCTA = ({
               <div className="grid md:grid-cols-4 gap-8 py-8">
                 {[{
                 icon: Users,
-                stat: '1200+',
+                stat: '100+',
                 label: 'Students Helped'
               }, {
                 icon: Award,

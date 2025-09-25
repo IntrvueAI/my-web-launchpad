@@ -37,7 +37,7 @@ export const LandingTruth = () => {
     {
       icon: Users,
       title: "Proven Success",
-      description: "Join hundreds of students who've successfully secured places at top UK schools",
+      description: "Join 100+ students who've successfully secured places at top UK schools",
       stat: "150+ schools"
     }
   ];
