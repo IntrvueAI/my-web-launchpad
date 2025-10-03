@@ -1,10 +1,10 @@
 import { Separator } from '@/components/ui/separator';
-import { Twitter, Instagram } from 'lucide-react';
+import { X, Instagram } from 'lucide-react';
 
 export const LandingFooter = () => {
 
   const socialIcons = [
-    { name: 'X', icon: Twitter, href: '#x' },
+    { name: 'X', icon: X, href: '#x' },
     { name: 'Instagram', icon: Instagram, href: '#instagram' }
   ];
 
