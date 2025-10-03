@@ -1,32 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 
 export const LandingFooter = () => {
-  const footerLinks = {
-    product: [
-      { name: 'Features', href: '#features' },
-      { name: 'Pricing', href: '#pricing' },
-      { name: 'Demo', href: '#demo' },
-      { name: 'FAQ', href: '#faq' }
-    ],
-    interviews: [
-      { name: '11+ Preparation', href: '#academic' },
-      { name: 'IELTS Speaking', href: '#language' },
-      { name: 'Professional', href: '#professional' },
-      { name: 'Request Type', href: '#request' }
-    ],
-    support: [
-      { name: 'Help Center', href: '#help' },
-      { name: 'Contact Us', href: '#contact' },
-      { name: 'System Status', href: '#status' },
-      { name: 'API Docs', href: '#api' }
-    ],
-    legal: [
-      { name: 'Privacy Policy', href: '#privacy' },
-      { name: 'Terms of Service', href: '#terms' },
-      { name: 'Cookie Policy', href: '#cookies' },
-      { name: 'GDPR', href: '#gdpr' }
-    ]
-  };
 
   const socialIcons = [
     { name: 'Twitter', icon: 'TW', href: '#twitter' },
@@ -39,18 +13,18 @@ export const LandingFooter = () => {
     <footer className="bg-muted/30 border-t">
       <div className="container mx-auto px-4 py-16 max-w-7xl">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
+        <div className="flex justify-center mb-12">
           {/* Brand Section */}
-          <div className="col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
+          <div className="space-y-4 max-w-md text-center">
+            <div className="flex items-center justify-center gap-3">
               <span className="text-xl font-bold">Intrvue.AI</span>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Master your interview skills with digital human interviewers. Get instant feedback and build confidence for academic, language, and professional interviews.
             </p>
             
             {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center justify-center gap-3 pt-2">
               {socialIcons.map((social, index) => (
                 <a 
                   key={index}
@@ -61,62 +35,6 @@ export const LandingFooter = () => {
                 </a>
               ))}
             </div>
-          </div>
-
-          {/* Product Links */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Product</h4>
-            <ul className="space-y-2">
-              {footerLinks.product.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Interview Types */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Interviews</h4>
-            <ul className="space-y-2">
-              {footerLinks.interviews.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Support</h4>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Legal</h4>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
