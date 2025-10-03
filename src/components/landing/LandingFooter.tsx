@@ -29,7 +29,9 @@ export const LandingFooter = () => {
                 <img src="/lovable-uploads/x-logo.png" alt="X" className="w-full h-full object-contain" />
               </a>
               <a 
-                href="#instagram"
+                href="https://www.instagram.com/intrvueai/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-muted rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
                 aria-label="Instagram"
               >
