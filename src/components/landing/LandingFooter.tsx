@@ -20,7 +20,9 @@ export const LandingFooter = () => {
             {/* Social Links */}
             <div className="flex items-center justify-center gap-3 pt-2">
               <a 
-                href="#x"
+                href="https://x.com/Intrvueai"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-muted rounded-full flex items-center justify-center hover:bg-primary transition-colors p-2"
                 aria-label="X (formerly Twitter)"
               >
