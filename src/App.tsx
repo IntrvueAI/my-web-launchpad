@@ -16,7 +16,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 // Set to true to display the downtime notice
-const IS_SITE_DOWN = false;
+const IS_SITE_DOWN = true;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
