@@ -7,7 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Trash2, Key, User, Mail, School, Calendar, X } from 'lucide-react';
+import { Loader2, Trash2, Key, User, Mail, School, Calendar, X, Bug } from 'lucide-react';
+import { BugReportDialog } from '@/components/BugReportDialog';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
@@ -29,6 +30,7 @@ export const UserSettings = () => {
   const [updating, setUpdating] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [resettingPassword, setResettingPassword] = useState(false);
+  const [bugReportOpen, setBugReportOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     fullName: '',
@@ -434,6 +436,36 @@ export const UserSettings = () => {
           </CardContent>
         </Card>
 
+        {/* Help & Support */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Bug className="h-5 w-5" />
+              Help & Support
+            </CardTitle>
+            <CardDescription>
+              Report issues and get help with the platform.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <Label>Found a bug?</Label>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Help us improve by reporting any issues you encounter.
+                </p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setBugReportOpen(true)}
+                >
+                  <Bug className="mr-2 h-4 w-4" />
+                  Report a Bug
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Danger Zone */}
         <Card className="border-destructive">
           <CardHeader>
@@ -494,6 +526,8 @@ export const UserSettings = () => {
           </CardContent>
         </Card>
       </div>
+
+      <BugReportDialog open={bugReportOpen} onOpenChange={setBugReportOpen} />
     </div>
   );
 };
