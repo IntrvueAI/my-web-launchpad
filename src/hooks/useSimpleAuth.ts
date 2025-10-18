@@ -6,7 +6,7 @@ import { sanitizeErrorMessage, authRateLimiter } from '@/utils/secureErrorHandle
 import { recordAuthFailure, recordRateLimit } from '@/utils/securityMonitor';
 
 export const useSimpleAuth = () => {
-  const { signIn, signUp, signOut } = useAuth();
+  const { signIn, signUp, signOut, resetPassword } = useAuth();
   const { toast } = useToast();
 
   const handleSignIn = useCallback(async (email: string, password: string) => {
@@ -104,9 +104,51 @@ export const useSimpleAuth = () => {
     }
   }, [signOut, toast]);
 
+  const handleResetPassword = useCallback(async (email: string) => {
+    const identifier = `reset_${email}`;
+    
+    if (authRateLimiter.isRateLimited(identifier)) {
+      recordRateLimit(identifier, 'password_reset');
+      toast({
+        title: "Too Many Attempts",
+        description: "Please wait before trying again.",
+        variant: "destructive",
+      });
+      return { error: new Error('Rate limited') };
+    }
+
+    authRateLimiter.recordAttempt(identifier);
+    
+    try {
+      const result = await resetPassword(email);
+      if (result.error) {
+        toast({
+          title: "Password Reset Failed",
+          description: sanitizeErrorMessage(result.error),
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Check Your Email",
+          description: "If an account exists with this email, you will receive a password reset link.",
+        });
+      }
+      return result;
+    } catch (error) {
+      const message = sanitizeErrorMessage(error);
+      toast({
+        title: "Password Reset Error",
+        description: message,
+        variant: "destructive",
+      });
+      return { error };
+    }
+  }, [resetPassword, toast]);
+
   return {
     handleSignIn,
     handleSignUp,
     handleSignOut,
+    handleResetPassword,
   };
 };
