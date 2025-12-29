@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Play, BookOpen, Brain, Users } from 'lucide-react';
+import { Play, BookOpen, Brain, Users, Snowflake } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SparklesText } from '@/components/ui/sparkles-text';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
@@ -17,18 +17,22 @@ export const LandingHero = ({
             <img src="/lovable-uploads/logo.png" alt="Intrvue.ai Logo" className="h-20 w-auto " />
             
           </div>
-          <Button variant="outline" size="sm" onClick={onSignUp} className="text-orange-500 font-medium text-sm">
-            Sign In
-          </Button>
+          <div className="flex items-center gap-3">
+            <Snowflake className="w-4 h-4 text-winter animate-pulse" />
+            <Button variant="outline" size="sm" onClick={onSignUp} className="text-orange-500 font-medium text-sm">
+              Sign In
+            </Button>
+          </div>
         </div>
       </header>
       
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-accent/10 to-primary/5 overflow-hidden pt-20">
-      {/* Background Elements */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-winter-frost/30 to-primary/5 overflow-hidden pt-20">
+      {/* Background Elements - with winter touches */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-24 h-24 bg-primary/10 rounded-full blur-xl animate-pulse" />
+        <div className="absolute top-20 left-10 w-24 h-24 bg-winter/20 rounded-full blur-xl animate-pulse" />
         <div className="absolute bottom-32 right-16 w-32 h-32 bg-primary/5 rounded-full blur-2xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-accent/20 rounded-full blur-lg animate-pulse delay-500" />
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-winter-soft/30 rounded-full blur-lg animate-pulse delay-500" />
+        <div className="absolute top-1/3 right-1/4 w-20 h-20 bg-winter/10 rounded-full blur-xl animate-pulse delay-700" />
       </div>
 
       <div className="container mx-auto px-4 py-20 max-w-7xl relative z-10">

@@ -72,6 +72,11 @@ export default {
 					DEFAULT: 'hsl(var(--interview-waiting))',
 					foreground: 'hsl(var(--interview-waiting-foreground))'
 				},
+				winter: {
+					DEFAULT: 'hsl(var(--winter))',
+					soft: 'hsl(var(--winter-soft))',
+					frost: 'hsl(var(--winter-frost))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
