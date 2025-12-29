@@ -32,6 +32,11 @@
     --accent: 16 30% 95%;
     --accent-foreground: 215 35% 25%;
 
+    /* Winter accent - subtle icy blue */
+    --winter: 200 60% 70%;
+    --winter-soft: 200 40% 85%;
+    --winter-frost: 200 30% 95%;
+
     /* Status colors - muted for professional feel */
     --success: 145 40% 35%;
     --success-foreground: 145 40% 95%;
@@ -64,6 +69,7 @@
     /* Professional gradients */
     --gradient-primary: linear-gradient(135deg, hsl(16 100% 66%), hsl(16 90% 70%));
     --gradient-background: linear-gradient(180deg, hsl(210 15% 98%), hsl(210 20% 96%));
+    --gradient-winter: linear-gradient(135deg, hsl(200 60% 70% / 0.1), hsl(200 40% 85% / 0.05));
     
     /* Sidebar elements - keeping minimal since not used */
     --sidebar-background: 210 15% 98%;
@@ -100,6 +106,11 @@
     --accent: 215 20% 18%;
     --accent-foreground: 210 20% 85%;
 
+    /* Winter accent - subtle icy blue for dark mode */
+    --winter: 200 50% 60%;
+    --winter-soft: 200 30% 40%;
+    --winter-frost: 200 20% 25%;
+
     --success: 145 40% 60%;
     --success-foreground: 145 40% 10%;
     
@@ -124,6 +135,7 @@
 
     --gradient-primary: linear-gradient(135deg, hsl(16 100% 66%), hsl(16 90% 70%));
     --gradient-background: linear-gradient(180deg, hsl(215 25% 8%), hsl(215 20% 10%));
+    --gradient-winter: linear-gradient(135deg, hsl(200 50% 60% / 0.1), hsl(200 30% 40% / 0.05));
     
     --sidebar-background: 215 25% 8%;
     --sidebar-foreground: 210 20% 85%;
