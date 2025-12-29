@@ -177,3 +177,25 @@
            px-6 py-3 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200;
   }
 }
+
+/* Snowfall animation */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-snowfall {
+  animation: snowfall linear infinite;
+}

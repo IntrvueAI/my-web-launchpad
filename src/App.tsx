@@ -8,6 +8,7 @@ import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Snowfall from "@/components/Snowfall";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
@@ -40,6 +41,7 @@ const AppContent = () => {
       style={{ pointerEvents: 'none' }}
     >
       <div className="w-full h-full pointer-events-auto">
+        <Snowfall />
         <Toaster />
         <Sonner />
         {shouldShowDowntime && (
