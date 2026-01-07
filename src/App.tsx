@@ -6,8 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Heart, Snowflake, Mail } from "lucide-react";
 import Snowfall from "@/components/Snowfall";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -17,8 +16,8 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Set to true to display the downtime notice
-const IS_SITE_DOWN = false;
+// Set to true to display the seasonal dormant notice
+const IS_SITE_DOWN = true;
 
 // Admin email that can bypass downtime
 const ADMIN_BYPASS_EMAIL = "ibrahim@khan.cc";
@@ -45,15 +44,49 @@ const AppContent = () => {
         <Toaster />
         <Sonner />
         {shouldShowDowntime && (
-          <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <Alert className="max-w-lg border-destructive/50 bg-background shadow-lg">
-              <AlertCircle className="h-5 w-5 text-destructive" />
-              <AlertTitle className="text-lg font-semibold">Site Maintenance</AlertTitle>
-              <AlertDescription className="mt-2">
-                We're currently performing scheduled maintenance to improve your experience. 
-                The site will be back online shortly. Thank you for your patience.
-              </AlertDescription>
-            </Alert>
+          <div className="fixed inset-0 bg-gradient-to-br from-background via-winter-frost/50 to-background z-50 flex items-center justify-center p-4">
+            <div className="max-w-lg text-center space-y-6 p-8 bg-card/80 backdrop-blur-sm rounded-2xl border border-winter-soft/40 shadow-xl">
+              {/* Logo */}
+              <div className="flex justify-center">
+                <img src="/lovable-uploads/logo.png" alt="Intrvue.ai Logo" className="h-16 w-auto" />
+              </div>
+              
+              {/* Decorative snowflakes */}
+              <div className="flex justify-center gap-3">
+                <Snowflake className="w-5 h-5 text-winter animate-pulse" />
+                <Heart className="w-5 h-5 text-primary" />
+                <Snowflake className="w-5 h-5 text-winter animate-pulse delay-300" />
+              </div>
+              
+              {/* Main message */}
+              <div className="space-y-4">
+                <h1 className="text-2xl font-bold text-foreground">
+                  Thank You for a Wonderful Season!
+                </h1>
+                <p className="text-muted-foreground leading-relaxed">
+                  We thank you for trusting <span className="font-semibold text-primary">Intrvue.AI</span> to help your children prepare for their interviews. We hope they achieved their goals and wish them all the best in their academic journeys.
+                </p>
+              </div>
+              
+              {/* Contact info */}
+              <div className="pt-4 border-t border-border">
+                <p className="text-sm text-muted-foreground mb-3">
+                  For any questions, please reach out to us:
+                </p>
+                <a 
+                  href="mailto:founders@intrvue.ai" 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-colors font-medium"
+                >
+                  <Mail className="w-4 h-4" />
+                  founders@intrvue.ai
+                </a>
+              </div>
+              
+              {/* Footer note */}
+              <p className="text-xs text-muted-foreground/70">
+                See you next season! ❄️
+              </p>
+            </div>
           </div>
         )}
         <BrowserRouter>
