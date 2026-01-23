@@ -35,7 +35,7 @@ export const ShutdownBanner = () => {
             <Calendar className="w-5 h-5 flex-shrink-0" />
             <p className="text-sm md:text-base font-medium text-center">
               <span className="font-bold">Important:</span> Intrvue.AI services will end on{" "}
-              <span className="font-bold underline">February 9th, 2025</span> for this exam cycle. 
+              <span className="font-bold underline">February 9th, 2026</span> for this exam cycle. 
               Thank you for your support!
             </p>
           </div>
