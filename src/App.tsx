@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
+import { ShutdownBanner } from "@/components/ShutdownBanner";
 import { Mail, Calendar } from "lucide-react";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -16,7 +17,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 // Set to true to display the seasonal dormant notice
-const IS_SITE_DOWN = true;
+const IS_SITE_DOWN = false;
 
 // Admin email that can bypass downtime
 const ADMIN_BYPASS_EMAIL = "ibrahim@khan.cc";
@@ -41,6 +42,7 @@ const AppContent = () => {
       <div className="w-full h-full pointer-events-auto">
         <Toaster />
         <Sonner />
+        <ShutdownBanner />
         {shouldShowDowntime && (
           <div className="fixed inset-0 bg-gradient-to-br from-background to-muted/30 z-50 flex items-center justify-center p-4">
             <div className="max-w-lg text-center space-y-6 p-8 bg-card/90 backdrop-blur-sm rounded-2xl border border-border shadow-xl">
