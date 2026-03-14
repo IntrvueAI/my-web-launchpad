@@ -26,7 +26,7 @@ const AppContent = () => {
   const { user } = useAuth();
   
   // Check if current user is the admin who can bypass downtime
-  const isAdminBypass = user?.email === ADMIN_BYPASS_EMAIL;
+  const isAdminBypass = user?.email?.toLowerCase() === ADMIN_BYPASS_EMAIL;
   const shouldShowDowntime = IS_SITE_DOWN && !isAdminBypass;
 
   return (
