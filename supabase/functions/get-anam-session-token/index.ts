@@ -5,6 +5,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 // Read required environment variables from Supabase secrets
 const supabaseUrl = Deno.env.get('SUPABASE_URL');
 const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY in Supabase secrets');
@@ -64,6 +65,20 @@ const { data: userData, error: userErr } = await supabase.auth.getUser(token);
 if (userErr || !userData?.user) {
   return new Response(JSON.stringify({ error: 'Unauthorized' }), {
     status: 401,
+    headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
+  });
+}
+
+// Rate limit: reject if user already has an active session to prevent Anam quota exhaustion
+const supabaseService = createClient(supabaseUrl!, supabaseServiceKey!);
+const { count: activeSessions } = await supabaseService
+  .from('interview_sessions')
+  .select('id', { count: 'exact', head: true })
+  .eq('user_id', userData.user.id)
+  .eq('status', 'active');
+if ((activeSessions ?? 0) >= 1) {
+  return new Response(JSON.stringify({ error: 'You already have an active session. Please end it before starting a new one.' }), {
+    status: 429,
     headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
   });
 }

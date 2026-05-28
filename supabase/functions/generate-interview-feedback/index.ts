@@ -237,10 +237,37 @@ try {
     });
   }
 
+  // Rate limit: max 3 feedback generations per 10 minutes per user
+  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+  const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+  const { count: recentCount } = await supabaseAdmin
+    .from('feedback')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .gte('created_at', tenMinutesAgo);
+  if ((recentCount ?? 0) >= 3) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please wait before generating more feedback.' }), {
+      status: 429,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Consume one credit before any expensive work — rejects with 402 if balance is zero
+  const supabaseUser = createClient(supabaseUrl, supabaseAnonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+  });
+  const { data: creditConsumed, error: creditError } = await supabaseUser.rpc('consume_credit');
+  if (creditError || !creditConsumed) {
+    return new Response(JSON.stringify({ error: 'Insufficient credits' }), {
+      status: 402,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
     // Sanitize and validate transcription length
     const sanitizedTranscription = transcription.trim();
-    if (sanitizedTranscription.length < 10) {
-      return new Response(JSON.stringify({ error: 'Transcription too short for meaningful analysis' }), {
+    if (sanitizedTranscription.length < 100) {
+      return new Response(JSON.stringify({ error: 'Transcription too short — minimum 100 characters required' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -253,8 +280,7 @@ try {
       });
     }
 
-    // Create Supabase client
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = supabaseAdmin;
 
     // Get dynamic system prompt based on interview type
     const systemPrompt = getSystemPrompt(interviewType || '11-plus', scoringSystem || '0-5');

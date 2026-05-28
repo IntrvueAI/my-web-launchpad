@@ -88,7 +88,20 @@ const handler = async (req: Request): Promise<Response> => {
 
     const user = userData.user;
 
-    console.log('🔧 [EdgeFunction] User authenticated successfully, processing request...');
+    // Server-side rate limit: max 5 bug reports per hour per user
+    const serviceClient = createClient(supabaseUrl!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count: reportCount } = await serviceClient
+      .from("user_feedback")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .gte("created_at", oneHourAgo);
+    if ((reportCount ?? 0) >= 5) {
+      return new Response(
+        JSON.stringify({ error: "Rate limit exceeded. Maximum 5 bug reports per hour." }),
+        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     // Parse and validate request body
     const { subject, category, description, stepsToReproduce, currentUrl }: BugReportRequest = await req.json();
