@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import { MinigameSection } from "@/components/MinigameSection";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +98,15 @@ const AppContent = () => {
             <Route path="/auth" element={<Auth />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            {/* Temporary standalone demo route for the practice minigames */}
+            <Route
+              path="/minigames"
+              element={
+                <div className="container mx-auto px-4 py-8 max-w-6xl">
+                  <MinigameSection />
+                </div>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

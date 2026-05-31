@@ -1,0 +1,812 @@
+[
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "How many steps did Maris climb each evening?",
+    "options": [
+      "One hundred and twelve",
+      "One hundred and twenty",
+      "Thirty",
+      "Twelve"
+    ],
+    "answer": "One hundred and twelve",
+    "explanation": "The passage states she 'climbed the one hundred and twelve steps'.",
+    "id": "EN-001"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "Why has the task of climbing the lighthouse passed to Maris?",
+    "options": [
+      "Her father's knees have grown stiff",
+      "She enjoys the exercise",
+      "Her father has moved away",
+      "She was told to as a punishment"
+    ],
+    "answer": "Her father's knees have grown stiff",
+    "explanation": "The text says her father climbed them for thirty years 'but his knees had grown stiff'.",
+    "id": "EN-002"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "In the passage, the word 'gathering' (a storm was gathering) most nearly means:",
+    "options": [
+      "building up",
+      "collecting flowers",
+      "meeting friends",
+      "disappearing"
+    ],
+    "answer": "building up",
+    "explanation": "Here 'gathering' describes a storm growing and building up in strength.",
+    "id": "EN-003"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Language",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "The phrase 'the wind rattled the glass as if it wanted to be let in' is an example of:",
+    "options": [
+      "personification",
+      "a simile of size",
+      "onomatopoeia",
+      "alliteration"
+    ],
+    "answer": "personification",
+    "explanation": "The wind is given a human-like desire ('wanted to be let in'), which is personification.",
+    "id": "EN-004"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "Why does Maris 'sit a little straighter'?",
+    "options": [
+      "She feels the responsibility of keeping sailors safe",
+      "She is cold",
+      "Her father is watching her",
+      "She is about to fall asleep"
+    ],
+    "answer": "She feels the responsibility of keeping sailors safe",
+    "explanation": "She realises a boat may depend on her light, so she takes the duty seriously.",
+    "id": "EN-005"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "What does Maris see from the lantern room?",
+    "options": [
+      "The curve of the coast and the village lights",
+      "A passing train",
+      "Her school",
+      "The lighthouse keeper of the next town"
+    ],
+    "answer": "The curve of the coast and the village lights",
+    "explanation": "She can see 'the whole curve of the coast' and 'the village lights blinking awake'.",
+    "id": "EN-006"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Tone",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "Which word best describes Maris's attitude to her duty?",
+    "options": [
+      "responsible",
+      "careless",
+      "frightened",
+      "bored"
+    ],
+    "answer": "responsible",
+    "explanation": "She does not mind the climb and takes the safety of strangers seriously, showing she is responsible.",
+    "id": "EN-007"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P1",
+    "passage_title": "The Lighthouse Keeper's Daughter",
+    "passage": "Every evening, just as the sun melted into the sea, Maris climbed the one hundred and twelve steps to the top of the lighthouse. Her father had climbed them for thirty years, but his knees had grown stiff, and now the task fell to her. She did not mind. From the lantern room she could see the whole curve of the coast, the village lights blinking awake one by one, and the dark water stretching out towards places she had only read about.\n\nTonight a storm was gathering. The clouds pressed low and heavy, and the wind rattled the glass as if it wanted to be let in. Maris lit the great lamp and watched its beam sweep across the waves. Somewhere out there, she knew, a fishing boat might be searching for that very light. The thought made her sit a little straighter. She was only twelve, but tonight the safety of strangers rested in her careful hands.",
+    "question": "What is the meaning of 'melted into the sea' as used about the sun?",
+    "options": [
+      "sank slowly out of sight",
+      "became liquid",
+      "grew hotter",
+      "turned green"
+    ],
+    "answer": "sank slowly out of sight",
+    "explanation": "It is a descriptive way of saying the sun set, sinking gently below the horizon.",
+    "id": "EN-008"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "What is the scientific name for water turning into an invisible gas?",
+    "options": [
+      "evaporation",
+      "condensation",
+      "precipitation",
+      "irrigation"
+    ],
+    "answer": "evaporation",
+    "explanation": "The passage states this process 'is known as evaporation'.",
+    "id": "EN-009"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "What causes water vapour to turn back into droplets?",
+    "options": [
+      "The air becoming cooler",
+      "The sun growing hotter",
+      "Plants drinking it",
+      "Strong winds"
+    ],
+    "answer": "The air becoming cooler",
+    "explanation": "'As the vapour climbs higher, the air around it becomes cooler' and it condenses.",
+    "id": "EN-010"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "Which of these is NOT given as a form of precipitation?",
+    "options": [
+      "Fog",
+      "Rain",
+      "Snow",
+      "Hail"
+    ],
+    "answer": "Fog",
+    "explanation": "The passage lists rain, snow and hail as precipitation, but not fog.",
+    "id": "EN-011"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "What is the main idea of the passage?",
+    "options": [
+      "Water moves around the planet in a repeating cycle",
+      "Rain is dangerous",
+      "Oceans are getting smaller",
+      "Plants need very little water"
+    ],
+    "answer": "Water moves around the planet in a repeating cycle",
+    "explanation": "The whole passage describes the never-ending water cycle.",
+    "id": "EN-012"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "The final sentence is included mainly to:",
+    "options": [
+      "show that water is reused over and over",
+      "prove rain is very old",
+      "warn readers not to drink water",
+      "explain how forests grow"
+    ],
+    "answer": "show that water is reused over and over",
+    "explanation": "It illustrates that the same water keeps cycling, even across thousands of years.",
+    "id": "EN-013"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "In this passage, 'cluster together' means the droplets:",
+    "options": [
+      "group closely together",
+      "push apart",
+      "freeze solid",
+      "fall quickly"
+    ],
+    "answer": "group closely together",
+    "explanation": "To cluster is to gather closely in a group.",
+    "id": "EN-014"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "Where does some of the fallen water eventually flow back to?",
+    "options": [
+      "The sea",
+      "The clouds directly",
+      "Underground caves only",
+      "The sun"
+    ],
+    "answer": "The sea",
+    "explanation": "'some flows along rivers back to the sea, where the journey begins all over again'.",
+    "id": "EN-015"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Structure",
+    "difficulty": "Standard",
+    "passage_id": "P2",
+    "passage_title": "The Journey of a Raindrop",
+    "passage": "Water never truly disappears; it simply moves around our planet in a never-ending cycle. When the sun heats the surface of oceans, lakes and rivers, tiny droplets of water rise into the air as an invisible gas called water vapour. This process is known as evaporation. As the vapour climbs higher, the air around it becomes cooler, and the vapour turns back into tiny droplets that cluster together to form clouds. We call this condensation.\n\nEventually the droplets in a cloud grow heavy enough to fall as rain, snow or hail. This falling water is called precipitation. Some of it soaks into the ground, some is drunk by plants, and some flows along rivers back to the sea, where the journey begins all over again. Scientists believe the water you drank this morning may once have fallen as rain on a forest thousands of years ago.",
+    "question": "What does the word 'Eventually' (start of paragraph two) tell the reader?",
+    "options": [
+      "that some time passes before the next step",
+      "that the cycle has stopped",
+      "that the event is unlikely",
+      "that it happens instantly"
+    ],
+    "answer": "that some time passes before the next step",
+    "explanation": "'Eventually' signals that the next stage happens after a period of time.",
+    "id": "EN-016"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "Where did Theo find the map?",
+    "options": [
+      "Inside an old trunk in the attic",
+      "In the kitchen drawer",
+      "In the woods",
+      "In his pocket"
+    ],
+    "answer": "Inside an old trunk in the attic",
+    "explanation": "He lifts the lid of the trunk and finds the rolled paper inside.",
+    "id": "EN-017"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "Why does Theo decide he has enough time to explore?",
+    "options": [
+      "His grandmother will be away for an hour",
+      "It is the school holidays",
+      "The map says he must hurry",
+      "His torch will only last an hour"
+    ],
+    "answer": "His grandmother will be away for an hour",
+    "explanation": "He remembers she has gone for milk and 'would not return for an hour'.",
+    "id": "EN-018"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "The phrase 'the green hush of the trees' suggests the woods are:",
+    "options": [
+      "quiet and leafy",
+      "noisy and crowded",
+      "dark and frightening",
+      "wet and muddy"
+    ],
+    "answer": "quiet and leafy",
+    "explanation": "'Green' suggests leaves and 'hush' suggests quietness, so the woods are quiet and leafy.",
+    "id": "EN-019"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "What does 'his heart drumming' tell us about how Theo feels?",
+    "options": [
+      "He is excited",
+      "He is sleepy",
+      "He is angry",
+      "He is unwell"
+    ],
+    "answer": "He is excited",
+    "explanation": "A drumming heart, with the 'promise of adventure', shows excitement.",
+    "id": "EN-020"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "'Yellowed paper' suggests the map is:",
+    "options": [
+      "old",
+      "brightly coloured",
+      "torn in half",
+      "newly printed"
+    ],
+    "answer": "old",
+    "explanation": "Paper turns yellow with age, so this tells us the map is old.",
+    "id": "EN-021"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "What did Theo take from the kitchen drawer?",
+    "options": [
+      "A torch",
+      "The map",
+      "A blanket",
+      "Some milk"
+    ],
+    "answer": "A torch",
+    "explanation": "'took the torch from the kitchen drawer'.",
+    "id": "EN-022"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "Why might the author end the passage on the word 'adventure'?",
+    "options": [
+      "To make the reader want to know what happens next",
+      "To explain the rules of the woods",
+      "To describe the weather",
+      "To list the characters"
+    ],
+    "answer": "To make the reader want to know what happens next",
+    "explanation": "Ending on 'adventure' creates suspense and curiosity about what Theo will find.",
+    "id": "EN-023"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Language",
+    "difficulty": "Standard",
+    "passage_id": "P3",
+    "passage_title": "The Map in the Attic",
+    "passage": "Dust hung in the slanting light as Theo lifted the lid of the old trunk. Inside, beneath a moth-eaten blanket, lay a roll of yellowed paper tied with faded ribbon. His fingers trembled as he untied it. The paper crackled open to reveal a map, hand-drawn in fading ink, showing the very woods behind his grandmother's house. A dotted line wound between landmarks he half-recognised, ending at a small, neatly inked cross.\n\n'Grandma,' he called down the ladder, 'whose map is this?' But the house was quiet. He remembered then that she had gone to fetch milk from the village and would not return for an hour. An hour, Theo thought, was more than enough time. He slipped the map into his pocket, took the torch from the kitchen drawer, and stepped out into the green hush of the trees, his heart drumming with the promise of adventure.",
+    "question": "'The paper crackled open' uses a word that imitates a sound. This technique is called:",
+    "options": [
+      "onomatopoeia",
+      "simile",
+      "metaphor",
+      "rhyme"
+    ],
+    "answer": "onomatopoeia",
+    "explanation": "'Crackled' imitates the sound it describes, which is onomatopoeia.",
+    "id": "EN-024"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "What was Williamina Fleming's first job for the professor?",
+    "options": [
+      "Housekeeper",
+      "Astronomer",
+      "Teacher",
+      "Photographer"
+    ],
+    "answer": "Housekeeper",
+    "explanation": "She 'found work as a housekeeper for a professor of astronomy'.",
+    "id": "EN-025"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "Why did the professor give Fleming scientific work?",
+    "options": [
+      "He believed she could do better than his assistants",
+      "She had a science degree",
+      "She asked him many times",
+      "She owned a telescope"
+    ],
+    "answer": "He believed she could do better than his assistants",
+    "explanation": "He said even his maid could do a better job, then proved 'he was right'.",
+    "id": "EN-026"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "In this passage, 'catalogued' means the stars were:",
+    "options": [
+      "recorded and organised in a list",
+      "painted",
+      "destroyed",
+      "named after people"
+    ],
+    "answer": "recorded and organised in a list",
+    "explanation": "To catalogue is to record items carefully in an organised list.",
+    "id": "EN-027"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "What is the main message of the final sentence?",
+    "options": [
+      "Talent can appear in unexpected places",
+      "Astronomy is very difficult",
+      "Maids make the best scientists",
+      "Photographs are unreliable"
+    ],
+    "answer": "Talent can appear in unexpected places",
+    "explanation": "The closing line states talent 'can be found in the most unexpected places'.",
+    "id": "EN-028"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "What did Fleming end up leading?",
+    "options": [
+      "A team of women cataloguing stars",
+      "A photography shop",
+      "An astronomy school",
+      "A space mission"
+    ],
+    "answer": "A team of women cataloguing stars",
+    "explanation": "She 'was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars'.",
+    "id": "EN-029"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "A 'chance remark' is a comment that is:",
+    "options": [
+      "made without much thought or planning",
+      "carefully rehearsed",
+      "written in a book",
+      "shouted angrily"
+    ],
+    "answer": "made without much thought or planning",
+    "explanation": "'Chance' here means unplanned, so a chance remark is a casual, unplanned comment.",
+    "id": "EN-030"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Tone",
+    "difficulty": "Standard",
+    "passage_id": "P4",
+    "passage_title": "The Woman Who Mapped the Stars",
+    "passage": "In the late 1800s, a young woman named Williamina Fleming arrived in the United States with little money and no plans to become a scientist. She found work as a housekeeper for a professor of astronomy. One day, frustrated with the slow progress of his assistants, the professor declared that even his maid could do a better job. To everyone's surprise, he was right.\n\nFleming was given the task of studying photographs of the night sky and recording the brightness of the stars. She proved so skilful that she was soon placed in charge of a team of women who carefully catalogued tens of thousands of stars. Over her career she discovered hundreds of new objects in space. Fleming showed that talent can be found in the most unexpected places, and that a chance remark can change the whole course of a life.",
+    "question": "How does the writer seem to feel about Fleming?",
+    "options": [
+      "admiring",
+      "disappointed",
+      "amused",
+      "uninterested"
+    ],
+    "answer": "admiring",
+    "explanation": "The writer praises her skill and achievements, showing admiration.",
+    "id": "EN-031"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "Who or what is the 'I' speaking in the poem?",
+    "options": [
+      "An oak tree",
+      "A child",
+      "The wind",
+      "A lighthouse"
+    ],
+    "answer": "An oak tree",
+    "explanation": "The title and the references to roots, leaves and limbs show the speaker is the oak tree.",
+    "id": "EN-032"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Language",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "Letting the tree speak as 'I' is an example of:",
+    "options": [
+      "personification",
+      "a simile",
+      "a question",
+      "a list"
+    ],
+    "answer": "personification",
+    "explanation": "Giving the tree a human voice and feelings is personification.",
+    "id": "EN-033"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "'Winter's tears' most likely refers to:",
+    "options": [
+      "rain or melting ice",
+      "real crying",
+      "falling snowflakes counted one by one",
+      "cold winds"
+    ],
+    "answer": "rain or melting ice",
+    "explanation": "'Tears' is a poetic image for the water (rain or melting ice) of winter.",
+    "id": "EN-034"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "What does the line 'My roots hold fast; I will not bend' suggest about the tree?",
+    "options": [
+      "It is strong and determined to survive",
+      "It is about to fall",
+      "It wants to move away",
+      "It is afraid of children"
+    ],
+    "answer": "It is strong and determined to survive",
+    "explanation": "Holding fast and refusing to bend shows strength and determination.",
+    "id": "EN-035"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Structure",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "How much time does the poem suggest has passed?",
+    "options": [
+      "About a hundred years, across several generations",
+      "A single day",
+      "One winter",
+      "Ten minutes"
+    ],
+    "answer": "About a hundred years, across several generations",
+    "explanation": "The tree has 'stood here a hundred years' and watches 'children's children' grow.",
+    "id": "EN-036"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Language",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "Which pair of words at the ends of lines rhyme?",
+    "options": [
+      "years / tears",
+      "arms / go",
+      "grow / limb",
+      "bend / strip"
+    ],
+    "answer": "years / tears",
+    "explanation": "'Years' and 'tears' rhyme at the ends of the first two lines.",
+    "id": "EN-037"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Tone",
+    "difficulty": "Standard",
+    "passage_id": "P5",
+    "passage_title": "The Old Oak (a poem)",
+    "passage": "I have stood here a hundred years,\nThrough summer suns and winter's tears.\nThe children climbed my crooked arms,\nAnd sheltered from the noonday's charms.\n\nNow grey and bent, I watch them go,\nTheir children's children come and grow.\nThough storms may strip me leaf and limb,\nMy roots hold fast; I will not bend.",
+    "question": "The overall mood of the poem is best described as:",
+    "options": [
+      "reflective and proud",
+      "silly and playful",
+      "angry and bitter",
+      "frightened"
+    ],
+    "answer": "reflective and proud",
+    "explanation": "The tree looks back over time with calm pride in its endurance.",
+    "id": "EN-038"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "What is the writer's main purpose in this passage?",
+    "options": [
+      "To persuade readers to help protect bees",
+      "To explain how to make honey",
+      "To describe a picnic",
+      "To compare bees and wasps"
+    ],
+    "answer": "To persuade readers to help protect bees",
+    "explanation": "The passage argues for the importance of bees and urges readers to act.",
+    "id": "EN-039"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "How do bees help plants make seeds and fruit?",
+    "options": [
+      "By carrying pollen between flowers",
+      "By eating harmful insects",
+      "By watering the plants",
+      "By keeping the soil warm"
+    ],
+    "answer": "By carrying pollen between flowers",
+    "explanation": "'they carry pollen with them. This pollen allows plants to make seeds and fruit'.",
+    "id": "EN-040"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "Which of these is NOT given as a reason for falling bee numbers?",
+    "options": [
+      "Too many beekeepers",
+      "Loss of wild flowers",
+      "Harmful chemicals",
+      "Changes in climate"
+    ],
+    "answer": "Too many beekeepers",
+    "explanation": "The passage lists loss of wild flowers, chemicals and climate change, not too many beekeepers.",
+    "id": "EN-041"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Language",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "Describing bees as 'buzzing nuisances' at the start is used to:",
+    "options": [
+      "set up a view the writer will then argue against",
+      "show the writer hates bees",
+      "make readers laugh",
+      "describe the sound of a picnic"
+    ],
+    "answer": "set up a view the writer will then argue against",
+    "explanation": "The writer presents a common dismissive view, then counters it to strengthen the argument.",
+    "id": "EN-042"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Inference",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "The phrase 'protecting our own future too' suggests that:",
+    "options": [
+      "humans depend on bees for food",
+      "bees will attack us",
+      "gardens are dangerous",
+      "the future is already decided"
+    ],
+    "answer": "humans depend on bees for food",
+    "explanation": "Because bees pollinate our crops, protecting them protects our food supply and future.",
+    "id": "EN-043"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Retrieval",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "Which action does the writer suggest readers can take?",
+    "options": [
+      "Planting flowers",
+      "Buying more honey",
+      "Keeping bees as pets",
+      "Moving to the countryside"
+    ],
+    "answer": "Planting flowers",
+    "explanation": "The writer suggests 'planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild'.",
+    "id": "EN-044"
+  },
+  {
+    "subject": "English comprehension",
+    "topic": "Vocabulary",
+    "difficulty": "Standard",
+    "passage_id": "P6",
+    "passage_title": "Why We Should Protect Bees",
+    "passage": "It is easy to dismiss bees as nothing more than buzzing nuisances at a summer picnic. Yet these small insects are among the most important creatures on Earth. As bees travel from flower to flower in search of nectar, they carry pollen with them. This pollen allows plants to make seeds and fruit. Without bees, many of the foods we love, from apples to almonds, would become rare and expensive.\n\nSadly, bee numbers are falling. The reasons include the loss of wild flowers, the use of harmful chemicals, and changes in our climate. The good news is that we can all help. By planting flowers, avoiding chemical sprays, and leaving a corner of the garden to grow wild, even children can make a real difference. Protecting bees is not just about saving insects; it is about protecting our own future too.",
+    "question": "In this passage, 'dismiss' (to dismiss bees as nuisances) means to:",
+    "options": [
+      "treat as unimportant",
+      "send away from school",
+      "wave goodbye",
+      "frighten off"
+    ],
+    "answer": "treat as unimportant",
+    "explanation": "To dismiss something here means to regard it as unimportant or not worth attention.",
+    "id": "EN-045"
+  }
+]

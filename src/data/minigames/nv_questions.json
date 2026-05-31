@@ -1,0 +1,1102 @@
+[
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Four of these shapes share a feature. Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"35\" y=\"35\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 94.6,82.0 25.4,82.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"42\" width=\"70\" height=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "Three shapes have four straight sides; the triangle does not, so it is the odd one out.",
+    "id": "NV-001"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Four of these shapes share a feature. Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"35\" y=\"35\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"35,80 85,80 75,45 45,45\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "Three shapes have four straight sides; the pentagon does not, so it is the odd one out.",
+    "id": "NV-002"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Four of these shapes share a feature. Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"42\" width=\"70\" height=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"35,80 85,80 75,45 45,45\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "Three shapes have four straight sides; the hexagon does not, so it is the odd one out.",
+    "id": "NV-003"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Four of these shapes share a feature. Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"35\" y=\"35\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"42\" width=\"70\" height=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"35,80 85,80 75,45 45,45\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"38\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "Three shapes have four straight sides; the circle does not, so it is the odd one out.",
+    "id": "NV-004"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Four of these shapes share a feature. Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 94.6,82.0 25.4,82.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"35,80 85,80 75,45 45,45\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"42\" width=\"70\" height=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "Three shapes have four straight sides; the triangle does not, so it is the odd one out.",
+    "id": "NV-005"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Four of these shapes share a feature. Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"35\" y=\"35\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"35,80 85,80 75,45 45,45\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "Three shapes have four straight sides; the hexagon does not, so it is the odd one out.",
+    "id": "NV-006"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "Three shapes are unshaded outlines; one is shaded (filled in), so the shaded one is the odd one out.",
+    "id": "NV-007"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"30\" y=\"30\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"30\" y=\"30\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"30\" y=\"30\" width=\"60\" height=\"60\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"30\" y=\"30\" width=\"60\" height=\"60\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "Three shapes are unshaded outlines; one is shaded (filled in), so the shaded one is the odd one out.",
+    "id": "NV-008"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "Three shapes are unshaded outlines; one is shaded (filled in), so the shaded one is the odd one out.",
+    "id": "NV-009"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "Three shapes are unshaded outlines; one is shaded (filled in), so the shaded one is the odd one out.",
+    "id": "NV-010"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Each box contains some dots. Which box is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "Three boxes contain 3 dot(s); one box contains a different number, so it is the odd one out.",
+    "id": "NV-011"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Each box contains some dots. Which box is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "Three boxes contain 2 dot(s); one box contains a different number, so it is the odd one out.",
+    "id": "NV-012"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Each box contains some dots. Which box is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "Three boxes contain 4 dot(s); one box contains a different number, so it is the odd one out.",
+    "id": "NV-013"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Each box contains some dots. Which box is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "Three boxes contain 1 dot(s); one box contains a different number, so it is the odd one out.",
+    "id": "NV-014"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-015"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-016"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-017"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-018"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-019"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"92.0\" y1=\"60.0\" x2=\"28.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"38.9,54.9 28.0,60.0 38.9,65.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"92.0\" x2=\"60.0\" y2=\"28.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"65.1,38.9 60.0,28.0 54.9,38.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"28.0\" y1=\"60.0\" x2=\"92.0\" y2=\"60.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"81.1,65.1 92.0,60.0 81.1,54.9\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"60.0\" y1=\"28.0\" x2=\"60.0\" y2=\"92.0\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"54.9,81.1 60.0,92.0 65.1,81.1\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-020"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (counting)",
+    "difficulty": "Standard",
+    "question": "The number of dots changes by the same amount each step. Which option comes NEXT?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "Each box gains one more dot than the last, so the next box has one extra dot again.",
+    "id": "NV-021"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (counting)",
+    "difficulty": "Standard",
+    "question": "The number of dots changes by the same amount each step. Which option comes NEXT?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "Each box gains one more dot than the last, so the next box has one extra dot again.",
+    "id": "NV-022"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second in a certain way. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"18\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"25\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,80.0 25.4,80.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "The small shape becomes a large version of the SAME shape, so the small square should become a large square.",
+    "id": "NV-023"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second in a certain way. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"18\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"25\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,80.0 25.4,80.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "The small shape becomes a large version of the SAME shape, so the small square should become a large square.",
+    "id": "NV-024"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second in a certain way. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"18\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,80.0 25.4,80.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"25\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The small shape becomes a large version of the SAME shape, so the small square should become a large square.",
+    "id": "NV-025"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second in a certain way. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"18\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"48\" y=\"48\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"25\" y=\"25\" width=\"70\" height=\"70\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,80.0 25.4,80.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "The small shape becomes a large version of the SAME shape, so the small square should become a large square.",
+    "id": "NV-026"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "The outline shape becomes shaded (filled in), so the unshaded pentagon should become a shaded pentagon.",
+    "id": "NV-027"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The outline shape becomes shaded (filled in), so the unshaded pentagon should become a shaded pentagon.",
+    "id": "NV-028"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Analogy",
+    "difficulty": "Standard",
+    "question": "The first shape changes into the second. Apply the SAME change to the third shape. Which option is correct?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:22px\">&nbsp;::&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg><span style=\"font-size:24px\">&#8594;</span><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"34\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "The outline shape becomes shaded (filled in), so the unshaded pentagon should become a shaded pentagon.",
+    "id": "NV-029"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,40.0 94.6,80.0 60.0,100.0 25.4,80.0 25.4,40.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 86.0,45.0 86.0,75.0 60.0,90.0 34.0,75.0 34.0,45.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,79.0 27.1,79.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "The key shape is a six-sided hexagon. The correct option is also a hexagon, even though its size and shading differ.",
+    "id": "NV-030"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,40.0 94.6,80.0 60.0,100.0 25.4,80.0 25.4,40.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 86.0,45.0 86.0,75.0 60.0,90.0 34.0,75.0 34.0,45.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,79.0 27.1,79.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "The key shape is a six-sided hexagon. The correct option is also a hexagon, even though its size and shading differ.",
+    "id": "NV-031"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,40.0 94.6,80.0 60.0,100.0 25.4,80.0 25.4,40.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,79.0 27.1,79.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 86.0,45.0 86.0,75.0 60.0,90.0 34.0,75.0 34.0,45.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "The key shape is a six-sided hexagon. The correct option is also a hexagon, even though its size and shading differ.",
+    "id": "NV-032"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,40.0 94.6,80.0 60.0,100.0 25.4,80.0 25.4,40.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,79.0 27.1,79.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"36\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 86.0,45.0 86.0,75.0 60.0,90.0 34.0,75.0 34.0,45.0\" fill=\"#3b6\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The key shape is a six-sided hexagon. The correct option is also a hexagon, even though its size and shading differ.",
+    "id": "NV-033"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Reflection",
+    "difficulty": "Standard",
+    "question": "Which option shows the shape reflected in a vertical mirror (flipped left to right)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Mirror this shape (flip left-to-right):&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,35 80,85 40,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,85 40,35 80,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,85 80,35 40,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "A left-to-right reflection swaps left and right, so the foot of the L points the opposite way while the upright stays at the bottom.",
+    "id": "NV-034"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Reflection",
+    "difficulty": "Standard",
+    "question": "Which option shows the shape reflected in a vertical mirror (flipped left to right)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Mirror this shape (flip left-to-right):&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,35 80,85 40,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,85 40,35 80,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,85 80,35 40,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "A left-to-right reflection swaps left and right, so the foot of the L points the opposite way while the upright stays at the bottom.",
+    "id": "NV-035"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Reflection",
+    "difficulty": "Standard",
+    "question": "Which option shows the shape reflected in a vertical mirror (flipped left to right)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Mirror this shape (flip left-to-right):&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,85 40,35 80,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,35 80,85 40,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,85 80,35 40,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "A left-to-right reflection swaps left and right, so the foot of the L points the opposite way while the upright stays at the bottom.",
+    "id": "NV-036"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Reflection",
+    "difficulty": "Standard",
+    "question": "Which option shows the shape reflected in a vertical mirror (flipped left to right)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Mirror this shape (flip left-to-right):&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,35 40,85 80,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"40,85 40,35 80,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,85 80,35 40,35\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polyline points=\"80,35 80,85 40,85\" fill=\"none\" stroke=\"#222\" stroke-width=\"6\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "A left-to-right reflection swaps left and right, so the foot of the L points the opposite way while the upright stays at the bottom.",
+    "id": "NV-037"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-038"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-039"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-040"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (rotation)",
+    "difficulty": "Standard",
+    "question": "The arrow turns the same way each step. Which option comes NEXT in the series?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"37.4\" x2=\"82.6\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"71.4,78.5 82.6,82.6 78.5,71.4\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"37.4\" x2=\"37.4\" y2=\"82.6\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"41.5,71.4 37.4,82.6 48.6,78.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"82.6\" y1=\"82.6\" x2=\"37.4\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"48.6,41.5 37.4,37.4 41.5,48.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><line x1=\"37.4\" y1=\"82.6\" x2=\"82.6\" y2=\"37.4\" stroke=\"#222\" stroke-width=\"4\"/><polyline points=\"78.5,48.6 82.6,37.4 71.4,41.5\" fill=\"none\" stroke=\"#222\" stroke-width=\"4\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The arrow rotates 90 degrees clockwise each step, so the next arrow points the same way as the first one in the series.",
+    "id": "NV-041"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (counting)",
+    "difficulty": "Standard",
+    "question": "The number of dots changes by the same amount each step. Which option comes NEXT?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "Each box gains one more dot than the last, so the next box has one extra dot again.",
+    "id": "NV-042"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Series (counting)",
+    "difficulty": "Standard",
+    "question": "The number of dots changes by the same amount each step. Which option comes NEXT?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg><span style=\"font-size:28px\">?</span></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"60\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/><circle cx=\"45\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"45\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"45\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/><circle cx=\"75\" cy=\"75\" r=\"7\" fill=\"#222\" stroke=\"#222\" stroke-width=\"1\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "Each box gains one more dot than the last, so the next box has one extra dot again.",
+    "id": "NV-043"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"20\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><circle cx=\"60\" cy=\"60\" r=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "B",
+    "explanation": "Three shapes are large and one is much smaller, so the small one is the odd one out.",
+    "id": "NV-044"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"20\" y=\"20\" width=\"80\" height=\"80\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><rect x=\"40\" y=\"40\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "Three shapes are large and one is much smaller, so the small one is the odd one out.",
+    "id": "NV-045"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,42.0 77.3,72.0 42.7,72.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 94.6,82.0 25.4,82.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 94.6,82.0 25.4,82.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 94.6,82.0 25.4,82.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "Three shapes are large and one is much smaller, so the small one is the odd one out.",
+    "id": "NV-046"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which shape is the ODD ONE OUT?",
+    "stimulus_svg": "",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 98.0,47.6 83.5,92.4 36.5,92.4 22.0,47.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 98.0,47.6 83.5,92.4 36.5,92.4 22.0,47.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,40.0 79.0,53.8 71.8,76.2 48.2,76.2 41.0,53.8\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 98.0,47.6 83.5,92.4 36.5,92.4 22.0,47.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "Three shapes are large and one is much smaller, so the small one is the odd one out.",
+    "id": "NV-047"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 94.6,80.0 25.4,80.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 86.0,75.0 34.0,75.0\" fill=\"#39c\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "C",
+    "explanation": "The key shape has 3 sides. The correct option has the same number of sides, just a different size and shading.",
+    "id": "NV-048"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 100.0,60.0 60.0,100.0 20.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 90.0,60.0 60.0,90.0 30.0,60.0\" fill=\"#39c\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,79.0 27.1,79.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 96.1,48.3 82.3,90.7 37.7,90.7 23.9,48.3\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "A",
+    "explanation": "The key shape has 4 sides. The correct option has the same number of sides, just a different size and shading.",
+    "id": "NV-049"
+  },
+  {
+    "subject": "Non-verbal reasoning",
+    "topic": "Most alike",
+    "difficulty": "Standard",
+    "question": "Which option is the SAME type of shape as the key shape (it may be a different size or shading)?",
+    "stimulus_svg": "<div style=\"display:flex;gap:6px;align-items:center\"><span style=\"font-size:15px\">Key shape:&nbsp;</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,20.0 98.0,47.6 83.5,92.4 36.5,92.4 22.0,47.6\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg></div>",
+    "option_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "option_svgs": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,79.0 27.1,79.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 98.0,60.0 60.0,98.0 22.0,60.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,22.0 92.9,41.0 92.9,79.0 60.0,98.0 27.1,79.0 27.1,41.0\" fill=\"none\" stroke=\"#222\" stroke-width=\"3\"/></svg>",
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 120 120\" width=\"120\" height=\"120\"><rect x=\"1\" y=\"1\" width=\"118\" height=\"118\" fill=\"white\" stroke=\"#bbb\" stroke-width=\"1\"/><polygon points=\"60.0,30.0 88.5,50.7 77.6,84.3 42.4,84.3 31.5,50.7\" fill=\"#39c\" stroke=\"#222\" stroke-width=\"3\"/></svg>"
+    ],
+    "answer": "D",
+    "explanation": "The key shape has 5 sides. The correct option has the same number of sides, just a different size and shading.",
+    "id": "NV-050"
+  }
+]

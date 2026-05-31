@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
+import { MinigameSection } from '@/components/MinigameSection';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { UserSettings } from '@/components/UserSettings';
 import { Button } from '@/components/ui/button';
@@ -295,8 +296,9 @@ const Index = () => {
             />
           </div>
         ) : currentView === 'selection' ? (
-          <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <div className="container mx-auto px-4 py-8 max-w-6xl space-y-12">
             <InterviewSelection onSelectInterview={handleSelectInterview} />
+            <MinigameSection />
           </div>
         ) : currentView === 'interview' ? (
           <InterviewPlatform selectedInterviewType={selectedInterviewType} />
