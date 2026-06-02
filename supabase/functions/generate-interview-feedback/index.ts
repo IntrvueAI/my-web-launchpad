@@ -367,7 +367,7 @@ try {
     }
 
     const requestBody = {
-      model: 'gpt-5.4-mini',
+      model: 'gpt-4o',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields.\n\n${sanitizedTranscription}` }
@@ -581,7 +581,7 @@ CRITICAL INSTRUCTIONS:
 Segment to analyze:`;
 
         const segmentRequest = {
-          model: 'gpt-5.4-mini',
+          model: 'gpt-4o',
           messages: [
             { role: 'system', content: segmentAnnotationPrompt },
             { role: 'user', content: `${segment.content}\n\nFull transcript for character index reference:\n${sanitizedTranscription}` }
@@ -653,7 +653,7 @@ CRITICAL: You MUST provide exactly 30-35 annotations to give thorough feedback c
 - Return ONLY valid JSON with shape: { "annotations": Annotation[] }`;
 
       const fallbackRequest = {
-        model: 'gpt-5.4-mini',
+        model: 'gpt-4o',
         messages: [
           { role: 'system', content: fallbackAnnotationPrompt },
           { role: 'user', content: `Transcript to annotate (only highlight Student lines):\n\n${sanitizedTranscription}` }
@@ -800,7 +800,7 @@ CRITICAL: You MUST provide exactly 30-35 annotations to give thorough feedback c
       try {
         const backupPrompt = `Extract 15 to 25 quotes from ONLY Student lines throughout the ENTIRE transcript that reflect strengths or issues. Analyze the complete conversation systematically from beginning to end. Categories: strength, grammar, fluency, lexical. Ensure good distribution across all categories and conversation portions. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
         const backupReq = {
-          model: 'gpt-5.4-mini',
+          model: 'gpt-4o',
           messages: [
             { role: 'system', content: backupPrompt },
             { role: 'user', content: `Original Transcript (includes Interviewer labels):\n\n${sanitizedTranscription}` }
@@ -846,7 +846,7 @@ Use encouraging, teacher-like language throughout. Be specific about what they d
 STUDENT PERFORMANCE DATA:`;
 
       const improvementRequest = {
-        model: 'gpt-5.4-mini',
+        model: 'gpt-4o',
         messages: [
           { role: 'system', content: improvementSystemPrompt },
           { role: 'user', content: `Scores: ${JSON.stringify(feedbackData)}\n\nDetailed Feedback: ${JSON.stringify(feedbackData.detailed_feedback)}\n\nPlease create a comprehensive action plan for this student's improvement.` }
