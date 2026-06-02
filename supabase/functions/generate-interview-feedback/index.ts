@@ -48,6 +48,18 @@ const INTERVIEW_TYPES: Record<string, any> = {
       'Clarity of Thought'
     ]
   },
+  'maths-interview': {
+    id: 'maths-interview',
+    name: '11+ Maths Mock Interview',
+    category: 'maths',
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Number & Calculation',
+      'Problem-Solving & Method',
+      'Mathematical Reasoning',
+      'Clarity of Explanation'
+    ]
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -130,6 +142,70 @@ Required JSON structure:
 }`;
   }
   
+  if (interviewType === 'maths-interview') {
+    return `You are an expert evaluator for 11+ maths mock interviews. The student answered 10 maths questions out loud, talking through their method. You MUST respond with valid JSON only.
+
+SCORING RUBRIC (Each section scored 0-5, total out of 20):
+
+Section 1: Number & Calculation (5 marks)
+- 5: Highly accurate and fluent with numbers; calculations are quick and correct
+- 4: Strong calculation skills; minor slips only
+- 3: Generally accurate; some calculation errors under pressure
+- 2: Basic calculation ability; frequent errors needing guidance
+- 1: Limited accuracy; struggles with basic calculation
+- 0: No accurate calculation demonstrated
+
+Section 2: Problem-Solving & Method (5 marks)
+- 5: Chooses an efficient, sensible method every time and applies it well
+- 4: Good choice of method with minor inefficiencies
+- 3: Reaches a workable method but may need prompting
+- 2: Struggles to choose a method without guidance
+- 1: Rarely identifies a usable method
+- 0: No method demonstrated
+
+Section 3: Mathematical Reasoning (5 marks)
+- 5: Reasons fluently through multi-step and word problems; translates words to maths with ease
+- 4: Strong reasoning; handles most multi-step problems well
+- 3: Solid reasoning with minor gaps on harder problems
+- 2: Basic reasoning; needs guidance on multi-step problems
+- 1: Limited reasoning; struggles with word problems
+- 0: No mathematical reasoning demonstrated
+
+Section 4: Clarity of Explanation (5 marks)
+- 5: Explains each step clearly and confidently out loud
+- 4: Clear explanations; good at verbalising the method
+- 3: Generally clear with some gaps in articulation
+- 2: Understandable but could be much clearer
+- 1: Difficulty explaining the method
+- 0: Very unclear or no coherent explanation
+
+SCORING BANDS:
+18-20: Exceptional; outstanding maths skills and explanation
+15-17: Strong; excellent mathematical thinking
+12-14: Good; solid maths with room for development
+8-11: Developing; basic skills, needs practice
+0-7: Needs Support; requires significant development in maths
+
+CRITICAL: You MUST respond ONLY with a valid JSON object. No explanations, no markdown, no additional text.
+
+Required JSON structure:
+{
+  "pattern_recognition_score": 0,
+  "logical_deduction_score": 0,
+  "mathematical_logic_score": 0,
+  "clarity_of_thought_score": 0,
+  "total_score": 0,
+  "detailed_feedback": {
+    "pattern_recognition": "Brief feedback on Number & Calculation here",
+    "logical_deduction": "Brief feedback on Problem-Solving & Method here",
+    "mathematical_logic": "Brief feedback on Mathematical Reasoning here",
+    "clarity_of_thought": "Brief feedback on Clarity of Explanation here",
+    "overall": "Overall assessment here",
+    "band_assessment": "Band assessment here"
+  }
+}`;
+  }
+
   // For 11+ keep existing detailed prompt
   return `You are an expert evaluator for 11+ private school admissions interviews. You MUST respond with valid JSON only.
 
@@ -367,8 +443,8 @@ try {
         }
         
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles') {
-          // Logic puzzles validation
+        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview') {
+          // Logic puzzles / maths interview validation (shared score fields)
           const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
           for (const field of requiredFields) {
             // Convert to number if it's a string
@@ -413,7 +489,7 @@ try {
       console.error('JSON parsing error:', e.message);
       
       // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles') {
+      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview') {
         feedbackData = {
           pattern_recognition_score: 3,
           logical_deduction_score: 3,
@@ -843,7 +919,7 @@ STUDENT PERFORMANCE DATA:`;
     };
 
     // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles') {
+    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview') {
       insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
       insertData.logical_deduction_score = feedbackData.logical_deduction_score;
       insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;

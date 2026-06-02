@@ -63,6 +63,24 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
     icon: 'Brain'
   },
+  'maths-interview': {
+    id: 'maths-interview',
+    name: '11+ Maths Mock Interview',
+    description: 'A spoken maths mock interview with Clara — talk through your method on 10 questions',
+    category: 'maths',
+    promptFile: 'academic/maths-interview.md',
+    duration: 20,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Number & Calculation',
+      'Problem-Solving & Method',
+      'Mathematical Reasoning',
+      'Clarity of Explanation'
+    ],
+    difficultyLevel: 2,
+    tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning'],
+    icon: 'Calculator'
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -274,12 +292,65 @@ const LOGIC_PUZZLES_CONFIG: InterviewTypeConfig = {
   ]
 };
 
+// Maths Mock Interview Configuration (20 points total: 5+5+5+5)
+// Reuses the logic-puzzles score fields so no new DB columns are needed,
+// but presents maths-appropriate section titles.
+const MATHS_INTERVIEW_CONFIG: InterviewTypeConfig = {
+  name: 'Maths Mock Interview',
+  description: 'Spoken assessment of maths skills and problem-solving with Clara',
+  scoringSystem: '0-5',
+  maxTotalScore: 20,
+  maxSectionScore: 5,
+  sections: [
+    {
+      id: 'number-calculation',
+      title: 'Number & Calculation',
+      iconName: 'Calculator',
+      description: 'Accuracy and fluency with numbers and calculations',
+      scoreField: 'pattern_recognition_score',
+      feedbackField: 'pattern_recognition'
+    },
+    {
+      id: 'problem-solving',
+      title: 'Problem-Solving & Method',
+      iconName: 'Brain',
+      description: 'Choosing and applying a sound method to reach the answer',
+      scoreField: 'logical_deduction_score',
+      feedbackField: 'logical_deduction'
+    },
+    {
+      id: 'mathematical-reasoning',
+      title: 'Mathematical Reasoning',
+      iconName: 'TrendingUp',
+      description: 'Reasoning through multi-step and word problems',
+      scoreField: 'mathematical_logic_score',
+      feedbackField: 'mathematical_logic'
+    },
+    {
+      id: 'clarity-of-explanation',
+      title: 'Clarity of Explanation',
+      iconName: 'MessageCircle',
+      description: 'Explaining the working and reasoning clearly out loud',
+      scoreField: 'clarity_of_thought_score',
+      feedbackField: 'clarity_of_thought'
+    }
+  ],
+  bandThresholds: [
+    { minScore: 18, label: 'Exceptional', colorClass: 'bg-emerald-500', description: 'Outstanding maths skills and explanation' },
+    { minScore: 15, label: 'Strong', colorClass: 'bg-green-500', description: 'Strong mathematical thinking' },
+    { minScore: 12, label: 'Good', colorClass: 'bg-blue-500', description: 'Good maths with room for development' },
+    { minScore: 8, label: 'Developing', colorClass: 'bg-yellow-500', description: 'Basic maths skills, needs practice' },
+    { minScore: 0, label: 'Needs Support', colorClass: 'bg-red-500', description: 'Requires significant development in maths' }
+  ]
+};
+
 /**
  * Enhanced configurations mapped by modern interview type
  */
 export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeConfig> = {
   '11-plus': ELEVEN_PLUS_CONFIG,
   'logic-puzzles': LOGIC_PUZZLES_CONFIG,
+  'maths-interview': MATHS_INTERVIEW_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types
   'oxbridge': {

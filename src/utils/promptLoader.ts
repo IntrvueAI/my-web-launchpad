@@ -3,13 +3,31 @@ import { getInterviewType } from '@/config/interviewTypes';
 // Import all prompts statically to avoid dynamic import issues
 import elevenPlusPrompt from '../prompts/academic/11-plus.md?raw';
 import logicPuzzlesPrompt from '../prompts/academic/logic-puzzles.md?raw';
+import mathsInterviewPrompt from '../prompts/academic/maths-interview.md?raw';
 import demoPrompt from '../prompts/demo/demo.md?raw';
 
-// Static mapping of prompts
+// The core script + framework every mini-interview stems from.
+import interviewLogicCore from '../prompts/interview-logic.md?raw';
+
+// Static mapping of prompts (the subject-specific specialisations)
 const SYSTEM_PROMPTS: Record<string, string> = {
   '11-plus': elevenPlusPrompt,
   'logic-puzzles': logicPuzzlesPrompt,
+  'maths-interview': mathsInterviewPrompt,
   'demo': demoPrompt,
+};
+
+// Avatar-led mini-interviews that compose from the core interview-logic script.
+const MINI_INTERVIEW_TYPES = new Set(['logic-puzzles', 'maths-interview']);
+
+/**
+ * Composes the final system prompt for mini-interviews: the shared core script
+ * (interview-logic.md) governs structure/flow/scoring; the subject prompt then
+ * supplies the interviewer name, intro, and question bank.
+ */
+const composePrompt = (interviewTypeId: string, specificPrompt: string): string => {
+  if (!MINI_INTERVIEW_TYPES.has(interviewTypeId)) return specificPrompt;
+  return `${interviewLogicCore}\n\n---\n\n# Subject-specific brief (specialises the core above)\n\n${specificPrompt}`;
 };
 
 /**
@@ -18,13 +36,13 @@ const SYSTEM_PROMPTS: Record<string, string> = {
 export const loadSystemPrompt = async (interviewTypeId: string): Promise<string> => {
   try {
     const prompt = SYSTEM_PROMPTS[interviewTypeId];
-    
+
     if (!prompt) {
       console.warn(`Interview type ${interviewTypeId} not found, falling back to 11-plus`);
       return SYSTEM_PROMPTS['11-plus'] || getDefaultPrompt();
     }
 
-    return prompt;
+    return composePrompt(interviewTypeId, prompt);
     
   } catch (error) {
     console.error(`Failed to load prompt for ${interviewTypeId}:`, error);
