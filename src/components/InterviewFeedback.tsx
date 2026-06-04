@@ -158,12 +158,13 @@ export const InterviewFeedback = ({
   const isIELTS = interviewType === 'ielts';
   const isLogicPuzzles = interviewType === 'logic-puzzles';
   const isMathsInterview = interviewType === 'maths-interview';
+  const isVerbalInterview = interviewType === 'verbal-interview';
 
   let maxScore, maxIndividualScore;
   if (isIELTS) {
     maxScore = 9;
     maxIndividualScore = 9;
-  } else if (isLogicPuzzles || isMathsInterview) {
+  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview) {
     maxScore = 20;
     maxIndividualScore = 5;
   } else {
@@ -244,6 +245,34 @@ export const InterviewFeedback = ({
       },
       {
         title: 'Mathematical Reasoning',
+        icon: 'TrendingUp',
+        score: feedback.mathematical_logic_score || 0,
+        feedback: feedback.detailed_feedback.mathematical_logic || '',
+      },
+      {
+        title: 'Clarity of Explanation',
+        icon: 'MessageCircle',
+        score: feedback.clarity_of_thought_score || 0,
+        feedback: feedback.detailed_feedback.clarity_of_thought || '',
+      },
+    ];
+  } else if (isVerbalInterview) {
+    // Verbal reasoning interview reuses the logic score fields with verbal titles
+    sections = [
+      {
+        title: 'Vocabulary & Word Knowledge',
+        icon: 'BookOpen',
+        score: feedback.pattern_recognition_score || 0,
+        feedback: feedback.detailed_feedback.pattern_recognition || '',
+      },
+      {
+        title: 'Verbal Reasoning & Deduction',
+        icon: 'Brain',
+        score: feedback.logical_deduction_score || 0,
+        feedback: feedback.detailed_feedback.logical_deduction || '',
+      },
+      {
+        title: 'Word Relationships & Patterns',
         icon: 'TrendingUp',
         score: feedback.mathematical_logic_score || 0,
         feedback: feedback.detailed_feedback.mathematical_logic || '',

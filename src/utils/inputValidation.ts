@@ -139,7 +139,7 @@ export const validateSessionId = (sessionId: string): { isValid: boolean; error?
 };
 
 export const validateInterviewType = (interviewType: string): { isValid: boolean; error?: string } => {
-  const validTypes = ['11-plus', 'ielts', 'logic-puzzles', 'maths-interview', 'demo'];
+  const validTypes = ['11-plus', 'ielts', 'logic-puzzles', 'maths-interview', 'verbal-interview', 'demo'];
   
   if (!interviewType || typeof interviewType !== 'string') {
     return { isValid: false, error: 'Interview type is required' };

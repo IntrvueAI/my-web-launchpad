@@ -60,6 +60,18 @@ const INTERVIEW_TYPES: Record<string, any> = {
       'Clarity of Explanation'
     ]
   },
+  'verbal-interview': {
+    id: 'verbal-interview',
+    name: '11+ Verbal Reasoning Mock Interview',
+    category: 'logic',
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Vocabulary & Word Knowledge',
+      'Verbal Reasoning & Deduction',
+      'Word Relationships & Patterns',
+      'Clarity of Explanation'
+    ]
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -199,6 +211,70 @@ Required JSON structure:
     "pattern_recognition": "Brief feedback on Number & Calculation here",
     "logical_deduction": "Brief feedback on Problem-Solving & Method here",
     "mathematical_logic": "Brief feedback on Mathematical Reasoning here",
+    "clarity_of_thought": "Brief feedback on Clarity of Explanation here",
+    "overall": "Overall assessment here",
+    "band_assessment": "Band assessment here"
+  }
+}`;
+  }
+
+  if (interviewType === 'verbal-interview') {
+    return `You are an expert evaluator for 11+ verbal reasoning mock interviews. The student answered 10 verbal reasoning questions out loud, talking through their thinking. You MUST respond with valid JSON only.
+
+SCORING RUBRIC (Each section scored 0-5, total out of 20):
+
+Section 1: Vocabulary & Word Knowledge (5 marks)
+- 5: Excellent vocabulary; understands and uses precise word meanings with ease
+- 4: Strong vocabulary; minor gaps only
+- 3: Generally good word knowledge; occasional uncertainty
+- 2: Basic vocabulary; needs guidance on less common words
+- 1: Limited vocabulary; struggles with word meanings
+- 0: No relevant word knowledge demonstrated
+
+Section 2: Verbal Reasoning & Deduction (5 marks)
+- 5: Reasons fluently through word logic and deduction problems
+- 4: Strong reasoning; handles most problems well
+- 3: Solid reasoning with minor gaps on harder problems
+- 2: Basic reasoning; needs guidance on multi-step problems
+- 1: Limited reasoning; struggles with verbal logic
+- 0: No verbal reasoning demonstrated
+
+Section 3: Word Relationships & Patterns (5 marks)
+- 5: Quickly spots analogies, codes, sequences and word patterns
+- 4: Strong pattern recognition with good reasoning
+- 3: Good ability; mostly accurate with some hesitation
+- 2: Basic pattern recognition; needs guidance
+- 1: Limited ability with word patterns
+- 0: No pattern recognition demonstrated
+
+Section 4: Clarity of Explanation (5 marks)
+- 5: Explains each step clearly and confidently out loud
+- 4: Clear explanations; good at verbalising reasoning
+- 3: Generally clear with some gaps in articulation
+- 2: Understandable but could be much clearer
+- 1: Difficulty explaining reasoning
+- 0: Very unclear or no coherent explanation
+
+SCORING BANDS:
+18-20: Exceptional; outstanding verbal reasoning ability
+15-17: Strong; excellent verbal reasoning skills
+12-14: Good; solid verbal reasoning with room for development
+8-11: Developing; basic skills, needs practice
+0-7: Needs Support; requires significant development in verbal reasoning
+
+CRITICAL: You MUST respond ONLY with a valid JSON object. No explanations, no markdown, no additional text.
+
+Required JSON structure:
+{
+  "pattern_recognition_score": 0,
+  "logical_deduction_score": 0,
+  "mathematical_logic_score": 0,
+  "clarity_of_thought_score": 0,
+  "total_score": 0,
+  "detailed_feedback": {
+    "pattern_recognition": "Brief feedback on Vocabulary & Word Knowledge here",
+    "logical_deduction": "Brief feedback on Verbal Reasoning & Deduction here",
+    "mathematical_logic": "Brief feedback on Word Relationships & Patterns here",
     "clarity_of_thought": "Brief feedback on Clarity of Explanation here",
     "overall": "Overall assessment here",
     "band_assessment": "Band assessment here"
@@ -443,8 +519,8 @@ try {
         }
         
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview') {
-          // Logic puzzles / maths interview validation (shared score fields)
+        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview') {
+          // Logic puzzles / maths / verbal interview validation (shared score fields)
           const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
           for (const field of requiredFields) {
             // Convert to number if it's a string
@@ -489,7 +565,7 @@ try {
       console.error('JSON parsing error:', e.message);
       
       // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview') {
+      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview') {
         feedbackData = {
           pattern_recognition_score: 3,
           logical_deduction_score: 3,
@@ -919,7 +995,7 @@ STUDENT PERFORMANCE DATA:`;
     };
 
     // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview') {
+    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview') {
       insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
       insertData.logical_deduction_score = feedbackData.logical_deduction_score;
       insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;

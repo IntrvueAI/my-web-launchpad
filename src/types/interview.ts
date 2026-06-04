@@ -7,7 +7,7 @@
  */
 
 // Core interview system types
-export type InterviewType = '11-plus' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview';
+export type InterviewType = '11-plus' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview' | 'verbal-interview';
 export type ScoringSystem = '0-5' | '0-9' | '0-20' | '0-7';
 export type AnnotationCategory = 'strength' | 'grammar' | 'fluency' | 'lexical';
 

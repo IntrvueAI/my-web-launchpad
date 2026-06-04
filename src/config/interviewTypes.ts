@@ -81,6 +81,24 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning'],
     icon: 'Calculator'
   },
+  'verbal-interview': {
+    id: 'verbal-interview',
+    name: '11+ Verbal Reasoning Mock Interview',
+    description: 'A spoken verbal reasoning mock interview with Vera — talk through your thinking on 10 questions',
+    category: 'logic',
+    promptFile: 'academic/verbal-interview.md',
+    duration: 20,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Vocabulary & Word Knowledge',
+      'Verbal Reasoning & Deduction',
+      'Word Relationships & Patterns',
+      'Clarity of Explanation'
+    ],
+    difficultyLevel: 2,
+    tags: ['11+', 'verbal reasoning', 'mock interview', 'vocabulary', 'reasoning'],
+    icon: 'BookOpen'
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -344,6 +362,58 @@ const MATHS_INTERVIEW_CONFIG: InterviewTypeConfig = {
   ]
 };
 
+// Verbal Reasoning Mock Interview Configuration (20 points total: 5+5+5+5)
+// Reuses the logic-puzzles score fields so no new DB columns are needed,
+// but presents verbal-reasoning-appropriate section titles.
+const VERBAL_INTERVIEW_CONFIG: InterviewTypeConfig = {
+  name: 'Verbal Reasoning Mock Interview',
+  description: 'Spoken assessment of verbal reasoning and vocabulary with Vera',
+  scoringSystem: '0-5',
+  maxTotalScore: 20,
+  maxSectionScore: 5,
+  sections: [
+    {
+      id: 'vocabulary',
+      title: 'Vocabulary & Word Knowledge',
+      iconName: 'BookOpen',
+      description: 'Range of vocabulary and understanding of word meanings',
+      scoreField: 'pattern_recognition_score',
+      feedbackField: 'pattern_recognition'
+    },
+    {
+      id: 'verbal-deduction',
+      title: 'Verbal Reasoning & Deduction',
+      iconName: 'Brain',
+      description: 'Reasoning through word-based logic and deduction',
+      scoreField: 'logical_deduction_score',
+      feedbackField: 'logical_deduction'
+    },
+    {
+      id: 'word-relationships',
+      title: 'Word Relationships & Patterns',
+      iconName: 'TrendingUp',
+      description: 'Spotting analogies, codes, sequences and word patterns',
+      scoreField: 'mathematical_logic_score',
+      feedbackField: 'mathematical_logic'
+    },
+    {
+      id: 'clarity-of-explanation',
+      title: 'Clarity of Explanation',
+      iconName: 'MessageCircle',
+      description: 'Explaining the reasoning clearly out loud',
+      scoreField: 'clarity_of_thought_score',
+      feedbackField: 'clarity_of_thought'
+    }
+  ],
+  bandThresholds: [
+    { minScore: 18, label: 'Exceptional', colorClass: 'bg-emerald-500', description: 'Outstanding verbal reasoning ability' },
+    { minScore: 15, label: 'Strong', colorClass: 'bg-green-500', description: 'Strong verbal reasoning skills' },
+    { minScore: 12, label: 'Good', colorClass: 'bg-blue-500', description: 'Good verbal reasoning with room for development' },
+    { minScore: 8, label: 'Developing', colorClass: 'bg-yellow-500', description: 'Basic verbal reasoning, needs practice' },
+    { minScore: 0, label: 'Needs Support', colorClass: 'bg-red-500', description: 'Requires significant development in verbal reasoning' }
+  ]
+};
+
 /**
  * Enhanced configurations mapped by modern interview type
  */
@@ -351,6 +421,7 @@ export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeCo
   '11-plus': ELEVEN_PLUS_CONFIG,
   'logic-puzzles': LOGIC_PUZZLES_CONFIG,
   'maths-interview': MATHS_INTERVIEW_CONFIG,
+  'verbal-interview': VERBAL_INTERVIEW_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types
   'oxbridge': {
