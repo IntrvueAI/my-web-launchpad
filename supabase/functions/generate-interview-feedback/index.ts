@@ -72,6 +72,18 @@ const INTERVIEW_TYPES: Record<string, any> = {
       'Clarity of Explanation'
     ]
   },
+  'current-affairs-interview': {
+    id: 'current-affairs-interview',
+    name: '11+ Current Affairs & Moral Reasoning Interview',
+    category: 'academic',
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'World Awareness & Engagement',
+      'Forming & Defending a View',
+      'Considering Other Perspectives',
+      'Moral Maturity & Clarity'
+    ]
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -276,6 +288,70 @@ Required JSON structure:
     "logical_deduction": "Brief feedback on Verbal Reasoning & Deduction here",
     "mathematical_logic": "Brief feedback on Word Relationships & Patterns here",
     "clarity_of_thought": "Brief feedback on Clarity of Explanation here",
+    "overall": "Overall assessment here",
+    "band_assessment": "Band assessment here"
+  }
+}`;
+  }
+
+  if (interviewType === 'current-affairs-interview') {
+    return `You are an expert evaluator for 11+ current affairs & moral reasoning interviews at top independent school level. The student discussed news and ethical dilemmas out loud and was deliberately pushed back on. There are NO right answers — assess the QUALITY OF REASONING, not which views they hold. You MUST respond with valid JSON only.
+
+SCORING RUBRIC (Each section scored 0-5, total out of 20):
+
+Section 1: World Awareness & Engagement (5 marks)
+- 5: Genuinely engaged with the world; cites specific stories/issues accurately
+- 4: Good awareness; mostly specific and accurate
+- 3: Some awareness but general or vague in places
+- 2: Limited awareness; struggles to cite anything specific
+- 1: Very little engagement with the wider world
+- 0: No awareness demonstrated
+
+Section 2: Forming & Defending a View (5 marks)
+- 5: Takes a clear position and defends it well under challenge without crumbling
+- 4: Forms a view and defends it with minor wobbles
+- 3: Forms a view but defence is shaky when pushed
+- 2: Hedges heavily or abandons positions under mild pressure
+- 1: Cannot commit to or defend a position
+- 0: No coherent view formed
+
+Section 3: Considering Other Perspectives (5 marks)
+- 5: Readily acknowledges and engages with the strongest opposing arguments; can argue the other side
+- 4: Acknowledges other views and engages with them
+- 3: Recognises other views exist but engages only superficially
+- 2: Treats questions as having obvious answers; little perspective-taking
+- 1: Cannot see or entertain opposing views
+- 0: No perspective-taking demonstrated
+
+Section 4: Moral Maturity & Clarity (5 marks)
+- 5: Sits with genuinely hard questions; intellectually honest about uncertainty; explains reasoning clearly
+- 4: Thoughtful and mostly clear; some honesty about difficulty
+- 3: Reasonable but rushes to comfortable answers; explanations adequate
+- 2: Avoids difficulty or bluffs confidence; explanations unclear
+- 1: Little moral reflection; very unclear
+- 0: No coherent moral reasoning or explanation
+
+SCORING BANDS:
+18-20: Exceptional; outstanding awareness and moral reasoning
+15-17: Strong; excellent reasoning and engagement
+12-14: Good; solid engagement with room for development
+8-11: Developing; needs practice
+0-7: Needs Support; requires significant development
+
+CRITICAL: You MUST respond ONLY with a valid JSON object. No explanations, no markdown, no additional text.
+
+Required JSON structure:
+{
+  "pattern_recognition_score": 0,
+  "logical_deduction_score": 0,
+  "mathematical_logic_score": 0,
+  "clarity_of_thought_score": 0,
+  "total_score": 0,
+  "detailed_feedback": {
+    "pattern_recognition": "Brief feedback on World Awareness & Engagement here",
+    "logical_deduction": "Brief feedback on Forming & Defending a View here",
+    "mathematical_logic": "Brief feedback on Considering Other Perspectives here",
+    "clarity_of_thought": "Brief feedback on Moral Maturity & Clarity here",
     "overall": "Overall assessment here",
     "band_assessment": "Band assessment here"
   }
@@ -519,8 +595,8 @@ try {
         }
         
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview') {
-          // Logic puzzles / maths / verbal interview validation (shared score fields)
+        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview') {
+          // Logic / maths / verbal / current-affairs validation (shared score fields)
           const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
           for (const field of requiredFields) {
             // Convert to number if it's a string
@@ -565,7 +641,7 @@ try {
       console.error('JSON parsing error:', e.message);
       
       // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview') {
+      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview') {
         feedbackData = {
           pattern_recognition_score: 3,
           logical_deduction_score: 3,
@@ -995,7 +1071,7 @@ STUDENT PERFORMANCE DATA:`;
     };
 
     // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview') {
+    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview') {
       insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
       insertData.logical_deduction_score = feedbackData.logical_deduction_score;
       insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;

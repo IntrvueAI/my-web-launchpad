@@ -5,6 +5,7 @@ import elevenPlusPrompt from '../prompts/academic/11-plus.md?raw';
 import logicPuzzlesPrompt from '../prompts/academic/logic-puzzles.md?raw';
 import mathsInterviewPrompt from '../prompts/academic/maths-interview.md?raw';
 import verbalInterviewPrompt from '../prompts/academic/verbal-interview.md?raw';
+import currentAffairsInterviewPrompt from '../prompts/academic/current-affairs-interview.md?raw';
 import demoPrompt from '../prompts/demo/demo.md?raw';
 
 // The core script + framework every mini-interview stems from.
@@ -16,11 +17,12 @@ const SYSTEM_PROMPTS: Record<string, string> = {
   'logic-puzzles': logicPuzzlesPrompt,
   'maths-interview': mathsInterviewPrompt,
   'verbal-interview': verbalInterviewPrompt,
+  'current-affairs-interview': currentAffairsInterviewPrompt,
   'demo': demoPrompt,
 };
 
 // Avatar-led mini-interviews that compose from the core interview-logic script.
-const MINI_INTERVIEW_TYPES = new Set(['logic-puzzles', 'maths-interview', 'verbal-interview']);
+const MINI_INTERVIEW_TYPES = new Set(['logic-puzzles', 'maths-interview', 'verbal-interview', 'current-affairs-interview']);
 
 /**
  * Composes the final system prompt for mini-interviews: the shared core script

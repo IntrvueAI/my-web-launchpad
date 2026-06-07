@@ -159,12 +159,13 @@ export const InterviewFeedback = ({
   const isLogicPuzzles = interviewType === 'logic-puzzles';
   const isMathsInterview = interviewType === 'maths-interview';
   const isVerbalInterview = interviewType === 'verbal-interview';
+  const isCurrentAffairs = interviewType === 'current-affairs-interview';
 
   let maxScore, maxIndividualScore;
   if (isIELTS) {
     maxScore = 9;
     maxIndividualScore = 9;
-  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview) {
+  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview || isCurrentAffairs) {
     maxScore = 20;
     maxIndividualScore = 5;
   } else {
@@ -279,6 +280,34 @@ export const InterviewFeedback = ({
       },
       {
         title: 'Clarity of Explanation',
+        icon: 'MessageCircle',
+        score: feedback.clarity_of_thought_score || 0,
+        feedback: feedback.detailed_feedback.clarity_of_thought || '',
+      },
+    ];
+  } else if (isCurrentAffairs) {
+    // Current affairs interview reuses the logic score fields with discussion titles
+    sections = [
+      {
+        title: 'World Awareness & Engagement',
+        icon: 'Globe',
+        score: feedback.pattern_recognition_score || 0,
+        feedback: feedback.detailed_feedback.pattern_recognition || '',
+      },
+      {
+        title: 'Forming & Defending a View',
+        icon: 'Brain',
+        score: feedback.logical_deduction_score || 0,
+        feedback: feedback.detailed_feedback.logical_deduction || '',
+      },
+      {
+        title: 'Considering Other Perspectives',
+        icon: 'TrendingUp',
+        score: feedback.mathematical_logic_score || 0,
+        feedback: feedback.detailed_feedback.mathematical_logic || '',
+      },
+      {
+        title: 'Moral Maturity & Clarity',
         icon: 'MessageCircle',
         score: feedback.clarity_of_thought_score || 0,
         feedback: feedback.detailed_feedback.clarity_of_thought || '',

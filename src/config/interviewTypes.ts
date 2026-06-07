@@ -99,6 +99,24 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     tags: ['11+', 'verbal reasoning', 'mock interview', 'vocabulary', 'reasoning'],
     icon: 'BookOpen'
   },
+  'current-affairs-interview': {
+    id: 'current-affairs-interview',
+    name: '11+ Current Affairs & Moral Reasoning Interview',
+    description: 'A spoken discussion interview with Nadia on news, ethics and moral dilemmas — there are no right answers',
+    category: 'academic',
+    promptFile: 'academic/current-affairs-interview.md',
+    duration: 20,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'World Awareness & Engagement',
+      'Forming & Defending a View',
+      'Considering Other Perspectives',
+      'Moral Maturity & Clarity'
+    ],
+    difficultyLevel: 3,
+    tags: ['11+', 'current affairs', 'moral reasoning', 'ethics', 'discussion'],
+    icon: 'Globe'
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -414,6 +432,58 @@ const VERBAL_INTERVIEW_CONFIG: InterviewTypeConfig = {
   ]
 };
 
+// Current Affairs & Moral Reasoning Interview Configuration (20 points total: 5+5+5+5)
+// Reuses the logic-puzzles score fields so no new DB columns are needed,
+// but presents current-affairs-appropriate section titles.
+const CURRENT_AFFAIRS_INTERVIEW_CONFIG: InterviewTypeConfig = {
+  name: 'Current Affairs & Moral Reasoning Interview',
+  description: 'Spoken discussion of news, ethics and moral dilemmas with Nadia',
+  scoringSystem: '0-5',
+  maxTotalScore: 20,
+  maxSectionScore: 5,
+  sections: [
+    {
+      id: 'world-awareness',
+      title: 'World Awareness & Engagement',
+      iconName: 'Globe',
+      description: 'Genuine awareness of and engagement with the wider world',
+      scoreField: 'pattern_recognition_score',
+      feedbackField: 'pattern_recognition'
+    },
+    {
+      id: 'forming-defending',
+      title: 'Forming & Defending a View',
+      iconName: 'Brain',
+      description: 'Taking a position and defending it under gentle challenge',
+      scoreField: 'logical_deduction_score',
+      feedbackField: 'logical_deduction'
+    },
+    {
+      id: 'other-perspectives',
+      title: 'Considering Other Perspectives',
+      iconName: 'TrendingUp',
+      description: 'Acknowledging that reasonable people disagree, and engaging with it',
+      scoreField: 'mathematical_logic_score',
+      feedbackField: 'mathematical_logic'
+    },
+    {
+      id: 'moral-maturity',
+      title: 'Moral Maturity & Clarity',
+      iconName: 'MessageCircle',
+      description: 'Sitting with hard ethical questions and explaining reasoning clearly',
+      scoreField: 'clarity_of_thought_score',
+      feedbackField: 'clarity_of_thought'
+    }
+  ],
+  bandThresholds: [
+    { minScore: 18, label: 'Exceptional', colorClass: 'bg-emerald-500', description: 'Outstanding awareness and moral reasoning' },
+    { minScore: 15, label: 'Strong', colorClass: 'bg-green-500', description: 'Strong reasoning and engagement' },
+    { minScore: 12, label: 'Good', colorClass: 'bg-blue-500', description: 'Good engagement with room for development' },
+    { minScore: 8, label: 'Developing', colorClass: 'bg-yellow-500', description: 'Developing awareness, needs practice' },
+    { minScore: 0, label: 'Needs Support', colorClass: 'bg-red-500', description: 'Requires significant development in awareness and reasoning' }
+  ]
+};
+
 /**
  * Enhanced configurations mapped by modern interview type
  */
@@ -422,6 +492,7 @@ export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeCo
   'logic-puzzles': LOGIC_PUZZLES_CONFIG,
   'maths-interview': MATHS_INTERVIEW_CONFIG,
   'verbal-interview': VERBAL_INTERVIEW_CONFIG,
+  'current-affairs-interview': CURRENT_AFFAIRS_INTERVIEW_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types
   'oxbridge': {
