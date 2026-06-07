@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { authRateLimiter } from '@/utils/secureErrorHandler';
 import { FeedbackService } from '@/services/FeedbackService';
+import { supabase } from '@/integrations/supabase/client';
 
 interface BugReportData {
   subject: string;

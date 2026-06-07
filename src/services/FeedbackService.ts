@@ -24,7 +24,7 @@ export const FeedbackService = {
       .eq('id', feedbackId)
       .single();
     if (error) throw error;
-    return data as FeedbackRecord;
+    return data as unknown as FeedbackRecord;
   },
 
   async getUserFeedbackHistory(userId: string, limit = 20, offset = 0): Promise<FeedbackRecord[]> {
@@ -35,7 +35,7 @@ export const FeedbackService = {
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
     if (error) throw error;
-    return (data ?? []) as FeedbackRecord[];
+    return (data ?? []) as unknown as FeedbackRecord[];
   },
 
   async getProgressSummary(userId: string): Promise<ProgressSummary> {
