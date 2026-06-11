@@ -69,13 +69,23 @@ if (userErr || !userData?.user) {
   });
 }
 
-// Rate limit: reject if user already has an active session to prevent Anam quota exhaustion
+// Rate limit: reject only if the user has a *genuinely concurrent* live session, to
+// prevent Anam quota exhaustion. The client creates the active interview_sessions row
+// for THIS attempt before requesting a token, so we must ignore freshly-created rows
+// (younger than 90s) or every start would block itself. We also ignore rows older than
+// 30 minutes: a session can't still be live past the max interview length, so those are
+// stale/abandoned rows that should never lock a user out.
+const now = Date.now();
+const ignoreYoungerThan = new Date(now - 90 * 1000).toISOString();        // this attempt's own row
+const ignoreOlderThan = new Date(now - 30 * 60 * 1000).toISOString();     // stale/abandoned rows
 const supabaseService = createClient(supabaseUrl!, supabaseServiceKey!);
 const { count: activeSessions } = await supabaseService
   .from('interview_sessions')
   .select('id', { count: 'exact', head: true })
   .eq('user_id', userData.user.id)
-  .eq('status', 'active');
+  .eq('status', 'active')
+  .lt('created_at', ignoreYoungerThan)
+  .gt('created_at', ignoreOlderThan);
 if ((activeSessions ?? 0) >= 1) {
   return new Response(JSON.stringify({ error: 'You already have an active session. Please end it before starting a new one.' }), {
     status: 429,
