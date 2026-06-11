@@ -50,7 +50,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     connectionHealth,
     startInterview,
     stopInterview,
-    sessionStatus
+    sessionStatus,
+    setMicMuted
   } = useInterviewSession(videoRef, interviewType);
 
   // Detect when interviewer wraps up and nudge user to end
@@ -270,11 +271,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     }
   }, [feedback, user, interviewType, toast]);
 
-  // Toggle audio input (microphone)
+  // Toggle audio input (microphone) on the live Anam session
   const toggleAudio = useCallback(() => {
-    setIsAudioEnabled(prev => !prev);
-    // TODO: Implement actual audio control via anam SDK
-  }, []);
+    setIsAudioEnabled(prev => {
+      const next = !prev;
+      setMicMuted(!next); // enabled => unmuted, disabled => muted
+      return next;
+    });
+  }, [setMicMuted]);
 
   return (
     <div className="min-h-screen bg-gradient-background">

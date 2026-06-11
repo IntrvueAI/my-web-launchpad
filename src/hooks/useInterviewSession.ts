@@ -27,6 +27,7 @@ interface UseInterviewSessionReturn {
   connectionHealth: 'good' | 'poor' | 'offline';
   startInterview: (userId: string) => Promise<void>;
   stopInterview: () => Promise<string | null>;
+  setMicMuted: (muted: boolean) => void;
 }
 
 /**
@@ -331,6 +332,24 @@ export const useInterviewSession = (
     };
   }, []); // Empty dependency array - only run on unmount
 
+  /**
+   * Mute or unmute the student's microphone on the live Anam session.
+   * No-op if there is no active client (e.g. before the interview starts).
+   */
+  const setMicMuted = useCallback((muted: boolean) => {
+    const client = clientRef.current;
+    if (!client) return;
+    try {
+      if (muted) {
+        client.muteInputAudio();
+      } else {
+        client.unmuteInputAudio();
+      }
+    } catch (err) {
+      console.error('Failed to toggle microphone:', err);
+    }
+  }, []);
+
   return {
     isConnected,
     isStreaming,
@@ -341,5 +360,6 @@ export const useInterviewSession = (
     connectionHealth: connectionHealth.connectionQuality,
     startInterview,
     stopInterview,
+    setMicMuted,
   };
 };

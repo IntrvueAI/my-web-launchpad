@@ -105,9 +105,11 @@ for (const field of requiredFields) {
   }
 }
 
-    // Sanitize system prompt length
-if (personaConfig.systemPrompt.length > 10000) {
-  return new Response(JSON.stringify({ error: 'System prompt too long - maximum 10,000 characters allowed' }), {
+    // Sanitize system prompt length. Mini-interviews compose the shared core
+    // (interview-logic.md) with a subject brief, so the final prompt runs well
+    // past 10k characters — cap generously to leave headroom for that.
+if (personaConfig.systemPrompt.length > 30000) {
+  return new Response(JSON.stringify({ error: 'System prompt too long - maximum 30,000 characters allowed' }), {
     status: 400,
     headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
   });
