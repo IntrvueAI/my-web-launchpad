@@ -45,7 +45,8 @@ const chat: ChatComplete = async ({ messages, tools }) => {
   const resp = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: { Authorization: `Bearer ${openAIApiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: "gpt-4o", messages, tools, tool_choice: "auto", temperature: 0.6 }),
+    // max_tokens caps the spoken reply so Clara physically can't ramble into paragraphs.
+    body: JSON.stringify({ model: "gpt-4o", messages, tools, tool_choice: "auto", temperature: 0.7, max_tokens: 140 }),
   });
   if (!resp.ok) {
     const detail = await resp.text();
