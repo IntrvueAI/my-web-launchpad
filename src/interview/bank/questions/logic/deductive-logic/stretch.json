@@ -1,0 +1,88 @@
+[
+  {
+    "id": "LG-A4",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "stretch",
+    "question": "Three children - Alice, Ben, and Clara - are sitting in a row, all facing the front. A teacher pops a hat on each of their heads, and these hats come from a box holding three red hats and two blue ones. Now, because of where they're sitting: the child at the back can see both of the hats in front of them; the child in the middle can only see the hat of the child right at the front; and the child at the front can't see any hats at all. So the teacher turns to the child at the back and asks, 'Do you know what colour your own hat is?' And the child at the back says, 'No.' Then the teacher asks the middle child, 'Now do you know what colour your hat is?' And the middle child says, 'Yes.' So here's the puzzle - what colour is the middle child's hat?",
+    "answer": "Red.",
+    "modelReasoningPath": "The back child would only know their own colour if they saw two blue hats in front (only two blue hats exist, so two blues force their own to be red). They said 'no', so the two front hats are not both blue. The middle child overhears this and looks at the front child: if the front hat were blue, then for the pair not to be both blue the middle hat must be red - so they can answer 'yes'. They did say 'yes', so the middle hat is red. This is the hardest deductive question - do not expect a full solution. Reward the child grasping that one person's answer is information for the next person.",
+    "rubric": {
+      "strong": "Understands that the back child's 'no' carries information ('the front two aren't both blue') and uses it to reason about the middle hat - even if they need help finishing. Full correct solution is exceptional, not required.",
+      "developing": "Grasps that the back child saying 'no' must mean something, and that the middle child is using it, but can't fully chain it to a colour. Engages with the two-blue-hats constraint when pointed at it.",
+      "weak": "Treats each child in isolation, ignores that 'no' is a clue, or guesses a colour with no reference to what the back child could see. Gives up immediately."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Forgetting there are only two blue hats",
+        "reveals": "The entire deduction hinges on this scarcity"
+      },
+      {
+        "mistake": "Thinking the back child's 'no' tells us nothing",
+        "reveals": "Misses that a non-answer is itself information"
+      },
+      {
+        "mistake": "Solving purely from the middle child's own view",
+        "reveals": "Ignores the overheard answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would the back child need to SEE in order to say YES?",
+        "goodResponse": "They reach the two-blue-hats insight"
+      },
+      {
+        "probe": "The back child said no. What does that tell the middle child about the two front hats?",
+        "goodResponse": "They deduce the front two aren't both blue"
+      }
+    ],
+    "hints": [
+      "Start with the child at the back. What would they need to see in front of them to be sure of their own hat?",
+      "There are only two blue hats. So if the back child saw two blue hats, what must their own be? They said 'no' - so what does that rule out?",
+      "The front two hats aren't both blue. Now sit in the middle seat, looking at the front hat - if that front hat is blue, what must yours be?"
+    ]
+  },
+  {
+    "id": "LG-A5",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "stretch",
+    "question": "Imagine someone says to you: 'I always tell lies.' Can this statement be true? Can it be false? What's going on?",
+    "answer": "It's a paradox - no consistent truth value can be assigned.",
+    "modelReasoningPath": "Suppose it's true: then the speaker always lies, so this very statement is a lie, making it false - contradiction. Suppose it's false: then the speaker doesn't always lie, so sometimes tells the truth, and this could be one of those truths, making it true - contradiction. Both doors lead back on themselves: the statement refers to itself and undermines whichever value you give it. There is no resolution to find; the point is whether the child can sit with an unresolvable loop and articulate why it won't resolve.",
+    "rubric": {
+      "strong": "Tests both 'true' and 'false' and shows each collapses. Names or describes the self-referential loop ('the sentence is talking about itself'). Comfortable concluding it can't be either - enjoys the puzzle rather than demanding an answer.",
+      "developing": "Spots one side of the contradiction ('if it's true, then he's lying, so it's false') but doesn't close the loop on the other side until prompted. Senses something is 'weird' without naming self-reference.",
+      "weak": "Flatly decides 'it's false, liars can't tell the truth' and won't budge, or insists there must be a normal answer. Treats it as a trick with a hidden solution."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "'It must be false' - stopping at the first contradiction",
+        "reveals": "Doesn't check what 'false' then implies"
+      },
+      {
+        "mistake": "Trying to resolve it ('maybe he was joking')",
+        "reveals": "Misses the structural loop"
+      },
+      {
+        "mistake": "Reading frustration as failure",
+        "reveals": "Confusion is fine here; describing the loop is what matters"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If it's false, then the person doesn't always lie - so could THIS be the one time they're telling the truth?",
+        "goodResponse": "They see the loop's second half"
+      },
+      {
+        "probe": "Have you noticed the sentence is talking about itself? Does that change anything?",
+        "goodResponse": "They name self-reference"
+      }
+    ],
+    "hints": [
+      "Try assuming the sentence is true. If it's true, what kind of person is saying it - and does that fit with what they said?",
+      "Now try the opposite - assume it's false. If they don't always lie, could this sentence be one of their rare true ones?",
+      "Notice the sentence describes the person who's saying it. Each time you pick true or false, it flips. Maybe it can't settle at all - can you say why?"
+    ]
+  }
+]

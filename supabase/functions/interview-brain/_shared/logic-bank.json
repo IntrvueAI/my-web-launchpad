@@ -1,0 +1,698 @@
+[
+  {
+    "id": "LG-A1",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "On an island, every inhabitant is either a knight, who always tells the truth, or a knave, who always lies. You meet two people: Alex and Beth. Alex says: 'At least one of us is a knave.' What can you work out about each of them?",
+    "answer": "Alex is a knight; Beth is a knave.",
+    "modelReasoningPath": "A top candidate treats Alex's status as a fork and tests both branches aloud. Suppose Alex is a knave: then his words are false, so 'at least one of us is a knave' is false, meaning nobody is a knave; but Alex is a knave, a contradiction, so that branch collapses. So Alex must be a knight, his statement is true, and the knave referred to must be Beth. The marker of skill is deliberately assuming the thing you want to disprove and watching it break.",
+    "rubric": {
+      "strong": "Explicitly tests at least one assumption ('if he's a knave then...') and follows it to the contradiction; narrates the fork; reaches Alex = knight, Beth = knave with justification, or gets the structure right even if they fumble the final label.",
+      "developing": "Senses Alex is probably telling the truth and lands near the answer, but justifies it by feel ('he seems honest') rather than ruling out the alternative; can be walked to the contradiction with one nudge.",
+      "weak": "Guesses both roles with no test of either case, or reads 'at least one is a knave' as both being knaves; cannot engage with the self-referential setup even after prompting."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Reading 'at least one of us is a knave' as 'both are knaves'",
+        "reveals": "Misparsing the logical quantifier; derails the whole chain"
+      },
+      {
+        "mistake": "Concluding Alex is the knave because he 'accused' someone",
+        "reveals": "Confuses the content of the claim with the truth-status of the speaker"
+      },
+      {
+        "mistake": "Stopping at 'Alex is a knight' without working out Beth",
+        "reveals": "Doesn't carry the deduction through to completion"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What happens if we just suppose Alex is a knave - does that hold together?",
+        "goodResponse": "They spot the contradiction"
+      },
+      {
+        "probe": "What if Alex had said 'We are both knights' instead?",
+        "goodResponse": "They re-run the case test rather than just guessing a label"
+      }
+    ],
+    "hints": [
+      "Each person is either a knight or a knave. Why not just suppose Alex is one of them and see what follows?",
+      "Try 'Alex is a knave.' If he's a knave, everything he says is false - so is his sentence true or false?",
+      "If 'at least one of us is a knave' were false, that would mean nobody is a knave. But we just supposed Alex is one. Does that fit?"
+    ]
+  },
+  {
+    "id": "LG-A2",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "There are four cards on a table. Each one has a letter on one side and a number on the other. The cards you can see show E, K, 4, and 7. Now, the rule is this: if a card has a vowel on one side, it has an even number on the other side. So here's my question - which cards would you need to turn over to check the rule is being followed? And just as importantly: which ones wouldn't you bother turning over?",
+    "answer": "E and 7.",
+    "modelReasoningPath": "A strong candidate checks each card against what could break the rule, not what merely looks related. E (vowel) could break the rule if the back is odd - must turn. K (consonant) - the rule says nothing about consonants - irrelevant. 4 (even) - the rule is 'vowel then even', not 'even then vowel', so whatever is on the back the rule can't be broken - the famous trap. 7 (odd) - if a vowel is on the back, that's a vowel with an odd number, a direct violation - must turn. The decisive move is realising the rule is a one-way implication.",
+    "rubric": {
+      "strong": "Reasons from 'what could falsify the rule.' Rejects 4 with a reason (one-way implication) and identifies 7, ideally unprompted. Even getting 7 after the single hint, with a clean explanation, is strong.",
+      "developing": "Picks E and 4 (the intuitive pair) but, when asked what 7 could hide, sees the violation and revises. The revision is what earns the band - they can use new information.",
+      "weak": "Picks E and 4 and defends 4 even after prompting, or turns all four 'to be safe' with no sense of which checks matter. No grasp that the rule is directional."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Choosing 4 because it feels relevant",
+        "reveals": "The single most common error, made by most adults too"
+      },
+      {
+        "mistake": "Missing 7 entirely because an odd number 'has nothing to do with vowels'",
+        "reveals": "They forget the back could be a vowel"
+      },
+      {
+        "mistake": "Confirming the rule rather than trying to break it",
+        "reveals": "Turning cards that could only confirm shows no falsification mindset"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would happen if the 7 had a vowel on the back?",
+        "goodResponse": "They see the 7 must be turned"
+      },
+      {
+        "probe": "Does the rule say anything about what's on the back of an even number?",
+        "goodResponse": "They drop the 4-card trap"
+      }
+    ],
+    "hints": [
+      "The rule only makes a promise about vowels. Go card by card - which ones could hide something that breaks that promise?",
+      "For each card ask: 'could what's on the BACK of this one break the rule?' Try it on the 7.",
+      "What if the 7 had a vowel on its back? And remember - the rule never says even numbers must have vowels."
+    ]
+  },
+  {
+    "id": "LG-A3",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "I'm going to give you three facts, so listen carefully. First: everyone in the science club enjoys experiments. Second: some of the science club members also play in the school orchestra. And third: Priya plays in the orchestra, but she's not in the science club. So from just those facts - can you tell me whether Priya enjoys experiments? Talk me through how you work it out.",
+    "answer": "No - we cannot tell.",
+    "modelReasoningPath": "The only fact about who enjoys experiments applies to science club members. Priya is explicitly not a science club member, so that fact says nothing about her. The orchestra link is an association, not a rule that transfers the property. So the honest answer is 'we can't tell' - she might or might not. The hallmark is holding three options in mind - yes, no, and can't tell - and choosing the third deliberately.",
+    "rubric": {
+      "strong": "Arrives at 'can't tell' and explains that the rule only covers science club members, so it can't reach Priya. Distinguishes 'we don't know she does' from 'we know she doesn't.'",
+      "developing": "Leans toward 'can't tell' or hesitates productively ('she's not in the club, so... maybe?') but doesn't cleanly articulate why the orchestra link is irrelevant. The instinct is right; the justification is loose.",
+      "weak": "Confidently says 'yes' (orchestra overlap) or 'no' (she's not in the club so she can't enjoy experiments) - both treat absence of information as information."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Yes - she's in the orchestra with science-club people who like experiments",
+        "reveals": "Confuses association with implication"
+      },
+      {
+        "mistake": "No - she's not in the science club, so she doesn't enjoy experiments",
+        "reveals": "Denying the antecedent: treats 'not a member' as proof"
+      },
+      {
+        "mistake": "Not noticing that 'can't tell' is even an available answer",
+        "reveals": "Assumes every question has a yes/no answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is there anything in these three facts that tells us about people NOT in the science club?",
+        "goodResponse": "They realise there isn't, so we can't conclude"
+      },
+      {
+        "probe": "What extra fact would you need to be certain either way?",
+        "goodResponse": "They identify exactly what's missing"
+      }
+    ],
+    "hints": [
+      "Which of the three facts is actually about Priya?",
+      "The first fact only tells us about science club members. Is Priya one of them?",
+      "If the only rule about experiments covers club members, and Priya isn't a member - can you honestly say yes, no, or neither?"
+    ]
+  },
+  {
+    "id": "LG-A6",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "Which is the odd one out: dog, cat, whale, bat, snake? I want you to give me as many different answers as you can, each with a different reason.",
+    "answer": "Open question - any well-defended choice counts (e.g. snake: only reptile / no limbs; whale: only one living only in water; bat: only one that flies; dog/cat: domestication or diet angles).",
+    "modelReasoningPath": "A strong candidate doesn't hunt for the answer - they realise the task is to generate multiple lenses and switch deliberately between them: taxonomy, habitat, locomotion, diet, relationship to humans. The quality is in naming a principle ('by where they live...', 'by how they move...') rather than a one-off observation.",
+    "rubric": {
+      "strong": "Offers several answers unprompted, each on a different principle, and names the principle each time. Finds at least one creative distinction and defends it.",
+      "developing": "Gives one solid answer with a clear reason, and a second when asked, but tends to stay on one type of distinction (e.g. only biology). Needs the 'different lens' prompt to shift.",
+      "weak": "Gives a single answer and stops, or offers reasons that aren't distinguishing ('snake, because I don't like snakes'). Can't articulate a principle."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treating it as having one right answer",
+        "reveals": "Misses that the task is generative"
+      },
+      {
+        "mistake": "Confusing a personal/aesthetic reason ('scary') with a categorical principle",
+        "reveals": "No grasp of what makes a reason a classification"
+      },
+      {
+        "mistake": "Repeating the same lens with different animals",
+        "reveals": "Not genuinely shifting the lens"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Can you think of a reason a completely different animal could be the odd one out?",
+        "goodResponse": "They shift to a new lens"
+      },
+      {
+        "probe": "What's the rule you're using to decide that one?",
+        "goodResponse": "They move from observation to a named principle"
+      }
+    ],
+    "hints": [
+      "There's no single right answer here - just pick any one animal and tell me a reason it's different.",
+      "Think of different ways to sort them: where they live, how they move about, what they eat.",
+      "You've got one reason - now change the rule completely. Could a totally different animal be the odd one out for a totally different reason?"
+    ]
+  },
+  {
+    "id": "LG-A4",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "stretch",
+    "question": "Three children - Alice, Ben, and Clara - are sitting in a row, all facing the front. A teacher pops a hat on each of their heads, and these hats come from a box holding three red hats and two blue ones. Now, because of where they're sitting: the child at the back can see both of the hats in front of them; the child in the middle can only see the hat of the child right at the front; and the child at the front can't see any hats at all. So the teacher turns to the child at the back and asks, 'Do you know what colour your own hat is?' And the child at the back says, 'No.' Then the teacher asks the middle child, 'Now do you know what colour your hat is?' And the middle child says, 'Yes.' So here's the puzzle - what colour is the middle child's hat?",
+    "answer": "Red.",
+    "modelReasoningPath": "The back child would only know their own colour if they saw two blue hats in front (only two blue hats exist, so two blues force their own to be red). They said 'no', so the two front hats are not both blue. The middle child overhears this and looks at the front child: if the front hat were blue, then for the pair not to be both blue the middle hat must be red - so they can answer 'yes'. They did say 'yes', so the middle hat is red. This is the hardest deductive question - do not expect a full solution. Reward the child grasping that one person's answer is information for the next person.",
+    "rubric": {
+      "strong": "Understands that the back child's 'no' carries information ('the front two aren't both blue') and uses it to reason about the middle hat - even if they need help finishing. Full correct solution is exceptional, not required.",
+      "developing": "Grasps that the back child saying 'no' must mean something, and that the middle child is using it, but can't fully chain it to a colour. Engages with the two-blue-hats constraint when pointed at it.",
+      "weak": "Treats each child in isolation, ignores that 'no' is a clue, or guesses a colour with no reference to what the back child could see. Gives up immediately."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Forgetting there are only two blue hats",
+        "reveals": "The entire deduction hinges on this scarcity"
+      },
+      {
+        "mistake": "Thinking the back child's 'no' tells us nothing",
+        "reveals": "Misses that a non-answer is itself information"
+      },
+      {
+        "mistake": "Solving purely from the middle child's own view",
+        "reveals": "Ignores the overheard answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would the back child need to SEE in order to say YES?",
+        "goodResponse": "They reach the two-blue-hats insight"
+      },
+      {
+        "probe": "The back child said no. What does that tell the middle child about the two front hats?",
+        "goodResponse": "They deduce the front two aren't both blue"
+      }
+    ],
+    "hints": [
+      "Start with the child at the back. What would they need to see in front of them to be sure of their own hat?",
+      "There are only two blue hats. So if the back child saw two blue hats, what must their own be? They said 'no' - so what does that rule out?",
+      "The front two hats aren't both blue. Now sit in the middle seat, looking at the front hat - if that front hat is blue, what must yours be?"
+    ]
+  },
+  {
+    "id": "LG-A5",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "stretch",
+    "question": "Imagine someone says to you: 'I always tell lies.' Can this statement be true? Can it be false? What's going on?",
+    "answer": "It's a paradox - no consistent truth value can be assigned.",
+    "modelReasoningPath": "Suppose it's true: then the speaker always lies, so this very statement is a lie, making it false - contradiction. Suppose it's false: then the speaker doesn't always lie, so sometimes tells the truth, and this could be one of those truths, making it true - contradiction. Both doors lead back on themselves: the statement refers to itself and undermines whichever value you give it. There is no resolution to find; the point is whether the child can sit with an unresolvable loop and articulate why it won't resolve.",
+    "rubric": {
+      "strong": "Tests both 'true' and 'false' and shows each collapses. Names or describes the self-referential loop ('the sentence is talking about itself'). Comfortable concluding it can't be either - enjoys the puzzle rather than demanding an answer.",
+      "developing": "Spots one side of the contradiction ('if it's true, then he's lying, so it's false') but doesn't close the loop on the other side until prompted. Senses something is 'weird' without naming self-reference.",
+      "weak": "Flatly decides 'it's false, liars can't tell the truth' and won't budge, or insists there must be a normal answer. Treats it as a trick with a hidden solution."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "'It must be false' - stopping at the first contradiction",
+        "reveals": "Doesn't check what 'false' then implies"
+      },
+      {
+        "mistake": "Trying to resolve it ('maybe he was joking')",
+        "reveals": "Misses the structural loop"
+      },
+      {
+        "mistake": "Reading frustration as failure",
+        "reveals": "Confusion is fine here; describing the loop is what matters"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If it's false, then the person doesn't always lie - so could THIS be the one time they're telling the truth?",
+        "goodResponse": "They see the loop's second half"
+      },
+      {
+        "probe": "Have you noticed the sentence is talking about itself? Does that change anything?",
+        "goodResponse": "They name self-reference"
+      }
+    ],
+    "hints": [
+      "Try assuming the sentence is true. If it's true, what kind of person is saying it - and does that fit with what they said?",
+      "Now try the opposite - assume it's false. If they don't always lie, could this sentence be one of their rare true ones?",
+      "Notice the sentence describes the person who's saying it. Each time you pick true or false, it flips. Maybe it can't settle at all - can you say why?"
+    ]
+  },
+  {
+    "id": "LG-B1",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A boy is badly injured in a road accident and is rushed to hospital. The surgeon looks at him on the operating table and says: 'I cannot operate on this child - he is my son.' But the boy's father died in the accident. How is this possible?",
+    "answer": "The surgeon is the boy's mother. (Also valid: a second father in a same-sex family, a stepfather or adoptive father - any answer that breaks the 'surgeon = male' assumption.)",
+    "modelReasoningPath": "The puzzle works by exploiting an unstated assumption that the surgeon is a man. A strong candidate either spots it fast or, more valuably, notices what they were assuming ('I kept picturing the surgeon as a man'). The real prize is self-awareness about the assumption, not the speed of the answer.",
+    "rubric": {
+      "strong": "Solves it and can name the assumption they (or most people) make, or doesn't solve it instantly but explicitly interrogates 'what am I taking for granted about the surgeon?' Reflective about their own thinking.",
+      "developing": "Gets there with the single nudge and, when asked, recognises the gender assumption. Engaged but doesn't reach for self-examination on their own.",
+      "weak": "Proposes only literal escapes ('the father came back to life', 'it's a ghost') and, even after the nudge, can't locate the assumption. Treats the contradiction as a plot hole rather than a clue."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Insisting the father 'wasn't really dead'",
+        "reveals": "Refusing the premise instead of questioning the assumption"
+      },
+      {
+        "mistake": "Reaching the answer but missing the lesson",
+        "reveals": "No awareness of why it was hard to see"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What assumptions are you making about the surgeon?",
+        "goodResponse": "They surface the gender assumption"
+      },
+      {
+        "probe": "Why do you think that was hard to see at first?",
+        "goodResponse": "They convert a right answer into evidence of insight"
+      }
+    ],
+    "hints": [
+      "Read it again - is there something you're picturing in your head that the puzzle never actually told you?",
+      "What are you assuming about the surgeon?",
+      "Does a surgeon have to be a man?"
+    ]
+  },
+  {
+    "id": "LG-B2",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A man lives on the 10th floor of a tall block of flats. Every morning he takes the lift all the way down to the ground floor and heads off to work. When he comes home in the evening, here's the strange thing: on rainy days he takes the lift all the way back up to the 10th floor - but on dry days, he only takes it up to the 7th floor, and then walks up the last three flights of stairs. He's not doing it for exercise, and he's not stopping to see a friend. So why does he do it?",
+    "answer": "He is too short to reach the button for the 10th floor; he can only reach the 7th. On rainy days he has an umbrella, which he uses to press the higher button. (Accept equivalents: a child, a wheelchair user - anything explaining a height/reach difference plus the umbrella variable.)",
+    "modelReasoningPath": "Notice the genuine puzzle is the asymmetry: down is always fine, up depends on weather. Ask what is physically different on a rainy day - he carries an umbrella. Connect the umbrella to the lift buttons - reach. The constraint is his height, not his preference. The key is shifting from psychological explanations ('he likes the walk') to physical ones (he can't reach), prompted by the rain clue.",
+    "rubric": {
+      "strong": "Zeroes in on what changes between wet and dry days (the umbrella) and links it to a physical constraint. Asks probing yes/no questions ('Is something different about him on rainy days?'). May well solve it unaided.",
+      "developing": "Explores plausible angles and, given the 'what's different on a rainy day?' prompt, follows the umbrella thread to the answer. Reasoning is sound once aimed.",
+      "weak": "Offers only behaviour/preference explanations and doesn't use the rain detail as a clue even when pointed at it. Doesn't generate testable questions."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Fixating on exercise or laziness despite being told it isn't exercise",
+        "reveals": "Ignores given constraints"
+      },
+      {
+        "mistake": "Ignoring the rain as decorative rather than central",
+        "reveals": "Misses the load-bearing clue"
+      },
+      {
+        "mistake": "Not asking why the difference is weather-dependent",
+        "reveals": "Doesn't interrogate the asymmetry"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's different about him, or what he's carrying, on a rainy day compared to a dry day?",
+        "goodResponse": "They reach the umbrella"
+      },
+      {
+        "probe": "Is there a reason he might not be able to press the button himself on a dry day?",
+        "goodResponse": "They reach the reach/height constraint"
+      }
+    ],
+    "hints": [
+      "The real puzzle is why going DOWN is always fine, but going UP depends on the weather. What changes with the weather?",
+      "What does he carry on a rainy day that he doesn't carry on a dry one?",
+      "Think about the buttons in the lift and how tall he is. How could an umbrella help him reach a higher one?"
+    ]
+  },
+  {
+    "id": "LG-B3",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "Two men sit down at a cafe and order the same drink: iced coffee. The drinks arrive at the same time. The first man gulps his down quickly. The second man sips his slowly. Shortly after, the second man is taken to hospital - he had been poisoned. The poison was definitely in both drinks. Why did the first man survive?",
+    "answer": "The poison was in the ice. The fast drinker finished before the ice melted and released the poison; the slow sipper gave the ice time to melt.",
+    "modelReasoningPath": "Both drinks were poisoned, yet only the slow drinker fell ill - so the difference must be time, not dose. Ask what about an iced drink changes over time - the ice melts. Separate 'the drink' from 'the ice': if the poison is frozen in the ice, only melting releases it. The decisive move is realising the drink is not uniform - it has a component (ice) that changes with time.",
+    "rubric": {
+      "strong": "Locks onto the only variable that differs (speed, so time) and reasons that the drink must change over time, landing on the ice. Asks sharp questions ('Were the drinks exactly identical?').",
+      "developing": "Notices the speed difference is the clue and, prompted to think about how the drink changes over time, reaches the ice. Right track, needs a nudge to the mechanism.",
+      "weak": "Attributes survival to body size, tolerance, or 'he was lucky', ignoring that the only stated difference is drinking speed. Doesn't treat the drink as having parts."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Explaining it by the men ('one was bigger/stronger')",
+        "reveals": "Looks at the people rather than the drink"
+      },
+      {
+        "mistake": "Assuming the drink is a uniform liquid",
+        "reveals": "Misses the ice entirely"
+      },
+      {
+        "mistake": "Forgetting both drinks were poisoned",
+        "reveals": "Reverts to 'one wasn't poisoned'"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "The only difference is how fast they drank. So what might change about the drink while it sits?",
+        "goodResponse": "They consider time-dependent change"
+      },
+      {
+        "probe": "Were the two drinks identical in every single part?",
+        "goodResponse": "They isolate the ice"
+      }
+    ],
+    "hints": [
+      "The only difference is how fast they drank. So the clue is about time - what happens to a drink over time?",
+      "What part of an iced coffee changes if you leave it sitting for a while?",
+      "Where could the poison be hiding so it only spreads into the drink once the ice melts?"
+    ]
+  },
+  {
+    "id": "LG-B4",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A man is found dead in the middle of a large, open field. He's wearing a backpack. There are no footprints anywhere in the field, and there's no one else around. How did he die?",
+    "answer": "His parachute failed to open - the 'backpack' is an unopened parachute. He fell from above, which is why there are no footprints.",
+    "modelReasoningPath": "Treat the no-footprints detail as the load-bearing clue: he didn't walk in. If he didn't arrive horizontally, he arrived vertically - from above. Combine 'from above' plus 'backpack' - parachute. The backpack isn't luggage; it's the failed equipment. The leap is allowing vertical movement into a scenario the mind defaults to picturing horizontally.",
+    "rubric": {
+      "strong": "Uses 'no footprints' to rule out walking and reasons toward arrival from above; connects the backpack to a parachute. Probes the backpack's contents.",
+      "developing": "Recognises the no-footprints clue is important and, prompted to think about how else he could have got there, reaches the falling/parachute idea. Sound once the vertical angle is suggested.",
+      "weak": "Keeps him walking into the field (despite no footprints) or invents unrelated causes, never questioning how he arrived. Ignores the backpack as a clue."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Picturing only horizontal arrival",
+        "reveals": "Misses the 'from above' possibility"
+      },
+      {
+        "mistake": "Treating the backpack as irrelevant background detail",
+        "reveals": "Discards a key clue"
+      },
+      {
+        "mistake": "Not registering that 'no footprints' actively rules something out",
+        "reveals": "Reads clues as decoration"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What does the absence of footprints tell you about how he got there?",
+        "goodResponse": "They rule out walking"
+      },
+      {
+        "probe": "What might be in the backpack?",
+        "goodResponse": "They reach the parachute"
+      }
+    ],
+    "hints": [
+      "What's the strangest thing about the scene? Look hard at the footprints.",
+      "No footprints means he didn't walk in. So how else could he have got to the middle of the field?",
+      "If he came down from above, what might that backpack on his back really be?"
+    ]
+  },
+  {
+    "id": "LG-B6",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A woman walks into a hospital room and sees a man lying in a bed connected to various machines. She walks over, switches off one of the machines, and walks out. Soon afterwards, the man in the bed dies. The woman is not arrested, charged, or even questioned by the police. Why not?",
+    "answer": "Multiple valid: the switched-off machine didn't cause the death - she's a nurse/doctor turning off a device no longer needed, or she turned off something irrelevant (a TV, a lamp) and he died of natural causes. The key is breaking the assumed link 'machine off then man died.'",
+    "modelReasoningPath": "Resist the assumption that switching off the machine caused the death - the puzzle plants a false cause. Question both threads: was she authorised (clinical staff), and was the machine even relevant to his survival (maybe a TV)? The broader the questioning across authority and causation, the stronger the thinking. This tests causation vs correlation: two events near in time aren't necessarily cause and effect.",
+    "rubric": {
+      "strong": "Questions whether the machine caused the death at all, not just whether she had permission. Generates more than one explanation across both legal and causal angles. Explicitly separates 'after' from 'because of.'",
+      "developing": "Offers a sensible single explanation (usually 'she's a nurse / she had permission') and, when prompted for another reason, can find a second. On the right lines but initially narrow.",
+      "weak": "Assumes she's guilty and only searches for how she 'got away with it', never questioning whether she caused the death. Can't move off the causal assumption even when prompted."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Assuming guilt and hunting only for a loophole",
+        "reveals": "Locks onto the planted false cause"
+      },
+      {
+        "mistake": "Locking onto a single explanation and stopping",
+        "reveals": "No breadth of hypotheses"
+      },
+      {
+        "mistake": "Treating 'died soon after' as proof the machine caused it",
+        "reveals": "Post hoc reasoning"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Did switching off the machine definitely cause his death?",
+        "goodResponse": "They question the causal link"
+      },
+      {
+        "probe": "Is there any other reason she might not even be questioned?",
+        "goodResponse": "They generate a second explanation"
+      }
+    ],
+    "hints": [
+      "Does switching off the machine definitely mean she caused his death? Are you sure those two things are linked?",
+      "Who in a hospital is allowed to switch off a machine? And what if that machine wasn't keeping him alive at all?",
+      "Try two separate ideas: maybe she's a nurse doing her job - or maybe the machine she switched off was just a TV."
+    ]
+  },
+  {
+    "id": "LG-B5",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "stretch",
+    "question": "Four people need to cross a narrow rope bridge in the dark. The bridge can only hold two people at a time, and they've got just one torch between them - and nobody can cross without it. The thing is, they all walk at different speeds: one takes 1 minute to cross, one takes 2 minutes, one takes 5 minutes, and the slowest takes 10 minutes. And when two cross together, they can only go as fast as the slower of the two. So - what's the quickest time in which all four can get across?",
+    "answer": "17 minutes. Schedule: 1&2 cross (2), 1 returns (3), 5&10 cross (13), 2 returns (15), 1&2 cross (17).",
+    "modelReasoningPath": "Try the obvious method - fastest person ferries everyone - and get 19 minutes. Then ask 'can I do better?' - the crucial adaptive move. Spot that the 10-minute person is the expensive one, and you only want to pay that cost once, so the two slow people (5 and 10) should cross together. Arrange the fast people (1 and 2) to shuttle the torch around that single expensive crossing, giving 17. What's tested is systematic experimentation and the willingness to improve a working-but-suboptimal answer - not whether they nail 17 first try.",
+    "rubric": {
+      "strong": "Finds a working solution (often 19), recognises it might not be optimal, and searches for improvement by identifying the 10-minute person as the cost to minimise. Reaches 17, or gets very close with clear reasoning about pairing the slow walkers.",
+      "developing": "Produces a valid crossing that gets everyone across (e.g. 19) and explains it clearly, but treats it as 'done' until asked whether it can be faster; with the prompt, begins to experiment.",
+      "weak": "Loses track of the constraints (torch must come back, only two at a time), proposes impossible crossings, or fixes on one attempt with no checking. No sense of a cost to minimise."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Forgetting the torch must be carried back each time",
+        "reveals": "Loses a core constraint"
+      },
+      {
+        "mistake": "Sending the two slowest separately",
+        "reveals": "Pays the 10-minute cost twice"
+      },
+      {
+        "mistake": "Declaring 19 the answer without testing whether it can be beaten",
+        "reveals": "No drive to optimise"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "You've got a way that works - can you find a faster one?",
+        "goodResponse": "They begin to optimise"
+      },
+      {
+        "probe": "Which person is the most 'expensive' to move, and how often are you paying that cost?",
+        "goodResponse": "They target the 10-minute crossing"
+      }
+    ],
+    "hints": [
+      "First just find any order that gets all four across, and add up the time - don't worry if it's not the fastest yet.",
+      "Remember someone has to carry the torch back each time. Which person costs you the most every time they cross?",
+      "What if the two slowest people crossed together - could that mean you only pay the 10-minute cost once instead of twice?"
+    ]
+  },
+  {
+    "id": "LG-C1",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Can you define the word 'chair' for me? Try to be precise enough that your definition would include every chair - and exclude everything that isn't a chair.",
+    "answer": "Open question - there is no perfect definition; every first attempt fails to some counterexample, by design.",
+    "modelReasoningPath": "A strong candidate expects to be challenged and treats each counterexample as fuel: offer a definition, hear 'but what about X?', refine to exclude X, repeat. They're carving the concept tighter and stay cheerful. The skill is iteration under challenge, not landing a flawless definition (there isn't one).",
+    "rubric": {
+      "strong": "Gives a definition, recognises or accepts that a counterexample breaks it, and refines - ideally several rounds. Stays curious and flexible as it gets harder. May reflect that the task seems impossible and wonder why.",
+      "developing": "Produces a reasonable definition and can patch it once or twice when handed a counterexample, but adds features ad hoc rather than rethinking. Engaged but a bit rigid.",
+      "weak": "Gives one definition and defends it as obviously correct, or becomes frustrated/shuts down when it's challenged. Treats counterexamples as unfair rather than informative."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Believing the first definition is complete and resisting counterexamples",
+        "reveals": "Misses that refinement is the task"
+      },
+      {
+        "mistake": "Getting frustrated that 'you keep changing it'",
+        "reveals": "Reads the game as unfair"
+      },
+      {
+        "mistake": "Defining by example ('like the one I'm sitting on')",
+        "reveals": "Can't define by properties"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "You can sit on the floor - is the floor a chair?",
+        "goodResponse": "They refine to exclude it"
+      },
+      {
+        "probe": "What about a stool with no back? A sofa? A throne?",
+        "goodResponse": "They keep iterating cheerfully"
+      },
+      {
+        "probe": "Philosophers have tried for centuries and never agreed. Why do you think it's so hard?",
+        "goodResponse": "They reflect on the nature of definition"
+      }
+    ],
+    "hints": [
+      "Just give me a first try - it doesn't have to be perfect, we'll improve it together.",
+      "You said a chair is that - but the floor / a stool / a sofa fits that too and isn't a chair. Can you add something to rule it out?",
+      "Each time I find an exception, just tweak your definition to exclude it. The fixing is the whole game - keep going."
+    ]
+  },
+  {
+    "id": "LG-C2",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Here's one to finish: pen is to author as scalpel is to... what? And once you've got it, tell me the link you used.",
+    "answer": "Surgeon/doctor. Relationship: a professional's primary tool. (Escalate via the probes to harder analogies.)",
+    "modelReasoningPath": "A strong candidate fills the blank and immediately states the rule: 'the tool a professional uses', 'a creator and their work'. On harder ones they reason from the named rule rather than from vibe. The explanation is the evidence of reasoning; the word alone could be pattern-matching.",
+    "rubric": {
+      "strong": "Completes analogies and articulates the underlying relationship in words, unprompted. Handles abstract levels and can run the relationship in reverse.",
+      "developing": "Fills blanks correctly but reaches for the relationship only when asked, and describes it loosely ('they go together'). Right answers, fuzzy rationale.",
+      "weak": "Guesses words, sometimes plausibly, but can't say why - 'it just sounded right' - and can't transfer the rule to a harder item."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Filling the blank by association ('scalpel... hospital')",
+        "reveals": "Matches a vibe rather than the relationship (tool to user)"
+      },
+      {
+        "mistake": "Naming a relationship that doesn't fit both halves",
+        "reveals": "Loose analogical reasoning"
+      },
+      {
+        "mistake": "Treating 'I just knew it' as sufficient",
+        "reveals": "No articulated rule"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "library is to books as gallery is to... what?",
+        "goodResponse": "paintings/artworks - a place and the collection it holds"
+      },
+      {
+        "probe": "hot is to lukewarm as freezing is to... what?",
+        "goodResponse": "cold/chilly - an extreme and its milder counterpart"
+      },
+      {
+        "probe": "author is to novel as composer is to... what? And a sculptor makes... what?",
+        "goodResponse": "symphony; statue/sculpture - a creator and their primary work"
+      },
+      {
+        "probe": "What's the relationship you used there?",
+        "goodResponse": "They name the rule that works for both pairs"
+      }
+    ],
+    "hints": [
+      "Look at the first two words - what's the link between them?",
+      "Say it as a sentence: 'a pen is the tool an author uses, so a scalpel is the tool a ___ uses.'",
+      "Name the relationship out loud first - once you've got the rule, the missing word falls out."
+    ]
+  },
+  {
+    "id": "LG-C3",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Which is the odd one out: painting, sculpture, symphony, novel, poem? Give me as many different answers as you can, each with a completely different reason.",
+    "answer": "Open question - any well-defended choice (e.g. symphony: exists only in time / must be performed; sculpture: only 3D; painting: only purely visual; novel: only one too long for one sitting; poem: short enough to memorise, sound matters).",
+    "modelReasoningPath": "As with the animals, the task is lens-switching, but the lenses are conceptual: dimension, medium, time, length, how it's experienced. A strong child generates several, each on a distinct principle, and is surprised and pleased to keep finding more.",
+    "rubric": {
+      "strong": "Several answers on genuinely different principles, each named. Finds an unexpected angle (e.g. 'the symphony is the only one that doesn't exist until someone performs it') and defends it.",
+      "developing": "One strong answer, a second when prompted, but lenses stay close together (e.g. all about physical form). Needs 'which would you pick next?' to broaden.",
+      "weak": "One answer then stops, or reasons that don't distinguish ('poem, because poems are boring'). No principle behind the pick."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treating it as one-right-answer",
+        "reveals": "Misses the generative task"
+      },
+      {
+        "mistake": "Personal taste masquerading as a categorical reason",
+        "reveals": "No classifying principle"
+      },
+      {
+        "mistake": "Re-using one lens dressed up as different reasons",
+        "reveals": "Not genuinely switching lens"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If that were the odd one out, which would you choose next, and why?",
+        "goodResponse": "They switch to a new lens"
+      },
+      {
+        "probe": "What's the underlying idea behind that choice?",
+        "goodResponse": "They name the principle"
+      }
+    ],
+    "hints": [
+      "There's no single right answer - pick any one and give me a reason it's the odd one.",
+      "Think about different angles: which one you can touch, which takes time to experience, which is read versus performed.",
+      "You've found one - now switch the rule entirely and find a different odd one out for a different reason."
+    ]
+  },
+  {
+    "id": "LG-C4",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "stretch",
+    "question": "Here's a claim for you: 'Every rule has an exception.' Is that claim itself a rule? And if it is - does it have an exception? Have a think out loud.",
+    "answer": "It's self-undermining - a paradox with no clean resolution.",
+    "modelReasoningPath": "Ask whether the claim counts as a rule (a general statement, so arguably yes). Apply it to itself: if it's a rule, it has an exception, so there's a rule without an exception, so the claim is false. Recognise the self-reference: the statement bites its own tail. Sit with the loop rather than forcing an answer. Like the liar paradox, this tests whether a child can reason carefully about something genuinely unresolvable - and ideally enjoy it.",
+    "rubric": {
+      "strong": "Spots the self-referential trap and walks the contradiction through. Comfortable concluding it can't cleanly resolve. May bring up borderline cases (do maths facts like 2+2=4 count as exceptionless rules?).",
+      "developing": "Engages, senses something circular, and gets partway ('if it has an exception, then some rule doesn't... wait') but needs prompting to close the loop. Curious if a little tangled.",
+      "weak": "Answers 'yes it has an exception' or 'no it doesn't' flatly with no awareness of the loop, or dismisses it as a silly word game. Won't engage the self-reference even when pointed at it."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Not noticing the claim refers to itself",
+        "reveals": "Misses the self-reference"
+      },
+      {
+        "mistake": "Demanding a tidy yes/no",
+        "reveals": "Misses the paradox"
+      },
+      {
+        "mistake": "Confusing 'exception to a rule' with 'exception to this sentence'",
+        "reveals": "Muddles the levels"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If this rule has an exception, what would that exception have to be - and what does that do to the claim?",
+        "goodResponse": "They derive the contradiction"
+      },
+      {
+        "probe": "Can you think of any rule that definitely has no exceptions?",
+        "goodResponse": "They open the maths-rules thread"
+      }
+    ],
+    "hints": [
+      "Treat the sentence itself as a rule. Now apply it to itself - does this rule have an exception?",
+      "If this rule DOES have an exception, that means some rule somewhere has none. What does that do to the claim?",
+      "Notice it's a rule talking about all rules - including itself. Can it ever be cleanly true or false?"
+    ]
+  }
+]

@@ -32,6 +32,7 @@ const FILES = [
   'bank/select.ts',
   'subjects/types.ts',
   'subjects/maths/pack.ts',
+  'subjects/logic/pack.ts',
 ];
 
 /** Add `.ts` to extensionless relative import specifiers (Deno requirement). */
@@ -51,26 +52,32 @@ async function copyFiles() {
   }
 }
 
-async function buildBank() {
-  const banksDir = path.join(SRC, 'bank/questions/maths');
-  const all = [];
-  const topics = await fs.readdir(banksDir);
-  for (const topic of topics) {
-    const tdir = path.join(banksDir, topic);
-    const stat = await fs.stat(tdir);
-    if (!stat.isDirectory()) continue;
-    for (const file of await fs.readdir(tdir)) {
-      if (!file.endsWith('.json')) continue;
-      const rows = JSON.parse(await fs.readFile(path.join(tdir, file), 'utf8'));
-      all.push(...rows);
+/** Build a combined `<subject>-bank.json` for every subject folder under questions/. */
+async function buildBanks() {
+  const questionsDir = path.join(SRC, 'bank/questions');
+  const subjects = await fs.readdir(questionsDir);
+  const counts = {};
+  for (const subject of subjects) {
+    const subjDir = path.join(questionsDir, subject);
+    if (!(await fs.stat(subjDir)).isDirectory()) continue;
+    const all = [];
+    for (const topic of await fs.readdir(subjDir)) {
+      const tdir = path.join(subjDir, topic);
+      if (!(await fs.stat(tdir)).isDirectory()) continue;
+      for (const file of await fs.readdir(tdir)) {
+        if (!file.endsWith('.json')) continue;
+        all.push(...JSON.parse(await fs.readFile(path.join(tdir, file), 'utf8')));
+      }
     }
+    await fs.writeFile(path.join(OUT, `${subject}-bank.json`), JSON.stringify(all, null, 2) + '\n');
+    counts[subject] = all.length;
   }
-  await fs.writeFile(path.join(OUT, 'maths-bank.json'), JSON.stringify(all, null, 2) + '\n');
-  return all.length;
+  return counts;
 }
 
 await fs.rm(OUT, { recursive: true, force: true }); // drop stale vendored files
 await fs.mkdir(OUT, { recursive: true });
 await copyFiles();
-const count = await buildBank();
-console.log(`[brain:build] vendored ${FILES.length} engine files + ${count} bank questions → ${path.relative(root, OUT)}`);
+const counts = await buildBanks();
+const summary = Object.entries(counts).map(([s, n]) => `${s}:${n}`).join(', ');
+console.log(`[brain:build] vendored ${FILES.length} engine files + banks (${summary}) → ${path.relative(root, OUT)}`);

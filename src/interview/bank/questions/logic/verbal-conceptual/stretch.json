@@ -1,0 +1,45 @@
+[
+  {
+    "id": "LG-C4",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "stretch",
+    "question": "Here's a claim for you: 'Every rule has an exception.' Is that claim itself a rule? And if it is - does it have an exception? Have a think out loud.",
+    "answer": "It's self-undermining - a paradox with no clean resolution.",
+    "modelReasoningPath": "Ask whether the claim counts as a rule (a general statement, so arguably yes). Apply it to itself: if it's a rule, it has an exception, so there's a rule without an exception, so the claim is false. Recognise the self-reference: the statement bites its own tail. Sit with the loop rather than forcing an answer. Like the liar paradox, this tests whether a child can reason carefully about something genuinely unresolvable - and ideally enjoy it.",
+    "rubric": {
+      "strong": "Spots the self-referential trap and walks the contradiction through. Comfortable concluding it can't cleanly resolve. May bring up borderline cases (do maths facts like 2+2=4 count as exceptionless rules?).",
+      "developing": "Engages, senses something circular, and gets partway ('if it has an exception, then some rule doesn't... wait') but needs prompting to close the loop. Curious if a little tangled.",
+      "weak": "Answers 'yes it has an exception' or 'no it doesn't' flatly with no awareness of the loop, or dismisses it as a silly word game. Won't engage the self-reference even when pointed at it."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Not noticing the claim refers to itself",
+        "reveals": "Misses the self-reference"
+      },
+      {
+        "mistake": "Demanding a tidy yes/no",
+        "reveals": "Misses the paradox"
+      },
+      {
+        "mistake": "Confusing 'exception to a rule' with 'exception to this sentence'",
+        "reveals": "Muddles the levels"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If this rule has an exception, what would that exception have to be - and what does that do to the claim?",
+        "goodResponse": "They derive the contradiction"
+      },
+      {
+        "probe": "Can you think of any rule that definitely has no exceptions?",
+        "goodResponse": "They open the maths-rules thread"
+      }
+    ],
+    "hints": [
+      "Treat the sentence itself as a rule. Now apply it to itself - does this rule have an exception?",
+      "If this rule DOES have an exception, that means some rule somewhere has none. What does that do to the claim?",
+      "Notice it's a rule talking about all rules - including itself. Can it ever be cleanly true or false?"
+    ]
+  }
+]

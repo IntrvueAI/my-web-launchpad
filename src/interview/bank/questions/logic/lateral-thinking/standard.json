@@ -1,0 +1,213 @@
+[
+  {
+    "id": "LG-B1",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A boy is badly injured in a road accident and is rushed to hospital. The surgeon looks at him on the operating table and says: 'I cannot operate on this child - he is my son.' But the boy's father died in the accident. How is this possible?",
+    "answer": "The surgeon is the boy's mother. (Also valid: a second father in a same-sex family, a stepfather or adoptive father - any answer that breaks the 'surgeon = male' assumption.)",
+    "modelReasoningPath": "The puzzle works by exploiting an unstated assumption that the surgeon is a man. A strong candidate either spots it fast or, more valuably, notices what they were assuming ('I kept picturing the surgeon as a man'). The real prize is self-awareness about the assumption, not the speed of the answer.",
+    "rubric": {
+      "strong": "Solves it and can name the assumption they (or most people) make, or doesn't solve it instantly but explicitly interrogates 'what am I taking for granted about the surgeon?' Reflective about their own thinking.",
+      "developing": "Gets there with the single nudge and, when asked, recognises the gender assumption. Engaged but doesn't reach for self-examination on their own.",
+      "weak": "Proposes only literal escapes ('the father came back to life', 'it's a ghost') and, even after the nudge, can't locate the assumption. Treats the contradiction as a plot hole rather than a clue."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Insisting the father 'wasn't really dead'",
+        "reveals": "Refusing the premise instead of questioning the assumption"
+      },
+      {
+        "mistake": "Reaching the answer but missing the lesson",
+        "reveals": "No awareness of why it was hard to see"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What assumptions are you making about the surgeon?",
+        "goodResponse": "They surface the gender assumption"
+      },
+      {
+        "probe": "Why do you think that was hard to see at first?",
+        "goodResponse": "They convert a right answer into evidence of insight"
+      }
+    ],
+    "hints": [
+      "Read it again - is there something you're picturing in your head that the puzzle never actually told you?",
+      "What are you assuming about the surgeon?",
+      "Does a surgeon have to be a man?"
+    ]
+  },
+  {
+    "id": "LG-B2",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A man lives on the 10th floor of a tall block of flats. Every morning he takes the lift all the way down to the ground floor and heads off to work. When he comes home in the evening, here's the strange thing: on rainy days he takes the lift all the way back up to the 10th floor - but on dry days, he only takes it up to the 7th floor, and then walks up the last three flights of stairs. He's not doing it for exercise, and he's not stopping to see a friend. So why does he do it?",
+    "answer": "He is too short to reach the button for the 10th floor; he can only reach the 7th. On rainy days he has an umbrella, which he uses to press the higher button. (Accept equivalents: a child, a wheelchair user - anything explaining a height/reach difference plus the umbrella variable.)",
+    "modelReasoningPath": "Notice the genuine puzzle is the asymmetry: down is always fine, up depends on weather. Ask what is physically different on a rainy day - he carries an umbrella. Connect the umbrella to the lift buttons - reach. The constraint is his height, not his preference. The key is shifting from psychological explanations ('he likes the walk') to physical ones (he can't reach), prompted by the rain clue.",
+    "rubric": {
+      "strong": "Zeroes in on what changes between wet and dry days (the umbrella) and links it to a physical constraint. Asks probing yes/no questions ('Is something different about him on rainy days?'). May well solve it unaided.",
+      "developing": "Explores plausible angles and, given the 'what's different on a rainy day?' prompt, follows the umbrella thread to the answer. Reasoning is sound once aimed.",
+      "weak": "Offers only behaviour/preference explanations and doesn't use the rain detail as a clue even when pointed at it. Doesn't generate testable questions."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Fixating on exercise or laziness despite being told it isn't exercise",
+        "reveals": "Ignores given constraints"
+      },
+      {
+        "mistake": "Ignoring the rain as decorative rather than central",
+        "reveals": "Misses the load-bearing clue"
+      },
+      {
+        "mistake": "Not asking why the difference is weather-dependent",
+        "reveals": "Doesn't interrogate the asymmetry"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's different about him, or what he's carrying, on a rainy day compared to a dry day?",
+        "goodResponse": "They reach the umbrella"
+      },
+      {
+        "probe": "Is there a reason he might not be able to press the button himself on a dry day?",
+        "goodResponse": "They reach the reach/height constraint"
+      }
+    ],
+    "hints": [
+      "The real puzzle is why going DOWN is always fine, but going UP depends on the weather. What changes with the weather?",
+      "What does he carry on a rainy day that he doesn't carry on a dry one?",
+      "Think about the buttons in the lift and how tall he is. How could an umbrella help him reach a higher one?"
+    ]
+  },
+  {
+    "id": "LG-B3",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "Two men sit down at a cafe and order the same drink: iced coffee. The drinks arrive at the same time. The first man gulps his down quickly. The second man sips his slowly. Shortly after, the second man is taken to hospital - he had been poisoned. The poison was definitely in both drinks. Why did the first man survive?",
+    "answer": "The poison was in the ice. The fast drinker finished before the ice melted and released the poison; the slow sipper gave the ice time to melt.",
+    "modelReasoningPath": "Both drinks were poisoned, yet only the slow drinker fell ill - so the difference must be time, not dose. Ask what about an iced drink changes over time - the ice melts. Separate 'the drink' from 'the ice': if the poison is frozen in the ice, only melting releases it. The decisive move is realising the drink is not uniform - it has a component (ice) that changes with time.",
+    "rubric": {
+      "strong": "Locks onto the only variable that differs (speed, so time) and reasons that the drink must change over time, landing on the ice. Asks sharp questions ('Were the drinks exactly identical?').",
+      "developing": "Notices the speed difference is the clue and, prompted to think about how the drink changes over time, reaches the ice. Right track, needs a nudge to the mechanism.",
+      "weak": "Attributes survival to body size, tolerance, or 'he was lucky', ignoring that the only stated difference is drinking speed. Doesn't treat the drink as having parts."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Explaining it by the men ('one was bigger/stronger')",
+        "reveals": "Looks at the people rather than the drink"
+      },
+      {
+        "mistake": "Assuming the drink is a uniform liquid",
+        "reveals": "Misses the ice entirely"
+      },
+      {
+        "mistake": "Forgetting both drinks were poisoned",
+        "reveals": "Reverts to 'one wasn't poisoned'"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "The only difference is how fast they drank. So what might change about the drink while it sits?",
+        "goodResponse": "They consider time-dependent change"
+      },
+      {
+        "probe": "Were the two drinks identical in every single part?",
+        "goodResponse": "They isolate the ice"
+      }
+    ],
+    "hints": [
+      "The only difference is how fast they drank. So the clue is about time - what happens to a drink over time?",
+      "What part of an iced coffee changes if you leave it sitting for a while?",
+      "Where could the poison be hiding so it only spreads into the drink once the ice melts?"
+    ]
+  },
+  {
+    "id": "LG-B4",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A man is found dead in the middle of a large, open field. He's wearing a backpack. There are no footprints anywhere in the field, and there's no one else around. How did he die?",
+    "answer": "His parachute failed to open - the 'backpack' is an unopened parachute. He fell from above, which is why there are no footprints.",
+    "modelReasoningPath": "Treat the no-footprints detail as the load-bearing clue: he didn't walk in. If he didn't arrive horizontally, he arrived vertically - from above. Combine 'from above' plus 'backpack' - parachute. The backpack isn't luggage; it's the failed equipment. The leap is allowing vertical movement into a scenario the mind defaults to picturing horizontally.",
+    "rubric": {
+      "strong": "Uses 'no footprints' to rule out walking and reasons toward arrival from above; connects the backpack to a parachute. Probes the backpack's contents.",
+      "developing": "Recognises the no-footprints clue is important and, prompted to think about how else he could have got there, reaches the falling/parachute idea. Sound once the vertical angle is suggested.",
+      "weak": "Keeps him walking into the field (despite no footprints) or invents unrelated causes, never questioning how he arrived. Ignores the backpack as a clue."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Picturing only horizontal arrival",
+        "reveals": "Misses the 'from above' possibility"
+      },
+      {
+        "mistake": "Treating the backpack as irrelevant background detail",
+        "reveals": "Discards a key clue"
+      },
+      {
+        "mistake": "Not registering that 'no footprints' actively rules something out",
+        "reveals": "Reads clues as decoration"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What does the absence of footprints tell you about how he got there?",
+        "goodResponse": "They rule out walking"
+      },
+      {
+        "probe": "What might be in the backpack?",
+        "goodResponse": "They reach the parachute"
+      }
+    ],
+    "hints": [
+      "What's the strangest thing about the scene? Look hard at the footprints.",
+      "No footprints means he didn't walk in. So how else could he have got to the middle of the field?",
+      "If he came down from above, what might that backpack on his back really be?"
+    ]
+  },
+  {
+    "id": "LG-B6",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "standard",
+    "question": "A woman walks into a hospital room and sees a man lying in a bed connected to various machines. She walks over, switches off one of the machines, and walks out. Soon afterwards, the man in the bed dies. The woman is not arrested, charged, or even questioned by the police. Why not?",
+    "answer": "Multiple valid: the switched-off machine didn't cause the death - she's a nurse/doctor turning off a device no longer needed, or she turned off something irrelevant (a TV, a lamp) and he died of natural causes. The key is breaking the assumed link 'machine off then man died.'",
+    "modelReasoningPath": "Resist the assumption that switching off the machine caused the death - the puzzle plants a false cause. Question both threads: was she authorised (clinical staff), and was the machine even relevant to his survival (maybe a TV)? The broader the questioning across authority and causation, the stronger the thinking. This tests causation vs correlation: two events near in time aren't necessarily cause and effect.",
+    "rubric": {
+      "strong": "Questions whether the machine caused the death at all, not just whether she had permission. Generates more than one explanation across both legal and causal angles. Explicitly separates 'after' from 'because of.'",
+      "developing": "Offers a sensible single explanation (usually 'she's a nurse / she had permission') and, when prompted for another reason, can find a second. On the right lines but initially narrow.",
+      "weak": "Assumes she's guilty and only searches for how she 'got away with it', never questioning whether she caused the death. Can't move off the causal assumption even when prompted."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Assuming guilt and hunting only for a loophole",
+        "reveals": "Locks onto the planted false cause"
+      },
+      {
+        "mistake": "Locking onto a single explanation and stopping",
+        "reveals": "No breadth of hypotheses"
+      },
+      {
+        "mistake": "Treating 'died soon after' as proof the machine caused it",
+        "reveals": "Post hoc reasoning"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Did switching off the machine definitely cause his death?",
+        "goodResponse": "They question the causal link"
+      },
+      {
+        "probe": "Is there any other reason she might not even be questioned?",
+        "goodResponse": "They generate a second explanation"
+      }
+    ],
+    "hints": [
+      "Does switching off the machine definitely mean she caused his death? Are you sure those two things are linked?",
+      "Who in a hospital is allowed to switch off a machine? And what if that machine wasn't keeping him alive at all?",
+      "Try two separate ideas: maybe she's a nurse doing her job - or maybe the machine she switched off was just a TV."
+    ]
+  }
+]

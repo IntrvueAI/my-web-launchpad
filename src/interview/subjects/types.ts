@@ -34,4 +34,11 @@ export interface SubjectPack {
   startDifficulty: Difficulty;
   /** Target scored questions in a mock run. */
   mockTargetQuestions: number;
+  /**
+   * Subject-wide scoring philosophy injected into the interviewer's prompt — e.g. the golden rule
+   * (reasoning > the right answer), the process/adaptability/answer weighting, the qualities being
+   * assessed, the band definitions, and how hints affect banding. This is the document-level
+   * framework that sits behind every question.
+   */
+  scoringPhilosophy?: string;
 }

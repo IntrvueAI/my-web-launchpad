@@ -1,0 +1,174 @@
+[
+  {
+    "id": "LG-A1",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "On an island, every inhabitant is either a knight, who always tells the truth, or a knave, who always lies. You meet two people: Alex and Beth. Alex says: 'At least one of us is a knave.' What can you work out about each of them?",
+    "answer": "Alex is a knight; Beth is a knave.",
+    "modelReasoningPath": "A top candidate treats Alex's status as a fork and tests both branches aloud. Suppose Alex is a knave: then his words are false, so 'at least one of us is a knave' is false, meaning nobody is a knave; but Alex is a knave, a contradiction, so that branch collapses. So Alex must be a knight, his statement is true, and the knave referred to must be Beth. The marker of skill is deliberately assuming the thing you want to disprove and watching it break.",
+    "rubric": {
+      "strong": "Explicitly tests at least one assumption ('if he's a knave then...') and follows it to the contradiction; narrates the fork; reaches Alex = knight, Beth = knave with justification, or gets the structure right even if they fumble the final label.",
+      "developing": "Senses Alex is probably telling the truth and lands near the answer, but justifies it by feel ('he seems honest') rather than ruling out the alternative; can be walked to the contradiction with one nudge.",
+      "weak": "Guesses both roles with no test of either case, or reads 'at least one is a knave' as both being knaves; cannot engage with the self-referential setup even after prompting."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Reading 'at least one of us is a knave' as 'both are knaves'",
+        "reveals": "Misparsing the logical quantifier; derails the whole chain"
+      },
+      {
+        "mistake": "Concluding Alex is the knave because he 'accused' someone",
+        "reveals": "Confuses the content of the claim with the truth-status of the speaker"
+      },
+      {
+        "mistake": "Stopping at 'Alex is a knight' without working out Beth",
+        "reveals": "Doesn't carry the deduction through to completion"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What happens if we just suppose Alex is a knave - does that hold together?",
+        "goodResponse": "They spot the contradiction"
+      },
+      {
+        "probe": "What if Alex had said 'We are both knights' instead?",
+        "goodResponse": "They re-run the case test rather than just guessing a label"
+      }
+    ],
+    "hints": [
+      "Each person is either a knight or a knave. Why not just suppose Alex is one of them and see what follows?",
+      "Try 'Alex is a knave.' If he's a knave, everything he says is false - so is his sentence true or false?",
+      "If 'at least one of us is a knave' were false, that would mean nobody is a knave. But we just supposed Alex is one. Does that fit?"
+    ]
+  },
+  {
+    "id": "LG-A2",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "There are four cards on a table. Each one has a letter on one side and a number on the other. The cards you can see show E, K, 4, and 7. Now, the rule is this: if a card has a vowel on one side, it has an even number on the other side. So here's my question - which cards would you need to turn over to check the rule is being followed? And just as importantly: which ones wouldn't you bother turning over?",
+    "answer": "E and 7.",
+    "modelReasoningPath": "A strong candidate checks each card against what could break the rule, not what merely looks related. E (vowel) could break the rule if the back is odd - must turn. K (consonant) - the rule says nothing about consonants - irrelevant. 4 (even) - the rule is 'vowel then even', not 'even then vowel', so whatever is on the back the rule can't be broken - the famous trap. 7 (odd) - if a vowel is on the back, that's a vowel with an odd number, a direct violation - must turn. The decisive move is realising the rule is a one-way implication.",
+    "rubric": {
+      "strong": "Reasons from 'what could falsify the rule.' Rejects 4 with a reason (one-way implication) and identifies 7, ideally unprompted. Even getting 7 after the single hint, with a clean explanation, is strong.",
+      "developing": "Picks E and 4 (the intuitive pair) but, when asked what 7 could hide, sees the violation and revises. The revision is what earns the band - they can use new information.",
+      "weak": "Picks E and 4 and defends 4 even after prompting, or turns all four 'to be safe' with no sense of which checks matter. No grasp that the rule is directional."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Choosing 4 because it feels relevant",
+        "reveals": "The single most common error, made by most adults too"
+      },
+      {
+        "mistake": "Missing 7 entirely because an odd number 'has nothing to do with vowels'",
+        "reveals": "They forget the back could be a vowel"
+      },
+      {
+        "mistake": "Confirming the rule rather than trying to break it",
+        "reveals": "Turning cards that could only confirm shows no falsification mindset"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would happen if the 7 had a vowel on the back?",
+        "goodResponse": "They see the 7 must be turned"
+      },
+      {
+        "probe": "Does the rule say anything about what's on the back of an even number?",
+        "goodResponse": "They drop the 4-card trap"
+      }
+    ],
+    "hints": [
+      "The rule only makes a promise about vowels. Go card by card - which ones could hide something that breaks that promise?",
+      "For each card ask: 'could what's on the BACK of this one break the rule?' Try it on the 7.",
+      "What if the 7 had a vowel on its back? And remember - the rule never says even numbers must have vowels."
+    ]
+  },
+  {
+    "id": "LG-A3",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "I'm going to give you three facts, so listen carefully. First: everyone in the science club enjoys experiments. Second: some of the science club members also play in the school orchestra. And third: Priya plays in the orchestra, but she's not in the science club. So from just those facts - can you tell me whether Priya enjoys experiments? Talk me through how you work it out.",
+    "answer": "No - we cannot tell.",
+    "modelReasoningPath": "The only fact about who enjoys experiments applies to science club members. Priya is explicitly not a science club member, so that fact says nothing about her. The orchestra link is an association, not a rule that transfers the property. So the honest answer is 'we can't tell' - she might or might not. The hallmark is holding three options in mind - yes, no, and can't tell - and choosing the third deliberately.",
+    "rubric": {
+      "strong": "Arrives at 'can't tell' and explains that the rule only covers science club members, so it can't reach Priya. Distinguishes 'we don't know she does' from 'we know she doesn't.'",
+      "developing": "Leans toward 'can't tell' or hesitates productively ('she's not in the club, so... maybe?') but doesn't cleanly articulate why the orchestra link is irrelevant. The instinct is right; the justification is loose.",
+      "weak": "Confidently says 'yes' (orchestra overlap) or 'no' (she's not in the club so she can't enjoy experiments) - both treat absence of information as information."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Yes - she's in the orchestra with science-club people who like experiments",
+        "reveals": "Confuses association with implication"
+      },
+      {
+        "mistake": "No - she's not in the science club, so she doesn't enjoy experiments",
+        "reveals": "Denying the antecedent: treats 'not a member' as proof"
+      },
+      {
+        "mistake": "Not noticing that 'can't tell' is even an available answer",
+        "reveals": "Assumes every question has a yes/no answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is there anything in these three facts that tells us about people NOT in the science club?",
+        "goodResponse": "They realise there isn't, so we can't conclude"
+      },
+      {
+        "probe": "What extra fact would you need to be certain either way?",
+        "goodResponse": "They identify exactly what's missing"
+      }
+    ],
+    "hints": [
+      "Which of the three facts is actually about Priya?",
+      "The first fact only tells us about science club members. Is Priya one of them?",
+      "If the only rule about experiments covers club members, and Priya isn't a member - can you honestly say yes, no, or neither?"
+    ]
+  },
+  {
+    "id": "LG-A6",
+    "subject": "logic",
+    "topic": "deductive-logic",
+    "difficulty": "standard",
+    "question": "Which is the odd one out: dog, cat, whale, bat, snake? I want you to give me as many different answers as you can, each with a different reason.",
+    "answer": "Open question - any well-defended choice counts (e.g. snake: only reptile / no limbs; whale: only one living only in water; bat: only one that flies; dog/cat: domestication or diet angles).",
+    "modelReasoningPath": "A strong candidate doesn't hunt for the answer - they realise the task is to generate multiple lenses and switch deliberately between them: taxonomy, habitat, locomotion, diet, relationship to humans. The quality is in naming a principle ('by where they live...', 'by how they move...') rather than a one-off observation.",
+    "rubric": {
+      "strong": "Offers several answers unprompted, each on a different principle, and names the principle each time. Finds at least one creative distinction and defends it.",
+      "developing": "Gives one solid answer with a clear reason, and a second when asked, but tends to stay on one type of distinction (e.g. only biology). Needs the 'different lens' prompt to shift.",
+      "weak": "Gives a single answer and stops, or offers reasons that aren't distinguishing ('snake, because I don't like snakes'). Can't articulate a principle."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treating it as having one right answer",
+        "reveals": "Misses that the task is generative"
+      },
+      {
+        "mistake": "Confusing a personal/aesthetic reason ('scary') with a categorical principle",
+        "reveals": "No grasp of what makes a reason a classification"
+      },
+      {
+        "mistake": "Repeating the same lens with different animals",
+        "reveals": "Not genuinely shifting the lens"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Can you think of a reason a completely different animal could be the odd one out?",
+        "goodResponse": "They shift to a new lens"
+      },
+      {
+        "probe": "What's the rule you're using to decide that one?",
+        "goodResponse": "They move from observation to a named principle"
+      }
+    ],
+    "hints": [
+      "There's no single right answer here - just pick any one animal and tell me a reason it's different.",
+      "Think of different ways to sort them: where they live, how they move about, what they eat.",
+      "You've got one reason - now change the rule completely. Could a totally different animal be the odd one out for a totally different reason?"
+    ]
+  }
+]

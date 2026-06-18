@@ -70,7 +70,9 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     ],
     difficultyLevel: 3,
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
-    icon: 'Brain'
+    icon: 'Brain',
+    engineDriven: true,
+    engineSubject: 'logic'
   },
   'maths-interview': {
     id: 'maths-interview',

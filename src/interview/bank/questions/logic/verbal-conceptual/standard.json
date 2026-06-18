@@ -1,0 +1,143 @@
+[
+  {
+    "id": "LG-C1",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Can you define the word 'chair' for me? Try to be precise enough that your definition would include every chair - and exclude everything that isn't a chair.",
+    "answer": "Open question - there is no perfect definition; every first attempt fails to some counterexample, by design.",
+    "modelReasoningPath": "A strong candidate expects to be challenged and treats each counterexample as fuel: offer a definition, hear 'but what about X?', refine to exclude X, repeat. They're carving the concept tighter and stay cheerful. The skill is iteration under challenge, not landing a flawless definition (there isn't one).",
+    "rubric": {
+      "strong": "Gives a definition, recognises or accepts that a counterexample breaks it, and refines - ideally several rounds. Stays curious and flexible as it gets harder. May reflect that the task seems impossible and wonder why.",
+      "developing": "Produces a reasonable definition and can patch it once or twice when handed a counterexample, but adds features ad hoc rather than rethinking. Engaged but a bit rigid.",
+      "weak": "Gives one definition and defends it as obviously correct, or becomes frustrated/shuts down when it's challenged. Treats counterexamples as unfair rather than informative."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Believing the first definition is complete and resisting counterexamples",
+        "reveals": "Misses that refinement is the task"
+      },
+      {
+        "mistake": "Getting frustrated that 'you keep changing it'",
+        "reveals": "Reads the game as unfair"
+      },
+      {
+        "mistake": "Defining by example ('like the one I'm sitting on')",
+        "reveals": "Can't define by properties"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "You can sit on the floor - is the floor a chair?",
+        "goodResponse": "They refine to exclude it"
+      },
+      {
+        "probe": "What about a stool with no back? A sofa? A throne?",
+        "goodResponse": "They keep iterating cheerfully"
+      },
+      {
+        "probe": "Philosophers have tried for centuries and never agreed. Why do you think it's so hard?",
+        "goodResponse": "They reflect on the nature of definition"
+      }
+    ],
+    "hints": [
+      "Just give me a first try - it doesn't have to be perfect, we'll improve it together.",
+      "You said a chair is that - but the floor / a stool / a sofa fits that too and isn't a chair. Can you add something to rule it out?",
+      "Each time I find an exception, just tweak your definition to exclude it. The fixing is the whole game - keep going."
+    ]
+  },
+  {
+    "id": "LG-C2",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Here's one to finish: pen is to author as scalpel is to... what? And once you've got it, tell me the link you used.",
+    "answer": "Surgeon/doctor. Relationship: a professional's primary tool. (Escalate via the probes to harder analogies.)",
+    "modelReasoningPath": "A strong candidate fills the blank and immediately states the rule: 'the tool a professional uses', 'a creator and their work'. On harder ones they reason from the named rule rather than from vibe. The explanation is the evidence of reasoning; the word alone could be pattern-matching.",
+    "rubric": {
+      "strong": "Completes analogies and articulates the underlying relationship in words, unprompted. Handles abstract levels and can run the relationship in reverse.",
+      "developing": "Fills blanks correctly but reaches for the relationship only when asked, and describes it loosely ('they go together'). Right answers, fuzzy rationale.",
+      "weak": "Guesses words, sometimes plausibly, but can't say why - 'it just sounded right' - and can't transfer the rule to a harder item."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Filling the blank by association ('scalpel... hospital')",
+        "reveals": "Matches a vibe rather than the relationship (tool to user)"
+      },
+      {
+        "mistake": "Naming a relationship that doesn't fit both halves",
+        "reveals": "Loose analogical reasoning"
+      },
+      {
+        "mistake": "Treating 'I just knew it' as sufficient",
+        "reveals": "No articulated rule"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "library is to books as gallery is to... what?",
+        "goodResponse": "paintings/artworks - a place and the collection it holds"
+      },
+      {
+        "probe": "hot is to lukewarm as freezing is to... what?",
+        "goodResponse": "cold/chilly - an extreme and its milder counterpart"
+      },
+      {
+        "probe": "author is to novel as composer is to... what? And a sculptor makes... what?",
+        "goodResponse": "symphony; statue/sculpture - a creator and their primary work"
+      },
+      {
+        "probe": "What's the relationship you used there?",
+        "goodResponse": "They name the rule that works for both pairs"
+      }
+    ],
+    "hints": [
+      "Look at the first two words - what's the link between them?",
+      "Say it as a sentence: 'a pen is the tool an author uses, so a scalpel is the tool a ___ uses.'",
+      "Name the relationship out loud first - once you've got the rule, the missing word falls out."
+    ]
+  },
+  {
+    "id": "LG-C3",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Which is the odd one out: painting, sculpture, symphony, novel, poem? Give me as many different answers as you can, each with a completely different reason.",
+    "answer": "Open question - any well-defended choice (e.g. symphony: exists only in time / must be performed; sculpture: only 3D; painting: only purely visual; novel: only one too long for one sitting; poem: short enough to memorise, sound matters).",
+    "modelReasoningPath": "As with the animals, the task is lens-switching, but the lenses are conceptual: dimension, medium, time, length, how it's experienced. A strong child generates several, each on a distinct principle, and is surprised and pleased to keep finding more.",
+    "rubric": {
+      "strong": "Several answers on genuinely different principles, each named. Finds an unexpected angle (e.g. 'the symphony is the only one that doesn't exist until someone performs it') and defends it.",
+      "developing": "One strong answer, a second when prompted, but lenses stay close together (e.g. all about physical form). Needs 'which would you pick next?' to broaden.",
+      "weak": "One answer then stops, or reasons that don't distinguish ('poem, because poems are boring'). No principle behind the pick."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treating it as one-right-answer",
+        "reveals": "Misses the generative task"
+      },
+      {
+        "mistake": "Personal taste masquerading as a categorical reason",
+        "reveals": "No classifying principle"
+      },
+      {
+        "mistake": "Re-using one lens dressed up as different reasons",
+        "reveals": "Not genuinely switching lens"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If that were the odd one out, which would you choose next, and why?",
+        "goodResponse": "They switch to a new lens"
+      },
+      {
+        "probe": "What's the underlying idea behind that choice?",
+        "goodResponse": "They name the principle"
+      }
+    ],
+    "hints": [
+      "There's no single right answer - pick any one and give me a reason it's the odd one.",
+      "Think about different angles: which one you can touch, which takes time to experience, which is read versus performed.",
+      "You've found one - now switch the rule entirely and find a different odd one out for a different reason."
+    ]
+  }
+]

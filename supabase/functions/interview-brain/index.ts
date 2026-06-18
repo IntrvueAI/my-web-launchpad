@@ -8,8 +8,13 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 import { advanceAgent, initAgentState, type AgentState, type ChatComplete } from "./_shared/engine/agent.ts";
 import { mathsPack } from "./_shared/subjects/maths/pack.ts";
+import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import type { BrainRequest, BrainResponse, Mode } from "./_shared/engine/types.ts";
 import mathsBank from "./_shared/maths-bank.json" with { type: "json" };
+import logicBank from "./_shared/logic-bank.json" with { type: "json" };
+
+const PACKS: Record<string, any> = { maths: mathsPack, logic: logicPack };
+const BANKS: Record<string, any> = { maths: mathsBank, logic: logicBank };
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -30,7 +35,7 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 
-const SUBJECT_BY_TYPE: Record<string, string> = { "maths-interview": "maths" };
+const SUBJECT_BY_TYPE: Record<string, string> = { "maths-interview": "maths", "logic-puzzles": "logic" };
 
 function safeParseArgs(s: string): Record<string, any> {
   try {
@@ -97,13 +102,14 @@ serve(async (req) => {
     if (session.user_id !== userId) return json({ error: "Forbidden" }, 403);
 
     const subject = SUBJECT_BY_TYPE[session.interview_type as string];
-    if (subject !== "maths") return json({ error: "This interview type is not engine-driven" }, 400);
+    const pack = subject ? PACKS[subject] : undefined;
+    if (!pack) return json({ error: "This interview type is not engine-driven" }, 400);
 
-    const deps = { bank: mathsBank as any, pack: mathsPack, chat };
+    const deps = { bank: BANKS[subject], pack, chat };
 
     let state: AgentState;
     if (action === "start" || !session.engine_state) {
-      state = initAgentState({ subject, mode: (body.mode as Mode) ?? "mock", topic: body.topic, pack: mathsPack });
+      state = initAgentState({ subject, mode: (body.mode as Mode) ?? "mock", topic: body.topic, pack });
     } else {
       state = session.engine_state as AgentState;
     }

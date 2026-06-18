@@ -1,0 +1,45 @@
+[
+  {
+    "id": "LG-B5",
+    "subject": "logic",
+    "topic": "lateral-thinking",
+    "difficulty": "stretch",
+    "question": "Four people need to cross a narrow rope bridge in the dark. The bridge can only hold two people at a time, and they've got just one torch between them - and nobody can cross without it. The thing is, they all walk at different speeds: one takes 1 minute to cross, one takes 2 minutes, one takes 5 minutes, and the slowest takes 10 minutes. And when two cross together, they can only go as fast as the slower of the two. So - what's the quickest time in which all four can get across?",
+    "answer": "17 minutes. Schedule: 1&2 cross (2), 1 returns (3), 5&10 cross (13), 2 returns (15), 1&2 cross (17).",
+    "modelReasoningPath": "Try the obvious method - fastest person ferries everyone - and get 19 minutes. Then ask 'can I do better?' - the crucial adaptive move. Spot that the 10-minute person is the expensive one, and you only want to pay that cost once, so the two slow people (5 and 10) should cross together. Arrange the fast people (1 and 2) to shuttle the torch around that single expensive crossing, giving 17. What's tested is systematic experimentation and the willingness to improve a working-but-suboptimal answer - not whether they nail 17 first try.",
+    "rubric": {
+      "strong": "Finds a working solution (often 19), recognises it might not be optimal, and searches for improvement by identifying the 10-minute person as the cost to minimise. Reaches 17, or gets very close with clear reasoning about pairing the slow walkers.",
+      "developing": "Produces a valid crossing that gets everyone across (e.g. 19) and explains it clearly, but treats it as 'done' until asked whether it can be faster; with the prompt, begins to experiment.",
+      "weak": "Loses track of the constraints (torch must come back, only two at a time), proposes impossible crossings, or fixes on one attempt with no checking. No sense of a cost to minimise."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Forgetting the torch must be carried back each time",
+        "reveals": "Loses a core constraint"
+      },
+      {
+        "mistake": "Sending the two slowest separately",
+        "reveals": "Pays the 10-minute cost twice"
+      },
+      {
+        "mistake": "Declaring 19 the answer without testing whether it can be beaten",
+        "reveals": "No drive to optimise"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "You've got a way that works - can you find a faster one?",
+        "goodResponse": "They begin to optimise"
+      },
+      {
+        "probe": "Which person is the most 'expensive' to move, and how often are you paying that cost?",
+        "goodResponse": "They target the 10-minute crossing"
+      }
+    ],
+    "hints": [
+      "First just find any order that gets all four across, and add up the time - don't worry if it's not the fastest yet.",
+      "Remember someone has to carry the torch back each time. Which person costs you the most every time they cross?",
+      "What if the two slowest people crossed together - could that mean you only pay the 10-minute cost once instead of twice?"
+    ]
+  }
+]

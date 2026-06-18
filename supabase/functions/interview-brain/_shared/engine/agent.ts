@@ -131,6 +131,7 @@ const TOOLS = [
           },
           method_quality: { type: 'string', enum: ['sound', 'partial', 'none', 'unknown'] },
           band: { type: 'string', enum: ['strong', 'developing', 'weak'], description: 'Reasoning band from the rubric, if one was provided.' },
+          hints_given: { type: 'integer', description: 'How many hints you gave on the problem just finished (a key signal — always report it).' },
           note: { type: 'string', description: 'One short note on what they did or where they slipped.' },
         },
         required: [],
@@ -209,6 +210,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     '',
     CORE_SPEAKING_STYLE,
     pack.speakingNotes ? pack.speakingNotes : '',
+    pack.scoringPhilosophy ? '\nHOW TO JUDGE AND SCORE:\n' + pack.scoringPhilosophy : '',
     '',
     `How to run this ${mock ? 'mock interview' : 'practice session'}:`,
     `- This is a spoken ${pack.subject} mini-interview for an 11+ candidate (about 10–11 years old).`,
@@ -230,15 +232,16 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
   return lines.filter((l) => l !== '').join('\n');
 }
 
-function logEvidence(state: AgentState, args: { outcome?: string; method_quality?: string; band?: string; note?: string }) {
+function logEvidence(state: AgentState, args: { outcome?: string; method_quality?: string; band?: string; hints_given?: number; note?: string }) {
   if (!state.current) return;
   const outcome = (VALID_OUTCOMES.has(args.outcome as Outcome) ? args.outcome : 'stuck') as Outcome;
   const methodQuality = (['sound', 'partial', 'none', 'unknown'].includes(args.method_quality as string)
     ? args.method_quality
     : 'unknown') as Evidence['methodQuality'];
   const band = (['strong', 'developing', 'weak'].includes(args.band as string) ? args.band : undefined) as Evidence['band'];
+  const hintsUsed = Number.isFinite(args.hints_given) ? Math.max(0, Math.round(args.hints_given as number)) : 0;
   state.evidence.push(
-    makeEvidence(state.evidence.length + 1, state.current, state.currentStudentTurns.join(' ').trim(), 0, {
+    makeEvidence(state.evidence.length + 1, state.current, state.currentStudentTurns.join(' ').trim(), hintsUsed, {
       outcome,
       methodQuality,
       band,
