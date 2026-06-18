@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-GM-F01",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "foundation",
+    "question": "How many sides does a hexagon have?",
+    "answer": "6",
+    "explanation": "A hexagon has six sides."
+  },
+  {
+    "id": "MA-GM-F02",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "foundation",
+    "question": "What is the perimeter of a square with sides of 5 centimetres?",
+    "answer": "20",
+    "explanation": "Four sides of 5 centimetres: 4 times 5 is 20 centimetres."
+  }
+]

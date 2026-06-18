@@ -12,6 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 import { Play, Square, Mic, MicOff, RotateCcw } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
 import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes';
+import { InterviewSetup, SetupChoice } from './InterviewSetup';
+import { getSubjectPack } from '@/interview/subjects';
 
 interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
@@ -39,7 +41,12 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   
   // Use selected interview type or default to 11-plus
   const interviewType = selectedInterviewType || getDefaultInterviewType();
-  
+  const engineDriven = Boolean(interviewType.engineDriven);
+
+  // Engine-driven interviews show a Practice/Mock setup gate before connecting.
+  const [setupChoice, setSetupChoice] = useState<SetupChoice | null>(null);
+  const subjectPack = engineDriven ? getSubjectPack(interviewType.engineSubject || '') : undefined;
+
   // Custom hook to manage anam.ai interview session
   const {
     isConnected,
@@ -51,8 +58,20 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     startInterview,
     stopInterview,
     sessionStatus,
-    setMicMuted
+    setMicMuted,
+    skipQuestion,
+    switchTopic,
+    brainUiState,
+    interviewComplete
   } = useInterviewSession(videoRef, interviewType);
+
+  // Engine-driven runs emit an explicit completion signal — trust it directly.
+  useEffect(() => {
+    if (engineDriven && interviewComplete && isStreaming) {
+      setHighlightEnd(true);
+      setEndHintText('All done! Click "End Interview" to get your feedback.');
+    }
+  }, [engineDriven, interviewComplete, isStreaming]);
 
   // Detect when interviewer wraps up and nudge user to end
   useEffect(() => {
@@ -62,6 +81,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       setEndHintText('');
       return;
     }
+    // Engine-driven completion is handled by interviewComplete above (no phrase-sniffing needed).
+    if (engineDriven) return;
 
     const assistantMessages = chatHistory
       .filter(m => m.role === 'assistant')
@@ -148,7 +169,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       setEndHintText('Final question. When you finish, click "End Interview" to get feedback.');
       console.debug('[InterviewPlatform] final-question priming detected', { combined, matchedPriming });
     }
-  }, [chatHistory, isStreaming, attentionNudged, highlightEnd, toast]);
+  }, [chatHistory, isStreaming, attentionNudged, highlightEnd, toast, engineDriven]);
 
 
   // Handle starting the interview session
@@ -163,11 +184,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     }
 
     try {
-      await startInterview(user.id);
+      await startInterview(user.id, engineDriven ? (setupChoice ?? { mode: 'mock' }) : undefined);
     } catch (err) {
       console.error('Failed to start interview:', err);
     }
-  }, [startInterview, user, toast]);
+  }, [startInterview, user, toast, engineDriven, setupChoice]);
 
   // Handle stopping the interview session and generate feedback
   const handleStopInterview = useCallback(async () => {
@@ -300,9 +321,17 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           </p>
         </div>
 
+        {/* Engine-driven setup gate (Practice vs Mock) — shown before connecting. */}
+        {engineDriven && !setupChoice && !isStreaming && (
+          <div className="mb-8">
+            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} />
+          </div>
+        )}
+
         {/* Main Interview Interface - Mobile First Layout */}
+        {(!engineDriven || setupChoice || isStreaming) && (
         <div className="space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
-          
+
           {/* Video Interview Area */}
           <div className="lg:col-span-2">
             <Card className="p-4 md:p-6 shadow-medium">
@@ -410,18 +439,27 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 onStopInterview={handleStopInterview}
                 disabled={!!error}
                 highlightEnd={highlightEnd}
+                endHint={endHintText || undefined}
+                onSkipQuestion={engineDriven ? skipQuestion : undefined}
+                topics={
+                  engineDriven && brainUiState?.mode === 'practice'
+                    ? subjectPack?.topics.map((t) => ({ id: t.id, label: t.label }))
+                    : undefined
+                }
+                onSwitchTopic={engineDriven ? switchTopic : undefined}
               />
             </div>
           </div>
 
           {/* Chat History Panel - Collapsible on Mobile */}
           <div className="lg:block">
-            <ChatHistory 
+            <ChatHistory
               messages={chatHistory}
               isStreaming={isStreaming}
             />
           </div>
         </div>
+        )}
 
         {/* Feedback Section */}
         {(feedback || isGeneratingFeedback) && (

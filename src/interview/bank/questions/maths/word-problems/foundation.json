@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-WP-F01",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "foundation",
+    "question": "There are 12 apples and you eat 4. How many are left?",
+    "answer": "8",
+    "explanation": "12 take away 4 is 8."
+  },
+  {
+    "id": "MA-WP-F02",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "foundation",
+    "question": "A pencil case holds 6 pens. How many pens are in 3 pencil cases?",
+    "answer": "18",
+    "explanation": "3 times 6 is 18."
+  }
+]

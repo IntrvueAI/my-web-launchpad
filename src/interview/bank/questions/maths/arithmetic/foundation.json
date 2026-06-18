@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-AR-F01",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "foundation",
+    "question": "What is 7 times 8?",
+    "answer": "56",
+    "explanation": "Seven eights are fifty-six."
+  },
+  {
+    "id": "MA-AR-F02",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "foundation",
+    "question": "What is 64 divided by 8?",
+    "answer": "8",
+    "explanation": "Eight eights are sixty-four, so 64 divided by 8 is 8."
+  }
+]

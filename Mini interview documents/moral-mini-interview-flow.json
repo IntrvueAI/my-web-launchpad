@@ -1,0 +1,371 @@
+{
+  "title": "11+ Mini-Interview — Current Affairs & Moral Reasoning",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "x": 40,
+      "y": 40,
+      "title": "Session start",
+      "body": "Skip silence / background noise.\nWait for a clear \"ready\" before scoring."
+    },
+    {
+      "id": "persona",
+      "type": "persona",
+      "x": 40,
+      "y": 190,
+      "title": "Clara — persona & voice",
+      "body": "Warm, curious, Socratic. Neutral and non-\npartisan; never imposes a view. Encourages\nindependent thought. Age-appropriate."
+    },
+    {
+      "id": "guard",
+      "type": "guard",
+      "x": 40,
+      "y": 400,
+      "title": "Guardrails",
+      "body": "Stay neutral; don't share the model's opinions\nor lead to a \"right\" answer.\nKeep topics age-appropriate; avoid graphic /\ndistressing detail. Don't echo loaded framing."
+    },
+    {
+      "id": "greet",
+      "type": "step",
+      "x": 40,
+      "y": 660,
+      "title": "Greeting + unmarked opener",
+      "body": "Friendly hello, then a loosening question\n(\"what's something in the news you've noticed?\").\nNot scored — settles nerves, reads confidence."
+    },
+    {
+      "id": "struct",
+      "type": "structure",
+      "x": 360,
+      "y": 60,
+      "title": "Mini-interview — format",
+      "body": "~20 min, discussion-led.\nNo right answers — scores reasoning, balance\nand empathy. Scales concrete → abstract / ethical."
+    },
+    {
+      "id": "modefork",
+      "type": "branch",
+      "x": 360,
+      "y": 390,
+      "title": "Candidate chooses how to run it",
+      "body": "Offered after the opener.\nMode can change later (\"switch any time\")."
+    },
+    {
+      "id": "practice",
+      "type": "topic",
+      "x": 720,
+      "y": 120,
+      "title": "Theme practice — free / less rigid",
+      "body": "Pick a theme; switch any time.\nLow-pressure, exploratory conversation."
+    },
+    {
+      "id": "mock",
+      "type": "structure",
+      "x": 720,
+      "y": 560,
+      "title": "Full discussion set — structured",
+      "body": "Rigid run across several themes.\n~4–6 prompts to fill ~20 min;\nlight time-check, wind down near the end."
+    },
+    {
+      "id": "s1",
+      "type": "topic",
+      "x": 1060,
+      "y": 10,
+      "title": "Fairness, rules & school life",
+      "body": "Sharing, rules, what's fair —\nconcrete, relatable starting ground."
+    },
+    {
+      "id": "s2",
+      "type": "topic",
+      "x": 1060,
+      "y": 150,
+      "title": "Environment & responsibility",
+      "body": "Looking after shared things;\nindividual vs collective action."
+    },
+    {
+      "id": "s3",
+      "type": "topic",
+      "x": 1060,
+      "y": 290,
+      "title": "Technology & its effects",
+      "body": "Screens, online life, AI — benefits and\ntrade-offs. Keep it age-appropriate."
+    },
+    {
+      "id": "s4",
+      "type": "topic",
+      "x": 1060,
+      "y": 430,
+      "title": "Community & helping others",
+      "body": "Charity, kindness, who we owe things to\nand why."
+    },
+    {
+      "id": "s5",
+      "type": "topic",
+      "x": 1060,
+      "y": 570,
+      "title": "Right & wrong — simple dilemmas",
+      "body": "Small ethical scenarios with no clean answer;\nwhat would you do and why?"
+    },
+    {
+      "id": "s6",
+      "type": "topic",
+      "x": 1060,
+      "y": 710,
+      "title": "In the news",
+      "body": "Light, age-appropriate current events\n(e.g. The Week Junior). Awareness + a view."
+    },
+    {
+      "id": "ask",
+      "type": "step",
+      "x": 1410,
+      "y": 120,
+      "title": "Raise a theme / prompt",
+      "body": "Pose it openly; invite their own view.\nNo right answer signalled."
+    },
+    {
+      "id": "finish",
+      "type": "step",
+      "x": 1410,
+      "y": 330,
+      "title": "Keep them on the question",
+      "body": "Hold them to the topic; push for a reason\n(\"can you say why?\") not a finished answer.\nEscape valve: if stuck, offer a concrete case\nto react to, then move on."
+    },
+    {
+      "id": "probe",
+      "type": "step",
+      "x": 1410,
+      "y": 540,
+      "title": "Probe — reasons, balance, empathy",
+      "body": "\"Why do you think that? What would someone\nwho disagrees say? What about this case…?\"\nCredit any justification and self-correction."
+    },
+    {
+      "id": "judge",
+      "type": "branch",
+      "x": 1410,
+      "y": 790,
+      "title": "Evaluate the reasoning",
+      "body": "Justification + balance + empathy + awareness,\nagainst the watch-list → (no right answer)"
+    },
+    {
+      "id": "o1",
+      "type": "outcome",
+      "x": 1760,
+      "y": 470,
+      "title": "Nuanced + empathetic + handles a counterpoint",
+      "body": "Affirm the thinking. Push one step further\nwith a harder case if time allows."
+    },
+    {
+      "id": "o2",
+      "type": "outcome",
+      "x": 1760,
+      "y": 610,
+      "title": "Coherent but one-sided / developing",
+      "body": "Invite the other side: \"what might someone\nelse think?\" Reward the stretch."
+    },
+    {
+      "id": "o3",
+      "type": "outcome",
+      "x": 1760,
+      "y": 750,
+      "title": "Oversimplified / asserted, no reasons",
+      "body": "\"What makes you say that?\" Ask for one reason\nor example. Don't supply the view."
+    },
+    {
+      "id": "o4",
+      "type": "outcome",
+      "x": 1760,
+      "y": 890,
+      "title": "Minimal awareness / can't engage",
+      "body": "Offer a concrete, familiar example to react to.\nNote where it broke."
+    },
+    {
+      "id": "watch",
+      "type": "watch",
+      "x": 1060,
+      "y": 900,
+      "title": "What to flag",
+      "body": "• Asserts a view with no reasons\n• No awareness of other perspectives\n• Factual confusion / repeats slogans\n• Missing empathy for those affected\n• Absorbs the interviewer's framing\n• Drifts off the question"
+    },
+    {
+      "id": "adapt",
+      "type": "step",
+      "x": 1060,
+      "y": 1090,
+      "title": "Adapt depth (mock)",
+      "body": "Reasoning well → go more abstract /\nadd a counter-case. Struggling → return to\nconcrete. Track depth; watch the clock."
+    },
+    {
+      "id": "score",
+      "type": "step",
+      "x": 1410,
+      "y": 1010,
+      "title": "Log evidence (silent)",
+      "body": "Justification · balance · empathy · awareness.\nNo scores read aloud."
+    },
+    {
+      "id": "wrap",
+      "type": "step",
+      "x": 1760,
+      "y": 1190,
+      "title": "Encouraging wrap-up",
+      "body": "Thank them; one genuine positive.\nWarm, age-appropriate close."
+    },
+    {
+      "id": "report",
+      "type": "end",
+      "x": 1760,
+      "y": 1350,
+      "title": "Score → Rubric S4 / 5",
+      "body": "Current Awareness & Moral Reasoning, out of 5:\n5 nuanced view, empathy, conceptual depth\n3 basic awareness, oversimplified\n1 no relevant awareness. + depth reached."
+    }
+  ],
+  "edges": [
+    {
+      "f": "start",
+      "t": "persona"
+    },
+    {
+      "f": "persona",
+      "t": "guard"
+    },
+    {
+      "f": "guard",
+      "t": "greet"
+    },
+    {
+      "f": "greet",
+      "t": "struct"
+    },
+    {
+      "f": "struct",
+      "t": "modefork"
+    },
+    {
+      "f": "modefork",
+      "t": "practice",
+      "l": "theme practice"
+    },
+    {
+      "f": "modefork",
+      "t": "mock",
+      "l": "full discussion"
+    },
+    {
+      "f": "practice",
+      "t": "s1"
+    },
+    {
+      "f": "practice",
+      "t": "s2"
+    },
+    {
+      "f": "practice",
+      "t": "s3"
+    },
+    {
+      "f": "practice",
+      "t": "s4"
+    },
+    {
+      "f": "practice",
+      "t": "s5"
+    },
+    {
+      "f": "practice",
+      "t": "s6"
+    },
+    {
+      "f": "practice",
+      "t": "mock",
+      "l": "switch any time"
+    },
+    {
+      "f": "practice",
+      "t": "ask",
+      "l": "from chosen theme"
+    },
+    {
+      "f": "mock",
+      "t": "ask",
+      "l": "begin · all themes"
+    },
+    {
+      "f": "ask",
+      "t": "finish"
+    },
+    {
+      "f": "finish",
+      "t": "probe"
+    },
+    {
+      "f": "probe",
+      "t": "judge"
+    },
+    {
+      "f": "judge",
+      "t": "o1",
+      "l": "nuanced"
+    },
+    {
+      "f": "judge",
+      "t": "o2",
+      "l": "one-sided"
+    },
+    {
+      "f": "judge",
+      "t": "o3",
+      "l": "asserted"
+    },
+    {
+      "f": "judge",
+      "t": "o4",
+      "l": "minimal"
+    },
+    {
+      "f": "watch",
+      "t": "judge",
+      "l": "checks for"
+    },
+    {
+      "f": "o1",
+      "t": "score"
+    },
+    {
+      "f": "o2",
+      "t": "score",
+      "l": "after stretch"
+    },
+    {
+      "f": "o3",
+      "t": "score",
+      "l": "after a reason"
+    },
+    {
+      "f": "o4",
+      "t": "score"
+    },
+    {
+      "f": "score",
+      "t": "adapt",
+      "l": "mock: next Q"
+    },
+    {
+      "f": "adapt",
+      "t": "ask",
+      "l": "adaptive"
+    },
+    {
+      "f": "score",
+      "t": "practice",
+      "l": "free: pick / switch"
+    },
+    {
+      "f": "score",
+      "t": "wrap",
+      "l": "time up / final"
+    },
+    {
+      "f": "wrap",
+      "t": "report"
+    }
+  ]
+}

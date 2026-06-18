@@ -510,6 +510,45 @@ try {
 
     const supabase = supabaseAdmin;
 
+    // Engine-driven interviews carry a structured evidence log on the session row. Prefer it: it is
+    // cheaper and more reliable to score from than re-parsing the raw transcript, and it powers the
+    // "questions asked / skipped" review the student sees.
+    let evidence: any[] = [];
+    let questionsReview: any[] = [];
+    if (sessionReference) {
+      const { data: sessionRow } = await supabaseAdmin
+        .from('interview_sessions')
+        .select('evidence')
+        .eq('session_reference', sessionReference)
+        .eq('user_id', userId)
+        .maybeSingle();
+      if (sessionRow?.evidence && Array.isArray(sessionRow.evidence)) {
+        evidence = sessionRow.evidence;
+        questionsReview = evidence.map((e: any) => ({
+          index: e.index,
+          topic: e.topic,
+          difficulty: e.difficulty,
+          question: e.question,
+          asked: !e.skipped,
+          skipped: Boolean(e.skipped),
+          outcome: e.outcome,
+          your_answer: e.studentAnswer || '',
+          note: e.notes || '',
+        }));
+      }
+    }
+
+    // A compact, model-readable summary of the evidence to ground the scoring (when available).
+    const evidenceSummary = evidence.length
+      ? '\n\nStructured evidence log (one line per question — use this to ground your scores):\n' +
+        evidence
+          .map((e: any) =>
+            `Q${e.index} [${e.topic}/${e.difficulty}] ${e.skipped ? 'SKIPPED' : `outcome=${e.outcome}, method=${e.methodQuality}, hints=${e.hintsUsed}`}` +
+            (e.skipped ? '' : ` — said: "${(e.studentAnswer || '').slice(0, 200)}"`),
+          )
+          .join('\n')
+      : '';
+
     // Get dynamic system prompt based on interview type
     const systemPrompt = getSystemPrompt(interviewType || '11-plus', scoringSystem || '0-5');
 
@@ -522,7 +561,7 @@ try {
       model: 'gpt-4o',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields.\n\n${sanitizedTranscription}` }
+        { role: 'user', content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields.\n\n${sanitizedTranscription}${evidenceSummary}` }
       ],
       temperature: 0,
       response_format: { type: 'json_object' },
@@ -1034,6 +1073,7 @@ STUDENT PERFORMANCE DATA:`;
     feedbackData.transcription = sanitizedTranscription;
     feedbackData.annotations = annotations;
     feedbackData.overall_improvement_feedback = overallImprovementFeedback;
+    feedbackData.questions_review = questionsReview;
     // Build flexible scores object for new JSONB column
     const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
     const flexibleScores: Record<string, number> = {};
@@ -1068,6 +1108,7 @@ STUDENT PERFORMANCE DATA:`;
       scores: flexibleScores, // New flexible JSONB scores
       annotations: annotations,
       overall_improvement_feedback: overallImprovementFeedback,
+      questions_review: questionsReview,
     };
 
     // Keep legacy columns for backward compatibility based on interview type

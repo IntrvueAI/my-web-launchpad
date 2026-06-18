@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-RP-F01",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "foundation",
+    "question": "Share 10 sweets between two children in the ratio 1 to 1. How many does each get?",
+    "answer": "5",
+    "explanation": "One to one means an equal share, so each child gets 5."
+  },
+  {
+    "id": "MA-RP-F02",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "foundation",
+    "question": "If one pencil costs 20 pence, how much do 3 pencils cost?",
+    "answer": "60",
+    "explanation": "Three pencils cost 3 times 20 pence, which is 60 pence."
+  }
+]

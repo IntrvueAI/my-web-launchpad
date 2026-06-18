@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-SQ-F01",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "foundation",
+    "question": "Here is a sequence: 2, 4, 6, 8, and so on. What is the next number?",
+    "answer": "10",
+    "explanation": "The pattern adds 2 each time, so after 8 comes 10."
+  },
+  {
+    "id": "MA-SQ-F02",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "foundation",
+    "question": "If a number plus 3 equals 10, what is the number?",
+    "answer": "7",
+    "explanation": "10 minus 3 is 7."
+  }
+]

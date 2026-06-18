@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-AR-S01",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "standard",
+    "question": "Work this out for me: three thousand two hundred and five minus one thousand six hundred and forty-eight.",
+    "answer": "1557",
+    "explanation": "3205 minus 1648 is 1557, borrowing through the columns."
+  },
+  {
+    "id": "MA-AR-S02",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "standard",
+    "question": "What is the value of the digit 7 in the number four thousand seven hundred and twenty-eight?",
+    "answer": "700",
+    "explanation": "The 7 is in the hundreds column, so it is worth 7 times 100, which is 700."
+  }
+]

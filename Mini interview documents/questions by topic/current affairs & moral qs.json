@@ -1,0 +1,275 @@
+{
+  "title": "11+ Interview Preparation Guide",
+  "subtitle": "Top Independent Schools — Discussion & General Knowledge Questions",
+  "sections": [
+    {
+      "part": 1,
+      "partTitle": "Discussion Questions",
+      "partDescription": "These questions have no right answer. Interviewers want to see curiosity, reasoning, and the ability to consider other points of view.",
+      "topics": [
+        {
+          "id": "current-affairs",
+          "topic": "Current Affairs & The World",
+          "questions": [
+            "Have you been following anything in the news recently? What did you make of it?",
+            "Do you think social media does more good or more harm for people your age?",
+            "Do you think richer countries have a responsibility to help poorer ones?",
+            "If you had to pick one problem in the world to solve, what would it be and why?"
+          ]
+        },
+        {
+          "id": "ai-technology",
+          "topic": "AI & Technology",
+          "questions": [
+            "What do you think about AI — is it something to be excited about or worried about?",
+            "If you used AI to help write an essay, would you consider that cheating?",
+            "Do you think a computer could ever be truly creative — like write a poem that actually means something?",
+            "Is there a job you think a robot could never do? Why?"
+          ]
+        },
+        {
+          "id": "climate",
+          "topic": "Climate & Environment",
+          "questions": [
+            "Who do you think should be doing the most to tackle climate change — governments, businesses, or individuals?",
+            "Is it fair that your generation has to deal with a problem it didn't really create?",
+            "Is there something you'd genuinely be willing to give up to help the environment?"
+          ]
+        },
+        {
+          "id": "moral-dilemmas",
+          "topic": "Moral Dilemmas",
+          "questions": [
+            "Say you found £50 on the pavement and there was no one around — what would you do?",
+            "Can you think of a situation where lying might actually be the right thing to do?",
+            "If you saw someone being bullied and stepping in felt risky, what would you do?",
+            "If you could only save five strangers or one close friend, what would you do?"
+          ]
+        },
+        {
+          "id": "society-fairness",
+          "topic": "Society, Fairness & Social Situations",
+          "questions": [
+            "Do you think school uniforms are a good idea?",
+            "Is it fair that some people are born into wealthy families and others aren't?",
+            "Should 16-year-olds be allowed to vote? Why or why not?",
+            "If you saw someone in your class being left out or picked on, what would you do?",
+            "Have you ever had a falling out with a friend? How did you handle it, and would you do anything differently now?",
+            "If your closest friend did something you thought was really wrong, would you say something to them?",
+            "Say two of your friends had an argument and both came to you separately expecting you to take their side — how would you deal with that?"
+          ]
+        },
+        {
+          "id": "personal-curiosity",
+          "topic": "Personal Curiosity & Interests Outside the Classroom",
+          "questions": [
+            "Is there a book you've read that made you see something differently?",
+            "What's something you've gone and looked into just because you wanted to know more about it?",
+            "Has there been something you used to believe that you've since changed your mind on? What changed it?",
+            "Is there a sport, hobby or activity you do outside of school that you're really passionate about?",
+            "What's something you're good at that you've had to work hard to get better at?",
+            "Have you ever taken on a leadership role — in a team, a club, or even just among friends? What did you learn from it?",
+            "Is there a skill you've taught yourself, outside of school? How did you go about learning it?",
+            "What do you do when you have completely free time and no one is telling you what to do?",
+            "Has anything you've done outside school — a trip, a competition, a project — changed the way you think about something?"
+          ]
+        }
+      ]
+    },
+    {
+      "part": 2,
+      "partTitle": "Multiple Choice — Factual Knowledge",
+      "partDescription": "Answers are provided for each question.",
+      "topics": [
+        {
+          "id": "uk-government",
+          "topic": "UK Government & How Britain Works",
+          "questions": [
+            {
+              "id": 1,
+              "question": "What is the name of the UK's Parliament building?",
+              "options": [
+                "Buckingham Palace",
+                "The Houses of Parliament",
+                "The Supreme Court",
+                "10 Downing Street"
+              ],
+              "answer": "The Houses of Parliament"
+            },
+            {
+              "id": 2,
+              "question": "What are the two houses of the UK Parliament called?",
+              "options": [
+                "The Senate and the Assembly",
+                "The Lords and the Commons",
+                "The Cabinet and the Council",
+                "The Upper House and the Lower Council"
+              ],
+              "answer": "The Lords and the Commons"
+            },
+            {
+              "id": 3,
+              "question": "At what age can you vote in a UK general election?",
+              "options": ["16", "17", "18", "21"],
+              "answer": "18"
+            },
+            {
+              "id": 4,
+              "question": "What does \"democracy\" mean?",
+              "options": [
+                "A country ruled by one person with all the power",
+                "A country where the army makes all the decisions",
+                "A system where people vote to choose who runs the country",
+                "A country run by the wealthiest people"
+              ],
+              "answer": "A system where people vote to choose who runs the country"
+            },
+            {
+              "id": 5,
+              "question": "Which political party won the most recent UK general election (2024)?",
+              "options": [
+                "The Conservative Party",
+                "The Labour Party",
+                "The Liberal Democrats",
+                "The Green Party"
+              ],
+              "answer": "The Labour Party"
+            },
+            {
+              "id": 6,
+              "question": "How many countries make up the United Kingdom?",
+              "options": ["Two", "Three", "Four", "Five"],
+              "answer": "Four"
+            }
+          ]
+        },
+        {
+          "id": "world-affairs",
+          "topic": "World Affairs & International Issues",
+          "questions": [
+            {
+              "id": 7,
+              "question": "What does the term \"refugee\" mean?",
+              "options": [
+                "Someone who moves abroad to find a better-paid job",
+                "Someone who is on holiday in another country",
+                "Someone who has fled their home country because of war, danger or persecution",
+                "Someone who has been sent abroad by their employer"
+              ],
+              "answer": "Someone who has fled their home country because of war, danger or persecution"
+            },
+            {
+              "id": 8,
+              "question": "Russia invaded which neighbouring country in 2022, causing a major war in Europe?",
+              "options": ["Poland", "Belarus", "Ukraine", "Moldova"],
+              "answer": "Ukraine"
+            },
+            {
+              "id": 9,
+              "question": "Which country has the largest population in the world?",
+              "options": ["China", "USA", "India", "Indonesia"],
+              "answer": "India"
+            }
+          ]
+        },
+        {
+          "id": "climate-environment",
+          "topic": "Climate & Environment",
+          "questions": [
+            {
+              "id": 10,
+              "question": "What gas, released by burning oil, coal and gas, is most responsible for global warming?",
+              "options": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+              "answer": "Carbon dioxide"
+            },
+            {
+              "id": 11,
+              "question": "Which of the following is a renewable energy source?",
+              "options": ["Coal", "Natural gas", "Wind power", "Petrol"],
+              "answer": "Wind power"
+            },
+            {
+              "id": 12,
+              "question": "What is deforestation?",
+              "options": [
+                "Planting new trees in cities",
+                "Cutting down large areas of forest, often for farming or building",
+                "A disease that kills trees",
+                "A method of protecting forests from fire"
+              ],
+              "answer": "Cutting down large areas of forest, often for farming or building"
+            }
+          ]
+        },
+        {
+          "id": "ai-technology-mcq",
+          "topic": "AI & Technology",
+          "questions": [
+            {
+              "id": 13,
+              "question": "What does \"AI\" stand for?",
+              "options": [
+                "Automated Information",
+                "Artificial Intelligence",
+                "Advanced Integration",
+                "Automated Input"
+              ],
+              "answer": "Artificial Intelligence"
+            },
+            {
+              "id": 14,
+              "question": "Which of the following is the best example of AI being used in real life?",
+              "options": [
+                "A calculator doing a sum",
+                "A traffic light that changes on a timer",
+                "A streaming service recommending shows based on what you've already watched",
+                "A light bulb switching on automatically at sunset"
+              ],
+              "answer": "A streaming service recommending shows based on what you've already watched"
+            },
+            {
+              "id": 15,
+              "question": "What is \"misinformation\"?",
+              "options": [
+                "Information that is hard to understand",
+                "Information that is deliberately kept secret",
+                "False or inaccurate information that spreads quickly, often online",
+                "Information shared only between governments"
+              ],
+              "answer": "False or inaccurate information that spreads quickly, often online"
+            }
+          ]
+        },
+        {
+          "id": "human-rights-fairness",
+          "topic": "Human Rights & Fairness",
+          "questions": [
+            {
+              "id": 16,
+              "question": "Which of these is considered a basic human right?",
+              "options": [
+                "Owning a mobile phone",
+                "Attending a private school",
+                "Freedom of speech",
+                "Having a car"
+              ],
+              "answer": "Freedom of speech"
+            },
+            {
+              "id": 17,
+              "question": "Which of the following best describes what a charity does?",
+              "options": [
+                "It sells products to make as much profit as possible",
+                "It is run by the government to collect taxes",
+                "It raises money to help people, animals or causes without making a profit",
+                "It lends money to businesses"
+              ],
+              "answer": "It raises money to help people, animals or causes without making a profit"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tip": "For discussion questions, always give a reason for your answer. If the interviewer challenges you, don't immediately back down — think it through and explain your reasoning. It's fine to say \"I hadn't thought of it that way, but I still think...\" or \"That's a good point, maybe I'd change my view on that because...\""
+}

@@ -24,6 +24,15 @@ export interface InterviewType {
   tags: string[];
   icon: string; // Lucide icon name
   costCredits?: number; // Number of credits required (default 1). 0 for free/demo.
+  /**
+   * When true, this interview is run by our own server-side "interview brain"
+   * (supabase/functions/interview-brain) which drives the Anam avatar via talk() one turn at a
+   * time, instead of Anam's bundled LLM running the whole conversation from a static prompt.
+   * Pilot: maths-interview only.
+   */
+  engineDriven?: boolean;
+  /** Engine subject id for engine-driven types (matches src/interview/subjects). */
+  engineSubject?: string;
 }
 
 export const INTERVIEW_TYPES: Record<string, InterviewType> = {
@@ -79,7 +88,9 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     ],
     difficultyLevel: 2,
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning'],
-    icon: 'Calculator'
+    icon: 'Calculator',
+    engineDriven: true,
+    engineSubject: 'maths'
   },
   'verbal-interview': {
     id: 'verbal-interview',
@@ -542,4 +553,9 @@ export const getAllModernInterviewTypes = (): ModernInterviewType[] => {
 
 export const isValidInterviewType = (type: string): type is ModernInterviewType => {
   return type in INTERVIEW_TYPES_CONFIG;
+};
+
+/** Is this interview run by our own server-side interview brain (vs Anam's bundled LLM)? */
+export const isEngineDriven = (id: string): boolean => {
+  return Boolean(INTERVIEW_TYPES[id]?.engineDriven);
 };

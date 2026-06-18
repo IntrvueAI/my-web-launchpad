@@ -1,0 +1,737 @@
+[
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to RAPID.",
+    "options": [
+      "Swift",
+      "Heavy",
+      "Quiet",
+      "Narrow"
+    ],
+    "answer": "Swift",
+    "explanation": "Rapid and swift both mean fast.",
+    "id": "VR-001"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to BRAVE.",
+    "options": [
+      "Courageous",
+      "Foolish",
+      "Gentle",
+      "Honest"
+    ],
+    "answer": "Courageous",
+    "explanation": "Brave and courageous both mean showing courage.",
+    "id": "VR-002"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to ENORMOUS.",
+    "options": [
+      "Huge",
+      "Tiny",
+      "Rough",
+      "Empty"
+    ],
+    "answer": "Huge",
+    "explanation": "Enormous and huge both mean very large.",
+    "id": "VR-003"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to BEGIN.",
+    "options": [
+      "Commence",
+      "Finish",
+      "Delay",
+      "Repeat"
+    ],
+    "answer": "Commence",
+    "explanation": "Begin and commence both mean to start.",
+    "id": "VR-004"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to ANGRY.",
+    "options": [
+      "Furious",
+      "Cheerful",
+      "Weary",
+      "Curious"
+    ],
+    "answer": "Furious",
+    "explanation": "Angry and furious both describe being cross.",
+    "id": "VR-005"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to ANCIENT.",
+    "options": [
+      "Modern",
+      "Old",
+      "Fragile",
+      "Heavy"
+    ],
+    "answer": "Modern",
+    "explanation": "Ancient means very old; its opposite is modern.",
+    "id": "VR-006"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to EXPAND.",
+    "options": [
+      "Shrink",
+      "Grow",
+      "Stretch",
+      "Build"
+    ],
+    "answer": "Shrink",
+    "explanation": "Expand means to get bigger; shrink means to get smaller.",
+    "id": "VR-007"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to GENEROUS.",
+    "options": [
+      "Mean",
+      "Kind",
+      "Wealthy",
+      "Polite"
+    ],
+    "answer": "Mean",
+    "explanation": "Generous means giving freely; mean is its opposite.",
+    "id": "VR-008"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to ARRIVE.",
+    "options": [
+      "Depart",
+      "Reach",
+      "Enter",
+      "Return"
+    ],
+    "answer": "Depart",
+    "explanation": "Arrive means to reach a place; depart means to leave.",
+    "id": "VR-009"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to VICTORY.",
+    "options": [
+      "Defeat",
+      "Triumph",
+      "Battle",
+      "Prize"
+    ],
+    "answer": "Defeat",
+    "explanation": "Victory is a win; defeat is a loss.",
+    "id": "VR-010"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which word is the odd one out? rose, tulip, oak, daisy",
+    "options": [
+      "oak",
+      "rose",
+      "tulip",
+      "daisy"
+    ],
+    "answer": "oak",
+    "explanation": "Rose, tulip and daisy are flowers; an oak is a tree.",
+    "id": "VR-011"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which word is the odd one out? violin, trumpet, guitar, harp",
+    "options": [
+      "trumpet",
+      "violin",
+      "guitar",
+      "harp"
+    ],
+    "answer": "trumpet",
+    "explanation": "The others are string instruments; a trumpet is brass.",
+    "id": "VR-012"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which word is the odd one out? copper, gold, silver, plastic",
+    "options": [
+      "plastic",
+      "copper",
+      "gold",
+      "silver"
+    ],
+    "answer": "plastic",
+    "explanation": "Copper, gold and silver are metals; plastic is not.",
+    "id": "VR-013"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which word is the odd one out? square, circle, triangle, cube",
+    "options": [
+      "cube",
+      "square",
+      "circle",
+      "triangle"
+    ],
+    "answer": "cube",
+    "explanation": "The others are 2D shapes; a cube is 3D.",
+    "id": "VR-014"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Analogies",
+    "difficulty": "Standard",
+    "question": "Cat is to kitten as dog is to ____.",
+    "options": [
+      "puppy",
+      "bone",
+      "bark",
+      "kennel"
+    ],
+    "answer": "puppy",
+    "explanation": "A young cat is a kitten; a young dog is a puppy.",
+    "id": "VR-015"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Analogies",
+    "difficulty": "Standard",
+    "question": "Finger is to hand as toe is to ____.",
+    "options": [
+      "foot",
+      "leg",
+      "shoe",
+      "arm"
+    ],
+    "answer": "foot",
+    "explanation": "Fingers are part of a hand; toes are part of a foot.",
+    "id": "VR-016"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Analogies",
+    "difficulty": "Standard",
+    "question": "Author is to book as composer is to ____.",
+    "options": [
+      "symphony",
+      "piano",
+      "stage",
+      "concert"
+    ],
+    "answer": "symphony",
+    "explanation": "An author creates a book; a composer creates a symphony (music).",
+    "id": "VR-017"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Analogies",
+    "difficulty": "Standard",
+    "question": "Hot is to cold as up is to ____.",
+    "options": [
+      "down",
+      "high",
+      "top",
+      "over"
+    ],
+    "answer": "down",
+    "explanation": "Hot and cold are opposites; the opposite of up is down.",
+    "id": "VR-018"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Analogies",
+    "difficulty": "Standard",
+    "question": "Library is to books as garage is to ____.",
+    "options": [
+      "cars",
+      "tools",
+      "petrol",
+      "roads"
+    ],
+    "answer": "cars",
+    "explanation": "A library stores books; a garage stores cars.",
+    "id": "VR-019"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Hidden word",
+    "difficulty": "Standard",
+    "question": "A four-letter word is hidden at the end of one word and the start of the next. Find it: 'She kept her CALM, ENDING the argument quietly.'",
+    "options": [
+      "MEND",
+      "CALM",
+      "ENDS",
+      "LAME"
+    ],
+    "answer": "MEND",
+    "explanation": "calM ENDing -> the letters 'mend' bridge the two words.",
+    "id": "VR-020"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Hidden word",
+    "difficulty": "Standard",
+    "question": "A four-letter animal is hidden across the word boundary. Find it: 'The clever fox entered the barn.'",
+    "options": [
+      "OXEN",
+      "FOXE",
+      "XENT",
+      "OXET"
+    ],
+    "answer": "OXEN",
+    "explanation": "Take the end of 'fox' and the start of 'entered': fOX ENtered -> OXEN.",
+    "id": "VR-021"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Hidden word",
+    "difficulty": "Standard",
+    "question": "Which word hides the colour RED (the letters r-e-d in a row)?",
+    "options": [
+      "CREDIT",
+      "BREAD",
+      "GUARD",
+      "BORED"
+    ],
+    "answer": "CREDIT",
+    "explanation": "CREDIT contains the consecutive letters c-RED-it.",
+    "id": "VR-022"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Letter sequence",
+    "difficulty": "Standard",
+    "question": "What comes next in the series: B, D, F, H, ?",
+    "options": [
+      "J",
+      "I",
+      "K",
+      "G"
+    ],
+    "answer": "J",
+    "explanation": "The letters skip one each time (B,D,F,H), so the next is J.",
+    "id": "VR-023"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Letter sequence",
+    "difficulty": "Standard",
+    "question": "What comes next: Z, X, V, T, ?",
+    "options": [
+      "R",
+      "S",
+      "U",
+      "Q"
+    ],
+    "answer": "R",
+    "explanation": "Each letter moves back two places in the alphabet; after T comes R.",
+    "id": "VR-024"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Letter sequence",
+    "difficulty": "Standard",
+    "question": "What comes next: A, C, F, J, ?",
+    "options": [
+      "O",
+      "N",
+      "M",
+      "P"
+    ],
+    "answer": "O",
+    "explanation": "The gaps increase: +2, +3, +4, then +5, so J + 5 = O.",
+    "id": "VR-025"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Codes",
+    "difficulty": "Standard",
+    "question": "If CAT is coded as DBU, how is DOG coded?",
+    "options": [
+      "EPH",
+      "CPF",
+      "EOH",
+      "DPG"
+    ],
+    "answer": "EPH",
+    "explanation": "Each letter moves forward one place: D->E, O->P, G->H.",
+    "id": "VR-026"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Codes",
+    "difficulty": "Standard",
+    "question": "If the code for MOON is 13-15-15-14 (letter positions), what is the code for ZOO?",
+    "options": [
+      "26-15-15",
+      "25-15-15",
+      "26-14-14",
+      "24-15-15"
+    ],
+    "answer": "26-15-15",
+    "explanation": "Z is the 26th letter, O is the 15th, O is the 15th.",
+    "id": "VR-027"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Codes",
+    "difficulty": "Standard",
+    "question": "In a code, FISH = GJTI (each letter +1). What does the code WPSME stand for?",
+    "options": [
+      "VORLD",
+      "VOTLD",
+      "WORLD",
+      "VORLE"
+    ],
+    "answer": "VORLD",
+    "explanation": "Reverse the rule by moving each letter back one: W->V, P->O, S->R, M->L, E->D -> VORLD.",
+    "id": "VR-028"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Compound words",
+    "difficulty": "Standard",
+    "question": "Which word goes with BUTTER to make a new word?",
+    "options": [
+      "fly",
+      "jam",
+      "milk",
+      "bread"
+    ],
+    "answer": "fly",
+    "explanation": "BUTTER + FLY = butterfly.",
+    "id": "VR-029"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Compound words",
+    "difficulty": "Standard",
+    "question": "Which word can follow SNOW to make a new word?",
+    "options": [
+      "man",
+      "rain",
+      "sun",
+      "tree"
+    ],
+    "answer": "man",
+    "explanation": "SNOW + MAN = snowman.",
+    "id": "VR-030"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Word link",
+    "difficulty": "Standard",
+    "question": "Which word fits both: a piece of furniture AND a meeting of people. ____",
+    "options": [
+      "board",
+      "chair",
+      "table",
+      "bench"
+    ],
+    "answer": "board",
+    "explanation": "A board is a flat surface (e.g. a notice board) and a board can also mean a group of people who meet, e.g. a board meeting.",
+    "id": "VR-031"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Word link",
+    "difficulty": "Standard",
+    "question": "Which word means both a part of a tree AND something a bank can have? ____",
+    "options": [
+      "branch",
+      "root",
+      "trunk",
+      "leaf"
+    ],
+    "answer": "branch",
+    "explanation": "A branch is part of a tree and also a local office of a bank.",
+    "id": "VR-032"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Logic",
+    "difficulty": "Standard",
+    "question": "Tom is taller than Sam. Sam is taller than Raj. Who is the shortest?",
+    "options": [
+      "Raj",
+      "Tom",
+      "Sam",
+      "Cannot tell"
+    ],
+    "answer": "Raj",
+    "explanation": "Order from tallest: Tom, Sam, Raj, so Raj is shortest.",
+    "id": "VR-033"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Logic",
+    "difficulty": "Standard",
+    "question": "If all bloops are red, and some red things are round, which must be true?",
+    "options": [
+      "All bloops are red",
+      "All red things are bloops",
+      "All bloops are round",
+      "Some bloops are blue"
+    ],
+    "answer": "All bloops are red",
+    "explanation": "Only the first statement is guaranteed by the information given.",
+    "id": "VR-034"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Logic",
+    "difficulty": "Standard",
+    "question": "Five children sit in a row. Mia is in the middle. Leo is on her left. Who could be at the far right end?",
+    "options": [
+      "A child other than Mia or Leo",
+      "Mia",
+      "Leo",
+      "No one"
+    ],
+    "answer": "A child other than Mia or Leo",
+    "explanation": "Mia is central and Leo is to her left, so the right end must be one of the other children.",
+    "id": "VR-035"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Days/time logic",
+    "difficulty": "Standard",
+    "question": "If today is Wednesday, what day will it be in 10 days' time?",
+    "options": [
+      "Saturday",
+      "Friday",
+      "Sunday",
+      "Monday"
+    ],
+    "answer": "Saturday",
+    "explanation": "10 days = 1 week (7) + 3 days; 3 days after Wednesday is Saturday.",
+    "id": "VR-036"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Missing letters",
+    "difficulty": "Standard",
+    "question": "Complete the word: NEC___ARY (meaning needed).",
+    "options": [
+      "ESS",
+      "ASS",
+      "ISS",
+      "OSS"
+    ],
+    "answer": "ESS",
+    "explanation": "The word is NECESSARY.",
+    "id": "VR-037"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Missing letters",
+    "difficulty": "Standard",
+    "question": "Which letter completes both words: _OUND (to make 'round') and _IND (to make 'wind')? Choose the pair.",
+    "options": [
+      "R and W",
+      "S and K",
+      "G and F",
+      "B and M"
+    ],
+    "answer": "R and W",
+    "explanation": "ROUND uses R; WIND uses W.",
+    "id": "VR-038"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Anagrams",
+    "difficulty": "Standard",
+    "question": "Which word can be made using all the letters of 'LEMON'?",
+    "options": [
+      "MELON",
+      "MONKEY",
+      "MEDAL",
+      "LIMES"
+    ],
+    "answer": "MELON",
+    "explanation": "LEMON rearranges to MELON, another fruit, using the same five letters.",
+    "id": "VR-039"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Anagrams",
+    "difficulty": "Standard",
+    "question": "Which of these is an anagram of 'LISTEN'?",
+    "options": [
+      "SILENT",
+      "TINSELS",
+      "LITNES",
+      "STOLEN"
+    ],
+    "answer": "SILENT",
+    "explanation": "LISTEN and SILENT use exactly the same six letters.",
+    "id": "VR-040"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Categories",
+    "difficulty": "Standard",
+    "question": "'Mammal' is to 'whale' as 'reptile' is to ____.",
+    "options": [
+      "crocodile",
+      "shark",
+      "frog",
+      "penguin"
+    ],
+    "answer": "crocodile",
+    "explanation": "A whale is a mammal; a crocodile is a reptile.",
+    "id": "VR-041"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Categories",
+    "difficulty": "Standard",
+    "question": "Which word belongs in the same group as APPLE, BANANA, CHERRY?",
+    "options": [
+      "grape",
+      "carrot",
+      "potato",
+      "onion"
+    ],
+    "answer": "grape",
+    "explanation": "All are fruits; a grape is also a fruit, the others are vegetables.",
+    "id": "VR-042"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Sequences (words)",
+    "difficulty": "Standard",
+    "question": "Put in order of size, smallest first, then choose the largest: ant, dog, mouse, elephant.",
+    "options": [
+      "elephant",
+      "ant",
+      "mouse",
+      "dog"
+    ],
+    "answer": "elephant",
+    "explanation": "Of the four, the elephant is the largest animal.",
+    "id": "VR-043"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to PURCHASE.",
+    "options": [
+      "Buy",
+      "Sell",
+      "Borrow",
+      "Lose"
+    ],
+    "answer": "Buy",
+    "explanation": "To purchase something means to buy it.",
+    "id": "VR-044"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Synonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most similar in meaning to REPLY.",
+    "options": [
+      "Respond",
+      "Ignore",
+      "Question",
+      "Listen"
+    ],
+    "answer": "Respond",
+    "explanation": "To reply is to respond to something.",
+    "id": "VR-045"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to TEMPORARY.",
+    "options": [
+      "Permanent",
+      "Brief",
+      "Quick",
+      "Hourly"
+    ],
+    "answer": "Permanent",
+    "explanation": "Temporary means short-lived; permanent means lasting.",
+    "id": "VR-046"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Antonyms",
+    "difficulty": "Standard",
+    "question": "Choose the word most OPPOSITE in meaning to INCREASE.",
+    "options": [
+      "Decrease",
+      "Rise",
+      "Add",
+      "Double"
+    ],
+    "answer": "Decrease",
+    "explanation": "Increase means to grow; decrease means to get smaller.",
+    "id": "VR-047"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Odd one out",
+    "difficulty": "Standard",
+    "question": "Which word is the odd one out? happy, joyful, cheerful, gloomy",
+    "options": [
+      "gloomy",
+      "happy",
+      "joyful",
+      "cheerful"
+    ],
+    "answer": "gloomy",
+    "explanation": "The others mean glad; gloomy means sad.",
+    "id": "VR-048"
+  },
+  {
+    "subject": "Verbal reasoning",
+    "topic": "Analogies",
+    "difficulty": "Standard",
+    "question": "Bird is to nest as bee is to ____.",
+    "options": [
+      "hive",
+      "honey",
+      "flower",
+      "sting"
+    ],
+    "answer": "hive",
+    "explanation": "A bird lives in a nest; a bee lives in a hive.",
+    "id": "VR-049"
+  }
+]

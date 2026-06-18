@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-SQ-X01",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "stretch",
+    "question": "Here is a sequence: 1, 4, 9, 16, and so on. What is the next number, and what is the rule?",
+    "answer": "25",
+    "explanation": "These are square numbers; the next is 5 squared, which is 25."
+  },
+  {
+    "id": "MA-SQ-X02",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "stretch",
+    "question": "The nth term of a sequence is 2n plus 1. What is the 10th term?",
+    "answer": "21",
+    "explanation": "2 times 10 is 20, plus 1 is 21."
+  }
+]

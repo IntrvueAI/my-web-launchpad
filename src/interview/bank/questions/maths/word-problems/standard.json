@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-WP-S01",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "standard",
+    "question": "A bus has 52 seats. 38 are taken, then 9 more people get on. How many seats are now empty?",
+    "answer": "5",
+    "explanation": "38 plus 9 is 47 taken; 52 minus 47 is 5 empty."
+  },
+  {
+    "id": "MA-WP-S02",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "standard",
+    "question": "What is the mean of these five numbers: 4, 8, 6, 10 and 7?",
+    "answer": "7",
+    "explanation": "They add up to 35, and 35 divided by 5 is 7."
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-RP-S01",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "standard",
+    "question": "Share 35 sweets between Amy and Ben in the ratio 3 to 4. How many does Ben get?",
+    "answer": "20",
+    "explanation": "3 plus 4 is 7 parts; 35 divided by 7 is 5 per part; Ben gets 4 times 5, which is 20."
+  },
+  {
+    "id": "MA-RP-S02",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "standard",
+    "question": "If 3 pens cost 1 pound 20, how much do 7 pens cost?",
+    "answer": "2.80",
+    "explanation": "One pen costs 1 pound 20 divided by 3, which is 40 pence; 7 times 40 pence is 2 pounds 80."
+  }
+]

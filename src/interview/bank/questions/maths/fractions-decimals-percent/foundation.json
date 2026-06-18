@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-FD-F01",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "foundation",
+    "question": "What is one half of 18?",
+    "answer": "9",
+    "explanation": "Half of 18 is 9."
+  },
+  {
+    "id": "MA-FD-F02",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "foundation",
+    "question": "What is 25 percent of 80?",
+    "answer": "20",
+    "explanation": "25 percent is one quarter, and 80 divided by 4 is 20."
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-SQ-S01",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "standard",
+    "question": "Here is a sequence: 2, 5, 8, 11, and so on. What is the next number?",
+    "answer": "14",
+    "explanation": "The pattern adds 3 each time, so 11 plus 3 is 14."
+  },
+  {
+    "id": "MA-SQ-S02",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "standard",
+    "question": "If 3 times a number, plus 4, equals 19, what is the number?",
+    "answer": "5",
+    "explanation": "3 times the number is 19 minus 4, which is 15, so the number is 15 divided by 3, which is 5."
+  }
+]

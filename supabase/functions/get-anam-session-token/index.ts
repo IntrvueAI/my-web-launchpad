@@ -104,8 +104,21 @@ if (!personaConfig || typeof personaConfig !== 'object') {
   });
 }
 
+    // Engine-driven (orchestrated) interviews are puppeteered by our interview-brain via talk().
+    // Anam's official "bring your own LLM" mode disables its built-in AI so the avatar only speaks
+    // the text we send: set llmId="CUSTOMER_CLIENT_V1" and omit any systemPrompt.
+    const engineDriven = requestBody.engineDriven === true || personaConfig.engineDriven === true;
+    delete personaConfig.engineDriven;
+    if (engineDriven) {
+      delete personaConfig.brainType;
+      personaConfig.llmId = 'CUSTOMER_CLIENT_V1';
+      delete personaConfig.systemPrompt;
+    }
+
     // Validate required persona config fields
-    const requiredFields = ['name', 'avatarId', 'voiceId', 'brainType', 'systemPrompt'];
+    const requiredFields = engineDriven
+      ? ['name', 'avatarId', 'voiceId', 'llmId']
+      : ['name', 'avatarId', 'voiceId', 'brainType', 'systemPrompt'];
 for (const field of requiredFields) {
   if (!personaConfig[field] || typeof personaConfig[field] !== 'string') {
     return new Response(JSON.stringify({ error: `Valid ${field} is required in personaConfig` }), {
@@ -118,7 +131,7 @@ for (const field of requiredFields) {
     // Sanitize system prompt length. Mini-interviews compose the shared core
     // (interview-logic.md) with a subject brief, so the final prompt runs well
     // past 10k characters — cap generously to leave headroom for that.
-if (personaConfig.systemPrompt.length > 30000) {
+if (personaConfig.systemPrompt && personaConfig.systemPrompt.length > 30000) {
   return new Response(JSON.stringify({ error: 'System prompt too long - maximum 30,000 characters allowed' }), {
     status: 400,
     headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },

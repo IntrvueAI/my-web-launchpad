@@ -1,0 +1,371 @@
+{
+  "title": "11+ Mini-Interview — Verbal Reasoning",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "x": 40,
+      "y": 40,
+      "title": "Session start",
+      "body": "Skip silence / background noise.\nWait for a clear \"ready\" before scoring."
+    },
+    {
+      "id": "persona",
+      "type": "persona",
+      "x": 40,
+      "y": 190,
+      "title": "Clara — persona & voice",
+      "body": "Warm, patient examiner for bright, articulate\ncandidates. British register. Encouraging;\nnever reveals the answer."
+    },
+    {
+      "id": "guard",
+      "type": "guard",
+      "x": 40,
+      "y": 400,
+      "title": "Guardrails",
+      "body": "One question at a time; stay on script.\nNo answer leakage. Don't hint at the link.\nOnce a question begins, steer them to finish it.\nAge-appropriate throughout."
+    },
+    {
+      "id": "greet",
+      "type": "step",
+      "x": 40,
+      "y": 660,
+      "title": "Greeting + unmarked opener",
+      "body": "Friendly hello, then a loosening question\n(\"which book are you reading at the moment?\").\nNot scored — settles nerves, reads confidence."
+    },
+    {
+      "id": "struct",
+      "type": "structure",
+      "x": 360,
+      "y": 60,
+      "title": "Mini-interview — format",
+      "body": "~20 min, one continuous session.\nDifficulty scales adaptively (see Adapt).\nReward precise word-sense, relationships and\njustified choices — not lucky guesses."
+    },
+    {
+      "id": "modefork",
+      "type": "branch",
+      "x": 360,
+      "y": 390,
+      "title": "Candidate chooses how to run it",
+      "body": "Offered after the opener.\nMode can change later (\"switch any time\")."
+    },
+    {
+      "id": "practice",
+      "type": "topic",
+      "x": 720,
+      "y": 120,
+      "title": "Topic practice — free / less rigid",
+      "body": "Pick a strand; switch strands any time.\nLow-pressure, no fixed sequence."
+    },
+    {
+      "id": "mock",
+      "type": "structure",
+      "x": 720,
+      "y": 560,
+      "title": "Full verbal mock — structured",
+      "body": "Rigid run; samples all strands.\n~6–8 items to fill ~20 min;\nlight time-check, wind down near the end."
+    },
+    {
+      "id": "s1",
+      "type": "topic",
+      "x": 1060,
+      "y": 10,
+      "title": "Vocabulary & shades of meaning",
+      "body": "Synonyms, antonyms, precise word choice;\nwords with more than one sense."
+    },
+    {
+      "id": "s2",
+      "type": "topic",
+      "x": 1060,
+      "y": 150,
+      "title": "Analogies & word relationships",
+      "body": "A is to B as C is to ? —\nname the relationship before choosing."
+    },
+    {
+      "id": "s3",
+      "type": "topic",
+      "x": 1060,
+      "y": 290,
+      "title": "Comprehension & inference",
+      "body": "Short passage read aloud; infer meaning,\ntone and implication beyond the literal."
+    },
+    {
+      "id": "s4",
+      "type": "topic",
+      "x": 1060,
+      "y": 430,
+      "title": "Letter & number codes",
+      "body": "Encode / decode; spot the rule;\nletter-shift and position patterns."
+    },
+    {
+      "id": "s5",
+      "type": "topic",
+      "x": 1060,
+      "y": 570,
+      "title": "Logic with words",
+      "body": "Deduce from statements (\"all / some / none\");\nwho-does-what from clues."
+    },
+    {
+      "id": "s6",
+      "type": "topic",
+      "x": 1060,
+      "y": 710,
+      "title": "Sentence completion / cloze",
+      "body": "Best-fit word for sense and register;\njustify why the others don't fit."
+    },
+    {
+      "id": "ask",
+      "type": "step",
+      "x": 1410,
+      "y": 120,
+      "title": "Ask question  Q(n)",
+      "body": "Read clearly, once. For passages, allow a\nre-read. Don't signal the relationship."
+    },
+    {
+      "id": "finish",
+      "type": "step",
+      "x": 1410,
+      "y": 330,
+      "title": "Hold them to the question",
+      "body": "Once started, gently insist they attempt it.\nEscape valve: after a real attempt + one nudge,\nit's fine to move on — note it, don't force a stalemate."
+    },
+    {
+      "id": "probe",
+      "type": "step",
+      "x": 1410,
+      "y": 540,
+      "title": "Probe + credit reasoning",
+      "body": "\"What's the link / why that word?\"\nCredit a sound relationship even if the final\npick is wrong. Push for the reason, not just\nthe answer."
+    },
+    {
+      "id": "judge",
+      "type": "branch",
+      "x": 1410,
+      "y": 790,
+      "title": "Evaluate response",
+      "body": "Choice + reasoning + clarity,\nagainst the watch-list →"
+    },
+    {
+      "id": "o1",
+      "type": "outcome",
+      "x": 1760,
+      "y": 470,
+      "title": "Right + names the relationship",
+      "body": "Affirm. Stretch with a subtler pair\nif time allows."
+    },
+    {
+      "id": "o2",
+      "type": "outcome",
+      "x": 1760,
+      "y": 610,
+      "title": "Right, can't say why",
+      "body": "\"What made you choose it?\" — separate\ninsight from surface similarity."
+    },
+    {
+      "id": "o3",
+      "type": "outcome",
+      "x": 1760,
+      "y": 750,
+      "title": "Wrong",
+      "body": "Don't give the answer. One nudge toward the\nrelationship → a single retry. Credit sound logic."
+    },
+    {
+      "id": "o4",
+      "type": "outcome",
+      "x": 1760,
+      "y": 890,
+      "title": "Stuck / silent",
+      "body": "Reassure; offer the relationship type as a\nfoothold. Note where it broke."
+    },
+    {
+      "id": "watch",
+      "type": "watch",
+      "x": 1060,
+      "y": 900,
+      "title": "Common mistakes to flag",
+      "body": "• Picks on surface similarity, not relationship\n• Ignores context when inferring\n• Over- or under-reads a passage\n• Vocabulary gap hidden behind a guess\n• Can't justify the choice\n• Rushes coding patterns"
+    },
+    {
+      "id": "adapt",
+      "type": "step",
+      "x": 1060,
+      "y": 1090,
+      "title": "Adapt difficulty (mock)",
+      "body": "Precise + fluent → step up.\nShaky / needed nudges → hold or ease.\nTrack running level; watch the clock."
+    },
+    {
+      "id": "score",
+      "type": "step",
+      "x": 1410,
+      "y": 1010,
+      "title": "Log evidence (silent)",
+      "body": "Relationship grasp · reasoning · clarity ·\nvocabulary range. No scores read aloud."
+    },
+    {
+      "id": "wrap",
+      "type": "step",
+      "x": 1760,
+      "y": 1190,
+      "title": "Encouraging wrap-up",
+      "body": "Thank them; one genuine positive.\nWarm, age-appropriate close."
+    },
+    {
+      "id": "report",
+      "type": "end",
+      "x": 1760,
+      "y": 1350,
+      "title": "Score → Rubric S2 / 5",
+      "body": "Reasoning & Intellectual Agility, out of 5\n(see maths anchors).\nSecondary read → S1 Expression\n(fluency, clarity of explanation)."
+    }
+  ],
+  "edges": [
+    {
+      "f": "start",
+      "t": "persona"
+    },
+    {
+      "f": "persona",
+      "t": "guard"
+    },
+    {
+      "f": "guard",
+      "t": "greet"
+    },
+    {
+      "f": "greet",
+      "t": "struct"
+    },
+    {
+      "f": "struct",
+      "t": "modefork"
+    },
+    {
+      "f": "modefork",
+      "t": "practice",
+      "l": "topic practice"
+    },
+    {
+      "f": "modefork",
+      "t": "mock",
+      "l": "full mock"
+    },
+    {
+      "f": "practice",
+      "t": "s1"
+    },
+    {
+      "f": "practice",
+      "t": "s2"
+    },
+    {
+      "f": "practice",
+      "t": "s3"
+    },
+    {
+      "f": "practice",
+      "t": "s4"
+    },
+    {
+      "f": "practice",
+      "t": "s5"
+    },
+    {
+      "f": "practice",
+      "t": "s6"
+    },
+    {
+      "f": "practice",
+      "t": "mock",
+      "l": "switch any time"
+    },
+    {
+      "f": "practice",
+      "t": "ask",
+      "l": "from chosen strand"
+    },
+    {
+      "f": "mock",
+      "t": "ask",
+      "l": "begin · all strands"
+    },
+    {
+      "f": "ask",
+      "t": "finish"
+    },
+    {
+      "f": "finish",
+      "t": "probe"
+    },
+    {
+      "f": "probe",
+      "t": "judge"
+    },
+    {
+      "f": "judge",
+      "t": "o1",
+      "l": "names link"
+    },
+    {
+      "f": "judge",
+      "t": "o2",
+      "l": "no reason"
+    },
+    {
+      "f": "judge",
+      "t": "o3",
+      "l": "wrong"
+    },
+    {
+      "f": "judge",
+      "t": "o4",
+      "l": "stuck"
+    },
+    {
+      "f": "watch",
+      "t": "judge",
+      "l": "checks for"
+    },
+    {
+      "f": "o1",
+      "t": "score"
+    },
+    {
+      "f": "o2",
+      "t": "score",
+      "l": "explains"
+    },
+    {
+      "f": "o3",
+      "t": "score",
+      "l": "after retry"
+    },
+    {
+      "f": "o4",
+      "t": "score"
+    },
+    {
+      "f": "score",
+      "t": "adapt",
+      "l": "mock: next Q"
+    },
+    {
+      "f": "adapt",
+      "t": "ask",
+      "l": "adaptive"
+    },
+    {
+      "f": "score",
+      "t": "practice",
+      "l": "free: pick / switch"
+    },
+    {
+      "f": "score",
+      "t": "wrap",
+      "l": "time up / final"
+    },
+    {
+      "f": "wrap",
+      "t": "report"
+    }
+  ]
+}

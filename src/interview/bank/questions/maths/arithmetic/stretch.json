@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-AR-X01",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "stretch",
+    "question": "What is 17 times 23?",
+    "answer": "391",
+    "explanation": "17 times 20 is 340, and 17 times 3 is 51; 340 plus 51 is 391."
+  },
+  {
+    "id": "MA-AR-X02",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "stretch",
+    "question": "Using order of operations, what is 6 plus 2 times 5?",
+    "answer": "16",
+    "explanation": "Multiply first: 2 times 5 is 10, then add 6 to get 16."
+  }
+]

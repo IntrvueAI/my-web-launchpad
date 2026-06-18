@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-GM-S01",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "standard",
+    "question": "What is the area of a rectangle that is 7 centimetres long and 5 centimetres wide?",
+    "answer": "35",
+    "explanation": "Area is length times width: 7 times 5 is 35 square centimetres."
+  },
+  {
+    "id": "MA-GM-S02",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "standard",
+    "question": "How many minutes are there between quarter past three and ten to four?",
+    "answer": "35",
+    "explanation": "From 3:15 to 3:50 is 35 minutes."
+  }
+]

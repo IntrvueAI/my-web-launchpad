@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-FD-S01",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "standard",
+    "question": "What is three quarters of 60?",
+    "answer": "45",
+    "explanation": "60 divided by 4 is 15, then 15 times 3 is 45."
+  },
+  {
+    "id": "MA-FD-S02",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "standard",
+    "question": "Write 0.6 as a fraction in its simplest form.",
+    "answer": "3/5",
+    "explanation": "0.6 is six tenths, which simplifies to three fifths."
+  }
+]

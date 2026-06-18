@@ -2,7 +2,14 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { Play, Square, Loader2 } from 'lucide-react';
+import { Play, Square, Loader2, SkipForward } from 'lucide-react';
+
+/** A topic option for the engine-driven practice-mode switcher. */
+export interface TopicOption {
+  id: string;
+  label: string;
+}
+
 interface InterviewControlsProps {
   isStreaming: boolean;
   onStartInterview: () => Promise<void>;
@@ -10,6 +17,11 @@ interface InterviewControlsProps {
   disabled?: boolean;
   highlightEnd?: boolean;
   endHint?: string;
+  /** Engine-driven only: show a Skip button that records the skip in the evidence log. */
+  onSkipQuestion?: () => Promise<void>;
+  /** Engine-driven practice mode only: offer mid-run topic switching. */
+  topics?: TopicOption[];
+  onSwitchTopic?: (topicId: string) => Promise<void>;
 }
 
 /**
@@ -22,9 +34,23 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
   onStopInterview,
   disabled = false,
   highlightEnd = false,
-  endHint = 'Interview seems complete. Tap "End Interview" to generate feedback.'
+  endHint = 'Interview seems complete. Tap "End Interview" to generate feedback.',
+  onSkipQuestion,
+  topics,
+  onSwitchTopic,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isSkipping, setIsSkipping] = React.useState(false);
+
+  const handleSkip = async () => {
+    if (!onSkipQuestion) return;
+    setIsSkipping(true);
+    try {
+      await onSkipQuestion();
+    } finally {
+      setIsSkipping(false);
+    }
+  };
 
   // Handle start interview with loading state
   const handleStart = async () => {
@@ -108,6 +134,39 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
               </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
+        )}
+
+        {/* Engine-driven: skip the current question (recorded for the review). */}
+        {isStreaming && onSkipQuestion && (
+          <Button
+            onClick={handleSkip}
+            disabled={isSkipping}
+            variant="outline"
+            className="w-full gap-2 min-h-[44px]"
+          >
+            {isSkipping ? <Loader2 className="w-4 h-4 animate-spin" /> : <SkipForward className="w-4 h-4" />}
+            <span>Skip this question</span>
+          </Button>
+        )}
+
+        {/* Engine-driven practice mode: switch topic mid-run. */}
+        {isStreaming && topics && topics.length > 0 && onSwitchTopic && (
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground text-center">Switch topic</p>
+            <div className="flex flex-wrap justify-center gap-1.5">
+              {topics.map((t) => (
+                <Button
+                  key={t.id}
+                  size="sm"
+                  variant="secondary"
+                  className="text-xs"
+                  onClick={() => onSwitchTopic(t.id)}
+                >
+                  {t.label}
+                </Button>
+              ))}
+            </div>
+          </div>
         )}
 
         {isStreaming && highlightEnd && (

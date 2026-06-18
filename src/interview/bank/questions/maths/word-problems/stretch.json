@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-WP-X01",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "stretch",
+    "question": "A shop sells pens at 3 for 90 pence. Sam has 3 pounds. How many pens can he buy?",
+    "answer": "10",
+    "explanation": "90 pence buys 3 pens, so 30 pence per pen; 300 pence divided by 30 is 10 pens."
+  },
+  {
+    "id": "MA-WP-X02",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "stretch",
+    "question": "Tom is twice as old as Sam. Together they are 18. How old is Tom?",
+    "answer": "12",
+    "explanation": "Their ages are in the ratio 2 to 1, so 3 parts make 18, each part is 6; Tom is 2 parts, which is 12."
+  }
+]

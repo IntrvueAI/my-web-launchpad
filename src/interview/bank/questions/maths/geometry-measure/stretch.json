@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-GM-X01",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "stretch",
+    "question": "Two angles on a straight line; one is 110 degrees. What is the other?",
+    "answer": "70",
+    "explanation": "Angles on a straight line add up to 180, so the other is 180 minus 110, which is 70 degrees."
+  },
+  {
+    "id": "MA-GM-X02",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "stretch",
+    "question": "What is the area of a triangle with base 8 centimetres and height 5 centimetres?",
+    "answer": "20",
+    "explanation": "Area is half base times height: a half of 8 times 5 is 20 square centimetres."
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-FD-X01",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "stretch",
+    "question": "A coat costs 80 pounds and is reduced by 15 percent in a sale. What is the new price?",
+    "answer": "68",
+    "explanation": "15 percent of 80 is 12, so the new price is 80 minus 12, which is 68 pounds."
+  },
+  {
+    "id": "MA-FD-X02",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "stretch",
+    "question": "What is two thirds of three quarters?",
+    "answer": "1/2",
+    "explanation": "Multiply the fractions: two thirds times three quarters is six twelfths, which is one half."
+  }
+]

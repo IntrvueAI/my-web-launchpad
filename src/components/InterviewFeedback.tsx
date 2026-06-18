@@ -82,6 +82,18 @@ interface InterviewFeedbackProps {
     }>;
     // Overall improvement feedback
     overall_improvement_feedback?: string;
+    // Per-question review (engine-driven interviews) — what was asked, answered, or skipped.
+    questions_review?: Array<{
+      index: number;
+      topic: string;
+      difficulty?: string;
+      question: string;
+      asked: boolean;
+      skipped: boolean;
+      outcome: string;
+      your_answer?: string;
+      note?: string;
+    }>;
   };
   isLoading?: boolean;
   interviewType?: string;
@@ -403,6 +415,54 @@ export const InterviewFeedback = ({
           );
         })}
       </div>
+
+      {/* Per-question review (engine-driven interviews) */}
+      {Array.isArray(feedback.questions_review) && feedback.questions_review.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Questions</CardTitle>
+            <CardDescription>
+              Every question you were asked, what you said, and the ones you skipped.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {feedback.questions_review
+              .slice()
+              .sort((a, b) => a.index - b.index)
+              .map((q) => {
+                const outcomeMeta: Record<string, { label: string; cls: string }> = {
+                  correct_method: { label: 'Correct, with method', cls: 'bg-emerald-500' },
+                  correct_no_method: { label: 'Correct, method unclear', cls: 'bg-green-500' },
+                  incorrect: { label: 'Not quite', cls: 'bg-red-500' },
+                  stuck: { label: 'Got stuck', cls: 'bg-yellow-500' },
+                  skipped: { label: 'Skipped', cls: 'bg-muted-foreground' },
+                };
+                const meta = q.skipped
+                  ? outcomeMeta.skipped
+                  : outcomeMeta[q.outcome] || { label: q.outcome, cls: 'bg-blue-500' };
+                return (
+                  <div
+                    key={q.index}
+                    className={`rounded-lg border p-3 ${q.skipped ? 'border-dashed opacity-80' : ''}`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm font-medium">
+                        <span className="text-muted-foreground">Q{q.index}.</span> {q.question}
+                      </p>
+                      <Badge className={`${meta.cls} text-white shrink-0`}>{meta.label}</Badge>
+                    </div>
+                    {!q.skipped && q.your_answer && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        <span className="font-medium">You said:</span> {q.your_answer}
+                      </p>
+                    )}
+                    {q.note && <p className="text-xs text-muted-foreground mt-1 italic">{q.note}</p>}
+                  </div>
+                );
+              })}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Annotated Transcript - Now using the enhanced component */}
       {feedback.transcription && (

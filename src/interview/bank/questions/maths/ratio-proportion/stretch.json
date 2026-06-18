@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MA-RP-X01",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "stretch",
+    "question": "A recipe for 4 people needs 200 grams of flour. How much flour is needed for 10 people?",
+    "answer": "500",
+    "explanation": "200 divided by 4 is 50 grams per person; 50 times 10 is 500 grams."
+  },
+  {
+    "id": "MA-RP-X02",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "stretch",
+    "question": "Red and blue counters are in the ratio 2 to 5. There are 14 red counters. How many blue counters are there?",
+    "answer": "35",
+    "explanation": "14 red is 7 times the 2, so each part is 7; blue is 5 times 7, which is 35."
+  }
+]

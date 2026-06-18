@@ -1,0 +1,389 @@
+{
+  "title": "11+ Mini-Interview — Logic",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "x": 40,
+      "y": 40,
+      "title": "Session start",
+      "body": "Skip silence / background noise.\nWait for a clear \"ready\" before scoring."
+    },
+    {
+      "id": "persona",
+      "type": "persona",
+      "x": 40,
+      "y": 190,
+      "title": "Clara — persona & voice",
+      "body": "Warm, patient examiner for bright, articulate\ncandidates. British register. Encouraging;\nnever reveals the answer."
+    },
+    {
+      "id": "guard",
+      "type": "guard",
+      "x": 40,
+      "y": 400,
+      "title": "Guardrails",
+      "body": "One puzzle at a time; stay on script.\nNo answer leakage; don't signal the route.\nOnce a puzzle begins, steer them to finish it.\nAge-appropriate throughout."
+    },
+    {
+      "id": "greet",
+      "type": "step",
+      "x": 40,
+      "y": 660,
+      "title": "Greeting + unmarked opener",
+      "body": "Friendly hello, then a loosening question\n(\"do you like puzzles or brain-teasers?\").\nNot scored — settles nerves, reads confidence."
+    },
+    {
+      "id": "struct",
+      "type": "structure",
+      "x": 360,
+      "y": 60,
+      "title": "Mini-interview — format",
+      "body": "~20 min, one continuous session.\nDifficulty scales adaptively (see Adapt).\nReward how they think, not just the answer —\nespecially on open-ended teasers."
+    },
+    {
+      "id": "modefork",
+      "type": "branch",
+      "x": 360,
+      "y": 390,
+      "title": "Candidate chooses how to run it",
+      "body": "Offered after the opener.\nMode can change later (\"switch any time\")."
+    },
+    {
+      "id": "practice",
+      "type": "topic",
+      "x": 720,
+      "y": 120,
+      "title": "Topic practice — free / less rigid",
+      "body": "Pick a puzzle type; switch any time.\nLow-pressure, no fixed sequence."
+    },
+    {
+      "id": "mock",
+      "type": "structure",
+      "x": 720,
+      "y": 560,
+      "title": "Full logic mock — structured",
+      "body": "Rigid run; samples all puzzle types.\n~6–8 puzzles to fill ~20 min;\nlight time-check, wind down near the end."
+    },
+    {
+      "id": "s1",
+      "type": "topic",
+      "x": 1060,
+      "y": 10,
+      "title": "Deductive puzzles",
+      "body": "If/then chains; grid logic;\nwho-owns-what from a set of clues."
+    },
+    {
+      "id": "s2",
+      "type": "topic",
+      "x": 1060,
+      "y": 150,
+      "title": "Sequences & patterns",
+      "body": "Continue the pattern; find and state the rule\n(numbers, shapes, symbols)."
+    },
+    {
+      "id": "s3",
+      "type": "topic",
+      "x": 1060,
+      "y": 290,
+      "title": "Spatial / non-verbal",
+      "body": "Nets & cubes, rotations, reflections,\nodd-one-out."
+    },
+    {
+      "id": "s4",
+      "type": "topic",
+      "x": 1060,
+      "y": 430,
+      "title": "Lateral thinking / teasers",
+      "body": "Open problems with no single answer —\nthe point is the reasoning."
+    },
+    {
+      "id": "s5",
+      "type": "topic",
+      "x": 1060,
+      "y": 570,
+      "title": "Conditional & set reasoning",
+      "body": "\"all / some / none\"; overlapping groups;\nwhat must / might / can't be true."
+    },
+    {
+      "id": "s6",
+      "type": "topic",
+      "x": 1060,
+      "y": 710,
+      "title": "Working backwards",
+      "body": "Start from the result and undo each step\nto recover the start."
+    },
+    {
+      "id": "ask",
+      "type": "step",
+      "x": 1410,
+      "y": 120,
+      "title": "Pose puzzle  Q(n)",
+      "body": "State it clearly, once. Offer working space.\nDon't signal the intended route."
+    },
+    {
+      "id": "finish",
+      "type": "step",
+      "x": 1410,
+      "y": 330,
+      "title": "Hold them to the puzzle",
+      "body": "Once started, gently insist they attempt it.\nEscape valve: after a real attempt + one clue,\nit's fine to move on — note it, don't force a stalemate."
+    },
+    {
+      "id": "probe",
+      "type": "step",
+      "x": 1410,
+      "y": 540,
+      "title": "Probe + credit the thinking",
+      "body": "\"Talk me through your thinking.\"\nOn teasers, value the process over the answer.\nCredit testing ideas and checking the clues."
+    },
+    {
+      "id": "judge",
+      "type": "branch",
+      "x": 1410,
+      "y": 790,
+      "title": "Evaluate reasoning",
+      "body": "Logic + checking + clarity,\nagainst the watch-list →"
+    },
+    {
+      "id": "o1",
+      "type": "outcome",
+      "x": 1760,
+      "y": 470,
+      "title": "Solid answer + clear reasoning",
+      "body": "Affirm. Stretch with a harder variant\nif time allows."
+    },
+    {
+      "id": "o2",
+      "type": "outcome",
+      "x": 1760,
+      "y": 610,
+      "title": "Sound reasoning, not the intended answer",
+      "body": "Credit the thinking — on open teasers this can\nbe a full pass. Explore their route."
+    },
+    {
+      "id": "o3",
+      "type": "outcome",
+      "x": 1760,
+      "y": 750,
+      "title": "Flawed / incorrect reasoning",
+      "body": "Don't give the answer. Point at the unused\nclue → a single retry. Credit sound steps."
+    },
+    {
+      "id": "o4",
+      "type": "outcome",
+      "x": 1760,
+      "y": 890,
+      "title": "Stuck / silent",
+      "body": "Reassure; hand them one clue to start from.\nNote where it broke."
+    },
+    {
+      "id": "o5",
+      "type": "outcome",
+      "x": 1760,
+      "y": 1030,
+      "title": "Guesses without testing",
+      "body": "Push back gently: \"how could you check that?\"\nReward self-correction."
+    },
+    {
+      "id": "watch",
+      "type": "watch",
+      "x": 1060,
+      "y": 900,
+      "title": "Common mistakes to flag",
+      "body": "• Jumps to an answer without testing it\n• Doesn't check against all the clues\n• Pattern-matches on the surface\n• Gives up at the first dead end\n• Can't state the rule they used\n• Ignores a constraint"
+    },
+    {
+      "id": "adapt",
+      "type": "step",
+      "x": 1060,
+      "y": 1090,
+      "title": "Adapt difficulty (mock)",
+      "body": "Sound + self-checking → step up.\nFlailing / needed clues → hold or ease.\nTrack running level; watch the clock."
+    },
+    {
+      "id": "score",
+      "type": "step",
+      "x": 1410,
+      "y": 1010,
+      "title": "Log evidence (silent)",
+      "body": "Logical soundness · checking · resilience ·\nclarity. No scores read aloud."
+    },
+    {
+      "id": "wrap",
+      "type": "step",
+      "x": 1760,
+      "y": 1190,
+      "title": "Encouraging wrap-up",
+      "body": "Thank them; one genuine positive.\nWarm, age-appropriate close."
+    },
+    {
+      "id": "report",
+      "type": "end",
+      "x": 1760,
+      "y": 1350,
+      "title": "Score → Rubric S2 / 5",
+      "body": "Reasoning & Intellectual Agility, out of 5\n(see maths anchors). Credit reasoning quality\neven where there is no single right answer."
+    }
+  ],
+  "edges": [
+    {
+      "f": "start",
+      "t": "persona"
+    },
+    {
+      "f": "persona",
+      "t": "guard"
+    },
+    {
+      "f": "guard",
+      "t": "greet"
+    },
+    {
+      "f": "greet",
+      "t": "struct"
+    },
+    {
+      "f": "struct",
+      "t": "modefork"
+    },
+    {
+      "f": "modefork",
+      "t": "practice",
+      "l": "topic practice"
+    },
+    {
+      "f": "modefork",
+      "t": "mock",
+      "l": "full mock"
+    },
+    {
+      "f": "practice",
+      "t": "s1"
+    },
+    {
+      "f": "practice",
+      "t": "s2"
+    },
+    {
+      "f": "practice",
+      "t": "s3"
+    },
+    {
+      "f": "practice",
+      "t": "s4"
+    },
+    {
+      "f": "practice",
+      "t": "s5"
+    },
+    {
+      "f": "practice",
+      "t": "s6"
+    },
+    {
+      "f": "practice",
+      "t": "mock",
+      "l": "switch any time"
+    },
+    {
+      "f": "practice",
+      "t": "ask",
+      "l": "from chosen puzzle type"
+    },
+    {
+      "f": "mock",
+      "t": "ask",
+      "l": "begin · all puzzle types"
+    },
+    {
+      "f": "ask",
+      "t": "finish"
+    },
+    {
+      "f": "finish",
+      "t": "probe"
+    },
+    {
+      "f": "probe",
+      "t": "judge"
+    },
+    {
+      "f": "judge",
+      "t": "o1",
+      "l": "sound"
+    },
+    {
+      "f": "judge",
+      "t": "o2",
+      "l": "good alt"
+    },
+    {
+      "f": "judge",
+      "t": "o3",
+      "l": "flawed"
+    },
+    {
+      "f": "judge",
+      "t": "o4",
+      "l": "stuck"
+    },
+    {
+      "f": "watch",
+      "t": "judge",
+      "l": "checks for"
+    },
+    {
+      "f": "o1",
+      "t": "score"
+    },
+    {
+      "f": "o2",
+      "t": "score",
+      "l": "explains"
+    },
+    {
+      "f": "o3",
+      "t": "score",
+      "l": "after retry"
+    },
+    {
+      "f": "o4",
+      "t": "score"
+    },
+    {
+      "f": "score",
+      "t": "adapt",
+      "l": "mock: next Q"
+    },
+    {
+      "f": "adapt",
+      "t": "ask",
+      "l": "adaptive"
+    },
+    {
+      "f": "score",
+      "t": "practice",
+      "l": "free: pick / switch"
+    },
+    {
+      "f": "score",
+      "t": "wrap",
+      "l": "time up / final"
+    },
+    {
+      "f": "wrap",
+      "t": "report"
+    },
+    {
+      "f": "judge",
+      "t": "o5",
+      "l": "untested"
+    },
+    {
+      "f": "o5",
+      "t": "score",
+      "l": "self-corrects"
+    }
+  ]
+}
