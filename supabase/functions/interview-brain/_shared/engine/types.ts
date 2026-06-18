@@ -24,18 +24,55 @@ export type Outcome =
   | 'stuck'            // o4: stuck / silent
   | 'skipped';         // student chose to skip (recorded, not scored as wrong)
 
-/** A single bank question. Answers live server-side and are never sent to the avatar. */
+/** Reasoning-band rubric for a question (the gold standard Clara scores the transcript against). */
+export interface QuestionRubric {
+  strong: string;        // what strong reasoning looks like
+  developing: string;    // partial / prompted reasoning
+  weak: string;          // little or no reasoning
+  finalAnswerNote?: string; // note about the final answer (e.g. "accept 2.8 or £2.80")
+}
+
+/** A specific wrong turn to watch for, and what it reveals about the student's thinking. */
+export interface CommonMistake {
+  mistake: string;
+  reveals: string;
+}
+
+/** An interviewer follow-up line, with what a good response to it sounds like. */
+export interface LiveProbe {
+  probe: string;
+  goodResponse: string;
+}
+
+/**
+ * A single bank question. The first six fields are the minimum; the rich fields below let you
+ * author the full 6-part tutoring spec (model reasoning, rubric, mistakes, probes, hint ladder)
+ * that Clara uses to probe, hint, and score. All rich fields are OPTIONAL — a question with just
+ * question+answer still works. Answers and guidance live server-side and never reach the client.
+ */
 export interface BankQuestion {
   id: string;
   subject: string;
-  topic: string;          // strand id, e.g. 'arithmetic'
-  difficulty: Difficulty;
-  question: string;       // spoken aloud, plain text
-  answer: string;         // server-side only — NEVER serialised into a `talk()` line
-  /** Optional worked method/explanation, used by the judge, never spoken verbatim. */
+  topic: string;          // strand id, e.g. 'arithmetic' — MUST match the bank folder
+  difficulty: Difficulty; // MUST match the file it's in
+  question: string;       // 1. read verbatim, exactly as written
+  answer: string;         // the final answer (server-side only — NEVER spoken)
+  /** Optional short worked method (legacy field; superseded by modelReasoningPath). */
   explanation?: string;
   /** Optional MCQ options (kept for the shared minigame bank; ignored in the spoken interview). */
   options?: string[];
+
+  // ---- Rich 6-part tutoring spec (all optional) ----
+  /** 2. Model reasoning path — a top candidate's thinking, narrated step by step (a process). */
+  modelReasoningPath?: string;
+  /** 3. Scoring rubric — Strong / Developing / Weak reasoning bands + a final-answer note. */
+  rubric?: QuestionRubric;
+  /** 4. Common mistakes — the specific wrong turns to watch for and what each reveals. */
+  commonMistakes?: CommonMistake[];
+  /** 5. Live probes — exact follow-up lines to use mid-conversation, and what good looks like. */
+  liveProbes?: LiveProbe[];
+  /** 6. Hints if stuck — a three-step ladder, gentle nudge → near-reveal (used in order). */
+  hints?: string[];
 }
 
 /**
@@ -54,6 +91,8 @@ export interface Evidence {
   studentAnswer: string;  // best capture of what they said (may be empty if skipped/stuck)
   /** Coarse method-quality read used for scoring: did they show sound working? */
   methodQuality: 'sound' | 'partial' | 'none' | 'unknown';
+  /** Reasoning band from the question's rubric, when one was authored. */
+  band?: 'strong' | 'developing' | 'weak';
   notes: string;          // short interviewer-side note ("misread the question", etc.)
 }
 

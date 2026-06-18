@@ -130,6 +130,7 @@ const TOOLS = [
             description: 'How the student did on the problem currently on the table.',
           },
           method_quality: { type: 'string', enum: ['sound', 'partial', 'none', 'unknown'] },
+          band: { type: 'string', enum: ['strong', 'developing', 'weak'], description: 'Reasoning band from the rubric, if one was provided.' },
           note: { type: 'string', description: 'One short note on what they did or where they slipped.' },
         },
         required: [],
@@ -158,6 +159,37 @@ function topicLabel(pack: SubjectPack, id?: string): string {
   return pack.topics.find((t) => t.id === id)?.label ?? 'a new topic';
 }
 
+/**
+ * Render the current problem + any authored 6-part guidance into the system prompt, so Clara
+ * probes, hints, and scores from the bank content rather than improvising. All parts are optional.
+ */
+function renderCurrentProblem(q: BankQuestion | null): string {
+  if (!q) return 'No problem is on the table yet.';
+  const out: string[] = [
+    `The problem currently on the table (read it verbatim): "${q.question}"`,
+    `Its final answer is PRIVATE — never say it: ${q.answer}${q.rubric?.finalAnswerNote ? ` (${q.rubric.finalAnswerNote})` : ''}.`,
+  ];
+  if (q.modelReasoningPath) out.push(`How a strong candidate thinks it through (your gold standard, do not read aloud): ${q.modelReasoningPath}`);
+  if (q.rubric) {
+    out.push(
+      `Score their reasoning against this rubric — Strong: ${q.rubric.strong} · Developing: ${q.rubric.developing} · Weak: ${q.rubric.weak}.`,
+    );
+  }
+  if (q.commonMistakes?.length) {
+    out.push('Watch for these mistakes: ' + q.commonMistakes.map((m) => `${m.mistake} (reveals: ${m.reveals})`).join('; ') + '.');
+  }
+  if (q.liveProbes?.length) {
+    out.push('Use these follow-up probes when useful (one at a time): ' + q.liveProbes.map((p) => `"${p.probe}"`).join(' / ') + '.');
+  }
+  if (q.hints?.length) {
+    out.push(
+      'If they are genuinely stuck, use THIS hint ladder in order, one short hint per turn (never skip to the last one): ' +
+        q.hints.map((h, i) => `(${i + 1}) ${h}`).join(' '),
+    );
+  }
+  return out.join('\n');
+}
+
 /** The system prompt is where the tutoring quality lives — persona + voice + how to run the session. */
 export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string {
   const mock = state.mode === 'mock';
@@ -184,7 +216,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     '- To get each problem, call the tool next_problem. It returns the problem text and its answer. The answer is for YOUR eyes only — NEVER say it, spell it out, or confirm/deny their guess by stating it. Read the problem clearly, once; repeat it verbatim if asked, but do not rephrase the maths.',
     '- Ask ONE problem at a time, then listen. Encourage them to think out loud and explain their method. Praise the method, not just the answer.',
     '- If they are stuck or wrong, behave like a real tutor — never hand over the answer. Help them in SMALL steps, ONE short nudge per turn (do not list all the steps at once). First check they understood the question; next time name the method or strategy (for example: line the numbers up in columns and subtract from the units, borrowing when needed; the bus stop method for division; finding a quarter of an amount); and if they are still stuck, walk them through just the first step and ask them to take the next. Give as many genuine, escalating hints as they need — but always just one short nudge at a time, and never give up on them.',
-    '- Move on only once they have made a real attempt, or you have genuinely helped them work it through. When you move on, call next_problem and pass your honest judgement of the problem they just finished (outcome, method_quality, a short note) so it is recorded for their feedback.',
+    '- Move on only once they have made a real attempt, or you have genuinely helped them work it through. When you move on, call next_problem and pass your honest judgement of the problem they just finished (outcome, method_quality, the rubric band if one was given, and a short note) so it is recorded for their feedback.',
     mock
       ? `- Aim for about ${state.targetQuestions} problems in total, then give a warm closing and call finish_interview. If next_problem tells you there are no more problems, wrap up.`
       : '- Keep going on the chosen topic. The student may switch topics or end whenever they like.',
@@ -193,23 +225,23 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     '- To finish: thank them warmly, give one genuine, specific positive, and tell them to end the interview to see their feedback, then call finish_interview.',
     '',
     `Progress so far: ${state.questionIndex} problem(s) done${mock ? ` of about ${state.targetQuestions}` : ''}. Current difficulty: ${state.difficulty}.`,
-    state.current
-      ? `The problem currently on the table is: "${state.current.question}" — its answer, PRIVATE, is: ${state.current.answer}.`
-      : 'No problem is on the table yet.',
+    renderCurrentProblem(state.current),
   ];
   return lines.filter((l) => l !== '').join('\n');
 }
 
-function logEvidence(state: AgentState, args: { outcome?: string; method_quality?: string; note?: string }) {
+function logEvidence(state: AgentState, args: { outcome?: string; method_quality?: string; band?: string; note?: string }) {
   if (!state.current) return;
   const outcome = (VALID_OUTCOMES.has(args.outcome as Outcome) ? args.outcome : 'stuck') as Outcome;
   const methodQuality = (['sound', 'partial', 'none', 'unknown'].includes(args.method_quality as string)
     ? args.method_quality
     : 'unknown') as Evidence['methodQuality'];
+  const band = (['strong', 'developing', 'weak'].includes(args.band as string) ? args.band : undefined) as Evidence['band'];
   state.evidence.push(
     makeEvidence(state.evidence.length + 1, state.current, state.currentStudentTurns.join(' ').trim(), 0, {
       outcome,
       methodQuality,
+      band,
       notes: args.note || '',
     }),
   );
@@ -248,7 +280,20 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
   state.current = q;
   state.askedIds.push(q.id);
   state.currentStudentTurns = [];
-  return { number: state.evidence.length + 1, topic: q.topic, difficulty: q.difficulty, question: q.question, answer: q.answer };
+  // Full guidance also lives in the system prompt next turn; we return it here so the model can
+  // ask + handle the question well on this same turn.
+  return {
+    number: state.evidence.length + 1,
+    topic: q.topic,
+    difficulty: q.difficulty,
+    question: q.question,
+    answer: q.answer,
+    model_reasoning_path: q.modelReasoningPath,
+    rubric: q.rubric,
+    common_mistakes: q.commonMistakes,
+    live_probes: q.liveProbes,
+    hints: q.hints,
+  };
 }
 
 /** The note we inject as a "user" turn so the model knows about non-spoken events (skip, start, etc.). */

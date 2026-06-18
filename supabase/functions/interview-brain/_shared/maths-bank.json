@@ -24,7 +24,42 @@
     "difficulty": "standard",
     "question": "Work this out for me: three thousand two hundred and five minus one thousand six hundred and forty-eight.",
     "answer": "1557",
-    "explanation": "3205 minus 1648 is 1557, borrowing through the columns."
+    "modelReasoningPath": "Recognise this is a column subtraction that will need borrowing. Set it out as 3205 take away 1648, lined up by place value. Work right to left: units 5 take away 8 can't be done, so borrow a ten to make 15 take away 8, which is 7. Carry the borrows carefully through the tens, hundreds and thousands. At the end, sanity-check the size: 3200 minus 1600 is about 1600, so an answer near 1557 is sensible.",
+    "rubric": {
+      "strong": "Sets it out by place value, borrows correctly across columns, narrates each step, and sanity-checks the size of the answer.",
+      "developing": "Has the right idea (column subtraction) but needs a prompt on a borrow, or reaches the answer without checking it.",
+      "weak": "Subtracts the smaller digit from the larger in each column regardless of position, or cannot start until the method is named.",
+      "finalAnswerNote": "Correct final answer is 1557."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Subtracts the smaller digit from the larger in each column (e.g. does 8 take away 5)",
+        "reveals": "Hasn't understood borrowing or place value"
+      },
+      {
+        "mistake": "Forgets to reduce a column after borrowing from it",
+        "reveals": "Loses track of the running state of the calculation"
+      },
+      {
+        "mistake": "Gives an answer with no check",
+        "reveals": "No habit of estimating to catch slips"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Talk me through just the units column first.",
+        "goodResponse": "Explains that five take away eight needs a borrow, giving fifteen take away eight is seven."
+      },
+      {
+        "probe": "Roughly how big should the answer be, before you work it out exactly?",
+        "goodResponse": "Estimates about one thousand six hundred, since 3200 minus 1600 is 1600."
+      }
+    ],
+    "hints": [
+      "How could you set these two numbers out so the columns line up neatly?",
+      "Look at the units: five take away eight. We can't do that yet — what could we borrow?",
+      "Borrow one ten so it becomes fifteen take away eight. What does the units column give you, and what happens to the tens column?"
+    ]
   },
   {
     "id": "MA-AR-S02",

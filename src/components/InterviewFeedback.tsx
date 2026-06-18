@@ -91,6 +91,7 @@ interface InterviewFeedbackProps {
       asked: boolean;
       skipped: boolean;
       outcome: string;
+      band?: 'strong' | 'developing' | 'weak' | null;
       your_answer?: string;
       note?: string;
     }>;
@@ -449,7 +450,14 @@ export const InterviewFeedback = ({
                       <p className="text-sm font-medium">
                         <span className="text-muted-foreground">Q{q.index}.</span> {q.question}
                       </p>
-                      <Badge className={`${meta.cls} text-white shrink-0`}>{meta.label}</Badge>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {q.band && (
+                          <Badge variant="outline" className="capitalize text-xs">
+                            {q.band}
+                          </Badge>
+                        )}
+                        <Badge className={`${meta.cls} text-white`}>{meta.label}</Badge>
+                      </div>
                     </div>
                     {!q.skipped && q.your_answer && (
                       <p className="text-xs text-muted-foreground mt-1">

@@ -7,6 +7,8 @@ import type { BankQuestion, Evidence, Outcome } from './types.ts';
 export interface JudgeResult {
   outcome: Outcome;
   methodQuality: Evidence['methodQuality'];
+  /** Reasoning band from the question's rubric, when one applies. */
+  band?: Evidence['band'];
   /** Short interviewer-side note, e.g. "right answer but couldn't explain the method". */
   notes: string;
 }
@@ -30,6 +32,7 @@ export function makeEvidence(
     hintsUsed,
     studentAnswer,
     methodQuality: judged.methodQuality,
+    band: judged.band,
     notes: judged.notes,
   };
 }

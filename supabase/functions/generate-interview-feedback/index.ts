@@ -532,6 +532,7 @@ try {
           asked: !e.skipped,
           skipped: Boolean(e.skipped),
           outcome: e.outcome,
+          band: e.band || null,
           your_answer: e.studentAnswer || '',
           note: e.notes || '',
         }));

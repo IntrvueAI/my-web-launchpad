@@ -19,6 +19,20 @@ export const BankQuestionSchema = z.object({
   answer: z.string().min(1),
   explanation: z.string().optional(),
   options: z.array(z.string()).optional(),
+
+  // Rich 6-part tutoring spec (all optional).
+  modelReasoningPath: z.string().optional(),
+  rubric: z
+    .object({
+      strong: z.string().min(1),
+      developing: z.string().min(1),
+      weak: z.string().min(1),
+      finalAnswerNote: z.string().optional(),
+    })
+    .optional(),
+  commonMistakes: z.array(z.object({ mistake: z.string().min(1), reveals: z.string().min(1) })).optional(),
+  liveProbes: z.array(z.object({ probe: z.string().min(1), goodResponse: z.string().min(1) })).optional(),
+  hints: z.array(z.string().min(1)).optional(),
 });
 
 export const BankFileSchema = z.array(BankQuestionSchema);
