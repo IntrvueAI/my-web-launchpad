@@ -437,6 +437,7 @@ export const InterviewFeedback = ({
                   incorrect: { label: 'Not quite', cls: 'bg-red-500' },
                   stuck: { label: 'Got stuck', cls: 'bg-yellow-500' },
                   skipped: { label: 'Skipped', cls: 'bg-muted-foreground' },
+                  incomplete: { label: 'Not finished', cls: 'bg-orange-400' },
                 };
                 const meta = q.skipped
                   ? outcomeMeta.skipped

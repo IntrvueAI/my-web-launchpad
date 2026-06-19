@@ -560,12 +560,34 @@ try {
     if (sessionReference) {
       const { data: sessionRow } = await supabaseAdmin
         .from('interview_sessions')
-        .select('evidence, subject')
+        .select('evidence, subject, engine_state')
         .eq('session_reference', sessionReference)
         .eq('user_id', userId)
         .maybeSingle();
       if (sessionRow?.evidence && Array.isArray(sessionRow.evidence)) {
         evidence = sessionRow.evidence;
+
+        // If the interview ended with a question still "on the table" (never recorded by the model),
+        // score it as a DNF so the last question always counts — even if they ran out of time on it.
+        const current = (sessionRow as any).engine_state?.current;
+        if (current?.id && !evidence.some((e: any) => e.id === current.id)) {
+          const partial = Array.isArray((sessionRow as any).engine_state?.currentStudentTurns)
+            ? (sessionRow as any).engine_state.currentStudentTurns.join(' ').trim()
+            : '';
+          evidence = [...evidence, {
+            index: evidence.length + 1,
+            id: current.id,
+            topic: current.topic,
+            difficulty: current.difficulty,
+            question: current.question,
+            outcome: 'incomplete',
+            skipped: false,
+            hintsUsed: 0,
+            studentAnswer: partial,
+            methodQuality: 'unknown',
+            notes: 'Interview ended before this question was finished.',
+          }];
+        }
 
         // Flatten the evidence log into the dashboard's per-question table. Best-effort and
         // idempotent (clears any prior rows for this session so regenerating feedback won't dupe).

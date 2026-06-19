@@ -22,7 +22,8 @@ export type Outcome =
   | 'correct_no_method'// o2: correct, no method shown
   | 'incorrect'        // o3: wrong (after a hint + single retry)
   | 'stuck'            // o4: stuck / silent
-  | 'skipped';         // student chose to skip (recorded, not scored as wrong)
+  | 'skipped'          // student chose to skip (recorded, not scored as wrong)
+  | 'incomplete';      // interview ended before this question was finished (DNF)
 
 /** Reasoning-band rubric for a question (the gold standard Clara scores the transcript against). */
 export interface QuestionRubric {
