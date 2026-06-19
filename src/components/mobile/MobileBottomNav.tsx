@@ -5,9 +5,9 @@ import { Video, History, Wallet, Settings, LogOut, ListChecks } from 'lucide-rea
 import { cn } from '@/lib/utils';
 
 interface MobileBottomNavProps {
-  currentView: 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions';
+  currentView: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions';
   credits: number;
-  onViewChange: (view: 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions') => void;
+  onViewChange: (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions') => void;
   onSignOut: () => void;
   className?: string;
 }

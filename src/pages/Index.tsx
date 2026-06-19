@@ -8,9 +8,10 @@ import { InterviewSelection } from '@/components/InterviewSelection';
 import { MinigameSection } from '@/components/MinigameSection';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { UserSettings } from '@/components/UserSettings';
+import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Video, History, ArrowLeft, Settings, Wallet, ListChecks } from 'lucide-react';
+import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -41,7 +42,7 @@ const Index = () => {
     setShowPostSignupForm
   } = useAuth();
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions'>('selection');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions'>('dashboard');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
 
@@ -135,7 +136,7 @@ const Index = () => {
   }, [showPaymentSuccess, refetchCredits]);
 
   // Function to clear URL parameters and dismiss payment success
-  const clearPaymentSuccessAndNavigate = (view: 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions') => {
+  const clearPaymentSuccessAndNavigate = (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions') => {
     // Clear URL parameters
     const url = new URL(window.location.href);
     url.searchParams.delete('session_id');
@@ -185,7 +186,7 @@ const Index = () => {
                 tabIndex={0}
                 onClick={() => {
                   setSelectedInterviewType(null);
-                  showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection');
+                  showPaymentSuccess ? clearPaymentSuccessAndNavigate('dashboard') : setCurrentView('dashboard');
                 }}
               />
               {currentView === 'interview' && selectedInterviewType && (
@@ -199,6 +200,10 @@ const Index = () => {
             {/* Desktop Navigation */}
             {currentView !== 'interview' && (
               <nav className="hidden lg:flex gap-2">
+                <Button variant={currentView === 'dashboard' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('dashboard') : setCurrentView('dashboard')} className="gap-2">
+                  <Home className="w-4 h-4" />
+                  Home
+                </Button>
                 <Button variant={currentView === 'selection' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')} className="gap-2">
                   <Video className="w-4 h-4" />
                   Practice
@@ -225,10 +230,19 @@ const Index = () => {
             {/* Mobile Navigation - Icons Only */}
             {currentView !== 'interview' && (
               <nav className="flex lg:hidden gap-1 ml-auto">
-                <Button 
-                  variant={currentView === 'selection' ? 'default' : 'ghost'} 
-                  size="sm" 
-                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')} 
+                <Button
+                  variant={currentView === 'dashboard' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('dashboard') : setCurrentView('dashboard')}
+                  className="p-2"
+                  aria-label="Home"
+                >
+                  <Home className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={currentView === 'selection' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')}
                   className="p-2"
                   aria-label="Practice"
                 >
@@ -318,6 +332,12 @@ const Index = () => {
               onGoToCredits={() => clearPaymentSuccessAndNavigate('credits')}
             />
           </div>
+        ) : currentView === 'dashboard' ? (
+          <Dashboard
+            onStartInterview={() => setCurrentView('selection')}
+            onViewHistory={() => setCurrentView('history')}
+            onManageDates={() => setCurrentView('settings')}
+          />
         ) : currentView === 'selection' ? (
           <div className="container mx-auto px-4 py-8 max-w-6xl">
             <InterviewSelection onSelectInterview={handleSelectInterview} />
