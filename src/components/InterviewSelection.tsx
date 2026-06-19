@@ -151,8 +151,8 @@ export const InterviewSelection = ({
                   </div>
 
                   {/* Start Button - Mobile Touch Optimized */}
-                  <Button 
-                    className="w-full min-h-[44px] text-sm font-medium transition-colors" 
+                  <Button
+                    className="w-full min-h-[44px] text-sm font-medium transition-colors truncate"
                     onClick={e => {
                       e.stopPropagation();
                       const cost = interview.costCredits ?? 1;
@@ -167,7 +167,7 @@ export const InterviewSelection = ({
                         onSelectInterview(interview);
                       }
                     }}>
-                    Start {interview.name}
+                    Start Interview
                   </Button>
                 </div>
               </CardContent>
