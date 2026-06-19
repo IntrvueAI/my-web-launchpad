@@ -33,6 +33,11 @@ export interface InterviewType {
   engineDriven?: boolean;
   /** Engine subject id for engine-driven types (matches src/interview/subjects). */
   engineSubject?: string;
+  /**
+   * Optional reassuring note shown on the setup screen before the interview starts.
+   * Paragraphs separated by a blank line; the final paragraph is emphasised.
+   */
+  preStartNote?: string;
 }
 
 export const INTERVIEW_TYPES: Record<string, InterviewType> = {
@@ -72,7 +77,11 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
     icon: 'Brain',
     engineDriven: true,
-    engineSubject: 'logic'
+    engineSubject: 'logic',
+    preStartNote:
+      "These questions are deliberately difficult — some have no right answer, and that's intentional.\n\n" +
+      "Top schools aren't testing whether you know the answer. They're watching how you think: do you reason aloud, ask good questions, and stay curious when things get tricky?\n\n" +
+      "Don't worry about being right. Just focus on showing your thinking."
   },
   'maths-interview': {
     id: 'maths-interview',

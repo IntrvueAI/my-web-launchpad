@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ClipboardCheck, Compass, Check } from 'lucide-react';
+import { ClipboardCheck, Compass, Check, Lightbulb } from 'lucide-react';
 import type { Mode } from '@/interview/engine/types';
 import type { TopicDef } from '@/interview/subjects/types';
 
@@ -15,6 +15,8 @@ interface InterviewSetupProps {
   /** The strands available for practice-mode topic selection. */
   topics: TopicDef[];
   onConfirm: (choice: SetupChoice) => void;
+  /** Optional reassuring note shown above the setup (paragraphs split by a blank line). */
+  note?: string;
 }
 
 /**
@@ -22,12 +24,30 @@ interface InterviewSetupProps {
  * Mock samples all strands adaptively; Practice lets the student pick a single strand to drill
  * (and switch any time once live). Mirrors maths-mini-interview-flow.json.
  */
-export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfirm }) => {
+export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfirm, note }) => {
   const [mode, setMode] = useState<Mode>('mock');
   const [topic, setTopic] = useState<string>(topics[0]?.id ?? '');
 
+  const noteParagraphs = (note ?? '').split('\n\n').map((p) => p.trim()).filter(Boolean);
+
   return (
     <Card className="p-5 md:p-7 shadow-medium max-w-2xl mx-auto">
+      {noteParagraphs.length > 0 && (
+        <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4">
+          <div className="flex items-center gap-2 mb-2 text-amber-800 font-semibold">
+            <Lightbulb className="w-5 h-5" />
+            A note before you start
+          </div>
+          <div className="space-y-2 text-sm text-amber-900/90">
+            {noteParagraphs.map((p, i) => (
+              <p key={i} className={i === noteParagraphs.length - 1 ? 'font-semibold' : ''}>
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+
       <h2 className="text-xl font-bold mb-1">How would you like to practise?</h2>
       <p className="text-sm text-muted-foreground mb-5">
         You can switch topics any time once you've started.
