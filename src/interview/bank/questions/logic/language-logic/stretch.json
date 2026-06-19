@@ -1,0 +1,45 @@
+[
+  {
+    "id": "LG-D3",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "stretch",
+    "question": "I'm going to read you four statements, and exactly one of them is true - your job is to tell me which. Statement A says: exactly one of these four statements is false. Statement B says: exactly two of them are false. Statement C says: exactly three of them are false. And statement D says: all four of them are false. So - which one is the true one?",
+    "answer": "C.",
+    "modelReasoningPath": "Translate the premise: if exactly one statement is true, then exactly three are false. Which statement says 'exactly three are false'? That's C - so C would be the true one, and that's self-consistent. Sanity-check the others as the lone truth: A (one false) would mean three true; B (two false) would mean two true; D (four false) would mean none true including itself - each contradicts 'only one true'. Only C survives.",
+    "rubric": {
+      "strong": "Reasons 'one true means three false, and C says three false, so C' - fast, from the self-referential structure. Can show why A/B/D each contradict themselves as the sole truth.",
+      "developing": "Gets there by testing statements one at a time (often needs to be walked through A collapsing first), then applies the method to the rest. Sound once the testing method is modelled.",
+      "weak": "Picks a statement with no test of consistency, or can't see that 'exactly one true' fixes the number of false ones. Doesn't engage the self-reference."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Not converting 'exactly one true' into 'exactly three false'",
+        "reveals": "Misses the arithmetic bridge"
+      },
+      {
+        "mistake": "Checking each statement's wording in isolation",
+        "reveals": "Doesn't test it as the unique true one"
+      },
+      {
+        "mistake": "Picking D because 'most false' feels dramatic",
+        "reveals": "Guided by feel, not consistency"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If exactly one statement is true, how many are false?",
+        "goodResponse": "They get to 'three', bridging to C"
+      },
+      {
+        "probe": "Suppose A were the true one - would that hold together?",
+        "goodResponse": "They see it collapses"
+      }
+    ],
+    "hints": [
+      "If exactly one statement is true, then how many of the four are false?",
+      "Now find the statement that claims that exact number of false ones.",
+      "Test it - does that statement being the only true one stay consistent? Try A as the true one and watch it fall apart, then do the same with the rest."
+    ]
+  }
+]

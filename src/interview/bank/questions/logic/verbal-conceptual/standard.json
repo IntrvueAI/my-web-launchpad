@@ -139,5 +139,91 @@
       "Think about different angles: which one you can touch, which takes time to experience, which is read versus performed.",
       "You've found one - now switch the rule entirely and find a different odd one out for a different reason."
     ]
+  },
+  {
+    "id": "LG-C5",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Give me three completely different meanings of the word sharp. They must be genuinely different - not just different contexts for the same basic meaning.",
+    "answer": "Open - any three genuinely distinct senses across domains (cutting edge; mentally quick; musical pitch raised a semitone; cold/biting; clear/well-defined; stylishly dressed; sudden/abrupt).",
+    "modelReasoningPath": "A strong candidate first checks that meanings are genuinely distinct, not the same idea in two settings ('a sharp knife' and 'a sharp point' are the same core meaning), then reaches across domains (physical, mental, musical, weather), which is the real signal of lexical range.",
+    "rubric": {
+      "strong": "Three or more genuinely distinct senses spanning different domains, with a clear grasp of why they're different. Reaches for a non-obvious one (musical, sartorial) spontaneously.",
+      "developing": "Produces a couple of clearly different meanings but a third that's really a repeat of the first in a new context; can fix it when the distinction is explained.",
+      "weak": "Lists near-duplicates ('sharp knife, sharp scissors, sharp sword') and doesn't see they're one meaning. Stuck in a single domain."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Confusing different contexts with different meanings",
+        "reveals": "Doesn't separate sense from setting"
+      },
+      {
+        "mistake": "Staying entirely in the 'physically cutting' domain",
+        "reveals": "Limited lexical range"
+      },
+      {
+        "mistake": "Inventing a meaning that isn't really used",
+        "reveals": "Reaches for plausibility over real usage"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is 'a sharp knife' and 'a sharp point' really two different meanings, or the same idea twice?",
+        "goodResponse": "They see they're the same core sense and look further afield"
+      },
+      {
+        "probe": "Can you use two different meanings of 'sharp' in one sentence that still makes sense?",
+        "goodResponse": "e.g. 'The sharp detective spotted the sharp knife.'"
+      }
+    ],
+    "hints": [
+      "Picture 'sharp' in totally different places - a kitchen, someone's mind, a piece of music.",
+      "A sharp knife and a sharp pencil are really the same meaning. Can you find one that has nothing to do with cutting?",
+      "What does 'sharp' mean in music? And what do we mean if we call a person sharp?"
+    ]
+  },
+  {
+    "id": "LG-C6",
+    "subject": "logic",
+    "topic": "verbal-conceptual",
+    "difficulty": "standard",
+    "question": "Here's a little sequence of words for you: Monday, March, Morning. What could come next? See if you can give me more than one possible answer, and tell me the rule behind each one.",
+    "answer": "Open - several rules fit: all begin with M (Minute, Monsoon...); all are units/divisions of time (Minute, Moment...); the units get shorter (Minute, Second...); each is the 'first' of its category (Midnight, May, Mercury...).",
+    "modelReasoningPath": "A strong candidate finds one rule, then deliberately looks for another, realising several patterns fit the same three words: first the easy 'all start with M', then the subtler 'units of time', then 'each is the first of something'. This tests creative hypothesis generation.",
+    "rubric": {
+      "strong": "Multiple distinct rules, each with a valid 'next' word, and visible delight in finding more than one. Reaches at least one non-obvious pattern (units of time / 'firsts'), not just the initial letter.",
+      "developing": "Finds the 'all start with M' rule and, when asked for another, can find a second with support. Doesn't spontaneously look past the first pattern.",
+      "weak": "Offers one word with a thin or no rule, or a 'next' that fits no stated pattern. Doesn't treat it as having multiple possible structures."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Stopping at the first rule (usually the M)",
+        "reveals": "Doesn't search for alternative structures"
+      },
+      {
+        "mistake": "Giving a next word without stating the rule behind it",
+        "reveals": "Pattern is unexamined"
+      },
+      {
+        "mistake": "Picking a word that breaks their own stated rule",
+        "reveals": "Not checking the candidate against the rule"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "That's one rule - is there a completely different rule that also fits these three words?",
+        "goodResponse": "They find a second, distinct pattern"
+      },
+      {
+        "probe": "What do Monday, March and Morning have in common beyond the letter they start with?",
+        "goodResponse": "They reach 'units of time' or 'firsts'"
+      }
+    ],
+    "hints": [
+      "What's one thing all three words share? Start with the easiest thing you notice.",
+      "Now look past the first letter - what KIND of words are they? What do Monday, March and Morning all measure?",
+      "Are they all bits of time? Or is each one the 'first' of something? Each idea gives you a different next word."
+    ]
   }
 ]

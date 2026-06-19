@@ -26,6 +26,7 @@ export const logicPack: SubjectPack = {
     { id: 'deductive-logic', label: 'Deductive logic', blurb: 'Definite answers via formal chains — case-testing and proof by contradiction.' },
     { id: 'lateral-thinking', label: 'Lateral thinking', blurb: 'The obvious reading is wrong — surface and dismantle the hidden assumption.' },
     { id: 'verbal-conceptual', label: 'Verbal & conceptual reasoning', blurb: 'Precision and flexibility with words, analogy, and ideas.' },
+    { id: 'language-logic', label: 'Language logic & word puzzles', blurb: 'Systematic reasoning with language — logic grids, liar puzzles, hidden rules.' },
   ],
   watchlist: [
     'States a correct answer with no reasoning (worth very little — could be a guess)',

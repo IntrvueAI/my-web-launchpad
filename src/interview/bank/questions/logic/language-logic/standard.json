@@ -1,0 +1,218 @@
+[
+  {
+    "id": "LG-D1",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "standard",
+    "question": "Three friends - Alice, Ben, and Clara - each have a favourite animal and a favourite sport. The animals are cat, dog, and rabbit, and the sports are swimming, tennis, and cycling. I'll give you five clues, so see if you can keep track. Clue one: Alice doesn't like cats. Clue two: whoever likes dogs also likes swimming. Clue three: Ben likes tennis. Clue four: Clara doesn't like rabbits. And clue five: Alice doesn't like cycling. So - can you work out which animal and which sport each of them likes?",
+    "answer": "Alice - dog, swimming. Ben - rabbit, tennis. Clara - cat, cycling.",
+    "modelReasoningPath": "Start with the most constraining clue: clue 3 fixes Ben = tennis. Chain it: Ben plays tennis so doesn't swim, so (clue 2, dog-lover swims) Ben isn't the dog-lover. Alice: not cycling (clue 5), tennis taken, so Alice swims; therefore (clue 2) Alice likes dogs (consistent with not-cats). Clara: not rabbits (clue 4), dogs taken, so Clara likes cats; Ben gets rabbit; Clara gets cycling. The signal of strong reasoning is clue selection - beginning with the clue that pins something down, then propagating.",
+    "rubric": {
+      "strong": "Works systematically: identifies a high-constraint clue to start, chains consequences, keeps a running track. Reaches the full solution, or a near-complete one with sound steps.",
+      "developing": "Engages clue by clue and makes correct local deductions but jumps around, loses the thread, or needs 'which clue is most definite?' to get organised. The logic is sound in pieces.",
+      "weak": "Guesses assignments and checks them haphazardly, or can't link clue 2 and clue 3. No method for keeping track; contradictions go unnoticed.",
+      "finalAnswerNote": "Alice dog/swimming, Ben rabbit/tennis, Clara cat/cycling."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Not using clue 2 as a link (dog-swimming)",
+        "reveals": "Treats animals and sports as separate puzzles"
+      },
+      {
+        "mistake": "Forgetting to carry a deduction forward",
+        "reveals": "Establishes a fact but doesn't use it"
+      },
+      {
+        "mistake": "Random clue order leading to dead ends",
+        "reveals": "No sense of starting from the most constraining clue"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Which clue gives you the most definite information to start with?",
+        "goodResponse": "They start from clue 3"
+      },
+      {
+        "probe": "You know the dog-lover swims - who have you already shown does NOT swim?",
+        "goodResponse": "They eliminate Ben as dog-lover"
+      }
+    ],
+    "hints": [
+      "Which clue gives you something for certain straight away, with no working needed?",
+      "Start from 'Ben likes tennis.' If Ben plays tennis, he doesn't swim - so can Ben be the dog-lover?",
+      "Keep a little table going. Once you fix one person's sport, it squeezes what the others can have - work outward from there."
+    ]
+  },
+  {
+    "id": "LG-D2",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "standard",
+    "question": "A classroom window gets broken, and four children are asked who did it. Alice says, 'It was Ben.' Ben says, 'It wasn't me.' Clara says, 'It wasn't Alice.' And Dan says, 'It was Ben.' Now, exactly one of those four children is lying. So - who broke the window?",
+    "answer": "Ben broke it, and Ben is the liar.",
+    "modelReasoningPath": "Test each suspect and count the liars their guilt would create. Ben did it: Alice true, Ben false, Clara true, Dan true = exactly 1 liar. The other suspects each create 2-3 liars. Shortcut a strong child may spot: Alice and Dan say the same thing, so they're always both true or both false together; if they lie that's already two liars, too many - so they tell the truth, so it was Ben. The skill is methodical case-testing against the 'exactly one liar' constraint.",
+    "rubric": {
+      "strong": "Tests suspects systematically, counts liars against the 'exactly one' rule, and reaches Ben. Bonus for noticing the Alice/Dan shortcut and using it to cut the work.",
+      "developing": "Understands they should test possibilities and counts correctly for some, but doesn't try all four cleanly or needs reminding of the 'exactly one liar' constraint. Right method, incomplete execution.",
+      "weak": "Guesses based on who 'sounds guilty', ignores the counting constraint, or can't handle two people saying the same thing. No systematic testing."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Forgetting to check against exactly one liar",
+        "reveals": "Settles for 'at least one'"
+      },
+      {
+        "mistake": "Missing that Alice and Dan are logically locked together",
+        "reveals": "Doesn't use the duplicate-statement insight"
+      },
+      {
+        "mistake": "Picking Ben for the wrong reason (two people accused him)",
+        "reveals": "Right answer, no valid method"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Let's test one suspect at a time - if Alice did it, how many of them would be lying?",
+        "goodResponse": "They count liars per case"
+      },
+      {
+        "probe": "Notice Alice and Dan say the same thing. What does that tell you about them?",
+        "goodResponse": "They lock Alice and Dan together"
+      }
+    ],
+    "hints": [
+      "Try assuming each child did it, one at a time, and count how many statements become lies.",
+      "Only one person is lying. So you're hunting for the suspect that makes exactly ONE statement false.",
+      "Look at Alice and Dan - they say the same thing, so they're both true or both lying together. If they both lie, that's already two liars - too many."
+    ]
+  },
+  {
+    "id": "LG-D4",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "standard",
+    "question": "There are three boxes in front of you. One holds only apples, one holds only oranges, and one holds a mixture of both. All three are labelled - but here's the catch: every single label is wrong. The labels say 'Apples', 'Oranges', and 'Mixed'. Now, you're allowed to reach into just one box and pull out a single piece of fruit, without peeking inside first. Which box would you pick - and what could you work out from what you pull out?",
+    "answer": "Pick from the box labelled 'Mixed.'",
+    "modelReasoningPath": "Use the fact that every label is wrong as the key lever. The 'Mixed' box therefore isn't mixed - it's all apples or all oranges, so one fruit reveals its true contents completely. Say you draw an apple: 'Mixed' box is really Apples. Propagate: the 'Apples' box can't be apples (label wrong) and can't be mixed (just identified), so it's Oranges; the 'Oranges' box must be Mixed. One draw resolves all three, because you started from the most constrained box.",
+    "rubric": {
+      "strong": "Chooses 'Mixed' and explains why the all-wrong-labels rule makes that box only two possibilities, then shows how one fruit cascades to identify all three. Can say why the other boxes wouldn't work as the pick.",
+      "developing": "Picks 'Mixed' by good instinct, or reasons partway, but can't fully explain the cascade to all three boxes until prompted. Right choice, incomplete justification.",
+      "weak": "Picks 'Apples' or 'Oranges', or 'Mixed' with no reason, and can't trace what one fruit would tell them. Doesn't use the 'all labels wrong' constraint."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Picking the 'Apples' or 'Oranges' box",
+        "reveals": "Leaves two boxes ambiguous"
+      },
+      {
+        "mistake": "Forgetting that all labels are wrong",
+        "reveals": "Treats some labels as possibly right"
+      },
+      {
+        "mistake": "Stopping at 'it's apples' without deducing the other two boxes",
+        "reveals": "Doesn't complete the cascade"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Since every label is wrong, what can the box labelled 'Mixed' NOT contain?",
+        "goodResponse": "They see it must be a single fruit"
+      },
+      {
+        "probe": "You pulled out an apple from 'Mixed.' What must the other two boxes be?",
+        "goodResponse": "They trace the cascade"
+      }
+    ],
+    "hints": [
+      "Use the fact that EVERY label is wrong. Which box's label can you be most sure about?",
+      "The box labelled 'Mixed' can't actually be mixed - so it must be all of one fruit. What does that mean for your one pick?",
+      "Pick from the 'Mixed' box. Once you see that one fruit, the wrong labels force the other two boxes - try tracing it through."
+    ]
+  },
+  {
+    "id": "LG-D6",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "standard",
+    "question": "I'm going to read you some words that are in a special group, and some that aren't - and your job is to work out the rule. So, these words are in the group: knife, write, pneumonia, gnome, wrap. And these words are not in the group: king, right, planet, garden, rope. Have a think - what's the rule?",
+    "answer": "Every 'in' word begins with a silent letter (written but not pronounced): K-nife, W-rite, P-neumonia, G-nome, W-rap. The 'not in' words begin with fully pronounced letters.",
+    "modelReasoningPath": "The decisive move is saying the words aloud - the rule is invisible on the page and audible only in speech. Notice each 'in' word starts with a letter you don't hear ('the first letter is silent'). Confirm against the 'not in' list: those first letters are pronounced. The single best diagnostic is whether the child sounds the words out.",
+    "rubric": {
+      "strong": "Tests by pronouncing the words, identifies the silent-first-letter rule, and verifies it against both lists. Can supply a fresh example (KNEEL, WRIST, PSALM, GNAT).",
+      "developing": "Notices something about the spellings or starts sounding words out and, with a small nudge ('try saying them'), reaches the rule. On the right method once prompted to use sound.",
+      "weak": "Hunts only at the visual/letter level ('they have odd letters'), doesn't try pronouncing them, and can't find the rule even when nudged toward sound."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Reading silently and never testing by ear",
+        "reveals": "Misses an audible-only rule"
+      },
+      {
+        "mistake": "Spotting the words 'look unusual' without isolating the silent first letter",
+        "reveals": "Stops at surface oddity"
+      },
+      {
+        "mistake": "Proposing a rule that fits the 'in' list but not the 'not in' list",
+        "reveals": "Doesn't check both groups"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Try saying each word out loud - slowly. Notice anything about the first sound?",
+        "goodResponse": "They hear the silent first letter"
+      },
+      {
+        "probe": "How would you describe the rule to someone who hadn't noticed it?",
+        "goodResponse": "They articulate 'silent first letter'"
+      }
+    ],
+    "hints": [
+      "Try saying each word out loud, nice and slowly.",
+      "Listen to the very first sound of each one. Is every letter you can see actually being spoken?",
+      "In KNIFE, do you say the K? Check the start of each word the same way - what do the 'in' words share?"
+    ]
+  },
+  {
+    "id": "LG-D7",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "standard",
+    "question": "I'm going to give you a little sequence of words - listen carefully: once, twice, thrice. What comes next?",
+    "answer": "There is no standard English word for 'four times' - the pattern breaks; you simply say 'four times'.",
+    "modelReasoningPath": "Read the pattern: once = one time, twice = two, thrice = three. Reach for the next term and discover the gap - there's no common word for four times. The strong response isn't frustration but curiosity: the clean pattern just stopped; why? A child who invents 'frice' is showing creativity, as long as they know it isn't a real word. This tests verbal reasoning AND adaptability.",
+    "rubric": {
+      "strong": "Recognises there's no standard word and engages with why (these words are old and once-common; usage dropped off after three). On the follow-up, finds other English patterns that break (goose/geese but moose/moose). Genuinely curious.",
+      "developing": "Either confidently coins a word ('frice') or realises something's off, and with prompting sees that the pattern has no standard continuation. Engaged but doesn't probe why on their own.",
+      "weak": "Insists on a 'correct' next word and treats the gap as their own failure, or disengages. Doesn't entertain that a pattern can simply stop."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Assuming there must be a word and getting stuck hunting for it",
+        "reveals": "Can't accept a pattern that stops"
+      },
+      {
+        "mistake": "Coining a word but believing it's genuinely standard",
+        "reveals": "Doesn't distinguish invention from usage"
+      },
+      {
+        "mistake": "Not recognising the broader phenomenon of patterns breaking in language",
+        "reveals": "Misses the general point"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is there a real, everyday English word for four times? What do we actually say?",
+        "goodResponse": "They realise we just say 'four times'"
+      },
+      {
+        "probe": "Can you think of other patterns in English that seem neat but then stop?",
+        "goodResponse": "e.g. goose/geese but moose/moose"
+      }
+    ],
+    "hints": [
+      "Once means one time, twice means two times, thrice means three times. So what about four times?",
+      "Is there a normal, everyday English word for 'four times'? What do we actually say instead?",
+      "It's completely fine if the pattern just runs out - why do you think English has 'once' and 'twice' but nothing past 'thrice'?"
+    ]
+  }
+]

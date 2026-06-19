@@ -1,0 +1,45 @@
+[
+  {
+    "id": "LG-D5",
+    "subject": "logic",
+    "topic": "language-logic",
+    "difficulty": "foundation",
+    "question": "I'm going to give you three little analogies. For each one, fill in the missing word - and then tell me what the connection is. Here's the first: puppy is to dog as foal is to... what? Number two: author is to novel as composer is to... what? And the third one: map is to country as recipe is to... what?",
+    "answer": "horse; symphony (or music); meal (or dish).",
+    "modelReasoningPath": "The first two are warm-ups - easy, concrete relationships (young-to-adult; creator-to-work). A strong candidate sails through them while naming the rule, then meets the third and recognises it's a DIFFERENT kind of relationship: representation-to-reality. Articulating 'a recipe tells you how to make a meal but isn't the meal' is the high-water mark.",
+    "rubric": {
+      "strong": "All three answers with clearly named relationships, and recognises the third is abstract (representation vs the real thing). Can extend it to fresh examples (map/territory, score/music, blueprint/building) or invent their own analogy.",
+      "developing": "Gets the answers and the first two relationships clearly, but describes the third only loosely ('they're connected') until prompted to think about representation. Solid on the concrete, hazy on the abstract.",
+      "weak": "Fills blanks (perhaps correctly) but can't articulate any relationship, or forces the third into the same mould as the first two ('a recipe grows into a meal'). No grasp of representation."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treating the map/recipe pair as the same type as the warm-ups",
+        "reveals": "Misses the shift to representation"
+      },
+      {
+        "mistake": "Filling blanks without explaining the link",
+        "reveals": "Pattern-matching, not reasoning"
+      },
+      {
+        "mistake": "Missing that map and recipe are instructions/representations, not the things themselves",
+        "reveals": "No grasp of abstraction"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's the difference between a map and a country?",
+        "goodResponse": "They surface representation vs reality"
+      },
+      {
+        "probe": "Can you make up your own analogy - one nobody else would think of?",
+        "goodResponse": "They own the structure, not just the answers"
+      }
+    ],
+    "hints": [
+      "For each pair, say the link out loud as a full sentence.",
+      "The third pair is different from the first two - a map isn't a country. So what IS a map, compared to a country?",
+      "A map stands for a country; a recipe stands for a meal. What's the missing word, and what's the shared relationship?"
+    ]
+  }
+]
