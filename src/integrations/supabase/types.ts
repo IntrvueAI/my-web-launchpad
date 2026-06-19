@@ -315,6 +315,7 @@ export type Database = {
           id: string
           interview_date: string | null
           preferred_interview_type: string | null
+          school_interviews: Json
           schools: string[] | null
           updated_at: string
         }
@@ -325,6 +326,7 @@ export type Database = {
           id: string
           interview_date?: string | null
           preferred_interview_type?: string | null
+          school_interviews?: Json
           schools?: string[] | null
           updated_at?: string
         }
@@ -335,6 +337,7 @@ export type Database = {
           id?: string
           interview_date?: string | null
           preferred_interview_type?: string | null
+          school_interviews?: Json
           schools?: string[] | null
           updated_at?: string
         }

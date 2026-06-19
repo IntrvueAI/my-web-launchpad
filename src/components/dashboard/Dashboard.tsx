@@ -35,7 +35,7 @@ const SKILL_ROWS: { key: 'personalInsight' | 'reasoning' | 'extracurricular' | '
 
 export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory, onManageDates }) => {
   const { user } = useAuth();
-  const { stats, loading } = useDashboardStats();
+  const { stats } = useDashboardStats();
 
   const firstName =
     (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0] ||
@@ -63,6 +63,23 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   const strongest = validSkills.length ? validSkills.reduce((a, b) => (b.value > a.value ? b : a)) : null;
   const weakest = validSkills.length ? validSkills.reduce((a, b) => (b.value < a.value ? b : a)) : null;
 
+  const daysUntilInterview = stats?.daysUntilInterview ?? null;
+  const eyebrowText =
+    daysUntilInterview === null
+      ? null
+      : daysUntilInterview === 0
+      ? "Your interview is today — you've got this"
+      : daysUntilInterview === 1
+      ? 'Just 1 day until your next interview'
+      : `${daysUntilInterview} days until your next interview`;
+
+  const goodPoints = stats?.goodPoints ?? [];
+  const tips = stats?.tips ?? [];
+  const hasLatestFeedback = stats?.hasLatestFeedback ?? false;
+  const streak = stats?.streak ?? 0;
+  const weekStrip = stats?.weekStrip ?? [];
+  const upcomingSchoolInterviews = stats?.upcomingSchoolInterviews ?? [];
+
   // Chart geometry for the "progress over time" sparkline
   const chartWidth = 460;
   const chartLeft = 10;
@@ -87,14 +104,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
     <div className="container mx-auto px-4 py-8 max-w-6xl space-y-6">
       {/* Hero greeting */}
       <div className="text-center py-2 pb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-accent text-primary-foreground/0 text-primary text-sm font-semibold mb-5">
-          <CheckCircle2 className="w-3.5 h-3.5" />
-          {loading
-            ? 'Loading your progress…'
-            : totalSessions > 0
-            ? `${totalSessions} interview${totalSessions === 1 ? '' : 's'} completed so far — keep the momentum going`
-            : "Let's get your first practice session started"}
-        </div>
+        {eyebrowText && (
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-accent text-primary text-sm font-semibold mb-5">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            {eyebrowText}
+          </div>
+        )}
         <h1 className="text-3xl md:text-[42px] font-bold leading-tight tracking-tight text-foreground">
           Hello, {firstName} — <br />
           <span className="text-primary">ready for your next interview?</span>
@@ -186,7 +201,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
           </div>
         </Card>
 
-        {/* Interview dates — placeholder until scheduling data exists */}
+        {/* Interview dates — real, from each school's paired date in Settings */}
         <Card className="p-6 flex flex-col">
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -195,71 +210,89 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
               </div>
               Your Interview Dates
             </div>
-            <Badge variant="outline" className="text-[10px]">Preview</Badge>
           </div>
-          <div className="grid grid-cols-3 gap-2.5 mt-1.5">
-            {[
-              { mon: 'Jul', day: '02', school: 'Westfield Grammar', countdown: '13 days away', next: true },
-              { mon: 'Jul', day: '11', school: 'Kingswood House', countdown: '22 days away', next: false },
-              { mon: 'Jul', day: '19', school: "St. Augustine's", countdown: '30 days away', next: false },
-            ].map((d) => (
-              <div
-                key={d.school}
-                className={`flex flex-col items-center text-center px-2 py-3 rounded-md border ${
-                  d.next ? 'bg-accent border-primary/20' : 'bg-background border-border'
-                }`}
+          {upcomingSchoolInterviews.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center text-center py-4">
+              <p className="text-sm text-muted-foreground mb-3">
+                You haven't added your interview dates yet — go to Settings to add them.
+              </p>
+              <button
+                onClick={onManageDates}
+                className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:underline"
               >
-                <span className={`text-[10.5px] font-bold uppercase tracking-wide ${d.next ? 'text-primary' : 'text-muted-foreground'}`}>
-                  {d.mon}
-                </span>
-                <span className={`text-xl font-extrabold leading-tight ${d.next ? 'text-primary' : 'text-foreground'}`}>{d.day}</span>
-                <span className="mt-2 font-bold text-[12.5px] text-foreground leading-tight">{d.school}</span>
-                <span className="text-[11px] text-muted-foreground mt-0.5">{d.countdown}</span>
+                Go to Settings →
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-3 gap-2.5 mt-1.5">
+                {upcomingSchoolInterviews.slice(0, 3).map((d, i) => {
+                  const dateObj = new Date(`${d.date}T00:00:00`);
+                  const mon = dateObj.toLocaleDateString('en-GB', { month: 'short' });
+                  const day = dateObj.toLocaleDateString('en-GB', { day: '2-digit' });
+                  const next = i === 0;
+                  return (
+                    <div
+                      key={`${d.school}-${d.date}`}
+                      className={`flex flex-col items-center text-center px-2 py-3 rounded-md border ${
+                        next ? 'bg-accent border-primary/20' : 'bg-background border-border'
+                      }`}
+                    >
+                      <span className={`text-[10.5px] font-bold uppercase tracking-wide ${next ? 'text-primary' : 'text-muted-foreground'}`}>
+                        {mon}
+                      </span>
+                      <span className={`text-xl font-extrabold leading-tight ${next ? 'text-primary' : 'text-foreground'}`}>{day}</span>
+                      <span className="mt-2 font-bold text-[12.5px] text-foreground leading-tight">{d.school}</span>
+                      <span className="text-[11px] text-muted-foreground mt-0.5">
+                        {d.daysUntil === 0 ? 'Today' : d.daysUntil === 1 ? '1 day away' : `${d.daysUntil} days away`}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
-          <button
-            onClick={onManageDates}
-            className="mt-4 text-sm font-semibold text-primary inline-flex items-center gap-1 hover:underline"
-          >
-            Add your real interview dates in Settings →
-          </button>
+              <button
+                onClick={onManageDates}
+                className="mt-4 text-sm font-semibold text-primary inline-flex items-center gap-1 hover:underline"
+              >
+                Manage your interview dates in Settings →
+              </button>
+            </>
+          )}
         </Card>
       </div>
 
-      {/* Streak tracker — placeholder until streak tracking exists */}
+      {/* Streak tracker — real, computed from completed-interview dates */}
       <Card className="p-6 flex items-center justify-between gap-5 flex-wrap">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-md bg-accent flex items-center justify-center flex-shrink-0">
             <Flame className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-base text-foreground">5-day practice streak</span>
-              <Badge variant="outline" className="text-[10px]">Preview</Badge>
+            <span className="font-bold text-base text-foreground">
+              {streak > 0 ? `${streak}-day practice streak` : 'No active streak yet'}
+            </span>
+            <div className="text-sm text-muted-foreground mt-0.5">
+              {streak > 0
+                ? 'Keep it going — practise today to extend your streak'
+                : 'Complete an interview today to start a streak'}
             </div>
-            <div className="text-sm text-muted-foreground mt-0.5">Keep it going — practise today to extend your streak</div>
           </div>
         </div>
         <div className="flex gap-1.5">
-          {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => {
-            const done = i < 5;
-            const today = i === 5;
-            return (
-              <div
-                key={i}
-                className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center text-[11px] font-bold border ${
-                  done
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : today
-                    ? 'bg-card text-primary border-2 border-primary'
-                    : 'bg-background text-muted-foreground border-border'
-                }`}
-              >
-                {d}
-              </div>
-            );
-          })}
+          {weekStrip.map((day, i) => (
+            <div
+              key={i}
+              className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center text-[11px] font-bold border ${
+                day.completed
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : day.isToday
+                  ? 'bg-card text-primary border-2 border-primary'
+                  : 'bg-background text-muted-foreground border-border'
+              }`}
+            >
+              {day.label}
+            </div>
+          ))}
         </div>
       </Card>
 
@@ -346,7 +379,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         </Card>
       </div>
 
-      {/* Bottom row — placeholders until generated from real session feedback */}
+      {/* Bottom row — real, drawn from the action plan generated for the most recent interview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
@@ -354,23 +387,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
               <MessageSquare className="w-[18px] h-[18px]" />
               Quick Feedback
             </div>
-            <Badge variant="outline" className="text-[11px]">Preview</Badge>
+            <Badge variant="outline" className="text-[11px]">From your last session</Badge>
           </div>
-          {[
-            { good: true, label: 'Thoughtful, well-organised answers', desc: 'You structured your responses with a clear beginning, middle, and end.' },
-            { good: true, label: 'Strong opening answer', desc: 'Your "tell me about yourself" response was well structured.' },
-            { good: false, label: 'Pace was a little fast', desc: 'Try pausing briefly before answering tricky questions.' },
-          ].map((item, i) => (
-            <div key={i} className="flex gap-3 py-3 border-b border-border last:border-b-0 last:pb-0 first:pt-0">
-              <div className={`w-[30px] h-[30px] rounded-lg flex items-center justify-center flex-shrink-0 ${item.good ? 'bg-success/10' : 'bg-accent'}`}>
-                <CheckCircle2 className={`w-[15px] h-[15px] ${item.good ? 'text-success' : 'text-primary'}`} />
+          {!hasLatestFeedback ? (
+            <p className="text-sm text-muted-foreground py-4">Complete an interview to see feedback here.</p>
+          ) : goodPoints.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-4">No feedback notes were generated for your last session.</p>
+          ) : (
+            goodPoints.map((point, i) => (
+              <div key={i} className="flex gap-3 py-3 border-b border-border last:border-b-0 last:pb-0 first:pt-0">
+                <div className="w-[30px] h-[30px] rounded-lg flex items-center justify-center flex-shrink-0 bg-success/10">
+                  <CheckCircle2 className="w-[15px] h-[15px] text-success" />
+                </div>
+                <div className="text-[13px] text-foreground leading-relaxed pt-1.5">{point}</div>
               </div>
-              <div>
-                <div className="text-sm font-semibold text-foreground">{item.label}</div>
-                <div className="text-[13px] text-muted-foreground mt-0.5 leading-relaxed">{item.desc}</div>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </Card>
 
         <Card className="p-6">
@@ -379,23 +411,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
               <Lightbulb className="w-[18px] h-[18px]" />
               Tips for Your Next Interview
             </div>
-            <Badge variant="outline" className="text-[11px]">Preview</Badge>
+            <Badge variant="outline" className="text-[11px]">From your last session</Badge>
           </div>
-          {[
-            { label: 'Slow your pace on tricky questions', desc: 'Take a breath before answering — it reads as thoughtful, not unsure.' },
-            { label: 'Practise explaining your favourite book', desc: 'This came up in 3 of your last 5 sessions — have one ready.' },
-            { label: 'Bring one example to every answer', desc: 'Specific stories score higher than general statements.' },
-          ].map((item, i) => (
-            <div key={i} className="flex gap-3 py-3 border-b border-border last:border-b-0 last:pb-0 first:pt-0">
-              <div className="w-[26px] h-[26px] rounded-full bg-foreground text-background text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-                {i + 1}
+          {!hasLatestFeedback ? (
+            <p className="text-sm text-muted-foreground py-4">Complete an interview to get personalised tips here.</p>
+          ) : tips.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-4">No tips were generated for your last session.</p>
+          ) : (
+            tips.map((tip, i) => (
+              <div key={i} className="flex gap-3 py-3 border-b border-border last:border-b-0 last:pb-0 first:pt-0">
+                <div className="w-[26px] h-[26px] rounded-full bg-foreground text-background text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                  {i + 1}
+                </div>
+                <div className="text-[13px] text-foreground leading-relaxed pt-0.5">{tip}</div>
               </div>
-              <div>
-                <div className="text-sm font-semibold text-foreground">{item.label}</div>
-                <div className="text-[13px] text-muted-foreground mt-0.5 leading-relaxed">{item.desc}</div>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </Card>
       </div>
     </div>
