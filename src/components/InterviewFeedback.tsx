@@ -218,26 +218,26 @@ export const InterviewFeedback = ({
   } else if (isLogicPuzzles) {
     sections = [
       {
-        title: 'Pattern Recognition & Sequences',
-        icon: 'TrendingUp',
+        title: 'Logic',
+        icon: 'Brain',
         score: feedback.pattern_recognition_score || 0,
         feedback: feedback.detailed_feedback.pattern_recognition || '',
       },
       {
-        title: 'Logical Deduction & Reasoning',
-        icon: 'Brain',
+        title: 'Verbal Reasoning',
+        icon: 'BookOpen',
         score: feedback.logical_deduction_score || 0,
         feedback: feedback.detailed_feedback.logical_deduction || '',
       },
       {
-        title: 'Mathematical Logic & World Problems',
-        icon: 'Calculator',
+        title: 'Thinking Aloud & Adaptability',
+        icon: 'MessageCircle',
         score: feedback.mathematical_logic_score || 0,
         feedback: feedback.detailed_feedback.mathematical_logic || '',
       },
       {
-        title: 'Clarity of Thought',
-        icon: 'MessageCircle',
+        title: 'Lateral Thinking',
+        icon: 'TrendingUp',
         score: feedback.clarity_of_thought_score || 0,
         feedback: feedback.detailed_feedback.clarity_of_thought || '',
       },

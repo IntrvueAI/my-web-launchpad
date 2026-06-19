@@ -1,6 +1,48 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { mathsPack } from "./_shared/subjects/maths/pack.ts";
+import { logicPack } from "./_shared/subjects/logic/pack.ts";
+
+// Engine-driven subjects score from their OWN subject pack — the same file that drives the
+// interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
+// rubric. Maps the four assessed domains onto the existing four score columns.
+const ENGINE_PACKS: Record<string, any> = {
+  'maths-interview': mathsPack,
+  'logic-puzzles': logicPack,
+};
+
+function buildEngineDrivenSystemPrompt(pack: any): string {
+  const [d1, d2, d3, d4] = pack.domains;
+  return `You are an expert, warm evaluator for an 11+ ${pack.subject} mini-interview. You MUST respond with valid JSON only.
+
+${pack.scoringPhilosophy || ''}
+
+Score these FOUR dimensions, each 0-5 (total out of 20). Weight PROCESS and ADAPTABILITY far above the final answer — a child who reasons well but reaches a wrong answer outscores one who states a correct answer with no reasoning:
+1. ${d1}
+2. ${d2}
+3. ${d3}
+4. ${d4}
+
+Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write feedback that names one specific reasoning strength actually observed and one concrete next step — warm, concrete, process-focused, never reducing the child to their final answer.
+
+CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure (the four keys below map to ${d1}, ${d2}, ${d3}, ${d4} in order):
+{
+  "pattern_recognition_score": 0,
+  "logical_deduction_score": 0,
+  "mathematical_logic_score": 0,
+  "clarity_of_thought_score": 0,
+  "total_score": 0,
+  "detailed_feedback": {
+    "pattern_recognition": "feedback on ${d1}",
+    "logical_deduction": "feedback on ${d2}",
+    "mathematical_logic": "feedback on ${d3}",
+    "clarity_of_thought": "feedback on ${d4}",
+    "overall": "Overall assessment, process-focused",
+    "band_assessment": "Which band and why"
+  }
+}`;
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -550,8 +592,12 @@ try {
           .join('\n')
       : '';
 
-    // Get dynamic system prompt based on interview type
-    const systemPrompt = getSystemPrompt(interviewType || '11-plus', scoringSystem || '0-5');
+    // Get system prompt: engine-driven subjects use their own pack (qualities + scoring philosophy);
+    // everything else uses the legacy hardcoded rubric.
+    const enginePack = ENGINE_PACKS[interviewType as string];
+    const systemPrompt = enginePack
+      ? buildEngineDrivenSystemPrompt(enginePack)
+      : getSystemPrompt(interviewType || '11-plus', scoringSystem || '0-5');
 
     if (Deno.env.get('NODE_ENV') !== 'production') {
       console.log('Preparing OpenAI request...');

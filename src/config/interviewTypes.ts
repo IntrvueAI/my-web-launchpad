@@ -63,10 +63,10 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     duration: 30,
     scoringSystem: '0-5',
     scoringCriteria: [
-      'Pattern Recognition & Sequences',
-      'Logical Deduction & Reasoning',
-      'Mathematical Logic & World Problems',
-      'Clarity of Thought'
+      'Logic',
+      'Verbal Reasoning',
+      'Thinking Aloud & Adaptability',
+      'Lateral Thinking'
     ],
     difficultyLevel: 3,
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
@@ -300,34 +300,34 @@ const LOGIC_PUZZLES_CONFIG: InterviewTypeConfig = {
   maxSectionScore: 5,
   sections: [
     {
-      id: 'pattern-recognition',
-      title: 'Pattern Recognition & Sequences',
-      iconName: 'TrendingUp',
-      description: 'Ability to identify patterns and predict sequences',
+      id: 'logic',
+      title: 'Logic',
+      iconName: 'Brain',
+      description: 'Following a chain of reasoning to a sound conclusion',
       scoreField: 'pattern_recognition_score',
       feedbackField: 'pattern_recognition'
     },
     {
-      id: 'logical-deduction',
-      title: 'Logical Deduction & Reasoning',
-      iconName: 'Brain',
-      description: 'Deductive reasoning and logical problem-solving skills',
+      id: 'verbal-reasoning',
+      title: 'Verbal Reasoning',
+      iconName: 'BookOpen',
+      description: 'Manipulating language, analogy, and concepts precisely',
       scoreField: 'logical_deduction_score',
       feedbackField: 'logical_deduction'
     },
     {
-      id: 'mathematical-logic',
-      title: 'Mathematical Logic & World Problems',
-      iconName: 'Calculator',
-      description: 'Mathematical reasoning and word problem solving',
+      id: 'thinking-aloud',
+      title: 'Thinking Aloud & Adaptability',
+      iconName: 'MessageCircle',
+      description: 'Narrating the thought process and adjusting when challenged',
       scoreField: 'mathematical_logic_score',
       feedbackField: 'mathematical_logic'
     },
     {
-      id: 'clarity-of-thought',
-      title: 'Clarity of Thought',
-      iconName: 'MessageCircle',
-      description: 'Ability to articulate reasoning clearly and logically',
+      id: 'lateral-thinking',
+      title: 'Lateral Thinking',
+      iconName: 'TrendingUp',
+      description: 'Stepping outside the first assumption',
       scoreField: 'clarity_of_thought_score',
       feedbackField: 'clarity_of_thought'
     }

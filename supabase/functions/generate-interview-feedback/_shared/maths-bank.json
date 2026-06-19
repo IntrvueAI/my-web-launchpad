@@ -1,0 +1,361 @@
+[
+  {
+    "id": "MA-AR-F01",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "foundation",
+    "question": "What is 7 times 8?",
+    "answer": "56",
+    "explanation": "Seven eights are fifty-six."
+  },
+  {
+    "id": "MA-AR-F02",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "foundation",
+    "question": "What is 64 divided by 8?",
+    "answer": "8",
+    "explanation": "Eight eights are sixty-four, so 64 divided by 8 is 8."
+  },
+  {
+    "id": "MA-AR-S01",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "standard",
+    "question": "Work this out for me: three thousand two hundred and five minus one thousand six hundred and forty-eight.",
+    "answer": "1557",
+    "modelReasoningPath": "Recognise this is a column subtraction that will need borrowing. Set it out as 3205 take away 1648, lined up by place value. Work right to left: units 5 take away 8 can't be done, so borrow a ten to make 15 take away 8, which is 7. Carry the borrows carefully through the tens, hundreds and thousands. At the end, sanity-check the size: 3200 minus 1600 is about 1600, so an answer near 1557 is sensible.",
+    "rubric": {
+      "strong": "Sets it out by place value, borrows correctly across columns, narrates each step, and sanity-checks the size of the answer.",
+      "developing": "Has the right idea (column subtraction) but needs a prompt on a borrow, or reaches the answer without checking it.",
+      "weak": "Subtracts the smaller digit from the larger in each column regardless of position, or cannot start until the method is named.",
+      "finalAnswerNote": "Correct final answer is 1557."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Subtracts the smaller digit from the larger in each column (e.g. does 8 take away 5)",
+        "reveals": "Hasn't understood borrowing or place value"
+      },
+      {
+        "mistake": "Forgets to reduce a column after borrowing from it",
+        "reveals": "Loses track of the running state of the calculation"
+      },
+      {
+        "mistake": "Gives an answer with no check",
+        "reveals": "No habit of estimating to catch slips"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Talk me through just the units column first.",
+        "goodResponse": "Explains that five take away eight needs a borrow, giving fifteen take away eight is seven."
+      },
+      {
+        "probe": "Roughly how big should the answer be, before you work it out exactly?",
+        "goodResponse": "Estimates about one thousand six hundred, since 3200 minus 1600 is 1600."
+      }
+    ],
+    "hints": [
+      "How could you set these two numbers out so the columns line up neatly?",
+      "Look at the units: five take away eight. We can't do that yet — what could we borrow?",
+      "Borrow one ten so it becomes fifteen take away eight. What does the units column give you, and what happens to the tens column?"
+    ]
+  },
+  {
+    "id": "MA-AR-S02",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "standard",
+    "question": "What is the value of the digit 7 in the number four thousand seven hundred and twenty-eight?",
+    "answer": "700",
+    "explanation": "The 7 is in the hundreds column, so it is worth 7 times 100, which is 700."
+  },
+  {
+    "id": "MA-AR-X01",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "stretch",
+    "question": "What is 17 times 23?",
+    "answer": "391",
+    "explanation": "17 times 20 is 340, and 17 times 3 is 51; 340 plus 51 is 391."
+  },
+  {
+    "id": "MA-AR-X02",
+    "subject": "maths",
+    "topic": "arithmetic",
+    "difficulty": "stretch",
+    "question": "Using order of operations, what is 6 plus 2 times 5?",
+    "answer": "16",
+    "explanation": "Multiply first: 2 times 5 is 10, then add 6 to get 16."
+  },
+  {
+    "id": "MA-FD-F01",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "foundation",
+    "question": "What is one half of 18?",
+    "answer": "9",
+    "explanation": "Half of 18 is 9."
+  },
+  {
+    "id": "MA-FD-F02",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "foundation",
+    "question": "What is 25 percent of 80?",
+    "answer": "20",
+    "explanation": "25 percent is one quarter, and 80 divided by 4 is 20."
+  },
+  {
+    "id": "MA-FD-S01",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "standard",
+    "question": "What is three quarters of 60?",
+    "answer": "45",
+    "explanation": "60 divided by 4 is 15, then 15 times 3 is 45."
+  },
+  {
+    "id": "MA-FD-S02",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "standard",
+    "question": "Write 0.6 as a fraction in its simplest form.",
+    "answer": "3/5",
+    "explanation": "0.6 is six tenths, which simplifies to three fifths."
+  },
+  {
+    "id": "MA-FD-X01",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "stretch",
+    "question": "A coat costs 80 pounds and is reduced by 15 percent in a sale. What is the new price?",
+    "answer": "68",
+    "explanation": "15 percent of 80 is 12, so the new price is 80 minus 12, which is 68 pounds."
+  },
+  {
+    "id": "MA-FD-X02",
+    "subject": "maths",
+    "topic": "fractions-decimals-percent",
+    "difficulty": "stretch",
+    "question": "What is two thirds of three quarters?",
+    "answer": "1/2",
+    "explanation": "Multiply the fractions: two thirds times three quarters is six twelfths, which is one half."
+  },
+  {
+    "id": "MA-GM-F01",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "foundation",
+    "question": "How many sides does a hexagon have?",
+    "answer": "6",
+    "explanation": "A hexagon has six sides."
+  },
+  {
+    "id": "MA-GM-F02",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "foundation",
+    "question": "What is the perimeter of a square with sides of 5 centimetres?",
+    "answer": "20",
+    "explanation": "Four sides of 5 centimetres: 4 times 5 is 20 centimetres."
+  },
+  {
+    "id": "MA-GM-S01",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "standard",
+    "question": "What is the area of a rectangle that is 7 centimetres long and 5 centimetres wide?",
+    "answer": "35",
+    "explanation": "Area is length times width: 7 times 5 is 35 square centimetres."
+  },
+  {
+    "id": "MA-GM-S02",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "standard",
+    "question": "How many minutes are there between quarter past three and ten to four?",
+    "answer": "35",
+    "explanation": "From 3:15 to 3:50 is 35 minutes."
+  },
+  {
+    "id": "MA-GM-X01",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "stretch",
+    "question": "Two angles on a straight line; one is 110 degrees. What is the other?",
+    "answer": "70",
+    "explanation": "Angles on a straight line add up to 180, so the other is 180 minus 110, which is 70 degrees."
+  },
+  {
+    "id": "MA-GM-X02",
+    "subject": "maths",
+    "topic": "geometry-measure",
+    "difficulty": "stretch",
+    "question": "What is the area of a triangle with base 8 centimetres and height 5 centimetres?",
+    "answer": "20",
+    "explanation": "Area is half base times height: a half of 8 times 5 is 20 square centimetres."
+  },
+  {
+    "id": "MA-RP-F01",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "foundation",
+    "question": "Share 10 sweets between two children in the ratio 1 to 1. How many does each get?",
+    "answer": "5",
+    "explanation": "One to one means an equal share, so each child gets 5."
+  },
+  {
+    "id": "MA-RP-F02",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "foundation",
+    "question": "If one pencil costs 20 pence, how much do 3 pencils cost?",
+    "answer": "60",
+    "explanation": "Three pencils cost 3 times 20 pence, which is 60 pence."
+  },
+  {
+    "id": "MA-RP-S01",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "standard",
+    "question": "Share 35 sweets between Amy and Ben in the ratio 3 to 4. How many does Ben get?",
+    "answer": "20",
+    "explanation": "3 plus 4 is 7 parts; 35 divided by 7 is 5 per part; Ben gets 4 times 5, which is 20."
+  },
+  {
+    "id": "MA-RP-S02",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "standard",
+    "question": "If 3 pens cost 1 pound 20, how much do 7 pens cost?",
+    "answer": "2.80",
+    "explanation": "One pen costs 1 pound 20 divided by 3, which is 40 pence; 7 times 40 pence is 2 pounds 80."
+  },
+  {
+    "id": "MA-RP-X01",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "stretch",
+    "question": "A recipe for 4 people needs 200 grams of flour. How much flour is needed for 10 people?",
+    "answer": "500",
+    "explanation": "200 divided by 4 is 50 grams per person; 50 times 10 is 500 grams."
+  },
+  {
+    "id": "MA-RP-X02",
+    "subject": "maths",
+    "topic": "ratio-proportion",
+    "difficulty": "stretch",
+    "question": "Red and blue counters are in the ratio 2 to 5. There are 14 red counters. How many blue counters are there?",
+    "answer": "35",
+    "explanation": "14 red is 7 times the 2, so each part is 7; blue is 5 times 7, which is 35."
+  },
+  {
+    "id": "MA-SQ-F01",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "foundation",
+    "question": "Here is a sequence: 2, 4, 6, 8, and so on. What is the next number?",
+    "answer": "10",
+    "explanation": "The pattern adds 2 each time, so after 8 comes 10."
+  },
+  {
+    "id": "MA-SQ-F02",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "foundation",
+    "question": "If a number plus 3 equals 10, what is the number?",
+    "answer": "7",
+    "explanation": "10 minus 3 is 7."
+  },
+  {
+    "id": "MA-SQ-S01",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "standard",
+    "question": "Here is a sequence: 2, 5, 8, 11, and so on. What is the next number?",
+    "answer": "14",
+    "explanation": "The pattern adds 3 each time, so 11 plus 3 is 14."
+  },
+  {
+    "id": "MA-SQ-S02",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "standard",
+    "question": "If 3 times a number, plus 4, equals 19, what is the number?",
+    "answer": "5",
+    "explanation": "3 times the number is 19 minus 4, which is 15, so the number is 15 divided by 3, which is 5."
+  },
+  {
+    "id": "MA-SQ-X01",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "stretch",
+    "question": "Here is a sequence: 1, 4, 9, 16, and so on. What is the next number, and what is the rule?",
+    "answer": "25",
+    "explanation": "These are square numbers; the next is 5 squared, which is 25."
+  },
+  {
+    "id": "MA-SQ-X02",
+    "subject": "maths",
+    "topic": "sequences-algebra",
+    "difficulty": "stretch",
+    "question": "The nth term of a sequence is 2n plus 1. What is the 10th term?",
+    "answer": "21",
+    "explanation": "2 times 10 is 20, plus 1 is 21."
+  },
+  {
+    "id": "MA-WP-F01",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "foundation",
+    "question": "There are 12 apples and you eat 4. How many are left?",
+    "answer": "8",
+    "explanation": "12 take away 4 is 8."
+  },
+  {
+    "id": "MA-WP-F02",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "foundation",
+    "question": "A pencil case holds 6 pens. How many pens are in 3 pencil cases?",
+    "answer": "18",
+    "explanation": "3 times 6 is 18."
+  },
+  {
+    "id": "MA-WP-S01",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "standard",
+    "question": "A bus has 52 seats. 38 are taken, then 9 more people get on. How many seats are now empty?",
+    "answer": "5",
+    "explanation": "38 plus 9 is 47 taken; 52 minus 47 is 5 empty."
+  },
+  {
+    "id": "MA-WP-S02",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "standard",
+    "question": "What is the mean of these five numbers: 4, 8, 6, 10 and 7?",
+    "answer": "7",
+    "explanation": "They add up to 35, and 35 divided by 5 is 7."
+  },
+  {
+    "id": "MA-WP-X01",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "stretch",
+    "question": "A shop sells pens at 3 for 90 pence. Sam has 3 pounds. How many pens can he buy?",
+    "answer": "10",
+    "explanation": "90 pence buys 3 pens, so 30 pence per pen; 300 pence divided by 30 is 10 pens."
+  },
+  {
+    "id": "MA-WP-X02",
+    "subject": "maths",
+    "topic": "word-problems",
+    "difficulty": "stretch",
+    "question": "Tom is twice as old as Sam. Together they are 18. How old is Tom?",
+    "answer": "12",
+    "explanation": "Their ages are in the ratio 2 to 1, so 3 parts make 18, each part is 6; Tom is 2 parts, which is 12."
+  }
+]
