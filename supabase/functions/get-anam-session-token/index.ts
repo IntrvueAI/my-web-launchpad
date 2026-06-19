@@ -79,6 +79,17 @@ const now = Date.now();
 const ignoreYoungerThan = new Date(now - 90 * 1000).toISOString();        // this attempt's own row
 const ignoreOlderThan = new Date(now - 30 * 60 * 1000).toISOString();     // stale/abandoned rows
 const supabaseService = createClient(supabaseUrl!, supabaseServiceKey!);
+
+// Self-heal: a genuinely live session is always younger than 90s at this point, so any of the
+// user's OWN active sessions older than that are abandoned (tab closed / refreshed without ending).
+// Mark them abandoned so they can never lock the user out of starting a new interview.
+await supabaseService
+  .from('interview_sessions')
+  .update({ status: 'abandoned', ended_at: new Date().toISOString() })
+  .eq('user_id', userData.user.id)
+  .eq('status', 'active')
+  .lt('created_at', ignoreYoungerThan);
+
 const { count: activeSessions } = await supabaseService
   .from('interview_sessions')
   .select('id', { count: 'exact', head: true })
