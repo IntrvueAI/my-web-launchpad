@@ -51,7 +51,7 @@ const chat: ChatComplete = async ({ messages, tools }) => {
     method: "POST",
     headers: { Authorization: `Bearer ${openAIApiKey}`, "Content-Type": "application/json" },
     // max_tokens caps the spoken reply so Clara physically can't ramble into paragraphs.
-    body: JSON.stringify({ model: "gpt-4.1", messages, tools, tool_choice: "auto", temperature: 0.7, max_tokens: 140 }),
+    body: JSON.stringify({ model: "gpt-4o", messages, tools, tool_choice: "auto", temperature: 0.7, max_tokens: 140 }),
   });
   if (!resp.ok) {
     const detail = await resp.text();
@@ -130,7 +130,9 @@ serve(async (req) => {
     const response: BrainResponse = { say: result.say, done: result.done, uiState: uiStateOf(result.state) };
     return json(response);
   } catch (err) {
-    console.error("interview-brain error:", (err as Error)?.message || err);
-    return json({ error: "Internal server error" }, 500);
+    const detail = (err as Error)?.message || String(err);
+    console.error("interview-brain error:", detail);
+    // Temporary: surface the underlying error so we can diagnose from the browser network tab.
+    return json({ error: "Internal server error", detail }, 500);
   }
 });
