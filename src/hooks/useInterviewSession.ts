@@ -207,7 +207,12 @@ export const useInterviewSession = (
       sessionLogger.logEvent('anam_token', 'Successfully obtained Anam session token').catch(() => {});
 
       console.log('🤖 Creating Anam client...');
-      const client = createClient(sessionToken);
+      // endOfSpeechSensitivity (0–1): lower = waits longer before deciding the student has finished,
+      // so a thinking pause or a breath doesn't get cut off. Default is 0.5; kids pause a lot, so we
+      // run it more patient. Lower further if she still interrupts; raise if replies feel laggy.
+      const client = createClient(sessionToken, {
+        voiceDetection: { endOfSpeechSensitivity: 0.3 },
+      });
       clientRef.current = client;
 
       // Anam fires MESSAGE_HISTORY_UPDATED when the student finishes speaking, with the full history
