@@ -15,13 +15,20 @@ import { AdminInterviews } from '@/components/admin/AdminInterviews';
 import { AdminUserFeedback } from '@/components/admin/AdminUserFeedback';
 import { AdminSystemHealth } from '@/components/admin/AdminSystemHealth';
 import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
-import { Shield, AlertTriangle } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Shield, LogOut } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { isAdmin, isLoading, error } = useAdminStatus();
+  const { user, signOut, signInWithGoogle } = useAuth();
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem('admin_unlocked') === '1');
   const [passcode, setPasscode] = useState('');
   const [passError, setPassError] = useState(false);
+
+  const handleSignOut = async () => {
+    sessionStorage.removeItem('admin_unlocked');
+    await signOut();
+  };
 
   const tryUnlock = () => {
     if (passcode.trim() === ADMIN_PASSCODE) {
@@ -72,6 +79,20 @@ export default function AdminDashboard() {
             />
             {passError && <p className="text-sm text-destructive">Incorrect passcode.</p>}
             <Button className="w-full" onClick={tryUnlock}>Unlock</Button>
+
+            <div className="pt-3 mt-1 border-t space-y-2 text-center">
+              <p className="text-xs text-muted-foreground">
+                {user ? `Signed in as ${user.email}` : 'Not signed in'} — switch to your admin account:
+              </p>
+              <Button variant="outline" className="w-full gap-2" onClick={() => signInWithGoogle()}>
+                Sign in with Google
+              </Button>
+              {user && (
+                <Button variant="ghost" size="sm" className="w-full gap-2" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4" /> Sign out
+                </Button>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -88,6 +109,12 @@ export default function AdminDashboard() {
           <div>
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
             <p className="text-muted-foreground">Manage users, credits, and system health</p>
+          </div>
+          <div className="ml-auto flex items-center gap-3">
+            {user && <span className="text-sm text-muted-foreground hidden sm:inline">{user.email}</span>}
+            <Button variant="outline" size="sm" className="gap-2" onClick={handleSignOut}>
+              <LogOut className="h-4 w-4" /> Sign out
+            </Button>
           </div>
         </div>
 
