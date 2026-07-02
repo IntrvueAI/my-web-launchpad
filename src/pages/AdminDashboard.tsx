@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   const [passError, setPassError] = useState(false);
 
   const tryUnlock = () => {
-    if (passcode === ADMIN_PASSCODE) {
+    if (passcode.trim() === ADMIN_PASSCODE) {
       sessionStorage.setItem('admin_unlocked', '1');
       setUnlocked(true);
     } else {
