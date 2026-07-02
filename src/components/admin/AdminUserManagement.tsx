@@ -173,7 +173,7 @@ export const AdminUserManagement = () => {
             User Management
           </CardTitle>
           <CardDescription>
-            Search for users and manage their credit balances
+            Search for a user by email or name, then click <span className="font-medium">Add credits</span> to grant them interview credits.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -222,18 +222,19 @@ export const AdminUserManagement = () => {
                       <div className="flex gap-2">
                         <Button
                           size="sm"
-                          variant="outline"
                           onClick={() => openCreditDialog(user, 'add')}
+                          className="gap-1"
                         >
-                          <Plus className="h-4 w-4" />
+                          <Plus className="h-4 w-4" /> Add credits
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => openCreditDialog(user, 'remove')}
                           disabled={user.credits === 0}
+                          className="gap-1"
                         >
-                          <Minus className="h-4 w-4" />
+                          <Minus className="h-4 w-4" /> Remove
                         </Button>
                       </div>
                     </TableCell>
