@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
+import { Pip } from '@/components/brand/Pip';
 import {
   Play,
   History as HistoryIcon,
@@ -27,10 +28,10 @@ const MAX_TOTAL_SCORE = 20;
 const MAX_SKILL_SCORE = 5;
 
 const SKILL_ROWS: { key: 'personalInsight' | 'reasoning' | 'extracurricular' | 'currentAwareness'; label: string; colorClass: string }[] = [
-  { key: 'personalInsight', label: 'Personal Insight & Expression', colorClass: 'bg-[#2E8AB8]' },
-  { key: 'reasoning', label: 'Reasoning & Intellectual Agility', colorClass: 'bg-primary' },
-  { key: 'extracurricular', label: 'Extracurricular Engagement', colorClass: 'bg-success' },
-  { key: 'currentAwareness', label: 'Current Awareness & Moral Reasoning', colorClass: 'bg-[#724DB2]' },
+  { key: 'personalInsight', label: 'Personal Insight & Expression', colorClass: 'bg-gold' },
+  { key: 'reasoning', label: 'Reasoning & Intellectual Agility', colorClass: 'bg-teal' },
+  { key: 'extracurricular', label: 'Extracurricular Engagement', colorClass: 'bg-primary' },
+  { key: 'currentAwareness', label: 'Current Awareness & Moral Reasoning', colorClass: 'bg-ink' },
 ];
 
 export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory, onManageDates }) => {
@@ -63,6 +64,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   const strongest = validSkills.length ? validSkills.reduce((a, b) => (b.value > a.value ? b : a)) : null;
   const weakest = validSkills.length ? validSkills.reduce((a, b) => (b.value < a.value ? b : a)) : null;
 
+  const hour = new Date().getHours();
+  const partOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+
   const daysUntilInterview = stats?.daysUntilInterview ?? null;
   const eyebrowText =
     daysUntilInterview === null
@@ -79,6 +83,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   const streak = stats?.streak ?? 0;
   const weekStrip = stats?.weekStrip ?? [];
   const upcomingSchoolInterviews = stats?.upcomingSchoolInterviews ?? [];
+  const nextInterview = upcomingSchoolInterviews[0] ?? null;
+  // Rough fill toward the interview (assumes a ~60-day prep window).
+  const countdownPct = nextInterview
+    ? Math.max(6, Math.min(100, Math.round((1 - nextInterview.daysUntil / 60) * 100)))
+    : 0;
 
   // Chart geometry for the "progress over time" sparkline
   const chartWidth = 460;
@@ -102,31 +111,49 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl space-y-6">
-      {/* Hero greeting */}
-      <div className="text-center py-2 pb-8">
-        {eyebrowText && (
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-accent text-primary text-sm font-semibold mb-5">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            {eyebrowText}
+      {/* Hero greeting — Pip + serif welcome + interview-day countdown (ref mock 1a) */}
+      <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 py-4 pb-6">
+        <Pip size={112} className="hidden sm:block" />
+        <div className="flex-1 min-w-0 text-center md:text-left">
+          <div className="text-xs font-bold uppercase tracking-[0.12em] text-gold mb-2.5">Pip says hello</div>
+          <h1 className="font-serif text-4xl md:text-[44px] font-semibold leading-[1.15] text-foreground">
+            Good {partOfDay}, {firstName}.
+          </h1>
+          <p className="mt-3 text-[17px] leading-relaxed text-muted-foreground max-w-xl mx-auto md:mx-0">
+            {nextInterview ? (
+              <>Your <strong className="text-foreground">{nextInterview.school}</strong> interview is in{' '}
+                <strong className="text-foreground">{nextInterview.daysUntil} {nextInterview.daysUntil === 1 ? 'day' : 'days'}</strong>.
+                {' '}One short practice today keeps you on track.</>
+            ) : (
+              <>One short practice a day keeps your thinking sharp — shall we warm up your thinking-aloud?</>
+            )}
+          </p>
+          <div className="mt-6 flex gap-3 flex-wrap justify-center md:justify-start">
+            <Button size="lg" className="rounded-full gap-2 shadow-md" onClick={onStartInterview}>
+              <Play className="w-4 h-4" />
+              Start today&rsquo;s practice
+            </Button>
+            <Button size="lg" variant="outline" className="rounded-full gap-2" onClick={onViewHistory}>
+              <HistoryIcon className="w-4 h-4" />
+              Review last session
+            </Button>
+          </div>
+        </div>
+        {nextInterview && (
+          <div className="w-full md:w-[230px] shrink-0 rounded-2xl bg-ink text-cream p-6">
+            <div className="text-[11.5px] font-bold uppercase tracking-[0.1em] text-cream/60">Interview day</div>
+            <div className="font-serif text-[40px] font-semibold mt-2 leading-none text-cream">
+              {nextInterview.daysUntil}
+              <span className="text-base font-sans font-medium text-cream/60"> {nextInterview.daysUntil === 1 ? 'day' : 'days'} to go</span>
+            </div>
+            <div className="mt-3.5 h-1.5 rounded-full bg-cream/15 overflow-hidden">
+              <div className="h-1.5 rounded-full bg-primary" style={{ width: `${countdownPct}%` }} />
+            </div>
+            <div className="mt-2.5 text-[12.5px] text-cream/60">
+              {nextInterview.school} · {new Date(`${nextInterview.date}T00:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}
+            </div>
           </div>
         )}
-        <h1 className="text-3xl md:text-[42px] font-bold leading-tight tracking-tight text-foreground">
-          Hello, {firstName} — <br />
-          <span className="text-primary">ready for your next interview?</span>
-        </h1>
-        <p className="mt-3 text-base text-muted-foreground max-w-md mx-auto leading-relaxed">
-          Pick up where you left off, or jump into a fresh mock session with instant feedback from your digital interviewer.
-        </p>
-        <div className="mt-7 flex justify-center gap-3 flex-wrap">
-          <Button size="lg" className="rounded-xl gap-2 shadow-md" onClick={onStartInterview}>
-            <Play className="w-4 h-4" />
-            Start Your Next Interview
-          </Button>
-          <Button size="lg" variant="outline" className="rounded-xl gap-2" onClick={onViewHistory}>
-            <HistoryIcon className="w-4 h-4" />
-            View Past Sessions
-          </Button>
-        </div>
       </div>
 
       {/* Stats row */}
@@ -134,8 +161,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         {/* Interviews completed */}
         <Card className="p-6">
           <div className="flex items-center gap-2 mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            <div className="w-[26px] h-[26px] rounded-lg bg-winter-frost flex items-center justify-center">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#2E8AB8]" />
+            <div className="w-[26px] h-[26px] rounded-lg bg-muted flex items-center justify-center">
+              <CheckCircle2 className="w-3.5 h-3.5 text-teal" />
             </div>
             Interviews Completed
           </div>
@@ -143,10 +170,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
             <span className="text-4xl font-extrabold text-foreground">{totalSessions}</span>
             <span className="text-sm text-muted-foreground font-medium">sessions</span>
           </div>
-          <div className="mt-4 h-2 rounded-full bg-winter-frost overflow-hidden">
+          <div className="mt-4 h-2 rounded-full bg-muted overflow-hidden">
             <div
               className="h-full rounded-full"
-              style={{ width: `${completedPct}%`, background: 'linear-gradient(90deg, #2E8AB8, #85C2E0)' }}
+              style={{ width: `${completedPct}%`, background: 'hsl(var(--teal))' }}
             />
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
@@ -160,7 +187,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         <Card className="p-6 flex items-center gap-5">
           <div className="relative w-[88px] h-[88px] flex-shrink-0">
             <svg width="88" height="88" viewBox="0 0 88 88">
-              <circle cx="44" cy="44" r={radius} fill="none" stroke="hsl(var(--winter-frost))" strokeWidth="9" />
+              <circle cx="44" cy="44" r={radius} fill="none" stroke="hsl(var(--muted))" strokeWidth="9" />
               <circle
                 cx="44"
                 cy="44"
