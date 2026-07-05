@@ -5,6 +5,8 @@
     "topic": "lateral-thinking",
     "difficulty": 2,
     "questionType": "Lateral",
+    "title": "The Surgeon",
+    "tags": [],
     "question": "A boy is badly injured in a road accident and is rushed to hospital. The surgeon looks at him on the operating table and says: 'I cannot operate on this child - he is my son.' But the boy's father died in the accident. How is this possible?",
     "answer": "The surgeon is the boy's mother. (Also valid: a second father in a same-sex family, a stepfather/adoptive father - any answer that breaks the \"surgeon = male\" assumption.)",
     "modelReasoningPath": "The puzzle works by exploiting an unstated assumption that the surgeon is a man. A strong candidate either spots it fast or - more valuably - notices what they were assuming: \"I kept picturing the surgeon as a man.\" The real prize is self-awareness about the assumption, not the speed of the answer.",

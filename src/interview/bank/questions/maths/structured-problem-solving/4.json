@@ -5,6 +5,8 @@
     "topic": "structured-problem-solving",
     "difficulty": 4,
     "questionType": "Structured",
+    "title": "The Village Well",
+    "tags": [],
     "question": "A village has a single well. Every day, four families each take the same amount of water from it, and every night the well slowly refills itself at a steady rate. Now, here's the thing: if six families lived there instead of four, the well would run dry after exactly 12 days. But if only two families lived there, the well would never run dry at all - in fact it'd slowly overflow. So, if the well starts off completely full - how many days would it last with the four families?",
     "answer": "36 days.",
     "modelReasoningPath": "This is one of the hardest questions - reward structure and insight, not a complete solution. 1. Name the quantities: C = how much the well holds, r = how much it refills each night, d = how much one family uses a day. 2. The key insight: \"2 families would never run dry\" means the refill keeps pace with 2 families' use - so the break-even point is r = 2d (2 families' usage exactly equals the refill). 3. With 6 families, the well loses (6d − r) = (6d − 2d) = 4d each day, and it empties in 12 days. So C = 12 × 4d = 48d. 4. With 4 families, it loses (4d − 2d) = 2d a day. Time to empty = 48d ÷ 2d = 36 days.  The gold standard moment is realising 2 families = break-even (refill = 2 families' use) - that one idea unlocks everything.",

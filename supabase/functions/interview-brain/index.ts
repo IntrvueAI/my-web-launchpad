@@ -74,6 +74,30 @@ const chat: ChatComplete = async ({ messages, tools }) => {
   return { content: msg.content ?? "", toolCalls, raw };
 };
 
+/** Map a DB `questions` row (snake_case) to the engine's BankQuestion (camelCase). */
+function mapQuestionRow(r: any) {
+  return {
+    id: r.id, subject: r.subject, topic: r.topic, questionType: r.question_type,
+    difficulty: r.difficulty, title: r.title, question: r.question, answer: r.answer,
+    explanation: r.explanation, modelReasoningPath: r.model_reasoning_path,
+    rubric: r.rubric, commonMistakes: r.common_mistakes, liveProbes: r.live_probes,
+    hints: r.hints, options: r.options, tags: r.tags,
+  };
+}
+
+/** Load the question bank for a subject from the DB (source of truth); fall back to the bundled
+ *  JSON if the table isn't seeded yet, so interviews work before and after the migration. */
+async function loadBank(admin: any, subject: string): Promise<any[]> {
+  try {
+    const { data, error } = await admin
+      .from("questions").select("*").eq("subject", subject).eq("active", true);
+    if (!error && data && data.length) return data.map(mapQuestionRow);
+  } catch (e) {
+    console.warn("questions DB load failed, using bundled bank:", (e as Error)?.message || e);
+  }
+  return BANKS[subject] || [];
+}
+
 const uiStateOf = (s: AgentState): BrainResponse["uiState"] => ({
   mode: s.mode,
   topic: s.currentTopic,
@@ -111,7 +135,7 @@ serve(async (req) => {
     const pack = subject ? PACKS[subject] : undefined;
     if (!pack) return json({ error: "This interview type is not engine-driven" }, 400);
 
-    const deps = { bank: BANKS[subject], pack, chat };
+    const deps = { bank: await loadBank(admin, subject), pack, chat };
 
     let state: AgentState;
     if (action === "start" || !session.engine_state) {

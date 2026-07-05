@@ -69,6 +69,10 @@ export interface BankQuestion {
   /** The category / question-type this belongs to (e.g. "Numerical Reasoning"). Kept for the
    *  practice-mode picker and the dashboard now that difficulty is the star level, not the category. */
   questionType?: string;
+  /** Short human title for the admin/questions list (e.g. "Digit Reversal"). */
+  title?: string;
+  /** Free-form tags for filtering/organising in the admin Questions page. */
+  tags?: string[];
   question: string;       // 1. read verbatim, exactly as written
   answer: string;         // the final answer (server-side only — NEVER spoken)
   /** Optional short worked method (legacy field; superseded by modelReasoningPath). */

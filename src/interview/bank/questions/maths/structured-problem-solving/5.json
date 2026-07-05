@@ -5,6 +5,8 @@
     "topic": "structured-problem-solving",
     "difficulty": 5,
     "questionType": "Structured",
+    "title": "The Camel and the Desert",
+    "tags": [],
     "question": "A man has 3,000 bananas and a camel, and he wants to get as many bananas as he can across a desert that's 1,000 miles wide. The camel can only carry 1,000 bananas at a time, and here's the catch - it eats exactly one banana for every mile it walks. So what's the largest number of whole bananas the man can arrive with on the other side?",
     "answer": "833 bananas (the maths gives 833⅓, but bananas are whole, so 833).",
     "modelReasoningPath": "This is the hardest question in the bank - do not expect a full solution. Score the structural insights, not the final number. 1. See that 3,000 bananas can't be carried at once (the camel holds 1,000), so the camel must make multiple trips, shuttling bananas forward in stages and coming back for more. 2. See that return trips cost bananas too - the camel eats on the way back, so moving the whole pile forward is expensive while there's lots to carry. 3. The efficient method uses depots: move everything forward a short distance, then a bit further with fewer trips as the pile shrinks. For miles 0-200, with 3,000 bananas, the camel makes 3 trips forward and 2 back (5 legs × 200 = 1,000 eaten), leaving 2,000 at mile 200. From 200 to 533⅓, 2 forward + 1 back (3 legs), leaving 1,000. From 533⅓ to the end, one straight trip - arriving with 833.  The gold standard here is structural: realising multiple trips are forced, that return journeys are a real cost, and that stockpiling at intermediate points helps.",

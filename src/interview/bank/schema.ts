@@ -16,6 +16,8 @@ export const BankQuestionSchema = z.object({
   topic: z.string().min(1),
   difficulty: DifficultySchema, // star level (1 = easiest)
   questionType: z.string().optional(),
+  title: z.string().optional(),
+  tags: z.array(z.string()).optional(),
   question: z.string().min(1),
   answer: z.string().min(1),
   explanation: z.string().optional(),

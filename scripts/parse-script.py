@@ -179,6 +179,8 @@ def parse_block(cfg, quickref, section, qid, title, block):
         "topic": cfg["sections"][section],
         "difficulty": difficulty,
         "questionType": question_type,
+        "title": title,
+        "tags": [],
         "question": question,
         "answer": clean(" ".join(parts.get("answer", []))) or
                   ("Open discussion - there is no single right answer; score the quality of reasoning." if cfg["discussion"] else "(no single answer)"),

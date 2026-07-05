@@ -5,6 +5,8 @@
     "topic": "language-logic",
     "difficulty": 4,
     "questionType": "Language",
+    "title": "Exactly One Statement is True",
+    "tags": [],
     "question": "I'm going to read you four statements, and exactly one of them is true - your job is to tell me which. Statement A says: exactly one of these four statements is false. Statement B says: exactly two of them are false. Statement C says: exactly three of them are false. And statement D says: all four of them are false. So - which one is the true one?",
     "answer": "C.",
     "modelReasoningPath": "1. Translate the premise: if exactly one statement is true, then exactly three are false. 2. Which statement says \"exactly three are false\"? That's C - so C would be the true one, and that's self-consistent. 3. Sanity-check the others as the lone truth: A says one is false (would mean three true - contradicts \"only one true\"); B says two false (would mean two true - contradiction); D says four false (would mean none true, including itself - contradiction). Only C survives.  The skill is connecting the premise (\"exactly one true\") to its arithmetic consequence (\"exactly three false\") and finding the statement that asserts exactly that.",

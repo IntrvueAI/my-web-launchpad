@@ -5,6 +5,8 @@
     "topic": "verbal-conceptual",
     "difficulty": 4,
     "questionType": "Verbal",
+    "title": "The Rule About Rules",
+    "tags": [],
     "question": "Here's a claim for you: 'Every rule has an exception.' Is that claim itself a rule? And if it is - does it have an exception? Have a think out loud.",
     "answer": "(no single answer)",
     "modelReasoningPath": "1. Ask whether the claim counts as a rule (it's a general statement, so arguably yes). 2. Apply it to itself: if it's a rule, it has an exception → there's a rule without an exception → the claim is false. 3. Recognise the self-reference: the statement bites its own tail. Sit with the loop rather than forcing an answer.  Like A5, this tests whether a child can reason carefully about something genuinely unresolvable - and ideally enjoy it.",

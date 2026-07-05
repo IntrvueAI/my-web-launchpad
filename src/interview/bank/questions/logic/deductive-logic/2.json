@@ -5,6 +5,8 @@
     "topic": "deductive-logic",
     "difficulty": 2,
     "questionType": "Deductive",
+    "title": "The Odd One Out (Animals)",
+    "tags": [],
     "question": "Which is the odd one out: dog, cat, whale, bat, snake? I want you to give me as many different answers as you can, each with a different reason.",
     "answer": "- Snake - only reptile; only one with no limbs. - Whale - only one living exclusively in water; can't survive on land. - Bat - only one capable of sustained flight. - Dog - only one routinely domesticated as a working animal; only canid. - Cat - only obligate carnivore; domestication angle.",
     "modelReasoningPath": "A strong candidate doesn't hunt for the answer - they realise the task is to generate multiple lenses and switch deliberately between them: taxonomy, habitat, locomotion, diet, relationship to humans. The quality is in naming a principle (\"by where they live…\", \"by how they move…\") rather than a one-off observation.",

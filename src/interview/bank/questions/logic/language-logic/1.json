@@ -5,6 +5,8 @@
     "topic": "language-logic",
     "difficulty": 1,
     "questionType": "Language",
+    "title": "What's the Connection?",
+    "tags": [],
     "question": "I'm going to give you three little analogies. For each one, fill in the missing word - and then tell me what the connection is. Here's the first: puppy is to dog as foal is to… what? Number two: author is to novel as composer is to… what? And the third one: map is to country as recipe is to… what?",
     "answer": "horse; symphony (or music); meal (or dish).  Relationships: - Puppy/foal → a young animal and the adult it becomes. - Author/composer → a creator and the work they produce. - Map/recipe → the interesting one: a representation of something that is not the thing itself. A map represents a country; a recipe describes a meal.",
     "modelReasoningPath": "The first two are warm-ups - easy, concrete relationships. A strong candidate sails through them while naming the rule, then meets the third and recognises it's a different kind of relationship: not \"young→adult\" or \"maker→made,\" but \"representation→reality.\" Articulating \"a recipe tells you how to make a meal but isn't the meal\" is the high-water mark.",

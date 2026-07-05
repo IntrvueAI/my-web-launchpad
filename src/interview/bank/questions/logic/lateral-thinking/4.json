@@ -5,6 +5,8 @@
     "topic": "lateral-thinking",
     "difficulty": 4,
     "questionType": "Lateral",
+    "title": "The Rope Bridge",
+    "tags": [],
     "question": "Four people need to cross a narrow rope bridge in the dark. The bridge can only hold two people at a time, and they've got just one torch between them - and nobody can cross without it. The thing is, they all walk at different speeds: one of them takes 1 minute to cross, one takes 2 minutes, one takes 5 minutes, and the slowest takes 10 minutes. And when two cross together, they can only go as fast as the slower of the two. So - what's the quickest time in which all four can get across?",
     "answer": "17 minutes.  Optimal schedule: 1. 1 & 2 cross → 2 min elapsed. 2. 1 returns with torch → 3 min. 3. 5 & 10 cross → 13 min. 4. 2 returns with torch → 15 min. 5. 1 & 2 cross → 17 min.",
     "modelReasoningPath": "1. Try the obvious method - fastest person ferries everyone - and get 19 minutes (1+2, 1 back, 1+5, 1 back, 1+10 = 2+1+5+1+10). 2. Ask \"can I do better?\" - the crucial adaptive move. 3. Spot that the 10-minute person is the expensive one, and you only want to pay that cost once. So the two slow people (5 and 10) should cross together, paying 10 once instead of 5 and 10 separately. 4. Arrange fast people (1 and 2) to shuttle the torch around that single expensive crossing → 17.  What's being tested is systematic experimentation and the willingness to improve a working-but-suboptimal answer - not whether they nail 17 first try.",
