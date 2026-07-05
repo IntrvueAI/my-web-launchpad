@@ -31,7 +31,7 @@ import { LandingFooter } from '@/components/landing/LandingFooter';
 import { CreditsStore } from '@/components/credits/CreditsStore';
 import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
-import Snowfall from '@/components/Snowfall';
+import SeasonalEffect from '@/components/SeasonalEffect';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
@@ -159,7 +159,7 @@ const Index = () => {
   // Show landing page if not authenticated
   if (!user) {
     return <div className="min-h-screen relative">
-        <Snowfall />
+        <SeasonalEffect />
         <LandingHero onSignUp={() => navigate('/auth')} />
         <LandingInterviewTypes />
         <LandingProcess />

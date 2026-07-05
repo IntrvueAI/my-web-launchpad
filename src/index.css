@@ -190,24 +190,39 @@
   }
 }
 
-/* Snowfall animation */
-@keyframes snowfall {
+/* Seasonal ambient effects (snow / blossom / sun-motes / leaves) */
+@keyframes seasonal-fall {
   0% {
-    transform: translateY(-10px) rotate(0deg);
+    transform: translate(0, -10px) rotate(0deg);
     opacity: 0;
   }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
+  10% { opacity: 1; }
+  50% { transform: translate(24px, 50vh) rotate(180deg); }
+  90% { opacity: 1; }
   100% {
-    transform: translateY(100vh) rotate(360deg);
+    transform: translate(-16px, 100vh) rotate(360deg);
     opacity: 0;
   }
 }
 
-.animate-snowfall {
-  animation: snowfall linear infinite;
+@keyframes seasonal-rise {
+  0% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  50% { transform: translate(32px, -50vh) scale(1.05); }
+  85% { opacity: 1; }
+  100% {
+    transform: translate(-24px, -100vh) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.animate-seasonal-fall {
+  animation: seasonal-fall linear infinite;
+}
+
+.animate-seasonal-rise {
+  animation: seasonal-rise ease-in-out infinite;
 }
