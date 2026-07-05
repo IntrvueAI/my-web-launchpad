@@ -14,7 +14,7 @@ interface QRow {
   id: string; subject: string; topic: string; question_type: string | null;
   difficulty: number; title: string | null; question: string; answer: string | null;
   model_reasoning_path: string | null; rubric: any; common_mistakes: any; live_probes: any;
-  hints: any; tags: string[] | null; active: boolean;
+  hints: any; tags: string[] | null; active: boolean; warmup: boolean;
 }
 
 const db = () => (supabase as any).from('questions');
@@ -23,7 +23,7 @@ const blankDraft = (): any => ({
   id: '', subject: 'maths', topic: '', question_type: '', difficulty: 3, title: '',
   question: '', answer: '', model_reasoning_path: '',
   rubric_strong: '', rubric_developing: '', rubric_weak: '', rubric_final: '',
-  common_mistakes_json: '[]', live_probes_json: '[]', hints_text: '', tags_csv: '', active: true,
+  common_mistakes_json: '[]', live_probes_json: '[]', hints_text: '', tags_csv: '', active: true, warmup: true,
 });
 
 const rowToDraft = (r: QRow): any => ({
@@ -35,7 +35,7 @@ const rowToDraft = (r: QRow): any => ({
   common_mistakes_json: JSON.stringify(r.common_mistakes ?? [], null, 2),
   live_probes_json: JSON.stringify(r.live_probes ?? [], null, 2),
   hints_text: (r.hints ?? []).join('\n'),
-  tags_csv: (r.tags ?? []).join(', '), active: r.active,
+  tags_csv: (r.tags ?? []).join(', '), active: r.active, warmup: r.warmup ?? true,
 });
 
 const Ta = (p: any) => (
@@ -99,7 +99,7 @@ export const AdminQuestions: React.FC = () => {
       common_mistakes, live_probes,
       hints: draft.hints_text.split('\n').map((h: string) => h.trim()).filter(Boolean),
       tags: draft.tags_csv.split(',').map((t: string) => t.trim()).filter(Boolean),
-      active: !!draft.active,
+      active: !!draft.active, warmup: !!draft.warmup,
     };
     const { error } = await db().upsert(rowData);
     setSaving(false);
@@ -207,7 +207,10 @@ export const AdminQuestions: React.FC = () => {
               <div><Label>Live probes (JSON: [{'{'}"probe","goodResponse"{'}'}])</Label><Ta rows={3} value={draft.live_probes_json} onChange={(e: any) => set('live_probes_json', e.target.value)} className="font-mono text-xs" /></div>
               <div className="grid grid-cols-2 gap-3 items-end">
                 <div><Label>Tags (comma-separated)</Label><Input value={draft.tags_csv} onChange={(e) => set('tags_csv', e.target.value)} placeholder="e.g. algebra, hard" /></div>
-                <label className="flex items-center gap-2 text-sm pb-2"><input type="checkbox" checked={draft.active} onChange={(e) => set('active', e.target.checked)} className="h-4 w-4" /> Active (used in interviews)</label>
+                <div className="flex flex-col gap-1 pb-1">
+                  <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.active} onChange={(e) => set('active', e.target.checked)} className="h-4 w-4" /> Active (used in interviews)</label>
+                  <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.warmup} onChange={(e) => set('warmup', e.target.checked)} className="h-4 w-4" /> Allow as warm-up</label>
+                </div>
               </div>
             </div>
           )}

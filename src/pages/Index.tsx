@@ -6,6 +6,7 @@ import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
 import { MinigameSection } from '@/components/MinigameSection';
+import { QuestionsHub } from '@/components/questions/QuestionsHub';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { UserSettings } from '@/components/UserSettings';
 import { Dashboard } from '@/components/dashboard/Dashboard';
@@ -344,7 +345,7 @@ const Index = () => {
           </div>
         ) : currentView === 'questions' ? (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <MinigameSection />
+            <QuestionsHub onViewHistory={() => setCurrentView('history')} />
           </div>
         ) : currentView === 'interview' ? (
           <InterviewPlatform selectedInterviewType={selectedInterviewType} />

@@ -16,6 +16,7 @@ import { AdminUserFeedback } from '@/components/admin/AdminUserFeedback';
 import { AdminSystemHealth } from '@/components/admin/AdminSystemHealth';
 import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
 import { AdminQuestions } from '@/components/admin/AdminQuestions';
+import { AdminDailyQuestions } from '@/components/admin/AdminDailyQuestions';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -142,10 +143,11 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-7">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="questions">Questions</TabsTrigger>
+            <TabsTrigger value="daily">Daily Q</TabsTrigger>
             <TabsTrigger value="interviews">Interviews</TabsTrigger>
             <TabsTrigger value="feedback">Feedback</TabsTrigger>
             <TabsTrigger value="system">System</TabsTrigger>
@@ -162,6 +164,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="questions">
             <AdminQuestions />
+          </TabsContent>
+
+          <TabsContent value="daily">
+            <AdminDailyQuestions />
           </TabsContent>
 
           <TabsContent value="interviews">
