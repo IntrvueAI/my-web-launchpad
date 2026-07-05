@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import { SectionCard } from './SectionCard';
 
 interface ReviewItem {
   index: number; topic?: string; question: string; skipped?: boolean;
@@ -43,53 +43,42 @@ export function WrongLastTime({ onViewHistory }: { onViewHistory?: () => void })
   if (wrong.length === 0 && skipped.length === 0) return null;
 
   return (
-    <Card className="border-amber-500/40">
-      <CardHeader className="cursor-pointer" onClick={() => setOpen((o) => !o)}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-amber-500" />
-            <div>
-              <CardTitle className="text-lg">Review from last time</CardTitle>
-              <CardDescription>
-                {wrong.length} to revisit{skipped.length ? ` · ${skipped.length} skipped` : ''}
-                {type ? ` · ${type.replace(/-/g, ' ')}` : ''}
-              </CardDescription>
-            </div>
+    <SectionCard
+      icon={<AlertCircle className="h-5 w-5" />}
+      accent="amber"
+      title="Review from last time"
+      subtitle={`${wrong.length} to revisit${skipped.length ? ` · ${skipped.length} skipped` : ''}${type ? ` · ${type.replace(/-/g, ' ')}` : ''}`}
+      collapsible
+      open={open}
+      onToggle={() => setOpen((o) => !o)}
+    >
+      {wrong.map((r) => (
+        <div key={r.index} className="rounded-xl border bg-muted/20 p-3.5 space-y-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <Badge variant="outline" className="text-[10px]">Q{r.index}</Badge>
+            {r.topic && <Badge variant="secondary" className="text-[10px]">{r.topic}</Badge>}
+            {r.outcome && <Badge className="text-[10px] bg-amber-500/15 text-amber-700 border border-amber-500/30 hover:bg-amber-500/15">{r.outcome.replace(/_/g, ' ')}</Badge>}
           </div>
-          {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          <p className="text-sm font-medium leading-relaxed">{r.question}</p>
+          {r.your_answer && <p className="text-xs text-muted-foreground">You said: “{r.your_answer}”</p>}
+          {r.note && <p className="text-sm leading-relaxed"><span className="font-semibold">Why: </span>{r.note}</p>}
         </div>
-      </CardHeader>
-      {open && (
-        <CardContent className="space-y-3">
-          {wrong.map((r) => (
-            <div key={r.index} className="rounded-lg border bg-muted/30 p-3 space-y-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <Badge variant="outline" className="text-[10px]">Q{r.index}</Badge>
-                {r.topic && <Badge variant="secondary" className="text-[10px]">{r.topic}</Badge>}
-                {r.outcome && <Badge className="text-[10px] bg-amber-500/15 text-amber-700 border-amber-500/30">{r.outcome.replace(/_/g, ' ')}</Badge>}
-              </div>
-              <p className="text-sm font-medium">{r.question}</p>
-              {r.your_answer && <p className="text-xs text-muted-foreground">You said: “{r.your_answer}”</p>}
-              {r.note && <p className="text-sm"><span className="font-semibold">Why: </span>{r.note}</p>}
-            </div>
-          ))}
-          {skipped.map((r) => (
-            <div key={`s-${r.index}`} className="rounded-lg border border-dashed p-3">
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-[10px]">Q{r.index}</Badge>
-                <Badge variant="outline" className="text-[10px]">skipped</Badge>
-                {r.topic && <span className="text-xs text-muted-foreground">{r.topic}</span>}
-              </div>
-              <p className="text-sm mt-1">{r.question}</p>
-            </div>
-          ))}
-          {onViewHistory && (
-            <Button variant="ghost" size="sm" onClick={onViewHistory} className="w-full">
-              See the full transcript &amp; feedback
-            </Button>
-          )}
-        </CardContent>
+      ))}
+      {skipped.map((r) => (
+        <div key={`s-${r.index}`} className="rounded-xl border border-dashed p-3.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <Badge variant="outline" className="text-[10px]">Q{r.index}</Badge>
+            <Badge variant="outline" className="text-[10px]">skipped</Badge>
+            {r.topic && <span className="text-xs text-muted-foreground">{r.topic}</span>}
+          </div>
+          <p className="text-sm mt-1.5 leading-relaxed">{r.question}</p>
+        </div>
+      ))}
+      {onViewHistory && (
+        <Button variant="ghost" size="sm" onClick={onViewHistory} className="w-full text-muted-foreground">
+          See the full transcript &amp; feedback
+        </Button>
       )}
-    </Card>
+    </SectionCard>
   );
 }

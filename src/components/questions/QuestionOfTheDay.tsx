@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Check, X, Sparkles } from 'lucide-react';
+import { Check, X, Sparkles, RotateCcw } from 'lucide-react';
+import { SectionCard } from './SectionCard';
 
 interface DailyOption { key: string; text: string; correct: boolean; reasoning: string; }
 interface DailyQuestion {
@@ -33,67 +34,77 @@ export function QuestionOfTheDay() {
 
   if (!q || !Array.isArray(q.options) || q.options.length === 0) return null;
   const answered = picked !== null;
+  const correct = q.options.find((o) => o.key === picked)?.correct;
   const pick = (key: string) => {
     if (answered) return;
     setPicked(key);
     localStorage.setItem(`qotd-${q.active_date}`, key);
   };
+  const retry = () => { setPicked(null); localStorage.removeItem(`qotd-${q.active_date}`); };
 
   return (
-    <Card className="border-primary/30">
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-primary" />
-          <div>
-            <CardTitle className="text-lg">Question of the Day</CardTitle>
-            <CardDescription>
-              {q.title || 'Give it a go'}{q.subject ? ` · ${q.subject}` : ''}
-            </CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <p className="text-base font-medium">{q.question}</p>
-        <div className="grid gap-2">
-          {q.options.map((opt) => {
-            const isPicked = opt.key === picked;
-            const reveal = answered;
-            return (
-              <button
-                key={opt.key}
-                disabled={answered}
-                onClick={() => pick(opt.key)}
-                className={cn(
-                  'rounded-lg border p-3 text-left transition-colors',
-                  !answered && 'hover:border-primary hover:bg-accent',
-                  reveal && opt.correct && 'border-green-500 bg-green-500/10',
-                  reveal && isPicked && !opt.correct && 'border-red-500 bg-red-500/10',
-                  reveal && !opt.correct && !isPicked && 'opacity-70',
-                )}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span className="text-sm"><span className="font-semibold mr-2">{opt.key}.</span>{opt.text}</span>
-                  {reveal && opt.correct && <Check className="h-4 w-4 shrink-0 text-green-600" />}
-                  {reveal && isPicked && !opt.correct && <X className="h-4 w-4 shrink-0 text-red-600" />}
-                </div>
-                {reveal && (
-                  <p className={cn('mt-2 text-xs', opt.correct ? 'text-green-700' : 'text-muted-foreground')}>
+    <SectionCard
+      icon={<Sparkles className="h-5 w-5" />}
+      accent="primary"
+      title="Question of the Day"
+      subtitle={q.subject ? q.subject : 'A quick daily challenge'}
+      right={<Badge variant="secondary" className="hidden sm:inline-flex text-[10px] uppercase tracking-wide">Daily</Badge>}
+    >
+      {q.title && <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{q.title}</p>}
+      <p className="text-base font-medium leading-relaxed">{q.question}</p>
+
+      <div className="grid gap-2.5">
+        {q.options.map((opt) => {
+          const isPicked = opt.key === picked;
+          const showCorrect = answered && opt.correct;
+          const showWrong = answered && isPicked && !opt.correct;
+          return (
+            <button
+              key={opt.key}
+              disabled={answered}
+              onClick={() => pick(opt.key)}
+              className={cn(
+                'flex items-start gap-3 rounded-xl border p-3.5 text-left transition-all',
+                !answered && 'hover:border-primary/60 hover:bg-accent hover:shadow-sm',
+                showCorrect && 'border-green-500/60 bg-green-500/5',
+                showWrong && 'border-red-500/60 bg-red-500/5',
+                answered && !opt.correct && !isPicked && 'opacity-55',
+              )}
+            >
+              <span className={cn(
+                'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs font-bold',
+                showCorrect && 'border-green-500 bg-green-500 text-white',
+                showWrong && 'border-red-500 bg-red-500 text-white',
+                !answered && 'text-muted-foreground',
+              )}>
+                {showCorrect ? <Check className="h-4 w-4" /> : showWrong ? <X className="h-4 w-4" /> : opt.key}
+              </span>
+              <span className="flex-1 space-y-1 pt-0.5">
+                <span className="block text-sm font-medium">{opt.text}</span>
+                {answered && (
+                  <span className={cn('block text-xs leading-relaxed', opt.correct ? 'text-green-700' : 'text-muted-foreground')}>
                     {opt.reasoning}
-                  </p>
+                  </span>
                 )}
-              </button>
-            );
-          })}
-        </div>
-        {answered && (
-          <div className="rounded-lg bg-muted/50 p-3 text-sm">
-            <Badge className="mb-2" variant={q.options.find((o) => o.key === picked)?.correct ? 'default' : 'destructive'}>
-              {q.options.find((o) => o.key === picked)?.correct ? 'Correct!' : 'Not quite'}
-            </Badge>
-            {q.explanation && <p className="text-muted-foreground">{q.explanation}</p>}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {answered && (
+        <div className="flex items-start gap-3 rounded-xl bg-muted/50 p-3.5">
+          <Badge className={cn('shrink-0', correct ? 'bg-green-500 hover:bg-green-500' : 'bg-red-500 hover:bg-red-500', 'text-white')}>
+            {correct ? 'Correct!' : 'Not quite'}
+          </Badge>
+          <div className="flex-1 space-y-2">
+            {q.explanation && <p className="text-sm text-muted-foreground leading-relaxed">{q.explanation}</p>}
+            <Button variant="ghost" size="sm" onClick={retry} className="h-7 gap-1.5 px-2 text-xs text-muted-foreground">
+              <RotateCcw className="h-3.5 w-3.5" /> Try again
+            </Button>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+      )}
+    </SectionCard>
   );
 }

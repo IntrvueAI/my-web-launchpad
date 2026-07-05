@@ -124,8 +124,8 @@ export function MinigameSection() {
     return (
       <section className="space-y-4">
         <div>
-          <h2 className="text-2xl font-bold">Practice questions</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-lg font-semibold">Quick practice</h2>
+          <p className="text-sm text-muted-foreground">
             Sharpen up with quick {QUESTIONS_PER_ROUND}-question rounds.
           </p>
         </div>
@@ -135,7 +135,7 @@ export function MinigameSection() {
               key={c.id}
               role="button"
               onClick={() => pickCategory(c)}
-              className="cursor-pointer p-5 transition-colors hover:border-primary hover:bg-accent"
+              className="cursor-pointer rounded-2xl border-border/60 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md"
             >
               <span className="font-semibold">{c.label}</span>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -152,15 +152,15 @@ export function MinigameSection() {
   if (phase === 'subject' && category) {
     return (
       <Frame onBack={() => setPhase('category')}>
-        <h2 className="text-2xl font-bold">{category.label}</h2>
-        <p className="text-muted-foreground">Pick a type of question.</p>
+        <h2 className="text-lg font-semibold">{category.label}</h2>
+        <p className="text-sm text-muted-foreground">Pick a type of question.</p>
         <div className="grid gap-3 sm:grid-cols-2">
           {category.subjects.map((s) => (
             <Card
               key={s}
               role="button"
               onClick={() => startRound(s)}
-              className="cursor-pointer p-5 transition-colors hover:border-primary hover:bg-accent"
+              className="cursor-pointer rounded-2xl border-border/60 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md"
             >
               <span className="font-semibold">{s}</span>
             </Card>
