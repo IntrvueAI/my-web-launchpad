@@ -1,187 +1,113 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { getAllInterviewTypes, getInterviewTypesByCategory, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
-import { getScoreRange } from '@/utils/scoringSystem';
-import { Search, Clock, Target, Star } from 'lucide-react';
+import { getAllInterviewTypes, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
+import { cn } from '@/lib/utils';
 import { useCredits } from '@/hooks/useCredits';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+
 interface InterviewSelectionProps {
   onSelectInterview: (interviewType: InterviewType) => void;
 }
-export const InterviewSelection = ({
-  onSelectInterview
-}: InterviewSelectionProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
+
+// Which coach fronts each interview (falls back to Cara for anything unmapped).
+const INTERVIEWER: Record<string, string> = {
+  'maths-interview': 'Clara',
+  'logic-puzzles': 'Clara',
+  'current-affairs-interview': 'Nadia',
+};
+// Colour-block palette, cycled per card (mock 1b: coral / teal / gold).
+const PALETTE = ['bg-primary', 'bg-teal', 'bg-gold'];
+
+const difficultyLabel = (level: number) =>
+  level === 1 ? 'Beginner' : level === 2 ? 'Intermediate' : level === 3 ? 'Advanced' : 'All levels';
+
+export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const allInterviewTypes = getAllInterviewTypes();
   const { credits } = useCredits();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [pendingInterview, setPendingInterview] = useState<InterviewType | null>(null);
 
-  // Filter interview types based on search and category
-  const filteredInterviewTypes = allInterviewTypes.filter(interview => {
-    const matchesSearch = interview.name.toLowerCase().includes(searchQuery.toLowerCase()) || interview.description.toLowerCase().includes(searchQuery.toLowerCase()) || interview.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesCategory = !selectedCategory || interview.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-  const getDifficultyLabel = (level: number) => {
-    switch (level) {
-      case 1:
-        return 'Beginner';
-      case 2:
-        return 'Intermediate';
-      case 3:
-        return 'Advanced';
-      default:
-        return 'Unknown';
+  const filtered = allInterviewTypes.filter(
+    (iv) => !selectedCategory || iv.category === selectedCategory,
+  );
+
+  const launch = (interview: InterviewType) => {
+    const cost = interview.costCredits ?? 1;
+    if (cost === 0 || (credits ?? 0) <= 0) {
+      onSelectInterview(interview);
+      return;
     }
+    setPendingInterview(interview);
+    setConfirmOpen(true);
   };
-  const getDifficultyColor = (level: number) => {
-    switch (level) {
-      case 1:
-        return 'green';
-      case 2:
-        return 'yellow';
-      case 3:
-        return 'red';
-      default:
-        return 'gray';
-    }
-  };
-  return <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">Choose Your Interview Type</h1>
-        <p className="text-muted-foreground">
-          Select the type of interview you'd like to practice
-        </p>
-      </div>
 
-      {/* Search and Filters */}
-      <div className="space-y-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input placeholder="Search interviews by name, description, or tags..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" />
-        </div>
-
-         {/* Category Filters - Mobile Optimized */}
-        <div className="flex flex-wrap gap-2">
-          <Button 
-            variant={selectedCategory === null ? "default" : "outline"} 
-            size="sm" 
-            onClick={() => setSelectedCategory(null)}
-            className="min-h-[36px] text-xs md:text-sm"
-          >
-            All Categories
-          </Button>
-          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => 
-            <Button 
-              key={key} 
-              variant={selectedCategory === key ? "default" : "outline"} 
-              size="sm" 
-              onClick={() => setSelectedCategory(key)}
-              className="min-h-[36px] text-xs md:text-sm"
-            >
-              {category.name}
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Interview Cards - Mobile Optimized Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
-        {filteredInterviewTypes.map(interview => {
-        const scoreRange = getScoreRange(interview.scoringSystem, interview.id);
-        return <Card key={interview.id} className="hover:shadow-lg transition-shadow group border-2 hover:border-primary/30">
-              <CardHeader className="p-4 md:p-6">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2 flex-1">
-                    <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-lg leading-tight">
-                      <span>{interview.name}</span>
-                      {interview.id === '11-plus' && <Badge variant="secondary" className="text-xs w-fit">
-                          <Star className="h-3 w-3 mr-1" />
-                          Popular
-                        </Badge>}
-                    </CardTitle>
-                    <CardDescription className="text-sm leading-relaxed">{interview.description}</CardDescription>
-                  </div>
-                </div>
-                
-                {/* Interview Details - Mobile Optimized */}
-                <div className="flex flex-wrap gap-2 mt-3">
-                  <Badge variant="outline" className="text-xs">
-                    {INTERVIEW_CATEGORIES[interview.category].name}
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    {getDifficultyLabel(interview.difficultyLevel)}
-                  </Badge>
-                </div>
-              </CardHeader>
-              
-              <CardContent className="p-4 md:p-6 pt-0">
-                <div className="space-y-4">
-                  {/* Interview Info - Mobile Responsive */}
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <span className="text-xs md:text-sm">{interview.duration} min</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Target className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      <span className="text-xs md:text-sm">0-20</span>
-                    </div>
-                  </div>
-
-                  {/* Assessment Criteria - Mobile Optimized */}
-                  <div>
-                    <h4 className="text-xs md:text-sm font-medium mb-2">Assessment Areas:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {interview.scoringCriteria.slice(0, 4).map((criteria, index) => <Badge key={index} variant="secondary" className="text-xs">
-                          {criteria.length > 12 ? `${criteria.substring(0, 12)}...` : criteria}
-                        </Badge>)}
-                      {interview.scoringCriteria.length > 4 && (
-                        <Badge variant="secondary" className="text-xs">
-                          +{interview.scoringCriteria.length - 4}
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Start Button - Mobile Touch Optimized */}
-                  <Button
-                    className="w-full min-h-[44px] text-sm font-medium transition-colors truncate"
-                    onClick={e => {
-                      e.stopPropagation();
-                      const cost = interview.costCredits ?? 1;
-                      if (cost === 0) {
-                        onSelectInterview(interview);
-                        return;
-                      }
-                      if ((credits ?? 0) > 0) {
-                        setPendingInterview(interview);
-                        setConfirmOpen(true);
-                      } else {
-                        onSelectInterview(interview);
-                      }
-                    }}>
-                    Start Interview
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>;
-      })}
-      </div>
-
-      {filteredInterviewTypes.length === 0 && <div className="text-center py-12">
-          <p className="text-muted-foreground">
-            No interviews match your search criteria. Try adjusting your search or filters.
+  return (
+    <div className="container mx-auto max-w-6xl px-4 md:px-8 py-6 space-y-8">
+      {/* Header + filter pills */}
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-3xl md:text-[38px] font-semibold">What shall we practise today?</h1>
+          <p className="mt-2.5 text-base text-muted-foreground">
+            Pick a session — Pip recommends starting with what feels hardest.
           </p>
-        </div>}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <FilterPill active={selectedCategory === null} onClick={() => setSelectedCategory(null)}>All</FilterPill>
+          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => (
+            <FilterPill key={key} active={selectedCategory === key} onClick={() => setSelectedCategory(key)}>
+              {category.name}
+            </FilterPill>
+          ))}
+        </div>
+      </div>
 
-      {/* Confirm consume credit dialog - Mobile Optimized */}
+      {/* Interviewer cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-[22px]">
+        {filtered.map((interview, i) => {
+          const interviewer = INTERVIEWER[interview.id] ?? 'Cara';
+          const color = PALETTE[i % PALETTE.length];
+          const isPick = filtered.length > 1 && i === filtered.length - 1;
+          const badge = interview.id === '11-plus' || i === 0 ? '★ Most popular' : isPick ? "Pip's pick for you" : null;
+          const pillText = color === 'bg-teal' ? 'text-[#1f6969]' : 'text-[#b0641f]';
+          return (
+            <div key={interview.id} className="flex flex-col rounded-[22px] border border-border bg-card overflow-hidden">
+              <div className={cn('relative h-[120px]', color)}>
+                {badge && (
+                  <span className="absolute top-4 right-4 rounded-full bg-white/25 px-3 py-[5px] text-[11.5px] font-bold text-white">
+                    {badge}
+                  </span>
+                )}
+                <div className="absolute -bottom-[26px] left-[22px] flex h-14 w-14 items-center justify-center rounded-full border-4 border-card bg-secondary text-lg font-extrabold text-ink">
+                  {interviewer.charAt(0)}
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col p-6 pt-[38px]">
+                <div className="font-serif text-xl font-semibold">{interview.name}</div>
+                <p className="mt-2 text-[13.5px] leading-[1.55] text-muted-foreground">{interview.description}</p>
+                <div className="mt-3.5 flex flex-wrap gap-2">
+                  <span className={cn('rounded-full bg-secondary px-[11px] py-[5px] text-[11.5px] font-bold', pillText)}>{interview.duration} min</span>
+                  <span className={cn('rounded-full bg-secondary px-[11px] py-[5px] text-[11.5px] font-bold', pillText)}>{difficultyLabel(interview.difficultyLevel)}</span>
+                </div>
+                <button
+                  onClick={() => launch(interview)}
+                  className={cn(
+                    'mt-[18px] w-full rounded-full py-3 text-sm font-bold transition-transform hover:-translate-y-0.5',
+                    isPick ? 'bg-primary text-primary-foreground shadow-[0_6px_16px_hsl(var(--primary)/0.28)]' : 'bg-ink text-cream',
+                  )}
+                >
+                  Start with {interviewer}
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="py-12 text-center text-muted-foreground">No sessions in this category yet.</p>
+      )}
+
+      {/* Confirm consume credit */}
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent className="mx-4 max-w-[calc(100vw-2rem)] md:max-w-md">
           <AlertDialogHeader>
@@ -207,5 +133,20 @@ export const InterviewSelection = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>;
+    </div>
+  );
 };
+
+function FilterPill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        'rounded-full px-[18px] py-[9px] text-[13px] font-semibold transition-colors',
+        active ? 'bg-ink text-cream' : 'border border-foreground/15 text-muted-foreground hover:text-foreground',
+      )}
+    >
+      {children}
+    </button>
+  );
+}

@@ -33,6 +33,14 @@ import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
 import SeasonalEffect from '@/components/SeasonalEffect';
 import { PipMark } from '@/components/brand/Pip';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
@@ -200,33 +208,29 @@ const Index = () => {
               )}
             </div>
             
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation — text pills, active filled ink (mock) */}
             {currentView !== 'interview' && (
-              <nav className="hidden lg:flex gap-2">
-                <Button variant={currentView === 'dashboard' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('dashboard') : setCurrentView('dashboard')} className="gap-2">
-                  <Home className="w-4 h-4" />
-                  Home
-                </Button>
-                <Button variant={currentView === 'selection' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')} className="gap-2">
-                  <Video className="w-4 h-4" />
-                  Practice
-                </Button>
-                <Button variant={currentView === 'questions' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('questions') : setCurrentView('questions')} className="gap-2">
-                  <ListChecks className="w-4 h-4" />
-                  Questions
-                </Button>
-                <Button variant={currentView === 'history' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('history') : setCurrentView('history')} className="gap-2">
-                  <History className="w-4 h-4" />
-                  History
-                </Button>
-                <Button variant={currentView === 'credits' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('credits') : setCurrentView('credits')} className="gap-2">
-                  <Wallet className="w-4 h-4" />
-                  Credits
-                </Button>
-                <Button variant={currentView === 'settings' ? 'default' : 'ghost'} size="sm" onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('settings') : setCurrentView('settings')} className="gap-2">
-                  <Settings className="w-4 h-4" />
-                  Settings
-                </Button>
+              <nav className="hidden lg:flex items-center gap-1 ml-3">
+                {([
+                  ['dashboard', 'Home'],
+                  ['selection', 'Practice'],
+                  ['history', 'My sessions'],
+                  ['questions', 'Questions'],
+                ] as const).map(([view, label]) => {
+                  const active = currentView === view;
+                  return (
+                    <button
+                      key={view}
+                      onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate(view) : setCurrentView(view)}
+                      className={cn(
+                        'px-4 py-2 rounded-full text-[13.5px] transition-colors',
+                        active ? 'bg-ink text-cream font-semibold' : 'text-muted-foreground hover:text-foreground font-medium',
+                      )}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </nav>
             )}
             
@@ -291,21 +295,36 @@ const Index = () => {
             )}
           </div>
           
-          {/* Desktop User Info */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-4">
-            <span className="text-xs lg:text-sm text-muted-foreground truncate max-w-32 lg:max-w-none">
-              {user.user_metadata?.full_name || user.email}
-            </span>
-            <Badge variant="outline" className="text-xs">
-              {credits ?? 0}
-            </Badge>
-            <Button variant="outline" size="sm" onClick={() => setCurrentView('credits')} className="hidden lg:flex">
-              Buy Credits
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleSignOut}>
-              <span className="hidden lg:inline">Sign Out</span>
-              <span className="lg:hidden">Out</span>
-            </Button>
+          {/* Desktop User Info — credits pill + avatar menu (mock) */}
+          <div className="hidden md:flex items-center gap-3.5">
+            <button
+              onClick={() => setCurrentView('credits')}
+              className="px-3.5 py-[7px] rounded-full border border-foreground/15 text-[12.5px] font-semibold text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {credits ?? 0} credits
+            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center font-bold text-[13px] text-ink hover:opacity-90 transition-opacity"
+                  aria-label="Account menu"
+                >
+                  {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52">
+                <DropdownMenuLabel className="truncate">{user.user_metadata?.full_name || user.email}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setCurrentView('settings')}>
+                  <Settings className="w-4 h-4 mr-2" /> Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCurrentView('credits')}>
+                  <Wallet className="w-4 h-4 mr-2" /> Buy credits
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           
           {/* Mobile User Info - Credits Badge Only */}
@@ -342,9 +361,7 @@ const Index = () => {
             onManageDates={() => setCurrentView('settings')}
           />
         ) : currentView === 'selection' ? (
-          <div className="container mx-auto px-4 py-8 max-w-6xl">
-            <InterviewSelection onSelectInterview={handleSelectInterview} />
-          </div>
+          <InterviewSelection onSelectInterview={handleSelectInterview} />
         ) : currentView === 'questions' ? (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
             <QuestionsHub onViewHistory={() => setCurrentView('history')} />
