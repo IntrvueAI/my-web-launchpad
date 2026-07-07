@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface SessionRow {
@@ -12,6 +15,7 @@ interface SessionRow {
   mode: string | null;
   status: string | null;
   started_at: string;
+  transcript: string | null;
 }
 
 const statusColor: Record<string, string> = {
@@ -28,12 +32,32 @@ export const AdminInterviews: React.FC = () => {
   const [emails, setEmails] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [viewing, setViewing] = useState<{ email: string; when: string; text: string } | null>(null);
+
+  const openTranscript = async (s: SessionRow) => {
+    const email = emails[s.user_id] || s.user_id.slice(0, 8) + '…';
+    const when = new Date(s.started_at).toLocaleString('en-GB');
+    if (s.transcript) { setViewing({ email, when, text: s.transcript }); return; }
+    // Older sessions saved the transcript only on the feedback row — fall back to that.
+    let text = 'No transcript stored for this session.';
+    if (s.session_reference) {
+      const { data } = await supabase
+        .from('feedback')
+        .select('transcription')
+        .eq('session_reference', s.session_reference)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if ((data as any)?.transcription) text = (data as any).transcription;
+    }
+    setViewing({ email, when, text });
+  };
 
   useEffect(() => {
     (async () => {
       const { data, error } = await (supabase as any)
         .from('interview_sessions')
-        .select('id, user_id, session_reference, interview_type, subject, mode, status, started_at')
+        .select('id, user_id, session_reference, interview_type, subject, mode, status, started_at, transcript')
         .order('started_at', { ascending: false })
         .limit(200);
       if (error) {
@@ -68,6 +92,7 @@ export const AdminInterviews: React.FC = () => {
                 <th className="p-3 font-medium">Status</th>
                 <th className="p-3 font-medium">Ref</th>
                 <th className="p-3 font-medium">When</th>
+                <th className="p-3 font-medium">Transcript</th>
               </tr>
             </thead>
             <tbody>
@@ -83,15 +108,32 @@ export const AdminInterviews: React.FC = () => {
                   </td>
                   <td className="p-3 font-mono text-xs">{s.session_reference || '—'}</td>
                   <td className="p-3 text-muted-foreground">{new Date(s.started_at).toLocaleString('en-GB')}</td>
+                  <td className="p-3">
+                    <Button size="sm" variant="ghost" className="gap-1.5 h-8" onClick={() => openTranscript(s)}>
+                      <FileText className="w-4 h-4" /> View
+                    </Button>
+                  </td>
                 </tr>
               ))}
               {rows.length === 0 && (
-                <tr><td colSpan={6} className="p-8 text-center text-muted-foreground">No interviews yet.</td></tr>
+                <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">No interviews yet.</td></tr>
               )}
             </tbody>
           </table>
         </div>
       </CardContent>
+
+      <Dialog open={!!viewing} onOpenChange={(o) => !o && setViewing(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Transcript — {viewing?.email}</DialogTitle>
+            <p className="text-xs text-muted-foreground">{viewing?.when}</p>
+          </DialogHeader>
+          <div className="overflow-y-auto whitespace-pre-wrap text-sm leading-relaxed rounded-lg bg-muted/40 p-4">
+            {viewing?.text}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };

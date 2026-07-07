@@ -554,6 +554,20 @@ try {
 
     const supabase = supabaseAdmin;
 
+    // Persist the raw transcript to the session row up front, so a student's words are kept even if
+    // the (expensive, failure-prone) feedback generation below errors out. Best-effort; never blocks.
+    if (sessionReference) {
+      try {
+        await supabaseAdmin
+          .from('interview_sessions')
+          .update({ transcript: sanitizedTranscription, transcript_saved_at: new Date().toISOString() })
+          .eq('session_reference', sessionReference)
+          .eq('user_id', userId);
+      } catch (e) {
+        console.warn('transcript persist failed (continuing):', (e as any)?.message || e);
+      }
+    }
+
     // Engine-driven interviews carry a structured evidence log on the session row. Prefer it: it is
     // cheaper and more reliable to score from than re-parsing the raw transcript, and it powers the
     // "questions asked / skipped" review the student sees.
