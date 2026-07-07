@@ -6,13 +6,12 @@ import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
 import { MinigameSection } from '@/components/MinigameSection';
-import { QuestionsHub } from '@/components/questions/QuestionsHub';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { UserSettings } from '@/components/UserSettings';
 import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks } from 'lucide-react';
+import { Home, Video, History, ArrowLeft, Settings, Wallet } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -216,7 +215,6 @@ const Index = () => {
                   ['dashboard', 'Home'],
                   ['selection', 'Practice'],
                   ['history', 'My sessions'],
-                  ['questions', 'Questions'],
                 ] as const).map(([view, label]) => {
                   const active = currentView === view;
                   return (
@@ -257,18 +255,9 @@ const Index = () => {
                   <Video className="w-4 h-4" />
                 </Button>
                 <Button
-                  variant={currentView === 'questions' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('questions') : setCurrentView('questions')}
-                  className="p-2"
-                  aria-label="Questions"
-                >
-                  <ListChecks className="w-4 h-4" />
-                </Button>
-                <Button
                   variant={currentView === 'history' ? 'default' : 'ghost'}
-                  size="sm" 
-                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('history') : setCurrentView('history')} 
+                  size="sm"
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('history') : setCurrentView('history')}
                   className="p-2"
                   aria-label="History"
                 >
@@ -363,10 +352,6 @@ const Index = () => {
           />
         ) : currentView === 'selection' ? (
           <InterviewSelection onSelectInterview={handleSelectInterview} />
-        ) : currentView === 'questions' ? (
-          <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <QuestionsHub onViewHistory={() => setCurrentView('history')} />
-          </div>
         ) : currentView === 'interview' ? (
           <InterviewPlatform selectedInterviewType={selectedInterviewType} />
         ) : currentView === 'history' ? (

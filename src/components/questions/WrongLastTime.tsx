@@ -3,8 +3,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertCircle } from 'lucide-react';
+import { Sprout } from 'lucide-react';
 import { SectionCard } from './SectionCard';
+import { PipMark } from '@/components/brand/Pip';
 
 interface ReviewItem {
   index: number; topic?: string; question: string; skipped?: boolean;
@@ -15,7 +16,7 @@ const WRONG = new Set(['incorrect', 'stuck', 'incomplete']);
 const isWrong = (r: ReviewItem) => !r.skipped && (WRONG.has(r.outcome || '') || r.band === 'weak');
 
 /** "What you got wrong last time — and why", pulled from the most recent interview's review log. */
-export function WrongLastTime({ onViewHistory }: { onViewHistory?: () => void }) {
+export function WrongLastTime({ onViewHistory, name = 'superstar' }: { onViewHistory?: () => void; name?: string }) {
   const { user } = useAuth();
   const [items, setItems] = useState<ReviewItem[] | null>(null);
   const [type, setType] = useState<string>('');
@@ -44,14 +45,20 @@ export function WrongLastTime({ onViewHistory }: { onViewHistory?: () => void })
 
   return (
     <SectionCard
-      icon={<AlertCircle className="h-5 w-5" />}
+      icon={<Sprout className="h-5 w-5" />}
       accent="amber"
-      title="Review from last time"
+      title="Let's grow from last time"
       subtitle={`${wrong.length} to revisit${skipped.length ? ` · ${skipped.length} skipped` : ''}${type ? ` · ${type.replace(/-/g, ' ')}` : ''}`}
       collapsible
       open={open}
       onToggle={() => setOpen((o) => !o)}
     >
+      <div className="flex items-center gap-2 rounded-xl bg-gold/10 p-3">
+        <PipMark size={22} />
+        <p className="text-sm font-medium text-[#5a4a2e]">
+          Getting these wrong is how you get better, {name}. Let&rsquo;s take another look together.
+        </p>
+      </div>
       {wrong.map((r) => (
         <div key={r.index} className="rounded-xl border bg-muted/20 p-3.5 space-y-1.5">
           <div className="flex items-center gap-1.5 flex-wrap">

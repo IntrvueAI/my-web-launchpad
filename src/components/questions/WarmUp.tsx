@@ -6,6 +6,8 @@ import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { Flame, Eye, RotateCcw } from 'lucide-react';
 import { SectionCard } from './SectionCard';
+import { PipMark } from '@/components/brand/Pip';
+import { encourage } from '@/lib/kid';
 
 interface WarmUpQuestion {
   id: string; subject: string; topic?: string; questionType?: string;
@@ -22,7 +24,7 @@ const SUBJECTS = [
 const stars = (n: number) => '★'.repeat(Math.max(0, n));
 
 /** Optional, self-paced warm-up drawn from the real interview bank. Think it through, then reveal. */
-export function WarmUp() {
+export function WarmUp({ name = 'superstar' }: { name?: string }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<WarmUpQuestion[] | null>(null);
@@ -88,6 +90,9 @@ export function WarmUp() {
               </div>
             ) : (
               <div className="space-y-2 rounded-lg border bg-background p-3 text-sm">
+                <p className="flex items-center gap-2 font-serif text-[15px] font-semibold text-foreground">
+                  <PipMark size={20} /> {encourage(name)}
+                </p>
                 {current.answer && <p><span className="font-semibold">Answer: </span>{current.answer}</p>}
                 {current.modelReasoningPath && (
                   <p className="text-muted-foreground leading-relaxed"><span className="font-semibold text-foreground">How to get there: </span>{current.modelReasoningPath}</p>

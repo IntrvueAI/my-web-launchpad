@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Video, History, Wallet, Settings, LogOut, ListChecks } from 'lucide-react';
+import { Video, History, Wallet, Settings, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MobileBottomNavProps {
@@ -35,17 +35,6 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           >
             <Video className="w-4 h-4" />
             <span className="text-xs">Practice</span>
-          </Button>
-
-          {/* Questions */}
-          <Button
-            variant={currentView === 'questions' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => onViewChange('questions')}
-            className="flex-col h-auto py-2 px-2 gap-1 min-w-0"
-          >
-            <ListChecks className="w-4 h-4" />
-            <span className="text-xs">Questions</span>
           </Button>
 
           {/* History */}

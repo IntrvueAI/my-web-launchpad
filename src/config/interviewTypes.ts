@@ -103,24 +103,6 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     engineDriven: true,
     engineSubject: 'maths'
   },
-  'verbal-interview': {
-    id: 'verbal-interview',
-    name: '11+ Verbal Reasoning Mock Interview',
-    description: 'A spoken verbal reasoning mock interview with Vera — talk through your thinking on 10 questions',
-    category: 'logic',
-    promptFile: 'academic/verbal-interview.md',
-    duration: 20,
-    scoringSystem: '0-5',
-    scoringCriteria: [
-      'Vocabulary & Word Knowledge',
-      'Verbal Reasoning & Deduction',
-      'Word Relationships & Patterns',
-      'Clarity of Explanation'
-    ],
-    difficultyLevel: 2,
-    tags: ['11+', 'verbal reasoning', 'mock interview', 'vocabulary', 'reasoning'],
-    icon: 'BookOpen'
-  },
   'current-affairs-interview': {
     id: 'current-affairs-interview',
     name: '11+ Current Affairs & Moral Reasoning Interview',

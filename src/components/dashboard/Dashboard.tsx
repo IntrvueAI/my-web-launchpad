@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { Pip, PipMark } from '@/components/brand/Pip';
+import { Star, Play } from 'lucide-react';
+import { QuestionOfTheDay } from '@/components/questions/QuestionOfTheDay';
+import { WarmUp } from '@/components/questions/WarmUp';
+import { WrongLastTime } from '@/components/questions/WrongLastTime';
+import { MinigameSection } from '@/components/MinigameSection';
+import { getStars } from '@/lib/kid';
 
 interface DashboardProps {
   onStartInterview: () => void;
@@ -39,6 +45,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
 
   const hour = new Date().getHours();
   const partOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+
+  // Live star count (awarded by the Question of the Day) — a little reward loop for the storyboard.
+  const [stars, setStars] = useState(0);
+  useEffect(() => {
+    setStars(getStars());
+    const onChange = () => setStars(getStars());
+    window.addEventListener('pip-stars-changed', onChange);
+    return () => window.removeEventListener('pip-stars-changed', onChange);
+  }, []);
 
   const totalSessions = stats?.totalSessions ?? 0;
   const averageScore = stats?.averageScore ?? 0;
@@ -84,7 +99,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
       <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 py-6">
         <Pip size={120} className="hidden sm:block" />
         <div className="flex-1 min-w-0 text-center md:text-left">
-          <div className="text-[13px] font-bold uppercase tracking-[0.12em] text-[#b0641f] mb-2.5">Pip says hello</div>
+          <div className="flex items-center gap-3 mb-2.5 justify-center md:justify-start">
+            <span className="text-[13px] font-bold uppercase tracking-[0.12em] text-[#b0641f]">Pip says hello</span>
+            {stars > 0 && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-gold/15 px-2.5 py-0.5 text-xs font-bold text-[#b0641f]">
+                <Star className="h-3 w-3 fill-current" /> {stars} {stars === 1 ? 'star' : 'stars'}
+              </span>
+            )}
+          </div>
           <h1 className="font-serif text-4xl md:text-[44px] font-semibold leading-[1.15] text-foreground">
             Good {partOfDay}, {firstName}.
           </h1>
@@ -122,6 +144,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
           </div>
         )}
       </div>
+
+      {/* Chapter: today's question + warm up */}
+      <Chapter title="Let's warm up your brain" subtitle="A daily puzzle and a few quick questions to get going." />
+      <div className="grid items-start gap-5 lg:grid-cols-2">
+        <QuestionOfTheDay name={firstName} />
+        <WarmUp name={firstName} />
+      </div>
+
+      {/* Chapter: progress */}
+      <Chapter title="How you're doing" subtitle="Your sessions, your score, and the skills you're building." />
 
       {/* Stats row — Practice sessions · Latest score · This week */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -230,6 +262,38 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
           </div>
         </Card>
       </div>
+
+      {/* Chapter: quick-fire game */}
+      <Chapter title="Play a quick round" subtitle="Ten fast questions — how many can you get right?" />
+      <MinigameSection />
+
+      {/* Chapter: review from last time */}
+      <WrongLastTime name={firstName} onViewHistory={onViewHistory} />
+
+      {/* Chapter: ready for a full practice */}
+      <Card className="rounded-[22px] bg-ink p-7 md:p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left border-0">
+        <Pip size={84} />
+        <div className="flex-1">
+          <h2 className="font-serif text-2xl md:text-[28px] font-semibold text-cream">Ready for the real thing, {firstName}?</h2>
+          <p className="text-cream/70 mt-1.5 text-[15px]">Pick a full practice interview and show Pip your best thinking. You&rsquo;ve got this!</p>
+        </div>
+        <Button size="lg" className="rounded-full px-8 font-bold shadow-[0_6px_16px_hsl(var(--primary)/0.35)]" onClick={onStartInterview}>
+          <Play className="w-4 h-4 mr-2" /> Start a practice
+        </Button>
+      </Card>
     </div>
   );
 };
+
+/** A small "storyboard chapter" divider — a Pip mark, a serif title and a friendly subtitle. */
+function Chapter({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <PipMark size={28} />
+      <div>
+        <h2 className="font-serif text-xl font-semibold leading-tight">{title}</h2>
+        <p className="text-sm text-muted-foreground">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
