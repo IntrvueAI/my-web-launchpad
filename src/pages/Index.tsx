@@ -194,7 +194,8 @@ const Index = () => {
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() => {
                   setSelectedInterviewType(null);
-                  showPaymentSuccess ? clearPaymentSuccessAndNavigate('dashboard') : setCurrentView('dashboard');
+                  if (showPaymentSuccess) clearPaymentSuccessAndNavigate('dashboard');
+                  else setCurrentView('dashboard');
                 }}
               >
                 <PipMark size={30} />

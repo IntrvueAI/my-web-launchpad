@@ -32,7 +32,8 @@ describe('validateEmail', () => {
   });
 
   it('rejects email longer than 254 chars', () => {
-    expect(validateEmail('a'.repeat(250) + '@b.c').isValid).toBe(false);
+    // 251 + "@b.c" (4) = 255 chars, just over the RFC 5321 limit of 254
+    expect(validateEmail('a'.repeat(251) + '@b.c').isValid).toBe(false);
   });
 });
 
