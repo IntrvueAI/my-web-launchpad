@@ -303,24 +303,29 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   }, [setMicMuted]);
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
 
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="interview-title mb-3">
-            {interviewType.name} Practice
-          </h1>
-          <p className="interview-subtitle mb-2">
-            {interviewType.description}
-          </p>
-          <p className="interview-instruction max-w-2xl mx-auto">
-            {interviewType.id === 'ielts' 
-              ? 'Practice your IELTS Speaking test with our AI examiner. Get Band Score feedback (0-9) on all four assessment criteria: Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, and Pronunciation.'
-              : 'Prepare for your interview with realistic practice sessions. Our AI interviewer will ask questions commonly used in entrance interviews and provide instant feedback to help you improve.'
-            }
-          </p>
+        {/* Compact top bar (deck style): recording state · title · question progress */}
+        <div className="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <div className="flex items-center gap-3">
+            {isStreaming && (
+              <span className="flex items-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 px-3 py-1.5">
+                <span className="h-2 w-2 rounded-full bg-destructive animate-pulsering" />
+                <span className="text-[11px] font-extrabold uppercase tracking-wide text-[#FCA5A5]">Recording</span>
+              </span>
+            )}
+            <span className="font-display text-[15px] font-semibold text-white">{interviewType.name}</span>
+          </div>
+          {isStreaming && brainUiState && (
+            <div className="text-[13px] font-extrabold text-muted-foreground">
+              Question <span className="text-white">{Math.min((brainUiState.questionIndex ?? 0) + 1, brainUiState.targetQuestions ?? 10)}</span> of {brainUiState.targetQuestions ?? 10}
+            </div>
+          )}
         </div>
+        {!isStreaming && !engineDriven && (
+          <p className="text-muted-foreground text-sm max-w-2xl mb-5">{interviewType.description}</p>
+        )}
 
         {/* Engine-driven setup gate (Practice vs Mock) — shown before connecting. */}
         {engineDriven && !setupChoice && !isStreaming && (
@@ -462,8 +467,28 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             </div>
           </div>
 
-          {/* Chat History Panel - Collapsible on Mobile */}
-          <div className="lg:block">
+          {/* Right column: current question + progress, then the conversation */}
+          <div className="lg:block space-y-4">
+            {isStreaming && brainUiState && (
+              <div className="tile p-5">
+                <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">Current question</div>
+                <div className="text-[15px] font-bold text-[#EAF0FA] leading-relaxed capitalize">
+                  {(brainUiState.topic || 'Warming up').replace(/-/g, ' ')}
+                </div>
+                <div className="mt-4 flex gap-1.5 flex-wrap">
+                  {Array.from({ length: brainUiState.targetQuestions ?? 10 }).map((_, i) => {
+                    const idx = brainUiState.questionIndex ?? 0;
+                    return (
+                      <span
+                        key={i}
+                        className="h-2 w-[22px] rounded-full"
+                        style={{ background: i < idx ? 'hsl(var(--emerald))' : i === idx ? 'hsl(var(--primary))' : 'rgba(255,255,255,.1)' }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <ChatHistory
               messages={chatHistory}
               isStreaming={isStreaming}

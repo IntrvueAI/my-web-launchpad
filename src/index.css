@@ -45,10 +45,10 @@
     --teal: 158 64% 52%;     /* alias → emerald (back-compat) */
     --gold: 43 96% 56%;      /* alias → amber (back-compat) */
 
-    /* Winter accent - subtle icy blue */
-    --winter: 200 60% 70%;
-    --winter-soft: 200 40% 85%;
-    --winter-frost: 200 30% 95%;
+    /* Legacy "winter" accents retuned to the dark scheme (avoid light-blue patches) */
+    --winter: 199 92% 60%;
+    --winter-soft: 210 30% 28%;
+    --winter-frost: 220 30% 18%;
 
     /* Status colors */
     --success: 158 64% 52%;

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Play, BookOpen, Brain, Users, Snowflake } from 'lucide-react';
+import { Play, BookOpen, Brain, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Pip } from '@/components/brand/Pip';
 import { SparklesText } from '@/components/ui/sparkles-text';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 interface LandingHeroProps {
@@ -13,20 +14,19 @@ export const LandingHero = ({
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-sm border-b border-border/50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/lovable-uploads/logo.png" alt="Intrvue.ai Logo" className="h-20 w-auto " />
-            
+          <div className="flex items-center gap-2.5">
+            <Pip size={40} float />
+            <span className="font-display text-2xl font-semibold tracking-tight text-white">intrvue</span>
           </div>
           <div className="flex items-center gap-3">
-            <Snowflake className="w-4 h-4 text-winter animate-pulse" />
-            <Button variant="outline" size="sm" onClick={onSignUp} className="text-orange-500 font-medium text-sm">
+            <Button variant="outline" size="sm" onClick={onSignUp} className="rounded-full font-extrabold text-sm">
               Sign In
             </Button>
           </div>
         </div>
       </header>
       
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-winter-frost/30 to-primary/5 overflow-hidden pt-20">
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-[#0F1830] to-primary/10 overflow-hidden pt-20">
       {/* Background Elements - with winter touches */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-24 h-24 bg-winter/20 rounded-full blur-xl animate-pulse" />
