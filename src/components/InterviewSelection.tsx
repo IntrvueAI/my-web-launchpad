@@ -1,107 +1,116 @@
 import { useState } from 'react';
 import { getAllInterviewTypes, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
 import { cn } from '@/lib/utils';
-import { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, Sparkles, type LucideIcon } from 'lucide-react';
 import { useCredits } from '@/hooks/useCredits';
+import { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, Sparkles, Search, Clock, Star, Play, type LucideIcon } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 interface InterviewSelectionProps {
   onSelectInterview: (interviewType: InterviewType) => void;
 }
 
-// Which coach fronts each interview (falls back to Cara for anything unmapped).
-const INTERVIEWER: Record<string, string> = {
-  'maths-interview': 'Clara',
-  'logic-puzzles': 'Clara',
-  'current-affairs-interview': 'Nadia',
-};
-// Colour-block palette, cycled per card (mock 1b: coral / teal / gold).
-const PALETTE = ['bg-primary', 'bg-teal', 'bg-gold'];
-// Each interview's picture — a friendly subject icon (matches interviewTypes `icon`).
 const ICONS: Record<string, LucideIcon> = { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen };
-
-const difficultyLabel = (level: number) =>
-  level === 1 ? 'Beginner' : level === 2 ? 'Intermediate' : level === 3 ? 'Advanced' : 'All levels';
+// Accent (top bar + icon tint) per interview.
+const ACCENT: Record<string, string> = {
+  '11-plus': '#FF7F50', 'maths-interview': '#38BDF8', 'logic-puzzles': '#8B5CF6',
+  'current-affairs-interview': '#34D399', demo: '#FBBF24',
+};
+const DIFF: Record<number, { label: string; cls: string }> = {
+  1: { label: 'Beginner', cls: 'text-emerald' },
+  2: { label: 'Intermediate', cls: 'text-amber' },
+  3: { label: 'Advanced', cls: 'text-[#F87171]' },
+};
 
 export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const allInterviewTypes = getAllInterviewTypes();
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState<string | null>(null);
   const { credits } = useCredits();
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [pendingInterview, setPendingInterview] = useState<InterviewType | null>(null);
+  const [pending, setPending] = useState<InterviewType | null>(null);
+  const all = getAllInterviewTypes();
 
-  const filtered = allInterviewTypes.filter(
-    (iv) => !selectedCategory || iv.category === selectedCategory,
-  );
+  const filtered = all.filter((iv) => {
+    if (category && iv.category !== category) return false;
+    if (!search) return true;
+    const s = search.toLowerCase();
+    return [iv.name, iv.description, ...(iv.tags || [])].some((v) => (v || '').toLowerCase().includes(s));
+  });
 
-  const launch = (interview: InterviewType) => {
-    const cost = interview.costCredits ?? 1;
-    if (cost === 0 || (credits ?? 0) <= 0) {
-      onSelectInterview(interview);
-      return;
-    }
-    setPendingInterview(interview);
-    setConfirmOpen(true);
+  const launch = (iv: InterviewType) => {
+    const cost = iv.costCredits ?? 1;
+    if (cost === 0 || (credits ?? 0) <= 0) { onSelectInterview(iv); return; }
+    setPending(iv); setConfirmOpen(true);
   };
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 md:px-8 py-6 space-y-8">
-      {/* Header + filter pills */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-3xl md:text-[38px] font-semibold">What shall we practise today?</h1>
-          <p className="mt-2.5 text-base text-muted-foreground">
-            Pick a session — Pip recommends starting with what feels hardest.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <FilterPill active={selectedCategory === null} onClick={() => setSelectedCategory(null)}>All</FilterPill>
-          {Object.entries(INTERVIEW_CATEGORIES).map(([key, category]) => (
-            <FilterPill key={key} active={selectedCategory === key} onClick={() => setSelectedCategory(key)}>
-              {category.name}
-            </FilterPill>
-          ))}
-        </div>
+    <div className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6">
+      <div className="text-center mb-5">
+        <h1 className="font-display text-[28px] font-semibold text-white">Choose your interview</h1>
+        <p className="mt-1.5 text-sm font-semibold text-muted-foreground">Pick what you&rsquo;d like to practise — each one earns XP!</p>
       </div>
 
-      {/* Interviewer cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-[22px]">
-        {filtered.map((interview, i) => {
-          const interviewer = INTERVIEWER[interview.id] ?? 'Cara';
-          const color = PALETTE[i % PALETTE.length];
-          const isPick = filtered.length > 1 && i === filtered.length - 1;
-          const badge = interview.id === '11-plus' || i === 0 ? '★ Most popular' : isPick ? "Pip's pick for you" : null;
-          const pillText = 'text-white/80';
-          const Icon = ICONS[interview.icon || ''] || Sparkles;
+      {/* Search */}
+      <div className="relative mb-3.5">
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search interviews by name, topic, or tag…"
+          className="w-full rounded-2xl border border-white/10 bg-white/[0.04] py-3 pl-10 pr-4 text-sm font-semibold text-white placeholder:text-muted-foreground focus:outline-none focus:border-primary/50"
+        />
+      </div>
+
+      {/* Category chips */}
+      <div className="flex gap-2.5 flex-wrap mb-5">
+        <button onClick={() => setCategory(null)} className={cn('chip', category === null && 'chip-on')}>All</button>
+        {Object.entries(INTERVIEW_CATEGORIES).map(([key, c]) => (
+          <button key={key} onClick={() => setCategory(key)} className={cn('chip', category === key && 'chip-on')}>{c.name}</button>
+        ))}
+      </div>
+
+      {/* Cards */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {filtered.map((iv) => {
+          const Icon = ICONS[iv.icon || ''] || Sparkles;
+          const accent = ACCENT[iv.id] || '#FF7F50';
+          const diff = DIFF[iv.difficultyLevel] || DIFF[2];
+          const areas = iv.scoringCriteria || [];
           return (
-            <div key={interview.id} className="flex flex-col rounded-[22px] border border-border bg-card overflow-hidden transition-transform hover:-translate-y-1">
-              <div className={cn('relative h-[120px]', color)}>
-                {badge && (
-                  <span className="absolute top-4 right-4 rounded-full bg-white/25 px-3 py-[5px] text-[11.5px] font-bold text-white">
-                    {badge}
-                  </span>
+            <div key={iv.id} className="tile p-0 overflow-hidden flex flex-col transition-transform hover:-translate-y-1">
+              <div style={{ height: 4, background: accent }} />
+              <div className="p-[18px] flex flex-col gap-3 flex-1">
+                <div className="flex items-center gap-2.5">
+                  <div className="h-10 w-10 rounded-xl flex items-center justify-center" style={{ background: `${accent}26` }}>
+                    <Icon className="h-5 w-5" style={{ color: accent }} />
+                  </div>
+                  <div className="font-extrabold text-[15px] text-white leading-tight">{iv.name}</div>
+                </div>
+                <p className="text-[12.5px] font-semibold text-muted-foreground leading-[1.5] line-clamp-2">{iv.description}</p>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[10.5px] font-extrabold text-[#AEB9D0] bg-white/5 px-2.5 py-[3px] rounded-full">{INTERVIEW_CATEGORIES[iv.category]?.name || iv.category}</span>
+                  <span className={cn('text-[10.5px] font-extrabold px-2.5 py-[3px] rounded-full bg-white/5', diff.cls)}>● {diff.label}</span>
+                </div>
+                <div className="flex gap-4 text-[12px] font-bold text-muted-foreground">
+                  <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {iv.duration} min</span>
+                  <span className="flex items-center gap-1.5 text-amber"><Star className="h-3.5 w-3.5 fill-current" /> up to {iv.duration * 8} XP</span>
+                </div>
+                {areas.length > 0 && (
+                  <div>
+                    <div className="text-[11px] font-extrabold text-[#7E8BA6] mb-1.5">ASSESSMENT AREAS</div>
+                    <div className="flex gap-1.5 flex-wrap">
+                      {areas.slice(0, 2).map((a) => (
+                        <span key={a} className="text-[10.5px] font-bold text-[#C7D2E4] bg-white/5 px-2 py-[3px] rounded-lg">{a.split(' ').slice(0, 2).join(' ')}</span>
+                      ))}
+                      {areas.length > 2 && <span className="text-[10.5px] font-bold text-[#C7D2E4] bg-white/5 px-2 py-[3px] rounded-lg">+{areas.length - 2}</span>}
+                    </div>
+                  </div>
                 )}
-                {/* Subject picture */}
-                <Icon className="absolute right-6 bottom-6 h-14 w-14 text-white/85" strokeWidth={1.75} />
-                <div className="absolute -bottom-[26px] left-[22px] flex h-14 w-14 items-center justify-center rounded-full border-4 border-card bg-white text-lg font-extrabold text-ink">
-                  {interviewer.charAt(0)}
-                </div>
-              </div>
-              <div className="flex flex-1 flex-col p-6 pt-[38px]">
-                <div className="font-serif text-xl font-semibold">{interview.name}</div>
-                <p className="mt-2 text-[13.5px] leading-[1.55] text-muted-foreground">{interview.description}</p>
-                <div className="mt-3.5 flex flex-wrap gap-2">
-                  <span className={cn('rounded-full bg-secondary px-[11px] py-[5px] text-[11.5px] font-bold', pillText)}>{interview.duration} min</span>
-                  <span className={cn('rounded-full bg-secondary px-[11px] py-[5px] text-[11.5px] font-bold', pillText)}>{difficultyLabel(interview.difficultyLevel)}</span>
-                </div>
                 <button
-                  onClick={() => launch(interview)}
-                  className={cn(
-                    'mt-[18px] w-full rounded-full py-3 text-sm font-bold transition-transform hover:-translate-y-0.5',
-                    isPick ? 'bg-primary text-primary-foreground shadow-[0_6px_16px_hsl(var(--primary)/0.28)]' : 'bg-ink text-cream',
-                  )}
+                  onClick={() => launch(iv)}
+                  className="mt-auto flex items-center justify-center gap-2 w-full rounded-xl py-3 text-sm font-extrabold text-white transition-transform hover:-translate-y-0.5"
+                  style={{ background: 'linear-gradient(135deg,#FF7F50,#F43F5E)' }}
                 >
-                  Start with {interviewer}
+                  <Play className="h-3.5 w-3.5 fill-current" /> {iv.costCredits === 0 ? 'Try free' : 'Start interview'}
                 </button>
               </div>
             </div>
@@ -109,31 +118,19 @@ export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProp
         })}
       </div>
 
-      {filtered.length === 0 && (
-        <p className="py-12 text-center text-muted-foreground">No sessions in this category yet.</p>
-      )}
+      {filtered.length === 0 && <p className="py-12 text-center text-muted-foreground">No interviews match your search.</p>}
 
-      {/* Confirm consume credit */}
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent className="mx-4 max-w-[calc(100vw-2rem)] md:max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-lg">Use 1 credit to start?</AlertDialogTitle>
             <AlertDialogDescription className="text-sm leading-relaxed">
-              Starting this interview will deduct 1 credit from your balance. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
+              Starting this interview will deduct 1 credit. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
             <AlertDialogCancel className="w-full sm:w-auto min-h-[44px]">Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              className="w-full sm:w-auto min-h-[44px]"
-              onClick={() => {
-                if (pendingInterview) {
-                  onSelectInterview(pendingInterview);
-                  setPendingInterview(null);
-                }
-                setConfirmOpen(false);
-              }}
-            >
+            <AlertDialogAction className="w-full sm:w-auto min-h-[44px]" onClick={() => { if (pending) { onSelectInterview(pending); setPending(null); } setConfirmOpen(false); }}>
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -142,17 +139,3 @@ export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProp
     </div>
   );
 };
-
-function FilterPill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'rounded-full px-[18px] py-[9px] text-[13px] font-semibold transition-colors',
-        active ? 'bg-ink text-cream' : 'border border-foreground/15 text-muted-foreground hover:text-foreground',
-      )}
-    >
-      {children}
-    </button>
-  );
-}
