@@ -3,16 +3,13 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { Pip } from '@/components/brand/Pip';
 import { Play, Calendar, Trophy, BarChart3, Flame, Zap, Award } from 'lucide-react';
-import { QuestionOfTheDay } from '@/components/questions/QuestionOfTheDay';
-import { WarmUp } from '@/components/questions/WarmUp';
-import { WrongLastTime } from '@/components/questions/WrongLastTime';
-import { MinigameSection } from '@/components/MinigameSection';
 import { cn } from '@/lib/utils';
 
 interface DashboardProps {
   onStartInterview: () => void;
   onViewHistory: () => void;
   onManageDates: () => void;
+  onAchievements?: () => void;
 }
 
 const MAX_TOTAL_SCORE = 20;
@@ -27,7 +24,7 @@ const SKILLS: { key: 'reasoning' | 'personalInsight' | 'currentAwareness' | 'ext
 
 const DATE_ACCENTS = ['#FF9E77', '#DCE4F2', '#DCE4F2'];
 
-export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory, onAchievements }) => {
   const { user } = useAuth();
   const { stats } = useDashboardStats();
 
@@ -103,7 +100,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         </button>
 
         {/* Level */}
-        <div className="rounded-[20px] p-[18px] text-white" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
+        <div onClick={onAchievements} className="rounded-[20px] p-[18px] text-white cursor-pointer transition-transform hover:-translate-y-0.5" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
           <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-85">Level</div>
           <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{level}<Trophy className="h-5 w-5" /></div>
           <div className="h-2 rounded-full bg-white/25 overflow-hidden"><div className="h-full rounded-full bg-white" style={{ width: `${xpPct}%` }} /></div>
@@ -179,6 +176,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
               </div>
             ))}
           </div>
+          {onAchievements && (
+            <button onClick={onAchievements} className="flex-none rounded-xl bg-white/[0.06] px-3.5 py-2 text-[13px] font-extrabold text-[#DCE4F2] hover:bg-white/10 transition-colors">See all →</button>
+          )}
         </div>
       )}
 
@@ -218,16 +218,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
           </div>
         </div>
       </div>
-
-      {/* Play + daily question + warm up */}
-      <div className="grid items-start gap-[13px] lg:grid-cols-2 pt-2">
-        <QuestionOfTheDay name={firstName} />
-        <WarmUp name={firstName} />
-      </div>
-
-      <MinigameSection />
-
-      <WrongLastTime name={firstName} onViewHistory={onViewHistory} />
     </div>
   );
 };

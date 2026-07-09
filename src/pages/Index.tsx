@@ -5,13 +5,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
-import { MinigameSection } from '@/components/MinigameSection';
+import { QuestionsHub } from '@/components/questions/QuestionsHub';
+import { AchievementsPage } from '@/components/AchievementsPage';
 import { FeedbackHistory } from '@/components/FeedbackHistory';
 import { UserSettings } from '@/components/UserSettings';
 import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Home, Video, History, ArrowLeft, Settings, Wallet } from 'lucide-react';
+import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -51,7 +52,7 @@ const Index = () => {
     setShowPostSignupForm
   } = useAuth();
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements'>('dashboard');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
 
@@ -145,7 +146,7 @@ const Index = () => {
   }, [showPaymentSuccess, refetchCredits]);
 
   // Function to clear URL parameters and dismiss payment success
-  const clearPaymentSuccessAndNavigate = (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions') => {
+  const clearPaymentSuccessAndNavigate = (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements') => {
     // Clear URL parameters
     const url = new URL(window.location.href);
     url.searchParams.delete('session_id');
@@ -214,6 +215,8 @@ const Index = () => {
                 {([
                   ['dashboard', 'Home'],
                   ['selection', 'Practice'],
+                  ['questions', 'Questions'],
+                  ['achievements', 'Achievements'],
                   ['history', 'My sessions'],
                 ] as const).map(([view, label]) => {
                   const active = currentView === view;
@@ -253,6 +256,24 @@ const Index = () => {
                   aria-label="Practice"
                 >
                   <Video className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={currentView === 'questions' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('questions') : setCurrentView('questions')}
+                  className="p-2"
+                  aria-label="Questions"
+                >
+                  <ListChecks className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={currentView === 'achievements' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('achievements') : setCurrentView('achievements')}
+                  className="p-2"
+                  aria-label="Achievements"
+                >
+                  <Trophy className="w-4 h-4" />
                 </Button>
                 <Button
                   variant={currentView === 'history' ? 'default' : 'ghost'}
@@ -349,9 +370,14 @@ const Index = () => {
             onStartInterview={() => setCurrentView('selection')}
             onViewHistory={() => setCurrentView('history')}
             onManageDates={() => setCurrentView('settings')}
+            onAchievements={() => setCurrentView('achievements')}
           />
         ) : currentView === 'selection' ? (
           <InterviewSelection onSelectInterview={handleSelectInterview} />
+        ) : currentView === 'questions' ? (
+          <QuestionsHub name={(user.user_metadata?.full_name as string | undefined)?.split(' ')[0] || user.email?.split('@')[0]} onViewHistory={() => setCurrentView('history')} />
+        ) : currentView === 'achievements' ? (
+          <AchievementsPage />
         ) : currentView === 'interview' ? (
           <InterviewPlatform selectedInterviewType={selectedInterviewType} />
         ) : currentView === 'history' ? (
