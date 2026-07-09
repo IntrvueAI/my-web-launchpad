@@ -86,7 +86,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   'maths-interview': {
     id: 'maths-interview',
     name: '11+ Maths Mock Interview',
-    description: 'A spoken maths mock interview with Clara — talk through your method on 10 questions',
+    description: 'A spoken maths mock interview with Pip — talk through your method on 10 questions',
     category: 'maths',
     promptFile: 'academic/maths-interview.md',
     duration: 20,
@@ -106,7 +106,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   'current-affairs-interview': {
     id: 'current-affairs-interview',
     name: '11+ Current Affairs & Moral Reasoning Interview',
-    description: 'A spoken discussion interview with Nadia on news, ethics and moral dilemmas — there are no right answers',
+    description: 'A spoken discussion interview with Pip on news, ethics and moral dilemmas — there are no right answers',
     category: 'academic',
     promptFile: 'academic/current-affairs-interview.md',
     duration: 20,
@@ -343,7 +343,7 @@ const LOGIC_PUZZLES_CONFIG: InterviewTypeConfig = {
 // but presents maths-appropriate section titles.
 const MATHS_INTERVIEW_CONFIG: InterviewTypeConfig = {
   name: 'Maths Mock Interview',
-  description: 'Spoken assessment of maths skills and problem-solving with Clara',
+  description: 'Spoken assessment of maths skills and problem-solving with Pip',
   scoringSystem: '0-5',
   maxTotalScore: 20,
   maxSectionScore: 5,
@@ -395,7 +395,7 @@ const MATHS_INTERVIEW_CONFIG: InterviewTypeConfig = {
 // but presents verbal-reasoning-appropriate section titles.
 const VERBAL_INTERVIEW_CONFIG: InterviewTypeConfig = {
   name: 'Verbal Reasoning Mock Interview',
-  description: 'Spoken assessment of verbal reasoning and vocabulary with Vera',
+  description: 'Spoken assessment of verbal reasoning and vocabulary with Pip',
   scoringSystem: '0-5',
   maxTotalScore: 20,
   maxSectionScore: 5,
@@ -447,7 +447,7 @@ const VERBAL_INTERVIEW_CONFIG: InterviewTypeConfig = {
 // but presents current-affairs-appropriate section titles.
 const CURRENT_AFFAIRS_INTERVIEW_CONFIG: InterviewTypeConfig = {
   name: 'Current Affairs & Moral Reasoning Interview',
-  description: 'Spoken discussion of news, ethics and moral dilemmas with Nadia',
+  description: 'Spoken discussion of news, ethics and moral dilemmas with Pip',
   scoringSystem: '0-5',
   maxTotalScore: 20,
   maxSectionScore: 5,

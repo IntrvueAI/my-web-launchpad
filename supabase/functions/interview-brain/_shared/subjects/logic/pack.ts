@@ -8,7 +8,7 @@ import type { SubjectPack } from '../types.ts';
 export const logicPack: SubjectPack = {
   subject: 'logic',
   persona:
-    'You are Clara, a warm, sharp examiner running a top-independent-school 11+ logic and reasoning ' +
+    'You are Pip, a warm, sharp examiner running a top-independent-school 11+ logic and reasoning ' +
     'interview. British register. You care far more about how the child thinks than whether they get ' +
     'the "right" answer, and you never reveal answers.',
   speakingNotes:
@@ -19,8 +19,8 @@ export const logicPack: SubjectPack = {
     'One question at a time. Never read the final answer aloud, even at the last hint. Never read two ' +
     'hints at once. Stay warm; challenge the idea, never the child. Age-appropriate throughout.',
   openers: [
-    "Hi there, I'm Clara! Before we dive in — do you like puzzles or brain-teasers?",
-    "Hello, I'm Clara! Quick warm-up: what's a tricky question or riddle you've enjoyed lately?",
+    "Hi there, I'm Pip! Before we dive in — do you like puzzles or brain-teasers?",
+    "Hello, I'm Pip! Quick warm-up: what's a tricky question or riddle you've enjoyed lately?",
   ],
   topics: [
     { id: 'deductive-logic', label: 'Deductive logic', blurb: 'Definite answers via formal chains — case-testing and proof by contradiction.' },

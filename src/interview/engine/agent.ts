@@ -365,7 +365,15 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     break;
   }
 
-  if (say) state.transcript.push({ role: 'assistant', content: say });
+  // Never leave the avatar silent (e.g. the model replied with only a tool call and no words).
+  if (!say.trim()) {
+    const openers = deps.pack.openers ?? [];
+    say = req.action === 'start' && openers.length
+      ? openers[Math.floor(Math.random() * openers.length)]
+      : "Take your time — whenever you're ready, talk me through your thinking.";
+  }
+
+  state.transcript.push({ role: 'assistant', content: say });
   return { say, state, done: state.done };
 }
 

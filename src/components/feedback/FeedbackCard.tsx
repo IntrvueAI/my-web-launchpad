@@ -40,9 +40,9 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
   // Variant-based styling
   const variantClasses = {
     default: 'border-border',
-    highlight: 'border-secondary/30 bg-gradient-to-br from-secondary/10 to-orange-50/50 shadow-lg',
-    success: 'border-green-200 bg-green-50/50',
-    warning: 'border-yellow-200 bg-yellow-50/50'
+    highlight: 'border-primary/25 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] shadow-lg',
+    success: 'border-emerald/25 bg-emerald/[0.06]',
+    warning: 'border-amber/25 bg-amber/[0.06]'
   };
   
   return (

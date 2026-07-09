@@ -528,8 +528,8 @@ export const InterviewFeedback = ({
               if (trimmedSection.startsWith(FEEDBACK_SECTIONS.WHAT_WENT_WELL)) {
                 const content = trimmedSection.replace(FEEDBACK_SECTIONS.WHAT_WENT_WELL, '').trim();
                 return (
-                  <div key={index} className="bg-white/70 rounded-lg p-4 border border-green-200 mb-4">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-green-700">
+                  <div key={index} className="bg-white/[0.04] rounded-lg p-4 border border-emerald/25 mb-4">
+                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-emerald">
                       <Brain className="w-4 h-4" />
                       What went well
                     </h4>
@@ -548,8 +548,8 @@ export const InterviewFeedback = ({
               if (trimmedSection.startsWith(FEEDBACK_SECTIONS.EVEN_BETTER_IF)) {
                 const content = trimmedSection.replace(FEEDBACK_SECTIONS.EVEN_BETTER_IF, '').trim();
                 return (
-                  <div key={index} className="bg-white/70 rounded-lg p-4 border border-orange-200 mb-4">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-orange-700">
+                  <div key={index} className="bg-white/[0.04] rounded-lg p-4 border border-primary/25 mb-4">
+                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-primary">
                       <Target className="w-4 h-4" />
                       Even better if
                     </h4>
@@ -562,7 +562,7 @@ export const InterviewFeedback = ({
                           <div key={pIndex} className={`mb-2 leading-relaxed ${isBulletPoint ? 'ml-4' : ''}`}>
                             {isBulletPoint ? (
                               <div className="flex items-start gap-2">
-                                <span className="text-orange-600 font-semibold">→</span>
+                                <span className="text-primary font-semibold">→</span>
                                 <span>{paragraph.replace(/^[•\-\*]\s/, '').replace(/^\d+\.\s/, '')}</span>
                               </div>
                             ) : (
@@ -579,7 +579,7 @@ export const InterviewFeedback = ({
               // For any other content (fallback or intro text)
               if (trimmedSection && !trimmedSection.startsWith('**')) {
                 return (
-                  <div key={index} className="bg-white/70 rounded-lg p-4 border border-secondary/20 mb-4">
+                  <div key={index} className="bg-white/[0.04] rounded-lg p-4 border border-secondary/20 mb-4">
                     <div className="prose prose-sm max-w-none text-muted-foreground">
                       {parseFeedbackText(trimmedSection).map((paragraph, pIndex) => (
                         <p key={pIndex} className="mb-2 leading-relaxed">
@@ -596,8 +596,8 @@ export const InterviewFeedback = ({
           })()}
           
           {/* Success Reminder */}
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
-            <p className="text-sm text-green-700 font-medium text-center">
+          <div className="bg-emerald/10 rounded-lg p-4 border border-emerald/25">
+            <p className="text-sm text-emerald font-medium text-center">
               💡 Remember: Every interview is a learning opportunity. Focus on progress, not perfection!
             </p>
           </div>
