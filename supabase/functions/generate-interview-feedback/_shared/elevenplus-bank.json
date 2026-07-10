@@ -57,7 +57,43 @@
     "tags": [],
     "question": "Suppose someone invents a robot that can do any human job perfectly. Would that be a good thing or a bad thing? Think it through.",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "A strong response: Weighs both sides - freeing people from dull or dangerous work vs jobs and purpose lost - and reaches a considered view, perhaps \"it depends how we use it.\"\n\nA weak response: \"Good, because robots are cool\" or \"Bad, robots are scary,\" with no reasoning.\n\nWhat to listen for: Nuanced thinking about a big, open question - consequences, fairness, and a willingness to sit with \"it depends.\" --- ## Quick Reference | # | Question | Section | Difficulty | |---|----------|---------|------------| | A1 | Tell Me About Yourself | Personal | ★ | | A2 | Most Proud Of | Personal | ★ | | A3 | A Time You Failed | Personal | ★★ | | A4 | What Makes You, You | Personal | ★★ | | A5 | A Difficult Decision | Personal | ★★★ | | B1 | Everyone Forgets How to Read | Reasoning | ★★★ | | B2 | The Fair Way to Share | Reasoning | ★★ | | B3 | Why Is the Sky Dark at Night | Reasoning | ★★★ | | B4 | The Bat and the Ball | Reasoning | ★★ | | B5 | Design a Test (Estimation) | Reasoning | ★★★★ | | C1 | What You Love Outside Class | Extracurricular | ★ | | C2 | Taught Yourself Something | Extracurricular | ★★ | | C3 | A Skill You've Worked Hard At | Extracurricular | ★★ | | C4 | Teach Me Something | Extracurricular | ★★★ | | D1 | Something in the News | Current Affairs | ★★ | | D2 | Should Children Have Phones | Current Affairs | ★★ | | D3 | Is It Ever Right to Break a Rule | Current Affairs | ★★★ | | D4 | A Fair Decision | Current Affairs | ★★★ | | D5 | A Robot That Could Do Any Job | Current Affairs | ★★★ |"
+    "modelReasoningPath": "A strong response: Weighs both sides - freeing people from dull or dangerous work vs jobs and purpose lost - and reaches a considered view, perhaps \"it depends how we use it.\"\n\nA weak response: \"Good, because robots are cool\" or \"Bad, robots are scary,\" with no reasoning.\n\nWhat to listen for: Nuanced thinking about a big, open question - consequences, fairness, and a willingness to sit with \"it depends.\" ---"
+  },
+  {
+    "id": "EP-D6",
+    "subject": "elevenplus",
+    "topic": "current-affairs-ethics",
+    "difficulty": 3,
+    "questionType": "Current Affairs & Ethics",
+    "title": "The Wallet",
+    "tags": [],
+    "question": "You're walking home and you find a wallet on the pavement with fifty pounds inside and a card with the owner's name and address. Talk me through exactly what you'd do - and what, if anything, would change your mind.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: A clear plan (return it / hand it in) with reasons, and honest engagement with the temptation and the edge cases (\"what if I really needed the money\", \"what if there was no address\"). Reasons about right vs easy.\n\nA weak response: \"I'd keep it\" or \"I'd give it back\" with no reasoning, or a perfect saintly answer with no acknowledgement that it's tempting.\n\nWhat to listen for: Honest moral reasoning - distinguishing what's right from what's easy, and sitting with temptation rather than pretending it away. ---"
+  },
+  {
+    "id": "EP-D7",
+    "subject": "elevenplus",
+    "topic": "current-affairs-ethics",
+    "difficulty": 3,
+    "questionType": "Current Affairs & Ethics",
+    "title": "Equal or What You Need",
+    "tags": [],
+    "question": "Should everyone always be treated exactly the same? Or is it sometimes fairer to give different people different things? Give me an example.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Recognises that fair and equal aren't always the same, gives a real example (a child who needs glasses, extra help, a ramp), and reasons about when equal treatment is or isn't fair.\n\nA weak response: \"Everyone should get the same, that's fair,\" with no engagement with need, or the reverse with no example.\n\nWhat to listen for: The leap from \"equal\" to \"equitable\", with a concrete example - sophisticated fairness reasoning for this age. ---"
+  },
+  {
+    "id": "EP-D8",
+    "subject": "elevenplus",
+    "topic": "current-affairs-ethics",
+    "difficulty": 3,
+    "questionType": "Current Affairs & Ethics",
+    "title": "One Law to Change",
+    "tags": [],
+    "question": "If you could change one law in the country - anything at all - what would you change, and who would it help or hurt?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: A specific, thought-through change, with reasons, and honest consideration of who might be worse off or how it could go wrong. Civic awareness plus consequences.\n\nA weak response: \"No school\" or a self-serving change with no reasoning about others.\n\nWhat to listen for: Reasoning that looks beyond themselves to consequences and to people who'd see it differently. --- ## Quick Reference | # | Question | Section | Difficulty | |---|----------|---------|------------| | A1 | Tell Me About Yourself | Personal | ★ | | A2 | Most Proud Of | Personal | ★ | | A3 | A Time You Failed | Personal | ★★ | | A4 | What Makes You, You | Personal | ★★ | | A5 | A Difficult Decision | Personal | ★★★ | | B1 | Everyone Forgets How to Read | Reasoning | ★★★ | | B2 | The Fair Way to Share | Reasoning | ★★ | | B3 | Why Is the Sky Dark at Night | Reasoning | ★★★ | | B4 | The Bat and the Ball | Reasoning | ★★ | | B5 | Design a Test (Estimation) | Reasoning | ★★★★ | | B6 | Clever or Wise | Reasoning | ★★★★ | | B7 | The Creative Machine | Reasoning | ★★★★ | | B8 | Remove One Invention | Reasoning | ★★★ | | C1 | What You Love Outside Class | Extracurricular | ★ | | C2 | Taught Yourself Something | Extracurricular | ★★ | | C3 | A Skill You've Worked Hard At | Extracurricular | ★★ | | C4 | Teach Me Something | Extracurricular | ★★★ | | D1 | Something in the News | Current Affairs | ★★ | | D2 | Should Children Have Phones | Current Affairs | ★★ | | D3 | Is It Ever Right to Break a Rule | Current Affairs | ★★★ | | D4 | A Fair Decision | Current Affairs | ★★★ | | D5 | A Robot That Could Do Any Job | Current Affairs | ★★★ | | D6 | The Wallet | Current Affairs | ★★★ | | D7 | Equal or What You Need | Current Affairs | ★★★ | | D8 | One Law to Change | Current Affairs | ★★★ |"
   },
   {
     "id": "EP-C1",
@@ -216,6 +252,18 @@
     "modelReasoningPath": "A strong response: Any genuine attempt to reason - stars are very far away, light spreads out, the Sun is on the other side of the Earth, space is enormous. Building an argument step by step, not reciting a fact.\n\nA weak response: \"Because it's night\" with no reasoning, or refusing to attempt it.\n\nWhat to listen for: Willingness to reason about something unfamiliar. The point is the attempt and the chain of thought, not the physics. ---"
   },
   {
+    "id": "EP-B8",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 3,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "Remove One Invention",
+    "tags": [],
+    "question": "If you could remove one invention from all of history to make the world better overall, what would you remove - and are you sure the world would actually be better?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Picks something and traces the consequences of its absence - including the good things that would also disappear - and honestly weighs whether the world is really better. Second-order thinking.\n\nA weak response: \"Guns/phones, because they're bad,\" with no thought about knock-on effects or what would be lost.\n\nWhat to listen for: Consequential reasoning and the maturity to see trade-offs rather than a simple villain. ---"
+  },
+  {
     "id": "EP-B5",
     "subject": "elevenplus",
     "topic": "reasoning",
@@ -226,5 +274,29 @@
     "question": "How would you work out how many piano tuners there are in London - without looking it up? You'll have to estimate. Walk me through it.",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
     "modelReasoningPath": "A strong response: Breaks it into steps - roughly how many people, how many have pianos, how often they're tuned, how many a tuner does in a day - and multiplies/divides sensibly. Comfortable with rough numbers.\n\nA weak response: \"I don't know, you'd have to count them,\" with no attempt to break the problem down.\n\nWhat to listen for: Structured estimation and comfort with approximation. This tests whether they can build a model from nothing. --- ## SECTION C - Extracurricular Interests Passion, initiative and reflection. Look for depth in one or two things, self-driven learning, and the ability to reflect on progress and setbacks - not a long list of clubs. ---"
+  },
+  {
+    "id": "EP-B6",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 4,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "Clever or Wise",
+    "tags": [],
+    "question": "What do you think is the difference between being clever and being wise? Can someone be one without the other?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Draws a real distinction - clever as quick/knowledgeable, wise as good judgement about how to use it - with an example, and engages with whether they can come apart (a clever person who makes foolish choices).\n\nA weak response: \"They're the same thing,\" or a definition of one word with no attempt at the contrast.\n\nWhat to listen for: Abstract distinction-drawing and the willingness to hold a genuinely open question. This separates surface cleverness from real thinking. ---"
+  },
+  {
+    "id": "EP-B7",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 4,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "The Creative Machine",
+    "tags": [],
+    "question": "A computer can now write a poem that people can't tell apart from one written by a person. Does that mean the computer is being creative? Why, or why not?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Wrestles with what \"creative\" actually means (new? intended? felt?), considers both sides, and reaches a reasoned view rather than a gut reaction. Comfortable that it's a hard question.\n\nA weak response: \"Yes because it wrote a poem\" / \"No because it's a robot,\" with no examination of what creativity means.\n\nWhat to listen for: Definitional reasoning and nuance about a genuinely open, modern question - exactly the kind of thing top schools probe. ---"
   }
 ]

@@ -22,5 +22,17 @@
     "question": "The Sun is incredibly bright. There are billions of stars in the sky. So why is the sky dark at night rather than blazing with light? Have a go - I don't expect a perfect answer.",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
     "modelReasoningPath": "A strong response: Any genuine attempt to reason - stars are very far away, light spreads out, the Sun is on the other side of the Earth, space is enormous. Building an argument step by step, not reciting a fact.\n\nA weak response: \"Because it's night\" with no reasoning, or refusing to attempt it.\n\nWhat to listen for: Willingness to reason about something unfamiliar. The point is the attempt and the chain of thought, not the physics. ---"
+  },
+  {
+    "id": "EP-B8",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 3,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "Remove One Invention",
+    "tags": [],
+    "question": "If you could remove one invention from all of history to make the world better overall, what would you remove - and are you sure the world would actually be better?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Picks something and traces the consequences of its absence - including the good things that would also disappear - and honestly weighs whether the world is really better. Second-order thinking.\n\nA weak response: \"Guns/phones, because they're bad,\" with no thought about knock-on effects or what would be lost.\n\nWhat to listen for: Consequential reasoning and the maturity to see trade-offs rather than a simple villain. ---"
   }
 ]

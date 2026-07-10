@@ -344,6 +344,102 @@ The interviewer moves **dynamically between four sections** — Personal, Reason
 
 ---
 
+### B6 — Clever or Wise
+
+> "What do you think is the difference between being clever and being wise? Can someone be one without the other?"
+
+**What a strong response looks like:** Draws a real distinction — clever as quick/knowledgeable, wise as good judgement about how to use it — with an example, and engages with whether they can come apart (a clever person who makes foolish choices).
+
+**What a weak response looks like:** "They're the same thing," or a definition of one word with no attempt at the contrast.
+
+**Follow-up prompts:**
+- *"Can you think of someone clever who wasn't wise?"*
+- *"Which matters more, and when?"*
+
+**What to listen for:** Abstract distinction-drawing and the willingness to hold a genuinely open question. This separates surface cleverness from real thinking.
+
+---
+
+### B7 — The Creative Machine
+
+> "A computer can now write a poem that people can't tell apart from one written by a person. Does that mean the computer is being creative? Why, or why not?"
+
+**What a strong response looks like:** Wrestles with what "creative" actually means (new? intended? felt?), considers both sides, and reaches a reasoned view rather than a gut reaction. Comfortable that it's a hard question.
+
+**What a weak response looks like:** "Yes because it wrote a poem" / "No because it's a robot," with no examination of what creativity means.
+
+**Follow-up prompts:**
+- *"What would the computer need to do for you to call it truly creative?"*
+- *"Does it matter whether it meant to write it?"*
+
+**What to listen for:** Definitional reasoning and nuance about a genuinely open, modern question — exactly the kind of thing top schools probe.
+
+---
+
+### B8 — Remove One Invention
+
+> "If you could remove one invention from all of history to make the world better overall, what would you remove — and are you sure the world would actually be better?"
+
+**What a strong response looks like:** Picks something and traces the consequences of its absence — including the *good* things that would also disappear — and honestly weighs whether the world is really better. Second-order thinking.
+
+**What a weak response looks like:** "Guns/phones, because they're bad," with no thought about knock-on effects or what would be lost.
+
+**Follow-up prompts:**
+- *"What good thing would also disappear if you removed it?"*
+- *"Has anything you thought was all bad turned out to have a good side?"*
+
+**What to listen for:** Consequential reasoning and the maturity to see trade-offs rather than a simple villain.
+
+---
+
+### D6 — The Wallet
+
+> "You're walking home and you find a wallet on the pavement with fifty pounds inside and a card with the owner's name and address. Talk me through exactly what you'd do — and what, if anything, would change your mind."
+
+**What a strong response looks like:** A clear plan (return it / hand it in) with reasons, and honest engagement with the temptation and the edge cases ("what if I really needed the money", "what if there was no address"). Reasons about right vs easy.
+
+**What a weak response looks like:** "I'd keep it" or "I'd give it back" with no reasoning, or a perfect saintly answer with no acknowledgement that it's tempting.
+
+**Follow-up prompts:**
+- *"What if you were sure no one would ever know?"*
+- *"Does the amount of money change what's right?"*
+
+**What to listen for:** Honest moral reasoning — distinguishing what's right from what's easy, and sitting with temptation rather than pretending it away.
+
+---
+
+### D7 — Equal or What You Need
+
+> "Should everyone always be treated exactly the same? Or is it sometimes fairer to give different people different things? Give me an example."
+
+**What a strong response looks like:** Recognises that fair and equal aren't always the same, gives a real example (a child who needs glasses, extra help, a ramp), and reasons about when equal treatment is or isn't fair.
+
+**What a weak response looks like:** "Everyone should get the same, that's fair," with no engagement with need, or the reverse with no example.
+
+**Follow-up prompts:**
+- *"When could treating people the same actually be unfair?"*
+- *"Who should decide who needs more?"*
+
+**What to listen for:** The leap from "equal" to "equitable", with a concrete example — sophisticated fairness reasoning for this age.
+
+---
+
+### D8 — One Law to Change
+
+> "If you could change one law in the country — anything at all — what would you change, and who would it help or hurt?"
+
+**What a strong response looks like:** A specific, thought-through change, with reasons, and honest consideration of who might be worse off or how it could go wrong. Civic awareness plus consequences.
+
+**What a weak response looks like:** "No school" or a self-serving change with no reasoning about others.
+
+**Follow-up prompts:**
+- *"Who might disagree with you, and why?"*
+- *"How would you know if it had actually made things better?"*
+
+**What to listen for:** Reasoning that looks beyond themselves to consequences and to people who'd see it differently.
+
+---
+
 ## Quick Reference
 
 | # | Question | Section | Difficulty |
@@ -358,6 +454,9 @@ The interviewer moves **dynamically between four sections** — Personal, Reason
 | B3 | Why Is the Sky Dark at Night | Reasoning | ★★★ |
 | B4 | The Bat and the Ball | Reasoning | ★★ |
 | B5 | Design a Test (Estimation) | Reasoning | ★★★★ |
+| B6 | Clever or Wise | Reasoning | ★★★★ |
+| B7 | The Creative Machine | Reasoning | ★★★★ |
+| B8 | Remove One Invention | Reasoning | ★★★ |
 | C1 | What You Love Outside Class | Extracurricular | ★ |
 | C2 | Taught Yourself Something | Extracurricular | ★★ |
 | C3 | A Skill You've Worked Hard At | Extracurricular | ★★ |
@@ -367,3 +466,6 @@ The interviewer moves **dynamically between four sections** — Personal, Reason
 | D3 | Is It Ever Right to Break a Rule | Current Affairs | ★★★ |
 | D4 | A Fair Decision | Current Affairs | ★★★ |
 | D5 | A Robot That Could Do Any Job | Current Affairs | ★★★ |
+| D6 | The Wallet | Current Affairs | ★★★ |
+| D7 | Equal or What You Need | Current Affairs | ★★★ |
+| D8 | One Law to Change | Current Affairs | ★★★ |
