@@ -1,0 +1,26 @@
+[
+  {
+    "id": "EP-34",
+    "subject": "elevenplus",
+    "topic": "strengths",
+    "difficulty": 2,
+    "questionType": "Strengths",
+    "title": "If I were interviewing your best friend",
+    "tags": [],
+    "question": "If I were interviewing your best friend, how would they describe you?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Can you give an example that shows that?\n\nAsk for a real situation that demonstrates each quality they name, turning labels into stories. If they're shy about praising themselves, gently reassure them it's okay to talk about their good points.\n\nWhat to look for: Look for self-awareness — backed up with a real example rather than just labels."
+  },
+  {
+    "id": "EP-35",
+    "subject": "elevenplus",
+    "topic": "strengths",
+    "difficulty": 2,
+    "questionType": "Strengths",
+    "title": "What is one thing other people don't know about ",
+    "tags": [],
+    "question": "What is one thing other people don't know about you?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Why haven't many people seen this side of you?\n\nKeep it warm and low-pressure. Follow whatever they reveal with curiosity and no judgement, giving them space to share a hidden interest, talent, or side of themselves.\n\nWhat to look for: Look for self-awareness — backed up with a real example rather than just labels."
+  }
+]

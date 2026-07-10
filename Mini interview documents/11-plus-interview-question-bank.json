@@ -1,0 +1,285 @@
+{
+  "title": "11+ Interview Question Bank",
+  "description": "Practice questions modelled on interviews at top UK independent schools. Core topics are used in shorter (15–20 minute) interviews; Extension topics appear in longer interviews.",
+  "total_questions": 35,
+  "pacing_note": "Keep the conversation moving — don't stay on any one topic for too long. Ask a main question, and after one follow-up (two at the very most) move on to a different topic. The aim is an interview that feels natural and human, like a real conversation, not a robotic AI script working through a checklist. Let the child's answers guide which topic you turn to next, vary your wording, and react warmly to what they say rather than reading questions mechanically.",
+  "interviewer_guidance": "The goal of every question is to get to know the child and give them room to articulate and express themselves. Ask the main question, then listen. Use the follow-up prompts and interviewer notes to draw the child out naturally — pick up on the specific things they mention rather than reading questions mechanically. Encourage full answers (Point, Explanation, Evidence) but never interrogate. If an answer is thin, gently invite more; if it is rich, follow the thread the child opens.",
+  "categories": [
+    {
+      "category": "Family",
+      "section": "Core",
+      "tip": "Encourage full answers using Point, Explanation, Evidence — not one-word replies.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Tell me about your family. Do you have any brothers or sisters?",
+          "follow_up": "How do you get on with them?",
+          "interviewer_note": "If the child names siblings or family members, follow up on the relationships they mention — who they are closest to, what they do together, any funny or fond stories. If they give a short list, warmly invite them to describe one person in more detail so they can open up."
+        },
+        {
+          "id": 2,
+          "question": "How do you like to spend time together as a family?",
+          "follow_up": "Is there something you always do at weekends or holidays?",
+          "interviewer_note": "Latch onto any specific activity or ritual they raise and ask what they enjoy about it or how it makes them feel. If the answer is vague, offer a gentle prompt (meals, trips, games, weekends) to help them find something concrete to talk about."
+        },
+        {
+          "id": 3,
+          "question": "What is a family tradition that is special to you, and why?",
+          "follow_up": "How does it make you feel?",
+          "interviewer_note": "Explore the 'why' behind whatever tradition they choose — who started it, what happens, why it matters. If they can't think of a formal tradition, reassure them and ask about something they simply always do together, however small."
+        },
+        {
+          "id": 4,
+          "question": "Who in your family do you go to when you need help, and what do they help you with?",
+          "follow_up": "Can you give an example?",
+          "interviewer_note": "Ask for a real example of a time this person helped them, to move from a name to a story. Notice what kind of help they value (emotional, practical, academic) and follow that thread."
+        },
+        {
+          "id": 5,
+          "question": "If your family could go anywhere in the world together, where would you choose and why?",
+          "follow_up": "What would you most want to do there?",
+          "interviewer_note": "Follow the reasoning behind their choice rather than the destination itself — what draws them there, what they imagine doing, who they picture with them. This reveals interests and imagination, so give them space to expand."
+        }
+      ]
+    },
+    {
+      "category": "Your School",
+      "section": "Core",
+      "tip": "Look for warmth about their current school and a sense of what they give back to it.",
+      "questions": [
+        {
+          "id": 6,
+          "question": "What is your favourite thing about your current school?",
+          "follow_up": "Why does that matter to you?",
+          "interviewer_note": "Whatever they name — a subject, friends, a club, a place — ask them to describe a specific moment or example. If they answer in one word, gently ask 'what is it about that you like?' to help them articulate."
+        },
+        {
+          "id": 7,
+          "question": "If you were headteacher for a day, what is one thing you would change, and why?",
+          "follow_up": "How would that help other pupils?",
+          "interviewer_note": "Probe the reasoning: who benefits, and are there any downsides? Invite them to think it through out loud rather than expecting a polished answer — the aim is to see how they reason and consider others."
+        },
+        {
+          "id": 8,
+          "question": "Do you think school rules are necessary? Which rule do you think matters most?",
+          "follow_up": "Can you argue both sides?",
+          "interviewer_note": "Encourage balanced thinking — 'on the one hand… on the other'. If they pick a side quickly, invite them to consider the opposite view. Follow up on any personal example that prompted their opinion."
+        },
+        {
+          "id": 9,
+          "question": "Tell me about a teacher who has made a difference to you.",
+          "follow_up": "What did they do that stuck with you?",
+          "interviewer_note": "Draw out a concrete example of something the teacher did or said. Notice what the child values in an adult (kindness, high standards, humour) and reflect that back to keep them talking."
+        },
+        {
+          "id": 10,
+          "question": "What do you contribute to your school community?",
+          "follow_up": "Do you have any responsibilities or roles?",
+          "interviewer_note": "If they hold a role or help others, ask for a specific instance. If they're modest or unsure, reassure them and prompt gently about small everyday things they do for classmates or the school."
+        }
+      ]
+    },
+    {
+      "category": "Reading",
+      "section": "Core",
+      "tip": "Depth beats breadth — knowing one book well is more impressive than listing many.",
+      "questions": [
+        {
+          "id": 11,
+          "question": "Tell me about what you are reading at the moment.",
+          "follow_up": "What do you think will happen next, and why?",
+          "interviewer_note": "Follow the specific book they name: ask what's happening, what they think of a character, or how they'd feel in that situation. If they aren't reading anything now, ask about the last book they enjoyed instead."
+        },
+        {
+          "id": 12,
+          "question": "What is your favourite book, and what makes it special to you?",
+          "follow_up": "Which character do you relate to most?",
+          "interviewer_note": "Go deeper on the one book rather than moving on — favourite moment, why it stayed with them, how it made them feel. Let them lead you into the parts they're most excited to share."
+        },
+        {
+          "id": 13,
+          "question": "What do you think makes a good story?",
+          "follow_up": "Can you give an example of a book that does this well?",
+          "interviewer_note": "Ask them to test their own idea against a book they know. If they mention 'exciting' or 'interesting' characters, ask what makes a character interesting to help them articulate their thinking."
+        },
+        {
+          "id": 14,
+          "question": "Why do you think reading is important?",
+          "follow_up": "Has a book ever changed how you see something?",
+          "interviewer_note": "Invite a personal example — a book that taught them something or changed their mind. Follow whatever reason they give (imagination, learning, escape) and ask them to expand with a real instance."
+        },
+        {
+          "id": 15,
+          "question": "If you could meet any character from a book, who would it be, and what would you ask them?",
+          "follow_up": "What do you admire about them?",
+          "interviewer_note": "Explore what the choice says about them — what they'd ask, and why that character appeals. Keep it playful and follow their imagination wherever it goes."
+        }
+      ]
+    },
+    {
+      "category": "Academics",
+      "section": "Core",
+      "tip": "Curiosity and a willingness to tackle difficulty matter more than only naming strengths.",
+      "questions": [
+        {
+          "id": 16,
+          "question": "What are your favourite and least favourite subjects, and why?",
+          "follow_up": "What would make your least favourite more enjoyable?",
+          "interviewer_note": "Ask for the reasons behind both, and a specific topic they enjoyed or struggled with. If they're only positive, gently explore the harder subject to see how they handle challenge."
+        },
+        {
+          "id": 17,
+          "question": "Tell me about a topic you have studied recently that really interested you.",
+          "follow_up": "What made it fascinating?",
+          "interviewer_note": "Let their curiosity lead — ask what surprised them or what they'd like to learn next about it. Follow their enthusiasm; this is a strong chance for them to shine, so give plenty of space."
+        },
+        {
+          "id": 18,
+          "question": "When you find a piece of work difficult, how do you approach it?",
+          "follow_up": "Tell me about a time this worked.",
+          "interviewer_note": "Steer towards a real example rather than a general strategy. Notice resilience and problem-solving, and ask how they felt when they finally cracked it."
+        },
+        {
+          "id": 19,
+          "question": "Which subject do you think will be most useful later in life, and why?",
+          "follow_up": "Can you argue for a different one too?",
+          "interviewer_note": "Encourage them to reason it through and consider more than one answer. If they give a confident single choice, invite the opposite case to see flexible thinking."
+        },
+        {
+          "id": 20,
+          "question": "If you could invent a brand-new subject to be taught at school, what would it be?",
+          "follow_up": "What would pupils learn in it?",
+          "interviewer_note": "Play along with their invention and ask for detail — what a lesson would look like, why it matters. Follow their creativity; there are no wrong answers here."
+        }
+      ]
+    },
+    {
+      "category": "Extracurricular",
+      "section": "Core",
+      "tip": "Enthusiasm and commitment over time say a lot — draw out what they've stuck with.",
+      "questions": [
+        {
+          "id": 21,
+          "question": "What clubs or activities do you take part in outside lessons?",
+          "follow_up": "Which is your favourite, and why?",
+          "interviewer_note": "Pick one activity they mention and dig in — how they got into it, what they love, any highlights. If the list is short, that's fine; depth on one is better than a long list."
+        },
+        {
+          "id": 22,
+          "question": "What interests would you like to pursue further at your new school?",
+          "follow_up": "What draws you to it?",
+          "interviewer_note": "Explore the motivation behind the interest and how they've explored it so far. Keep the focus on the child's curiosity rather than any particular school."
+        },
+        {
+          "id": 23,
+          "question": "Tell me about an activity you have stuck with for a long time. What has kept you going?",
+          "follow_up": "How have you improved?",
+          "interviewer_note": "Draw out the story of their progress — early struggles, a proud moment, what keeps them motivated. Commitment is the theme, so let them reflect on their journey."
+        },
+        {
+          "id": 24,
+          "question": "Have you ever tried an activity that was completely new to you? How did it go?",
+          "follow_up": "Would you try something new again?",
+          "interviewer_note": "Follow up on how they felt facing something unfamiliar and what they learned. If it went badly, gently explore what they took from it — openness to new things is what matters."
+        },
+        {
+          "id": 25,
+          "question": "If you could start a brand-new club at school, what would it be and why?",
+          "follow_up": "Who would you hope joins?",
+          "interviewer_note": "Follow their idea with genuine interest — what they'd do, how they'd run it, why it excites them. This reveals initiative and interests, so give room to imagine."
+        }
+      ]
+    },
+    {
+      "category": "Hobbies",
+      "section": "Extension",
+      "tip": "Aim for a few things they can discuss with real enthusiasm and specific detail.",
+      "questions": [
+        {
+          "id": 26,
+          "question": "What do you like to do in your free time?",
+          "follow_up": "What is it about that you enjoy most?",
+          "interviewer_note": "Pick up on whatever they mention and ask them to describe a recent time they did it. If they name several things, invite them to choose the one they're most passionate about and expand."
+        },
+        {
+          "id": 27,
+          "question": "You're trapped on a desert island and can take one luxury item. What do you take, and why?",
+          "follow_up": "How would it help or entertain you?",
+          "interviewer_note": "Keep this light and playful. Follow the reasoning behind their choice — it often reveals a hobby or interest. Gently push for the 'why' if they only name the item.",
+          "quirky": true
+        },
+        {
+          "id": 28,
+          "question": "If you had a whole day with no plans and no rules, how would you spend it?",
+          "follow_up": "Why would that be a perfect day?",
+          "interviewer_note": "Let their answer paint a picture and follow the details — who's there, where they are, what they'd do first. This is a window into their personality, so keep it relaxed and curious."
+        }
+      ]
+    },
+    {
+      "category": "Achievements",
+      "section": "Extension",
+      "tip": "Big or small doesn't matter — what matters is that they can explain why it means so much.",
+      "questions": [
+        {
+          "id": 29,
+          "question": "What is your greatest achievement so far, and why does it mean so much to you?",
+          "follow_up": "What did you have to do to get there?",
+          "interviewer_note": "Reassure them that it can be big or small. Follow up on the effort and feelings behind it — the struggle, the moment of success, why it stuck with them. Let them relive it."
+        },
+        {
+          "id": 30,
+          "question": "What is the biggest challenge you have ever faced, and how did you deal with it?",
+          "follow_up": "What would you do differently next time?",
+          "interviewer_note": "Handle sensitively; let the child choose how much to share. Follow their lead on how they coped and what they learned. Focus on resilience and reflection, not the difficulty itself.",
+          "quirky": true
+        },
+        {
+          "id": 31,
+          "question": "Tell me about a time you did not succeed at first. What did you learn?",
+          "follow_up": "How did you keep going?",
+          "interviewer_note": "Encourage honesty about setbacks and draw out the learning and persistence. Reassure them that not succeeding first time is normal, so they feel safe to be candid."
+        }
+      ]
+    },
+    {
+      "category": "Ambitions",
+      "section": "Extension",
+      "tip": "Answers shouldn't sound rehearsed — encourage genuine reasons behind the ambition.",
+      "questions": [
+        {
+          "id": 32,
+          "question": "What would you like to do when you are an adult, and what draws you to it?",
+          "follow_up": "What might you need to learn to get there?",
+          "interviewer_note": "Follow the 'why' rather than the job title, and reassure them it's fine not to know yet. If they're unsure, ask what kinds of things they enjoy that might point somewhere."
+        },
+        {
+          "id": 33,
+          "question": "Is there a problem in the world you would like to help solve one day?",
+          "follow_up": "Why does that one matter to you?",
+          "interviewer_note": "Explore what sparked their concern and any personal connection. Follow their reasoning with genuine interest — this reveals values and awareness, so give them room to think aloud."
+        }
+      ]
+    },
+    {
+      "category": "Strengths",
+      "section": "Extension",
+      "tip": "Look for self-awareness — backed up with a real example rather than just labels.",
+      "questions": [
+        {
+          "id": 34,
+          "question": "If I were interviewing your best friend, how would they describe you?",
+          "follow_up": "Can you give an example that shows that?",
+          "interviewer_note": "Ask for a real situation that demonstrates each quality they name, turning labels into stories. If they're shy about praising themselves, gently reassure them it's okay to talk about their good points."
+        },
+        {
+          "id": 35,
+          "question": "What is one thing other people don't know about you?",
+          "follow_up": "Why haven't many people seen this side of you?",
+          "interviewer_note": "Keep it warm and low-pressure. Follow whatever they reveal with curiosity and no judgement, giving them space to share a hidden interest, talent, or side of themselves.",
+          "quirky": true
+        }
+      ]
+    }
+  ]
+}

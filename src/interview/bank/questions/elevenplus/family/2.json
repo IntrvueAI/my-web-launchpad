@@ -1,0 +1,62 @@
+[
+  {
+    "id": "EP-1",
+    "subject": "elevenplus",
+    "topic": "family",
+    "difficulty": 2,
+    "questionType": "Family",
+    "title": "Tell me about your family. Do you have any broth",
+    "tags": [],
+    "question": "Tell me about your family. Do you have any brothers or sisters?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: How do you get on with them?\n\nIf the child names siblings or family members, follow up on the relationships they mention — who they are closest to, what they do together, any funny or fond stories. If they give a short list, warmly invite them to describe one person in more detail so they can open up.\n\nWhat to look for: Encourage full answers using Point, Explanation, Evidence — not one-word replies."
+  },
+  {
+    "id": "EP-2",
+    "subject": "elevenplus",
+    "topic": "family",
+    "difficulty": 2,
+    "questionType": "Family",
+    "title": "How do you like to spend time together as a fami",
+    "tags": [],
+    "question": "How do you like to spend time together as a family?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Is there something you always do at weekends or holidays?\n\nLatch onto any specific activity or ritual they raise and ask what they enjoy about it or how it makes them feel. If the answer is vague, offer a gentle prompt (meals, trips, games, weekends) to help them find something concrete to talk about.\n\nWhat to look for: Encourage full answers using Point, Explanation, Evidence — not one-word replies."
+  },
+  {
+    "id": "EP-3",
+    "subject": "elevenplus",
+    "topic": "family",
+    "difficulty": 2,
+    "questionType": "Family",
+    "title": "What is a family tradition that is special to yo",
+    "tags": [],
+    "question": "What is a family tradition that is special to you, and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: How does it make you feel?\n\nExplore the 'why' behind whatever tradition they choose — who started it, what happens, why it matters. If they can't think of a formal tradition, reassure them and ask about something they simply always do together, however small.\n\nWhat to look for: Encourage full answers using Point, Explanation, Evidence — not one-word replies."
+  },
+  {
+    "id": "EP-4",
+    "subject": "elevenplus",
+    "topic": "family",
+    "difficulty": 2,
+    "questionType": "Family",
+    "title": "Who in your family do you go to when you need he",
+    "tags": [],
+    "question": "Who in your family do you go to when you need help, and what do they help you with?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Can you give an example?\n\nAsk for a real example of a time this person helped them, to move from a name to a story. Notice what kind of help they value (emotional, practical, academic) and follow that thread.\n\nWhat to look for: Encourage full answers using Point, Explanation, Evidence — not one-word replies."
+  },
+  {
+    "id": "EP-5",
+    "subject": "elevenplus",
+    "topic": "family",
+    "difficulty": 2,
+    "questionType": "Family",
+    "title": "If your family could go anywhere in the world to",
+    "tags": [],
+    "question": "If your family could go anywhere in the world together, where would you choose and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What would you most want to do there?\n\nFollow the reasoning behind their choice rather than the destination itself — what draws them there, what they imagine doing, who they picture with them. This reveals interests and imagination, so give them space to expand.\n\nWhat to look for: Encourage full answers using Point, Explanation, Evidence — not one-word replies."
+  }
+]

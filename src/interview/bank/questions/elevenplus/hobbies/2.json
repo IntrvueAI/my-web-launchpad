@@ -1,0 +1,38 @@
+[
+  {
+    "id": "EP-26",
+    "subject": "elevenplus",
+    "topic": "hobbies",
+    "difficulty": 2,
+    "questionType": "Hobbies",
+    "title": "What do you like to do in your free time",
+    "tags": [],
+    "question": "What do you like to do in your free time?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What is it about that you enjoy most?\n\nPick up on whatever they mention and ask them to describe a recent time they did it. If they name several things, invite them to choose the one they're most passionate about and expand.\n\nWhat to look for: Aim for a few things they can discuss with real enthusiasm and specific detail."
+  },
+  {
+    "id": "EP-27",
+    "subject": "elevenplus",
+    "topic": "hobbies",
+    "difficulty": 2,
+    "questionType": "Hobbies",
+    "title": "You're trapped on a desert island and can take o",
+    "tags": [],
+    "question": "You're trapped on a desert island and can take one luxury item. What do you take, and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: How would it help or entertain you?\n\nKeep this light and playful. Follow the reasoning behind their choice — it often reveals a hobby or interest. Gently push for the 'why' if they only name the item.\n\nWhat to look for: Aim for a few things they can discuss with real enthusiasm and specific detail."
+  },
+  {
+    "id": "EP-28",
+    "subject": "elevenplus",
+    "topic": "hobbies",
+    "difficulty": 2,
+    "questionType": "Hobbies",
+    "title": "If you had a whole day with no plans and no rule",
+    "tags": [],
+    "question": "If you had a whole day with no plans and no rules, how would you spend it?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Why would that be a perfect day?\n\nLet their answer paint a picture and follow the details — who's there, where they are, what they'd do first. This is a window into their personality, so keep it relaxed and curious.\n\nWhat to look for: Aim for a few things they can discuss with real enthusiasm and specific detail."
+  }
+]

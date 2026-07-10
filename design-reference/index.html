@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>intrvue.ai — 11+ interview practice that actually feels like the real thing</title>
+<meta name="description" content="Realistic spoken mock interviews for the 11+ and independent school entry. Your child practises with a calm, patient interviewer, gets clear scored feedback, and walks in confident. Join the waitlist and try a free demo." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0A0F1C;
+    --bg-2:#0E1526;
+    --panel:#151C2E;
+    --panel-2:#111828;
+    --line:rgba(255,255,255,.09);
+    --line-strong:rgba(255,255,255,.16);
+    --ink:#F3F6FB;
+    --muted:#A6AFC1;
+    --faint:#6C7589;
+    --orange:#FF6B45;
+    --coral:#FF4D5E;
+    --grad:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);
+    --grad-soft:linear-gradient(135deg,rgba(255,138,75,.15),rgba(255,77,94,.13));
+    --teal:#4FC3F7;
+    --green:#34D399;
+    --amber:#FBBF24;
+    --violet:#8B7CF0;
+    --r-lg:26px;
+    --r-md:18px;
+    --r-sm:12px;
+    --maxw:1500px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 640px at 82% -8%, rgba(255,107,69,.12), transparent 60%),
+      radial-gradient(1000px 560px at -12% 6%, rgba(255,77,94,.07), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Inter Tight",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  h1,h2,h3,h4{font-family:"Bricolage Grotesque",serif;font-weight:700;line-height:1.04;letter-spacing:-.02em;margin:0}
+  p{margin:0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .eyebrow::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--grad)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;border:0;
+    padding:14px 22px;border-radius:12px;transition:transform .18s var(--ease),box-shadow .18s var(--ease),background .18s;
+    min-height:48px;
+  }
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px -8px rgba(255,90,78,.5)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px rgba(255,90,78,.65)}
+  .btn-ghost{background:rgba(255,255,255,.05);color:var(--ink);border:1px solid var(--line-strong)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+  .btn svg{width:18px;height:18px}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:8px}
+
+  /* NAV */
+  header.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(10,15,28,.72);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+  header.nav.scrolled{border-bottom:1px solid var(--line);background:rgba(10,15,28,.9)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Bricolage Grotesque";font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .brand .dot{color:var(--orange)}
+  .owl{width:34px;height:34px;flex:0 0 auto}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-size:15.5px;color:var(--muted);font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;align-items:center;gap:12px}
+  .nav-cta .btn{padding:10px 18px;min-height:42px;font-size:15px}
+  .hamburger{display:none;background:none;border:1px solid var(--line-strong);border-radius:10px;width:44px;height:44px;cursor:pointer;color:var(--ink)}
+  .mobile-menu{display:none;flex-direction:column;gap:6px;padding:14px 24px 22px;border-bottom:1px solid var(--line);background:rgba(10,15,28,.98)}
+  .mobile-menu a{padding:12px 8px;color:var(--muted);font-weight:500;border-radius:10px}
+  .mobile-menu a:hover{background:rgba(255,255,255,.05);color:var(--ink)}
+  .mobile-menu .btn{margin-top:8px;width:100%}
+
+  /* HERO */
+  .hero{position:relative;padding:56px 0 36px}
+  .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:72px;align-items:center}
+  .hero h1{font-size:clamp(40px,6vw,80px);font-weight:800;margin:18px 0 0}
+  .hero h1 .soft{color:var(--muted);font-weight:600}
+  .hero-sub{color:var(--muted);font-size:20px;margin-top:22px;max-width:600px}
+  .waitlist{margin-top:30px;max-width:480px}
+  .waitlist form{display:flex;gap:10px;background:var(--panel);border:1px solid var(--line);padding:8px;border-radius:15px}
+  .waitlist input{flex:1;background:transparent;border:0;color:var(--ink);font-family:inherit;font-size:16px;padding:10px 14px;min-width:0}
+  .waitlist input::placeholder{color:var(--faint)}
+  .waitlist input:focus{outline:none}
+  .waitlist .btn{white-space:nowrap;flex:0 0 auto}
+  .waitlist .note{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px;color:var(--faint);font-size:14px}
+  .waitlist .note b{color:var(--muted);font-weight:600}
+  .waitlist .note .sep{width:4px;height:4px;border-radius:50%;background:var(--faint)}
+  .form-success{display:none;align-items:center;gap:12px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);color:#c8f5e3;padding:16px 18px;border-radius:14px;font-size:15.5px}
+  .form-success.show{display:flex}
+  .form-success svg{width:22px;height:22px;flex:0 0 auto;color:var(--green)}
+
+  .orb{position:absolute;border-radius:50%;filter:blur(2px);z-index:0;pointer-events:none}
+  .orb-1{width:120px;height:120px;background:radial-gradient(circle at 32% 28%,#ff9f7e,#ff4d5e 70%);top:8%;right:6%;box-shadow:0 20px 60px -10px rgba(255,77,94,.5);opacity:.9}
+  .orb-2{width:70px;height:70px;background:radial-gradient(circle at 35% 30%,#8fd7ff,#4aa0e8 72%);bottom:14%;left:2%;opacity:.75}
+
+  /* app mockup (shared) */
+  .app-card{background:linear-gradient(180deg,#161d30,#0f1523);border:1px solid var(--line-strong);border-radius:22px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);overflow:hidden}
+  .app-card .shot{display:block;width:100%;height:auto}
+  .app-top{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .app-top .dots{display:flex;gap:6px}
+  .app-top .dots i{width:10px;height:10px;border-radius:50%;display:block}
+  .app-top .rec{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#ffb4a0;background:rgba(255,77,94,.14);padding:5px 11px;border-radius:20px}
+  .app-top .rec i{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .iv{display:grid;grid-template-columns:1.4fr 1fr;gap:0}
+  .iv-main{padding:16px}
+  .iv-stage{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/10;background:linear-gradient(160deg,#2a3550,#1a2135)}
+  .iv-stage .face{position:absolute;inset:0;background:
+     radial-gradient(60% 55% at 50% 42%, #d7a98f 0%, #b07d63 40%, transparent 70%),
+     radial-gradient(120% 90% at 50% 120%, #efe7dd, #cdbfae 60%);
+  }
+  .iv-stage .hair{position:absolute;top:-4%;left:14%;right:14%;height:60%;background:linear-gradient(180deg,#3a2a22,#5a4034);border-radius:50% 50% 44% 44%/60% 60% 40% 40%}
+  .iv-stage .shoulder{position:absolute;bottom:-6%;left:8%;right:8%;height:34%;background:#efe6da;border-radius:46% 46% 0 0}
+  .iv-stage .iv-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .iv-stage .live{position:absolute;top:10px;left:10px;z-index:2;font-size:11px;font-weight:600;color:#fff;background:rgba(255,90,78,.9);padding:4px 10px;border-radius:20px}
+  .iv-meta{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:12.5px;color:var(--muted)}
+  .iv-mic{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:6px 12px;border-radius:20px;color:var(--ink);font-weight:500;font-size:12.5px}
+  .iv-mic .g{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .iv-chat{border-left:1px solid var(--line);padding:16px;background:rgba(255,255,255,.015)}
+  .iv-chat h5{font-family:"Bricolage Grotesque";font-size:13px;font-weight:600;color:var(--muted);margin:0 0 12px;letter-spacing:.02em}
+  .bubble{font-size:13.5px;line-height:1.5;padding:11px 13px;border-radius:13px;margin-bottom:10px}
+  .bubble.q{background:rgba(255,255,255,.05);border:1px solid var(--line)}
+  .bubble .who{display:block;font-size:11px;color:var(--faint);margin-bottom:4px;font-weight:600;letter-spacing:.04em}
+  .bubble.a{background:var(--grad-soft);border:1px solid rgba(255,90,78,.28)}
+  .bubble.you{background:var(--grad);color:#fff;margin-left:auto;max-width:88%}
+  .bubble.you .who{color:rgba(255,255,255,.82)}
+  .bubble.you .wave i{background:rgba(255,255,255,.9)}
+  .iv-status{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 0}
+  .iv-active{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#fff;background:var(--grad);padding:6px 13px;border-radius:20px}
+  .iv-active svg{width:14px;height:14px}
+  .iv-conn{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+  .iv-conn .g{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .iv-session{text-align:center;font-size:11.5px;color:var(--faint);margin-top:8px}
+  .iv-session code{background:rgba(255,255,255,.06);padding:2px 8px;border-radius:6px;color:var(--muted);font-family:ui-monospace,monospace}
+  .wave{display:flex;align-items:flex-end;gap:3px;height:26px;margin-top:6px}
+  .wave i{width:3px;background:linear-gradient(180deg,#ff8a5b,#ff4d6b);border-radius:2px;animation:wv 1.1s ease-in-out infinite}
+  @keyframes wv{0%,100%{height:20%}50%{height:100%}}
+
+  /* schools strip */
+  .schools{padding:26px 0 8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:44px}
+  .schools .wrap{display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center}
+  .schools span{color:var(--faint);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .schools .name{font-family:"Bricolage Grotesque";font-weight:600;font-size:18px;color:var(--muted);letter-spacing:-.01em}
+
+  /* section shells */
+  section{position:relative}
+  .sec{padding:88px 0}
+  .sec-head{max-width:760px}
+  .sec-head.center{margin:0 auto;text-align:center}
+  .sec-head h2{font-size:clamp(30px,4.2vw,50px);font-weight:800;margin:14px 0 0}
+  .sec-head p{color:var(--muted);font-size:18.5px;margin-top:16px}
+
+  /* problem cards */
+  .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+  .prob{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:28px}
+  .prob .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--grad-soft);border:1px solid rgba(255,90,78,.25);color:var(--orange);margin-bottom:18px}
+  .prob .ic svg{width:22px;height:22px}
+  .prob h3{font-size:20px;font-weight:700}
+  .prob p{color:var(--muted);font-size:15.5px;margin-top:10px}
+
+  /* solution (steps + mock) */
+  .sol{background:linear-gradient(180deg,#0b1120,#0e1526)}
+  .sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px}
+  .sol-grid .steps{align-self:center}
+  .steps{display:flex;flex-direction:column}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:24px 0;border-top:1px solid var(--line)}
+  .step:first-child{border-top:0;padding-top:0}
+  .step .n{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);display:grid;place-items:center;color:var(--orange)}
+  .step .n svg{width:22px;height:22px}
+  .step h3{font-size:20px;font-weight:700}
+  .step p{color:var(--muted);font-size:15.5px;margin-top:6px}
+
+  /* dashboard mock */
+  .dash{padding:16px}
+  .dash-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .stat{border-radius:14px;padding:15px;color:#fff;position:relative;overflow:hidden}
+  .stat.level{background:linear-gradient(150deg,#8b7cf0,#6d5fd6)}
+  .stat.streak{background:linear-gradient(150deg,#ff9a4b,#ff5f3d)}
+  .stat.score{background:rgba(255,255,255,.04);border:1px solid var(--line)}
+  .stat .lab{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.85;font-weight:600}
+  .stat .big{font-family:"Bricolage Grotesque";font-weight:800;font-size:30px;line-height:1;margin-top:8px}
+  .stat.score .big{color:var(--teal)}
+  .stat small{opacity:.85;font-size:11.5px}
+  .skills{margin-top:14px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .skills h5{font-family:"Bricolage Grotesque";font-size:14px;margin:0 0 14px}
+  .sk{margin-bottom:13px}
+  .sk .t{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+  .sk .bar{height:8px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden}
+  .sk .bar i{display:block;height:100%;border-radius:6px}
+
+  /* features grid */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+  .feat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:26px;transition:transform .2s var(--ease),border-color .2s}
+  .feat:hover{transform:translateY(-4px);border-color:var(--line-strong)}
+  .feat .ic{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px}
+  .feat .ic svg{width:22px;height:22px;color:#fff}
+  .feat h3{font-size:18.5px;font-weight:700}
+  .feat p{color:var(--muted);font-size:15px;margin-top:9px}
+
+  /* parents section */
+  .parents{background:linear-gradient(180deg,#0e1526,#0b1120)}
+  .parents-grid{margin-top:48px}
+  .why-grid{list-style:none;padding:0;margin:52px auto 0;max-width:1040px;display:grid;grid-template-columns:1fr 1fr;gap:36px 64px}
+  .why-grid li{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .why-grid li .ck{width:38px;height:38px;border-radius:11px;background:var(--grad);display:grid;place-items:center;flex:0 0 auto}
+  .why-grid li .ck svg{width:20px;height:20px;color:#fff}
+  .why-grid li b{font-weight:700;font-size:19px;display:block}
+  .why-grid li .d{display:block;color:var(--muted);font-size:15.5px;margin-top:7px;line-height:1.55}
+  .gv{padding:16px}
+  .gv-top{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .gv-card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:15px}
+  .gv-card .lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .gv-card .v{font-family:"Bricolage Grotesque";font-weight:800;font-size:24px;margin-top:8px}
+  .gv-card .v.ready{color:var(--orange)}
+  .gv-card .sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .gv-transcripts{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+  .tr{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .tr .sc{font-family:"Bricolage Grotesque";font-weight:800;font-size:20px;width:42px}
+  .tr .meta{flex:1;min-width:0}
+  .tr .meta .ti{font-size:14px;font-weight:600}
+  .tr .meta .da{font-size:12px;color:var(--faint)}
+  .tr .tag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px}
+  .parents ul.help{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:14px}
+  .parents ul.help li{display:grid;grid-template-columns:auto 1fr;gap:14px;color:var(--muted);font-size:15.5px}
+  .parents ul.help li .num{width:28px;height:28px;border-radius:9px;background:var(--grad-soft);border:1px solid rgba(255,90,78,.3);color:var(--orange);display:grid;place-items:center;font-weight:700;font-size:14px;font-family:"Bricolage Grotesque"}
+
+  /* use cases tabs */
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:40px;background:var(--panel);border:1px solid var(--line);padding:8px;border-radius:16px;width:fit-content;margin-left:auto;margin-right:auto}
+  .tab{padding:10px 18px;border-radius:11px;font-size:14.5px;font-weight:600;color:var(--muted);cursor:pointer;border:0;background:transparent;font-family:inherit;transition:all .2s}
+  .tab.active{background:var(--grad);color:#fff}
+  .tabpanel{display:none;margin-top:34px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:38px}
+  .tabs{display:none}
+  .tabpanel,.tabpanel.active{display:none}
+  .tabpanel h3{font-size:26px;font-weight:800}
+  .tabpanel p{color:var(--muted);margin-top:12px;font-size:16px}
+  .tab-facts{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .tab-facts .f{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:var(--ink)}
+  .tab-facts .f svg{width:20px;height:20px;color:var(--green);flex:0 0 auto;margin-top:2px}
+  .tab-visual{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:16px;padding:22px;min-height:230px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:20px;font-size:13.5px;font-weight:600;background:rgba(255,255,255,.05);border:1px solid var(--line);width:fit-content}
+  .chip .d{width:9px;height:9px;border-radius:50%}
+
+  /* testimonials */
+  .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+  .tst{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:28px;display:flex;flex-direction:column}
+  .tst .stars{display:flex;gap:3px;color:var(--amber);margin-bottom:14px}
+  .tst .stars svg{width:17px;height:17px}
+  .tst blockquote{margin:0;font-size:16.5px;line-height:1.55;color:var(--ink);font-family:"Bricolage Grotesque";font-weight:500;letter-spacing:-.01em}
+  .tst .who{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:22px}
+  .tst .av{width:42px;height:42px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;font-weight:700;color:#fff;font-family:"Bricolage Grotesque"}
+  .tst .who .nm{font-size:14.5px;font-weight:600}
+  .tst .who .rl{font-size:13px;color:var(--faint)}
+
+  /* assessment mock */
+  .assess{padding:16px}
+  .assess-score{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:18px 16px;text-align:center}
+  .assess-score .lab{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .assess-score .big{font-family:"Bricolage Grotesque";font-weight:800;font-size:42px;line-height:1;margin:8px 0;color:var(--orange)}
+  .assess-score .big span{font-size:20px;color:var(--muted)}
+  .assess-score .band{display:inline-block;font-size:12px;font-weight:600;color:#1a1206;background:var(--amber);padding:4px 13px;border-radius:20px}
+  .assess-score .bar{height:8px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:14px}
+  .assess-score .bar i{display:block;height:100%;background:var(--grad);border-radius:6px}
+  .assess-fb{margin-top:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:15px}
+  .assess-fb h5{font-family:"Bricolage Grotesque";font-size:13px;margin:0 0 6px}
+  .assess-fb p{font-size:12.5px;color:var(--muted);line-height:1.5}
+  .assess-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .ac{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:13px}
+  .ac .h{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:600;gap:8px}
+  .ac .h b{font-family:"Bricolage Grotesque";color:var(--orange);font-size:15px;white-space:nowrap}
+  .ac p{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.45}
+
+  /* demo video */
+  .video-frame{position:relative;margin-top:42px;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:16/9;background:linear-gradient(160deg,#16203a,#0d1322);border:1px solid var(--line-strong);display:grid;place-items:center;box-shadow:0 44px 100px -34px rgba(0,0,0,.7)}
+  .video-frame::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 62% at 50% 42%,rgba(255,90,78,.17),transparent 70%)}
+  .play{position:relative;width:88px;height:88px;border-radius:50%;border:0;cursor:pointer;background:var(--grad);color:#fff;display:grid;place-items:center;box-shadow:0 18px 44px -8px rgba(255,90,78,.6);transition:transform .2s var(--ease)}
+  .play:hover{transform:scale(1.07)}
+  .play svg{width:30px;height:30px;margin-left:5px}
+  .video-badge{position:absolute;bottom:16px;right:16px;background:rgba(10,15,28,.72);border:1px solid var(--line);padding:6px 13px;border-radius:20px;font-size:12.5px;color:var(--muted)}
+  .video-label{position:absolute;top:16px;left:16px;display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink);background:rgba(10,15,28,.55);border:1px solid var(--line);padding:6px 13px;border-radius:20px}
+  .video-cap{text-align:center;color:var(--faint);font-size:13px;margin-top:16px}
+
+  /* value band */
+  .value-band{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,138,75,.13),rgba(255,61,107,.10));border:1px solid rgba(255,90,78,.28);border-radius:var(--r-lg);padding:52px}
+  .value-band h2{font-size:clamp(26px,3.4vw,42px);margin-top:14px;max-width:720px;font-weight:800}
+  .value-band h2 em{color:var(--orange);font-style:normal}
+  .value-band p{color:var(--muted);margin-top:18px;max-width:600px;font-size:17px}
+  .value-band .orb-1{top:-30px;right:-20px;width:120px;height:120px}
+
+  /* hero trust line */
+  .hero-trust{display:flex;align-items:flex-start;gap:11px;margin-top:22px;color:var(--muted);font-size:14px;max-width:512px;line-height:1.55}
+  .hero-trust svg{width:20px;height:20px;color:var(--orange);flex:0 0 auto;margin-top:2px}
+  .hero-trust b{color:var(--ink);font-weight:600}
+
+  /* ticker */
+  .ticker{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);padding:17px 0;margin-top:46px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .ticker-track{display:flex;width:max-content;animation:ticker 42s linear infinite}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  .ticker-item{display:inline-flex;align-items:center;gap:36px;padding-right:36px;white-space:nowrap;font-family:"Bricolage Grotesque";font-weight:600;font-size:clamp(16px,1.6vw,19px);letter-spacing:-.01em;color:var(--muted)}
+  .ticker-item::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);flex:0 0 auto}
+  .ticker-item.hi{color:var(--ink)}
+  @keyframes ticker{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+  /* differentiator checklist */
+  .why-list{list-style:none;padding:0;margin:24px 0 0;display:flex;flex-direction:column;gap:16px}
+  .why-list li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+  .why-list li .ck{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;flex:0 0 auto;margin-top:1px}
+  .why-list li .ck svg{width:17px;height:17px;color:#fff}
+  .why-list li b{font-weight:700;font-size:17px;display:block}
+  .why-list li .d{display:block;color:var(--muted);font-size:14.5px;margin-top:1px}
+
+  /* comparison table */
+  .compare{margin-top:48px;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--panel);box-shadow:0 30px 70px -30px rgba(0,0,0,.6)}
+  .compare-row{display:grid;grid-template-columns:1fr 1fr}
+  .compare-row>div{padding:17px 26px;border-top:1px solid var(--line);font-size:15.5px}
+  .compare-head>div{border-top:0;font-family:"Bricolage Grotesque";font-weight:700;font-size:18px;padding-top:22px;padding-bottom:22px}
+  .compare-row .col-a{color:var(--muted)}
+  .compare-row .col-b{background:rgba(255,90,78,.06);border-left:1px solid var(--line);color:var(--ink);font-weight:500;display:flex;align-items:flex-start;gap:10px}
+  .compare-row .col-b svg{width:18px;height:18px;color:var(--green);flex:0 0 auto;margin-top:3px}
+  .compare-head .col-b{color:var(--ink);align-items:center}
+  .compare-head .col-b .badge{font-size:11px;background:var(--grad);color:#fff;padding:3px 11px;border-radius:20px;margin-left:10px;font-family:"Inter Tight";font-weight:600}
+
+  /* how it works — steps as cards + centered screenshot */
+  .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+  .step-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:28px}
+  .step-card .num{width:40px;height:40px;border-radius:11px;background:var(--grad);color:#fff;display:grid;place-items:center;font-family:"Bricolage Grotesque";font-weight:800;font-size:18px;margin-bottom:18px}
+  .step-card h3{font-size:19px;font-weight:700}
+  .step-card p{color:var(--muted);font-size:15px;margin-top:9px}
+  .how-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:52px;align-items:center;margin-top:48px}
+  .how-steps{display:flex;flex-direction:column}
+  .hstep{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+  .hstep:first-child{border-top:0;padding-top:0}
+  .hstep .num{width:38px;height:38px;border-radius:11px;background:var(--grad);color:#fff;display:grid;place-items:center;font-family:"Bricolage Grotesque";font-weight:800;font-size:16px}
+  .hstep h3{font-size:18px;font-weight:700}
+  .hstep p{color:var(--muted);font-size:14.5px;margin-top:6px}
+  .how-shots{display:flex;flex-direction:column;gap:16px}
+  .fb-shot{margin:0;border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -28px rgba(0,0,0,.6);background:#0f1523}
+  .fb-shot img{display:block;width:100%;height:auto}
+
+  /* interview types as cards */
+  .types-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+  .type-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:26px;display:flex;flex-direction:column;transition:transform .2s var(--ease),border-color .2s}
+  .type-card:hover{transform:translateY(-4px);border-color:var(--line-strong)}
+  .type-card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;background:var(--grad)}
+  .type-card .ic svg{width:23px;height:23px;color:#fff}
+  .type-card h3{font-size:18px;font-weight:700}
+  .type-card p{color:var(--muted);font-size:14.5px;margin-top:9px;flex:1}
+  .type-meta{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:15px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint)}
+  .type-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--faint)}
+  .type-meta b{color:var(--muted);font-weight:600}
+
+  /* final CTA */
+  .cta{padding:40px 0 100px}
+  .cta-card{position:relative;overflow:hidden;border-radius:var(--r-lg);padding:64px 48px;text-align:center;background:
+     radial-gradient(120% 140% at 50% -20%, rgba(255,90,78,.32), transparent 60%),
+     linear-gradient(180deg,#141d33,#0e1524);
+     border:1px solid var(--line-strong)}
+  .cta-card h2{font-size:clamp(30px,4.4vw,52px);font-weight:800}
+  .cta-card p{color:var(--muted);font-size:19px;margin:18px auto 0;max-width:560px}
+  .cta-card .waitlist{margin:30px auto 0}
+  .cta-card .note{justify-content:center}
+
+  /* footer */
+  footer.ft{border-top:1px solid var(--line);padding:52px 0 40px}
+  .ft-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .ft .brand{margin-bottom:14px}
+  .ft-tag{color:var(--muted);font-size:15px;max-width:300px}
+  .ft-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .ft-col h5{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 14px;font-family:"Inter Tight";font-weight:600}
+  .ft-col a{display:block;color:var(--muted);font-size:15px;padding:5px 0;transition:color .2s}
+  .ft-col a:hover{color:var(--ink)}
+  .ft-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--faint);font-size:13.5px}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* responsive */
+  @media(max-width:960px){
+    .hero-grid,.sol-grid,.parents-grid,.tabpanel.active,.how-grid{grid-template-columns:1fr;gap:40px}
+    .hero{padding:52px 0 20px}
+    .sol-grid .app-card,.parents-grid .app-card{order:2}
+    .prob-grid,.feat-grid,.tst-grid,.why-grid,.types-grid{grid-template-columns:1fr 1fr}
+    .steps-row{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .nav-cta .btn-ghost{display:none}
+    .hamburger{display:grid;place-items:center}
+    .wrap{padding:0 26px}
+    .sec{padding:72px 0}
+    .iv{grid-template-columns:1fr}
+    .iv-chat{border-left:0;border-top:1px solid var(--line)}
+  }
+  @media(max-width:620px){
+    body{font-size:16px}
+    .wrap{padding:0 20px}
+    .prob-grid,.feat-grid,.tst-grid,.gv-top,.dash-row,.why-grid,.types-grid{grid-template-columns:1fr}
+    .waitlist form{flex-direction:column}
+    .waitlist .btn{width:100%}
+    .schools .wrap{gap:16px}
+    .schools .name{font-size:15px}
+    .cta-card{padding:44px 22px}
+    .tabs{width:100%}
+    .tab{flex:1;text-align:center}
+    .hero h1{font-size:38px}
+    .sec-head h2{font-size:30px}
+    .compare-row{grid-template-columns:1fr}
+    .compare-row .col-b{border-left:0;border-top:0}
+    .compare-head{display:none}
+    .compare-row .col-a::before{content:"Traditional coach — ";color:var(--faint);font-weight:600}
+    .compare-row .col-b::after{content:""}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="intrvue.ai home">
+      <svg class="owl" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="5" y="6" width="30" height="30" rx="14" fill="#fff"/>
+        <circle cx="14.5" cy="18" r="6.4" fill="#0B1121"/><circle cx="25.5" cy="18" r="6.4" fill="#0B1121"/>
+        <circle cx="14.5" cy="18" r="2.6" fill="#FF5A4E"/><circle cx="25.5" cy="18" r="2.6" fill="#4FC3F7"/>
+        <path d="M17.6 24.5 L20 27 L22.4 24.5 Z" fill="#FF8A4B"/>
+      </svg>
+      intrvue<span class="dot">.ai</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#parents">Why intrvue</a>
+      <a href="#value">Compare</a>
+      <a href="#stories">Results</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#demo" class="btn btn-ghost">Try free demo</a>
+      <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how">How it works</a>
+    <a href="#parents">Why intrvue</a>
+    <a href="#value">Compare</a>
+    <a href="#stories">Results</a>
+    <a href="#demo" class="btn btn-ghost">Try free demo</a>
+    <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Built by former St Paul's, Westminster &amp; Eton tutors</span>
+      <h1>The 11+ interview,<br>rehearsed until it<br>feels <span class="soft">easy.</span></h1>
+      <p class="hero-sub">Unlimited spoken practice, scored on what top schools actually look for — whilst showing you exactly what to improve.</p>
+
+      <div class="waitlist" id="waitlist">
+        <form id="waitlistForm" novalidate>
+          <input type="email" id="wlEmail" name="email" placeholder="Your email address" aria-label="Email address" required />
+          <button type="submit" class="btn btn-primary">Join the waitlist
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+        <div class="form-success" id="wlSuccess" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+          You're on the list — we'll email your invite and a free demo shortly.
+        </div>
+        <div class="note">
+          <b>Free 2-minute demo</b><span class="sep"></span><b>No card needed</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO MOCK: live interview (mirrors the real product screen) -->
+    <div class="reveal app-card" aria-hidden="true">
+      <div class="app-top">
+        <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+        <span class="rec"><i></i>Recording · 11+ School Interview</span>
+      </div>
+      <div class="iv-status">
+        <span class="iv-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Interview Active</span>
+        <span class="iv-conn"><span class="g"></span>Connected</span>
+      </div>
+      <div class="iv-session">Session <code>FDSJJU6F05</code> · Connection: good</div>
+      <div class="iv">
+        <div class="iv-main">
+          <div class="iv-stage">
+            <div class="face"></div><div class="hair"></div><div class="shoulder"></div>
+            <img src="interview.png" alt="" class="iv-photo" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+            <span class="live">● Live</span>
+          </div>
+          <div class="iv-meta">
+            <span class="iv-mic"><span class="g"></span>Microphone On</span>
+            <span>29:35</span>
+          </div>
+        </div>
+        <div class="iv-chat">
+          <h5>Interview conversation</h5>
+          <div class="bubble q"><span class="who">INTERVIEWER · CLARA</span>Hello! I'm Clara. Tell me about a book you've really enjoyed recently.</div>
+          <div class="bubble you"><span class="who">YOU</span>I loved <em>Holes</em> — the way three stories link up at the end surprised me…
+            <div class="wave">
+              <i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.05s"></i><i style="animation-delay:.25s"></i><i style="animation-delay:.35s"></i><i style="animation-delay:.12s"></i><i style="animation-delay:.22s"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ticker -->
+  <div class="ticker" aria-label="Built for over 50 independent schools worldwide; realistic spoken interviews with instant written feedback">
+    <div class="ticker-track" aria-hidden="true">
+      <span class="ticker-item hi">Built for over 50 independent schools</span>
+      <span class="ticker-item">Realistic spoken interviews</span>
+      <span class="ticker-item">Instant written feedback</span>
+      <span class="ticker-item">Progress tracked every session</span>
+      <span class="ticker-item">Built by St Paul's, Westminster &amp; Eton tutors</span>
+      <span class="ticker-item hi">Built for over 50 independent schools</span>
+      <span class="ticker-item">Realistic spoken interviews</span>
+      <span class="ticker-item">Instant written feedback</span>
+      <span class="ticker-item">Progress tracked every session</span>
+      <span class="ticker-item">Built by St Paul's, Westminster &amp; Eton tutors</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO VIDEO -->
+<section class="sec" id="video" style="padding:64px 0">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">See it in action</span>
+      <h2>See a real interview in 90 seconds.</h2>
+      <p>The conversation, the live scoring, and the feedback your child gets the moment they finish.</p>
+    </div>
+    <div class="video-frame reveal">
+      <span class="video-label"><span style="width:8px;height:8px;border-radius:50%;background:var(--coral);display:inline-block"></span>Product demo</span>
+      <button class="play" aria-label="Play the demo walkthrough" onclick="alert('Demo video coming soon!')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span class="video-badge">1:30</span>
+    </div>
+    <p class="video-cap">A 90-second walkthrough of a full practice session.</p>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec" id="problem">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">The bit you can't revise for</span>
+      <h2>Papers can be drilled. The interview can't.</h2>
+      <p>Your child can sit a hundred papers — but the interview is a conversation with a stranger, and there's rarely a way to rehearse it.</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Mock interviews are scarce</h3>
+        <p>A private coach costs £80–£100 an hour and books out months ahead. Most families get one go, if any.</p>
+      </div>
+      <div class="prob reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 15s1.2-1.5 4-1.5S16 15 16 15M9 9h.01M15 9h.01"/></svg></div>
+        <h3>Bright children freeze up</h3>
+        <p>Nerves, one-word answers, going blank on "tell me about yourself." Confidence counts as much as the answer.</p>
+      </div>
+      <div class="prob reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Parents can't see the gap</h3>
+        <p>You know something's off but not what to fix — so practice at home goes in circles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION / HOW IT WORKS -->
+<section class="sec sol" id="how">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>Practise, get feedback, improve — on repeat.</h2>
+      <p>Prep your child can do alone, as often as they like, with feedback you can actually act on.</p>
+    </div>
+    <div class="how-grid reveal">
+      <div class="how-steps">
+        <div class="hstep">
+          <span class="num">1</span>
+          <div><h3>Talk to a real interviewer</h3><p>Your child speaks their answers aloud to Clara — a calm, patient interviewer — just like the day itself.</p></div>
+        </div>
+        <div class="hstep">
+          <span class="num">2</span>
+          <div><h3>Get scored on what matters</h3><p>Marked on insight, reasoning, engagement and curiosity — with the exact lines that earned the score.</p></div>
+        </div>
+        <div class="hstep">
+          <span class="num">3</span>
+          <div><h3>Improve where it counts</h3><p>Clear next steps and playful rewards — streaks, badges and progress — that keep children coming back.</p></div>
+        </div>
+      </div>
+      <div class="how-shots">
+        <figure class="fb-shot"><img src="feedback%201.png" alt="intrvue.ai interview assessment — score and written feedback" onerror="this.closest('.fb-shot').style.display='none'" /></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARENTS -->
+<section class="sec parents" id="parents">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Why it works so well</span>
+      <h2>A dedicated interview coach — that remembers your child.</h2>
+      <p>Built around what top schools look for. It remembers every session, tracks progress, and tells you exactly what to work on next.</p>
+    </div>
+    <div class="parents-grid">
+      <!-- grown-up view screenshot (full width) -->
+      <div class="reveal app-card" aria-hidden="true">
+        <div class="app-top">
+          <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+          <span style="margin-left:auto;font-size:12px;color:var(--faint)">Grown-up view · Ollie's progress</span>
+        </div>
+        <img src="parents.png" alt="intrvue.ai grown-up view" class="shot" onload="var c=this.closest('.app-card');c.querySelector('.app-top').style.display='none';this.nextElementSibling.style.display='none'" onerror="this.remove()" />
+        <div class="gv">
+          <div class="gv-top">
+            <div class="gv-card"><div class="lab">Readiness</div><div class="v ready">42%</div><div class="sub">Building · 4 days to first interview</div></div>
+            <div class="gv-card"><div class="lab">Next interview</div><div class="v" style="font-size:19px">St Paul's</div><div class="sub">12 Jan · in 4 days</div></div>
+          </div>
+          <div class="gv-transcripts">
+            <div class="tr"><span class="sc" style="color:var(--green)">12</span><div class="meta"><div class="ti">Maths Mock Interview</div><div class="da">18 June · 22:48</div></div><span class="tag" style="background:rgba(52,211,153,.15);color:#7ee7bf">Good</span></div>
+            <div class="tr"><span class="sc" style="color:var(--amber)">4</span><div class="meta"><div class="ti">Maths Mock Interview</div><div class="da">5 July · 18:48</div></div><span class="tag" style="background:rgba(251,191,36,.15);color:#f2cd6b">Getting there</span></div>
+            <div class="tr"><span class="sc" style="color:var(--coral)">1</span><div class="meta"><div class="ti">11+ School Interview</div><div class="da">5 July · 22:56</div></div><span class="tag" style="background:rgba(255,61,107,.15);color:#ff90a9">Keep going</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <ul class="why-grid">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Scores every answer</b><span class="d">A mark out of 20 on every response — never vague praise.</span></span></li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Knows what schools look for</b><span class="d">Built with tutors who've sat on the other side of the interview table — not one-size-fits-all feedback.</span></span></li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Tracks progress over time</b><span class="d">Every session logged, so you see improvement, not guesswork.</span></span></li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Remembers previous interviews</b><span class="d">Builds on last time — like a coach who knows your child.</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES / INTERVIEW TYPES -->
+<section class="sec" id="types">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Interview types</span>
+      <h2>Four interview types — pick what fits the school.</h2>
+      <p>School interview, logic puzzles, a spoken maths mock, and current affairs &amp; moral reasoning.</p>
+    </div>
+    <div class="types-grid reveal">
+      <div class="type-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        <h3>School Interview</h3>
+        <p>Personal questions, motivations, and the "tell me about yourself" moments that shape first impressions.</p>
+        <div class="type-meta"><b>30 min</b><span class="dot"></span>Personal insight &amp; reasoning</div>
+      </div>
+      <div class="type-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.6c.6.5 1 1.3 1 2.4h6c0-1.1.4-1.9 1-2.4A7 7 0 0 0 12 2Z"/></svg></div>
+        <h3>Logic Puzzles</h3>
+        <p>Reasoning problems that train the "explain your thinking" skill bright children tend to rush.</p>
+        <div class="type-meta"><b>30 min</b><span class="dot"></span>Verbal &amp; non-verbal reasoning</div>
+      </div>
+      <div class="type-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg></div>
+        <h3>Maths Mock</h3>
+        <p>Spoken maths problems with Clara — talk through your method out loud, just as you would at interview.</p>
+        <div class="type-meta"><b>20 min</b><span class="dot"></span>Number, method &amp; clarity</div>
+      </div>
+      <div class="type-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg></div>
+        <h3>Current Affairs</h3>
+        <p>A discussion on news and ethics — no right answers, only well-reasoned ones.</p>
+        <div class="type-meta"><b>20 min</b><span class="dot"></span>World awareness &amp; argument</div>
+      </div>
+    </div>
+
+    <div class="tabpanel active" id="t1" role="tabpanel">
+      <div>
+        <h3>11+ School Interview</h3>
+        <p>The full interview: personal questions, motivations, and the "tell me about yourself" moments that shape first impressions.</p>
+        <div class="tab-facts">
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>30-minute spoken session with instant scoring</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Scored on Personal Insight, Reasoning, Activities &amp; Awareness</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Full transcript to review together afterwards</div>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <span class="chip"><span class="d" style="background:var(--orange)"></span>Interviewer · Clara</span>
+        <div class="bubble q" style="border-radius:13px"><span class="who">CLARA</span>What's something you've changed your mind about recently?</div>
+        <span class="chip"><span class="d" style="background:var(--green)"></span>up to 240 XP · 30 min</span>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="t2" role="tabpanel">
+      <div>
+        <h3>Logic Puzzles</h3>
+        <p>Reasoning problems that train the "explain your thinking" skill bright children tend to rush.</p>
+        <div class="tab-facts">
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Verbal and non-verbal reasoning, spoken aloud</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Rewards clear method, not just the right answer</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Advanced difficulty for competitive schools</div>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <span class="chip"><span class="d" style="background:var(--violet)"></span>Logic · Advanced</span>
+        <div class="bubble q" style="border-radius:13px"><span class="who">PUZZLE</span>Three friends share 12 sweets so each gets more than the last. How many ways?</div>
+        <span class="chip"><span class="d" style="background:var(--green)"></span>up to 240 XP · 30 min</span>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="t3" role="tabpanel">
+      <div>
+        <h3>Maths Mock Interview</h3>
+        <p>A spoken maths mock with Clara — your child talks through their method on ten questions.</p>
+        <div class="tab-facts">
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Scored on Number, Problem-Solving, Method &amp; Clarity</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Builds the habit of explaining, not just answering</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>20-minute focused session</div>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <span class="chip"><span class="d" style="background:var(--teal)"></span>Interviewer · Clara</span>
+        <div class="bubble q" style="border-radius:13px"><span class="who">CLARA</span>Walk me through how you'd find 15% of 240.</div>
+        <span class="chip"><span class="d" style="background:var(--green)"></span>up to 160 XP · 20 min</span>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="t4" role="tabpanel">
+      <div>
+        <h3>Current Affairs &amp; Moral Reasoning</h3>
+        <p>A discussion with Clara on news and ethics — no right answers, only well-reasoned ones.</p>
+        <div class="tab-facts">
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Builds world awareness and the confidence to have a view</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Practises forming and defending an argument out loud</div>
+          <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>Advanced — for the top independent schools</div>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <span class="chip"><span class="d" style="background:var(--amber)"></span>Interviewer · Clara</span>
+        <div class="bubble q" style="border-radius:13px"><span class="who">CLARA</span>Should children be allowed phones at school? Talk me through both sides.</div>
+        <span class="chip"><span class="d" style="background:var(--green)"></span>up to 160 XP · 20 min</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="sec" id="value">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Coach vs intrvue.ai</span>
+      <h2>Everything a private coach gives you — without £100 an hour.</h2>
+    </div>
+    <div class="compare reveal">
+      <div class="compare-row compare-head">
+        <div class="col-a">Traditional interview coach</div>
+        <div class="col-b">intrvue.ai <span class="badge">Better value</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="col-a">£80–£100 per hour</div>
+        <div class="col-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>From £9.99</b> per interview — 5 for £45.99, 10 for £69.99</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="col-a">Limited availability</div>
+        <div class="col-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Available anytime</div>
+      </div>
+      <div class="compare-row">
+        <div class="col-a">One-off verbal feedback</div>
+        <div class="col-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Instant written feedback after every interview</div>
+      </div>
+      <div class="compare-row">
+        <div class="col-a">No progress tracking</div>
+        <div class="col-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Progress tracked over every session</div>
+      </div>
+      <div class="compare-row">
+        <div class="col-a">Hard to fit around family schedules</div>
+        <div class="col-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Practice whenever your child is ready</div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:14.5px;margin-top:20px">Pay-as-you-go — start with a single interview for £9.99. No subscription.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="stories">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">From parents</span>
+      <h2>Calmer children. Calmer households.</h2>
+      <p>Early families using intrvue.ai in the run-up to interview season.</p>
+    </div>
+    <div class="tst-grid">
+      <div class="tst reveal">
+        <div class="stars">★★★★★<svg style="display:none"></svg></div>
+        <blockquote>"She'd go silent when an adult asked her anything. Two weeks with Clara and she walked into Hampton and enjoyed it."</blockquote>
+        <div class="who"><span class="av" style="background:linear-gradient(150deg,#ff8a4b,#ff5a4e)">RP</span><div><div class="nm">Rehana P.</div><div class="rl">Parent · London</div></div></div>
+      </div>
+      <div class="tst reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The grown-up view is my favourite. I finally knew what to work on instead of nagging — and saw his answers were better than I feared."</blockquote>
+        <div class="who"><span class="av" style="background:linear-gradient(150deg,#ff9f5a,#ff5a4e)">DM</span><div><div class="nm">David M.</div><div class="rl">Parent · Surrey</div></div></div>
+      </div>
+      <div class="tst reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"He chases streaks and XP and doesn't realise he's doing interview prep. Worth it for that alone."</blockquote>
+        <div class="who"><span class="av" style="background:linear-gradient(150deg,#ff7a45,#ff3d6b)">SK</span><div><div class="nm">Sarah K.</div><div class="rl">Parent · Hertfordshire</div></div></div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--faint);font-size:13px;margin-top:22px">Illustrative — replace with your own quotes.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta" id="demo">
+  <div class="wrap">
+    <div class="cta-card reveal">
+      <span class="eyebrow" style="justify-content:center">Join the waitlist</span>
+      <h2 style="margin-top:14px">Give them the practice<br>that makes the difference.</h2>
+      <p>Be first in when we open — every waitlist family gets a free 2-minute demo. No card, no commitment.</p>
+      <div class="waitlist">
+        <form id="waitlistForm2" novalidate>
+          <input type="email" id="wlEmail2" name="email" placeholder="Your email address" aria-label="Email address" required />
+          <button type="submit" class="btn btn-primary">Join the waitlist
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+        <div class="form-success" id="wlSuccess2" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+          You're on the list — check your inbox for your invite and free demo.
+        </div>
+        <div class="note"><b>Free demo included</b><span class="sep"></span><b>No card needed</b><span class="sep"></span><b>Cancel anytime</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div>
+        <a class="brand" href="#top">
+          <svg class="owl" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="5" y="6" width="30" height="30" rx="14" fill="#fff"/>
+            <circle cx="14.5" cy="18" r="6.4" fill="#0B1121"/><circle cx="25.5" cy="18" r="6.4" fill="#0B1121"/>
+            <circle cx="14.5" cy="18" r="2.6" fill="#FF5A4E"/><circle cx="25.5" cy="18" r="2.6" fill="#4FC3F7"/>
+            <path d="M17.6 24.5 L20 27 L22.4 24.5 Z" fill="#FF8A4B"/>
+          </svg>
+          intrvue<span class="dot">.ai</span>
+        </a>
+        <p class="ft-tag">Spoken interview practice for the 11+ and independent school entry.</p>
+      </div>
+      <div class="ft-cols">
+        <div class="ft-col">
+          <h5>Product</h5>
+          <a href="#how">How it works</a>
+          <a href="#parents">Why intrvue</a>
+          <a href="#types">Interview types</a>
+          <a href="#value">Compare</a>
+        </div>
+        <div class="ft-col">
+          <h5>Get started</h5>
+          <a href="#waitlist">Join waitlist</a>
+          <a href="#demo">Free demo</a>
+          <a href="#stories">Results</a>
+        </div>
+        <div class="ft-col">
+          <h5>Company</h5>
+          <a href="#">About</a>
+          <a href="#">Privacy</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 intrvue.ai · Made for interview families everywhere</span>
+      <span>Not affiliated with any named school. Practice tool only.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky nav shadow
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>12),{passive:true});
+
+  // mobile menu
+  const burger=document.getElementById('hamburger'),menu=document.getElementById('mobileMenu');
+  burger.addEventListener('click',()=>{
+    const open=menu.style.display==='flex';
+    menu.style.display=open?'none':'flex';
+    burger.setAttribute('aria-expanded',String(!open));
+  });
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.style.display='none';burger.setAttribute('aria-expanded','false')}));
+
+  // waitlist forms
+  function wire(formId,successId,inputId){
+    const f=document.getElementById(formId);if(!f)return;
+    f.addEventListener('submit',e=>{
+      e.preventDefault();
+      const inp=document.getElementById(inputId);
+      if(!inp.value||!/.+@.+\..+/.test(inp.value)){inp.focus();inp.style.outline='2px solid #FF5A4E';return;}
+      f.style.display='none';
+      document.getElementById(successId).classList.add('show');
+    });
+  }
+  wire('waitlistForm','wlSuccess','wlEmail');
+  wire('waitlistForm2','wlSuccess2','wlEmail2');
+
+  // tabs
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.tabpanel').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById(t.dataset.tab).classList.add('active');
+    });
+  });
+
+  // scroll reveal
+  const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(!rm){
+    const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  }else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'))}
+</script>
+</body>
+</html>

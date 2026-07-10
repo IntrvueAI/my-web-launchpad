@@ -1,26 +1,62 @@
 [
   {
-    "id": "EP-C2",
+    "id": "EP-21",
     "subject": "elevenplus",
     "topic": "extracurricular",
     "difficulty": 2,
     "questionType": "Extracurricular",
-    "title": "Taught Yourself Something",
+    "title": "What clubs or activities do you take part in out",
     "tags": [],
-    "question": "Have you ever taught yourself something without a teacher or a class? How did you go about it?",
-    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "A strong response: A concrete example of self-driven learning (a coding project, a card trick, cooking, a language app) and the method - trial and error, watching videos, practising. Initiative on display.\n\nA weak response: \"No, I only learn at school,\" or an example with no sense of how they actually did it.\n\nWhat to listen for: Independent initiative and a real learning process. Self-teaching is one of the strongest 11+ signals. ---"
+    "question": "What clubs or activities do you take part in outside lessons?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Which is your favourite, and why?\n\nPick one activity they mention and dig in — how they got into it, what they love, any highlights. If the list is short, that's fine; depth on one is better than a long list.\n\nWhat to look for: Enthusiasm and commitment over time say a lot — draw out what they've stuck with."
   },
   {
-    "id": "EP-C3",
+    "id": "EP-22",
     "subject": "elevenplus",
     "topic": "extracurricular",
     "difficulty": 2,
     "questionType": "Extracurricular",
-    "title": "A Skill You've Worked Hard At",
+    "title": "What interests would you like to pursue further ",
     "tags": [],
-    "question": "Tell me about a skill you've really had to work at. What kept you going?",
-    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "A strong response: Honest account of effort over time, plateaus or frustration, and what motivated them to persist. Reflection on progress and setbacks.\n\nA weak response: \"I'm just naturally good at it,\" or a skill named with no story of effort.\n\nWhat to listen for: Grit and self-reflection. The setbacks are the interesting part - draw them out. ---"
+    "question": "What interests would you like to pursue further at your new school?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What draws you to it?\n\nExplore the motivation behind the interest and how they've explored it so far. Keep the focus on the child's curiosity rather than any particular school.\n\nWhat to look for: Enthusiasm and commitment over time say a lot — draw out what they've stuck with."
+  },
+  {
+    "id": "EP-23",
+    "subject": "elevenplus",
+    "topic": "extracurricular",
+    "difficulty": 2,
+    "questionType": "Extracurricular",
+    "title": "Tell me about an activity you have stuck with fo",
+    "tags": [],
+    "question": "Tell me about an activity you have stuck with for a long time. What has kept you going?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: How have you improved?\n\nDraw out the story of their progress — early struggles, a proud moment, what keeps them motivated. Commitment is the theme, so let them reflect on their journey.\n\nWhat to look for: Enthusiasm and commitment over time say a lot — draw out what they've stuck with."
+  },
+  {
+    "id": "EP-24",
+    "subject": "elevenplus",
+    "topic": "extracurricular",
+    "difficulty": 2,
+    "questionType": "Extracurricular",
+    "title": "Have you ever tried an activity that was complet",
+    "tags": [],
+    "question": "Have you ever tried an activity that was completely new to you? How did it go?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Would you try something new again?\n\nFollow up on how they felt facing something unfamiliar and what they learned. If it went badly, gently explore what they took from it — openness to new things is what matters.\n\nWhat to look for: Enthusiasm and commitment over time say a lot — draw out what they've stuck with."
+  },
+  {
+    "id": "EP-25",
+    "subject": "elevenplus",
+    "topic": "extracurricular",
+    "difficulty": 2,
+    "questionType": "Extracurricular",
+    "title": "If you could start a brand-new club at school",
+    "tags": [],
+    "question": "If you could start a brand-new club at school, what would it be and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Who would you hope joins?\n\nFollow their idea with genuine interest — what they'd do, how they'd run it, why it excites them. This reveals initiative and interests, so give room to imagine.\n\nWhat to look for: Enthusiasm and commitment over time say a lot — draw out what they've stuck with."
   }
 ]

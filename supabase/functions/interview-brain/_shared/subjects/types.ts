@@ -35,6 +35,18 @@ export interface SubjectPack {
   /** Target scored questions in a mock run. */
   mockTargetQuestions: number;
   /**
+   * Optional two-phase bank mix. When set, a mock run draws the FIRST `primaryShare` of questions
+   * from `primarySubject` (at `primaryDifficulty`, not adapted — e.g. warm get-to-know-you), then
+   * the rest from `secondarySubjects` (adaptive from `secondaryStartDifficulty` — e.g. hard academic).
+   */
+  mixedBank?: {
+    primarySubject: string;
+    primaryShare: number;
+    primaryDifficulty: Difficulty;
+    secondarySubjects: string[];
+    secondaryStartDifficulty: Difficulty;
+  };
+  /**
    * Subject-wide scoring philosophy injected into the interviewer's prompt — e.g. the golden rule
    * (reasoning > the right answer), the process/adaptability/answer weighting, the qualities being
    * assessed, the band definitions, and how hints affect banding. This is the document-level

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "EP-6",
+    "subject": "elevenplus",
+    "topic": "school",
+    "difficulty": 2,
+    "questionType": "Your School",
+    "title": "What is your favourite thing about your current ",
+    "tags": [],
+    "question": "What is your favourite thing about your current school?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Why does that matter to you?\n\nWhatever they name — a subject, friends, a club, a place — ask them to describe a specific moment or example. If they answer in one word, gently ask 'what is it about that you like?' to help them articulate.\n\nWhat to look for: Look for warmth about their current school and a sense of what they give back to it."
+  },
+  {
+    "id": "EP-7",
+    "subject": "elevenplus",
+    "topic": "school",
+    "difficulty": 2,
+    "questionType": "Your School",
+    "title": "If you were headteacher for a day",
+    "tags": [],
+    "question": "If you were headteacher for a day, what is one thing you would change, and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: How would that help other pupils?\n\nProbe the reasoning: who benefits, and are there any downsides? Invite them to think it through out loud rather than expecting a polished answer — the aim is to see how they reason and consider others.\n\nWhat to look for: Look for warmth about their current school and a sense of what they give back to it."
+  },
+  {
+    "id": "EP-8",
+    "subject": "elevenplus",
+    "topic": "school",
+    "difficulty": 2,
+    "questionType": "Your School",
+    "title": "Do you think school rules are necessary? Which r",
+    "tags": [],
+    "question": "Do you think school rules are necessary? Which rule do you think matters most?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Can you argue both sides?\n\nEncourage balanced thinking — 'on the one hand… on the other'. If they pick a side quickly, invite them to consider the opposite view. Follow up on any personal example that prompted their opinion.\n\nWhat to look for: Look for warmth about their current school and a sense of what they give back to it."
+  },
+  {
+    "id": "EP-9",
+    "subject": "elevenplus",
+    "topic": "school",
+    "difficulty": 2,
+    "questionType": "Your School",
+    "title": "Tell me about a teacher who has made a differenc",
+    "tags": [],
+    "question": "Tell me about a teacher who has made a difference to you.",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What did they do that stuck with you?\n\nDraw out a concrete example of something the teacher did or said. Notice what the child values in an adult (kindness, high standards, humour) and reflect that back to keep them talking.\n\nWhat to look for: Look for warmth about their current school and a sense of what they give back to it."
+  },
+  {
+    "id": "EP-10",
+    "subject": "elevenplus",
+    "topic": "school",
+    "difficulty": 2,
+    "questionType": "Your School",
+    "title": "What do you contribute to your school community",
+    "tags": [],
+    "question": "What do you contribute to your school community?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Do you have any responsibilities or roles?\n\nIf they hold a role or help others, ask for a specific instance. If they're modest or unsure, reassure them and prompt gently about small everyday things they do for classmates or the school.\n\nWhat to look for: Look for warmth about their current school and a sense of what they give back to it."
+  }
+]

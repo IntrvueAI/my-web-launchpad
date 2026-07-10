@@ -1,0 +1,62 @@
+[
+  {
+    "id": "EP-11",
+    "subject": "elevenplus",
+    "topic": "reading",
+    "difficulty": 2,
+    "questionType": "Reading",
+    "title": "Tell me about what you are reading at the moment",
+    "tags": [],
+    "question": "Tell me about what you are reading at the moment.",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What do you think will happen next, and why?\n\nFollow the specific book they name: ask what's happening, what they think of a character, or how they'd feel in that situation. If they aren't reading anything now, ask about the last book they enjoyed instead.\n\nWhat to look for: Depth beats breadth — knowing one book well is more impressive than listing many."
+  },
+  {
+    "id": "EP-12",
+    "subject": "elevenplus",
+    "topic": "reading",
+    "difficulty": 2,
+    "questionType": "Reading",
+    "title": "What is your favourite book",
+    "tags": [],
+    "question": "What is your favourite book, and what makes it special to you?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Which character do you relate to most?\n\nGo deeper on the one book rather than moving on — favourite moment, why it stayed with them, how it made them feel. Let them lead you into the parts they're most excited to share.\n\nWhat to look for: Depth beats breadth — knowing one book well is more impressive than listing many."
+  },
+  {
+    "id": "EP-13",
+    "subject": "elevenplus",
+    "topic": "reading",
+    "difficulty": 2,
+    "questionType": "Reading",
+    "title": "What do you think makes a good story",
+    "tags": [],
+    "question": "What do you think makes a good story?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Can you give an example of a book that does this well?\n\nAsk them to test their own idea against a book they know. If they mention 'exciting' or 'interesting' characters, ask what makes a character interesting to help them articulate their thinking.\n\nWhat to look for: Depth beats breadth — knowing one book well is more impressive than listing many."
+  },
+  {
+    "id": "EP-14",
+    "subject": "elevenplus",
+    "topic": "reading",
+    "difficulty": 2,
+    "questionType": "Reading",
+    "title": "Why do you think reading is important",
+    "tags": [],
+    "question": "Why do you think reading is important?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Has a book ever changed how you see something?\n\nInvite a personal example — a book that taught them something or changed their mind. Follow whatever reason they give (imagination, learning, escape) and ask them to expand with a real instance.\n\nWhat to look for: Depth beats breadth — knowing one book well is more impressive than listing many."
+  },
+  {
+    "id": "EP-15",
+    "subject": "elevenplus",
+    "topic": "reading",
+    "difficulty": 2,
+    "questionType": "Reading",
+    "title": "If you could meet any character from a book",
+    "tags": [],
+    "question": "If you could meet any character from a book, who would it be, and what would you ask them?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What do you admire about them?\n\nExplore what the choice says about them — what they'd ask, and why that character appeals. Keep it playful and follow their imagination wherever it goes.\n\nWhat to look for: Depth beats breadth — knowing one book well is more impressive than listing many."
+  }
+]

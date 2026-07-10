@@ -285,17 +285,37 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
   if (state.mode === 'mock' && state.questionIndex >= state.targetQuestions) {
     return { no_more_problems: true, message: 'That was the last planned problem. Give a warm closing, then call finish_interview.' };
   }
-  const q = selectQuestion({
-    bank: deps.bank,
+
+  // Two-phase mix (e.g. 11+): draw the first `primaryShare` from the primarySubject at a fixed,
+  // conversational difficulty, then the rest from the harder secondarySubjects (adaptive).
+  const mix = deps.pack.mixedBank;
+  let bank = deps.bank;
+  let difficulty = state.difficulty;
+  if (mix && state.mode === 'mock') {
+    const primaryCount = Math.max(1, Math.round(mix.primaryShare * state.targetQuestions));
+    if (state.questionIndex < primaryCount) {
+      bank = deps.bank.filter((b) => b.subject === mix.primarySubject);
+      difficulty = mix.primaryDifficulty;
+    } else {
+      if (state.questionIndex === primaryCount) state.difficulty = mix.secondaryStartDifficulty; // reset once, on entry
+      bank = deps.bank.filter((b) => mix.secondarySubjects.includes(b.subject));
+      difficulty = state.difficulty;
+    }
+    if (bank.length === 0) bank = deps.bank;
+  }
+
+  const params = {
     mode: state.mode,
-    difficulty: state.difficulty,
     askedIds: state.askedIds,
     topic: state.currentTopic,
     questionIndex: state.questionIndex,
     seed: state.seed,
     // Prefer a category not yet covered this run, for a good spread across question types.
     recentTopics: state.evidence.map((e) => e.topic),
-  });
+  };
+  const q = selectQuestion({ bank, difficulty, ...params })
+    // If the phase pool is exhausted, fall back to the whole bank so the interview never stalls.
+    ?? (bank !== deps.bank ? selectQuestion({ bank: deps.bank, difficulty: state.difficulty, ...params }) : null);
   if (!q) {
     return { no_more_problems: true, message: 'No more problems are available. Give a warm closing, then call finish_interview.' };
   }

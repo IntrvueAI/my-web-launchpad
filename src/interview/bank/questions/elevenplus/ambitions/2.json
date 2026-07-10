@@ -1,0 +1,26 @@
+[
+  {
+    "id": "EP-32",
+    "subject": "elevenplus",
+    "topic": "ambitions",
+    "difficulty": 2,
+    "questionType": "Ambitions",
+    "title": "What would you like to do when you are an adult",
+    "tags": [],
+    "question": "What would you like to do when you are an adult, and what draws you to it?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What might you need to learn to get there?\n\nFollow the 'why' rather than the job title, and reassure them it's fine not to know yet. If they're unsure, ask what kinds of things they enjoy that might point somewhere.\n\nWhat to look for: Answers shouldn't sound rehearsed — encourage genuine reasons behind the ambition."
+  },
+  {
+    "id": "EP-33",
+    "subject": "elevenplus",
+    "topic": "ambitions",
+    "difficulty": 2,
+    "questionType": "Ambitions",
+    "title": "Is there a problem in the world you would like t",
+    "tags": [],
+    "question": "Is there a problem in the world you would like to help solve one day?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Why does that one matter to you?\n\nExplore what sparked their concern and any personal connection. Follow their reasoning with genuine interest — this reveals values and awareness, so give them room to think aloud.\n\nWhat to look for: Answers shouldn't sound rehearsed — encourage genuine reasons behind the ambition."
+  }
+]

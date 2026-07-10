@@ -1,0 +1,62 @@
+[
+  {
+    "id": "EP-16",
+    "subject": "elevenplus",
+    "topic": "academics",
+    "difficulty": 2,
+    "questionType": "Academics",
+    "title": "What are your favourite and least favourite subj",
+    "tags": [],
+    "question": "What are your favourite and least favourite subjects, and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What would make your least favourite more enjoyable?\n\nAsk for the reasons behind both, and a specific topic they enjoyed or struggled with. If they're only positive, gently explore the harder subject to see how they handle challenge.\n\nWhat to look for: Curiosity and a willingness to tackle difficulty matter more than only naming strengths."
+  },
+  {
+    "id": "EP-17",
+    "subject": "elevenplus",
+    "topic": "academics",
+    "difficulty": 2,
+    "questionType": "Academics",
+    "title": "Tell me about a topic you have studied recently ",
+    "tags": [],
+    "question": "Tell me about a topic you have studied recently that really interested you.",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What made it fascinating?\n\nLet their curiosity lead — ask what surprised them or what they'd like to learn next about it. Follow their enthusiasm; this is a strong chance for them to shine, so give plenty of space.\n\nWhat to look for: Curiosity and a willingness to tackle difficulty matter more than only naming strengths."
+  },
+  {
+    "id": "EP-18",
+    "subject": "elevenplus",
+    "topic": "academics",
+    "difficulty": 2,
+    "questionType": "Academics",
+    "title": "When you find a piece of work difficult",
+    "tags": [],
+    "question": "When you find a piece of work difficult, how do you approach it?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Tell me about a time this worked.\n\nSteer towards a real example rather than a general strategy. Notice resilience and problem-solving, and ask how they felt when they finally cracked it.\n\nWhat to look for: Curiosity and a willingness to tackle difficulty matter more than only naming strengths."
+  },
+  {
+    "id": "EP-19",
+    "subject": "elevenplus",
+    "topic": "academics",
+    "difficulty": 2,
+    "questionType": "Academics",
+    "title": "Which subject do you think will be most useful l",
+    "tags": [],
+    "question": "Which subject do you think will be most useful later in life, and why?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: Can you argue for a different one too?\n\nEncourage them to reason it through and consider more than one answer. If they give a confident single choice, invite the opposite case to see flexible thinking.\n\nWhat to look for: Curiosity and a willingness to tackle difficulty matter more than only naming strengths."
+  },
+  {
+    "id": "EP-20",
+    "subject": "elevenplus",
+    "topic": "academics",
+    "difficulty": 2,
+    "questionType": "Academics",
+    "title": "If you could invent a brand-new subject to be ta",
+    "tags": [],
+    "question": "If you could invent a brand-new subject to be taught at school, what would it be?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What would pupils learn in it?\n\nPlay along with their invention and ask for detail — what a lesson would look like, why it matters. Follow their creativity; there are no wrong answers here.\n\nWhat to look for: Curiosity and a willingness to tackle difficulty matter more than only naming strengths."
+  }
+]

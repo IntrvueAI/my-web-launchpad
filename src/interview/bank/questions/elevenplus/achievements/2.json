@@ -1,0 +1,38 @@
+[
+  {
+    "id": "EP-29",
+    "subject": "elevenplus",
+    "topic": "achievements",
+    "difficulty": 2,
+    "questionType": "Achievements",
+    "title": "What is your greatest achievement so far",
+    "tags": [],
+    "question": "What is your greatest achievement so far, and why does it mean so much to you?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What did you have to do to get there?\n\nReassure them that it can be big or small. Follow up on the effort and feelings behind it — the struggle, the moment of success, why it stuck with them. Let them relive it.\n\nWhat to look for: Big or small doesn't matter — what matters is that they can explain why it means so much."
+  },
+  {
+    "id": "EP-30",
+    "subject": "elevenplus",
+    "topic": "achievements",
+    "difficulty": 2,
+    "questionType": "Achievements",
+    "title": "What is the biggest challenge you have ever face",
+    "tags": [],
+    "question": "What is the biggest challenge you have ever faced, and how did you deal with it?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: What would you do differently next time?\n\nHandle sensitively; let the child choose how much to share. Follow their lead on how they coped and what they learned. Focus on resilience and reflection, not the difficulty itself.\n\nWhat to look for: Big or small doesn't matter — what matters is that they can explain why it means so much."
+  },
+  {
+    "id": "EP-31",
+    "subject": "elevenplus",
+    "topic": "achievements",
+    "difficulty": 2,
+    "questionType": "Achievements",
+    "title": "Tell me about a time you did not succeed at firs",
+    "tags": [],
+    "question": "Tell me about a time you did not succeed at first. What did you learn?",
+    "answer": "Get-to-know-you question — there is no single correct answer. Assess how well the child articulates and expresses themselves, with specific detail and honesty.",
+    "modelReasoningPath": "Follow-up you can use: How did you keep going?\n\nEncourage honesty about setbacks and draw out the learning and persistence. Reassure them that not succeeding first time is normal, so they feel safe to be candid.\n\nWhat to look for: Big or small doesn't matter — what matters is that they can explain why it means so much."
+  }
+]
