@@ -15,7 +15,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Target, ChevronDown, Brain } from 'lucide-react';
+import { Target, ChevronDown, Brain, Sparkles } from 'lucide-react';
+import { PipMark } from '@/components/brand/Pip';
 import { useState } from 'react';
 
 // Import our new modular components and utilities
@@ -107,11 +108,12 @@ interface InterviewFeedbackV2Props {
  */
 const getBandColor = (score: number, maxScore: number) => {
   const percentage = (score / maxScore) * 100;
-  if (percentage >= 90) return 'bg-emerald-500';
-  if (percentage >= 75) return 'bg-green-500';
-  if (percentage >= 60) return 'bg-blue-500';
-  if (percentage >= 40) return 'bg-yellow-500';
-  return 'bg-red-500';
+  // Warm, encouraging palette — no harsh reds (V2).
+  if (percentage >= 90) return 'bg-emerald';
+  if (percentage >= 75) return 'bg-teal';
+  if (percentage >= 60) return 'bg-sky';
+  if (percentage >= 40) return 'bg-amber';
+  return 'bg-primary';
 };
 
 /**
@@ -129,13 +131,13 @@ const getBandLabel = (score: number, maxScore: number, interviewType?: string) =
     return 'Below Band 4';
   }
   
-  // 11+ labels
+  // 11+ labels — warmer, child-friendly wording (V2). Same score thresholds as the original.
   const percentage = (score / maxScore) * 100;
-  if (percentage >= 90) return 'Outstanding';
-  if (percentage >= 75) return 'Strong';
-  if (percentage >= 60) return 'Good';
-  if (percentage >= 40) return 'Developing';
-  return 'Needs Support';
+  if (percentage >= 90) return 'Brilliant';
+  if (percentage >= 75) return 'Really strong';
+  if (percentage >= 60) return 'Doing well';
+  if (percentage >= 40) return 'Getting there';
+  return 'Keep practising';
 };
 
 /**
@@ -358,10 +360,18 @@ export const InterviewFeedbackV2 = ({
 
   return (
     <div className="space-y-6">
-      {/* Overall Score Section - Using legacy approach for now */}
+      {/* Warm opener (V2) */}
+      <div className="flex items-center gap-3 rounded-2xl border border-primary/20 bg-primary/[0.06] p-4">
+        <PipMark size={34} />
+        <p className="text-sm font-medium text-foreground">
+          Great effort finishing your interview! Here&rsquo;s how it went — remember, every practice makes you better. 🌟
+        </p>
+      </div>
+
+      {/* Overall Score Section */}
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Interview Assessment</CardTitle>
+          <CardTitle className="text-2xl">How you did</CardTitle>
           <div className="flex items-center justify-center gap-4 mt-4">
             <div className="text-4xl font-bold text-primary">
               {isIELTS ? `${feedback.total_score}/9.0` : `${feedback.total_score}/${maxScore}`}
@@ -432,16 +442,16 @@ export const InterviewFeedbackV2 = ({
               .sort((a, b) => a.index - b.index)
               .map((q) => {
                 const outcomeMeta: Record<string, { label: string; cls: string }> = {
-                  correct_method: { label: 'Correct, with method', cls: 'bg-emerald-500' },
-                  correct_no_method: { label: 'Correct, method unclear', cls: 'bg-green-500' },
-                  incorrect: { label: 'Not quite', cls: 'bg-red-500' },
-                  stuck: { label: 'Got stuck', cls: 'bg-yellow-500' },
+                  correct_method: { label: 'Nailed it, with working', cls: 'bg-emerald' },
+                  correct_no_method: { label: 'Right answer', cls: 'bg-teal' },
+                  incorrect: { label: 'Not this time', cls: 'bg-amber' },
+                  stuck: { label: 'A tricky one', cls: 'bg-amber' },
                   skipped: { label: 'Skipped', cls: 'bg-muted-foreground' },
-                  incomplete: { label: 'Not finished', cls: 'bg-orange-400' },
+                  incomplete: { label: 'Ran out of time', cls: 'bg-primary' },
                 };
                 const meta = q.skipped
                   ? outcomeMeta.skipped
-                  : outcomeMeta[q.outcome] || { label: q.outcome, cls: 'bg-blue-500' };
+                  : outcomeMeta[q.outcome] || { label: q.outcome, cls: 'bg-sky' };
                 return (
                   <div
                     key={q.index}
@@ -453,8 +463,8 @@ export const InterviewFeedbackV2 = ({
                       </p>
                       <div className="flex items-center gap-1.5 shrink-0">
                         {q.band && (
-                          <Badge variant="outline" className="capitalize text-xs">
-                            {q.band}
+                          <Badge variant="outline" className="text-xs">
+                            {({ strong: 'Strong reasoning', developing: 'Growing', weak: 'Room to grow' } as Record<string, string>)[q.band] || q.band}
                           </Badge>
                         )}
                         <Badge className={`${meta.cls} text-white`}>{meta.label}</Badge>
@@ -506,103 +516,81 @@ export const InterviewFeedbackV2 = ({
         </Card>
       )}
 
-      {/* Comprehensive Overall Feedback Summary - Enhanced with modular approach */}
-      {feedback.overall_improvement_feedback && (
-        <FeedbackCard
-          title="Overall Feedback Summary & Action Plan"
-          description="Comprehensive analysis of your performance with targeted improvement strategies"
-          icon={Target}
-          variant="highlight"
-          className="shadow-lg"
-        >
-          {/* Parse and render the overall improvement feedback using utility function */}
-          {(() => {
-            const feedbackText = feedback.overall_improvement_feedback || '';
-            const sections = feedbackText.split(/(?=\*\*(?:What went well|Even better if)\*\*)/);
-            
-            return sections.map((section, index) => {
-              const trimmedSection = section.trim();
-              if (!trimmedSection) return null;
-              
-              // Check if this is a "What went well" section
-              if (trimmedSection.startsWith(FEEDBACK_SECTIONS.WHAT_WENT_WELL)) {
-                const content = trimmedSection.replace(FEEDBACK_SECTIONS.WHAT_WENT_WELL, '').trim();
-                return (
-                  <div key={index} className="bg-white/[0.04] rounded-lg p-4 border border-emerald/25 mb-4">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-emerald">
-                      <Brain className="w-4 h-4" />
-                      What went well
-                    </h4>
-                    <div className="prose prose-sm max-w-none text-muted-foreground">
-                      {parseFeedbackText(content).map((paragraph, pIndex) => (
-                        <p key={pIndex} className="mb-2 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-              
-              // Check if this is an "Even better if" section
-              if (trimmedSection.startsWith(FEEDBACK_SECTIONS.EVEN_BETTER_IF)) {
-                const content = trimmedSection.replace(FEEDBACK_SECTIONS.EVEN_BETTER_IF, '').trim();
-                return (
-                  <div key={index} className="bg-white/[0.04] rounded-lg p-4 border border-primary/25 mb-4">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-primary">
-                      <Target className="w-4 h-4" />
-                      Even better if
-                    </h4>
-                    <div className="prose prose-sm max-w-none text-muted-foreground">
-                      {parseFeedbackText(content).map((paragraph, pIndex) => {
-                        // Check if it's a bullet point or numbered item
-                        const isBulletPoint = paragraph.trim().match(/^[•\-\*]\s/) || paragraph.trim().match(/^\d+\.\s/);
-                        
-                        return (
-                          <div key={pIndex} className={`mb-2 leading-relaxed ${isBulletPoint ? 'ml-4' : ''}`}>
-                            {isBulletPoint ? (
-                              <div className="flex items-start gap-2">
-                                <span className="text-primary font-semibold">→</span>
-                                <span>{paragraph.replace(/^[•\-\*]\s/, '').replace(/^\d+\.\s/, '')}</span>
-                              </div>
-                            ) : (
-                              <p>{paragraph}</p>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              }
-              
-              // For any other content (fallback or intro text)
-              if (trimmedSection && !trimmedSection.startsWith('**')) {
-                return (
-                  <div key={index} className="bg-white/[0.04] rounded-lg p-4 border border-secondary/20 mb-4">
-                    <div className="prose prose-sm max-w-none text-muted-foreground">
-                      {parseFeedbackText(trimmedSection).map((paragraph, pIndex) => (
-                        <p key={pIndex} className="mb-2 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-              
-              return null;
-            }).filter(Boolean);
-          })()}
-          
-          {/* Success Reminder */}
-          <div className="bg-emerald/10 rounded-lg p-4 border border-emerald/25">
-            <p className="text-sm text-emerald font-medium text-center">
-              💡 Remember: Every interview is a learning opportunity. Focus on progress, not perfection!
+      {/* Warm, concise summary — bullets that quote exactly what the child said (V2) */}
+      {(feedback.overall_improvement_feedback || (feedback.annotations && feedback.annotations.length > 0)) && (() => {
+        const anns = feedback.annotations || [];
+        const strengths = anns.filter((a) => a.category === 'strength').slice(0, 4);
+        const improves = anns.filter((a) => a.category !== 'strength').slice(0, 4);
+
+        // Fallback when there are no annotations: pull concise bullets from the AI summary text.
+        const textBullets = (marker: string) => {
+          const seg = (feedback.overall_improvement_feedback || '')
+            .split(/(?=\*\*(?:What went well|Even better if)\*\*)/)
+            .find((s) => s.trim().startsWith(marker));
+          if (!seg) return [] as string[];
+          return parseFeedbackText(seg.replace(marker, '').trim())
+            .flatMap((p) => p.split(/(?<=[.!?])\s+(?=[A-Z])/))
+            .map((s) => s.replace(/^[•\-*]\s/, '').replace(/^\d+\.\s/, '').trim())
+            .filter(Boolean)
+            .slice(0, 4);
+        };
+
+        const wellItems = strengths.length
+          ? strengths.map((a) => ({ quote: a.quote, note: a.explanation }))
+          : textBullets(FEEDBACK_SECTIONS.WHAT_WENT_WELL).map((t) => ({ quote: '', note: t }));
+        const betterItems = improves.length
+          ? improves.map((a) => ({ quote: a.quote, note: a.suggestion || a.explanation }))
+          : textBullets(FEEDBACK_SECTIONS.EVEN_BETTER_IF).map((t) => ({ quote: '', note: t }));
+
+        return (
+          <FeedbackCard
+            title="How it went — and what to try next"
+            description="A quick, encouraging summary"
+            icon={Sparkles}
+            variant="highlight"
+            className="shadow-lg"
+          >
+            <p className="text-sm text-muted-foreground mb-4">
+              Every session makes you sharper. Here&rsquo;s what stood out — and a couple of friendly things to try next time.
             </p>
-          </div>
-        </FeedbackCard>
-      )}
+
+            {wellItems.length > 0 && (
+              <div className="rounded-lg p-4 border border-emerald/25 bg-emerald/[0.06] mb-4">
+                <h4 className="font-semibold mb-3 flex items-center gap-2 text-emerald">✨ What you did brilliantly</h4>
+                <ul className="space-y-2.5">
+                  {wellItems.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed">
+                      <span className="text-emerald font-bold mt-0.5">✓</span>
+                      <span>{b.quote ? <>You said <span className="text-foreground font-medium">&ldquo;{b.quote}&rdquo;</span> — {b.note}</> : b.note}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {betterItems.length > 0 && (
+              <div className="rounded-lg p-4 border border-amber/25 bg-amber/[0.06] mb-4">
+                <h4 className="font-semibold mb-3 flex items-center gap-2 text-amber">🎯 A couple to try next time</h4>
+                <ul className="space-y-2.5">
+                  {betterItems.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed">
+                      <span className="text-amber font-bold mt-0.5">→</span>
+                      <span>{b.quote ? <>When you said <span className="text-foreground font-medium">&ldquo;{b.quote}&rdquo;</span>, {b.note}</> : b.note}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="rounded-lg p-4 border border-primary/25 bg-primary/[0.06] flex items-center gap-3">
+              <PipMark size={30} />
+              <p className="text-sm text-foreground font-medium">
+                You&rsquo;re making great progress — come back and give it another go. Every try makes you better! 🌟
+              </p>
+            </div>
+          </FeedbackCard>
+        );
+      })()}
     </div>
   );
 };
