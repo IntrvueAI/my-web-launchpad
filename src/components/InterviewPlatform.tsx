@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InterviewControls } from './InterviewControls';
 import { InterviewStatus } from './InterviewStatus';
-import { InterviewFeedback } from './InterviewFeedback';
+import { FeedbackVersions } from './FeedbackVersions';
 import { ChatHistory } from './ChatHistory';
 import { useInterviewSession } from '@/hooks/useInterviewSession';
 import { useAuth } from '@/contexts/AuthContext';
@@ -514,7 +514,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 {isGeneratingFeedback ? 'Regenerating…' : 'Regenerate Feedback'}
               </Button>
             </div>
-            <InterviewFeedback
+            <FeedbackVersions
               feedback={feedback}
               isLoading={isGeneratingFeedback}
               interviewType={interviewType.id}

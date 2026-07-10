@@ -16,7 +16,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { InterviewFeedback } from './InterviewFeedback';
+import { FeedbackVersions } from './FeedbackVersions';
 import { useAuth } from '@/contexts/AuthContext';
 import { CalendarDays, ChevronRight } from 'lucide-react';
 
@@ -119,7 +119,7 @@ export const FeedbackHistory: React.FC = () => {
         
         {/* Use the enhanced InterviewFeedback component — pass the FULL record so the detail view
             matches the live post-interview feedback exactly (section scores + Questions review). */}
-        <InterviewFeedback
+        <FeedbackVersions
           feedback={{
             // 11+ scores
             personal_insight_score: selectedFeedback.personal_insight_score,
