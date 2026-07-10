@@ -7,7 +7,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "Exactly One Statement is True",
     "tags": [],
-    "question": "Here are four statements. Exactly one of them is true. Which one?",
+    "question": "Here are four statements. Exactly one of them is true. Which one? A: Exactly one of these statements is false. B: Exactly two of these statements are false. C: Exactly three of these statements are false. D: Exactly four of these statements are false.",
     "answer": "C - \"Exactly three of these statements are false.\"",
     "modelReasoningPath": "If exactly one statement is true, then exactly three are false. - Check C: \"Exactly three of these statements are false\" - yes, that is what we've assumed. C is true. ✓ - Check A: \"Exactly one is false\" - we have three false statements, so A is false. ✓ - Check B: \"Exactly two are false\" - false. ✓ - Check D: \"Exactly four are false\" - false (one is true). ✓ So C being the one true statement is self-consistent. No other choice works: - If A were the one true statement, then exactly one statement would be false - meaning three are true. But that contradicts A being the only true statement. - Similarly, B and D each contradict themselves when assumed to be the sole true statement.\n\nWhat to listen for: The child should test whether each statement is consistent with being \"the one true statement.\" A child who immediately says \"C, because if exactly one is true then exactly three are false, and C says exactly that\" has understood the self-referential structure instantly. More commonly, a child will need to be walked through testing A first - show them how the assumption collapses, then they can apply the same method to B, C, D. ---"
   }

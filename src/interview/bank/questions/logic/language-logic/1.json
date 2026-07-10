@@ -7,7 +7,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "What's the Connection?",
     "tags": [],
-    "question": "I'm going to give you three short analogies. For each one, fill in the missing word - then explain the relationship as clearly as you can.",
+    "question": "I'm going to give you three short analogies. For each one, fill in the missing word - then explain the relationship as clearly as you can. One: puppy is to dog as foal is to ___. Two: author is to novel as composer is to ___. Three: map is to country as recipe is to ___.",
     "answer": "(see working)",
     "modelReasoningPath": "What to listen for: The first two analogies are warm-up. The third is where the real thinking happens - the relationship is more abstract (representation vs. reality) and requires the child to go beyond simply \"completing a pattern.\" A child who articulates \"a recipe tells you how to make a meal but isn't the meal\" has understood something genuinely interesting about the nature of language and symbols. ---"
   }

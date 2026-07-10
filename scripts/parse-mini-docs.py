@@ -84,10 +84,18 @@ def parse_subject(key: str, cfg: dict) -> list:
         if section not in cfg["sections"]:
             continue
         topic, qtype = cfg["sections"][section]
-        qm = re.search(r'>\s*"?(.+?)"?\s*\n', b, re.S)
-        if not qm:
+        # Capture the FULL blockquote — questions can span several '>' lines (e.g. an intro plus a
+        # list of analogies or group members). Grab every contiguous '>' line, then clean.
+        qlines = []
+        for line in b.split("\n"):
+            s = line.strip()
+            if s.startswith(">"):
+                qlines.append(s.lstrip(">").strip())
+            elif qlines:
+                break
+        if not qlines:
             continue
-        question = clean(qm.group(1))
+        question = clean(" ".join(l for l in qlines if l).strip().strip('"').strip())
         if cfg["discussion"]:
             answer = DISCUSSION_ANSWER
             parts = [("A strong response", field(b, "What a strong response looks like")),

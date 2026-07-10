@@ -79,7 +79,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "What's the Connection?",
     "tags": [],
-    "question": "I'm going to give you three short analogies. For each one, fill in the missing word - then explain the relationship as clearly as you can.",
+    "question": "I'm going to give you three short analogies. For each one, fill in the missing word - then explain the relationship as clearly as you can. One: puppy is to dog as foal is to ___. Two: author is to novel as composer is to ___. Three: map is to country as recipe is to ___.",
     "answer": "(see working)",
     "modelReasoningPath": "What to listen for: The first two analogies are warm-up. The third is where the real thinking happens - the relationship is more abstract (representation vs. reality) and requires the child to go beyond simply \"completing a pattern.\" A child who articulates \"a recipe tells you how to make a meal but isn't the meal\" has understood something genuinely interesting about the nature of language and symbols. ---"
   },
@@ -91,7 +91,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "The Logic Grid",
     "tags": [],
-    "question": "Three friends - Alice, Ben, and Clara - each have a favourite animal and a favourite sport. The animals are cat, dog, and rabbit. The sports are swimming, tennis, and cycling. Here are your clues:",
+    "question": "Three friends - Alice, Ben, and Clara - each have a favourite animal and a favourite sport. The animals are cat, dog, and rabbit. The sports are swimming, tennis, and cycling. Here are your clues: One: Alice does not like cats. Two: The child who likes dogs also likes swimming. Three: Ben likes tennis. Four: Clara does not like rabbits. Five: Alice does not like cycling. Work out which animal and which sport each child prefers.",
     "answer": "- Alice: dog, swimming - Ben: rabbit, tennis - Clara: cat, cycling",
     "modelReasoningPath": "- Ben likes tennis (clue 3) → Ben does not swim → Ben does not like dogs (clue 2) - Alice does not like cycling (clue 5) and Ben has tennis, so Alice swims or plays tennis. Since Ben has tennis, Alice swims. - Alice swims → Alice likes dogs (clue 2, the dog-lover swims) - Alice does not like cats (clue 1) ✓ - she likes dogs, consistent - Clara does not like rabbits (clue 4) and Alice has dogs → Clara likes cats - Ben gets the remaining animal: rabbit - Alice has swimming, Ben has tennis → Clara gets cycling\n\nWhat to listen for: Does the child work through clues systematically, or jump between them randomly? The disciplined approach is to find the clue with the most constraint first (clue 3 is the most direct) and build from there. A child who keeps a running table - even mentally - shows organised thinking. When they get stuck, ask: \"Which clue gives you the most definite information?\" ---"
   },
@@ -103,7 +103,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "Who Broke the Window?",
     "tags": [],
-    "question": "Four children are asked who broke a classroom window. Each one makes a statement:",
+    "question": "Four children are asked who broke a classroom window. Each one makes a statement: Alice says: 'It was Ben.' Ben says: 'It was not me.' Clara says: 'It was not Alice.' Dan says: 'It was Ben.' Exactly one of them is lying. Who broke the window?",
     "answer": "Ben broke the window, and Ben is the one lying.",
     "modelReasoningPath": "Test each possibility: - If Ben did it: Alice (true), Ben - \"it was not me\" (lie), Clara (true), Dan (true). Exactly one liar. ✓ - If Alice did it: Alice (lie), Ben (true), Clara - \"it was not Alice\" (lie), Dan (lie). Three liars. ✗ - If Clara did it: Alice (lie), Ben (true), Clara (true), Dan (lie). Two liars. ✗ - If Dan did it: Alice (lie), Ben (true), Clara (true), Dan (lie). Two liars. ✗ Only the first scenario satisfies the condition of exactly one liar.\n\nWhat to listen for: Does the child instinctively test each suspect, or guess? The systematic approach - \"let me assume it was Alice and see how many liars that creates\" - is the right one. A child who tries all four possibilities methodically, even if slowly, is showing excellent logical structure. Note that Alice and Dan say the same thing, which is a useful shortcut: if they're both lying, that's already two liars. ---"
   },
@@ -127,7 +127,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "The Hidden Rule",
     "tags": [],
-    "question": "I'm going to tell you which words belong to a special group and which don't. Your job is to figure out the rule.",
+    "question": "I'm going to tell you which words belong to a special group and which don't. Your job is to figure out the rule. IN the group: KNIFE, WRITE, PNEUMONIA, GNOME, WRAP NOT in the group: KING, RIGHT, PLANET, GARDEN, ROPE What is the rule?",
     "answer": "Every word in the group begins with a silent letter - a letter that is written but not pronounced when you say the word aloud. - KNIFE → the K is silent (you say nife) - WRITE → the W is silent (you say rite) - PNEUMONIA → the P is silent (you say new-monia) - GNOME → the G is silent (you say nome) - WRAP → the W is silent (you say rap) The \"NOT in the group\" words all begin with letters that are fully pronounced.",
     "modelReasoningPath": "What to listen for: Does the child say the words aloud to test them? This is the key move - a child who reads silently may miss the pattern entirely. A child who starts sounding out each word and then says \"oh, they all start with a letter you don't say!\" has found it through exactly the right method. If they identify the rule but can't explain it clearly, ask: \"How would you describe it to someone who hadn't noticed?\" ---"
   },
@@ -151,7 +151,7 @@
     "questionType": "Language Logic & Word Puzzles",
     "title": "Exactly One Statement is True",
     "tags": [],
-    "question": "Here are four statements. Exactly one of them is true. Which one?",
+    "question": "Here are four statements. Exactly one of them is true. Which one? A: Exactly one of these statements is false. B: Exactly two of these statements are false. C: Exactly three of these statements are false. D: Exactly four of these statements are false.",
     "answer": "C - \"Exactly three of these statements are false.\"",
     "modelReasoningPath": "If exactly one statement is true, then exactly three are false. - Check C: \"Exactly three of these statements are false\" - yes, that is what we've assumed. C is true. ✓ - Check A: \"Exactly one is false\" - we have three false statements, so A is false. ✓ - Check B: \"Exactly two are false\" - false. ✓ - Check D: \"Exactly four are false\" - false (one is true). ✓ So C being the one true statement is self-consistent. No other choice works: - If A were the one true statement, then exactly one statement would be false - meaning three are true. But that contradicts A being the only true statement. - Similarly, B and D each contradict themselves when assumed to be the sole true statement.\n\nWhat to listen for: The child should test whether each statement is consistent with being \"the one true statement.\" A child who immediately says \"C, because if exactly one is true then exactly three are false, and C says exactly that\" has understood the self-referential structure instantly. More commonly, a child will need to be walked through testing A first - show them how the assumption collapses, then they can apply the same method to B, C, D. ---"
   },
