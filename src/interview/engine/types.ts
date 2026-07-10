@@ -175,5 +175,7 @@ export interface BrainResponse {
     difficulty: Difficulty;
     questionIndex: number;
     targetQuestions: number;
+    /** True once a real question is on the table (i.e. past the warm-up). */
+    onQuestion?: boolean;
   };
 }

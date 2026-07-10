@@ -14,7 +14,7 @@ interface QRow {
   id: string; subject: string; topic: string; question_type: string | null;
   difficulty: number; title: string | null; question: string; answer: string | null;
   model_reasoning_path: string | null; rubric: any; common_mistakes: any; live_probes: any;
-  hints: any; tags: string[] | null; active: boolean; warmup: boolean;
+  hints: any; tags: string[] | null; active: boolean; warmup: boolean; created_at: string | null;
 }
 
 const db = () => (supabase as any).from('questions');
@@ -48,6 +48,7 @@ export const AdminQuestions: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [subjectFilter, setSubjectFilter] = useState('all');
+  const [addedAfter, setAddedAfter] = useState('');
   const [search, setSearch] = useState('');
   const [draft, setDraft] = useState<any | null>(null);
   const [isNew, setIsNew] = useState(false);
@@ -56,7 +57,7 @@ export const AdminQuestions: React.FC = () => {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await db().select('*').order('subject').order('difficulty').order('id');
+    const { data, error } = await db().select('*').order('created_at', { ascending: false }).order('subject');
     if (error) setError(error.message);
     else setRows((data ?? []) as QRow[]);
     setLoading(false);
@@ -66,6 +67,7 @@ export const AdminQuestions: React.FC = () => {
   const subjects = useMemo(() => [...new Set(rows.map((r) => r.subject))], [rows]);
   const filtered = rows.filter((r) => {
     if (subjectFilter !== 'all' && r.subject !== subjectFilter) return false;
+    if (addedAfter && (!r.created_at || r.created_at.slice(0, 10) < addedAfter)) return false;
     if (!search) return true;
     const s = search.toLowerCase();
     return [r.title, r.question, r.topic, r.question_type, ...(r.tags || [])]
@@ -134,12 +136,17 @@ export const AdminQuestions: React.FC = () => {
               <option value="all">All subjects</option>
               {subjects.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
+            <div className="flex items-center gap-1.5 text-sm">
+              <span className="text-muted-foreground whitespace-nowrap">Added after</span>
+              <Input type="date" value={addedAfter} onChange={(e) => setAddedAfter(e.target.value)} className="w-[150px]" />
+              {addedAfter && <button onClick={() => setAddedAfter('')} className="text-xs text-muted-foreground hover:text-foreground">clear</button>}
+            </div>
           </div>
 
           <div className="rounded-md border overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="border-b bg-muted/50 text-left">
-                <tr><th className="p-2">Title</th><th className="p-2">Subject</th><th className="p-2">Type</th><th className="p-2">★</th><th className="p-2">Tags</th><th className="p-2">On</th><th className="p-2"></th></tr>
+                <tr><th className="p-2">Title</th><th className="p-2">Subject</th><th className="p-2">Type</th><th className="p-2">★</th><th className="p-2">Added</th><th className="p-2">Tags</th><th className="p-2">On</th><th className="p-2"></th></tr>
               </thead>
               <tbody>
                 {filtered.map((r) => (
@@ -151,6 +158,7 @@ export const AdminQuestions: React.FC = () => {
                     <td className="p-2 text-muted-foreground">{r.subject}</td>
                     <td className="p-2 text-muted-foreground">{r.question_type}</td>
                     <td className="p-2 text-yellow-500 whitespace-nowrap" title={`${r.difficulty} stars`}>{stars(r.difficulty)}</td>
+                    <td className="p-2 text-muted-foreground whitespace-nowrap text-xs">{r.created_at ? new Date(r.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' }) : '—'}</td>
                     <td className="p-2">
                       <div className="flex flex-wrap gap-1">{(r.tags || []).map((t) => <Badge key={t} variant="secondary" className="text-[10px]">{t}</Badge>)}</div>
                     </td>
@@ -163,7 +171,7 @@ export const AdminQuestions: React.FC = () => {
                     </td>
                   </tr>
                 ))}
-                {filtered.length === 0 && <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">No questions match.</td></tr>}
+                {filtered.length === 0 && <tr><td colSpan={8} className="p-8 text-center text-muted-foreground">No questions match.</td></tr>}
               </tbody>
             </table>
           </div>

@@ -473,7 +473,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               <div className="tile p-5">
                 <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">Current question</div>
                 <div className="text-[15px] font-bold text-[#EAF0FA] leading-relaxed capitalize">
-                  {(brainUiState.topic || 'Warming up').replace(/-/g, ' ')}
+                  {brainUiState.onQuestion
+                    ? `Question ${Math.min((brainUiState.questionIndex ?? 0) + 1, brainUiState.targetQuestions ?? 10)}${brainUiState.topic ? ` · ${brainUiState.topic.replace(/-/g, ' ')}` : ''}`
+                    : 'Warming up'}
                 </div>
                 <div className="mt-4 flex gap-1.5 flex-wrap">
                   {Array.from({ length: brainUiState.targetQuestions ?? 10 }).map((_, i) => {

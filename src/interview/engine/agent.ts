@@ -372,6 +372,14 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     console.error('agent chat loop failed:', (err as Error)?.message || err);
   }
 
+  // Guarantee we leave the warm-up. If we're mid-interview with no question on the table (the model
+  // kept chatting instead of calling next_problem after the opener), pull the next one and ask it.
+  if (!state.done && req.action === 'answer' && !state.current &&
+      !(state.mode === 'mock' && state.questionIndex >= state.targetQuestions)) {
+    const forced = executeTool({ id: 'forced-next', name: 'next_problem', args: {} }, state, deps) as any;
+    if (forced?.question) say = say ? `${say} ${forced.question}` : forced.question;
+  }
+
   // Never leave the avatar silent. If the model pulled a fresh question via next_problem but forgot
   // to actually say it, read that question aloud — otherwise fall back to a warm opener / nudge.
   if (!say.trim()) {

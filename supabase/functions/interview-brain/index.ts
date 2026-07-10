@@ -104,6 +104,7 @@ const uiStateOf = (s: AgentState): BrainResponse["uiState"] => ({
   difficulty: s.difficulty,
   questionIndex: s.questionIndex,
   targetQuestions: s.targetQuestions,
+  onQuestion: !!s.current,
 });
 
 serve(async (req) => {
