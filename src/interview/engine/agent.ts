@@ -11,6 +11,7 @@
  * and in unit tests (with a fake chat).
  */
 import type { BankQuestion, Difficulty, Evidence, Mode, Outcome } from './types';
+import { clampDifficulty } from './types';
 import type { SubjectPack } from '../subjects/types';
 import { selectQuestion } from '../bank/select';
 import { nextDifficulty } from './adapt';
@@ -91,11 +92,17 @@ export function initAgentState(args: {
   pack: SubjectPack;
   seed?: number;
 }): AgentState {
+  const seed = args.seed ?? Math.floor(Math.random() * 2 ** 31);
+  // Jitter the opening difficulty a touch (seed-based) so a new interview doesn't always open on the
+  // single easiest question — while still starting gently. Adapt takes over from there.
+  const startDifficulty = args.mode === 'mock'
+    ? clampDifficulty(args.pack.startDifficulty + (seed % 2))
+    : args.pack.startDifficulty;
   return {
     subject: args.subject,
     mode: args.mode,
     currentTopic: args.mode === 'practice' ? args.topic : undefined,
-    difficulty: args.pack.startDifficulty,
+    difficulty: startDifficulty,
     askedIds: [],
     current: null,
     currentStudentTurns: [],
@@ -103,7 +110,7 @@ export function initAgentState(args: {
     transcript: [],
     questionIndex: 0,
     targetQuestions: args.pack.mockTargetQuestions,
-    seed: args.seed ?? Math.floor(Math.random() * 2 ** 31),
+    seed,
     done: false,
   };
 }
@@ -256,7 +263,9 @@ function logEvidence(state: AgentState, args: { outcome?: string; method_quality
   );
   state.questionIndex = state.evidence.length;
   if (state.mode === 'mock') {
-    state.difficulty = nextDifficulty(state.difficulty, outcome, 0) as Difficulty;
+    // Adapt to how they did: clean solve (no hints) climbs; a hinted solve holds; a wrong/stuck
+    // answer eases down so the next one is the same level or gentler.
+    state.difficulty = nextDifficulty(state.difficulty, outcome, hintsUsed) as Difficulty;
   }
   state.current = null;
   state.currentStudentTurns = [];
