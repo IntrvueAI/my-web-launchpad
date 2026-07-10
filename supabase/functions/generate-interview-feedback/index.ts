@@ -18,6 +18,15 @@ const ENGINE_PACKS: Record<string, any> = {
 
 function buildEngineDrivenSystemPrompt(pack: any): string {
   const [d1, d2, d3, d4] = pack.domains;
+  // The score/feedback keys must match how this subject is validated + saved downstream. The 11+
+  // main interview uses the personal_insight/… columns; the academic minis use the pattern_… ones.
+  const isElevenPlus = pack.subject === 'elevenplus';
+  const sk = isElevenPlus
+    ? ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score']
+    : ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
+  const fk = isElevenPlus
+    ? ['personal_insight', 'reasoning', 'extracurricular', 'current_awareness']
+    : ['pattern_recognition', 'logical_deduction', 'mathematical_logic', 'clarity_of_thought'];
   return `You are an expert, warm evaluator for an 11+ ${pack.subject} mini-interview. You MUST respond with valid JSON only.
 
 ${pack.scoringPhilosophy || ''}
@@ -30,18 +39,18 @@ Score these FOUR dimensions, each 0-5 (total out of 20). Weight PROCESS and ADAP
 
 Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write feedback that names one specific reasoning strength actually observed and one concrete next step — warm, concrete, process-focused, never reducing the child to their final answer.
 
-CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure (the four keys below map to ${d1}, ${d2}, ${d3}, ${d4} in order):
+CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure (the four score keys map to ${d1}, ${d2}, ${d3}, ${d4} in order):
 {
-  "pattern_recognition_score": 0,
-  "logical_deduction_score": 0,
-  "mathematical_logic_score": 0,
-  "clarity_of_thought_score": 0,
+  "${sk[0]}": 0,
+  "${sk[1]}": 0,
+  "${sk[2]}": 0,
+  "${sk[3]}": 0,
   "total_score": 0,
   "detailed_feedback": {
-    "pattern_recognition": "feedback on ${d1}",
-    "logical_deduction": "feedback on ${d2}",
-    "mathematical_logic": "feedback on ${d3}",
-    "clarity_of_thought": "feedback on ${d4}",
+    "${fk[0]}": "feedback on ${d1}",
+    "${fk[1]}": "feedback on ${d2}",
+    "${fk[2]}": "feedback on ${d3}",
+    "${fk[3]}": "feedback on ${d4}",
     "overall": "Overall assessment, process-focused",
     "band_assessment": "Which band and why"
   }

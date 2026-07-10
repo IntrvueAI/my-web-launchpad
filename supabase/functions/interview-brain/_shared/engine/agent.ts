@@ -235,7 +235,8 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     mock
       ? `- Aim for about ${state.targetQuestions} problems in total, then give a warm closing and call finish_interview. If next_problem tells you there are no more problems, wrap up.`
       : '- Keep going on the chosen topic. The student may switch topics or end whenever they like.',
-    '- If the student asks to skip, acknowledge kindly and call next_problem with outcome "skipped".',
+    '- If the student asks to skip, do NOT skip on the first ask. Gently encourage one attempt first — "Give it a go first, even a rough guess; there\'s no wrong answer here." Only if they still decline after that single nudge, acknowledge kindly and call next_problem with outcome "skipped".',
+    '- If the student clearly wants to STOP early — "can we stop", "I\'m done", "end the interview", or they keep refusing to engage — do not fight it. Give a warm, proper closing in your own words ("That\'s all I have for you today — thank you so much for your time, you did really well"), offer one genuine positive, tell them to end the interview to see their feedback, and then call finish_interview.',
     '- Keep every turn to one or two short sentences — brevity matters more than completeness, since you can always continue next turn. The student should do most of the talking.',
     '- To finish: thank them warmly, give one genuine, specific positive, and tell them to end the interview to see their feedback, then call finish_interview.',
     '',
