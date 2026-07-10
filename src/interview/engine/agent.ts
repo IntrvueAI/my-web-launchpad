@@ -349,6 +349,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     ...recent.map((t) => ({ role: t.role, content: t.content }) as ChatMessage),
   ];
 
+  const questionBefore = state.current?.id;
   let say = '';
   // Never let a model/network hiccup 500 the whole turn — on failure we fall back to a spoken line
   // below so the avatar always says *something* rather than going silent.
@@ -371,12 +372,18 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     console.error('agent chat loop failed:', (err as Error)?.message || err);
   }
 
-  // Never leave the avatar silent (e.g. the model replied with only a tool call and no words).
+  // Never leave the avatar silent. If the model pulled a fresh question via next_problem but forgot
+  // to actually say it, read that question aloud — otherwise fall back to a warm opener / nudge.
   if (!say.trim()) {
-    const openers = deps.pack.openers ?? [];
-    say = req.action === 'start' && openers.length
-      ? openers[Math.floor(Math.random() * openers.length)]
-      : "Take your time — whenever you're ready, talk me through your thinking.";
+    const freshQuestion = state.current && state.current.id !== questionBefore ? state.current.question : '';
+    if (freshQuestion) {
+      say = freshQuestion;
+    } else {
+      const openers = deps.pack.openers ?? [];
+      say = req.action === 'start' && openers.length
+        ? openers[Math.floor(Math.random() * openers.length)]
+        : "Take your time — whenever you're ready, talk me through your thinking.";
+    }
   }
 
   state.transcript.push({ role: 'assistant', content: say });

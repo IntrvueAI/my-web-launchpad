@@ -57,7 +57,7 @@ const chat: ChatComplete = async ({ messages, tools }) => {
     method: "POST",
     headers: { Authorization: `Bearer ${openAIApiKey}`, "Content-Type": "application/json" },
     // max_tokens caps the spoken reply so Clara physically can't ramble into paragraphs.
-    body: JSON.stringify({ model: "gpt-4.1", messages, tools, tool_choice: "auto", temperature: 0.7, max_tokens: 140 }),
+    body: JSON.stringify({ model: "gpt-4.1", messages, tools, tool_choice: "auto", temperature: 0.7, max_tokens: 400 }),
   });
   if (!resp.ok) {
     const detail = await resp.text();

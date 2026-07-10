@@ -219,6 +219,9 @@ const Index = () => {
                   ['questions', 'Questions'],
                   ['achievements', 'Achievements'],
                   ['history', 'My sessions'],
+                  ['grownup', 'Grown-up'],
+                  ['settings', 'Settings'],
+                  ['credits', 'Buy Credits'],
                 ] as const).map(([view, label]) => {
                   const active = currentView === view;
                   return (
@@ -226,7 +229,7 @@ const Index = () => {
                       key={view}
                       onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate(view) : setCurrentView(view)}
                       className={cn(
-                        'px-4 py-2 rounded-xl text-[13.5px] font-extrabold transition-colors',
+                        'px-3 py-2 rounded-xl text-[13px] font-extrabold whitespace-nowrap transition-colors',
                         active ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5',
                       )}
                     >
@@ -326,16 +329,6 @@ const Index = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuLabel className="truncate">{user.user_metadata?.full_name || user.email}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => setCurrentView('grownup')}>
-                  👋 Grown-up view
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCurrentView('settings')}>
-                  <Settings className="w-4 h-4 mr-2" /> Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCurrentView('credits')}>
-                  <Wallet className="w-4 h-4 mr-2" /> Buy credits
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
               </DropdownMenuContent>
