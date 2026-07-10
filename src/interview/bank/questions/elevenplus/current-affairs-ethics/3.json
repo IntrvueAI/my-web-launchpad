@@ -1,0 +1,38 @@
+[
+  {
+    "id": "EP-D3",
+    "subject": "elevenplus",
+    "topic": "current-affairs-ethics",
+    "difficulty": 3,
+    "questionType": "Current Affairs & Ethics",
+    "title": "Is It Ever Right to Break a Rule",
+    "tags": [],
+    "question": "Is it ever right to break a rule? Can you think of an example?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Distinguishes rules from what's right, offers a real example (helping someone in danger, an unfair rule), and reasons about when breaking a rule might be justified - while seeing why rules matter.\n\nA weak response: \"Rules are always right\" or \"You can break any rule you want,\" with no nuance either way.\n\nWhat to listen for: Moral maturity - holding \"rules keep us safe\" and \"some rules are wrong\" together, with reasons. ---"
+  },
+  {
+    "id": "EP-D4",
+    "subject": "elevenplus",
+    "topic": "current-affairs-ethics",
+    "difficulty": 3,
+    "questionType": "Current Affairs & Ethics",
+    "title": "A Fair Decision",
+    "tags": [],
+    "question": "Imagine you're in charge of your school for a day and you can change one rule to make things fairer. What would you change, and who would it help?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: A specific change, a reason it's fairer, and thought about who benefits and whether anyone loses out. Empathy plus consequences.\n\nA weak response: \"No homework ever,\" said only because it benefits them, with no fairness reasoning.\n\nWhat to listen for: Fairness reasoning that considers others, not just self-interest - and awareness of trade-offs. ---"
+  },
+  {
+    "id": "EP-D5",
+    "subject": "elevenplus",
+    "topic": "current-affairs-ethics",
+    "difficulty": 3,
+    "questionType": "Current Affairs & Ethics",
+    "title": "A Robot That Could Do Any Job",
+    "tags": [],
+    "question": "Suppose someone invents a robot that can do any human job perfectly. Would that be a good thing or a bad thing? Think it through.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Weighs both sides - freeing people from dull or dangerous work vs jobs and purpose lost - and reaches a considered view, perhaps \"it depends how we use it.\"\n\nA weak response: \"Good, because robots are cool\" or \"Bad, robots are scary,\" with no reasoning.\n\nWhat to listen for: Nuanced thinking about a big, open question - consequences, fairness, and a willingness to sit with \"it depends.\" --- ## Quick Reference | # | Question | Section | Difficulty | |---|----------|---------|------------| | A1 | Tell Me About Yourself | Personal | ★ | | A2 | Most Proud Of | Personal | ★ | | A3 | A Time You Failed | Personal | ★★ | | A4 | What Makes You, You | Personal | ★★ | | A5 | A Difficult Decision | Personal | ★★★ | | B1 | Everyone Forgets How to Read | Reasoning | ★★★ | | B2 | The Fair Way to Share | Reasoning | ★★ | | B3 | Why Is the Sky Dark at Night | Reasoning | ★★★ | | B4 | The Bat and the Ball | Reasoning | ★★ | | B5 | Design a Test (Estimation) | Reasoning | ★★★★ | | C1 | What You Love Outside Class | Extracurricular | ★ | | C2 | Taught Yourself Something | Extracurricular | ★★ | | C3 | A Skill You've Worked Hard At | Extracurricular | ★★ | | C4 | Teach Me Something | Extracurricular | ★★★ | | D1 | Something in the News | Current Affairs | ★★ | | D2 | Should Children Have Phones | Current Affairs | ★★ | | D3 | Is It Ever Right to Break a Rule | Current Affairs | ★★★ | | D4 | A Fair Decision | Current Affairs | ★★★ | | D5 | A Robot That Could Do Any Job | Current Affairs | ★★★ |"
+  }
+]

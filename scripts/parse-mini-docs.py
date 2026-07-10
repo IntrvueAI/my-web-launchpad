@@ -37,6 +37,11 @@ SUBJECTS = {
                      "C": ("climate-environment", "Climate & The Environment"), "D": ("moral-dilemmas", "Moral Dilemmas"),
                      "E": ("society-rights-fairness", "Society, Rights & Fairness")},
     },
+    "elevenplus": {
+        "file": "11+ Interview Questions.md", "prefix": "EP", "default": 2, "discussion": True,
+        "sections": {"A": ("personal-insight", "Personal Insight"), "B": ("reasoning", "Reasoning & Thinking Aloud"),
+                     "C": ("extracurricular", "Extracurricular"), "D": ("current-affairs-ethics", "Current Affairs & Ethics")},
+    },
 }
 
 DISCUSSION_ANSWER = "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response."

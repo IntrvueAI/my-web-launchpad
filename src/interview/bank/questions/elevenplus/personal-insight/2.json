@@ -1,0 +1,26 @@
+[
+  {
+    "id": "EP-A3",
+    "subject": "elevenplus",
+    "topic": "personal-insight",
+    "difficulty": 2,
+    "questionType": "Personal Insight",
+    "title": "A Time You Failed",
+    "tags": [],
+    "question": "Tell me about a time something didn't go the way you hoped. What happened, and what did you do next?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Honest ownership of a setback, no blaming, and a sense of what they took from it or how they responded. Comfort discussing imperfection.\n\nA weak response: \"I've never really failed,\" or a humble-brag failure (\"I only came second\"). Defensiveness or blaming others.\n\nWhat to listen for: Resilience and honesty. Being able to sit with failure without needing to look perfect is exactly the poise top schools want. ---"
+  },
+  {
+    "id": "EP-A4",
+    "subject": "elevenplus",
+    "topic": "personal-insight",
+    "difficulty": 2,
+    "questionType": "Personal Insight",
+    "title": "What Makes You, You",
+    "tags": [],
+    "question": "What do you think makes you a bit different from other people your age?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: A thoughtful, specific trait or interest, ideally with an example, offered without arrogance. Even \"I'm quite quiet but I notice a lot\" shows self-knowledge.\n\nA weak response: \"I'm the best at…\", or \"I don't know, I'm just normal\" with no attempt to reflect.\n\nWhat to listen for: Genuine self-knowledge delivered with humility. Steer away from comparison/bragging and toward honest description. ---"
+  }
+]

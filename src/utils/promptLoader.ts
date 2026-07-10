@@ -22,7 +22,7 @@ const SYSTEM_PROMPTS: Record<string, string> = {
 };
 
 // Avatar-led mini-interviews that compose from the core interview-logic script.
-const MINI_INTERVIEW_TYPES = new Set(['logic-puzzles', 'maths-interview', 'verbal-interview', 'current-affairs-interview']);
+const MINI_INTERVIEW_TYPES = new Set(['logic-puzzles', 'maths-interview', 'verbal-interview', 'current-affairs-interview', '11-plus']);
 
 /**
  * Composes the final system prompt for mini-interviews: the shared core script

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "EP-B1",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 3,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "Everyone Forgets How to Read",
+    "tags": [],
+    "question": "Here's a strange one. Imagine that tomorrow, everyone in the world suddenly forgot how to read. What would happen? Talk me through your thinking.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: A structured exploration - who's affected (children, doctors, drivers, governments), a chain of consequences, and comparison to how we manage now. \"First, signs and instructions stop working, so… then…\". Considers both problems and how people might adapt.\n\nA weak response: A one-line answer (\"It would be bad\") or random guessing with no structure.\n\nWhat to listen for: Structure and stamina. A child who names stakeholders and follows a chain of effects is reasoning well. Reward effort and calm even if they wobble. ---"
+  },
+  {
+    "id": "EP-B3",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 3,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "Why Is the Sky Dark at Night",
+    "tags": [],
+    "question": "The Sun is incredibly bright. There are billions of stars in the sky. So why is the sky dark at night rather than blazing with light? Have a go - I don't expect a perfect answer.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Any genuine attempt to reason - stars are very far away, light spreads out, the Sun is on the other side of the Earth, space is enormous. Building an argument step by step, not reciting a fact.\n\nA weak response: \"Because it's night\" with no reasoning, or refusing to attempt it.\n\nWhat to listen for: Willingness to reason about something unfamiliar. The point is the attempt and the chain of thought, not the physics. ---"
+  }
+]

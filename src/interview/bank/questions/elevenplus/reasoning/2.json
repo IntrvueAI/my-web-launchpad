@@ -1,0 +1,26 @@
+[
+  {
+    "id": "EP-B2",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 2,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "The Fair Way to Share",
+    "tags": [],
+    "question": "You have 8 sweets to share between 3 children, but you can't cut any sweet. What's the fairest way to do it - and is 'fair' the same as 'equal'?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Recognises 8 doesn't divide by 3, proposes a scheme (2 each, then rotate/save/decide the last two), and engages with the deeper point that fair might mean equal, or by need, or by taking turns.\n\nA weak response: Freezes at \"it doesn't divide\" with no attempt, or ignores the fairness question entirely.\n\nWhat to listen for: Comfort with a problem that has no clean answer, and the leap from arithmetic to the idea of fairness. ---"
+  },
+  {
+    "id": "EP-B4",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 2,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "The Bat and the Ball",
+    "tags": [],
+    "question": "A bat and a ball cost £1.10 together. The bat costs £1 more than the ball. How much does the ball cost? Take your time and think out loud.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Notices the tempting-but-wrong answer (10p) and checks it (£1.10 + 10p = £1.20, too much), then reasons to 5p, or sets it up carefully. Crucially: checks their answer.\n\nA weak response: Blurts \"10p\" and moves on without checking, or gives up immediately.\n\nWhat to listen for: Do they slow down and verify rather than grab the obvious answer? Self-correction is a strong signal. ---"
+  }
+]

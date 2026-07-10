@@ -27,7 +27,7 @@ import { FeedbackService } from '@/services/FeedbackService';
 import { INTERVIEW_TYPES } from '@/config/interviewTypes';
 
 // Interview types whose scores live in the four engine score columns (pattern_recognition_score …).
-const ENGINE_SCORED = new Set(['logic-puzzles', 'maths-interview', 'verbal-interview', 'current-affairs-interview']);
+const ENGINE_SCORED = new Set(['logic-puzzles', 'maths-interview', 'verbal-interview', 'current-affairs-interview', '11-plus']);
 const shortLabel = (s: string) => (s.length > 14 ? `${s.slice(0, 13)}…` : s);
 
 export const FeedbackHistory: React.FC = () => {

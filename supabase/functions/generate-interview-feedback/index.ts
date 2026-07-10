@@ -4,6 +4,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
+import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
 
 // Engine-driven subjects score from their OWN subject pack — the same file that drives the
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
@@ -12,6 +13,7 @@ const ENGINE_PACKS: Record<string, any> = {
   'maths-interview': mathsPack,
   'logic-puzzles': logicPack,
   'current-affairs-interview': currentaffairsPack,
+  '11-plus': elevenplusPack,
 };
 
 function buildEngineDrivenSystemPrompt(pack: any): string {

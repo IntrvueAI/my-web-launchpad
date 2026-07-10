@@ -57,7 +57,14 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     ],
     difficultyLevel: 2,
     tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school'],
-    icon: 'GraduationCap'
+    icon: 'GraduationCap',
+    engineDriven: true,
+    engineSubject: 'elevenplus',
+    preStartNote:
+      "This is the main whole-child interview — like the real thing at a top independent school.\n\n" +
+      "Clara will move between getting to know you, how you think, what you love, and how you see the world. " +
+      "There are no perfect answers — just be honest, think out loud, and take your time.\n\n" +
+      "Ready when you are."
   },
   'logic-puzzles': {
     id: 'logic-puzzles',

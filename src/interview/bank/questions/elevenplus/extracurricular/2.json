@@ -1,0 +1,26 @@
+[
+  {
+    "id": "EP-C2",
+    "subject": "elevenplus",
+    "topic": "extracurricular",
+    "difficulty": 2,
+    "questionType": "Extracurricular",
+    "title": "Taught Yourself Something",
+    "tags": [],
+    "question": "Have you ever taught yourself something without a teacher or a class? How did you go about it?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: A concrete example of self-driven learning (a coding project, a card trick, cooking, a language app) and the method - trial and error, watching videos, practising. Initiative on display.\n\nA weak response: \"No, I only learn at school,\" or an example with no sense of how they actually did it.\n\nWhat to listen for: Independent initiative and a real learning process. Self-teaching is one of the strongest 11+ signals. ---"
+  },
+  {
+    "id": "EP-C3",
+    "subject": "elevenplus",
+    "topic": "extracurricular",
+    "difficulty": 2,
+    "questionType": "Extracurricular",
+    "title": "A Skill You've Worked Hard At",
+    "tags": [],
+    "question": "Tell me about a skill you've really had to work at. What kept you going?",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Honest account of effort over time, plateaus or frustration, and what motivated them to persist. Reflection on progress and setbacks.\n\nA weak response: \"I'm just naturally good at it,\" or a skill named with no story of effort.\n\nWhat to listen for: Grit and self-reflection. The setbacks are the interesting part - draw them out. ---"
+  }
+]

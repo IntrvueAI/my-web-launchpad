@@ -1,0 +1,14 @@
+[
+  {
+    "id": "EP-B5",
+    "subject": "elevenplus",
+    "topic": "reasoning",
+    "difficulty": 4,
+    "questionType": "Reasoning & Thinking Aloud",
+    "title": "Design a Test",
+    "tags": [],
+    "question": "How would you work out how many piano tuners there are in London - without looking it up? You'll have to estimate. Walk me through it.",
+    "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
+    "modelReasoningPath": "A strong response: Breaks it into steps - roughly how many people, how many have pianos, how often they're tuned, how many a tuner does in a day - and multiplies/divides sensibly. Comfortable with rough numbers.\n\nA weak response: \"I don't know, you'd have to count them,\" with no attempt to break the problem down.\n\nWhat to listen for: Structured estimation and comfort with approximation. This tests whether they can build a model from nothing. --- ## SECTION C - Extracurricular Interests Passion, initiative and reflection. Look for depth in one or two things, self-driven learning, and the ability to reflect on progress and setbacks - not a long list of clubs. ---"
+  }
+]
