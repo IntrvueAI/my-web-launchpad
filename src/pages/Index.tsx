@@ -13,7 +13,7 @@ import { UserSettings } from '@/components/UserSettings';
 import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy } from 'lucide-react';
+import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -26,14 +26,6 @@ import { CreditsStore } from '@/components/credits/CreditsStore';
 import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
 import { PipMark } from '@/components/brand/Pip';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
@@ -201,7 +193,6 @@ const Index = () => {
                   ['questions', 'Questions'],
                   ['achievements', 'Achievements'],
                   ['history', 'My sessions'],
-                  ['grownup', 'Grown-up'],
                   ['settings', 'Settings'],
                   ['credits', 'Buy Credits'],
                 ] as const).map(([view, label]) => {
@@ -292,29 +283,41 @@ const Index = () => {
             )}
           </div>
           
-          {/* Desktop User Info — credits pill + avatar menu (mock) */}
-          <div className="hidden md:flex items-center gap-3.5">
+          {/* Desktop User Info — credits pill + Grown-up + avatar + Sign out (mock) */}
+          <div className="hidden md:flex items-center gap-2.5">
             <button
               onClick={() => setCurrentView('credits')}
               className="px-3.5 py-[7px] rounded-full border border-foreground/15 text-[12.5px] font-semibold text-muted-foreground hover:text-foreground transition-colors"
             >
               {credits ?? 0} credits
             </button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-rose flex items-center justify-center font-extrabold text-[13px] text-white hover:opacity-90 transition-opacity"
-                  aria-label="Account menu"
-                >
-                  {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuLabel className="truncate">{user.user_metadata?.full_name || user.email}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {currentView !== 'interview' && (
+              <button
+                onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('grownup') : setCurrentView('grownup')}
+                className={cn(
+                  'px-3.5 py-[7px] rounded-full text-[12.5px] font-extrabold whitespace-nowrap transition-colors border',
+                  currentView === 'grownup'
+                    ? 'bg-white/10 text-white border-white/15'
+                    : 'text-muted-foreground border-foreground/15 hover:text-white hover:bg-white/5',
+                )}
+              >
+                Grown-up
+              </button>
+            )}
+            <div
+              className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-rose flex items-center justify-center font-extrabold text-[13px] text-white select-none"
+              title={user.user_metadata?.full_name || user.email || undefined}
+              aria-hidden="true"
+            >
+              {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
+            </div>
+            <button
+              onClick={handleSignOut}
+              className="flex items-center gap-1.5 px-3 py-[7px] rounded-full text-[12.5px] font-extrabold text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign out
+            </button>
           </div>
           
           {/* Mobile User Info - Credits Badge Only */}

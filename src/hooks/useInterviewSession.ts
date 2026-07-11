@@ -13,6 +13,10 @@ import type { BrainResponse, Mode } from '@/interview/engine/types';
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
 
+// How long we wait after the student stops before sending their answer to the brain, so quick
+// consecutive bursts get merged into one turn (feels less abrupt than reacting to each fragment).
+const COALESCE_MS = 650;
+
 interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
@@ -81,6 +85,12 @@ export const useInterviewSession = (
   const processedUserIdsRef = useRef<Set<string>>(new Set()); // user message ids already sent to the brain
   const brainBusyRef = useRef<boolean>(false);
   const startedRef = useRef<boolean>(false);
+  // Buffer of student utterances waiting to go to the brain. If the child speaks while Clara is still
+  // talking or the brain is mid-turn, we DON'T drop it (that felt like she "gave up") — we queue it
+  // and coalesce close-together bursts into one answer so a mid-thought pause doesn't fragment the turn.
+  const pendingStudentRef = useRef<string[]>([]);
+  const flushTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flushRef = useRef<() => void>(() => {});
 
   // Session logging and health monitoring
   const sessionLogger = useInterviewSessionLogger();
@@ -125,8 +135,31 @@ export const useInterviewSession = (
         .catch(() => {});
     } finally {
       brainBusyRef.current = false;
+      // Anything the student said while we were busy is queued — handle it now (coalesced).
+      if (pendingStudentRef.current.length > 0) {
+        if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
+        flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
+      }
     }
   }, [speak, sessionLogger]);
+
+  /**
+   * Send the buffered student utterance(s) to the brain as one answer. Coalescing means two quick
+   * bursts ("um… three" then "the middle one") become a single turn, so Clara answers the whole
+   * thought instead of reacting to a half-sentence.
+   */
+  const flushStudentBuffer = useCallback(() => {
+    if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
+    if (brainBusyRef.current) return; // still talking — the turn's `finally` will re-schedule this
+    const buffered = pendingStudentRef.current.join(' ').replace(/\s+/g, ' ').trim();
+    if (!buffered) return;
+    pendingStudentRef.current = [];
+    runBrainTurn('answer', { studentText: buffered });
+  }, [runBrainTurn]);
+
+  // Keep flushRef pointing at the latest flush fn so runBrainTurn's `finally` can call it without a
+  // circular useCallback dependency.
+  useEffect(() => { flushRef.current = flushStudentBuffer; }, [flushStudentBuffer]);
 
   /**
    * Get session token from the secure edge function. For engine-driven interviews we request a
@@ -171,8 +204,13 @@ export const useInterviewSession = (
   const handleStudentTurn = useCallback((text: string) => {
     if (!text?.trim() || !startedRef.current) return;
     pushTranscript('user', text);
-    runBrainTurn('answer', { studentText: text });
-  }, [pushTranscript, runBrainTurn]);
+    // Queue it rather than firing immediately: if Clara/the brain is mid-turn this is picked up when
+    // she finishes (never dropped); otherwise we wait a beat to coalesce any follow-on burst.
+    pendingStudentRef.current.push(text.trim());
+    if (brainBusyRef.current) return;
+    if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
+    flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
+  }, [pushTranscript]);
 
   /**
    * Start the interview session.
@@ -189,6 +227,8 @@ export const useInterviewSession = (
       setInterviewComplete(false);
       transcriptRef.current = [];
       processedUserIdsRef.current.clear();
+      pendingStudentRef.current = [];
+      if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
       startedRef.current = false;
       startOptsRef.current = opts;
       console.log('🚀 Starting interview session...', { engineDriven, opts });
@@ -353,6 +393,9 @@ export const useInterviewSession = (
         await clientRef.current.stopStreaming();
         clientRef.current = null;
       }
+
+      if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
+      pendingStudentRef.current = [];
 
       connectionHealth.stopMonitoring();
       await sessionLogger.endSession(transcription ? 'completed' : 'error');
