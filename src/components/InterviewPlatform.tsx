@@ -9,7 +9,7 @@ import { useInterviewSession } from '@/hooks/useInterviewSession';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Play, Square, Mic, MicOff, RotateCcw } from 'lucide-react';
+import { Play, Square, Mic, MicOff, RotateCcw, Eye, EyeOff } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
 import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes';
 import { InterviewSetup, SetupChoice } from './InterviewSetup';
@@ -28,6 +28,10 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   selectedInterviewType 
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  // Focus mode: hide the live transcript + question progress and go fullscreen, so a mock feels
+  // like a real interview (just you and the interviewer).
+  const [hideTranscript, setHideTranscript] = useState(false);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
   const [feedback, setFeedback] = useState(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
@@ -302,8 +306,25 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     });
   }, [setMicMuted]);
 
+  // Focus mode: hide transcript/progress + go fullscreen (and back).
+  const toggleFocusMode = useCallback(async () => {
+    const next = !hideTranscript;
+    setHideTranscript(next);
+    try {
+      if (next) await rootRef.current?.requestFullscreen?.();
+      else if (document.fullscreenElement) await document.exitFullscreen();
+    } catch { /* fullscreen can be blocked; the hide still works */ }
+  }, [hideTranscript]);
+
+  // If the user leaves fullscreen (Esc / browser chrome), bring the transcript back.
+  useEffect(() => {
+    const onFsChange = () => { if (!document.fullscreenElement) setHideTranscript(false); };
+    document.addEventListener('fullscreenchange', onFsChange);
+    return () => document.removeEventListener('fullscreenchange', onFsChange);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div ref={rootRef} className="min-h-screen bg-background text-foreground overflow-y-auto">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
 
         {/* Compact top bar (deck style): recording state · title · question progress */}
@@ -317,11 +338,21 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             )}
             <span className="font-display text-[15px] font-semibold text-white">{interviewType.name}</span>
           </div>
-          {isStreaming && brainUiState && (
-            <div className="text-[13px] font-extrabold text-muted-foreground">
-              Question <span className="text-white">{Math.min((brainUiState.questionIndex ?? 0) + 1, brainUiState.targetQuestions ?? 10)}</span> of {brainUiState.targetQuestions ?? 10}
-            </div>
-          )}
+          <div className="flex items-center gap-3">
+            {isStreaming && brainUiState && !hideTranscript && (
+              <div className="text-[13px] font-extrabold text-muted-foreground">
+                Question <span className="text-white">{Math.min((brainUiState.questionIndex ?? 0) + 1, brainUiState.targetQuestions ?? 10)}</span> of {brainUiState.targetQuestions ?? 10}
+              </div>
+            )}
+            {isStreaming && (
+              <button
+                onClick={toggleFocusMode}
+                className="flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-extrabold text-[#C7D2E4] hover:bg-white/10 transition-colors"
+              >
+                {hideTranscript ? <><Eye className="w-4 h-4" /> Show transcript</> : <><EyeOff className="w-4 h-4" /> Hide transcript</>}
+              </button>
+            )}
+          </div>
         </div>
         {!isStreaming && !engineDriven && (
           <p className="text-muted-foreground text-sm max-w-2xl mb-5">{interviewType.description}</p>
@@ -336,10 +367,10 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
         {/* Main Interview Interface - Mobile First Layout */}
         {(!engineDriven || setupChoice || isStreaming) && (
-        <div className="space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
+        <div className={hideTranscript ? "space-y-6" : "space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0"}>
 
           {/* Video Interview Area */}
-          <div className="lg:col-span-2">
+          <div className={hideTranscript ? "" : "lg:col-span-2"}>
             <Card className="p-4 md:p-6 shadow-medium">
               <div className="space-y-4">
                 
@@ -467,7 +498,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             </div>
           </div>
 
-          {/* Right column: current question + progress, then the conversation */}
+          {/* Right column: current question + progress, then the conversation.
+              Hidden in focus mode so a mock feels like a real interview. */}
+          {!hideTranscript && (
           <div className="lg:block space-y-4">
             {isStreaming && brainUiState && (
               <div className="tile p-5">
@@ -496,6 +529,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               isStreaming={isStreaming}
             />
           </div>
+          )}
         </div>
         )}
 
