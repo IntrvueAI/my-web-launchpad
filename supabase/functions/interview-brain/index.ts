@@ -175,7 +175,7 @@ serve(async (req) => {
       })
       .eq("id", session.id);
 
-    const response: BrainResponse = { say: result.say, done: result.done, uiState: uiStateOf(result.state) };
+    const response: BrainResponse = { say: result.say, done: result.done, uiState: uiStateOf(result.state, pack) };
     return json(response);
   } catch (err) {
     console.error("interview-brain error:", (err as Error)?.message || err);

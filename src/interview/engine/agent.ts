@@ -123,7 +123,7 @@ export function initAgentState(args: {
  * questions the run plans (0 when there's no about-you phase).
  */
 export function phaseInfo(pack: SubjectPack, state: AgentState): { phase: 'about-you' | 'challenge'; aboutYouCount: number } {
-  const mix = pack.mixedBank;
+  const mix = pack?.mixedBank;
   if (mix && state.mode === 'mock') {
     const aboutYouCount = Math.max(1, Math.round(mix.primaryShare * state.targetQuestions));
     return { phase: state.questionIndex < aboutYouCount ? 'about-you' : 'challenge', aboutYouCount };
