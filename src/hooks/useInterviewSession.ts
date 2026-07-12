@@ -319,11 +319,11 @@ export const useInterviewSession = (
     }
   }, [videoRef, sessionLogger, connectionHealth, interviewType, engineDriven, runBrainTurn, handleStudentTurn]);
 
-  /** Engine-driven: skip the current question. */
+  /** Engine-driven: skip the current question. No-op once the interview is complete. */
   const skipQuestion = useCallback(async () => {
-    if (!engineDriven) return;
+    if (!engineDriven || interviewComplete) return;
     await runBrainTurn('skip');
-  }, [engineDriven, runBrainTurn]);
+  }, [engineDriven, runBrainTurn, interviewComplete]);
 
   /** Engine-driven: switch the practice topic mid-run. */
   const switchTopic = useCallback(async (topic: string) => {

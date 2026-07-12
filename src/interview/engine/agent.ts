@@ -412,6 +412,18 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     if (forced?.question) say = say ? `${say} ${forced.question}` : forced.question;
   }
 
+  // Deterministically END a mock once all planned problems are done. The bank is out of questions
+  // (questionIndex has reached the target and nothing is on the table), so there is nothing left to
+  // ask — do NOT fall through to the "take your time" nudge, which kept a finished interview alive
+  // when the student spammed Skip. Close warmly and mark it done regardless of what the model did.
+  if (!state.done && state.mode === 'mock' && !state.current &&
+      state.questionIndex >= state.targetQuestions) {
+    state.done = true;
+    if (!say.trim()) {
+      say = "That's everything I had for you today — you did really well. Go ahead and end the interview to see your feedback.";
+    }
+  }
+
   // Never leave the avatar silent. If the model pulled a fresh question via next_problem but forgot
   // to actually say it, read that question aloud — otherwise fall back to a warm opener / nudge.
   if (!say.trim()) {
