@@ -20,6 +20,26 @@ interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
 }
 
+type BrainUiState = ReturnType<typeof useInterviewSession>['brainUiState'];
+
+/**
+ * Human progress label for the top bar / panel. Two-phase mocks (11+) show a friendly
+ * "Getting to know you" during the about-you phase instead of "Question 1, 2, 3…", and number the
+ * hard questions locally ("Question 2 of 3"). Single-phase subjects keep simple overall numbering.
+ */
+function progressLabel(ui: NonNullable<BrainUiState>): string {
+  const total = ui.targetQuestions ?? 10;
+  const idx = ui.questionIndex ?? 0;
+  if (ui.phase === 'about-you') return 'Getting to know you';
+  if (ui.phase === 'challenge') {
+    const about = ui.aboutYouCount ?? 0;
+    const local = Math.min(idx - about + 1, total - about);
+    return `Question ${Math.max(1, local)} of ${Math.max(1, total - about)}`;
+  }
+  if (!ui.onQuestion && idx === 0) return 'Warming up';
+  return `Question ${Math.min(idx + 1, total)} of ${total}`;
+}
+
 /**
  * Main Interview Platform Component
  * Handles the complete interview preparation experience
@@ -340,8 +360,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           </div>
           <div className="flex items-center gap-3">
             {isStreaming && brainUiState && !hideTranscript && (
-              <div className="text-[13px] font-extrabold text-muted-foreground">
-                Question <span className="text-white">{Math.min((brainUiState.questionIndex ?? 0) + 1, brainUiState.targetQuestions ?? 10)}</span> of {brainUiState.targetQuestions ?? 10}
+              <div className="text-[13px] font-extrabold text-white">
+                {progressLabel(brainUiState)}
               </div>
             )}
             {isStreaming && (
@@ -504,11 +524,12 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           <div className="lg:block space-y-4">
             {isStreaming && brainUiState && (
               <div className="tile p-5">
-                <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">Current question</div>
+                <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">
+                  {brainUiState.phase === 'about-you' ? 'About you' : 'Progress'}
+                </div>
                 <div className="text-[15px] font-bold text-[#EAF0FA] leading-relaxed capitalize">
-                  {brainUiState.onQuestion || (brainUiState.questionIndex ?? 0) > 0
-                    ? `Question ${Math.min((brainUiState.questionIndex ?? 0) + 1, brainUiState.targetQuestions ?? 10)}${brainUiState.topic ? ` · ${brainUiState.topic.replace(/-/g, ' ')}` : ''}`
-                    : 'Warming up'}
+                  {progressLabel(brainUiState)}
+                  {brainUiState.phase !== 'about-you' && brainUiState.topic ? ` · ${brainUiState.topic.replace(/-/g, ' ')}` : ''}
                 </div>
                 <div className="mt-4 flex gap-1.5 flex-wrap">
                   {Array.from({ length: brainUiState.targetQuestions ?? 10 }).map((_, i) => {

@@ -115,6 +115,22 @@ export function initAgentState(args: {
   };
 }
 
+/**
+ * Which half of a two-phase (mixedBank) mock we're in.
+ * - `about-you`: the first `primaryShare` questions — warm get-to-know-you (interests, school, family).
+ * - `challenge`: the harder second half (maths / logic / current-affairs).
+ * Subjects without a mixedBank are always `challenge`. `aboutYouCount` is how many about-you
+ * questions the run plans (0 when there's no about-you phase).
+ */
+export function phaseInfo(pack: SubjectPack, state: AgentState): { phase: 'about-you' | 'challenge'; aboutYouCount: number } {
+  const mix = pack.mixedBank;
+  if (mix && state.mode === 'mock') {
+    const aboutYouCount = Math.max(1, Math.round(mix.primaryShare * state.targetQuestions));
+    return { phase: state.questionIndex < aboutYouCount ? 'about-you' : 'challenge', aboutYouCount };
+  }
+  return { phase: 'challenge', aboutYouCount: 0 };
+}
+
 // ---- Tools the model uses to drive the bank + review ----
 
 const VALID_OUTCOMES = new Set<Outcome>(['correct_method', 'correct_no_method', 'incorrect', 'stuck', 'skipped']);
@@ -227,25 +243,36 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     '- The authored question bank is your PRIMARY material — your lesson notes. Always reach for it first: ask only problems you get from next_problem (never invent your own puzzles), and never reveal or change a problem\'s answer. For hints, probes and explanations, lean on each problem\'s authored guidance (the hint ladder, the live probes, the model reasoning path) as your first port of call.',
     '- But you are a real, intelligent tutor — NOT a script-reader. Put everything in your own natural, spoken words, and when a child says something unexpected, asks a tangent, or needs help the notes do not quite cover, use your own judgement to guide them well. Prefer the document; think for yourself and improvise warmly when it runs out. The notes are a tool you pull from, not lines you recite.',
     '- To get each problem, call the tool next_problem. It returns the problem text and its answer plus its authored guidance. The answer is for YOUR eyes only — NEVER say it or confirm/deny their guess by stating it.',
-    '- READ THE QUESTION VERBATIM — word for word, IN FULL, the very first time you ask it. Include every option, statement, number, name and item exactly as written (e.g. if it lists statements A, B, C, D, or several clues, read ALL of them out). NEVER summarise, shorten, paraphrase, or leave any part out and expect them to ask — a question like "four statements, which is true?" with the statements omitted is useless. Your own warm words go AROUND the question (framing, encouragement, follow-ups); the question text itself is delivered exactly and completely as written.',
+    '- READ EVERY CHALLENGE PROBLEM (maths, logic, current-affairs) VERBATIM — word for word, IN FULL, the first time you ask it. Include every option, statement, number, name and clue exactly as written (if it lists statements A, B, C, D, read ALL of them out). NEVER summarise, shorten, paraphrase or drop part of a hard problem — a question like "four statements, which is true?" with the statements omitted is useless. (The light "about you" questions are the exception: those you can put in your own casual words and keep short — no need to spell them out formally.)',
     '- Ask ONE problem at a time, then listen. Encourage them to think out loud and explain their method. Praise the method, not just the answer.',
     '- BRIDGE between questions so it feels like a real conversation, not a quiz firing off in a row. Before you read a NEW question, first give a short warm reaction to what they just said and signal that you are moving on — e.g. "Nice one, thank you." · "That\'s a good effort — let\'s try another." · "Great, are you ready for the next one?" Then a small beat (write it as "…" so you pause naturally), then read the next question. NEVER jump straight into a new question with no lead-in. Keep the bridge to a handful of words; the question text itself is still read verbatim and in full.',
     '- IF THEY ARE RIGHT AND HAVE EXPLAINED THEIR WORKING: just affirm it warmly and briefly ("That\'s right — lovely working") and move straight on to the next problem. Do NOT keep probing, re-explaining, summarising, or padding when their reasoning is already clear and correct. Only probe "how did you get that?" when they gave an answer with NO working (so you can tell it wasn\'t a guess).',
     '- PRODUCTIVE STRUGGLE — do not hand out hints, methods, or the answer too early. The FIRST time a child goes quiet, says "I don\'t know", or even directly ASKS for a hint, do NOT give one yet. Reassure them and insist they have a real go first — "Have a try first, even a rough guess; what\'s your first thought?" Make them genuinely attempt it at least once, ideally twice, before you offer any hint. Never give away the method just because they asked.',
     '- Only once they have genuinely had a go and are STILL stuck (usually after a second or third attempt) do you start hinting. Then behave like a real tutor — never hand over the answer, help in SMALL steps, ONE short nudge per turn (do not list all the steps at once): first check they understood the question; next name the method or strategy; and if still stuck, walk them through just the first step and ask them to take the next. Give as many escalating hints as they need, one at a time, and never give up on them.',
+    '- HALF-FINISHED ANSWERS — do this readily on the hard problems. If their answer looks incomplete — they made a strong start but trailed off, stopped mid-method, or gave only the first step — do NOT jump in with a hint or the method. Point out warmly that they are onto something and put the thought back to THEM to finish: "That\'s a great start — I don\'t think you quite finished it. You\'re onto something, keep that thought going." Prefer this to hand-holding whenever an answer is on-track but unfinished; only drop to the hint ladder when they are genuinely stuck with no idea, not merely unfinished.',
     '- Move on only once they have made a real attempt, or you have genuinely helped them work it through. When you move on, call next_problem and pass your honest judgement of the problem they just finished (outcome, method_quality, the rubric band if one was given, and a short note) so it is recorded for their feedback.',
     mock
       ? `- Aim for about ${state.targetQuestions} problems in total, then give a warm closing and call finish_interview. If next_problem tells you there are no more problems, wrap up.`
       : '- Keep going on the chosen topic. The student may switch topics or end whenever they like.',
-    '- KEEP IT MOVING and stay in control — this is a real interview, not an endless coaxing session. Give exactly ONE brief nudge to have a go ("Give it a quick go — even a rough guess is fine"). If they still dodge, stall, ramble, or give a thin/empty answer on the very next turn, MOVE ON: warmly take charge ("No problem — let\'s try a different one") and call next_problem for a FRESH question. Never ask the same question more than twice and never re-phrase-and-re-ask the same one over and over — a brisk, professional pace across varied questions beats squeezing one dry. (Reasoning puzzles are the exception: there you may give escalating hints as described above once they\'ve genuinely tried.)',
+    '- PACE — read the two parts differently. In the ABOUT YOU part, keep it brisk and stay in control: one brief nudge to answer, and if they still dodge, stall or ramble, MOVE ON to a fresh question rather than squeezing one dry. But in the CHALLENGE part, the opposite — those few hard questions ARE the interview, so do NOT rush them: stay on one, probe and go two-part, and give them real time to think and finish (only move on once they have genuinely worked at it or are truly stuck). Either way never ask the exact same question more than twice or re-phrase-and-re-ask the same one on a loop.',
     '- If the student clearly wants to STOP early — "can we stop", "I\'m done", "end the interview", or they keep refusing to engage — do not fight it. Give a warm, proper closing in your own words ("That\'s all I have for you today — thank you so much for your time, you did really well"), offer one genuine positive, tell them to end the interview to see their feedback, and then call finish_interview.',
     '- Keep every turn to one or two short sentences — brevity matters more than completeness, since you can always continue next turn. The student should do most of the talking.',
     '- To finish: thank them warmly, give one genuine, specific positive, and tell them to end the interview to see their feedback, then call finish_interview.',
     '',
+    phaseLine(pack, state),
     `Progress so far: ${state.questionIndex} problem(s) done${mock ? ` of about ${state.targetQuestions}` : ''}. Current difficulty: star level ${state.difficulty} of 5 (higher = harder). The bank handles which problem to serve — just ask what next_problem gives you.`,
     renderCurrentProblem(state.current),
   ];
   return lines.filter((l) => l !== '').join('\n');
+}
+
+/** Tell the model which part of a two-phase mock it's in, so it adopts the right mode. */
+function phaseLine(pack: SubjectPack, state: AgentState): string {
+  if (!pack.mixedBank || state.mode !== 'mock') return '';
+  const { phase, aboutYouCount } = phaseInfo(pack, state);
+  return phase === 'about-you'
+    ? `CURRENT PART: ABOUT YOU (question ${state.questionIndex + 1} of ~${aboutYouCount} in this part). This is the warm get-to-know-you half — ask about their interests, hobbies, activities, school, family and reading. Keep it LIGHT and brisk: put these in your own casual words (no need to spell them out formally), one main question, at most one follow-up, then move on. Do not over-probe or hand-hold here. No maths/logic yet.`
+    : `CURRENT PART: THE CHALLENGE. The "about you" part is over. There are only a few of these and they are the heart of the interview, so SLOW DOWN and give each one real time (think a few minutes of back-and-forth per question, not an instant answer). Ask the hard problem the bank gives you exactly, then genuinely PROBE the reasoning — where it fits, run it as TWO PARTS like a top-school interview: an accessible opening part, then a harder extension or an ethical "what do you think, and why?" follow-up (the authored probes are ideal). Push for depth: "why?", "what if…?", "are you sure?", "can you convince me?". This is where you dig in — but on half-finished answers, nudge them to finish rather than hinting.`;
 }
 
 function logEvidence(state: AgentState, args: { outcome?: string; method_quality?: string; band?: string; hints_given?: number; note?: string }) {
@@ -288,20 +315,32 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
   }
 
   // Two-phase mix (e.g. 11+): draw the first `primaryShare` from the primarySubject at a fixed,
-  // conversational difficulty, then the rest from the harder secondarySubjects (adaptive).
+  // conversational difficulty, then the rest from the harder secondarySubjects.
   const mix = deps.pack.mixedBank;
   let bank = deps.bank;
   let difficulty = state.difficulty;
   if (mix && state.mode === 'mock') {
-    const primaryCount = Math.max(1, Math.round(mix.primaryShare * state.targetQuestions));
+    const { aboutYouCount: primaryCount } = phaseInfo(deps.pack, state);
     if (state.questionIndex < primaryCount) {
       bank = deps.bank.filter((b) => b.subject === mix.primarySubject);
       difficulty = mix.primaryDifficulty;
     } else {
       if (state.questionIndex === primaryCount) state.difficulty = mix.secondaryStartDifficulty; // reset once, on entry
-      bank = deps.bank.filter((b) => mix.secondarySubjects.includes(b.subject));
-      difficulty = state.difficulty;
+      // Guarantee a spread across the hard subjects so EVERY challenge subject (crucially
+      // current-affairs) gets asked at least once: force one of each secondary subject in a
+      // seed-rotated order for the first N challenge questions; after that, draw freely.
+      const subs = mix.secondarySubjects;
+      const rot = subs.length ? state.seed % subs.length : 0;
+      const order = subs.map((_, i) => subs[(i + rot) % subs.length]);
+      const pos = state.questionIndex - primaryCount; // 0-based position within the challenge phase
+      const forced = pos < order.length ? order[pos] : null;
+      bank = deps.bank.filter((b) => (forced ? b.subject === forced : subs.includes(b.subject)));
+      // Keep EVERY challenge question genuinely hard — fixed, not eased by adaptation. This guarantees
+      // at least one 4-star (maths/logic carry 4-star questions). Current-affairs has no 4-star, so
+      // selection's nearest-level fallback lands on its own top tier — that's the thought-provoking one.
+      difficulty = mix.secondaryStartDifficulty;
     }
+    if (bank.length === 0) bank = deps.bank.filter((b) => mix.secondarySubjects.includes(b.subject));
     if (bank.length === 0) bank = deps.bank;
   }
 

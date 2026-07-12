@@ -177,5 +177,9 @@ export interface BrainResponse {
     targetQuestions: number;
     /** True once a real question is on the table (i.e. past the warm-up). */
     onQuestion?: boolean;
+    /** Two-phase mocks (e.g. 11+): which half we're in. Absent for single-phase subjects. */
+    phase?: 'about-you' | 'challenge';
+    /** How many "about you" questions the run plans (0 when there's no about-you phase). */
+    aboutYouCount?: number;
   };
 }

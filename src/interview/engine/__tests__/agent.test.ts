@@ -7,6 +7,8 @@ import {
   type ChatResult,
 } from '../agent';
 import { mathsPack } from '../../subjects/maths/pack';
+import { elevenplusPack } from '../../subjects/elevenplus/pack';
+import { phaseInfo } from '../agent';
 import type { BankQuestion } from '../types';
 
 const BANK: BankQuestion[] = [
@@ -65,6 +67,47 @@ describe('LLM-driven agent', () => {
     expect(r.done).toBe(true);
     expect(r.state.evidence).toHaveLength(2);
     expect(r.state.evidence[1].outcome).toBe('incorrect');
+  });
+
+  it('11+ two-phase mock: about-you first, then guarantees a current-affairs AND a 4-star challenge question', async () => {
+    // Bank spanning the primary (elevenplus) + the three challenge subjects, incl. 4-star maths/logic
+    // and current-affairs that only exists at 2-star (mirrors the real bank).
+    const bank: BankQuestion[] = [
+      ...Array.from({ length: 6 }, (_, i) => ({ id: `ep${i}`, subject: 'elevenplus', topic: `t${i}`, difficulty: 2 as const, question: `About you ${i}?`, answer: 'n/a' })),
+      { id: 'm3', subject: 'maths', topic: 'arithmetic', difficulty: 3, question: 'maths 3?', answer: 'x' },
+      { id: 'm4', subject: 'maths', topic: 'ratio', difficulty: 4, question: 'maths 4?', answer: 'x' },
+      { id: 'l3', subject: 'logic', topic: 'deduction', difficulty: 3, question: 'logic 3?', answer: 'x' },
+      { id: 'l4', subject: 'logic', topic: 'knights', difficulty: 4, question: 'logic 4?', answer: 'x' },
+      { id: 'c2a', subject: 'currentaffairs', topic: 'ethics', difficulty: 2, question: 'ca a?', answer: 'x' },
+      { id: 'c2b', subject: 'currentaffairs', topic: 'world', difficulty: 2, question: 'ca b?', answer: 'x' },
+    ];
+    const byId = new Map(bank.map((q) => [q.id, q]));
+
+    // Script: warm-up fetch, then log+fetch each subsequent turn (enough to exhaust the run).
+    const queue: ChatResult[] = [say('Hi, I am Clara. Tell me about yourself.')];
+    for (let i = 0; i < 12; i++) {
+      queue.push(tool('next_problem', i === 0 ? {} : { outcome: 'correct_method', method_quality: 'sound' }));
+      queue.push(say(`ok ${i}`));
+    }
+    const deps: AgentDeps = { bank, pack: elevenplusPack, chat: fakeChat(queue) };
+    let r = await advanceAgent(initAgentState({ subject: 'elevenplus', mode: 'mock', pack: elevenplusPack, seed: 7 }), { action: 'start' }, deps);
+    for (let i = 0; i < 12 && !r.done; i++) {
+      r = await advanceAgent(r.state, { action: 'answer', studentText: `answer ${i}` }, deps);
+    }
+
+    const { aboutYouCount } = phaseInfo(elevenplusPack, r.state);
+    const asked = r.state.askedIds.map((id) => byId.get(id)!).filter(Boolean);
+    const aboutYou = asked.slice(0, aboutYouCount);
+    const challenge = asked.slice(aboutYouCount);
+
+    // First phase is entirely "about you" (elevenplus); challenge phase covers the hard subjects.
+    expect(aboutYou.every((q) => q.subject === 'elevenplus')).toBe(true);
+    expect(challenge.some((q) => q.subject === 'currentaffairs')).toBe(true); // ≥1 current affairs
+    expect(challenge.some((q) => q.difficulty === 4)).toBe(true);             // ≥1 four-star
+    // Every hard subject asked at least once.
+    for (const s of ['maths', 'logic', 'currentaffairs']) {
+      expect(challenge.some((q) => q.subject === s)).toBe(true);
+    }
   });
 
   it('records a skip when the model marks the current problem skipped', async () => {

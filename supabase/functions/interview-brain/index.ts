@@ -6,7 +6,8 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
-import { advanceAgent, initAgentState, type AgentState, type ChatComplete } from "./_shared/engine/agent.ts";
+import { advanceAgent, initAgentState, phaseInfo, type AgentState, type ChatComplete } from "./_shared/engine/agent.ts";
+import type { SubjectPack } from "./_shared/subjects/types.ts";
 import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
@@ -109,14 +110,19 @@ async function loadBank(admin: any, subject: string): Promise<any[]> {
   return subjects.flatMap((s) => BANKS[s] || []);
 }
 
-const uiStateOf = (s: AgentState): BrainResponse["uiState"] => ({
-  mode: s.mode,
-  topic: s.currentTopic,
-  difficulty: s.difficulty,
-  questionIndex: s.questionIndex,
-  targetQuestions: s.targetQuestions,
-  onQuestion: !!s.current,
-});
+const uiStateOf = (s: AgentState, pack: SubjectPack): BrainResponse["uiState"] => {
+  const { phase, aboutYouCount } = phaseInfo(pack, s);
+  return {
+    mode: s.mode,
+    topic: s.currentTopic,
+    difficulty: s.difficulty,
+    questionIndex: s.questionIndex,
+    targetQuestions: s.targetQuestions,
+    onQuestion: !!s.current,
+    phase: pack.mixedBank ? phase : undefined,
+    aboutYouCount,
+  };
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
