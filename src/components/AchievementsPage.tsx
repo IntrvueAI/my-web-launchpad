@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { Pip } from '@/components/brand/Pip';
+import { BETA_CUTOFF } from '@/contexts/PipCustomizationContext';
 import { getStars } from '@/lib/kid';
 import { cn } from '@/lib/utils';
 
@@ -10,7 +11,7 @@ interface Badge {
 }
 
 /** "Trophy cabinet" — playful, gamified achievements derived from the student's real activity. */
-export const AchievementsPage: React.FC = () => {
+export const AchievementsPage: React.FC<{ onLockerRoom?: () => void }> = ({ onLockerRoom }) => {
   const { user } = useAuth();
   const { stats } = useDashboardStats();
 
@@ -64,6 +65,7 @@ export const AchievementsPage: React.FC = () => {
     },
     {
       icon: '🎩', name: 'Special', badges: [
+        { emoji: '🦉', title: 'Beta Tester', desc: 'Joined during the beta — unlocks the intrvue cap!', xp: 250, earned: !!user?.created_at && user.created_at.slice(0, 10) < BETA_CUTOFF, grad: 'from-primary to-[#F1730B]' },
         { emoji: '🌅', title: 'Early Bird', desc: 'Practise before 8am', xp: 50, earned: false, grad: 'from-amber to-primary' },
         { emoji: '🎪', title: 'All-Rounder', desc: 'Try every interview type', xp: 200, earned: false, grad: 'from-purple to-sky' },
       ],
@@ -91,7 +93,17 @@ export const AchievementsPage: React.FC = () => {
           <div className="h-3 rounded-full bg-white/[0.08] overflow-hidden max-w-[460px]">
             <div className="h-full rounded-full" style={{ width: `${pct(intoLevel, 300)}%`, background: 'linear-gradient(90deg,#FBBF24,#F59E0B,#FF7F50)' }} />
           </div>
-          <p className="mt-2.5 text-[12.5px] font-semibold text-muted-foreground">{toNext} XP to <span className="text-[#C4B0FF]">Level {level + 1}</span></p>
+          <p className="mt-2.5 text-[12.5px] font-semibold text-muted-foreground">
+            {toNext} XP to <span className="text-[#C4B0FF]">Level {level + 1}</span>
+            {onLockerRoom && (
+              <>
+                {' · '}
+                <button onClick={onLockerRoom} className="font-extrabold text-amber hover:text-white transition-colors">
+                  👒 Spend your badges in the locker room →
+                </button>
+              </>
+            )}
+          </p>
         </div>
       </div>
 

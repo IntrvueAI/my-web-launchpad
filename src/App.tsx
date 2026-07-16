@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { PipCustomizationProvider } from "@/contexts/PipCustomizationContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
 import { ShutdownBanner } from "@/components/ShutdownBanner";
@@ -120,9 +121,11 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <SecurityProvider>
-          <AppContent />
-        </SecurityProvider>
+        <PipCustomizationProvider>
+          <SecurityProvider>
+            <AppContent />
+          </SecurityProvider>
+        </PipCustomizationProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
