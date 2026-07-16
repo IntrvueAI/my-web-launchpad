@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Pencil, Trash2, Search, Star } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, Star, Archive, ArchiveRestore } from 'lucide-react';
 
 interface QRow {
   id: string; subject: string; topic: string; question_type: string | null;
@@ -48,6 +48,7 @@ export const AdminQuestions: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [subjectFilter, setSubjectFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'live' | 'retired'>('all');
   const [addedAfter, setAddedAfter] = useState('');
   const [search, setSearch] = useState('');
   const [draft, setDraft] = useState<any | null>(null);
@@ -67,6 +68,8 @@ export const AdminQuestions: React.FC = () => {
   const subjects = useMemo(() => [...new Set(rows.map((r) => r.subject))], [rows]);
   const filtered = rows.filter((r) => {
     if (subjectFilter !== 'all' && r.subject !== subjectFilter) return false;
+    if (statusFilter === 'live' && !r.active) return false;
+    if (statusFilter === 'retired' && r.active) return false;
     if (addedAfter && (!r.created_at || r.created_at.slice(0, 10) < addedAfter)) return false;
     if (!search) return true;
     const s = search.toLowerCase();
@@ -103,6 +106,14 @@ export const AdminQuestions: React.FC = () => {
     load();
   };
 
+  /** Retire (or bring back) a question with one click — retired questions are never asked. */
+  const toggleRetire = async (r: QRow) => {
+    const { error } = await db().update({ active: !r.active }).eq('id', r.id);
+    if (error) { toast({ title: 'Update failed', description: error.message, variant: 'destructive' }); return; }
+    toast({ title: r.active ? `Retired ${r.id} — it won't be asked in interviews` : `${r.id} is live again` });
+    setRows((prev) => prev.map((x) => (x.id === r.id ? { ...x, active: !r.active } : x)));
+  };
+
   const doDelete = async () => {
     if (!deleteId) return;
     const { error } = await db().delete().eq('id', deleteId);
@@ -136,6 +147,11 @@ export const AdminQuestions: React.FC = () => {
               <option value="all">All subjects</option>
               {subjects.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value as 'all' | 'live' | 'retired')} className="rounded-md border border-input bg-background px-3 text-sm">
+              <option value="all">Live + retired</option>
+              <option value="live">Live only</option>
+              <option value="retired">Retired only</option>
+            </select>
             <div className="flex items-center gap-1.5 text-sm">
               <span className="text-muted-foreground whitespace-nowrap">Added after</span>
               <Input type="date" value={addedAfter} onChange={(e) => setAddedAfter(e.target.value)} className="w-[150px]" />
@@ -146,11 +162,11 @@ export const AdminQuestions: React.FC = () => {
           <div className="rounded-md border overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="border-b bg-muted/50 text-left">
-                <tr><th className="p-2">Title</th><th className="p-2">Subject</th><th className="p-2">Type</th><th className="p-2">★</th><th className="p-2">Added</th><th className="p-2">Tags</th><th className="p-2">On</th><th className="p-2"></th></tr>
+                <tr><th className="p-2">Title</th><th className="p-2">Subject</th><th className="p-2">Type</th><th className="p-2">★</th><th className="p-2">Added</th><th className="p-2">Tags</th><th className="p-2">Status</th><th className="p-2"></th></tr>
               </thead>
               <tbody>
                 {filtered.map((r) => (
-                  <tr key={r.id} className="border-b hover:bg-muted/30">
+                  <tr key={r.id} className={`border-b hover:bg-muted/30 ${r.active ? '' : 'opacity-55'}`}>
                     <td className="p-2">
                       <div className="font-medium">{r.title || r.id}</div>
                       <div className="text-xs text-muted-foreground line-clamp-1 max-w-md">{r.question}</div>
@@ -162,9 +178,17 @@ export const AdminQuestions: React.FC = () => {
                     <td className="p-2">
                       <div className="flex flex-wrap gap-1">{(r.tags || []).map((t) => <Badge key={t} variant="secondary" className="text-[10px]">{t}</Badge>)}</div>
                     </td>
-                    <td className="p-2">{r.active ? <Badge className="bg-green-500 text-white text-[10px]">on</Badge> : <Badge variant="outline" className="text-[10px]">off</Badge>}</td>
+                    <td className="p-2">{r.active ? <Badge className="bg-green-500 text-white text-[10px]">live</Badge> : <Badge variant="outline" className="text-[10px]">retired</Badge>}</td>
                     <td className="p-2">
                       <div className="flex gap-1">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => toggleRetire(r)}
+                          title={r.active ? 'Retire — stop this question being asked' : 'Unretire — put it back in the bank'}
+                        >
+                          {r.active ? <Archive className="w-4 h-4" /> : <ArchiveRestore className="w-4 h-4 text-emerald-500" />}
+                        </Button>
                         <Button size="sm" variant="ghost" onClick={() => openEdit(r)}><Pencil className="w-4 h-4" /></Button>
                         <Button size="sm" variant="ghost" onClick={() => setDeleteId(r.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
                       </div>
@@ -216,7 +240,7 @@ export const AdminQuestions: React.FC = () => {
               <div className="grid grid-cols-2 gap-3 items-end">
                 <div><Label>Tags (comma-separated)</Label><Input value={draft.tags_csv} onChange={(e) => set('tags_csv', e.target.value)} placeholder="e.g. algebra, hard" /></div>
                 <div className="flex flex-col gap-1 pb-1">
-                  <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.active} onChange={(e) => set('active', e.target.checked)} className="h-4 w-4" /> Active (used in interviews)</label>
+                  <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.active} onChange={(e) => set('active', e.target.checked)} className="h-4 w-4" /> Live (untick to retire — retired questions are never asked)</label>
                   <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={draft.warmup} onChange={(e) => set('warmup', e.target.checked)} className="h-4 w-4" /> Allow as warm-up</label>
                 </div>
               </div>

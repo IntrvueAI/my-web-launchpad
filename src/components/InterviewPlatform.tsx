@@ -53,6 +53,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   // like a real interview (just you and the interviewer).
   const [hideTranscript, setHideTranscript] = useState(false);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+  // Push-to-talk (toggle, like focus mode): mic stays muted and the student HOLDS a button (or the
+  // spacebar) to speak. Clara can't be interrupted by background noise / quiet chatter, and the
+  // student controls exactly when they're heard. Choice is remembered across sessions.
+  const [pushToTalk, setPushToTalk] = useState(() => {
+    try { return localStorage.getItem('intrvue-ptt') === '1'; } catch { return false; }
+  });
+  const [pttHeld, setPttHeld] = useState(false);
+  const pttMuteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [feedback, setFeedback] = useState(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
   const { user } = useAuth();
@@ -326,6 +334,66 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     });
   }, [setMicMuted]);
 
+  const togglePushToTalk = useCallback(() => {
+    setPushToTalk(prev => {
+      const next = !prev;
+      try { localStorage.setItem('intrvue-ptt', next ? '1' : '0'); } catch { /* private mode */ }
+      return next;
+    });
+  }, []);
+
+  // Keep the actual mic state in sync with the mode: PTT on => muted until held;
+  // PTT off => whatever the normal mic button says.
+  useEffect(() => {
+    if (!isStreaming) return;
+    if (pushToTalk) { setPttHeld(false); setMicMuted(true); }
+    else setMicMuted(!isAudioEnabled);
+  }, [pushToTalk, isStreaming, isAudioEnabled, setMicMuted]);
+
+  const pttStart = useCallback(() => {
+    if (!pushToTalk || !isStreaming) return;
+    if (pttMuteTimerRef.current) { clearTimeout(pttMuteTimerRef.current); pttMuteTimerRef.current = null; }
+    setPttHeld(true);
+    setMicMuted(false);
+  }, [pushToTalk, isStreaming, setMicMuted]);
+
+  const pttEnd = useCallback(() => {
+    if (!pushToTalk) return;
+    setPttHeld(false);
+    // Small grace period so the tail of the last word isn't clipped before it reaches the mic.
+    if (pttMuteTimerRef.current) clearTimeout(pttMuteTimerRef.current);
+    pttMuteTimerRef.current = setTimeout(() => setMicMuted(true), 350);
+  }, [pushToTalk, setMicMuted]);
+
+  // Spacebar = hold to talk (desktop). Ignores typing fields; releases on window blur so the mic
+  // can never get stuck open.
+  useEffect(() => {
+    if (!pushToTalk || !isStreaming) return;
+    const down = (e: KeyboardEvent) => {
+      if (e.code !== 'Space' || e.repeat) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      e.preventDefault();
+      pttStart();
+    };
+    const up = (e: KeyboardEvent) => {
+      if (e.code !== 'Space') return;
+      e.preventDefault();
+      pttEnd();
+    };
+    const cancel = () => pttEnd();
+    window.addEventListener('keydown', down);
+    window.addEventListener('keyup', up);
+    window.addEventListener('blur', cancel);
+    return () => {
+      window.removeEventListener('keydown', down);
+      window.removeEventListener('keyup', up);
+      window.removeEventListener('blur', cancel);
+    };
+  }, [pushToTalk, isStreaming, pttStart, pttEnd]);
+
+  useEffect(() => () => { if (pttMuteTimerRef.current) clearTimeout(pttMuteTimerRef.current); }, []);
+
   // Focus mode: hide transcript/progress + go fullscreen (and back).
   const toggleFocusMode = useCallback(async () => {
     const next = !hideTranscript;
@@ -363,6 +431,17 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               <div className="text-[13px] font-extrabold text-white">
                 {progressLabel(brainUiState)}
               </div>
+            )}
+            {isStreaming && (
+              <button
+                onClick={togglePushToTalk}
+                className={pushToTalk
+                  ? "flex items-center gap-1.5 rounded-full border border-primary/60 bg-primary/15 px-3.5 py-1.5 text-[12.5px] font-extrabold text-primary-soft transition-colors"
+                  : "flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-extrabold text-[#C7D2E4] hover:bg-white/10 transition-colors"}
+                title="When on, the microphone only listens while you hold the talk button (or the spacebar)"
+              >
+                <Mic className="w-4 h-4" /> Push to talk{pushToTalk ? ': on' : ''}
+              </button>
             )}
             {isStreaming && (
               <button
@@ -440,6 +519,28 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     </span>
                   )}
 
+                  {/* Push-to-talk: hold to open the mic. Sits on the video so it works in focus mode too. */}
+                  {isStreaming && pushToTalk && (
+                    <button
+                      type="button"
+                      onMouseDown={pttStart}
+                      onMouseUp={pttEnd}
+                      onMouseLeave={pttEnd}
+                      onTouchStart={(e) => { e.preventDefault(); pttStart(); }}
+                      onTouchEnd={(e) => { e.preventDefault(); pttEnd(); }}
+                      onTouchCancel={pttEnd}
+                      onContextMenu={(e) => e.preventDefault()}
+                      className={`absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 rounded-full px-6 py-3.5 text-[14px] font-extrabold text-white select-none touch-none transition-all ${
+                        pttHeld
+                          ? 'bg-gradient-to-br from-[#FB923C] to-[#F1730B] animate-pulsering scale-105'
+                          : 'bg-black/55 border border-white/20 backdrop-blur-sm hover:bg-black/70'
+                      }`}
+                    >
+                      {pttHeld ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+                      {pttHeld ? "I'm listening — release when done" : 'Hold to speak · or hold Space'}
+                    </button>
+                  )}
+
                   {/* Video Overlay for Non-active States */}
                   {!isStreaming && (
                     <div
@@ -464,9 +565,16 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     variant="outline"
                     size="sm"
                     onClick={toggleAudio}
+                    disabled={pushToTalk}
                     className="gap-2 w-full sm:w-auto min-h-[44px]"
+                    title={pushToTalk ? 'Push to talk is on — hold the talk button to speak' : undefined}
                   >
-                    {isAudioEnabled ? (
+                    {pushToTalk ? (
+                      <>
+                        <MicOff className="w-4 h-4" />
+                        <span className="text-sm">Push to talk on</span>
+                      </>
+                    ) : isAudioEnabled ? (
                       <>
                         <Mic className="w-4 h-4" />
                         <span className="text-sm">Microphone On</span>
