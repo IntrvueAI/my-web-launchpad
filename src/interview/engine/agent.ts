@@ -141,9 +141,10 @@ const TOOLS = [
     function: {
       name: 'next_problem',
       description:
-        'Record how the student did on the problem currently on the table (if any), then get the next problem to ask. ' +
+        'Record how the student did on the problem currently on the table, then get the next problem to ask. ' +
         'Call this after the warm-up to get the first problem, and again each time you are ready to move on. ' +
-        'Omit the outcome fields on the very first call (no problem is on the table yet).',
+        'The outcome fields are REQUIRED whenever a problem is on the table (the call is rejected without them) — ' +
+        'omit them ONLY on the very first call, when no problem has been asked yet.',
       parameters: {
         type: 'object',
         properties: {
@@ -316,7 +317,16 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
     state.done = true;
     return { ok: true };
   }
-  // next_problem
+  // next_problem — if a problem is on the table, recording it is MANDATORY before getting the next.
+  // Without this, a model that "forgot" the outcome fields silently dropped the finished question
+  // from the evidence log: questionIndex never advanced, the 11+ phase stayed "about you" forever,
+  // and feedback scored only the first question.
+  if (state.current && !call.args.outcome) {
+    return {
+      rejected:
+        'A problem is still on the table and has not been recorded. Call next_problem again and INCLUDE the outcome fields for it (outcome, method_quality, band if given, hints_given, note) — every question must be recorded so the student gets fair feedback.',
+    };
+  }
   if (call.args.outcome && state.current) logEvidence(state, call.args);
 
   if (state.mode === 'mock' && state.questionIndex >= state.targetQuestions) {

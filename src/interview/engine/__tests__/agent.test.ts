@@ -110,6 +110,31 @@ describe('LLM-driven agent', () => {
     }
   });
 
+  it('rejects next_problem while a question is unrecorded, so no question vanishes from evidence', async () => {
+    const queue: ChatResult[] = [
+      say('Hi! Quick warm-up?'),
+      tool('next_problem', {}), // fetch Q1 (fine — nothing on the table yet)
+      say('Here is your first problem.'),
+      // Model tries to move on WITHOUT recording Q1 → must be rejected…
+      tool('next_problem', {}),
+      // …after which it retries correctly with the outcome and gets Q2.
+      tool('next_problem', { outcome: 'correct_method', method_quality: 'sound' }),
+      say('Nice — next one.'),
+    ];
+    const deps: AgentDeps = { bank: BANK, pack: mathsPack, chat: fakeChat(queue) };
+    let r = await advanceAgent(initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 3 }), { action: 'start' }, deps);
+    r = await advanceAgent(r.state, { action: 'answer', studentText: 'ready' }, deps);
+    const q1 = r.state.current!.id;
+    expect(r.state.evidence).toHaveLength(0);
+
+    r = await advanceAgent(r.state, { action: 'answer', studentText: '56, because seven eights' }, deps);
+    // Q1 was recorded (not dropped) and a fresh question is on the table.
+    expect(r.state.evidence).toHaveLength(1);
+    expect(r.state.evidence[0].outcome).toBe('correct_method');
+    expect(r.state.current!.id).not.toBe(q1);
+    expect(r.state.questionIndex).toBe(1); // phase/progress advances
+  });
+
   it('records a skip when the model marks the current problem skipped', async () => {
     const queue: ChatResult[] = [
       say('Hi! Warm-up question?'),

@@ -54,7 +54,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const [hideTranscript, setHideTranscript] = useState(false);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
   // Push-to-talk (toggle, like focus mode): mic stays muted and the student HOLDS a button (or the
-  // spacebar) to speak. Clara can't be interrupted by background noise / quiet chatter, and the
+  // T key) to speak. Clara can't be interrupted by background noise / quiet chatter, and the
   // student controls exactly when they're heard. Choice is remembered across sessions.
   const [pushToTalk, setPushToTalk] = useState(() => {
     try { return localStorage.getItem('intrvue-ptt') === '1'; } catch { return false; }
@@ -365,19 +365,19 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     pttMuteTimerRef.current = setTimeout(() => setMicMuted(true), 350);
   }, [pushToTalk, setMicMuted]);
 
-  // Spacebar = hold to talk (desktop). Ignores typing fields; releases on window blur so the mic
-  // can never get stuck open.
+  // Hold T = talk (desktop). T rather than Space — Space is page-scroll, so holding it jumped the
+  // page around. Ignores typing fields; releases on window blur so the mic can never get stuck open.
   useEffect(() => {
     if (!pushToTalk || !isStreaming) return;
     const down = (e: KeyboardEvent) => {
-      if (e.code !== 'Space' || e.repeat) return;
+      if (e.code !== 'KeyT' || e.repeat) return;
       const t = e.target as HTMLElement | null;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
       e.preventDefault();
       pttStart();
     };
     const up = (e: KeyboardEvent) => {
-      if (e.code !== 'Space') return;
+      if (e.code !== 'KeyT') return;
       e.preventDefault();
       pttEnd();
     };
@@ -438,7 +438,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 className={pushToTalk
                   ? "flex items-center gap-1.5 rounded-full border border-primary/60 bg-primary/15 px-3.5 py-1.5 text-[12.5px] font-extrabold text-primary-soft transition-colors"
                   : "flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-extrabold text-[#C7D2E4] hover:bg-white/10 transition-colors"}
-                title="When on, the microphone only listens while you hold the talk button (or the spacebar)"
+                title="When on, the microphone only listens while you hold the talk button (or hold T)"
               >
                 <Mic className="w-4 h-4" /> Push to talk{pushToTalk ? ': on' : ''}
               </button>
@@ -537,7 +537,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                       }`}
                     >
                       {pttHeld ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
-                      {pttHeld ? "I'm listening — release when done" : 'Hold to speak · or hold Space'}
+                      {pttHeld ? "I'm listening — release when done" : 'Hold to speak · or hold T'}
                     </button>
                   )}
 
