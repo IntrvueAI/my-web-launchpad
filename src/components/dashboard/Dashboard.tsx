@@ -72,7 +72,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   return (
     <div className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-[13px]">
       {/* Greeting */}
-      <div className="flex items-center gap-3">
+      <div data-tour="dashboard-intro" className="flex items-center gap-3">
         <Pip size={58} float className="flex-none" />
         <div>
           <h1 className="text-[25px] font-semibold text-white">Hi {firstName}! Let&rsquo;s practise</h1>
@@ -103,7 +103,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         </button>
 
         {/* Level */}
-        <div onClick={onAchievements} data-tour="level" className="rounded-[20px] p-[18px] text-white cursor-pointer transition-transform hover:-translate-y-0.5" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
+        <div onClick={onAchievements} className="rounded-[20px] p-[18px] text-white cursor-pointer transition-transform hover:-translate-y-0.5" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
           <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-85">Level</div>
           <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{level}<Trophy className="h-5 w-5" /></div>
           <div className="h-2 rounded-full bg-white/25 overflow-hidden"><div className="h-full rounded-full bg-white" style={{ width: `${xpPct}%` }} /></div>

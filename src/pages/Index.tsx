@@ -194,12 +194,12 @@ const Index = () => {
                 {([
                   ['dashboard', 'Home', undefined],
                   ['selection', 'Practice', 'nav-practice'],
-                  ['questions', 'Questions', undefined],
+                  ['questions', 'Questions', 'nav-questions'],
                   ['achievements', 'Achievements', 'nav-achievements'],
                   ['locker', 'Locker room', undefined],
-                  ['history', 'My sessions', undefined],
+                  ['history', 'My sessions', 'nav-history'],
                   ['settings', 'Settings', undefined],
-                  ['credits', 'Buy Credits', 'nav-credits'],
+                  ['credits', 'Buy Credits', undefined],
                 ] as const).map(([view, label, tourKey]) => {
                   const active = currentView === view;
                   return (
@@ -245,6 +245,7 @@ const Index = () => {
                   variant={currentView === 'questions' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('questions') : setCurrentView('questions')}
+                  data-tour="nav-questions"
                   className="p-2"
                   aria-label="Questions"
                 >
@@ -264,6 +265,7 @@ const Index = () => {
                   variant={currentView === 'history' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('history') : setCurrentView('history')}
+                  data-tour="nav-history"
                   className="p-2"
                   aria-label="History"
                 >
@@ -273,7 +275,6 @@ const Index = () => {
                   variant={currentView === 'credits' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('credits') : setCurrentView('credits')}
-                  data-tour="nav-credits"
                   className="p-2"
                   aria-label="Credits"
                 >

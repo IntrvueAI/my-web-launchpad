@@ -8,10 +8,18 @@
  * ResizeObserver on the target itself. Nothing is drawn until that first measurement lands, so
  * there's never a flash at a stale (0,0) rect.
  *
- * Steps advance ONLY by the student clicking the real, still-fully-functional target — there is
- * no "Next" button. A capture-phase document click listener watches for `data-tour="<currentKey>"`
- * without ever calling preventDefault/stopPropagation, so the target's own onClick (navigate,
- * start interview, etc.) still fires exactly as normal.
+ * Two ways a step advances (`advanceMode`):
+ * - 'click' (nav items): the student clicks the real, still-fully-functional target. A
+ *   capture-phase document click listener watches for `data-tour="<currentKey>"` without ever
+ *   calling preventDefault/stopPropagation, so the target's own onClick (navigate, etc.) still
+ *   fires exactly as normal — nav items just switch the current view, which is safe mid-tour
+ *   since the nav bar itself stays mounted across every view.
+ * - 'button' (the two dashboard-only steps): the target is spotlighted but made genuinely
+ *   non-interactive (a transparent "glass" pane sits over it), and the bubble shows an explicit
+ *   "Let's go" button instead. This exists because the dashboard hero tile's real onClick
+ *   navigates AWAY from the dashboard — if that were allowed to fire mid-tour, the dashboard
+ *   (and the tour's next target, if it were also dashboard-only) would unmount and the tour would
+ *   silently stall with nothing left to measure.
  */
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,18 +30,22 @@ import { HowItWorksModal } from './HowItWorksModal';
 interface TourStep {
   key: string;
   message: string;
+  /** 'click' = real click on the target advances (default). 'button' = target is spotlighted but
+   *  not clickable; a "Let's go" button in the bubble advances instead. */
+  advanceMode?: 'click' | 'button';
 }
 
 export const TOUR_STEPS: TourStep[] = [
-  { key: 'start-interview', message: "This is home base — click here whenever you're ready to start a mock interview." },
-  { key: 'level', message: 'Every interview earns you XP. Level up as you keep practising!' },
+  { key: 'dashboard-intro', message: "This is your dashboard — home base for everything. Let's take a quick look around!", advanceMode: 'button' },
+  { key: 'start-interview', message: "This is where you'll start your mock interviews whenever you're ready.", advanceMode: 'button' },
+  { key: 'nav-questions', message: 'Browse and practise individual questions here, any time you like.' },
   { key: 'nav-achievements', message: 'Your trophy cabinet lives here — badges you earn unlock hats for Pip in the locker room.' },
-  { key: 'nav-credits', message: 'Each mock interview uses one credit. Top up here any time you need to.' },
-  { key: 'nav-practice', message: "Last stop — this is where every interview starts. Click Practice to see how it all works!" },
+  { key: 'nav-history', message: "This is where your past interviews and feedback live — looks like you haven't done one yet!" },
+  { key: 'nav-practice', message: 'Last stop — this is where every interview starts. Click Practice to see how it all works!' },
 ];
 
 const BUBBLE_W = 288;
-const BUBBLE_H = 168;
+const BUBBLE_H = 182;
 const GAP = 14;
 const EDGE_PAD = 10;
 const HOLE_PAD = 8;
@@ -136,11 +148,12 @@ export function useTourTarget(key: string, active: boolean) {
 /**
  * Advances the tour ONLY when the real, currently-highlighted target is clicked — observes via a
  * capture-phase listener, never calls preventDefault/stopPropagation, so the target's own onClick
- * (navigate, start interview, etc.) still fires exactly as it would without the tour running.
+ * (navigate, etc.) still fires exactly as it would without the tour running. Pass `enabled=false`
+ * for 'button'-mode steps, where advancing happens via the bubble's own button instead.
  */
-export function useTourAdvance(active: boolean, rect: DOMRect | null, key: string, onAdvance: () => void) {
+export function useTourAdvance(enabled: boolean, rect: DOMRect | null, key: string, onAdvance: () => void) {
   useEffect(() => {
-    if (!active || !rect) return undefined;
+    if (!enabled || !rect) return undefined;
     const onClick = (e: MouseEvent) => {
       const el = (e.target as HTMLElement)?.closest?.(`[data-tour="${key}"]`);
       if (!el) return;
@@ -148,7 +161,7 @@ export function useTourAdvance(active: boolean, rect: DOMRect | null, key: strin
     };
     document.addEventListener('click', onClick, true);
     return () => document.removeEventListener('click', onClick, true);
-  }, [active, rect, key, onAdvance]);
+  }, [enabled, rect, key, onAdvance]);
 }
 
 export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?: boolean; restartKey?: number }) {
@@ -182,6 +195,7 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
 
   const active = phase === 'active' && !suspended;
   const currentStep = TOUR_STEPS[stepIndex];
+  const isButtonMode = currentStep.advanceMode === 'button';
   const { rect, ringRadius, viewport } = useTourTarget(currentStep.key, active);
 
   const handleAdvance = useCallback(() => {
@@ -192,20 +206,32 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
       setStepIndex((i) => i + 1);
     }
   }, [stepIndex, markSeen]);
-  useTourAdvance(active, rect, currentStep.key, handleAdvance);
+  useTourAdvance(active && !isButtonMode, rect, currentStep.key, handleAdvance);
 
   return (
     <>
-      {active && rect && viewport.w > 0 && <TourVisuals rect={rect} ringRadius={ringRadius} viewport={viewport} step={stepIndex} message={currentStep.message} onSkip={markSeen} />}
+      {active && rect && viewport.w > 0 && (
+        <TourVisuals
+          rect={rect}
+          ringRadius={ringRadius}
+          viewport={viewport}
+          step={stepIndex}
+          message={currentStep.message}
+          onSkip={markSeen}
+          clickable={!isButtonMode}
+          onNext={isButtonMode ? handleAdvance : undefined}
+        />
+      )}
       <HowItWorksModal open={showHowItWorks} onOpenChange={setShowHowItWorks} />
     </>
   );
 }
 
 export function TourVisuals({
-  rect, ringRadius, viewport, step, message, onSkip,
+  rect, ringRadius, viewport, step, message, onSkip, clickable = true, onNext,
 }: {
-  rect: DOMRect; ringRadius: string; viewport: { w: number; h: number }; step: number; message: string; onSkip: () => void;
+  rect: DOMRect; ringRadius: string; viewport: { w: number; h: number }; step: number; message: string;
+  onSkip: () => void; clickable?: boolean; onNext?: () => void;
 }) {
   const holeTop = rect.top - HOLE_PAD;
   const holeLeft = rect.left - HOLE_PAD;
@@ -225,6 +251,14 @@ export function TourVisuals({
       <div className="fixed left-0 transition-all duration-200" style={{ top: holeTop, height: holeH, width: Math.max(0, holeLeft), background: dim, pointerEvents: 'auto' }} />
       <div className="fixed right-0 transition-all duration-200" style={{ top: holeTop, height: holeH, left: holeLeft + holeW, background: dim, pointerEvents: 'auto' }} />
 
+      {/* 'button'-mode steps: the hole above is purely visual (keeps the target looking
+          spotlighted/undimmed like every other step) — this invisible pane sits over just the
+          hole and swallows clicks, so the real element genuinely cannot be triggered; the bubble's
+          "Let's go" button is the only way to advance. */}
+      {!clickable && (
+        <div className="fixed transition-all duration-200" style={{ top: holeTop, left: holeLeft, width: holeW, height: holeH, pointerEvents: 'auto' }} />
+      )}
+
       {/* Spotlight ring around the target */}
       <div
         className="fixed transition-all duration-200"
@@ -236,12 +270,14 @@ export function TourVisuals({
         }}
       />
 
-      <TourBubble bubble={bubble} step={step} message={message} onSkip={onSkip} />
+      <TourBubble bubble={bubble} step={step} message={message} onSkip={onSkip} onNext={onNext} />
     </div>
   );
 }
 
-export function TourBubble({ bubble, step, message, onSkip }: { bubble: BubblePos; step: number; message: string; onSkip: () => void }) {
+export function TourBubble({
+  bubble, step, message, onSkip, onNext,
+}: { bubble: BubblePos; step: number; message: string; onSkip: () => void; onNext?: () => void }) {
   const skipButton = (
     <button
       onClick={onSkip}
@@ -249,6 +285,16 @@ export function TourBubble({ bubble, step, message, onSkip }: { bubble: BubblePo
       className="flex-none text-[11px] font-extrabold text-muted-foreground hover:text-white transition-colors"
     >
       Skip tour
+    </button>
+  );
+
+  const nextButton = onNext && (
+    <button
+      onClick={onNext}
+      style={{ pointerEvents: 'auto' }}
+      className="flex-none rounded-full bg-primary px-3.5 py-1.5 text-[11.5px] font-extrabold text-white hover:bg-primary/90 transition-colors"
+    >
+      Let&rsquo;s go →
     </button>
   );
 
@@ -268,7 +314,10 @@ export function TourBubble({ bubble, step, message, onSkip }: { bubble: BubblePo
       >
         <Pip size={40} className="flex-none" />
         <p className="text-[13px] font-semibold text-[#EAF0FA] leading-snug">{message}</p>
-        <div className="flex-none flex flex-col items-end gap-1.5">{dots}{skipButton}</div>
+        <div className="flex-none flex flex-col items-end gap-1.5">
+          {dots}
+          <div className="flex items-center gap-2">{nextButton}{skipButton}</div>
+        </div>
       </div>
     );
   }
@@ -290,9 +339,9 @@ export function TourBubble({ bubble, step, message, onSkip }: { bubble: BubblePo
         <Pip size={40} className="flex-none" float />
         <p className="text-[13px] font-semibold text-[#EAF0FA] leading-snug">{message}</p>
       </div>
-      <div className="mt-3 flex items-center justify-between">
+      <div className="mt-3 flex items-center justify-between gap-2">
         {dots}
-        {skipButton}
+        <div className="flex items-center gap-2">{nextButton}{skipButton}</div>
       </div>
     </div>
   );
