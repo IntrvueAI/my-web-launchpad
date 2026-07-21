@@ -85,6 +85,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         {/* Start interview — hero */}
         <button
           onClick={onStartInterview}
+          data-tour="start-interview"
           className="md:row-span-2 relative overflow-hidden rounded-[20px] p-[22px] text-left flex flex-col justify-between"
           style={{ background: 'linear-gradient(150deg,#FF7F50,#F43F5E)' }}
         >
@@ -100,7 +101,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         </button>
 
         {/* Level */}
-        <div onClick={onAchievements} className="rounded-[20px] p-[18px] text-white cursor-pointer transition-transform hover:-translate-y-0.5" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
+        <div onClick={onAchievements} data-tour="level" className="rounded-[20px] p-[18px] text-white cursor-pointer transition-transform hover:-translate-y-0.5" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
           <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-85">Level</div>
           <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{level}<Trophy className="h-5 w-5" /></div>
           <div className="h-2 rounded-full bg-white/25 overflow-hidden"><div className="h-full rounded-full bg-white" style={{ width: `${xpPct}%` }} /></div>

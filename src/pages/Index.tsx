@@ -28,6 +28,7 @@ import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
 import { PipMark } from '@/components/brand/Pip';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { TourOverlay } from '@/components/tour/TourOverlay';
 
 const Index = () => {
   const {
@@ -189,20 +190,21 @@ const Index = () => {
             {currentView !== 'interview' && (
               <nav className="hidden lg:flex items-center gap-1 ml-3">
                 {([
-                  ['dashboard', 'Home'],
-                  ['selection', 'Practice'],
-                  ['questions', 'Questions'],
-                  ['achievements', 'Achievements'],
-                  ['locker', 'Locker room'],
-                  ['history', 'My sessions'],
-                  ['settings', 'Settings'],
-                  ['credits', 'Buy Credits'],
-                ] as const).map(([view, label]) => {
+                  ['dashboard', 'Home', undefined],
+                  ['selection', 'Practice', 'nav-practice'],
+                  ['questions', 'Questions', undefined],
+                  ['achievements', 'Achievements', 'nav-achievements'],
+                  ['locker', 'Locker room', undefined],
+                  ['history', 'My sessions', undefined],
+                  ['settings', 'Settings', undefined],
+                  ['credits', 'Buy Credits', 'nav-credits'],
+                ] as const).map(([view, label, tourKey]) => {
                   const active = currentView === view;
                   return (
                     <button
                       key={view}
                       onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate(view) : setCurrentView(view)}
+                      data-tour={tourKey}
                       className={cn(
                         'px-3 py-2 rounded-xl text-[13px] font-extrabold whitespace-nowrap transition-colors',
                         active ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white hover:bg-white/5',
@@ -231,6 +233,7 @@ const Index = () => {
                   variant={currentView === 'selection' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('selection') : setCurrentView('selection')}
+                  data-tour="nav-practice"
                   className="p-2"
                   aria-label="Practice"
                 >
@@ -249,6 +252,7 @@ const Index = () => {
                   variant={currentView === 'achievements' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('achievements') : setCurrentView('achievements')}
+                  data-tour="nav-achievements"
                   className="p-2"
                   aria-label="Achievements"
                 >
@@ -263,10 +267,11 @@ const Index = () => {
                 >
                   <History className="w-4 h-4" />
                 </Button>
-                <Button 
-                  variant={currentView === 'credits' ? 'default' : 'ghost'} 
-                  size="sm" 
-                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('credits') : setCurrentView('credits')} 
+                <Button
+                  variant={currentView === 'credits' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('credits') : setCurrentView('credits')}
+                  data-tour="nav-credits"
                   className="p-2"
                   aria-label="Credits"
                 >
@@ -399,6 +404,9 @@ const Index = () => {
           userId={user.id}
         />
       )}
+
+      {/* First-time guided tour — paused while another modal/form is already on top */}
+      <TourOverlay suspended={showPostSignupForm || showPaymentSuccess} />
     </div>;
 };
 export default Index;
