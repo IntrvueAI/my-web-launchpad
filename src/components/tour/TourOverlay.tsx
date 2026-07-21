@@ -280,11 +280,23 @@ export function TourVisuals({
 }) {
   const dim = 'hsl(var(--background) / 0.82)';
 
-  // Page-kind steps: a brief "here's this page" orientation, not a spotlight — greying out the
-  // whole page you're being shown makes no sense, so there's no dim, no ring, nothing covering
-  // the real page at all. Just the banner floating over a fully normal, fully visible page.
+  // Page-kind steps: a brief "here's this page" orientation. The whole screen dims and gets a
+  // coral frame, and — since there's no one small thing to click — clicking ANYWHERE on that dim
+  // layer advances (the banner explains this instead of showing a Next button).
   if (isPageKind) {
-    return <TourBubble bubble={{ mode: 'banner' }} step={step} message={message} onSkip={onSkip} onNext={onNext} />;
+    return (
+      <div className="fixed inset-0 z-[9998] cursor-pointer" style={{ background: dim, pointerEvents: 'auto' }} onClick={onNext} aria-hidden="true">
+        <div
+          className="fixed inset-3 rounded-[28px]"
+          style={{
+            border: '4px solid hsl(var(--primary))',
+            boxShadow: '0 0 0 6px hsl(var(--primary) / 0.18), 0 0 44px 8px hsl(var(--primary) / 0.25)',
+            pointerEvents: 'none',
+          }}
+        />
+        <TourBubble bubble={{ mode: 'banner' }} step={step} message={message} onSkip={onSkip} clickAnywhere />
+      </div>
+    );
   }
 
   const holeTop = rect.top - HOLE_PAD;
@@ -329,11 +341,11 @@ export function TourVisuals({
 }
 
 export function TourBubble({
-  bubble, step, message, onSkip, onNext,
-}: { bubble: BubblePos; step: number; message: string; onSkip: () => void; onNext?: () => void }) {
+  bubble, step, message, onSkip, onNext, clickAnywhere = false,
+}: { bubble: BubblePos; step: number; message: string; onSkip: () => void; onNext?: () => void; clickAnywhere?: boolean }) {
   const skipButton = (
     <button
-      onClick={onSkip}
+      onClick={(e) => { e.stopPropagation(); onSkip(); }}
       aria-label="Skip tour"
       title="Skip tour"
       style={{ pointerEvents: 'auto' }}
@@ -351,7 +363,11 @@ export function TourBubble({
     </div>
   );
 
-  const nextButton = onNext && (
+  // Page-kind steps advance on a click anywhere on the dimmed screen (there's no one small thing
+  // to click), so there's no button here — just a hint that doubles as the visual cue.
+  const nextButton = clickAnywhere ? (
+    <span className="flex-none text-[12px] font-extrabold text-primary-soft">Click anywhere →</span>
+  ) : onNext && (
     <button
       onClick={onNext}
       aria-label="Next step"
