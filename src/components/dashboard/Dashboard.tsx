@@ -10,6 +10,8 @@ interface DashboardProps {
   onViewHistory: () => void;
   onManageDates: () => void;
   onAchievements?: () => void;
+  /** Testing aid: replays the first-time guided tour on demand. */
+  onReplayTour?: () => void;
 }
 
 const MAX_TOTAL_SCORE = 20;
@@ -24,7 +26,7 @@ const SKILLS: { key: 'reasoning' | 'personalInsight' | 'currentAwareness' | 'ext
 
 const DATE_ACCENTS = ['#FF9E77', '#DCE4F2', '#DCE4F2'];
 
-export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory, onAchievements }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory, onAchievements, onReplayTour }) => {
   const { user } = useAuth();
   const { stats } = useDashboardStats();
 
@@ -219,6 +221,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
           </div>
         </div>
       </div>
+
+      {/* Testing aid — replays the first-time guided tour on demand. */}
+      {onReplayTour && (
+        <button
+          onClick={onReplayTour}
+          className="fixed bottom-5 right-5 z-40 flex items-center gap-1.5 rounded-full border border-white/12 bg-[#152036] px-4 py-2.5 text-[12.5px] font-extrabold text-[#C7D2E4] shadow-lg hover:bg-white/10 hover:text-white transition-colors"
+        >
+          <Zap className="h-3.5 w-3.5 text-amber" /> Replay tour
+        </button>
+      )}
     </div>
   );
 };

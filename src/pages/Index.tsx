@@ -42,6 +42,8 @@ const Index = () => {
   const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'locker' | 'grownup'>('dashboard');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
+  // Testing aid: bump to force-restart the guided tour (see Dashboard's "Replay tour" button).
+  const [tourRestartKey, setTourRestartKey] = useState(0);
 
   const { credits, refetchCredits } = useCredits();
   const { toast } = useToast();
@@ -360,6 +362,7 @@ const Index = () => {
             onViewHistory={() => setCurrentView('history')}
             onManageDates={() => setCurrentView('settings')}
             onAchievements={() => setCurrentView('achievements')}
+            onReplayTour={() => setTourRestartKey((k) => k + 1)}
           />
         ) : currentView === 'selection' ? (
           <InterviewSelection onSelectInterview={handleSelectInterview} />
@@ -406,7 +409,7 @@ const Index = () => {
       )}
 
       {/* First-time guided tour — paused while another modal/form is already on top */}
-      <TourOverlay suspended={showPostSignupForm || showPaymentSuccess} />
+      <TourOverlay suspended={showPostSignupForm || showPaymentSuccess} restartKey={tourRestartKey} />
     </div>;
 };
 export default Index;

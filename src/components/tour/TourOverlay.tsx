@@ -151,7 +151,7 @@ export function useTourAdvance(active: boolean, rect: DOMRect | null, key: strin
   }, [active, rect, key, onAdvance]);
 }
 
-export function TourOverlay({ suspended = false }: { suspended?: boolean }) {
+export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?: boolean; restartKey?: number }) {
   const { user } = useAuth();
   const [phase, setPhase] = useState<'idle' | 'active' | 'done'>('idle');
   const [stepIndex, setStepIndex] = useState(0);
@@ -162,6 +162,16 @@ export function TourOverlay({ suspended = false }: { suspended?: boolean }) {
     if (!user || phase !== 'idle') return;
     setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'active');
   }, [user, phase]);
+
+  // Bumping restartKey (e.g. a "Replay tour" test button) force-restarts from step 1, regardless
+  // of hasSeenTour. Skipped on the very first render (restartKey starts at 0 with no prior value).
+  const prevRestartKey = useRef(restartKey);
+  useEffect(() => {
+    if (restartKey === prevRestartKey.current) return;
+    prevRestartKey.current = restartKey;
+    setStepIndex(0);
+    setPhase('active');
+  }, [restartKey]);
 
   const markSeen = useCallback(() => {
     setPhase('done');
