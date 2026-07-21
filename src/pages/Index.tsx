@@ -26,7 +26,6 @@ import { LandingV2 } from '@/components/landing/LandingV2';
 import { CreditsStore } from '@/components/credits/CreditsStore';
 import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
-import { PipMark } from '@/components/brand/Pip';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { TourOverlay } from '@/components/tour/TourOverlay';
 
@@ -177,8 +176,7 @@ const Index = () => {
                   else setCurrentView('dashboard');
                 }}
               >
-                <PipMark size={30} />
-                <span className="font-display text-lg md:text-xl font-semibold tracking-tight text-white">intrvue</span>
+                <img src="/lovable-uploads/logo.png" alt="intrvue.ai" className="h-[26px] md:h-[30px] w-auto" />
               </button>
               {currentView === 'interview' && selectedInterviewType && (
                 <Button variant="ghost" size="sm" onClick={handleBackToSelection} className="gap-1 md:gap-2 px-2 md:px-3">
