@@ -280,14 +280,11 @@ export function TourVisuals({
 }) {
   const dim = 'hsl(var(--background) / 0.82)';
 
-  // Page-kind steps: dim everything, no ring (ringing a whole page is visually pointless), and
-  // the bubble always reads as a banner rather than trying to point at any one spot.
+  // Page-kind steps: a brief "here's this page" orientation, not a spotlight — greying out the
+  // whole page you're being shown makes no sense, so there's no dim, no ring, nothing covering
+  // the real page at all. Just the banner floating over a fully normal, fully visible page.
   if (isPageKind) {
-    return (
-      <div className="fixed inset-0 z-[9998]" style={{ background: dim, pointerEvents: 'auto' }} aria-hidden="true">
-        <TourBubble bubble={{ mode: 'banner' }} step={step} message={message} onSkip={onSkip} onNext={onNext} />
-      </div>
-    );
+    return <TourBubble bubble={{ mode: 'banner' }} step={step} message={message} onSkip={onSkip} onNext={onNext} />;
   }
 
   const holeTop = rect.top - HOLE_PAD;
