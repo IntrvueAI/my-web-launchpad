@@ -9,6 +9,19 @@
 import { InterviewType, InterviewTypeConfig, BandThreshold } from '@/types/interview';
 import { getInterviewTypeConfig } from '@/config/interviewTypes';
 
+/** Short, correctly-cased badge labels for an interview_type id — never render the raw
+ *  "maths-interview" / "MATHS-INTERVIEW" id directly, it reads as a bug. */
+const SHORT_INTERVIEW_LABELS: Record<string, string> = {
+  '11-plus': '11+',
+  'logic-puzzles': '11+ Logic',
+  'maths-interview': 'Maths',
+  'current-affairs-interview': 'Current Affairs',
+  'demo': 'Demo',
+};
+
+export const shortInterviewLabel = (id: string | null | undefined): string =>
+  (id && SHORT_INTERVIEW_LABELS[id]) || '11+';
+
 /**
  * Calculate the appropriate band label for a given score
  * 

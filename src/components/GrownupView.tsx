@@ -4,6 +4,7 @@ import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { FeedbackService } from '@/services/FeedbackService';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
+import { shortInterviewLabel } from '@/utils/interviewHelpers';
 
 interface FbRow {
   id: string; interview_type: string | null; total_score: number | null;
@@ -113,7 +114,7 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
               <div key={r.id} className="tile p-[18px] flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="font-extrabold text-[14px] text-[#EAF0FA] leading-tight">{(r.interview_type || 'Interview').replace(/-/g, ' ')}</div>
+                    <div className="font-extrabold text-[14px] text-[#EAF0FA] leading-tight">{shortInterviewLabel(r.interview_type)} Interview</div>
                     <div className="text-[11.5px] font-bold text-muted-foreground mt-0.5">{when}</div>
                   </div>
                 </div>
@@ -129,7 +130,7 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
                   </div>
                 )}
                 <button
-                  onClick={() => setTranscript({ title: (r.interview_type || 'Interview').replace(/-/g, ' '), when, text: r.transcription || 'No transcript was saved for this session.' })}
+                  onClick={() => setTranscript({ title: `${shortInterviewLabel(r.interview_type)} Interview`, when, text: r.transcription || 'No transcript was saved for this session.' })}
                   className="mt-auto text-left text-[12.5px] font-extrabold text-sky hover:underline"
                 >
                   Review full transcript →

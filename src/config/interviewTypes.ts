@@ -197,7 +197,7 @@ export const INTERVIEW_CATEGORIES = {
  * Enhanced configurations for detailed feedback and scoring
  */
 const ELEVEN_PLUS_CONFIG: InterviewTypeConfig = {
-  name: '11-Plus',
+  name: '11+',
   description: 'Traditional UK secondary school entrance interview',
   scoringSystem: '0-5',
   maxTotalScore: 20,

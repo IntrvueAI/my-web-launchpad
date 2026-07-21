@@ -79,7 +79,7 @@ export const AchievementsPage: React.FC<{ onLockerRoom?: () => void }> = ({ onLo
   const toNext = 300 - intoLevel;
 
   return (
-    <div className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-6">
+    <div data-tour="page-achievements" className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-6">
       {/* Hero */}
       <div className="flex items-center gap-[18px] rounded-[20px] border border-white/[0.07] p-5" style={{ background: 'linear-gradient(120deg,rgba(139,92,246,.18),rgba(255,127,80,.12))' }}>
         <Pip size={78} float className="flex-none" />
@@ -98,7 +98,7 @@ export const AchievementsPage: React.FC<{ onLockerRoom?: () => void }> = ({ onLo
             {onLockerRoom && (
               <>
                 {' · '}
-                <button onClick={onLockerRoom} className="font-extrabold text-amber hover:text-white transition-colors">
+                <button onClick={onLockerRoom} data-tour="locker-link" className="font-extrabold text-amber hover:text-white transition-colors">
                   👒 Spend your badges in the locker room →
                 </button>
               </>

@@ -81,6 +81,7 @@ export const LockerRoom: React.FC<{ onAchievements?: () => void }> = ({ onAchiev
               key={h.id}
               onClick={() => equip(h.id)}
               disabled={!isUnlocked}
+              data-tour={h.id === 'beta-cap' ? 'locker-hat' : undefined}
               className={cn(
                 'rounded-[18px] p-4 text-center border transition-all',
                 isEquipped

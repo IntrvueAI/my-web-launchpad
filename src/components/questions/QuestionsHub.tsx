@@ -6,7 +6,7 @@ import { MinigameSection } from '@/components/MinigameSection';
 /** The "Daily practice" screen (deck Questions): today's question, warm-up, review, quick rounds. */
 export function QuestionsHub({ name = 'superstar', onViewHistory }: { name?: string; onViewHistory?: () => void }) {
   return (
-    <div className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-6">
+    <div data-tour="page-questions" className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-6">
       <div>
         <h1 className="font-display text-[28px] font-semibold text-white">Daily practice</h1>
         <p className="mt-1.5 text-sm font-semibold text-muted-foreground">

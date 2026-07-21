@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { Pip } from '@/components/brand/Pip';
+import { QuestionOfTheDay } from '@/components/questions/QuestionOfTheDay';
 import { Play, Calendar, Trophy, BarChart3, Flame, Zap, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -70,9 +71,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   const fmtDate = (d: string) => new Date(`${d}T00:00:00`).toLocaleDateString('en-GB', { month: 'short', day: '2-digit' });
 
   return (
-    <div className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-[13px]">
+    <div data-tour="page-dashboard" className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-[13px]">
       {/* Greeting */}
-      <div data-tour="dashboard-intro" className="flex items-center gap-3">
+      <div className="flex items-center gap-3">
         <Pip size={58} float className="flex-none" />
         <div>
           <h1 className="text-[25px] font-semibold text-white">Hi {firstName}! Let&rsquo;s practise</h1>
@@ -144,6 +145,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
           <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden"><div className="h-full rounded-full bg-sky" style={{ width: `${donePct}%` }} /></div>
           <div className="text-[11px] font-bold text-muted-foreground mt-1.5">{Math.max(0, milestone - totalSessions)} to your milestone 🎉</div>
         </div>
+      </div>
+
+      {/* Question of the Day */}
+      <div data-tour="qotd">
+        <QuestionOfTheDay name={firstName} />
       </div>
 
       {/* Interview dates */}

@@ -21,7 +21,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { CalendarDays, ChevronRight } from 'lucide-react';
 
 import { FeedbackRecord } from '@/types/interview';
-import { getBandLabel, getBandColor } from '@/utils/interviewHelpers';
+import { getBandLabel, getBandColor, shortInterviewLabel } from '@/utils/interviewHelpers';
 import { FEEDBACK_DEFAULTS } from '@/constants/feedback';
 import { FeedbackService } from '@/services/FeedbackService';
 import { INTERVIEW_TYPES } from '@/config/interviewTypes';
@@ -156,7 +156,7 @@ export const FeedbackHistory: React.FC = () => {
 
   // Main feedback history list view
   return (
-    <div className="space-y-6">
+    <div data-tour="page-history" className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Feedback History</h2>
         <p className="text-muted-foreground">
@@ -191,7 +191,7 @@ export const FeedbackHistory: React.FC = () => {
                     <CardTitle className="text-lg flex items-center gap-2">
                       Interview Session
                       <Badge variant="outline" className="text-xs">
-                        {feedback.interview_type?.toUpperCase() || '11+'}
+                        {shortInterviewLabel(feedback.interview_type)}
                       </Badge>
                       {feedback.session_reference && (
                         <Badge variant="secondary" className="text-xs font-mono">
