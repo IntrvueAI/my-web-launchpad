@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 // fonts, re-run its little vanilla script (scripts inside dangerouslySetInnerHTML don't execute),
 // and wire its "Try free demo / Get started / Sign in" CTAs into the app's auth flow.
 import rawHtml from '@/assets/landing.html?raw';
+import { supabase } from '@/integrations/supabase/client';
 
 const styleCss = rawHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '';
 const scriptJs = rawHtml.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
@@ -39,10 +40,32 @@ export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
       }
     });
 
+    // Actually store the "Join waitlist" email (the page's own script only handles the visual
+    // hide-form/show-success toggle — it never persisted anything). Runs alongside that script
+    // rather than replacing it: we don't preventDefault or touch the DOM here, just fire the
+    // insert. Silently ignore a duplicate-email submit (unique index) — the user's already on it.
+    const waitlistCleanups: Array<() => void> = [];
+    [{ formId: 'waitlistForm', inputId: 'wlEmail' }, { formId: 'waitlistForm2', inputId: 'wlEmail2' }]
+      .forEach(({ formId, inputId }) => {
+        const form = root?.querySelector<HTMLFormElement>(`#${formId}`);
+        const input = root?.querySelector<HTMLInputElement>(`#${inputId}`);
+        if (!form || !input) return;
+        const onSubmit = () => {
+          const email = input.value.trim();
+          if (!email || !/.+@.+\..+/.test(email)) return;
+          supabase.from('marketing_waitlist').insert({ email, source: 'landing_page' }).then(({ error }) => {
+            if (error && error.code !== '23505') console.error('Failed to save waitlist email:', error.message);
+          });
+        };
+        form.addEventListener('submit', onSubmit);
+        waitlistCleanups.push(() => form.removeEventListener('submit', onSubmit));
+      });
+
     return () => {
       link.remove();
       script.remove();
       wired.forEach((el) => el.removeEventListener('click', goAuth));
+      waitlistCleanups.forEach((fn) => fn());
     };
   }, [onSignUp]);
 
