@@ -5,13 +5,19 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { InterviewType } from '@/config/interviewTypes';
-import { Lightbulb, PhoneOff, CheckCircle2, XCircle, MinusCircle, Loader2 } from 'lucide-react';
+import { Lightbulb, PhoneOff, CheckCircle2, XCircle, MinusCircle, Loader2, Video, Sparkles } from 'lucide-react';
 
 interface TavusInterviewPlatformProps {
   selectedInterviewType: InterviewType;
 }
 
 type ViewState = 'idle' | 'connecting' | 'live' | 'ending' | 'ended' | 'error';
+
+interface PendingConversation {
+  conversation_id: string;
+  conversation_url: string;
+  session_reference: string;
+}
 
 interface QuestionAttemptRow {
   id: string;
@@ -38,6 +44,16 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
   const [view, setView] = useState<ViewState>('idle');
   const [error, setError] = useState<string | null>(null);
   const [attempts, setAttempts] = useState<QuestionAttemptRow[]>([]);
+  // Set once tavus-create-conversation resolves; consumed by the effect below once the video
+  // container (rendered only for 'connecting'/'live'/'ending') has actually committed to the DOM.
+  // This — not the click handler itself — is what mounts the Daily frame, so containerRef.current
+  // is guaranteed to exist by the time we use it (React state updates aren't synchronous, so
+  // reading the ref right after setView() in the same function would still see the pre-render DOM).
+  const [pendingConversation, setPendingConversation] = useState<PendingConversation | null>(null);
+  // Daily's embedded frame shows its own camera/mic check screen before joining (normal, expected
+  // for a video call) — our spinner overlay must disappear as soon as the frame has real content
+  // to show, not wait for 'joined-meeting', or it hides that screen (and its Join button) entirely.
+  const [frameLoaded, setFrameLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const callRef = useRef<DailyCall | null>(null);
   const conversationIdRef = useRef<string | null>(null);
@@ -74,6 +90,16 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
     setAttempts((data ?? []) as QuestionAttemptRow[]);
   }, []);
 
+  const failWith = useCallback((message: string, opts: { silent?: boolean } = {}) => {
+    setError(message);
+    setView('error');
+    setPendingConversation(null);
+    cleanupCall();
+    if (!opts.silent) {
+      toast({ title: 'Could not start interview', description: message, variant: 'destructive' });
+    }
+  }, [cleanupCall, toast]);
+
   const endInterview = useCallback(async () => {
     if (endingRef.current) return;
     endingRef.current = true;
@@ -94,53 +120,58 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
     setView('ended');
   }, [cleanupCall, loadSummary]);
 
+  // Fires once the 'connecting' view has actually rendered (so containerRef is live) AND we have a
+  // conversation to join. Mounts the Daily frame and joins the call.
+  useEffect(() => {
+    if (view !== 'connecting' || !pendingConversation || callRef.current) return;
+    if (!containerRef.current) return; // will re-run once the ref commits
+
+    const { conversation_id, conversation_url, session_reference } = pendingConversation;
+    conversationIdRef.current = conversation_id;
+    sessionReferenceRef.current = session_reference;
+
+    const call = Daily.createFrame(containerRef.current, {
+      iframeStyle: { width: '100%', height: '100%', border: '0' },
+      showLeaveButton: false,
+      showFullscreenButton: true,
+    });
+    callRef.current = call;
+
+    call.on('loaded', () => setFrameLoaded(true));
+    call.on('left-meeting', () => { endInterview(); });
+    call.on('error', (ev) => {
+      console.error('Daily call error:', ev);
+      failWith('The video call ran into a problem. Please try again.');
+    });
+
+    call.join({ url: conversation_url })
+      .then(() => setView('live'))
+      .catch((err) => {
+        console.error('Failed to join Daily call:', err);
+        failWith('Could not connect the video call. Please try again.');
+      });
+  }, [view, pendingConversation, endInterview, failWith]);
+
   const startInterview = useCallback(async () => {
     setError(null);
-    setView('connecting');
+    setAttempts([]);
+    setFrameLoaded(false);
     endingRef.current = false;
+    setView('connecting'); // renders the video container so the effect above can mount into it
     try {
       const { data, error: createErr } = await supabase.functions.invoke('tavus-create-conversation', {
         body: {},
       });
       if (createErr) throw new Error(createErr.message);
       if (!data?.conversation_url || !data?.conversation_id) throw new Error('No conversation returned');
-
-      conversationIdRef.current = data.conversation_id;
-      sessionReferenceRef.current = data.session_reference;
-
-      if (!containerRef.current) throw new Error('Video container not ready');
-      const call = Daily.createFrame(containerRef.current, {
-        iframeStyle: { width: '100%', height: '100%', border: '0' },
-        showLeaveButton: false,
-        showFullscreenButton: true,
-      });
-      callRef.current = call;
-
-      call.on('left-meeting', () => { endInterview(); });
-      call.on('error', (ev) => {
-        console.error('Daily call error:', ev);
-        setError('The video call ran into a problem. Please try again.');
-        setView('error');
-        cleanupCall();
-      });
-
-      await call.join({ url: data.conversation_url });
-      setView('live');
+      setPendingConversation(data as PendingConversation);
     } catch (err) {
       console.error('Failed to start Tavus interview:', err);
-      setError(err instanceof Error ? err.message : 'Unable to start the interview. Please try again.');
-      setView('error');
-      cleanupCall();
-      toast({
-        title: 'Could not start interview',
-        description: err instanceof Error ? err.message : 'Please try again.',
-        variant: 'destructive',
-      });
+      failWith(err instanceof Error ? err.message : 'Unable to start the interview. Please try again.');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cleanupCall, endInterview, toast]);
+  }, [failWith]);
 
-  if (view === 'idle' || view === 'connecting' || view === 'error') {
+  if (view === 'idle' || view === 'error') {
     return (
       <Card className="p-5 md:p-7 shadow-medium max-w-2xl mx-auto">
         {noteParagraphs.length > 0 && (
@@ -158,7 +189,11 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
         )}
 
         <h2 className="text-xl font-bold mb-1">{selectedInterviewType.name}</h2>
-        <p className="text-sm text-muted-foreground mb-6">{selectedInterviewType.description}</p>
+        <p className="text-sm text-muted-foreground mb-4">{selectedInterviewType.description}</p>
+        <p className="flex items-center gap-2 text-xs text-muted-foreground mb-6">
+          <Video className="w-3.5 h-3.5 shrink-0" />
+          You'll be asked to allow camera and microphone access — Clara needs to see and hear you.
+        </p>
 
         {view === 'error' && error && (
           <div className="mb-4 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
@@ -166,21 +201,45 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
           </div>
         )}
 
-        <Button onClick={startInterview} disabled={view === 'connecting'} size="lg" className="w-full">
-          {view === 'connecting' ? (
-            <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Connecting…</>
-          ) : (
-            'Start Interview'
-          )}
+        <Button onClick={startInterview} size="lg" className="w-full">
+          Start Interview
         </Button>
       </Card>
     );
   }
 
-  if (view === 'live' || view === 'ending') {
+  if (view === 'connecting' || view === 'live' || view === 'ending') {
     return (
       <div className="max-w-4xl mx-auto">
-        <div ref={containerRef} className="w-full aspect-video rounded-lg overflow-hidden bg-black shadow-medium" />
+        <div className="flex items-center gap-2 mb-3 px-1">
+          {view === 'live' ? (
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
+            </span>
+          ) : (
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-muted-foreground" />
+          )}
+          <span className="text-sm font-medium">
+            {view === 'live' ? `Live with Clara` : view === 'ending' ? 'Ending…' : 'Connecting…'}
+          </span>
+        </div>
+
+        <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black shadow-medium">
+          <div ref={containerRef} className="absolute inset-0" />
+          {view === 'connecting' && !frameLoaded && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black text-white/80">
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <p className="text-sm">Connecting you to Clara…</p>
+            </div>
+          )}
+          {view === 'connecting' && frameLoaded && (
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 pointer-events-none bg-black/60 text-white text-xs px-3 py-1.5 rounded-full">
+              Check your camera &amp; mic, then click Join
+            </div>
+          )}
+        </div>
+
         <div className="flex justify-center mt-4">
           <Button onClick={endInterview} disabled={view === 'ending'} variant="destructive" size="lg">
             {view === 'ending' ? (
@@ -195,17 +254,27 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
   }
 
   // view === 'ended'
+  const correctCount = attempts.filter((a) => a.outcome === 'correct_method' || a.outcome === 'correct_no_method').length;
+
   return (
     <Card className="p-5 md:p-7 shadow-medium max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-1">Interview complete</h2>
-      <p className="text-sm text-muted-foreground mb-6">Here's a quick summary of what you covered with Clara.</p>
+      <div className="flex items-center gap-2 mb-1">
+        <Sparkles className="w-5 h-5 text-primary" />
+        <h2 className="text-xl font-bold">Interview complete</h2>
+      </div>
+      <p className="text-sm text-muted-foreground mb-2">Here's a quick summary of what you covered with Clara.</p>
+      {attempts.length > 0 && (
+        <p className="text-sm font-medium mb-6">
+          You got {correctCount} of {attempts.length} question{attempts.length === 1 ? '' : 's'} right.
+        </p>
+      )}
 
       {attempts.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground mb-6">
           No questions were recorded for this session — it may have ended before Clara got through one.
         </p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 mb-6">
           {attempts.map((a, i) => {
             const isCorrect = a.outcome === 'correct_method' || a.outcome === 'correct_no_method';
             const isSkipped = a.outcome === 'skipped';
@@ -227,8 +296,8 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
         </div>
       )}
 
-      <Button onClick={() => { setView('idle'); setAttempts([]); }} variant="outline" className="w-full mt-6">
-        Done
+      <Button onClick={() => { setView('idle'); setAttempts([]); setPendingConversation(null); }} variant="outline" className="w-full">
+        Practise again
       </Button>
     </Card>
   );
