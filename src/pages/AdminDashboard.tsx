@@ -17,6 +17,7 @@ import { AdminSystemHealth } from '@/components/admin/AdminSystemHealth';
 import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
 import { AdminQuestions } from '@/components/admin/AdminQuestions';
 import { AdminDailyQuestions } from '@/components/admin/AdminDailyQuestions';
+import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -158,13 +159,14 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-8">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="questions">Questions</TabsTrigger>
             <TabsTrigger value="daily">Daily Q</TabsTrigger>
             <TabsTrigger value="interviews">Interviews</TabsTrigger>
             <TabsTrigger value="feedback">Feedback</TabsTrigger>
+            <TabsTrigger value="waitlist">Waitlist</TabsTrigger>
             <TabsTrigger value="system">System</TabsTrigger>
             <TabsTrigger value="audit">Audit Log</TabsTrigger>
           </TabsList>
@@ -191,6 +193,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="feedback">
             <AdminUserFeedback />
+          </TabsContent>
+
+          <TabsContent value="waitlist">
+            <AdminWaitlist />
           </TabsContent>
 
           <TabsContent value="system">
