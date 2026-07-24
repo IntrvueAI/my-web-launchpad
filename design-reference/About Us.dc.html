@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="./image-slot.js"></script>
+  <style>
+    body{margin:0;background:#0A0F1C}
+    a{color:#FF8A66}
+    a:hover{color:#FF4D5E}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  </style>
+</helmet>
+
+<div style="background:radial-gradient(1100px 640px at 84% -10%, rgba(255,107,69,.10), transparent 60%), radial-gradient(1000px 560px at -12% 10%, rgba(255,77,94,.06), transparent 55%), #0A0F1C; min-height:100vh; color:#F3F6FB; font-family:'Inter Tight',system-ui,-apple-system,sans-serif; font-size:17px; line-height:1.6;">
+
+  <header style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:26px 40px;">
+    <div style="display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:20px;letter-spacing:-.02em;">
+      <svg width="30" height="30" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="5" y="6" width="30" height="30" rx="14" fill="#fff"></rect>
+        <circle cx="14.5" cy="18" r="6.4" fill="#0B1121"></circle><circle cx="25.5" cy="18" r="6.4" fill="#0B1121"></circle>
+        <circle cx="14.5" cy="18" r="2.6" fill="#FF5A4E"></circle><circle cx="25.5" cy="18" r="2.6" fill="#4FC3F7"></circle>
+        <path d="M17.6 24.5 L20 27 L22.4 24.5 Z" fill="#FF8A4B"></path>
+      </svg>
+      intrvue<span style="color:#FF6B45">.ai</span>
+    </div>
+    <a href="#waitlist" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;padding:10px 18px;border-radius:12px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);color:#fff;text-decoration:none;">Join waitlist</a>
+  </header>
+
+  <section style="max-width:900px;margin:0 auto;padding:64px 40px 20px;text-align:center;">
+    <span style="display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#A6AFC1;">
+      <span style="width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);display:inline-block;"></span>
+      Our story
+    </span>
+    <h1 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(34px,5.2vw,58px);line-height:1.05;letter-spacing:-.02em;margin:18px 0 0;">
+      Two students who sat<br />these interviews ourselves.
+    </h1>
+    <p style="color:#A6AFC1;font-size:19px;max-width:620px;margin:22px auto 0;">
+      We built intrvue.ai because we remember exactly how the 11+ interview feels from the other side of the table — and we knew practice, not luck, was what got us through it.
+    </p>
+  </section>
+
+  <section style="max-width:1100px;margin:0 auto;padding:52px 40px 0;display:grid;grid-template-columns:1fr 1fr;gap:26px;">
+
+    <div style="background:#151C2E;border:1px solid rgba(255,255,255,.09);border-radius:26px;padding:34px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+      <image-slot id="founder-dillon" shape="circle" style="width:128px;height:128px;" placeholder="Drop a photo of Dillon"></image-slot>
+      <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:21px;margin:20px 0 2px;">Dillon Rahman</h3>
+      <span style="font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#FF8A66;">Co-founder</span>
+      <p style="color:#A6AFC1;font-size:15px;margin-top:14px;line-height:1.6;">
+        Attended St Paul's School from Year 7 through to A-Levels — seven years — on a full academic bursary. Now in his second year reading Maths at the University of Warwick. Before intrvue.ai, he spent hundreds of hours tutoring and volunteering, coaching younger pupils through the exact interviews he once sat.
+      </p>
+    </div>
+
+    <div style="background:#151C2E;border:1px solid rgba(255,255,255,.09);border-radius:26px;padding:34px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+      <image-slot id="founder-zakir" shape="circle" style="width:128px;height:128px;" placeholder="Drop a photo of Zakir"></image-slot>
+      <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:21px;margin:20px 0 2px;">Zakir Mugal</h3>
+      <span style="font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#FF8A66;">Co-founder</span>
+      <p style="color:#A6AFC1;font-size:15px;margin-top:14px;line-height:1.6;">
+        Educated at Hampton School, where he sat the same battery of scholarship and 11+ interviews years before helping build a way to practise them properly. He's coached dozens of students through mock interviews since, and knows exactly where nerves take over.
+      </p>
+    </div>
+
+  </section>
+
+  <section style="max-width:1100px;margin:0 auto;padding:56px 40px 0;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+
+      <div style="background:linear-gradient(135deg,rgba(255,138,75,.15),rgba(255,77,94,.13));border:1px solid rgba(255,90,78,.25);border-radius:20px;padding:28px;text-align:center;">
+        <div style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:40px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">500+ hrs</div>
+        <div style="color:#A6AFC1;font-size:14px;margin-top:8px;">of tutoring &amp; mock interviews delivered</div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(255,138,75,.15),rgba(255,77,94,.13));border:1px solid rgba(255,90,78,.25);border-radius:20px;padding:28px;text-align:center;">
+        <div style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:40px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">7 years</div>
+        <div style="color:#A6AFC1;font-size:14px;margin-top:8px;">on a bursary at a top independent school</div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(255,138,75,.15),rgba(255,77,94,.13));border:1px solid rgba(255,90,78,.25);border-radius:20px;padding:28px;text-align:center;">
+        <div style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:40px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">50+</div>
+        <div style="color:#A6AFC1;font-size:14px;margin-top:8px;">school interview formats studied</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="max-width:760px;margin:0 auto;padding:88px 40px 20px;text-align:center;">
+    <span style="display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#A6AFC1;">
+      <span style="width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);display:inline-block;"></span>
+      Why we built this
+    </span>
+    <h2 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.02em;margin:16px 0 0;">
+      An interview isn't a test.<br />It's a conversation.
+    </h2>
+    <p style="color:#A6AFC1;font-size:18px;margin-top:20px;line-height:1.65;">
+      Most children preparing for the 11+ only ever rehearse on paper. But the interview itself is spoken — a real conversation with a real adult, under real pressure. Confidence there doesn't come from memorising more answers. It comes from repetition: sitting the conversation itself, again and again, in real time, until it stops feeling like a test.
+    </p>
+  </section>
+
+  <section id="waitlist" style="max-width:900px;margin:0 auto;padding:56px 40px 100px;">
+    <div style="position:relative;overflow:hidden;border-radius:26px;padding:56px 44px;text-align:center;background:radial-gradient(120% 140% at 50% -20%, rgba(255,90,78,.30), transparent 60%), linear-gradient(180deg,#141d33,#0e1524);border:1px solid rgba(255,255,255,.16);">
+      <h2 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(26px,3.8vw,40px);margin:0;">Come practise with us.</h2>
+      <p style="color:#A6AFC1;font-size:17px;margin:14px auto 0;max-width:460px;">Join the waitlist for a free demo interview — no card needed.</p>
+
+      <sc-if value="{{ !submitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ onSubmit }}" style="display:flex;gap:10px;background:#151C2E;border:1px solid rgba(255,255,255,.09);padding:8px;border-radius:15px;max-width:440px;margin:26px auto 0;">
+          <input type="email" value="{{ email }}" onChange="{{ onEmailChange }}" placeholder="Your email address" aria-label="Email address" required="" style="flex:1;background:transparent;border:0;color:#F3F6FB;font-family:inherit;font-size:16px;padding:10px 14px;min-width:0;outline:none;" />
+          <button type="submit" style="white-space:nowrap;display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;border:0;padding:14px 22px;border-radius:12px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);color:#fff;">Join waitlist</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);color:#c8f5e3;padding:16px 18px;border-radius:14px;font-size:15.5px;max-width:440px;margin:26px auto 0;">
+          You're on the list — we'll be in touch soon.
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.09);padding:32px 40px;text-align:center;color:#6C7589;font-size:13.5px;">
+    intrvue.ai · built by two students who've sat the interviews themselves
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { email: '', submitted: false };
+  renderVals() {
+    return {
+      email: this.state.email,
+      submitted: this.state.submitted,
+      onEmailChange: (e) => this.setState({ email: e.target.value }),
+      onSubmit: (e) => {
+        e.preventDefault();
+        if (this.state.email) this.setState({ submitted: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

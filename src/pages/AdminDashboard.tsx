@@ -18,9 +18,9 @@ import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
 import { AdminQuestions } from '@/components/admin/AdminQuestions';
 import { AdminDailyQuestions } from '@/components/admin/AdminDailyQuestions';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut } from 'lucide-react';
+import { Shield, LogOut, ExternalLink } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { isAdmin, isLoading, error } = useAdminStatus();
@@ -140,6 +140,21 @@ export default function AdminDashboard() {
               <LogOut className="h-4 w-4" /> Sign out
             </Button>
           </div>
+        </div>
+
+        {/* TEMP: design-reference page previews — remove once they're finalised or scrapped. */}
+        <div className="flex flex-wrap items-center gap-2 mb-6 rounded-lg border border-dashed p-3">
+          <span className="text-xs font-medium text-muted-foreground mr-1">Design previews (draft, not live):</span>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/about-preview" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3.5 w-3.5" /> About us
+            </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/faq-preview" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3.5 w-3.5" /> FAQ
+            </Link>
+          </Button>
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
