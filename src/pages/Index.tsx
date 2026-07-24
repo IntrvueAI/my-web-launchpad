@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
+import { TavusInterviewPlatform } from '@/components/TavusInterviewPlatform';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
 import { QuestionsHub } from '@/components/questions/QuestionsHub';
@@ -374,7 +375,13 @@ const Index = () => {
         ) : currentView === 'grownup' ? (
           <GrownupView onBack={() => setCurrentView('dashboard')} />
         ) : currentView === 'interview' ? (
-          <InterviewPlatform selectedInterviewType={selectedInterviewType} />
+          selectedInterviewType?.provider === 'tavus' ? (
+            <div className="container mx-auto px-4 py-8">
+              <TavusInterviewPlatform selectedInterviewType={selectedInterviewType} />
+            </div>
+          ) : (
+            <InterviewPlatform selectedInterviewType={selectedInterviewType} />
+          )
         ) : currentView === 'history' ? (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
             <FeedbackHistory />

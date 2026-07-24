@@ -6,3 +6,9 @@ verify_jwt = true
 # Tavus calls this directly as a webhook — it has no Supabase JWT to send.
 [functions.tavus-webhook]
 verify_jwt = false
+
+[functions.tavus-create-conversation]
+verify_jwt = true
+
+[functions.tavus-end-conversation]
+verify_jwt = true

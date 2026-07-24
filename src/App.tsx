@@ -13,6 +13,8 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminAboutPreview from "./pages/AdminAboutPreview";
+import AdminFaqPreview from "./pages/AdminFaqPreview";
 import NotFound from "./pages/NotFound";
 import { MinigameSection } from "@/components/MinigameSection";
 
@@ -99,6 +101,8 @@ const AppContent = () => {
             <Route path="/auth" element={<Auth />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/about-preview" element={<AdminAboutPreview />} />
+            <Route path="/admin/faq-preview" element={<AdminFaqPreview />} />
             {/* Temporary standalone demo route for the practice minigames */}
             <Route
               path="/minigames"
