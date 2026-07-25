@@ -32,7 +32,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Pip } from '@/components/brand/Pip';
 import { X } from 'lucide-react';
-import { HowItWorksModal } from './HowItWorksModal';
+import { IntroVideoModal } from './IntroVideoModal';
+import { WelcomeModal } from './WelcomeModal';
 
 interface TourStep {
   key: string;
@@ -201,18 +202,20 @@ function useStallWatchdog(active: boolean, rect: DOMRect | null, stepKey: string
 
 export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?: boolean; restartKey?: number }) {
   const { user } = useAuth();
-  const [phase, setPhase] = useState<'idle' | 'active' | 'done'>('idle');
+  // 'intro' = onboarding walkthrough video, shown once before the guided steps start.
+  const [phase, setPhase] = useState<'idle' | 'intro' | 'active' | 'done'>('idle');
   const [stepIndex, setStepIndex] = useState(0);
-  const [showHowItWorks, setShowHowItWorks] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   // Decide once per user whether they've already seen the tour.
   useEffect(() => {
     if (!user || phase !== 'idle') return;
-    setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'active');
+    setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'intro');
   }, [user, phase]);
 
-  // Bumping restartKey (e.g. a "Replay tour" test button) force-restarts from step 1, regardless
-  // of hasSeenTour. Skipped on the very first render (restartKey starts at 0 with no prior value).
+  // Bumping restartKey (e.g. a "Replay tour" test button) force-restarts the guided steps
+  // directly (skips re-showing the intro video, so repeat test runs stay quick), regardless of
+  // hasSeenTour. Skipped on the very first render (restartKey starts at 0 with no prior value).
   const prevRestartKey = useRef(restartKey);
   useEffect(() => {
     if (restartKey === prevRestartKey.current) return;
@@ -226,6 +229,12 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
     supabase.auth.updateUser({ data: { hasSeenTour: true } }).catch((e) => {
       console.warn('Failed to save tour completion:', e);
     });
+  }, []);
+
+  // Closing the intro video (played fully, X, backdrop click, or Escape — Dialog reports all of
+  // these the same way) moves straight into the guided steps.
+  const handleIntroClose = useCallback((open: boolean) => {
+    if (!open) setPhase('active');
   }, []);
 
   const active = phase === 'active' && !suspended;
@@ -242,7 +251,7 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
   }, []);
   const handleFinish = useCallback(() => {
     markSeen();
-    setShowHowItWorks(true);
+    setShowWelcome(true);
   }, [markSeen]);
   const advanceOrFinish = useCallback(() => {
     if (stepIndex === TOUR_STEPS.length - 1) handleFinish();
@@ -254,6 +263,7 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
 
   return (
     <>
+      <IntroVideoModal open={phase === 'intro'} onOpenChange={handleIntroClose} />
       {active && rect && viewport.w > 0 && (
         <TourVisuals
           rect={rect}
@@ -267,7 +277,7 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
           onNext={isButtonMode ? advanceOrFinish : undefined}
         />
       )}
-      <HowItWorksModal open={showHowItWorks} onOpenChange={setShowHowItWorks} />
+      <WelcomeModal open={showWelcome} onOpenChange={setShowWelcome} />
     </>
   );
 }
