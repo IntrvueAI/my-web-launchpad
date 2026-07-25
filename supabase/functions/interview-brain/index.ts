@@ -45,6 +45,7 @@ const SUBJECT_BY_TYPE: Record<string, string> = {
   "logic-puzzles": "logic",
   "current-affairs-interview": "currentaffairs",
   "11-plus": "elevenplus",
+  "11-plus-v2": "elevenplus",
 };
 
 function safeParseArgs(s: string): Record<string, any> {
