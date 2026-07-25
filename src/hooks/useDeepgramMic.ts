@@ -24,14 +24,24 @@ export function useDeepgramMic() {
   const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
+  // Two independent reasons the mic can be gated: the user's own choice (push-to-talk, type mode,
+  // manual toggle) and — new — Clara currently being audibly mid-speech (see setPeerActive). Anam's
+  // own built-in STT apparently never suffered from hearing itself; ours has no such awareness on
+  // its own, since we're capturing the raw mic directly, so we replicate that half-duplex behavior.
   const mutedRef = useRef(false);
+  const peerActiveRef = useRef(false);
 
   const start = useCallback(async (callbacks: DeepgramMicCallbacks) => {
     const { data: sessionData } = await supabase.auth.getSession();
     const accessToken = sessionData.session?.access_token;
     if (!accessToken) throw new Error('Not authenticated');
 
-    const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // Explicit (rather than relying on browser defaults) as a second line of defense alongside the
+    // peer-audio gating above — echoCancellation is what actually filters Clara's voice picked back
+    // up acoustically through the speakers before it ever reaches Deepgram.
+    const mediaStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+    });
     mediaStreamRef.current = mediaStream;
 
     // Same project ref used by every other edge function call in this app (src/integrations/supabase/client.ts).
@@ -82,7 +92,7 @@ export function useDeepgramMic() {
     workletNodeRef.current = workletNode;
 
     workletNode.port.onmessage = (event: MessageEvent<ArrayBuffer>) => {
-      if (mutedRef.current) return;
+      if (mutedRef.current || peerActiveRef.current) return;
       if (wsRef.current?.readyState === WebSocket.OPEN) wsRef.current.send(event.data);
     };
 
@@ -107,5 +117,10 @@ export function useDeepgramMic() {
     mutedRef.current = muted;
   }, []);
 
-  return { start, stop, setMuted };
+  /** Called by the peer-audio watcher (useInterviewSessionV2) while Clara is audibly speaking. */
+  const setPeerActive = useCallback((active: boolean) => {
+    peerActiveRef.current = active;
+  }, []);
+
+  return { start, stop, setMuted, setPeerActive };
 }

@@ -504,8 +504,25 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     }
   }
 
+  if (phaseInfo(deps.pack, state).phase === 'about-you') say = enforceSingleAskInAboutYou(say);
+
   state.transcript.push({ role: 'assistant', content: say });
   return { say, state, done: state.done };
+}
+
+// The prompt repeatedly forbids stacking two asks in one breath (see "ONE QUESTION PER TURN"),
+// but the model still slips sometimes — this is a deterministic backstop for the about-you phase
+// specifically, where it's safe: those questions are always the model's own improvised phrasing,
+// never verbatim bank text. NOT applied to the challenge phase — several authored current-affairs
+// problems (moral dilemmas especially) legitimately contain two "?" as ONE question that must be
+// read in full, and a blind truncation there would silently drop authored content.
+function enforceSingleAskInAboutYou(say: string): string {
+  if ((say.match(/\?/g) || []).length < 2) return say;
+  const sentences = say.match(/[^.?!]+[.?!]+|[^.?!]+$/g);
+  if (!sentences) return say;
+  const cut = sentences.findIndex((s) => s.trim().endsWith('?'));
+  if (cut === -1) return say;
+  return sentences.slice(0, cut + 1).join('').trim();
 }
 
 function structuredCloneSafe<T>(v: T): T {

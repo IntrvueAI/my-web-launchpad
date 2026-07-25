@@ -80,6 +80,7 @@ export const useInterviewSessionV2 = (
   const flushRef = useRef<() => void>(() => {});
   // Accumulates finalized Deepgram segments for the CURRENT (not-yet-ended) turn.
   const utteranceBufferRef = useRef<string>('');
+  const peerAudioRef = useRef<{ ctx: AudioContext; raf: number } | null>(null);
 
   const sessionLogger = useInterviewSessionLogger();
   const connectionHealth = useConnectionHealthCheck(15000);
@@ -175,6 +176,62 @@ export const useInterviewSessionV2 = (
     flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
   }, [pushTranscript]);
 
+  /** Watches Clara's own output audio level (from the video element's stream) and gates the
+   *  Deepgram mic while she's audibly speaking. Retries briefly if the stream isn't attached to
+   *  the video element yet (streamToVideoElement's promise resolving doesn't strictly guarantee
+   *  srcObject is already populated by the time we check). */
+  const startPeerAudioWatch = useCallback((attempt = 0) => {
+    const stream = videoRef.current?.srcObject as MediaStream | null;
+    if (!stream || stream.getAudioTracks().length === 0) {
+      if (attempt < 8) setTimeout(() => startPeerAudioWatch(attempt + 1), 250);
+      return;
+    }
+
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const source = ctx.createMediaStreamSource(stream);
+    const analyser = ctx.createAnalyser();
+    analyser.fftSize = 512;
+    source.connect(analyser);
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    // Empirical thresholds, not measured against real hardware — may need tuning after live testing.
+    const LOUD_RMS = 6;
+    const QUIET_HOLD_MS = 350; // small tail so reverb/echo right as she stops doesn't leak through
+
+    let speaking = false;
+    let quietSince = 0;
+    const tick = () => {
+      analyser.getByteTimeDomainData(data);
+      let sumSquares = 0;
+      for (let i = 0; i < data.length; i++) {
+        const v = data[i] - 128;
+        sumSquares += v * v;
+      }
+      const rms = Math.sqrt(sumSquares / data.length);
+      if (rms > LOUD_RMS) {
+        quietSince = 0;
+        if (!speaking) { speaking = true; deepgramMic.setPeerActive(true); }
+      } else if (speaking) {
+        if (!quietSince) quietSince = performance.now();
+        else if (performance.now() - quietSince > QUIET_HOLD_MS) {
+          speaking = false;
+          deepgramMic.setPeerActive(false);
+        }
+      }
+      if (peerAudioRef.current) peerAudioRef.current.raf = requestAnimationFrame(tick);
+    };
+    peerAudioRef.current = { ctx, raf: requestAnimationFrame(tick) };
+  }, [videoRef, deepgramMic]);
+
+  const stopPeerAudioWatch = useCallback(() => {
+    if (peerAudioRef.current) {
+      cancelAnimationFrame(peerAudioRef.current.raf);
+      peerAudioRef.current.ctx.close().catch(() => {});
+      peerAudioRef.current = null;
+    }
+    deepgramMic.setPeerActive(false);
+  }, [deepgramMic]);
+
   const startInterview = useCallback(async (userId: string, opts: StartOptions = {}) => {
     if (!videoRef.current) {
       setError('Video element not found');
@@ -219,6 +276,7 @@ export const useInterviewSessionV2 = (
 
       if (!videoRef.current) throw new Error('Video element lost during initialization');
       await client.streamToVideoElement('interview-video');
+      startPeerAudioWatch();
 
       // Deepgram is our mic now — start it alongside the avatar stream.
       await deepgramMic.start({
@@ -254,7 +312,7 @@ export const useInterviewSessionV2 = (
       setIsConnected(false);
       setIsStreaming(false);
     }
-  }, [videoRef, sessionLogger, connectionHealth, interviewType, runBrainTurn, handleStudentTurn, deepgramMic]);
+  }, [videoRef, sessionLogger, connectionHealth, interviewType, runBrainTurn, handleStudentTurn, deepgramMic, startPeerAudioWatch]);
 
   const sendTypedMessage = useCallback((text: string) => {
     const t = (text || '').trim();
@@ -282,6 +340,7 @@ export const useInterviewSessionV2 = (
       await sessionLogger.logEvent('stop_interview', 'Interview stop initiated');
 
       deepgramMic.stop();
+      stopPeerAudioWatch();
 
       if (clientRef.current) {
         try {
@@ -327,7 +386,7 @@ export const useInterviewSessionV2 = (
       setError(errorMessage);
       return null;
     }
-  }, [sessionLogger, connectionHealth, deepgramMic]);
+  }, [sessionLogger, connectionHealth, deepgramMic, stopPeerAudioWatch]);
 
   useEffect(() => {
     if (!isStreaming) return;
@@ -345,6 +404,11 @@ export const useInterviewSessionV2 = (
   useEffect(() => {
     return () => {
       deepgramMic.stop();
+      if (peerAudioRef.current) {
+        cancelAnimationFrame(peerAudioRef.current.raf);
+        peerAudioRef.current.ctx.close().catch(() => {});
+        peerAudioRef.current = null;
+      }
       if (clientRef.current) {
         clientRef.current.stopStreaming().catch(console.error);
       }
