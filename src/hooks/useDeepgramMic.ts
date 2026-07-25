@@ -70,6 +70,10 @@ export function useDeepgramMic() {
 
     const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
     audioCtxRef.current = audioCtx;
+    // Some browsers (notably Safari) can leave a freshly-created context 'suspended' once enough
+    // async work has happened since the user gesture that triggered start() — resume is a no-op
+    // if it's already running, so this is a safe, cheap guard against silent, unrecorded audio.
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
     await audioCtx.audioWorklet.addModule('/audio/pcm-downsampler-worklet.js');
 
     const sourceNode = audioCtx.createMediaStreamSource(mediaStream);

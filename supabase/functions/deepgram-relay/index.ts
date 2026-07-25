@@ -36,6 +36,9 @@ Deno.serve(async (req) => {
   const { socket: clientWs, response } = Deno.upgradeWebSocket(req);
 
   let deepgramWs: WebSocket | null = null;
+  // Deepgram's own connection takes a moment to open after ours does — audio arriving in that gap
+  // would otherwise be silently dropped, which can eat the very start of what the student says.
+  const pending: unknown[] = [];
 
   clientWs.onopen = () => {
     const endpointing = pauseMs;
@@ -49,6 +52,10 @@ Deno.serve(async (req) => {
     // way Deepgram actually documents this for backend integrations.
     deepgramWs = new WebSocket(dgUrl, ["token", deepgramApiKey]);
 
+    deepgramWs.onopen = () => {
+      for (const chunk of pending) deepgramWs!.send(chunk as never);
+      pending.length = 0;
+    };
     deepgramWs.onmessage = (ev) => {
       if (clientWs.readyState === WebSocket.OPEN) clientWs.send(ev.data);
     };
@@ -65,6 +72,7 @@ Deno.serve(async (req) => {
 
   clientWs.onmessage = (ev) => {
     if (deepgramWs?.readyState === WebSocket.OPEN) deepgramWs.send(ev.data);
+    else if (deepgramWs) pending.push(ev.data);
   };
   clientWs.onclose = () => {
     if (deepgramWs?.readyState === WebSocket.OPEN) deepgramWs.close();
