@@ -172,6 +172,9 @@ export const useInterviewSession = (
       const personaConfig: Record<string, unknown> = {
         name: `${interviewType.name} Assistant`,
         avatarId: "bb4f5306-ffdb-4437-a837-da6fdc23cbff",
+        // Cara 4: current-gen avatar model (higher-res video, better lip sync/expressivity than
+        // Cara 3, the implicit default). Same per-minute pricing — model choice doesn't affect it.
+        avatarModel: "cara-4",
         voiceId: "04965b9e-ff4c-4b54-a4dc-fba6e458c760",
         maxSessionLengthSeconds: interviewType.duration * 60,
       };

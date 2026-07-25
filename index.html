@@ -22,6 +22,15 @@
   </head>
 
   <body>
+    <!-- Applies the saved theme before first paint (no flash of the wrong theme). Defaults to
+         dark — the app's always-been-dark default — so existing users see no change unless they
+         explicitly toggle to light. -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem('intrvue-theme');
+        if (saved !== 'light') document.documentElement.classList.add('dark');
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

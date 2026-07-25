@@ -29,6 +29,8 @@ import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { TourOverlay } from '@/components/tour/TourOverlay';
+import { SidebarNav, SidebarTopBar } from '@/components/dashboard/SidebarLayout';
+import { LayoutGrid, PanelLeft } from 'lucide-react';
 
 const Index = () => {
   const {
@@ -44,6 +46,15 @@ const Index = () => {
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
   // Testing aid: bump to force-restart the guided tour (see Dashboard's "Replay tour" button).
   const [tourRestartKey, setTourRestartKey] = useState(0);
+  // Dashboard 1 (top-nav) vs Dashboard 2 (left sidebar) — purely cosmetic chrome toggle, freely
+  // switchable, remembered across reloads. Desktop-only distinction; mobile looks the same either
+  // way (a fixed icon rail doesn't fit a phone).
+  const [dashboardLayout, setDashboardLayout] = useState<'topnav' | 'sidebar'>(
+    () => (localStorage.getItem('intrvue-dashboard-layout') as 'topnav' | 'sidebar' | null) ?? 'topnav'
+  );
+  useEffect(() => {
+    localStorage.setItem('intrvue-dashboard-layout', dashboardLayout);
+  }, [dashboardLayout]);
 
   const { credits, refetchCredits } = useCredits();
   const { toast } = useToast();
@@ -160,8 +171,26 @@ const Index = () => {
   }
 
   // Show main app for authenticated users
-  return <div className="min-h-screen">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  return <div className={cn("min-h-screen", dashboardLayout === 'sidebar' && "md:flex")}>
+      {dashboardLayout === 'sidebar' && (
+        <SidebarNav
+          currentView={currentView}
+          onNavigate={(v) => (showPaymentSuccess ? clearPaymentSuccessAndNavigate(v) : setCurrentView(v))}
+          onSignOut={handleSignOut}
+        />
+      )}
+      <div className="flex-1 min-w-0 flex flex-col">
+      {dashboardLayout === 'sidebar' && (
+        <SidebarTopBar
+          currentView={currentView}
+          onNavigate={(v) => (showPaymentSuccess ? clearPaymentSuccessAndNavigate(v) : setCurrentView(v))}
+          credits={credits ?? 0}
+          user={user}
+        />
+      )}
+      {/* Original top-nav header — hidden on desktop when the sidebar layout is active; mobile
+          always uses this regardless of layout choice (a fixed icon rail doesn't fit a phone). */}
+      <header className={cn("border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60", dashboardLayout === 'sidebar' && "md:hidden")}>
         <div className="container flex h-14 items-center justify-between px-4">
           {/* Mobile Layout */}
           <div className="flex items-center gap-2 md:gap-6 w-full">
@@ -404,7 +433,8 @@ const Index = () => {
           </div>
         )}
       </main>
-      
+      </div>
+
       {/* Post-signup form */}
       {user && showPostSignupForm && (
         <PostSignupForm
@@ -416,6 +446,17 @@ const Index = () => {
 
       {/* First-time guided tour — paused while another modal/form is already on top */}
       <TourOverlay suspended={showPostSignupForm || showPaymentSuccess} restartKey={tourRestartKey} />
+
+      {/* Dashboard layout toggle — freely switch between the top-nav and sidebar chrome.
+          Desktop-only (the sidebar itself doesn't apply on mobile, so there's nothing to toggle). */}
+      <button
+        type="button"
+        onClick={() => setDashboardLayout((l) => (l === 'topnav' ? 'sidebar' : 'topnav'))}
+        className="hidden md:flex fixed bottom-5 right-5 z-40 items-center gap-2 rounded-full border bg-card px-4 py-2.5 text-[12.5px] font-semibold shadow-medium hover:bg-accent transition-colors"
+      >
+        {dashboardLayout === 'topnav' ? <PanelLeft className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
+        Switch to {dashboardLayout === 'topnav' ? 'Dashboard 2' : 'Dashboard 1'}
+      </button>
     </div>;
 };
 export default Index;

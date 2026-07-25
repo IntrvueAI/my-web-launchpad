@@ -6,35 +6,112 @@
 
 @layer base {
   :root {
-    /* Bright Deck — dark, playful, gamified. Ref: design-reference/Intrvue Bright Deck.html */
+    /* Light theme — same coral/navy brand as Bright Deck, re-tuned for light backgrounds.
+       New (there was no real light mode before this — see the .dark block for the original,
+       unchanged Bright Deck dark theme this was derived from). */
+    --background: 220 30% 97%;
+    --foreground: 220 44% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 44% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 44% 12%;
+
+    /* Primary: Coral #FF7F50, slightly deepened for contrast on white */
+    --primary: 16 90% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 18 95% 65%;
+
+    --secondary: 220 25% 94%;
+    --secondary-foreground: 220 30% 25%;
+
+    --muted: 220 25% 95%;
+    --muted-foreground: 220 15% 42%;
+
+    --accent: 220 25% 92%;
+    --accent-foreground: 220 44% 12%;
+
+    /* Named brand accents — same hues as dark, deepened for legibility on light backgrounds */
+    --sky: 199 85% 45%;
+    --purple: 258 75% 55%;
+    --rose: 350 80% 50%;
+    --amber: 43 90% 45%;
+    --emerald: 158 55% 38%;
+    --ink: 220 44% 12%;
+    --cream: 40 33% 89%;      /* Pip belly #EDE6D8 — unchanged, works on both themes */
+    --teal: 158 55% 38%;      /* alias → emerald (back-compat) */
+    --gold: 43 90% 45%;       /* alias → amber (back-compat) */
+
+    --winter: 199 85% 45%;
+    --winter-soft: 200 40% 88%;
+    --winter-frost: 200 30% 94%;
+
+    --success: 158 55% 38%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 43 90% 45%;
+    --warning-foreground: 0 0% 100%;
+
+    --destructive: 0 78% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 88%;
+    --input: 220 20% 90%;
+    --ring: 16 90% 58%;
+
+    /* Rounded corners — big and friendly, per the deck (20px) */
+    --radius: 1.25rem;
+
+    --interview-active: 145 45% 36%;
+    --interview-active-foreground: 0 0% 100%;
+    --interview-waiting: 35 65% 42%;
+    --interview-waiting-foreground: 0 0% 100%;
+
+    --shadow-soft: 220 20% 20% / 0.06;
+    --shadow-medium: 220 20% 20% / 0.10;
+    --shadow-strong: 220 20% 20% / 0.16;
+
+    --gradient-primary: linear-gradient(135deg, hsl(16 100% 66%), hsl(16 90% 70%));
+    --gradient-background: linear-gradient(180deg, hsl(220 30% 99%), hsl(220 25% 96%));
+    --gradient-winter: linear-gradient(135deg, hsl(200 60% 70% / 0.1), hsl(200 40% 85% / 0.05));
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 30% 25%;
+    --sidebar-primary: 16 90% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 25% 94%;
+    --sidebar-accent-foreground: 220 30% 25%;
+    --sidebar-border: 220 20% 88%;
+    --sidebar-ring: 16 90% 58%;
+  }
+
+  .dark {
+    /* Bright Deck — dark, playful, gamified. Ref: design-reference/Intrvue Bright Deck.html
+       This is the ORIGINAL default theme, unchanged — now applied via a class instead of
+       always-on :root, so the new light theme above can exist alongside it. */
     --background: 226 50% 8%;         /* deep navy #0A0E1E */
     --foreground: 214 45% 92%;        /* near-white slate */
 
-    /* Card / tile surfaces */
     --card: 220 44% 15%;              /* tile #152036 */
     --card-foreground: 214 45% 94%;
 
     --popover: 220 44% 15%;
     --popover-foreground: 214 45% 94%;
 
-    /* Primary: Coral #FF7F50 */
     --primary: 16 100% 66%;
     --primary-foreground: 0 0% 100%;
     --primary-soft: 18 100% 73%;
 
-    /* Secondary: subtle dark chip */
     --secondary: 220 32% 20%;
     --secondary-foreground: 221 25% 78%;
 
-    /* Muted tones */
     --muted: 220 30% 18%;
     --muted-foreground: 221 20% 66%;   /* #93A0B8 */
 
-    /* Accent: hover surface */
     --accent: 220 30% 22%;
     --accent-foreground: 214 45% 92%;
 
-    /* Named brand accents from the deck */
     --sky: 199 92% 60%;      /* #38BDF8 */
     --purple: 258 90% 66%;   /* #8B5CF6 */
     --rose: 350 89% 60%;     /* #F43F5E */
@@ -45,12 +122,10 @@
     --teal: 158 64% 52%;     /* alias → emerald (back-compat) */
     --gold: 43 96% 56%;      /* alias → amber (back-compat) */
 
-    /* Legacy "winter" accents retuned to the dark scheme (avoid light-blue patches) */
     --winter: 199 92% 60%;
     --winter-soft: 210 30% 28%;
     --winter-frost: 220 30% 18%;
 
-    /* Status colors */
     --success: 158 64% 52%;
     --success-foreground: 226 50% 8%;
 
@@ -60,96 +135,23 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Interface elements (subtle light-on-dark borders) */
     --border: 220 28% 24%;
     --input: 220 28% 22%;
     --ring: 16 100% 66%;
 
-    /* Rounded corners — big and friendly, per the deck (20px) */
-    --radius: 1.25rem;
-    
-    /* Interview control colors */
     --interview-active: 145 40% 35%;
     --interview-active-foreground: 145 40% 95%;
-    --interview-waiting: 35 60% 45%; 
+    --interview-waiting: 35 60% 45%;
     --interview-waiting-foreground: 35 60% 95%;
-    
-    /* Professional shadows */
+
     --shadow-soft: 215 25% 25% / 0.05;
     --shadow-medium: 215 25% 25% / 0.08;
     --shadow-strong: 215 25% 25% / 0.12;
 
-    /* Professional gradients */
     --gradient-primary: linear-gradient(135deg, hsl(16 100% 66%), hsl(16 90% 70%));
     --gradient-background: linear-gradient(180deg, hsl(210 15% 98%), hsl(210 20% 96%));
     --gradient-winter: linear-gradient(135deg, hsl(200 60% 70% / 0.1), hsl(200 40% 85% / 0.05));
-    
-    /* Sidebar elements - keeping minimal since not used */
-    --sidebar-background: 210 15% 98%;
-    --sidebar-foreground: 215 25% 25%;
-    --sidebar-primary: 16 100% 66%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 20% 94%;
-    --sidebar-accent-foreground: 215 25% 25%;
-    --sidebar-border: 215 20% 88%;
-    --sidebar-ring: 16 100% 66%;
-  }
 
-  .dark {
-    /* Dark = the calm navy "interview room" (mock 1c) */
-    --background: 211 30% 17%;
-    --foreground: 40 40% 95%;
-
-    --card: 211 26% 22%;
-    --card-foreground: 40 40% 95%;
-
-    --popover: 211 26% 22%;
-    --popover-foreground: 40 40% 95%;
-
-    --primary: 14 88% 63%;
-    --primary-foreground: 40 40% 97%;
-    --primary-soft: 14 88% 70%;
-
-    --secondary: 211 20% 28%;
-    --secondary-foreground: 40 30% 92%;
-
-    --muted: 211 22% 26%;
-    --muted-foreground: 210 18% 70%;
-
-    --accent: 211 22% 30%;
-    --accent-foreground: 40 30% 92%;
-
-    /* Winter accent - subtle icy blue for dark mode */
-    --winter: 200 50% 60%;
-    --winter-soft: 200 30% 40%;
-    --winter-frost: 200 20% 25%;
-
-    --success: 158 48% 55%;
-    --success-foreground: 211 30% 12%;
-
-    --warning: 39 68% 58%;
-    --warning-foreground: 211 30% 12%;
-
-    --destructive: 0 60% 60%;
-    --destructive-foreground: 40 40% 97%;
-
-    --border: 211 18% 31%;
-    --input: 211 18% 29%;
-    --ring: 14 88% 63%;
-    
-    --interview-active: 145 40% 60%;
-    --interview-active-foreground: 145 40% 10%;
-    --interview-waiting: 35 60% 65%;
-    --interview-waiting-foreground: 35 60% 10%;
-    
-    --shadow-soft: 215 25% 5% / 0.2;
-    --shadow-medium: 215 25% 5% / 0.3;
-    --shadow-strong: 215 25% 5% / 0.4;
-
-    --gradient-primary: linear-gradient(135deg, hsl(16 100% 66%), hsl(16 90% 70%));
-    --gradient-background: linear-gradient(180deg, hsl(215 25% 8%), hsl(215 20% 10%));
-    --gradient-winter: linear-gradient(135deg, hsl(200 50% 60% / 0.1), hsl(200 30% 40% / 0.05));
-    
     --sidebar-background: 215 25% 8%;
     --sidebar-foreground: 210 20% 85%;
     --sidebar-primary: 16 100% 66%;
