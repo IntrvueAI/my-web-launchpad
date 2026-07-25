@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { TavusInterviewPlatform } from '@/components/TavusInterviewPlatform';
+import { InterviewPlatformV2 } from '@/components/InterviewPlatformV2';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { InterviewSelection } from '@/components/InterviewSelection';
 import { QuestionsHub } from '@/components/questions/QuestionsHub';
@@ -408,6 +409,8 @@ const Index = () => {
             <div className="container mx-auto px-4 py-8">
               <TavusInterviewPlatform selectedInterviewType={selectedInterviewType} />
             </div>
+          ) : selectedInterviewType?.provider === 'anam-deepgram' ? (
+            <InterviewPlatformV2 selectedInterviewType={selectedInterviewType} />
           ) : (
             <InterviewPlatform selectedInterviewType={selectedInterviewType} />
           )

@@ -12,3 +12,8 @@ verify_jwt = true
 
 [functions.tavus-end-conversation]
 verify_jwt = true
+
+# Browser WebSocket upgrade requests can't carry a custom Authorization header, so this verifies
+# the user's token itself (passed as ?token=) instead of relying on the platform's auto-check.
+[functions.deepgram-relay]
+verify_jwt = false

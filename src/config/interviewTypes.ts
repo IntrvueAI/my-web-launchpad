@@ -44,7 +44,7 @@ export interface InterviewType {
    * TavusInterviewPlatform instead — a different SDK (Daily, not Anam) with its own
    * conversation-creation and scoring plumbing (supabase/functions/tavus-*).
    */
-  provider?: 'anam' | 'tavus';
+  provider?: 'anam' | 'tavus' | 'anam-deepgram';
 }
 
 export const INTERVIEW_TYPES: Record<string, InterviewType> = {
@@ -69,6 +69,33 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     engineSubject: 'elevenplus',
     preStartNote:
       "This is the main whole-child interview — like the real thing at a top independent school.\n\n" +
+      "Clara will move between getting to know you, how you think, what you love, and how you see the world. " +
+      "There are no perfect answers — just be honest, think out loud, and take your time.\n\n" +
+      "Ready when you are."
+  },
+  '11-plus-v2': {
+    id: '11-plus-v2',
+    name: '11+ School Interview (V2)',
+    description: 'The same whole-child interview, running on our new Deepgram-powered listening — you\'re one of the first to try it',
+    category: 'academic',
+    promptFile: 'academic/11-plus.md',
+    duration: 30,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Personal Insight & Self-Awareness',
+      'Reasoning & Problem-Solving',
+      'Extracurricular Activities & Leadership',
+      'Current Awareness & Curiosity'
+    ],
+    difficultyLevel: 2,
+    tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school', 'beta'],
+    icon: 'GraduationCap',
+    engineDriven: true,
+    engineSubject: 'elevenplus',
+    provider: 'anam-deepgram',
+    preStartNote:
+      "This is a new version of the main interview — same Clara, same questions, but listening " +
+      "through a new speech engine we're testing. You're one of the first to try it.\n\n" +
       "Clara will move between getting to know you, how you think, what you love, and how you see the world. " +
       "There are no perfect answers — just be honest, think out loud, and take your time.\n\n" +
       "Ready when you are."
@@ -536,6 +563,7 @@ const CURRENT_AFFAIRS_INTERVIEW_CONFIG: InterviewTypeConfig = {
  */
 export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeConfig> = {
   '11-plus': ELEVEN_PLUS_CONFIG,
+  '11-plus-v2': ELEVEN_PLUS_CONFIG,
   'logic-puzzles': LOGIC_PUZZLES_CONFIG,
   'maths-interview': MATHS_INTERVIEW_CONFIG,
   'verbal-interview': VERBAL_INTERVIEW_CONFIG,
