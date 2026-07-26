@@ -17,3 +17,7 @@ verify_jwt = true
 # the user's token itself (passed as ?token=) instead of relying on the platform's auto-check.
 [functions.deepgram-relay]
 verify_jwt = false
+
+# Same reason as deepgram-relay — verified manually via ?token= instead.
+[functions.stt-bakeoff-relay]
+verify_jwt = false

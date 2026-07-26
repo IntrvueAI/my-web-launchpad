@@ -15,6 +15,8 @@ import ResetPassword from "./pages/ResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminAboutPreview from "./pages/AdminAboutPreview";
 import AdminFaqPreview from "./pages/AdminFaqPreview";
+import AdminSttBakeoff from "./pages/AdminSttBakeoff";
+import AdminSchoolFinder from "./pages/AdminSchoolFinder";
 import NotFound from "./pages/NotFound";
 import { MinigameSection } from "@/components/MinigameSection";
 
@@ -103,6 +105,8 @@ const AppContent = () => {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/about-preview" element={<AdminAboutPreview />} />
             <Route path="/admin/faq-preview" element={<AdminFaqPreview />} />
+            <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
+            <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />
             {/* Temporary standalone demo route for the practice minigames */}
             <Route
               path="/minigames"
