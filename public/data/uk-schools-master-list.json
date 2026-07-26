@@ -1,0 +1,2578 @@
+[
+  {
+    "name": "Westminster School",
+    "website": "https://www.westminster.org.uk",
+    "region": "London",
+    "type": "Senior (13+/16+)",
+    "gender": "Boys (Girls in Sixth Form)",
+    "notes": "Consistently top-ranked; academically selective; strong Oxbridge record"
+  },
+  {
+    "name": "St Paul's School",
+    "website": "https://www.stpaulsschool.org.uk",
+    "region": "London",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "Ranked #1 nationally in Parent Power 2026"
+  },
+  {
+    "name": "St Paul's Girls' School",
+    "website": "https://www.spgs.org",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Top-ranked academically; Hammersmith"
+  },
+  {
+    "name": "North London Collegiate School",
+    "website": "https://www.nlcs.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "Named Sunday Times Independent Secondary School of the Year 2026"
+  },
+  {
+    "name": "Godolphin and Latymer School",
+    "website": "https://www.godolphinandlatymer.com",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Top 5 Parent Power 2026"
+  },
+  {
+    "name": "Latymer Upper School",
+    "website": "https://www.latymer-upper.org",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Top 10 nationally in Parent Power 2026"
+  },
+  {
+    "name": "City of London School",
+    "website": "https://www.clsb.org.uk",
+    "region": "London",
+    "type": "Senior (10-18)",
+    "gender": "Boys",
+    "notes": "Academically selective, on the Thames"
+  },
+  {
+    "name": "City of London School for Girls",
+    "website": "https://www.clsg.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Girls",
+    "notes": "Barbican; strong academic results"
+  },
+  {
+    "name": "King's College School Wimbledon",
+    "website": "https://www.kcs.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Boys (Girls in Sixth Form)",
+    "notes": "Consistently top 10 nationally"
+  },
+  {
+    "name": "Highgate School",
+    "website": "https://www.highgateschool.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Popular North London day school"
+  },
+  {
+    "name": "University College School (UCS)",
+    "website": "https://www.ucs.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Boys (Co-ed Sixth Form)",
+    "notes": "Hampstead; strong academics"
+  },
+  {
+    "name": "South Hampstead High School",
+    "website": "https://www.shhs.gdst.net",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school; top academic results"
+  },
+  {
+    "name": "James Allen's Girls' School (JAGS)",
+    "website": "https://www.jags.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "Dulwich; strong 11+ intake"
+  },
+  {
+    "name": "Alleyn's School",
+    "website": "https://www.alleyns.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Dulwich; popular co-ed day school"
+  },
+  {
+    "name": "Dulwich College",
+    "website": "https://www.dulwich.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Large, well-resourced day school"
+  },
+  {
+    "name": "Harrow School",
+    "website": "https://www.harrowschool.org.uk",
+    "region": "London",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "Historic boarding school"
+  },
+  {
+    "name": "Mill Hill School",
+    "website": "https://www.millhill.org.uk",
+    "region": "London",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Haberdashers' Boys' School",
+    "website": "https://www.habsboys.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Elstree; highly selective 11+/13+"
+  },
+  {
+    "name": "Haberdashers' Girls' School",
+    "website": "https://www.habsgirls.org.uk",
+    "region": "London",
+    "type": "Senior (4-18)",
+    "gender": "Girls",
+    "notes": "Elstree; highly selective"
+  },
+  {
+    "name": "Channing School",
+    "website": "https://www.channing.co.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "Highgate day school"
+  },
+  {
+    "name": "Francis Holland School, Regent's Park",
+    "website": "https://www.fhs-nw1.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Central London day school"
+  },
+  {
+    "name": "Francis Holland School, Sloane Square",
+    "website": "https://www.fhs-sw1.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Central London day school"
+  },
+  {
+    "name": "More House School",
+    "website": "https://www.morehouse.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Knightsbridge day school"
+  },
+  {
+    "name": "Queen's Gate School",
+    "website": "https://www.queensgate.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "South Kensington"
+  },
+  {
+    "name": "Notting Hill and Ealing High School",
+    "website": "https://www.nhehs.gdst.net",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Wimbledon High School",
+    "website": "https://www.wimbledonhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Putney High School",
+    "website": "https://www.putneyhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school; strong Parent Power rankings"
+  },
+  {
+    "name": "Streatham and Clapham High School",
+    "website": "https://www.streathamandclaphamhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Emanuel School",
+    "website": "https://www.emanuel.org.uk",
+    "region": "London",
+    "type": "Senior (10-18)",
+    "gender": "Co-ed",
+    "notes": "Battersea"
+  },
+  {
+    "name": "Ibstock Place School",
+    "website": "https://www.ibstockplaceschool.co.uk",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Roehampton"
+  },
+  {
+    "name": "Reed's School",
+    "website": "https://www.reeds.surrey.sch.uk",
+    "region": "London (Surrey border)",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Cobham; day and boarding"
+  },
+  {
+    "name": "Hampton School",
+    "website": "https://www.hamptonschool.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Highly selective; strong 11+/13+ entry"
+  },
+  {
+    "name": "Lady Eleanor Holles School",
+    "website": "https://www.lehs.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Hampton; top academic results"
+  },
+  {
+    "name": "Surbiton High School",
+    "website": "https://www.surbitonhigh.com",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Popular South West London day school"
+  },
+  {
+    "name": "Whitgift School",
+    "website": "https://www.whitgift.co.uk",
+    "region": "London",
+    "type": "Senior (10-18)",
+    "gender": "Boys",
+    "notes": "Croydon; large campus, strong results"
+  },
+  {
+    "name": "Trinity School Croydon",
+    "website": "https://www.trinity-school.org",
+    "region": "London",
+    "type": "Senior (10-18)",
+    "gender": "Boys",
+    "notes": "Croydon; noted music scholarship program"
+  },
+  {
+    "name": "Old Palace of John Whitgift School",
+    "website": "https://www.oldpalace.co.uk",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Croydon"
+  },
+  {
+    "name": "Croydon High School",
+    "website": "https://www.croydonhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Royal Russell School",
+    "website": "https://www.royalrussell.co.uk",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Croydon; day and boarding"
+  },
+  {
+    "name": "Eltham College",
+    "website": "https://www.eltham-college.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "South East London"
+  },
+  {
+    "name": "Colfe's School",
+    "website": "https://www.colfes.com",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Lewisham"
+  },
+  {
+    "name": "Blackheath High School",
+    "website": "https://www.blackheathhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "St Dunstan's College",
+    "website": "https://www.stdunstans.org.uk",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Catford"
+  },
+  {
+    "name": "Sydenham High School",
+    "website": "https://www.sydenhamhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Forest School",
+    "website": "https://www.forest.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Walthamstow; large grounds"
+  },
+  {
+    "name": "Bancroft's School",
+    "website": "https://www.bancrofts.org",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Co-ed",
+    "notes": "Woodford Green; strong academic results"
+  },
+  {
+    "name": "Chigwell School",
+    "website": "https://www.chigwell-school.org",
+    "region": "London (Essex border)",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Merchant Taylors' School (Northwood)",
+    "website": "https://www.mtsn.org.uk",
+    "region": "London",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Northwood, Middlesex"
+  },
+  {
+    "name": "St Benedict's School",
+    "website": "https://www.stbenedicts.org.uk",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Ealing"
+  },
+  {
+    "name": "Harrodian School",
+    "website": "https://www.harrodian.com",
+    "region": "London",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Barnes"
+  },
+  {
+    "name": "John Lyon School",
+    "website": "https://www.johnlyon.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Harrow-on-the-Hill"
+  },
+  {
+    "name": "Queen's College London",
+    "website": "https://www.qcl.org.uk",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Harley Street"
+  },
+  {
+    "name": "North Bridge House Senior School",
+    "website": "https://www.northbridgehouse.com",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Regent's Park / Canonbury"
+  },
+  {
+    "name": "Thomas's London Day Schools",
+    "website": "https://www.thomas-s.co.uk",
+    "region": "London",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Multiple sites; popular prep feeding senior schools"
+  },
+  {
+    "name": "Wetherby Preparatory School",
+    "website": "https://www.wetherbyprep.co.uk",
+    "region": "London",
+    "type": "Prep (8-13)",
+    "gender": "Boys",
+    "notes": "Marylebone"
+  },
+  {
+    "name": "Garden House School",
+    "website": "https://www.gardenhouseschool.com",
+    "region": "London",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Chelsea"
+  },
+  {
+    "name": "Hill House International Junior School",
+    "website": "https://www.hillhouseschool.co.uk",
+    "region": "London",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Knightsbridge"
+  },
+  {
+    "name": "Kensington Prep School",
+    "website": "https://www.kensingtonprep.gdst.net",
+    "region": "London",
+    "type": "Prep (4-11)",
+    "gender": "Girls",
+    "notes": "GDST prep feeding into senior GDST schools"
+  },
+  {
+    "name": "Bute House Preparatory School",
+    "website": "https://www.butehouse.co.uk",
+    "region": "London",
+    "type": "Prep (4-11)",
+    "gender": "Girls",
+    "notes": "Hammersmith; feeds Godolphin & Latymer, St Paul's Girls'"
+  },
+  {
+    "name": "Broomwood Hall School",
+    "website": "https://www.northwoodschools.com",
+    "region": "London",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Wandsworth"
+  },
+  {
+    "name": "Northcote Lodge School",
+    "website": "https://www.northwoodschools.com",
+    "region": "London",
+    "type": "Prep (8-13)",
+    "gender": "Boys",
+    "notes": "Wandsworth; feeds top senior schools"
+  },
+  {
+    "name": "Eaton House Schools",
+    "website": "https://www.eatonhouseschools.com",
+    "region": "London",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed (split sites)",
+    "notes": "Multiple London sites"
+  },
+  {
+    "name": "Marymount International School London",
+    "website": "https://www.marymountlondon.com",
+    "region": "London",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Kingston; international curriculum"
+  },
+  {
+    "name": "Charterhouse",
+    "website": "https://www.charterhouse.org.uk",
+    "region": "Surrey",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Godalming; historic boarding school"
+  },
+  {
+    "name": "Cranleigh School",
+    "website": "https://www.cranleigh.org",
+    "region": "Surrey",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding; own prep school"
+  },
+  {
+    "name": "Guildford High School",
+    "website": "https://www.guildfordhigh.gdst.net",
+    "region": "Surrey",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "Top 5 Parent Power 2026"
+  },
+  {
+    "name": "Royal Grammar School, Guildford",
+    "website": "https://www.rgs-guildford.co.uk",
+    "region": "Surrey",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Highly selective academic day school"
+  },
+  {
+    "name": "St Catherine's School, Bramley",
+    "website": "https://www.stcatherines.info",
+    "region": "Surrey",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Prior's Field School",
+    "website": "https://www.priorsfieldschool.com",
+    "region": "Surrey",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Godalming"
+  },
+  {
+    "name": "Box Hill School",
+    "website": "https://www.boxhillschool.com",
+    "region": "Surrey",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding, IB offered"
+  },
+  {
+    "name": "Epsom College",
+    "website": "https://www.epsomcollege.org.uk",
+    "region": "Surrey",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "City of London Freemen's School",
+    "website": "https://www.clfs.surrey.sch.uk",
+    "region": "Surrey",
+    "type": "All-through (7-18)",
+    "gender": "Co-ed",
+    "notes": "Ashtead"
+  },
+  {
+    "name": "Frensham Heights School",
+    "website": "https://www.frensham-heights.org.uk",
+    "region": "Surrey",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Farnham; day and boarding"
+  },
+  {
+    "name": "Reigate Grammar School",
+    "website": "https://www.reigategrammar.org",
+    "region": "Surrey",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Popular academic day school"
+  },
+  {
+    "name": "Caterham School",
+    "website": "https://www.caterhamschool.co.uk",
+    "region": "Surrey",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Woldingham School",
+    "website": "https://www.woldinghamschool.co.uk",
+    "region": "Surrey",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Tonbridge School",
+    "website": "https://www.tonbridge-school.co.uk",
+    "region": "Kent",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "Day and boarding; strong academics"
+  },
+  {
+    "name": "Sevenoaks School",
+    "website": "https://www.sevenoaksschool.org",
+    "region": "Kent",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Known for IB Diploma"
+  },
+  {
+    "name": "Kent College Canterbury",
+    "website": "https://www.kentcollege.com",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Kent College, Pembury",
+    "website": "https://www.kentcollegepembury.co.uk",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Benenden School",
+    "website": "https://www.benenden.school",
+    "region": "Kent",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Boarding school"
+  },
+  {
+    "name": "Sutton Valence School",
+    "website": "https://www.suttonvalence.org",
+    "region": "Kent",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "St Lawrence College",
+    "website": "https://www.slcuk.com",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Ramsgate"
+  },
+  {
+    "name": "Dover College",
+    "website": "https://www.dovercollege.org.uk",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "The King's School, Canterbury",
+    "website": "https://www.kings-school.co.uk",
+    "region": "Kent",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "England's oldest school (founded 597)"
+  },
+  {
+    "name": "St Edmund's School Canterbury",
+    "website": "https://www.stedmunds.org.uk",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Walthamstow Hall",
+    "website": "https://www.walthamstowhall.co.uk",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Sevenoaks"
+  },
+  {
+    "name": "Farringtons School",
+    "website": "https://www.farringtons.org.uk",
+    "region": "Kent",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Chislehurst"
+  },
+  {
+    "name": "Bromley High School",
+    "website": "https://www.bromleyhigh.gdst.net",
+    "region": "London",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Brighton College",
+    "website": "https://www.brightoncollege.org.uk",
+    "region": "Sussex",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Ranked #2 nationally Parent Power 2026"
+  },
+  {
+    "name": "Roedean School",
+    "website": "https://www.roedean.co.uk",
+    "region": "Sussex",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Brighton; boarding and day"
+  },
+  {
+    "name": "Lancing College",
+    "website": "https://www.lancingcollege.co.uk",
+    "region": "Sussex",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Hurstpierpoint College",
+    "website": "https://www.hppc.co.uk",
+    "region": "Sussex",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Own prep school on site"
+  },
+  {
+    "name": "Ardingly College",
+    "website": "https://www.ardingly.com",
+    "region": "Sussex",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Christ's Hospital",
+    "website": "https://www.christs-hospital.org.uk",
+    "region": "Sussex",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Large bursary-funded boarding school"
+  },
+  {
+    "name": "Worth School",
+    "website": "https://www.worthschool.org.uk",
+    "region": "Sussex",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Benedictine boarding school"
+  },
+  {
+    "name": "Brambletye School",
+    "website": "https://www.brambletye.com",
+    "region": "Sussex",
+    "type": "Prep (3-13)",
+    "gender": "Co-ed",
+    "notes": "East Grinstead"
+  },
+  {
+    "name": "Cottesmore School",
+    "website": "https://www.cottesmoreschool.com",
+    "region": "Sussex",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Boarding prep; listed in Spear's Index"
+  },
+  {
+    "name": "Burgess Hill Girls",
+    "website": "https://www.burgesshillgirls.com",
+    "region": "Sussex",
+    "type": "All-through (2-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Windlesham House School",
+    "website": "https://www.windlesham.com",
+    "region": "Sussex",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Boarding prep"
+  },
+  {
+    "name": "Bede's School",
+    "website": "https://www.bedes.org",
+    "region": "Sussex",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Upper Dicker; day and boarding"
+  },
+  {
+    "name": "St Leonards-Mayfield School",
+    "website": "https://www.mayfieldgirls.org",
+    "region": "Sussex",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Mayfield; boarding and day"
+  },
+  {
+    "name": "Eton College",
+    "website": "https://www.etoncollege.com",
+    "region": "Berkshire",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "World-famous boarding school"
+  },
+  {
+    "name": "Wellington College",
+    "website": "https://www.wellingtoncollege.org.uk",
+    "region": "Berkshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Crowthorne; day and boarding"
+  },
+  {
+    "name": "Radley College",
+    "website": "https://www.radley.org.uk",
+    "region": "Oxfordshire",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "Full boarding"
+  },
+  {
+    "name": "Bradfield College",
+    "website": "https://www.bradfieldcollege.org.uk",
+    "region": "Berkshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Pangbourne College",
+    "website": "https://www.pangbourne.com",
+    "region": "Berkshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Downe House School",
+    "website": "https://www.downehouse.net",
+    "region": "Berkshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Queen Anne's School",
+    "website": "https://www.qas.org.uk",
+    "region": "Berkshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Caversham"
+  },
+  {
+    "name": "The Oratory School",
+    "website": "https://www.oratory.co.uk",
+    "region": "Berkshire",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Catholic boarding school"
+  },
+  {
+    "name": "St Mary's School Ascot",
+    "website": "https://www.stmarysascot.co.uk",
+    "region": "Berkshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Catholic boarding school"
+  },
+  {
+    "name": "Heathfield School Ascot",
+    "website": "https://www.heathfieldschool.net",
+    "region": "Berkshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Boarding school"
+  },
+  {
+    "name": "Lambrook School",
+    "website": "https://www.lambrookschool.co.uk",
+    "region": "Berkshire",
+    "type": "Prep (3-13)",
+    "gender": "Co-ed",
+    "notes": "Prince George's former school"
+  },
+  {
+    "name": "Ludgrove School",
+    "website": "https://www.ludgrove.co.uk",
+    "region": "Berkshire",
+    "type": "Prep (8-13)",
+    "gender": "Boys",
+    "notes": "Wokingham; boarding prep, Prince William & Harry's former school"
+  },
+  {
+    "name": "Wycombe Abbey",
+    "website": "https://www.wycombeabbey.com",
+    "region": "Buckinghamshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Leading girls' boarding school"
+  },
+  {
+    "name": "Stowe School",
+    "website": "https://www.stowe.co.uk",
+    "region": "Buckinghamshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Historic estate; boarding"
+  },
+  {
+    "name": "Akeley Wood School",
+    "website": "https://www.akeleywoodschool.co.uk",
+    "region": "Buckinghamshire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Godstowe Preparatory School",
+    "website": "https://www.godstowe.org",
+    "region": "Buckinghamshire",
+    "type": "Prep (3-13)",
+    "gender": "Girls (co-ed to age 8)",
+    "notes": "High Wycombe; feeds Wycombe Abbey"
+  },
+  {
+    "name": "Magdalen College School",
+    "website": "https://www.mcsoxford.org",
+    "region": "Oxfordshire",
+    "type": "Senior (7-18)",
+    "gender": "Co-ed",
+    "notes": "Oxford; strong academics"
+  },
+  {
+    "name": "St Edward's School, Oxford",
+    "website": "https://www.stedwardsoxford.org",
+    "region": "Oxfordshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Headington School",
+    "website": "https://www.headington.org",
+    "region": "Oxfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Oxford; boarding and day"
+  },
+  {
+    "name": "Oxford High School",
+    "website": "https://www.oxfordhigh.gdst.net",
+    "region": "Oxfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "The Dragon School",
+    "website": "https://www.dragonschool.org",
+    "region": "Oxfordshire",
+    "type": "Prep (4-13)",
+    "gender": "Co-ed",
+    "notes": "Oxford; boarding and day"
+  },
+  {
+    "name": "Summer Fields",
+    "website": "https://www.summerfields.com",
+    "region": "Oxfordshire",
+    "type": "Prep (8-13)",
+    "gender": "Boys",
+    "notes": "Oxford; boarding prep"
+  },
+  {
+    "name": "Abingdon School",
+    "website": "https://www.abingdon.org.uk",
+    "region": "Oxfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Day and boarding"
+  },
+  {
+    "name": "Cothill House",
+    "website": "https://www.cothill.net",
+    "region": "Oxfordshire",
+    "type": "Prep (8-13)",
+    "gender": "Boys",
+    "notes": "Boarding prep near Abingdon"
+  },
+  {
+    "name": "Cokethorpe School",
+    "website": "https://www.cokethorpe.org.uk",
+    "region": "Oxfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Witney"
+  },
+  {
+    "name": "Rye St Antony School",
+    "website": "https://www.ryestantony.co.uk",
+    "region": "Oxfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Oxford"
+  },
+  {
+    "name": "d'Overbroeck's",
+    "website": "https://www.doverbroecks.com",
+    "region": "Oxfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Oxford"
+  },
+  {
+    "name": "St Albans School",
+    "website": "https://www.st-albans.herts.sch.uk",
+    "region": "Hertfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "St Albans High School for Girls",
+    "website": "https://www.stalbansgirls.org.uk",
+    "region": "Hertfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Aldenham School",
+    "website": "https://www.aldenham.com",
+    "region": "Hertfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Bishop's Stortford College",
+    "website": "https://www.bishopsstortfordcollege.org",
+    "region": "Hertfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Berkhamsted School",
+    "website": "https://www.berkhamsted.com",
+    "region": "Hertfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Haileybury",
+    "website": "https://www.haileybury.com",
+    "region": "Hertfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Abbot's Hill School",
+    "website": "https://www.abbotshill.co.uk",
+    "region": "Hertfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Hemel Hempstead"
+  },
+  {
+    "name": "Queenswood School",
+    "website": "https://www.queenswood.org",
+    "region": "Hertfordshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Hatfield; boarding and day"
+  },
+  {
+    "name": "Bedford School",
+    "website": "https://www.bedfordschool.org.uk",
+    "region": "Bedfordshire",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Bedford Modern School",
+    "website": "https://www.bedmod.co.uk",
+    "region": "Bedfordshire",
+    "type": "Senior (7-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Bedford Girls' School",
+    "website": "https://www.bedfordgirlsschool.co.uk",
+    "region": "Bedfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "St Christopher School",
+    "website": "https://www.stchris.co.uk",
+    "region": "Hertfordshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Letchworth"
+  },
+  {
+    "name": "Felsted School",
+    "website": "https://www.felsted.org",
+    "region": "Essex",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Brentwood School",
+    "website": "https://www.brentwoodschool.co.uk",
+    "region": "Essex",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "New Hall School",
+    "website": "https://www.newhallschool.co.uk",
+    "region": "Essex",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Chelmsford; Catholic foundation"
+  },
+  {
+    "name": "The Perse School",
+    "website": "https://www.perse.co.uk",
+    "region": "Cambridgeshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Cambridge; strong academics"
+  },
+  {
+    "name": "The Leys School",
+    "website": "https://www.theleys.net",
+    "region": "Cambridgeshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Cambridge; boarding and day"
+  },
+  {
+    "name": "St Mary's School Cambridge",
+    "website": "https://www.stmaryscambridge.co.uk",
+    "region": "Cambridgeshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "The Stephen Perse Foundation",
+    "website": "https://www.stephenperse.com",
+    "region": "Cambridgeshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Cambridge"
+  },
+  {
+    "name": "Kimbolton School",
+    "website": "https://www.kimbolton.cambs.sch.uk",
+    "region": "Cambridgeshire",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "The King's School, Ely",
+    "website": "https://www.kingsely.org",
+    "region": "Cambridgeshire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Winchester College",
+    "website": "https://www.winchestercollege.org",
+    "region": "Hampshire",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "Historic boarding school; top academic results"
+  },
+  {
+    "name": "St Swithun's School",
+    "website": "https://www.stswithuns.com",
+    "region": "Hampshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Winchester; boarding and day"
+  },
+  {
+    "name": "Portsmouth Grammar School",
+    "website": "https://www.pgs.org.uk",
+    "region": "Hampshire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Portsmouth High School",
+    "website": "https://www.portsmouthhigh.gdst.net",
+    "region": "Hampshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Churcher's College",
+    "website": "https://www.churcherscollege.com",
+    "region": "Hampshire",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Petersfield"
+  },
+  {
+    "name": "Lord Wandsworth College",
+    "website": "https://www.lordwandsworth.org",
+    "region": "Hampshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Farnborough Hill",
+    "website": "https://www.farnboroughhill.org.uk",
+    "region": "Hampshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Catholic foundation"
+  },
+  {
+    "name": "Ryde School",
+    "website": "https://www.rydeschool.org.uk",
+    "region": "Isle of Wight",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Bedales School",
+    "website": "https://www.bedales.org.uk",
+    "region": "Hampshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Progressive boarding school; own prep (Dunhurst)"
+  },
+  {
+    "name": "Sherborne School",
+    "website": "https://www.sherborne.org",
+    "region": "Dorset",
+    "type": "Senior (13-18)",
+    "gender": "Boys",
+    "notes": "Boarding school"
+  },
+  {
+    "name": "Sherborne Girls",
+    "website": "https://www.sherborne.com",
+    "region": "Dorset",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Canford School",
+    "website": "https://www.canford.com",
+    "region": "Dorset",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Wimborne; boarding and day"
+  },
+  {
+    "name": "Bryanston School",
+    "website": "https://www.bryanston.co.uk",
+    "region": "Dorset",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Blandford Forum; boarding"
+  },
+  {
+    "name": "Clayesmore School",
+    "website": "https://www.clayesmore.com",
+    "region": "Dorset",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Milton Abbey School",
+    "website": "https://www.miltonabbey.co.uk",
+    "region": "Dorset",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding"
+  },
+  {
+    "name": "Talbot Heath School",
+    "website": "https://www.talbotheath.org",
+    "region": "Dorset",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Bournemouth"
+  },
+  {
+    "name": "Bournemouth Collegiate School",
+    "website": "https://www.bournemouthcollegiateschool.co.uk",
+    "region": "Dorset",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Leweston School",
+    "website": "https://www.leweston.co.uk",
+    "region": "Dorset",
+    "type": "All-through (2-18)",
+    "gender": "Girls",
+    "notes": "Sherborne; boarding and day"
+  },
+  {
+    "name": "Marlborough College",
+    "website": "https://www.marlboroughcollege.org",
+    "region": "Wiltshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Large boarding school"
+  },
+  {
+    "name": "St Mary's Calne",
+    "website": "https://www.stmaryscalne.org",
+    "region": "Wiltshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Godolphin School",
+    "website": "https://www.godolphin.org",
+    "region": "Wiltshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Salisbury; boarding and day"
+  },
+  {
+    "name": "Dauntsey's School",
+    "website": "https://www.dauntseys.org",
+    "region": "Wiltshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Devizes; boarding and day"
+  },
+  {
+    "name": "Warminster School",
+    "website": "https://www.warminsterschool.org.uk",
+    "region": "Wiltshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Salisbury Cathedral School",
+    "website": "https://www.salisburycathedralschool.com",
+    "region": "Wiltshire",
+    "type": "Prep (3-13)",
+    "gender": "Co-ed",
+    "notes": "Choir school"
+  },
+  {
+    "name": "Stonar School",
+    "website": "https://www.stonarschool.com",
+    "region": "Wiltshire",
+    "type": "All-through (2-18)",
+    "gender": "Girls",
+    "notes": "Melksham; boarding and day"
+  },
+  {
+    "name": "Millfield School",
+    "website": "https://www.millfieldschool.com",
+    "region": "Somerset",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Large boarding school; strong sport"
+  },
+  {
+    "name": "Millfield Preparatory School",
+    "website": "https://www.millfieldprep.com",
+    "region": "Somerset",
+    "type": "Prep (2-13)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Wells Cathedral School",
+    "website": "https://www.wells-cathedral-school.co.uk",
+    "region": "Somerset",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Specialist music school"
+  },
+  {
+    "name": "King's Bruton",
+    "website": "https://www.kingsbruton.com",
+    "region": "Somerset",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Downside School",
+    "website": "https://www.downside.co.uk",
+    "region": "Somerset",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Benedictine boarding school"
+  },
+  {
+    "name": "Taunton School",
+    "website": "https://www.tauntonschool.co.uk",
+    "region": "Somerset",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "King's College, Taunton",
+    "website": "https://www.kings-taunton.co.uk",
+    "region": "Somerset",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Queen's College, Taunton",
+    "website": "https://www.queenscollege.org.uk",
+    "region": "Somerset",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Blundell's School",
+    "website": "https://www.blundells.org",
+    "region": "Devon",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Tiverton; boarding and day"
+  },
+  {
+    "name": "West Buckland School",
+    "website": "https://www.westbuckland.devon.sch.uk",
+    "region": "Devon",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Wellington School",
+    "website": "https://www.wellingtonschool.org.uk",
+    "region": "Somerset",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Clifton College",
+    "website": "https://www.cliftoncollege.com",
+    "region": "Bristol",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Bristol Grammar School",
+    "website": "https://www.bristolgrammarschool.co.uk",
+    "region": "Bristol",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Redland High School",
+    "website": "https://www.redlandhigh.com",
+    "region": "Bristol",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Badminton School",
+    "website": "https://www.badmintonschool.co.uk",
+    "region": "Bristol",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Queen Elizabeth's Hospital",
+    "website": "https://www.qehbristol.co.uk",
+    "region": "Bristol",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "Red Maids' High School",
+    "website": "https://www.redmaids.bristol.sch.uk",
+    "region": "Bristol",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "England's oldest girls' school (founded 1634)"
+  },
+  {
+    "name": "Clifton High School",
+    "website": "https://www.cliftonhigh.bristol.sch.uk",
+    "region": "Bristol",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Prior Park College",
+    "website": "https://www.priorparkcollege.com",
+    "region": "Somerset",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Bath; Catholic foundation"
+  },
+  {
+    "name": "King Edward's School, Bath",
+    "website": "https://www.kesbath.com",
+    "region": "Somerset",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Monkton Combe School",
+    "website": "https://www.monktoncombeschool.com",
+    "region": "Somerset",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Bath; boarding and day"
+  },
+  {
+    "name": "Kingswood School",
+    "website": "https://www.kingswood.bath.sch.uk",
+    "region": "Somerset",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Bath; boarding and day"
+  },
+  {
+    "name": "Royal High School Bath",
+    "website": "https://www.royalhighbath.gdst.net",
+    "region": "Somerset",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school; boarding and day"
+  },
+  {
+    "name": "Wycliffe College",
+    "website": "https://www.wycliffe.co.uk",
+    "region": "Gloucestershire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Stonehouse; boarding and day"
+  },
+  {
+    "name": "Cheltenham College",
+    "website": "https://www.cheltenhamcollege.org",
+    "region": "Gloucestershire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Cheltenham Ladies' College",
+    "website": "https://www.cheltladiescollege.org",
+    "region": "Gloucestershire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Top boarding school for girls"
+  },
+  {
+    "name": "Dean Close School",
+    "website": "https://www.deanclose.org.uk",
+    "region": "Gloucestershire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Cheltenham; boarding and day"
+  },
+  {
+    "name": "Rendcomb College",
+    "website": "https://www.rendcombcollege.org.uk",
+    "region": "Gloucestershire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "The King's School, Gloucester",
+    "website": "https://www.thekingsschool.co.uk",
+    "region": "Gloucestershire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Cathedral school"
+  },
+  {
+    "name": "Exeter School",
+    "website": "https://www.exeterschool.org.uk",
+    "region": "Devon",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Exeter Cathedral School",
+    "website": "https://www.exetercs.org",
+    "region": "Devon",
+    "type": "Prep (3-13)",
+    "gender": "Co-ed",
+    "notes": "Choir school"
+  },
+  {
+    "name": "Shebbear College",
+    "website": "https://www.shebbearcollege.co.uk",
+    "region": "Devon",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Mount Kelly",
+    "website": "https://www.mountkelly.com",
+    "region": "Devon",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Tavistock; formerly Kelly College"
+  },
+  {
+    "name": "Plymouth College",
+    "website": "https://www.plymouthcollege.com",
+    "region": "Devon",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Truro School",
+    "website": "https://www.truroschool.com",
+    "region": "Cornwall",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Truro High School for Girls",
+    "website": "https://www.trurohigh.co.uk",
+    "region": "Cornwall",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "King Edward's School, Birmingham",
+    "website": "https://www.kes.org.uk",
+    "region": "West Midlands",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Top-ranked academically"
+  },
+  {
+    "name": "King Edward VI High School for Girls, Birmingham",
+    "website": "https://www.kehs.org.uk",
+    "region": "West Midlands",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Consistently top-ranked nationally"
+  },
+  {
+    "name": "Solihull School",
+    "website": "https://www.solihullschool.org.uk",
+    "region": "West Midlands",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Bromsgrove School",
+    "website": "https://www.bromsgrove-school.co.uk",
+    "region": "Worcestershire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "The Royal Grammar School, Worcester",
+    "website": "https://www.rgsw.org.uk",
+    "region": "Worcestershire",
+    "type": "Senior (10-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Malvern College",
+    "website": "https://www.malverncollege.org.uk",
+    "region": "Worcestershire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Malvern St James",
+    "website": "https://www.malvernstjames.co.uk",
+    "region": "Worcestershire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Wrekin College",
+    "website": "https://www.wrekincollege.com",
+    "region": "Shropshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Shrewsbury School",
+    "website": "https://www.shrewsbury.org.uk",
+    "region": "Shropshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Ellesmere College",
+    "website": "https://www.ellesmere.com",
+    "region": "Shropshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Edgbaston High School for Girls",
+    "website": "https://www.edgbastonhigh.co.uk",
+    "region": "West Midlands",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Birmingham"
+  },
+  {
+    "name": "The Blue Coat School, Birmingham",
+    "website": "https://www.bluecoatschool.com",
+    "region": "West Midlands",
+    "type": "Prep (3-11)",
+    "gender": "Co-ed",
+    "notes": "Edgbaston"
+  },
+  {
+    "name": "Warwick School",
+    "website": "https://www.warwickschool.org",
+    "region": "Warwickshire",
+    "type": "All-through (7-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "King's High School, Warwick",
+    "website": "https://www.kingshighwarwick.co.uk",
+    "region": "Warwickshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Rugby School",
+    "website": "https://www.rugbyschool.co.uk",
+    "region": "Warwickshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Historic boarding school"
+  },
+  {
+    "name": "Princethorpe College",
+    "website": "https://www.princethorpe.co.uk",
+    "region": "Warwickshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Trent College",
+    "website": "https://www.trentcollege.net",
+    "region": "Nottinghamshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Repton School",
+    "website": "https://www.repton.org.uk",
+    "region": "Derbyshire",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Denstone College",
+    "website": "https://www.denstonecollege.org",
+    "region": "Staffordshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Abbotsholme School",
+    "website": "https://www.abbotsholme.co.uk",
+    "region": "Staffordshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Nottingham High School",
+    "website": "https://www.nottinghamhigh.co.uk",
+    "region": "Nottinghamshire",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "Nottingham Girls' High School",
+    "website": "https://www.nottinghamgirlshigh.gdst.net",
+    "region": "Nottinghamshire",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Ratcliffe College",
+    "website": "https://www.ratcliffecollege.com",
+    "region": "Leicestershire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Catholic foundation; boarding and day"
+  },
+  {
+    "name": "Loughborough Grammar School",
+    "website": "https://www.lsf.org",
+    "region": "Leicestershire",
+    "type": "Senior (10-18)",
+    "gender": "Boys",
+    "notes": "Part of Loughborough Schools Foundation"
+  },
+  {
+    "name": "Loughborough High School",
+    "website": "https://www.lsf.org",
+    "region": "Leicestershire",
+    "type": "Senior (10-18)",
+    "gender": "Girls",
+    "notes": "Part of Loughborough Schools Foundation"
+  },
+  {
+    "name": "Stamford School",
+    "website": "https://www.ses.lincs.sch.uk",
+    "region": "Lincolnshire",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Stamford Endowed Schools"
+  },
+  {
+    "name": "Stamford High School",
+    "website": "https://www.ses.lincs.sch.uk",
+    "region": "Lincolnshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Stamford Endowed Schools"
+  },
+  {
+    "name": "Oakham School",
+    "website": "https://www.oakham.rutland.sch.uk",
+    "region": "Rutland",
+    "type": "All-through (10-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Uppingham School",
+    "website": "https://www.uppingham.co.uk",
+    "region": "Rutland",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Leicester Grammar School",
+    "website": "https://www.leicestergrammar.org.uk",
+    "region": "Leicestershire",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Derby Grammar School",
+    "website": "https://www.derbygrammar.org",
+    "region": "Derbyshire",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "Derby High School",
+    "website": "https://www.derbyhigh.co.uk",
+    "region": "Derbyshire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Newcastle-under-Lyme School",
+    "website": "https://www.newcastle-under-lyme.staffs.sch.uk",
+    "region": "Staffordshire",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Bablake School",
+    "website": "https://www.bablake.com",
+    "region": "West Midlands",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Coventry"
+  },
+  {
+    "name": "King Henry VIII School",
+    "website": "https://www.khsboys.org",
+    "region": "West Midlands",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Coventry"
+  },
+  {
+    "name": "Manchester Grammar School",
+    "website": "https://www.mgs.org",
+    "region": "Greater Manchester",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Highly selective academically"
+  },
+  {
+    "name": "Withington Girls' School",
+    "website": "https://www.withington.manchester.sch.uk",
+    "region": "Greater Manchester",
+    "type": "Senior (7-18)",
+    "gender": "Girls",
+    "notes": "Highly selective academically"
+  },
+  {
+    "name": "Manchester High School for Girls",
+    "website": "https://www.manchesterhigh.co.uk",
+    "region": "Greater Manchester",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Cheadle Hulme School",
+    "website": "https://www.cheadlehulmeschool.co.uk",
+    "region": "Greater Manchester",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Stockport Grammar School",
+    "website": "https://www.stockportgrammar.co.uk",
+    "region": "Greater Manchester",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Bolton School",
+    "website": "https://www.boltonschool.org",
+    "region": "Greater Manchester",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boys' and Girls' Divisions"
+  },
+  {
+    "name": "Merchant Taylors' School, Crosby",
+    "website": "https://www.merchanttaylors.com",
+    "region": "Merseyside",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Liverpool area"
+  },
+  {
+    "name": "Liverpool College",
+    "website": "https://www.liverpoolcollege.org.uk",
+    "region": "Merseyside",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Birkenhead School",
+    "website": "https://www.birkenheadschool.co.uk",
+    "region": "Merseyside",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Queen Elizabeth's Grammar School, Blackburn",
+    "website": "https://www.qegsblackburn.com",
+    "region": "Lancashire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Kirkham Grammar School",
+    "website": "https://www.kirkhamgrammar.co.uk",
+    "region": "Lancashire",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Rossall School",
+    "website": "https://www.rossall.org.uk",
+    "region": "Lancashire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Fleetwood; boarding and day"
+  },
+  {
+    "name": "Lancaster Royal Grammar School",
+    "website": "https://www.lrgs.org.uk",
+    "region": "Lancashire",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Sedbergh School",
+    "website": "https://www.sedberghschool.org",
+    "region": "Cumbria",
+    "type": "Senior (13-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day; strong rugby tradition"
+  },
+  {
+    "name": "Bury Grammar School Boys",
+    "website": "https://www.burygrammarboys.com",
+    "region": "Greater Manchester",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "Bury Grammar School Girls",
+    "website": "https://www.burygrammargirls.com",
+    "region": "Greater Manchester",
+    "type": "Senior (4-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Chetham's School of Music",
+    "website": "https://www.chethams.com",
+    "region": "Greater Manchester",
+    "type": "All-through (8-18)",
+    "gender": "Co-ed",
+    "notes": "Specialist music school, Manchester"
+  },
+  {
+    "name": "Ampleforth College",
+    "website": "https://www.ampleforth.org.uk",
+    "region": "Yorkshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "Benedictine boarding school, North Yorkshire"
+  },
+  {
+    "name": "Queen Ethelburga's Collegiate",
+    "website": "https://www.qe.org",
+    "region": "Yorkshire",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Near York; large boarding provision"
+  },
+  {
+    "name": "Harrogate Ladies' College",
+    "website": "https://www.hlc.org.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Ashville College",
+    "website": "https://www.ashville.co.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Harrogate; boarding and day"
+  },
+  {
+    "name": "Bootham School",
+    "website": "https://www.boothamschool.com",
+    "region": "Yorkshire",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "York; Quaker foundation"
+  },
+  {
+    "name": "The Mount School, York",
+    "website": "https://www.mountschoolyork.co.uk",
+    "region": "Yorkshire",
+    "type": "Senior (11-18)",
+    "gender": "Girls",
+    "notes": "Quaker foundation"
+  },
+  {
+    "name": "St Peter's School, York",
+    "website": "https://www.stpetersyork.org.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Pocklington School",
+    "website": "https://www.pocklingtonschool.com",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Hymers College",
+    "website": "https://www.hymers.co.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Hull"
+  },
+  {
+    "name": "Hull Collegiate School",
+    "website": "https://www.hullcollegiate.co.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Sheffield High School",
+    "website": "https://www.sheffieldhigh.gdst.net",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school; Top Independent Secondary School in the North award"
+  },
+  {
+    "name": "Birkdale School",
+    "website": "https://www.birkdaleschool.org.uk",
+    "region": "Yorkshire",
+    "type": "Senior (4-18)",
+    "gender": "Boys (Co-ed Sixth Form)",
+    "notes": "Sheffield"
+  },
+  {
+    "name": "Woodhouse Grove School",
+    "website": "https://www.woodhousegrove.co.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Bradford; boarding and day"
+  },
+  {
+    "name": "Silcoates School",
+    "website": "https://www.silcoates.org.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Wakefield"
+  },
+  {
+    "name": "Wakefield Girls' High School",
+    "website": "https://www.wghs.org.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": ""
+  },
+  {
+    "name": "Queen Elizabeth Grammar School, Wakefield",
+    "website": "https://www.qegswakefield.org",
+    "region": "Yorkshire",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": ""
+  },
+  {
+    "name": "The Grammar School at Leeds",
+    "website": "https://www.gsal.org.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Formed from merger of Leeds Grammar and Leeds Girls' High"
+  },
+  {
+    "name": "Rishworth School",
+    "website": "https://www.rishworth-school.co.uk",
+    "region": "Yorkshire",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Royal Grammar School, Newcastle",
+    "website": "https://www.rgs.newcastle.sch.uk",
+    "region": "North East England",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Highly selective academically"
+  },
+  {
+    "name": "Newcastle High School for Girls",
+    "website": "https://www.newcastlehigh.gdst.net",
+    "region": "North East England",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "GDST school"
+  },
+  {
+    "name": "Durham School",
+    "website": "https://www.durhamschool.co.uk",
+    "region": "North East England",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Barnard Castle School",
+    "website": "https://www.barnardcastleschool.org.uk",
+    "region": "North East England",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Yarm School",
+    "website": "https://www.yarmschool.org",
+    "region": "North East England",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Teesside High School",
+    "website": "https://www.teessidehigh.co.uk",
+    "region": "North East England",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Red House School",
+    "website": "https://www.redhouseschool.co.uk",
+    "region": "North East England",
+    "type": "All-through (3-16)",
+    "gender": "Co-ed",
+    "notes": "Norton, Stockton-on-Tees"
+  },
+  {
+    "name": "Fettes College",
+    "website": "https://www.fettes.com",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Edinburgh; boarding and day"
+  },
+  {
+    "name": "Merchiston Castle School",
+    "website": "https://www.merchiston.co.uk",
+    "region": "Scotland",
+    "type": "Senior (7-18)",
+    "gender": "Boys",
+    "notes": "Edinburgh; boarding and day"
+  },
+  {
+    "name": "Loretto School",
+    "website": "https://www.loretto.com",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Musselburgh; boarding and day"
+  },
+  {
+    "name": "Glenalmond College",
+    "website": "https://www.glenalmondcollege.co.uk",
+    "region": "Scotland",
+    "type": "Senior (12-18)",
+    "gender": "Co-ed",
+    "notes": "Perthshire; boarding and day"
+  },
+  {
+    "name": "Strathallan School",
+    "website": "https://www.strathallan.co.uk",
+    "region": "Scotland",
+    "type": "Senior (9-18)",
+    "gender": "Co-ed",
+    "notes": "Perthshire; boarding and day"
+  },
+  {
+    "name": "Gordonstoun",
+    "website": "https://www.gordonstoun.org.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Moray; famous boarding school (King Charles III's alma mater)"
+  },
+  {
+    "name": "George Watson's College",
+    "website": "https://www.gwc.org.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Edinburgh; largest co-ed independent school in Scotland"
+  },
+  {
+    "name": "Edinburgh Academy",
+    "website": "https://www.edinburghacademy.org.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Ranked #1 in Scotland, Parent Power 2024"
+  },
+  {
+    "name": "Stewart's Melville College",
+    "website": "https://www.esms.org.uk",
+    "region": "Scotland",
+    "type": "Senior (12-18)",
+    "gender": "Boys",
+    "notes": "Edinburgh; part of Erskine Stewart's Melville Schools"
+  },
+  {
+    "name": "The Mary Erskine School",
+    "website": "https://www.esms.org.uk",
+    "region": "Scotland",
+    "type": "Senior (12-18)",
+    "gender": "Girls",
+    "notes": "Edinburgh; part of Erskine Stewart's Melville Schools"
+  },
+  {
+    "name": "St George's School for Girls",
+    "website": "https://www.st-georges.edin.sch.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Edinburgh; boarding and day"
+  },
+  {
+    "name": "George Heriot's School",
+    "website": "https://www.george-heriots.com",
+    "region": "Scotland",
+    "type": "All-through (5-18)",
+    "gender": "Co-ed",
+    "notes": "Edinburgh"
+  },
+  {
+    "name": "The Glasgow Academy",
+    "website": "https://www.theglasgowacademy.org.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Oldest continuously independent school in Glasgow"
+  },
+  {
+    "name": "Hutchesons' Grammar School",
+    "website": "https://www.hutchesons.org",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Glasgow"
+  },
+  {
+    "name": "The High School of Glasgow",
+    "website": "https://www.highschoolofglasgow.co.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Named Scottish Independent Secondary School of the Year 2026"
+  },
+  {
+    "name": "Kelvinside Academy",
+    "website": "https://www.kelvinsideacademy.org.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Glasgow"
+  },
+  {
+    "name": "St Aloysius' College",
+    "website": "https://www.staloysius.org",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Glasgow; Jesuit foundation"
+  },
+  {
+    "name": "Robert Gordon's College",
+    "website": "https://www.rgc.aberdeen.sch.uk",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Aberdeen"
+  },
+  {
+    "name": "Albyn School",
+    "website": "https://www.albynschool.co.uk",
+    "region": "Scotland",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Aberdeen"
+  },
+  {
+    "name": "Dollar Academy",
+    "website": "https://www.dollaracademy.org.uk",
+    "region": "Scotland",
+    "type": "All-through (2-18)",
+    "gender": "Co-ed",
+    "notes": "Clackmannanshire; boarding and day"
+  },
+  {
+    "name": "Kilgraston School",
+    "website": "https://www.kilgraston.com",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Perthshire; boarding and day"
+  },
+  {
+    "name": "Lomond School",
+    "website": "https://www.lomondschool.com",
+    "region": "Scotland",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Helensburgh; boarding and day"
+  },
+  {
+    "name": "Christ College, Brecon",
+    "website": "https://www.christcollegebrecon.com",
+    "region": "Wales",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Monmouth School for Boys",
+    "website": "https://www.monmouthschool.org",
+    "region": "Wales",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Part of Haberdashers' Monmouth Schools"
+  },
+  {
+    "name": "Haberdashers' Monmouth School for Girls",
+    "website": "https://www.habsmonmouth.org",
+    "region": "Wales",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Llandovery College",
+    "website": "https://www.llandoverycollege.com",
+    "region": "Wales",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Boarding and day"
+  },
+  {
+    "name": "Howell's School, Llandaff",
+    "website": "https://www.howells.org",
+    "region": "Wales",
+    "type": "All-through (3-18)",
+    "gender": "Girls",
+    "notes": "Cardiff; GDST school"
+  },
+  {
+    "name": "St John's College, Cardiff",
+    "website": "https://www.stjohnscollegecardiff.com",
+    "region": "Wales",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": ""
+  },
+  {
+    "name": "Rougemont School",
+    "website": "https://www.rougemontschool.co.uk",
+    "region": "Wales",
+    "type": "All-through (3-18)",
+    "gender": "Co-ed",
+    "notes": "Newport"
+  },
+  {
+    "name": "Ruthin School",
+    "website": "https://www.ruthinschool.co.uk",
+    "region": "Wales",
+    "type": "Senior (11-18)",
+    "gender": "Co-ed",
+    "notes": "North Wales; boarding and day"
+  },
+  {
+    "name": "Methodist College Belfast",
+    "website": "https://www.methodycollege.com",
+    "region": "Northern Ireland",
+    "type": "All-through (4-18)",
+    "gender": "Co-ed",
+    "notes": "Grant-aided grammar with historic independent status; highly selective"
+  },
+  {
+    "name": "Royal Belfast Academical Institution",
+    "website": "https://www.rbai.org.uk",
+    "region": "Northern Ireland",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Grant-aided grammar (\"Inst\"); historic independent foundation"
+  },
+  {
+    "name": "Campbell College",
+    "website": "https://www.campbellcollege.co.uk",
+    "region": "Northern Ireland",
+    "type": "Senior (11-18)",
+    "gender": "Boys",
+    "notes": "Grant-aided grammar; boarding and day"
+  },
+  {
+    "name": "Victoria College Belfast",
+    "website": "https://www.victoriacollegebelfast.co.uk",
+    "region": "Northern Ireland",
+    "type": "All-through (4-18)",
+    "gender": "Girls",
+    "notes": "Grant-aided grammar"
+  }
+]
