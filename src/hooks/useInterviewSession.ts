@@ -236,7 +236,6 @@ export const useInterviewSession = (
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
       startedRef.current = false;
       startOptsRef.current = opts;
-      console.log('🚀 Starting interview session...', { engineDriven, opts });
 
       // Start session logging — for the engine path we MUST have the session_reference before the
       // first brain call, so await it here (it's still resilient: it falls back to a local ref).
@@ -246,12 +245,10 @@ export const useInterviewSession = (
 
       connectionHealth.startMonitoring();
 
-      console.log('🔑 Getting session token...');
       const sessionToken = await getSessionToken();
 
       sessionLogger.logEvent('anam_token', 'Successfully obtained Anam session token').catch(() => {});
 
-      console.log('🤖 Creating Anam client...');
       // endOfSpeechSensitivity (0–1): lower = waits longer before deciding the student has finished,
       // so a thinking pause or a breath doesn't get cut off. Default is 0.5; kids pause a lot, so we
       // run it more patient. Lower further if she still interrupts; raise if replies feel laggy.
@@ -297,7 +294,6 @@ export const useInterviewSession = (
         });
       }
 
-      console.log('📹 Starting video stream...');
       if (!videoRef.current) throw new Error('Video element lost during initialization');
       await client.streamToVideoElement('interview-video');
 
@@ -312,7 +308,6 @@ export const useInterviewSession = (
         runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic });
       }
 
-      console.log('🎉 Interview session started successfully');
     } catch (err) {
       console.error('❌ Failed to start interview:', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to start interview';

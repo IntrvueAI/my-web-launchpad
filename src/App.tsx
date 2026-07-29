@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,16 +10,26 @@ import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
 import { ShutdownBanner } from "@/components/ShutdownBanner";
 import { Mail, Calendar } from "lucide-react";
+// Index (the landing page) stays a direct import — it's the most-visited route and should render
+// with zero loading flash. Everything else is lazy: admin tooling, auth, and the minigame demo are
+// only ever hit by a fraction of visitors, so there's no reason to ship their JS to everyone who
+// just lands on "/". This was the single biggest contributor to a ~3.9MB single-chunk bundle.
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import ResetPassword from "./pages/ResetPassword";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminAboutPreview from "./pages/AdminAboutPreview";
-import AdminFaqPreview from "./pages/AdminFaqPreview";
-import AdminSttBakeoff from "./pages/AdminSttBakeoff";
-import AdminSchoolFinder from "./pages/AdminSchoolFinder";
-import NotFound from "./pages/NotFound";
-import { MinigameSection } from "@/components/MinigameSection";
+const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminAboutPreview = lazy(() => import("./pages/AdminAboutPreview"));
+const AdminFaqPreview = lazy(() => import("./pages/AdminFaqPreview"));
+const AdminSttBakeoff = lazy(() => import("./pages/AdminSttBakeoff"));
+const AdminSchoolFinder = lazy(() => import("./pages/AdminSchoolFinder"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
+
+const RouteFallback = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+  </div>
+);
 
 const queryClient = new QueryClient();
 
@@ -97,28 +108,30 @@ const AppContent = () => {
           </div>
         )}
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/landing" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/about-preview" element={<AdminAboutPreview />} />
-            <Route path="/admin/faq-preview" element={<AdminFaqPreview />} />
-            <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
-            <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />
-            {/* Temporary standalone demo route for the practice minigames */}
-            <Route
-              path="/minigames"
-              element={
-                <div className="container mx-auto px-4 py-8 max-w-6xl">
-                  <MinigameSection />
-                </div>
-              }
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/landing" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/about-preview" element={<AdminAboutPreview />} />
+              <Route path="/admin/faq-preview" element={<AdminFaqPreview />} />
+              <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
+              <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />
+              {/* Temporary standalone demo route for the practice minigames */}
+              <Route
+                path="/minigames"
+                element={
+                  <div className="container mx-auto px-4 py-8 max-w-6xl">
+                    <MinigameSection />
+                  </div>
+                }
+              />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </div>
     </ClickSpark>

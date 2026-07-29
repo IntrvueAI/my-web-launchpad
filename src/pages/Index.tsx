@@ -1,20 +1,27 @@
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { InterviewPlatform } from '@/components/InterviewPlatform';
-import { TavusInterviewPlatform } from '@/components/TavusInterviewPlatform';
-import { InterviewPlatformV2 } from '@/components/InterviewPlatformV2';
 import { PostSignupForm } from '@/components/PostSignupForm';
-import { InterviewSelection } from '@/components/InterviewSelection';
-import { QuestionsHub } from '@/components/questions/QuestionsHub';
-import { AchievementsPage } from '@/components/AchievementsPage';
-import { GrownupView } from '@/components/GrownupView';
-import { LockerRoom } from '@/components/LockerRoom';
-import { FeedbackHistory } from '@/components/FeedbackHistory';
-import { UserSettings } from '@/components/UserSettings';
 import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
+// Everything below only ever renders after a user navigates away from the dashboard (the one
+// view guaranteed to be the first thing an authenticated user sees) — lazy so the initial
+// authenticated load doesn't ship the Anam/WebRTC SDK, Stripe, and every other screen's JS up
+// front. This (plus Index/LandingV2 staying eager for the logged-out first paint) was the biggest
+// single contributor to a ~3.9MB single-chunk bundle.
+const InterviewPlatform = lazy(() => import('@/components/InterviewPlatform').then((m) => ({ default: m.InterviewPlatform })));
+const TavusInterviewPlatform = lazy(() => import('@/components/TavusInterviewPlatform').then((m) => ({ default: m.TavusInterviewPlatform })));
+const InterviewPlatformV2 = lazy(() => import('@/components/InterviewPlatformV2').then((m) => ({ default: m.InterviewPlatformV2 })));
+const InterviewSelection = lazy(() => import('@/components/InterviewSelection').then((m) => ({ default: m.InterviewSelection })));
+const QuestionsHub = lazy(() => import('@/components/questions/QuestionsHub').then((m) => ({ default: m.QuestionsHub })));
+const AchievementsPage = lazy(() => import('@/components/AchievementsPage').then((m) => ({ default: m.AchievementsPage })));
+const GrownupView = lazy(() => import('@/components/GrownupView').then((m) => ({ default: m.GrownupView })));
+const LockerRoom = lazy(() => import('@/components/LockerRoom').then((m) => ({ default: m.LockerRoom })));
+const FeedbackHistory = lazy(() => import('@/components/FeedbackHistory').then((m) => ({ default: m.FeedbackHistory })));
+const UserSettings = lazy(() => import('@/components/UserSettings').then((m) => ({ default: m.UserSettings })));
+const CreditsStore = lazy(() => import('@/components/credits/CreditsStore').then((m) => ({ default: m.CreditsStore })));
+const PaymentSuccess = lazy(() => import('@/components/PaymentSuccess').then((m) => ({ default: m.PaymentSuccess })));
 import { Badge } from '@/components/ui/badge';
 import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
@@ -25,8 +32,6 @@ import { cn } from '@/lib/utils';
 
 // Landing page (marketing) — the new design, rendered 1:1 from the authored HTML.
 import { LandingV2 } from '@/components/landing/LandingV2';
-import { CreditsStore } from '@/components/credits/CreditsStore';
-import { PaymentSuccess } from '@/components/PaymentSuccess';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { TourOverlay } from '@/components/tour/TourOverlay';
@@ -379,6 +384,11 @@ const Index = () => {
       )}
       
       <main className={cn("pb-safe", isMobile && "pb-20")}>
+        <Suspense fallback={
+          <div className="flex items-center justify-center py-24">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+          </div>
+        }>
         {showPaymentSuccess ? (
           <div className="container mx-auto px-4 py-8 max-w-3xl">
             <PaymentSuccess 
@@ -435,6 +445,7 @@ const Index = () => {
             <UserSettings />
           </div>
         )}
+        </Suspense>
       </main>
       </div>
 

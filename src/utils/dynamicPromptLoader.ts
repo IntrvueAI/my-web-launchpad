@@ -49,7 +49,7 @@ export const getAvailablePrompts = (): string[] => {
  * Preloads all available system prompts for better performance
  */
 export const preloadAllPrompts = async (): Promise<void> => {
-  console.log(`Preloaded ${Object.keys(promptModules).length} system prompts successfully`);
+  // All prompts are already loaded statically, so this is a no-op
 };
 
 /**

@@ -28,8 +28,6 @@ export const AdminUserManagement = () => {
   const { data: users, isLoading, refetch, error } = useQuery({
     queryKey: ['admin-users', searchTerm],
     queryFn: async () => {
-      console.log('Fetching users for admin dashboard...');
-      
       // Use basic admin check instead of enhanced one for now
       const { data: isAdminVerified, error: adminVerifyError } = await supabase.rpc('is_current_user_admin');
       
@@ -59,8 +57,6 @@ export const AdminUserManagement = () => {
         throw profilesError;
       }
 
-      console.log('Profiles data retrieved by admin');
-
       // Get credits for all users separately
       const { data: creditsData, error: creditsError } = await supabase
         .from('credits_balance')
@@ -70,8 +66,6 @@ export const AdminUserManagement = () => {
         console.error('Error fetching credits:', creditsError);
         // Don't throw error for credits, just log it
       }
-
-      console.log('Credits data retrieved by admin');
 
       // Map profiles with their credits
       const usersWithCredits = profilesData?.map(user => {
@@ -85,7 +79,6 @@ export const AdminUserManagement = () => {
         };
       }) || [];
 
-      console.log(`Admin accessed ${usersWithCredits.length} user records`);
       return usersWithCredits as UserWithCredits[];
     },
     refetchInterval: 30000,
@@ -106,8 +99,6 @@ export const AdminUserManagement = () => {
     }
 
     try {
-      console.log('Attempting credit action:', { userId: selectedUser.id, action: actionType, amount, email: selectedUser.email });
-      
       const { data, error } = await supabase.functions.invoke('admin-credit-management', {
         body: {
           userId: selectedUser.id,
@@ -116,8 +107,6 @@ export const AdminUserManagement = () => {
           targetUserEmail: selectedUser.email,
         }
       });
-
-      console.log('Credit action response:', { data, error });
 
       if (error) {
         console.error('Credit action error:', error);

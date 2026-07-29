@@ -20,7 +20,6 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
       const session = await SessionService.createSession(userId, interviewType);
       sessionIdRef.current = session.id;
       sessionReferenceRef.current = session.session_reference;
-      console.log('🟢 Interview session started:', session.session_reference);
       return session.session_reference;
     } catch (error) {
       console.warn('Session logging failed - using fallback:', error);
@@ -63,7 +62,6 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
     try {
       await SessionService.endSession(sessionIdRef.current, status === 'timeout' ? 'timed_out' : status);
       await logEvent('session_end', `Session ended with status: ${status}`, 'info', { final_status: status });
-      console.log('🔴 Interview session ended:', sessionReferenceRef.current, 'Status:', status);
     } catch (error) {
       console.warn('Failed to end session (continuing):', error);
     }

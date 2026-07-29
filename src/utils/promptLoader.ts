@@ -74,5 +74,4 @@ const getDefaultPrompt = (): string => {
  */
 export const preloadAllPrompts = async (): Promise<void> => {
   // All prompts are already loaded statically, so this is a no-op
-  console.log('All system prompts preloaded successfully');
 };

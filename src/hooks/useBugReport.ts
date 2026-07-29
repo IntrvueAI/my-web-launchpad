@@ -20,30 +20,16 @@ export const useBugReport = () => {
     setIsLoading(true);
     
     try {
-      console.log('🐛 [BugReport] Starting bug report submission...');
-      
       // Get session first to verify it exists
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      console.log('🐛 [BugReport] Session check:', {
-        hasSession: !!session,
-        hasAccessToken: !!session?.access_token,
-        tokenPreview: session?.access_token?.substring(0, 20) + '...',
-        expiresAt: session?.expires_at ? new Date(session.expires_at * 1000).toISOString() : 'N/A',
-        sessionError: sessionError?.message
-      });
+      if (sessionError) console.error('Bug report session check failed:', sessionError.message);
 
       if (!session || !session.access_token) {
         throw new Error('No valid session found. Please log in again.');
       }
 
       // Get user details
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      console.log('🐛 [BugReport] User check:', {
-        hasUser: !!user,
-        userId: user?.id,
-        userEmail: user?.email,
-        userError: userError?.message
-      });
+      const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
         throw new Error('You must be logged in to report a bug');
@@ -59,13 +45,6 @@ export const useBugReport = () => {
         });
         return false;
       }
-
-      console.log('🐛 [BugReport] Invoking edge function with data:', {
-        subject: data.subject,
-        category: data.category,
-        descriptionLength: data.description.length,
-        currentUrl: data.currentUrl
-      });
 
       await FeedbackService.submitBugReport(data);
 
