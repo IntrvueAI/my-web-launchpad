@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { PostSignupForm } from '@/components/PostSignupForm';
 import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
@@ -17,13 +18,18 @@ const InterviewSelection = lazy(() => import('@/components/InterviewSelection').
 const QuestionsHub = lazy(() => import('@/components/questions/QuestionsHub').then((m) => ({ default: m.QuestionsHub })));
 const AchievementsPage = lazy(() => import('@/components/AchievementsPage').then((m) => ({ default: m.AchievementsPage })));
 const GrownupView = lazy(() => import('@/components/GrownupView').then((m) => ({ default: m.GrownupView })));
-const LockerRoom = lazy(() => import('@/components/LockerRoom').then((m) => ({ default: m.LockerRoom })));
 const FeedbackHistory = lazy(() => import('@/components/FeedbackHistory').then((m) => ({ default: m.FeedbackHistory })));
 const UserSettings = lazy(() => import('@/components/UserSettings').then((m) => ({ default: m.UserSettings })));
 const CreditsStore = lazy(() => import('@/components/credits/CreditsStore').then((m) => ({ default: m.CreditsStore })));
 const PaymentSuccess = lazy(() => import('@/components/PaymentSuccess').then((m) => ({ default: m.PaymentSuccess })));
 import { Badge } from '@/components/ui/badge';
-import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut, UserCog } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -47,20 +53,37 @@ const Index = () => {
     setShowPostSignupForm
   } = useAuth();
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'locker' | 'grownup'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'grownup'>('dashboard');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
   // Testing aid: bump to force-restart the guided tour (see Dashboard's "Replay tour" button).
   const [tourRestartKey, setTourRestartKey] = useState(0);
-  // Dashboard 1 (top-nav) vs Dashboard 2 (left sidebar) — purely cosmetic chrome toggle, freely
-  // switchable, remembered across reloads. Desktop-only distinction; mobile looks the same either
-  // way (a fixed icon rail doesn't fit a phone).
+  // Dashboard 1 (top-nav) vs Dashboard 2 (left sidebar) — admin-only preview now, not a public
+  // toggle. Reachable via /admin's "Preview Dashboard 2" link (?dashboardLayout=sidebar) or the
+  // corner toggle, both hidden from regular users; non-admins are force-reset to topnav below in
+  // case a browser has a stale 'sidebar' value in localStorage from before this was admin-gated.
+  const { isAdmin } = useAdminStatus();
   const [dashboardLayout, setDashboardLayout] = useState<'topnav' | 'sidebar'>(
     () => (localStorage.getItem('intrvue-dashboard-layout') as 'topnav' | 'sidebar' | null) ?? 'topnav'
   );
   useEffect(() => {
     localStorage.setItem('intrvue-dashboard-layout', dashboardLayout);
   }, [dashboardLayout]);
+  useEffect(() => {
+    if (!isAdmin && dashboardLayout === 'sidebar') setDashboardLayout('topnav');
+  }, [isAdmin, dashboardLayout]);
+  useEffect(() => {
+    if (!isAdmin) return;
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get('dashboardLayout');
+    if (requested === 'sidebar' || requested === 'topnav') {
+      setDashboardLayout(requested);
+      params.delete('dashboardLayout');
+      const url = new URL(window.location.href);
+      url.search = params.toString();
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, [isAdmin]);
 
   const { credits, refetchCredits } = useCredits();
   const { toast } = useToast();
@@ -152,7 +175,7 @@ const Index = () => {
   }, [showPaymentSuccess, refetchCredits]);
 
   // Function to clear URL parameters and dismiss payment success
-  const clearPaymentSuccessAndNavigate = (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'locker' | 'grownup') => {
+  const clearPaymentSuccessAndNavigate = (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'grownup') => {
     // Clear URL parameters
     const url = new URL(window.location.href);
     url.searchParams.delete('session_id');
@@ -227,12 +250,10 @@ const Index = () => {
               <nav className="hidden lg:flex items-center gap-1 ml-3">
                 {([
                   ['dashboard', 'Home', undefined],
-                  ['selection', 'Practice', 'nav-practice'],
+                  ['selection', 'Practise', 'nav-practice'],
                   ['questions', 'Questions', 'nav-questions'],
+                  ['history', 'Feedback', 'nav-history'],
                   ['achievements', 'Achievements', 'nav-achievements'],
-                  ['locker', 'Locker room', undefined],
-                  ['history', 'My sessions', 'nav-history'],
-                  ['settings', 'Settings', undefined],
                   ['credits', 'Buy Credits', undefined],
                 ] as const).map(([view, label, tourKey]) => {
                   const active = currentView === view;
@@ -327,7 +348,7 @@ const Index = () => {
             )}
           </div>
           
-          {/* Desktop User Info — credits pill + Grown-up + avatar + Sign out (mock) */}
+          {/* Desktop User Info — credits pill + avatar (Settings/Grown-up/Sign out live in its dropdown) */}
           <div className="hidden md:flex items-center gap-2.5">
             <button
               onClick={() => setCurrentView('credits')}
@@ -335,33 +356,27 @@ const Index = () => {
             >
               {credits ?? 0} credits
             </button>
-            {currentView !== 'interview' && (
-              <button
-                onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('grownup') : setCurrentView('grownup')}
-                className={cn(
-                  'px-3.5 py-[7px] rounded-full text-[12.5px] font-extrabold whitespace-nowrap transition-colors border',
-                  currentView === 'grownup'
-                    ? 'bg-white/10 text-white border-white/15'
-                    : 'text-muted-foreground border-foreground/15 hover:text-white hover:bg-white/5',
-                )}
-              >
-                Grown-up
-              </button>
-            )}
-            <div
-              className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-rose flex items-center justify-center font-extrabold text-[13px] text-white select-none"
-              title={user.user_metadata?.full_name || user.email || undefined}
-              aria-hidden="true"
-            >
-              {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
-            </div>
-            <button
-              onClick={handleSignOut}
-              className="flex items-center gap-1.5 px-3 py-[7px] rounded-full text-[12.5px] font-extrabold text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              Sign out
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-rose flex items-center justify-center font-extrabold text-[13px] text-white select-none hover:opacity-90 transition-opacity"
+                  title={user.user_metadata?.full_name || user.email || undefined}
+                >
+                  {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('settings') : setCurrentView('settings')}>
+                  <Settings className="w-4 h-4 mr-2" /> Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('grownup') : setCurrentView('grownup')}>
+                  <UserCog className="w-4 h-4 mr-2" /> Grown-up view
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut}>
+                  <LogOut className="w-4 h-4 mr-2" /> Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           
           {/* Mobile User Info - Credits Badge Only */}
@@ -409,9 +424,7 @@ const Index = () => {
         ) : currentView === 'questions' ? (
           <QuestionsHub name={(user.user_metadata?.full_name as string | undefined)?.split(' ')[0] || user.email?.split('@')[0]} onViewHistory={() => setCurrentView('history')} />
         ) : currentView === 'achievements' ? (
-          <AchievementsPage onLockerRoom={() => setCurrentView('locker')} />
-        ) : currentView === 'locker' ? (
-          <LockerRoom onAchievements={() => setCurrentView('achievements')} />
+          <AchievementsPage />
         ) : currentView === 'grownup' ? (
           <GrownupView onBack={() => setCurrentView('dashboard')} />
         ) : currentView === 'interview' ? (
@@ -461,16 +474,18 @@ const Index = () => {
       {/* First-time guided tour — paused while another modal/form is already on top */}
       <TourOverlay suspended={showPostSignupForm || showPaymentSuccess} restartKey={tourRestartKey} />
 
-      {/* Dashboard layout toggle — freely switch between the top-nav and sidebar chrome.
-          Desktop-only (the sidebar itself doesn't apply on mobile, so there's nothing to toggle). */}
-      <button
-        type="button"
-        onClick={() => setDashboardLayout((l) => (l === 'topnav' ? 'sidebar' : 'topnav'))}
-        className="hidden md:flex fixed bottom-5 right-5 z-40 items-center gap-2 rounded-full border bg-card px-4 py-2.5 text-[12.5px] font-semibold shadow-medium hover:bg-accent transition-colors"
-      >
-        {dashboardLayout === 'topnav' ? <PanelLeft className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
-        Switch to {dashboardLayout === 'topnav' ? 'Dashboard 2' : 'Dashboard 1'}
-      </button>
+      {/* Dashboard layout toggle — admin-only (regular users always get top-nav). Desktop-only
+          (the sidebar itself doesn't apply on mobile, so there's nothing to toggle). */}
+      {isAdmin && (
+        <button
+          type="button"
+          onClick={() => setDashboardLayout((l) => (l === 'topnav' ? 'sidebar' : 'topnav'))}
+          className="hidden md:flex fixed bottom-5 right-5 z-40 items-center gap-2 rounded-full border bg-card px-4 py-2.5 text-[12.5px] font-semibold shadow-medium hover:bg-accent transition-colors"
+        >
+          {dashboardLayout === 'topnav' ? <PanelLeft className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
+          Admin: switch to {dashboardLayout === 'topnav' ? 'Dashboard 2' : 'Dashboard 1'}
+        </button>
+      )}
     </div>;
 };
 export default Index;

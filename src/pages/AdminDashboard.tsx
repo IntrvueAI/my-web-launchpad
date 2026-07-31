@@ -128,8 +128,8 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Shield className="h-5 w-5 text-primary" />
+          <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center p-1.5">
+            <img src="/lovable-uploads/icon-mark.png" alt="intrvue.ai" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
@@ -174,6 +174,11 @@ export default function AdminDashboard() {
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/demo-interviews" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3.5 w-3.5" /> Demo interviews
+            </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/?dashboardLayout=sidebar" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3.5 w-3.5" /> Preview Dashboard 2
             </Link>
           </Button>
         </div>

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
 import type { User } from '@supabase/supabase-js';
 
-export type View = 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'locker' | 'grownup';
+export type View = 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'grownup';
 
 interface SharedProps {
   currentView: View;
@@ -31,9 +31,8 @@ const NAV_ITEMS: { view: View; label: string; icon: React.ComponentType<{ classN
  * next to the EXISTING header/mobile-nav/main in Index.tsx — mobile keeps its current top bar +
  * bottom nav either way (a fixed icon rail doesn't fit a phone), so only desktop chrome changes.
  *
- * Locker Room has no icon of its own here (folded into Achievements, per spec) — AchievementsPage
- * already links to it internally, and the Achievements icon stays highlighted while there since
- * that's still "where you came from."
+ * Locker Room has no icon of its own here — it's a tab inside AchievementsPage now, not a
+ * separate view (see AchievementsPage.tsx).
  */
 export function SidebarNav({ currentView, onNavigate, onSignOut }: SidebarNavProps) {
   const { theme, toggleTheme } = useTheme();
@@ -51,7 +50,7 @@ export function SidebarNav({ currentView, onNavigate, onSignOut }: SidebarNavPro
 
       <nav className="flex flex-col items-center gap-1.5 w-full px-2">
         {NAV_ITEMS.map(({ view, label, icon: Icon }) => {
-          const active = currentView === view || (view === 'achievements' && currentView === 'locker');
+          const active = currentView === view;
           return (
             <button
               key={view}

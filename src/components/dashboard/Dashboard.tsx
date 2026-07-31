@@ -89,33 +89,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         <button
           onClick={onStartInterview}
           data-tour="start-interview"
-          className="md:row-span-2 relative overflow-hidden rounded-[20px] p-[22px] text-left flex flex-col justify-between"
+          title="Start a new mock interview"
+          className="group md:row-span-2 relative overflow-hidden rounded-[20px] p-[22px] text-left flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_16px_40px_-10px_rgba(244,63,94,.6)]"
           style={{ background: 'linear-gradient(150deg,#FF7F50,#F43F5E)' }}
         >
-          <Play className="absolute right-3 bottom-3 h-28 w-28 text-white/[0.14]" strokeWidth={1.2} />
+          <Play className="absolute right-3 bottom-3 h-28 w-28 text-white/[0.14] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" strokeWidth={1.2} />
           <div>
             <div className="text-xs font-extrabold uppercase tracking-wide text-white/85">Ready when you are</div>
             <div className="font-display text-[27px] font-semibold text-white leading-[1.1] mt-1.5">Start your next<br />interview</div>
             <p className="mt-2 text-[13px] font-bold text-white/90 max-w-[230px]">A friendly mock with instant feedback. Earn up to +200 XP!</p>
           </div>
-          <span className="mt-4 inline-flex items-center gap-1.5 self-start rounded-[14px] bg-white px-5 py-3 text-sm font-extrabold text-[#EF4444] shadow-lg">
+          <span className="mt-4 inline-flex items-center gap-1.5 self-start rounded-[14px] bg-white px-5 py-3 text-sm font-extrabold text-[#EF4444] shadow-lg transition-transform duration-200 group-hover:scale-105">
             <Play className="h-3 w-3 fill-current" /> Let&rsquo;s go
           </span>
         </button>
 
         {/* Level */}
-        <div onClick={onAchievements} className="rounded-[20px] p-[18px] text-white cursor-pointer transition-transform hover:-translate-y-0.5" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
+        <div onClick={onAchievements} title="See all achievements" className="group rounded-[20px] p-[18px] text-white cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_30px_-8px_rgba(139,92,246,.55)]" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
           <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-85">Level</div>
-          <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{level}<Trophy className="h-5 w-5" /></div>
+          <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{level}<Trophy className="h-5 w-5 transition-transform duration-200 group-hover:scale-125 group-hover:-rotate-6" /></div>
           <div className="h-2 rounded-full bg-white/25 overflow-hidden"><div className="h-full rounded-full bg-white" style={{ width: `${xpPct}%` }} /></div>
           <div className="text-[11px] font-bold mt-1.5 opacity-90">{xpInLevel} / {xpNeeded} XP</div>
         </div>
 
         {/* Avg score */}
-        <div className="tile p-[18px]">
+        <div title="Your average score across all interviews" className="group tile p-[18px] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_30px_-8px_rgba(56,189,248,.35)]">
           <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Avg score</div>
           <div className="flex items-center gap-2.5 mt-1.5">
-            <div className="relative w-14 h-14 flex-none">
+            <div className="relative w-14 h-14 flex-none transition-transform duration-200 group-hover:scale-110">
               <svg width="56" height="56" viewBox="0 0 56 56">
                 <circle cx="28" cy="28" r="23" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="6" />
                 <circle cx="28" cy="28" r="23" fill="none" stroke="hsl(var(--sky))" strokeWidth="6" strokeLinecap="round" strokeDasharray={scoreCirc} strokeDashoffset={scoreOffset} transform="rotate(-90 28 28)" />
@@ -132,14 +133,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         </div>
 
         {/* Streak */}
-        <div className="rounded-[20px] p-[18px] text-white" style={{ background: 'linear-gradient(150deg,#F59E0B,#EF4444)' }}>
+        <div title={streak > 0 ? `${streak}-day practice streak` : 'Start a practice streak'} className="group rounded-[20px] p-[18px] text-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_30px_-8px_rgba(239,68,68,.5)]" style={{ background: 'linear-gradient(150deg,#F59E0B,#EF4444)' }}>
           <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-85">Streak</div>
-          <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{streak}<Flame className="h-5 w-5 fill-white" /></div>
+          <div className="font-display text-[34px] font-semibold leading-none my-1 flex items-center gap-2">{streak}<Flame className="h-5 w-5 fill-white transition-transform duration-200 group-hover:scale-125" /></div>
           <div className="text-[11.5px] font-bold opacity-92">{streak > 0 ? `Practise today to make it ${streak + 1}!` : 'Practise today to start a streak!'}</div>
         </div>
 
         {/* Interviews done */}
-        <div className="tile p-[18px]">
+        <div title="Total interviews completed" className="group tile p-[18px] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_30px_-8px_rgba(56,189,248,.35)]">
           <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Interviews done</div>
           <div className="font-display text-[34px] font-semibold text-white leading-none my-1">{totalSessions}</div>
           <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden"><div className="h-full rounded-full bg-sky" style={{ width: `${donePct}%` }} /></div>
