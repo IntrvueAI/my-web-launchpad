@@ -45,6 +45,8 @@ export interface InterviewType {
    * conversation-creation and scoring plumbing (supabase/functions/tavus-*).
    */
   provider?: 'anam' | 'tavus' | 'anam-deepgram';
+  /** When true, hidden from the normal interview picker — only reachable from an admin page. */
+  adminOnly?: boolean;
 }
 
 export const INTERVIEW_TYPES: Record<string, InterviewType> = {
@@ -93,6 +95,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     engineDriven: true,
     engineSubject: 'elevenplus',
     provider: 'anam-deepgram',
+    adminOnly: true,
     preStartNote:
       "This is a new version of the main interview — same Clara, same questions, but listening " +
       "through a new speech engine we're testing. You're one of the first to try it.\n\n" +
@@ -597,7 +600,7 @@ export const getInterviewTypesByCategory = (category: InterviewType['category'])
 };
 
 export const getAllInterviewTypes = (): InterviewType[] => {
-  return Object.values(INTERVIEW_TYPES);
+  return Object.values(INTERVIEW_TYPES).filter((iv) => !iv.adminOnly);
 };
 
 export const getDefaultInterviewType = (): InterviewType => {

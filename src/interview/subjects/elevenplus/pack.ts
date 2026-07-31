@@ -47,9 +47,18 @@ export const elevenplusPack: SubjectPack = {
     'read a raw list of questions. On the harder problems, never reveal an answer — nudge with a ' +
     'smaller version or a fresh angle. Age-appropriate throughout; on ethics stay neutral and never ' +
     'impose your view.',
+  // Real variety on purpose: buildSystemPrompt picks one of these fresh each session as a loose
+  // style anchor for the opening greeting. A single hardcoded example in the prompt gets echoed
+  // near-verbatim turn after turn — a well-known LLM failure mode — so every interview sounding
+  // identical was a direct symptom of that, not a one-off. More entries here means more real
+  // entropy, not just an instruction hoping the model varies itself.
   openers: [
     "Hi, I'm Clara — I'll be your interviewer today. Nothing to be nervous about; just be yourself. To start, tell me a little about yourself and your family.",
     "Hello — I'm Clara, and I'll be interviewing you today. Try to relax, this is really just a chat. To begin, tell me a bit about yourself.",
+    "Hi there, I'm Clara — lovely to meet you. No need to be nervous, we're just going to have a chat. Why don't you start by telling me a bit about yourself?",
+    "Hello, I'm Clara, and I'll be chatting with you today. Take a breath, there's nothing to worry about — where should we start? Tell me about yourself.",
+    "Hi, I'm Clara. Thanks for coming in — try to relax, this is really just a conversation. Shall we start with you telling me a little about you and your family?",
+    "Hello — I'm Clara, I'll be your interviewer this morning. There's no need to be nervous at all; just be honest and be yourself. So, tell me a bit about you.",
   ],
   topics: [
     { id: 'family', label: 'Family', blurb: 'Home life, siblings, and family relationships.' },

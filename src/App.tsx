@@ -22,6 +22,7 @@ const AdminAboutPreview = lazy(() => import("./pages/AdminAboutPreview"));
 const AdminFaqPreview = lazy(() => import("./pages/AdminFaqPreview"));
 const AdminSttBakeoff = lazy(() => import("./pages/AdminSttBakeoff"));
 const AdminSchoolFinder = lazy(() => import("./pages/AdminSchoolFinder"));
+const AdminDemoInterviews = lazy(() => import("./pages/AdminDemoInterviews"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
 
@@ -119,6 +120,7 @@ const AppContent = () => {
               <Route path="/admin/faq-preview" element={<AdminFaqPreview />} />
               <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
               <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />
+              <Route path="/admin/demo-interviews" element={<AdminDemoInterviews />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route
                 path="/minigames"

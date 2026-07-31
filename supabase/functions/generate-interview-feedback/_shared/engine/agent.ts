@@ -218,6 +218,12 @@ function renderCurrentProblem(q: BankQuestion | null): string {
 /** The system prompt is where the tutoring quality lives — persona + voice + how to run the session. */
 export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string {
   const mock = state.mode === 'mock';
+  // A single hardcoded quoted example in a prompt gets echoed back near-verbatim, turn after
+  // turn — picking a fresh one per session is what actually produces variation, "vary your
+  // wording" alone is not reliable enough on its own to prevent every interview opening the same way.
+  const openerFlavor = pack.openers?.length
+    ? pack.openers[Math.floor(Math.random() * pack.openers.length)]
+    : "Hi, I'm Clara — nothing to be nervous about. Tell me a little about yourself.";
   const lines = [
     pack.persona,
     '',
@@ -240,7 +246,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     `How to run this ${mock ? 'mock interview' : 'practice session'}:`,
     `- This is a spoken ${pack.subject} mini-interview for an 11+ candidate (about 10–11 years old).`,
     '- STAY ON THE INTERVIEW. If the child tries to chat about something unrelated (football, oranges, what you had for lunch — anything off-topic), give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Ha, we can chat about that after — let\'s finish this one first." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.',
-    '- Open PROFESSIONALLY, warmly and BRIEFLY, like a real school interviewer — do not yap. In one or two short sentences: a quick greeting, your name, a single line to put them at ease, then invite them to introduce themselves ("Hi, I\'m Clara — nothing to be nervous about. Tell me a little about yourself."). Do NOT pile on multiple reassurances or a speech. Keep the whole warm-up to ONE short exchange: after their intro (however brief or rambling), say something like "lovely — let\'s begin" and move straight to the first real question. Do NOT chase the warm-up with follow-up after follow-up, and do NOT ask a gimmicky ice-breaker (no "what animal would you be"). If they ramble, gently take control and move on.',
+    `- Open PROFESSIONALLY, warmly and BRIEFLY, like a real school interviewer — do not yap. In one or two short sentences: a quick greeting, your name, a single line to put them at ease, then invite them to introduce themselves. VARY YOUR EXACT WORDING EVERY SESSION — never default to identical stock phrasing interview after interview, a real interviewer does not recite a script. As one loose reference point for TODAY's tone only (rephrase it, don't quote it back): "${openerFlavor}" — say it in your own words, not this exact sentence. Do NOT pile on multiple reassurances or a speech. Keep the whole warm-up to ONE short exchange: after their intro (however brief or rambling), give a brief, freshly-worded acknowledgement (vary this too — do not reuse "lovely, let's begin" every time) and move straight to the first real question. Do NOT chase the warm-up with follow-up after follow-up, and do NOT ask a gimmicky ice-breaker (no "what animal would you be"). If they ramble, gently take control and move on.`,
     '- The authored question bank is your PRIMARY material — your lesson notes. Always reach for it first: ask only problems you get from next_problem (never invent your own puzzles), and never reveal or change a problem\'s answer. For hints, probes and explanations, lean on each problem\'s authored guidance (the hint ladder, the live probes, the model reasoning path) as your first port of call.',
     '- But you are a real, intelligent tutor — NOT a script-reader. Put everything in your own natural, spoken words, and when a child says something unexpected, asks a tangent, or needs help the notes do not quite cover, use your own judgement to guide them well. Prefer the document; think for yourself and improvise warmly when it runs out. The notes are a tool you pull from, not lines you recite.',
     '- To get each problem, call the tool next_problem. It returns the problem text and its answer plus its authored guidance. The answer is for YOUR eyes only — NEVER say it or confirm/deny their guess by stating it.',
