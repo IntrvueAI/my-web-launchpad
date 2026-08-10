@@ -156,6 +156,11 @@ export default function AdminDashboard() {
               <ExternalLink className="h-3.5 w-3.5" /> FAQ
             </Link>
           </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/onboarding-preview" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3.5 w-3.5" /> Onboarding flow
+            </Link>
+          </Button>
         </div>
 
         {/* TEMP: internal testing tools, admin-only, not linked anywhere public. */}
