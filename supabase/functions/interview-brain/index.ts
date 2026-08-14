@@ -12,14 +12,16 @@ import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
 import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
+import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
 import type { BrainRequest, BrainResponse, Mode } from "./_shared/engine/types.ts";
 import mathsBank from "./_shared/maths-bank.json" with { type: "json" };
 import logicBank from "./_shared/logic-bank.json" with { type: "json" };
 import currentaffairsBank from "./_shared/currentaffairs-bank.json" with { type: "json" };
 import elevenplusBank from "./_shared/elevenplus-bank.json" with { type: "json" };
+import medicineBank from "./_shared/medicine-bank.json" with { type: "json" };
 
-const PACKS: Record<string, any> = { maths: mathsPack, logic: logicPack, currentaffairs: currentaffairsPack, elevenplus: elevenplusPack };
-const BANKS: Record<string, any> = { maths: mathsBank, logic: logicBank, currentaffairs: currentaffairsBank, elevenplus: elevenplusBank };
+const PACKS: Record<string, any> = { maths: mathsPack, logic: logicPack, currentaffairs: currentaffairsPack, elevenplus: elevenplusPack, medicine: medicinePack };
+const BANKS: Record<string, any> = { maths: mathsBank, logic: logicBank, currentaffairs: currentaffairsBank, elevenplus: elevenplusBank, medicine: medicineBank };
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -46,6 +48,7 @@ const SUBJECT_BY_TYPE: Record<string, string> = {
   "current-affairs-interview": "currentaffairs",
   "11-plus": "elevenplus",
   "11-plus-v2": "elevenplus",
+  "medicine-mmi": "medicine",
 };
 
 function safeParseArgs(s: string): Record<string, any> {

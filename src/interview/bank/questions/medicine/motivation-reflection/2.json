@@ -1,0 +1,302 @@
+[
+  {
+    "id": "MED-M1",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Why Medicine",
+    "tags": ["motivation", "reflection"],
+    "question": "Why do you want to study medicine? I'd like a specific, honest answer, not the version you think I want to hear.",
+    "answer": "No single correct answer. Assess specificity, honesty, and genuine reflection — not the content of the reason itself. A strong answer is grounded in a concrete experience or realisation, acknowledges the difficult and unglamorous parts of the career (not just the noble parts), and doesn't rely on generic lines like 'I want to help people' as the whole answer.",
+    "modelReasoningPath": "A strong candidate goes past the socially expected opening line ('I want to help people') to something specific and personally true — a particular experience, person, or moment that shaped the interest — and can explain WHY that experience mattered to them, not just describe it. They show awareness that medicine involves long hours, emotional difficulty, bureaucracy, and years of training, not just the rewarding moments, which signals they've thought realistically about the career rather than romanticised it.",
+    "rubric": {
+      "strong": "Gives a specific, personal reason grounded in real experience or reflection, explains the reasoning behind it rather than just describing the experience, and shows awareness of the harder or less glamorous realities of the career.",
+      "developing": "Gives a reason that's somewhat personal but stays fairly general or surface-level, or only mentions the positive/appealing side of medicine without prompting.",
+      "weak": "Relies entirely on a generic, rehearsed line ('I've always wanted to help people') with no specific example or personal reflection behind it."
+    },
+    "commonMistakes": [
+      { "mistake": "Answers only with 'I want to help people' and stops there", "reveals": "Hasn't done the reflective work to identify what's specifically true and personal about their own motivation" },
+      { "mistake": "Only mentions the appealing or noble parts of medicine (saving lives, being respected)", "reveals": "May not have engaged realistically with the demanding, unglamorous, and emotionally difficult sides of the career" }
+    ],
+    "liveProbes": [
+      { "probe": "Plenty of careers let you help people — why medicine specifically, and not nursing, social work, or something else?", "goodResponse": "Engages seriously with what's distinctive about being a doctor specifically, rather than repeating a generic 'helping people' framing" },
+      { "probe": "What's the least appealing part of a doctor's working life that you've thought about?", "goodResponse": "Names something genuine and specific (long hours, emotionally difficult conversations, bureaucracy, delayed gratification of training) rather than deflecting the question" }
+    ],
+    "hints": [
+      "Try to think of one specific moment or experience, not a general feeling.",
+      "What's different about medicine specifically, compared to other caring professions?",
+      "Have you thought about the hard parts of the job, not just the rewarding ones?"
+    ]
+  },
+  {
+    "id": "MED-M2",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "A Difficult Team Experience",
+    "tags": ["teamwork", "reflection"],
+    "question": "Tell me about a time you worked in a team and it didn't go well. What happened, and what did you learn?",
+    "answer": "No single correct answer. Assess whether they give a genuine example of difficulty (not a disguised humble-brag), take real ownership of their own part in it, and articulate a specific, credible lesson rather than a vague platitude.",
+    "modelReasoningPath": "A strong candidate picks a genuine example where something actually went wrong — not a thinly disguised success story ('we disagreed but then we won the competition!'). They take real ownership of their own role in the difficulty, rather than placing all the blame elsewhere, and describe a specific, concrete change in how they now approach teamwork, not a vague statement like 'I learned communication is important'.",
+    "rubric": {
+      "strong": "Describes a genuine team difficulty with honest detail, takes clear ownership of their own contribution to the problem (not just others' faults), and names a specific, credible lesson or change in behaviour since.",
+      "developing": "Gives a real example but is vague about their own role, or the lesson learned is generic ('teamwork is important') rather than specific.",
+      "weak": "Describes a disguised success story with no real difficulty, or blames the difficulty entirely on other people with no self-reflection."
+    },
+    "commonMistakes": [
+      { "mistake": "Picks an example that's actually a success story in disguise", "reveals": "Is avoiding genuine vulnerability or hasn't understood the question is looking for real difficulty" },
+      { "mistake": "Blames teammates entirely with no acknowledgment of their own part", "reveals": "May lack self-awareness or the capacity for honest self-reflection, both important for working in clinical teams" }
+    ],
+    "liveProbes": [
+      { "probe": "What was YOUR part in why it went wrong — not what others did?", "goodResponse": "Takes genuine ownership rather than redirecting back to other people's behaviour" },
+      { "probe": "If the exact same situation happened again tomorrow, what would you specifically do differently?", "goodResponse": "Names a concrete, specific action rather than a vague intention" }
+    ],
+    "hints": [
+      "Try to think of a moment where something genuinely went wrong, not a near-miss success.",
+      "What did YOU do, or not do, that contributed to the problem?",
+      "Can you name one specific thing you'd do differently next time?"
+    ]
+  },
+  {
+    "id": "MED-M3",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "A Mistake You Made",
+    "tags": ["failure", "reflection", "honesty"],
+    "question": "Tell me about a time you made a genuine mistake — academic, personal, anything — and what it taught you.",
+    "answer": "No single correct answer. Assess honesty (a real mistake, not a disguised strength), the depth of reflection, and whether the stated lesson is specific and credible rather than a rehearsed-sounding platitude.",
+    "modelReasoningPath": "A strong candidate is willing to be genuinely vulnerable and name a real mistake, rather than the classic interview dodge of describing a 'flaw' that's secretly a strength ('I work too hard' or 'I care too much'). They take clear ownership without excessive self-flagellation, and describe a specific, believable change in behaviour or thinking since — something that sounds like it actually happened, not a lesson manufactured to sound good in an interview.",
+    "rubric": {
+      "strong": "Names a genuine, specific mistake with real honesty, takes clear ownership without deflecting blame, and describes a credible, specific lesson or change since.",
+      "developing": "Gives a real mistake but the reflection is somewhat shallow or the 'lesson' sounds rehearsed rather than genuinely earned.",
+      "weak": "Describes a disguised strength as a weakness ('I care too much about getting things right'), or gives no real ownership of the mistake."
+    },
+    "commonMistakes": [
+      { "mistake": "Answers with a classic disguised-strength dodge ('I'm a perfectionist' or 'I work too hard')", "reveals": "Is avoiding genuine vulnerability rather than engaging honestly with the question" },
+      { "mistake": "Describes the mistake but the stated lesson doesn't actually follow from it, or sounds generic", "reveals": "May not have genuinely reflected on the experience, just prepared an answer that sounds reflective" }
+    ],
+    "liveProbes": [
+      { "probe": "That sounds like it worked out fine in the end — was there a real cost to this mistake?", "goodResponse": "Is honest about genuine consequences rather than minimising them to make the story more comfortable" },
+      { "probe": "How do you know you've actually changed, rather than just knowing you're supposed to say you have?", "goodResponse": "Points to a specific instance since where they behaved differently, rather than just asserting they've changed" }
+    ],
+    "hints": [
+      "Try to think of something that had a real, uncomfortable consequence.",
+      "Is the lesson you're describing something you can point to evidence of, since then?",
+      "Avoid a 'weakness' that's secretly a strength — what's a genuine mistake?"
+    ]
+  },
+  {
+    "id": "MED-M4",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Work Experience Reality Check",
+    "tags": ["work-experience", "reflection", "realism"],
+    "question": "Tell me about a piece of work experience, volunteering, or shadowing you've done. What did it teach you about the REALITY of a medical career, as opposed to what you expected beforehand?",
+    "answer": "No single correct answer. Assess whether they describe a genuine shift in understanding (something they didn't expect, learned, or found harder/different than imagined) rather than simply listing what they did or restating that it 'confirmed' their existing view with no new insight.",
+    "modelReasoningPath": "A strong candidate identifies a genuine gap between what they expected beforehand and what they actually observed — this shows real engagement and reflection, not just box-ticking. It could be about the emotional weight of certain conversations, the amount of non-clinical admin work, the pace and unpredictability, or the teamwork involved. A weaker candidate simply narrates what they did ('I shadowed a GP for a week') without reflecting on what it changed in their understanding.",
+    "rubric": {
+      "strong": "Identifies a specific, genuine shift in understanding — something unexpected, harder, or different from what they assumed beforehand — with concrete detail from the experience.",
+      "developing": "Describes the experience reasonably but the 'lesson' is vague or just confirms what they already believed with no real new insight.",
+      "weak": "Simply lists what they did with no reflection at all on what it taught them or changed in their thinking."
+    },
+    "commonMistakes": [
+      { "mistake": "Just narrates a timeline of what they did ('first I observed X, then I did Y')", "reveals": "Hasn't engaged with the reflective part of the question, only the descriptive part" },
+      { "mistake": "Says the experience 'confirmed everything I already thought' with no specific new insight", "reveals": "May not have engaged critically with the experience, or is giving a safe but unreflective answer" }
+    ],
+    "liveProbes": [
+      { "probe": "What's something that surprised you, even a small thing?", "goodResponse": "Names something specific and genuine, even if minor, rather than insisting nothing was surprising" },
+      { "probe": "Did anything make you question whether medicine is really right for you?", "goodResponse": "Engages honestly with this rather than reflexively denying any doubt at all" }
+    ],
+    "hints": [
+      "Try to think of one moment that didn't match what you expected beforehand.",
+      "What was harder, less glamorous, or more surprising than you imagined?",
+      "Did you see anything that made you think differently about the job?"
+    ]
+  },
+  {
+    "id": "MED-M5",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Handling Pressure",
+    "tags": ["resilience", "reflection"],
+    "question": "Medicine involves real pressure — long hours, high stakes, difficult news. Tell me about a genuinely stressful situation you've faced, and how you actually handled it.",
+    "answer": "No single correct answer. Assess whether they give a specific, real example of stress (not a vague generalisation), describe honestly how they coped — including anything that DIDN'T work well — and show self-awareness about their own coping style rather than an idealised version of themselves.",
+    "modelReasoningPath": "A strong candidate names a specific, genuinely stressful situation rather than a vague generalisation ('exams are stressful'). They describe their actual coping strategy with enough concrete detail to sound real, and — crucially — are willing to admit the coping wasn't perfect or that they're still working on it, rather than presenting an implausibly polished picture of themselves handling every pressure flawlessly.",
+    "rubric": {
+      "strong": "Gives a specific, genuine example of a stressful situation, describes concrete coping strategies with real detail, and shows honest self-awareness including imperfections or ongoing growth areas.",
+      "developing": "Gives a real example but the coping description is generic ('I just stayed calm and focused'), or the account sounds slightly too polished to be fully honest.",
+      "weak": "Gives a vague, generic example with no specific detail, or claims to have handled it perfectly with no honest reflection on difficulty."
+    },
+    "commonMistakes": [
+      { "mistake": "Says something vague like 'I just try to stay positive' with no concrete detail", "reveals": "Hasn't given a specific enough answer to demonstrate genuine self-awareness or a real coping strategy" },
+      { "mistake": "Presents themselves as having handled the stress perfectly with no difficulty at all", "reveals": "May be giving an idealised rather than honest account — real resilience usually includes some struggle" }
+    ],
+    "liveProbes": [
+      { "probe": "Was there a moment during that situation where your coping strategy DIDN'T work?", "goodResponse": "Honestly acknowledges a moment of real struggle rather than insisting everything went smoothly throughout" },
+      { "probe": "What do you do now, differently, because of that experience?", "goodResponse": "Names something concrete and specific they've changed, rather than a vague statement about being 'more resilient now'" }
+    ],
+    "hints": [
+      "Try to think of one specific moment, not a general category of stress like 'exams'.",
+      "What did you actually DO, step by step, to cope?",
+      "Was there a part of it that didn't go well, or that you're still working on?"
+    ]
+  },
+  {
+    "id": "MED-M6",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "A Time You Led Something",
+    "tags": ["leadership", "reflection"],
+    "question": "Tell me about a time you took the lead on something — formally or informally. What made it work, or not work?",
+    "answer": "No single correct answer. Assess whether the example shows genuine initiative and specific detail about what leadership actually looked like in practice (not just a title held), and honest reflection on what did or didn't go well, rather than a purely self-congratulatory account.",
+    "modelReasoningPath": "A strong candidate picks a concrete example where they can describe SPECIFIC actions they took to lead, not just a role or title they held ('I was team captain' says nothing on its own — what did they actually DO as captain?). They show awareness that leadership isn't just giving instructions — it might involve listening, delegating, resolving a disagreement, or motivating someone struggling. A genuinely strong answer includes honest reflection on something that didn't go perfectly, showing self-awareness rather than presenting an implausibly flawless account of their own leadership.",
+    "rubric": {
+      "strong": "Describes specific actions taken (not just a title held), shows understanding that leadership involves more than giving orders, and reflects honestly on what worked and what didn't.",
+      "developing": "Names a leadership role but the description stays fairly generic about what they actually did, or the reflection is one-sided (all positive).",
+      "weak": "Names a title or position with no concrete description of actions taken, or takes full credit for a group's success with no reflection."
+    },
+    "commonMistakes": [
+      { "mistake": "Describes holding a title (captain, prefect, project lead) with no detail on specific actions taken", "reveals": "Hasn't reflected on what leadership actually involved in practice, only that they held a position" },
+      { "mistake": "Presents the experience as a flawless success with no honest reflection on difficulty", "reveals": "May be less self-aware, or is giving a polished rather than genuine account" }
+    ],
+    "liveProbes": [
+      { "probe": "Was there a moment someone disagreed with your approach — what did you do?", "goodResponse": "Describes a specific, real moment of friction and how they actually handled it, rather than claiming universal agreement" },
+      { "probe": "What would you do differently if you led the same thing again?", "goodResponse": "Names a specific, genuine change rather than a vague 'communicate better'" }
+    ],
+    "hints": [
+      "Try to describe specific actions you took, not just the role or title you held.",
+      "Was there a moment of disagreement or difficulty you had to navigate?",
+      "What's one thing you'd genuinely do differently next time?"
+    ]
+  },
+  {
+    "id": "MED-M7",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Communicating Across a Barrier",
+    "tags": ["communication", "empathy", "reflection"],
+    "question": "Tell me about a time you had to communicate something important to someone when there was a real barrier — a language difference, an age gap, a difference in understanding, or something else. How did you handle it?",
+    "answer": "No single correct answer. Assess whether the example is specific and genuine, whether they describe concrete adaptations they made to communicate effectively (not just 'I spoke slowly and clearly'), and whether they reflect on how they knew or checked that the communication had actually worked.",
+    "modelReasoningPath": "A strong candidate picks a real, specific example — this could be with a grandparent, a young child, someone with a different first language, or someone with a different level of technical understanding. They describe concrete adaptations (using simpler language, checking understanding by asking the person to explain it back, using an analogy, being patient with repetition) rather than just asserting they communicated well. A genuinely strong answer reflects on how they actually KNEW the communication worked — did they check, or just assume — since checking understanding is a core clinical communication skill.",
+    "rubric": {
+      "strong": "Gives a specific example with concrete adaptations described, and explains how they checked or confirmed the communication actually landed, rather than assuming it did.",
+      "developing": "Gives a real example but the adaptations described are vague ('I explained clearly'), or there's no reflection on whether it actually worked.",
+      "weak": "Gives a generic or hypothetical answer with no specific real example, or shows no awareness of the need to check understanding."
+    },
+    "commonMistakes": [
+      { "mistake": "Describes only 'speaking slowly and clearly' with no other adaptation", "reveals": "Hasn't thought deeply about what genuinely effective cross-barrier communication requires beyond volume and pace" },
+      { "mistake": "Assumes the communication worked with no mention of checking understanding", "reveals": "Misses a core communication principle — that the speaker's intention isn't the same as the listener's actual understanding" }
+    ],
+    "liveProbes": [
+      { "probe": "How did you actually know they understood, rather than just nodding politely?", "goodResponse": "Describes a specific check — asking them to explain it back, asking a follow-up question, observing their subsequent actions" },
+      { "probe": "What would you do differently if it happened again?", "goodResponse": "Names something specific and genuine rather than a generic 'be more patient'" }
+    ],
+    "hints": [
+      "What specific adaptation did you make, beyond just speaking slower?",
+      "How did you check whether the message had actually landed?",
+      "Was there a moment it wasn't working, and what did you do then?"
+    ]
+  },
+  {
+    "id": "MED-M8",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Disagreeing With Someone in Authority",
+    "tags": ["professionalism", "reflection", "hierarchy"],
+    "question": "Tell me about a time you disagreed with a decision made by someone in authority over you — a teacher, a coach, a boss. What did you do?",
+    "answer": "No single correct answer. Assess whether the candidate describes handling the disagreement respectfully and constructively (not simply complying silently, and not being insubordinate), and whether they show genuine reflection on the outcome, including if they turned out to be wrong.",
+    "modelReasoningPath": "A strong candidate describes a real instance of disagreement and how they navigated the tension between respecting the person's authority/experience and voicing a genuine concern. This could involve raising the disagreement privately and respectfully, providing reasoning rather than just objecting, and accepting the final decision professionally even if it didn't go their way. A genuinely strong answer is honest about the outcome — including if they were ultimately wrong, or if the authority figure had context they didn't — showing they can hold a view without needing to have been right to find the experience valuable.",
+    "rubric": {
+      "strong": "Describes raising the disagreement respectfully and with reasoning, shows they can accept a decision professionally even without agreeing, and reflects honestly on the outcome including any ways they were wrong or learned something.",
+      "developing": "Describes a real disagreement but the resolution is vague, or the reflection doesn't seriously engage with the possibility they were wrong.",
+      "weak": "Describes either simply complying with no real engagement, or being confrontational/insubordinate with no awareness that this would be inappropriate in a clinical hierarchy."
+    },
+    "commonMistakes": [
+      { "mistake": "Describes the disagreement resolving because they 'won' or were proven completely right", "reveals": "May be selecting an example that avoids genuine reflection on complexity or being wrong" },
+      { "mistake": "Says they'd never disagree with someone in authority", "reveals": "May not understand that raising genuine, respectful concerns (including patient-safety-adjacent ones) is sometimes professionally necessary, not simply insubordinate" }
+    ],
+    "liveProbes": [
+      { "probe": "Looking back, do you think you were right to disagree?", "goodResponse": "Gives an honest, nuanced answer rather than automatically defending their original position" },
+      { "probe": "How did you raise it, specifically — what did you actually say?", "goodResponse": "Describes a concrete, respectful approach rather than a vague description" }
+    ],
+    "hints": [
+      "How did you actually raise the disagreement — what did you say, and to whom?",
+      "Looking back honestly, were you right?",
+      "How did you handle it if the final decision didn't go your way?"
+    ]
+  },
+  {
+    "id": "MED-M9",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Handling an Unsuccessful Outcome",
+    "tags": ["resilience", "reflection", "honesty"],
+    "question": "Tell me about a time you worked hard toward something and it didn't work out — you didn't get the grade, the place, the result you wanted. How did you respond?",
+    "answer": "No single correct answer. Assess honesty about the disappointment (rather than pretending it didn't matter), and whether they describe a genuine, specific process of moving forward rather than a vague platitude like 'I just tried harder next time'.",
+    "modelReasoningPath": "A strong candidate is honest that the setback was genuinely disappointing, rather than performing indifference to seem resilient. They describe a specific, credible process of processing the disappointment and moving forward — what they actually did differently, what they learned about themselves, or how they sought feedback or support. This is directly relevant to medicine, a career with high stakes and frequent setbacks (competitive training posts, difficult outcomes despite best efforts), so genuine evidence of resilience — not the performance of resilience — matters.",
+    "rubric": {
+      "strong": "Is honest about genuine disappointment, describes a specific and credible process of responding and moving forward, and shows real self-reflection about what they learned.",
+      "developing": "Gives a real example but the response described is somewhat generic ('I just worked harder'), without specific detail.",
+      "weak": "Claims the setback didn't really bother them, or gives no specific detail about how they actually responded."
+    },
+    "commonMistakes": [
+      { "mistake": "Says the setback 'didn't really affect me' or similar", "reveals": "May be performing resilience rather than demonstrating genuine emotional honesty and self-reflection" },
+      { "mistake": "Gives only a generic response ('I worked harder next time') with no specific detail", "reveals": "Hasn't reflected deeply enough on what actually changed in their approach" }
+    ],
+    "liveProbes": [
+      { "probe": "What did you actually change afterward, specifically?", "goodResponse": "Names a concrete, specific change rather than a vague intention" },
+      { "probe": "Did anyone help you process it, or did you do it alone?", "goodResponse": "Answers honestly, showing self-awareness about how they cope, including whether they sought support" }
+    ],
+    "hints": [
+      "Be honest about how it actually felt at the time.",
+      "What specifically did you do differently afterward?",
+      "Did you talk to anyone about it, or process it on your own?"
+    ]
+  },
+  {
+    "id": "MED-M10",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "The Realities of Training",
+    "tags": ["motivation", "realism", "reflection"],
+    "question": "Medical training takes at least five or six years at university, followed by many more years of postgraduate training before you're fully qualified in a specialty — often a decade or more in total. What have you actually done to understand whether that reality is right for you?",
+    "answer": "No single correct answer. Assess whether the candidate has done genuine, specific research or reflection into the length and structure of training (not just a vague awareness that 'it takes a long time'), and whether they can speak honestly about the trade-offs involved rather than only the appeal of the eventual outcome.",
+    "modelReasoningPath": "A strong candidate goes beyond a generic acknowledgement that training is long, and describes something SPECIFIC they've done to understand it — talking to a junior doctor or medical student about their actual experience, researching the structure of postgraduate training, or reflecting on a work experience placement that gave them a realistic view. They're able to speak honestly about the trade-offs (delayed independence, delayed earning potential relative to some other paths, the demands of exams throughout training) rather than only focusing on the appeal of eventually being a doctor.",
+    "rubric": {
+      "strong": "Describes specific, genuine research or experience that informed their understanding of training length and structure, and can speak honestly about real trade-offs, not just the appeal of the destination.",
+      "developing": "Shows general awareness that training is long but hasn't done much specific research, or only discusses the appeal rather than genuine trade-offs.",
+      "weak": "Gives a vague or dismissive answer ('I know it's long but I'm ready') with no specific evidence of having engaged with what that actually means."
+    },
+    "commonMistakes": [
+      { "mistake": "Says simply 'I know it will be hard but I'm committed' with no specific detail", "reveals": "Hasn't done the concrete research or reflection the question is actually asking about" },
+      { "mistake": "Only discusses the appeal of eventually qualifying, not the years of training itself", "reveals": "May be focused on the destination without having genuinely grappled with the long process required to get there" }
+    ],
+    "liveProbes": [
+      { "probe": "What's the one part of the training pathway that concerns you the most, honestly?", "goodResponse": "Names something specific and genuine, showing they've actually thought about the realistic downsides, not just the positives" },
+      { "probe": "Have you spoken to anyone currently going through training?", "goodResponse": "Describes a specific conversation or source of insight, rather than a vague general awareness" }
+    ],
+    "hints": [
+      "What SPECIFIC thing have you done to research the actual training pathway?",
+      "What's a genuine downside or difficulty of the training process, not just the appeal of the end result?",
+      "Have you spoken to anyone currently in training, or read about their real experience?"
+    ]
+  }
+]

@@ -21,7 +21,7 @@ import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut, ExternalLink } from 'lucide-react';
+import { Shield, LogOut, ExternalLink, Stethoscope } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { isAdmin, isLoading, error } = useAdminStatus();
@@ -179,6 +179,11 @@ export default function AdminDashboard() {
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/demo-interviews" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3.5 w-3.5" /> Demo interviews
+            </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/medicine-interviews" target="_blank" rel="noopener noreferrer">
+              <Stethoscope className="h-3.5 w-3.5" /> Medicine interviews
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>

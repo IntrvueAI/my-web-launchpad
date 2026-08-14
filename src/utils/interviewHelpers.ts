@@ -16,6 +16,7 @@ const SHORT_INTERVIEW_LABELS: Record<string, string> = {
   'logic-puzzles': '11+ Logic',
   'maths-interview': 'Maths',
   'current-affairs-interview': 'Current Affairs',
+  'medicine-mmi': 'Medicine MMI',
   'demo': 'Demo',
 };
 

@@ -1,0 +1,1426 @@
+[
+  {
+    "id": "MED-D1",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "The Morning Queue",
+    "tags": [
+      "prioritisation",
+      "triage",
+      "judgement"
+    ],
+    "question": "You're helping run a busy GP morning clinic with only three appointment slots left before lunch, but four patients waiting: a child with a mild fever and a rash that started this morning; a man in his 70s with sudden chest pain that started twenty minutes ago; a woman asking for a repeat prescription she's collected many times before; and a teenager who twisted their ankle playing sport yesterday and can now walk on it. How would you prioritise seeing them?",
+    "answer": "The defensible strong ranking: the 70s man with sudden chest pain first (a genuine medical emergency needing immediate action, possibly redirected to emergency care rather than waiting at all), then the child with fever and new rash (rash plus fever in a child can indicate something serious and time-sensitive, worth same-day assessment), then either the repeat prescription or the ankle depending on how they're reasoned — both are lower urgency and could reasonably be the one deferred or handled administratively (e.g. the prescription may not need a full appointment at all). The KEY assessed skill is the justification and the criteria used (urgency/risk of harm from delay), not memorising this exact order.",
+    "modelReasoningPath": "A strong candidate reasons explicitly about URGENCY and RISK OF HARM FROM DELAY, not just how unwell someone currently seems. Sudden chest pain in an older adult is flagged immediately as a potential cardiac emergency — every candidate should recognise this needs urgent attention, arguably before or instead of a routine slot at all. Fever plus a new rash in a child is flagged as something that COULD be serious (some serious infections present exactly this way) even though it might turn out to be nothing, so waiting is riskier than it looks. The repeat prescription and the day-old ankle are both lower risk from a short delay, and a strong candidate notices the prescription might not need a face-to-face slot at all. What's being tested is whether they reason about urgency/risk systematically, not whether they land on the exact 'expected' order.",
+    "rubric": {
+      "strong": "Explicitly reasons using urgency/risk-of-delay as the ranking criterion, correctly flags the chest pain as most urgent with a clear reason (possible cardiac event), engages seriously with the fever-plus-rash case rather than dismissing it as 'just a child', and justifies wherever the last two are placed.",
+      "developing": "Reaches a broadly sensible order but the reasoning is thin (e.g. 'the old man seems worst') without naming why, or doesn't seriously consider the fever/rash case.",
+      "weak": "Ranks based on unrelated factors (e.g. who arrived first, who seems most upset) with no clinical-urgency reasoning, or fails to flag the chest pain as urgent."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Puts the ankle injury or prescription ahead of the fever/rash child",
+        "reveals": "Hasn't recognised that a new rash with fever in a child is a genuine red-flag combination worth taking seriously, even without a firm diagnosis"
+      },
+      {
+        "mistake": "Treats all four as roughly equal and just goes in arrival order",
+        "reveals": "Is avoiding the actual task of the question, which is to demonstrate prioritisation reasoning, not fairness by turn order"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Why is sudden chest pain more urgent than a fever that's been building for hours?",
+        "goodResponse": "Explains that suddenness and the specific combination of symptoms (chest pain, older adult) suggests a time-critical emergency versus a more gradual, lower-immediate-risk presentation"
+      },
+      {
+        "probe": "Could the repeat prescription actually be dealt with without using one of the three slots at all?",
+        "goodResponse": "Considers that routine repeat prescriptions are often handled administratively rather than needing a GP appointment"
+      }
+    ],
+    "hints": [
+      "Which of these four could deteriorate seriously if made to wait?",
+      "What does 'new' or 'sudden' tell you that 'ongoing' or 'routine' doesn't?",
+      "Does every one of these four actually need a full appointment slot at all?"
+    ]
+  },
+  {
+    "id": "MED-D2",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "Reading a Waiting-List Claim",
+    "tags": [
+      "statistics",
+      "critical-thinking",
+      "healthcare-policy"
+    ],
+    "question": "A news headline says: \"Hospital waiting lists have grown by 40% this year — proof the NHS is getting worse.\" Before you accept that conclusion, what questions would you want to ask about this statistic?",
+    "answer": "Not a single fixed answer, but a strong response interrogates the claim rather than accepting it: what's the baseline number (40% of a small number can be a small absolute change); is this list length or wait TIME (a longer list isn't the same as longer waits, e.g. if more people are being referred in a growing population); has demand or population size changed; has the definition or measurement of the list changed; is this one hospital, one region, or national; and does 'the NHS getting worse' actually follow from a waiting list number, or are there other explanations (more people seeking care, more conditions now treatable, etc.)?",
+    "modelReasoningPath": "A strong candidate doesn't accept or reject the headline outright — they interrogate the STATISTIC itself. They ask about the baseline (a 40% rise from 10 to 14 is very different from 100,000 to 140,000), what exactly is being measured (list length vs. actual wait times vs. one hospital vs. national), whether the population or demand has changed (more referrals could mean more people seeking help, not necessarily worse care), and whether there are alternative explanations for the same number. This shows genuine statistical/critical literacy rather than either naive acceptance or reflexive scepticism.",
+    "rubric": {
+      "strong": "Raises several genuinely different lines of questioning (baseline/scale, what's measured, denominator/population change, alternative explanations) rather than one single objection, and explains WHY each one matters for interpreting the number correctly.",
+      "developing": "Raises one reasonable question (e.g. 'what's the actual number') but doesn't push further into other angles without prompting.",
+      "weak": "Either accepts the headline's conclusion at face value, or simply says 'statistics can be misleading' with no specific, substantive question raised."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says 'the news always exaggerates' with no specific reasoning about THIS number",
+        "reveals": "Is expressing generic scepticism rather than doing the actual analytical work of interrogating a statistic"
+      },
+      {
+        "mistake": "Immediately accepts the 40% figure as proof of decline with no further questions",
+        "reveals": "Hasn't recognised that a percentage without context (baseline, what's measured) can be highly misleading"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If the waiting list grew because more people are coming forward for care they'd previously avoided, would that still mean the NHS is 'getting worse'?",
+        "goodResponse": "Considers that a rising list could reflect increased access or demand rather than declining quality of care"
+      },
+      {
+        "probe": "Does a longer waiting LIST necessarily mean longer waiting TIMES for any individual patient?",
+        "goodResponse": "Distinguishes between the size of a list and the actual experience of individual patients on it"
+      }
+    ],
+    "hints": [
+      "What's missing from '40%' on its own — what would you want to know that number as a percentage OF?",
+      "Is a longer list the same thing as a longer wait for any one person?",
+      "Could there be a reason for this number that ISN'T 'the NHS getting worse'?"
+    ]
+  },
+  {
+    "id": "MED-D3",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "The Screening Test Result",
+    "tags": [
+      "risk",
+      "statistics",
+      "probability"
+    ],
+    "question": "A screening test for a certain condition is 95% accurate. A patient tests positive. They immediately assume they have a 95% chance of having the condition. Talk me through whether that's the right way to think about it.",
+    "answer": "It is generally NOT correct without more information — this is testing awareness of base-rate/false-positive reasoning (related to the real-world 'base rate fallacy'). If the condition is rare in the population being screened, even a 95%-accurate test can mean MOST positive results are false positives, because the large pool of healthy people being tested produces more false positives in absolute terms than the small pool of genuinely affected people produces true positives. A strong candidate doesn't need to calculate exact numbers, but should recognise that accuracy alone, without knowing how common the condition is, is not enough to know the real chance they have it.",
+    "modelReasoningPath": "A strong candidate recognises this is testing whether they blindly accept '95% accurate = 95% chance I have it', or think more carefully. The key insight (the candidate doesn't need the exact maths, just the concept): if very few people in the tested population actually HAVE the condition, then even a small false-positive rate applied to a huge number of healthy people can produce more false positives in absolute terms than true positives from the small group who are actually ill. So the real chance of having the condition given a positive result depends on how COMMON the condition is, not just on the test's accuracy alone. A candidate who can even gesture at 'it depends how rare the condition is' is showing strong reasoning here.",
+    "rubric": {
+      "strong": "Explicitly identifies that test accuracy alone doesn't tell you the chance of actually having the condition — that how common the condition is in the population matters too — even without doing precise maths.",
+      "developing": "Senses something is off about the assumption but can't clearly articulate why, or needs a strong hint to get there.",
+      "weak": "Agrees the patient's 95% assumption is correct with no further probing, or cannot engage with the concept even after a hint."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Confirms the patient's logic is correct ('yes, 95% accurate means 95% chance they have it')",
+        "reveals": "Hasn't recognised the difference between test accuracy and the actual probability of having the condition given a positive result — a very common and important reasoning error to be aware of before medical school"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If this condition is extremely rare — say it affects 1 in 10,000 people — does that change how you'd think about a positive result?",
+        "goodResponse": "Recognises that rarity of the condition dramatically affects how many positive results are actually false, even with a highly 'accurate' test"
+      },
+      {
+        "probe": "What would you want to tell the patient, given this uncertainty?",
+        "goodResponse": "Suggests communicating that a positive result means further testing or investigation is needed, not a certain diagnosis, while being careful not to alarm the patient unnecessarily"
+      }
+    ],
+    "hints": [
+      "Think about how many people without the condition might also test positive, just by chance.",
+      "Does the answer depend at all on how common or rare this condition is?",
+      "Try imagining testing 10,000 people, most of whom don't have the condition at all — what happens?"
+    ]
+  },
+  {
+    "id": "MED-D4",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "A&E Waiting Times Over Time",
+    "tags": [
+      "statistics",
+      "trends",
+      "healthcare-policy"
+    ],
+    "question": "Here's a simple trend: five years ago, the average wait in a hospital's A&E department was two hours. This year, it's four hours. The hospital's management says: \"Nothing has changed on our end — this is purely a national trend affecting every hospital equally.\" What would you want to know before accepting or rejecting that claim?",
+    "answer": "Not a single fixed answer — the strong response interrogates the claim with specific, checkable questions: how does this hospital's increase compare numerically to the genuine national average increase over the same period (if the national trend rose by, say, 30% and this hospital rose by 100%, the claim doesn't hold); has anything local changed (funding, staffing levels, local population growth, ward closures); and is the comparison using consistent measurement (are 'wait times' measured the same way in both years)?",
+    "modelReasoningPath": "A strong candidate treats the management's claim as something to be TESTED against evidence, not accepted because it was asserted confidently. They would want a genuine national comparison figure to check whether this hospital's rise (100%, from 2 to 4 hours) is actually in line with or worse than the national trend — if the national average only rose by, say, 20-30%, the claim that 'nothing has changed on our end' looks weak. They'd also want to know about local factors (staffing cuts, local demand changes, ward or bed closures) that could explain a hospital-specific effect, and whether the two figures were measured in a consistent, comparable way.",
+    "rubric": {
+      "strong": "Asks for the actual comparative national figure rather than accepting the claim on its face, and separately raises at least one plausible local factor that could explain a hospital-specific effect.",
+      "developing": "Is sceptical of the claim in general terms but doesn't specify what comparison or evidence would actually test it.",
+      "weak": "Accepts the management's claim without question, or rejects it outright with no reasoning for why."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Simply distrusts management's statement 'because management always spins things' with no substantive reasoning",
+        "reveals": "Is expressing generic cynicism rather than identifying what specific evidence would actually confirm or disprove the claim"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If the national average also doubled over the same five years, would that change your view of the hospital's claim?",
+        "goodResponse": "Recognises that if the numbers genuinely matched the national trend, the claim would become far more credible"
+      },
+      {
+        "probe": "What local information, beyond the national comparison, would you want to see?",
+        "goodResponse": "Suggests concrete local factors — staffing levels, funding changes, local population growth, bed numbers"
+      }
+    ],
+    "hints": [
+      "What's the one number you'd most want to compare this hospital's increase against?",
+      "Could something have genuinely changed locally, even if the national trend is also true?",
+      "Is 'wait time' definitely being measured the same way across both years?"
+    ]
+  },
+  {
+    "id": "MED-D5",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "Vaccine Uptake in Two Towns",
+    "tags": [
+      "statistics",
+      "correlation",
+      "critical-thinking"
+    ],
+    "question": "Town A has a 95% childhood vaccination rate and very few cases of a certain preventable disease. Town B has a 60% vaccination rate and a recent outbreak of the same disease. A local politician says: \"This proves vaccination rates alone caused the difference.\" How would you assess that claim?",
+    "answer": "Not a single fixed answer — a strong candidate treats this as a plausible but NOT proven causal claim, since it's a correlation between two towns. They should raise: this is only two data points/towns, not a controlled comparison; other differences between the towns could matter (population density, healthcare access, prior outbreaks, age demographics); and while lower vaccination rates plausibly contribute to outbreak risk (this has strong general scientific backing), 'proves' is too strong a word for a single comparison like this.",
+    "modelReasoningPath": "A strong candidate distinguishes between 'this is consistent with vaccination rates being an important factor' (very plausible, and well-supported generally) and 'this single comparison PROVES it was the cause' (too strong a claim from just two towns). They'd want to know about other differences between the towns — population density (denser areas can spread disease faster regardless of vaccination), general healthcare access, age structure of the population, or whether Town B had recent travel-related exposure. This isn't about being contrarian for its own sake — genuine scientific evidence does support vaccination reducing outbreak risk — it's about recognising that ONE comparison between two towns doesn't 'prove' causation on its own, however plausible the explanation is.",
+    "rubric": {
+      "strong": "Distinguishes 'plausible contributing factor, well-supported by wider evidence' from 'proven by this one comparison', and names at least one other plausible difference between the towns worth ruling out.",
+      "developing": "Expresses some doubt about 'proves' but doesn't clearly articulate what other factors might be at play or why one comparison isn't enough.",
+      "weak": "Either accepts 'proves' at face value, or dismisses the entire vaccination link as coincidence despite it being a well-evidenced general effect."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Rejects any link between vaccination rates and outbreak risk entirely",
+        "reveals": "Has overcorrected into rejecting well-established general evidence, rather than specifically critiquing the overreach of 'proves' from one comparison"
+      },
+      {
+        "mistake": "Accepts 'proves' without qualification",
+        "reveals": "Hasn't distinguished correlation in a single comparison from a scientifically proven causal claim"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does questioning the word 'proves' mean you doubt that vaccination reduces outbreak risk in general?",
+        "goodResponse": "Clarifies that they accept the wider evidence base for vaccination effectiveness, while specifically objecting to over-claiming proof from a single two-town comparison"
+      },
+      {
+        "probe": "What single extra piece of information would strengthen the politician's claim the most?",
+        "goodResponse": "Suggests something like data from many more towns/regions showing the same pattern, or a controlled study, rather than just this one comparison"
+      }
+    ],
+    "hints": [
+      "Is there a difference between 'this fits the theory' and 'this proves the theory'?",
+      "What else about these two towns might be different, besides vaccination rates?",
+      "Does the wider scientific evidence on vaccination effectiveness change how you'd phrase your answer?"
+    ]
+  },
+  {
+    "id": "MED-D6",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "The Relative Risk Headline",
+    "tags": [
+      "statistics",
+      "risk",
+      "critical-thinking"
+    ],
+    "question": "A headline says: \"New drug cuts risk of a rare complication by 50%!\" It turns out the complication affects 2 in 1,000 people without the drug, and 1 in 1,000 people with it. Is the '50%' figure misleading? Talk me through it.",
+    "answer": "The 50% figure is technically accurate as a RELATIVE risk reduction, but is a strong candidate for being called misleading in isolation because it sounds far more dramatic than the ABSOLUTE risk reduction, which is only 1 in 1,000 (0.1 percentage points). A strong answer explains the difference between relative and absolute risk, and notes that both figures are useful together — the relative figure alone, without the absolute baseline, can create a distorted impression of how much benefit an individual patient actually gets.",
+    "modelReasoningPath": "A strong candidate recognises this is testing the classic relative-vs-absolute risk distinction. The 50% relative reduction is mathematically correct (1 is half of 2), but sounds far more significant than the absolute reduction of one case per thousand people. They explain that both numbers are 'true' but tell different stories: relative risk is useful for comparing effect sizes between studies, while absolute risk is what actually matters for an individual patient deciding whether a drug is worth taking (side effects, cost, effort). A genuinely strong answer notes that headlines often quote relative risk because it sounds more impressive, which is itself worth being alert to.",
+    "rubric": {
+      "strong": "Clearly explains both figures are technically true but tell different stories, correctly computes or describes the absolute risk reduction, and notes why relative risk alone can create a misleading impression of a drug's real-world benefit.",
+      "developing": "Senses the 50% figure oversells the benefit but can't clearly explain the relative-vs-absolute distinction without help.",
+      "weak": "Either accepts the 50% figure as fully representative with no further thought, or dismisses the drug's benefit entirely without engaging with the actual numbers."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says the 50% figure is simply 'wrong' or 'a lie'",
+        "reveals": "Hasn't grasped that relative risk reduction is a real, valid statistic — the issue is using it alone without the absolute context, not that it's false"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If the complication instead affected 200 in 1,000 without the drug and 100 in 1,000 with it, would the 50% figure feel as misleading?",
+        "goodResponse": "Recognises that with a much larger absolute baseline, the same relative figure represents a much more meaningful absolute benefit — showing they understand the relationship between the two, not just a fixed rule"
+      }
+    ],
+    "hints": [
+      "What's the actual absolute drop in cases per thousand people?",
+      "Are both the 50% figure and the absolute figure 'true' at the same time?",
+      "Why might a headline prefer to quote the relative figure?"
+    ]
+  },
+  {
+    "id": "MED-D7",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "A Small Study, A Big Claim",
+    "tags": [
+      "statistics",
+      "study-design",
+      "critical-thinking"
+    ],
+    "question": "A study of 24 people finds that a particular supplement improves memory, and it gets reported as \"Scientists confirm memory-boosting supplement.\" What would you want to know before accepting that conclusion?",
+    "answer": "Not a single fixed answer — a strong response raises: the sample size (24 is very small, making the result less reliable and more likely due to chance); whether there was a control/placebo group and whether it was randomised; whether the effect was statistically significant or just a trend; whether the study has been replicated by others; and who funded the study (potential conflicts of interest). 'Confirm' is a strong word for one small study.",
+    "modelReasoningPath": "A strong candidate treats a single small study as preliminary evidence, not proof, regardless of how it's reported. They'd want to know the sample size is a real limitation (24 people is small enough that random chance becomes a plausible explanation), whether there was a properly controlled comparison group, whether the result was statistically significant, and whether independent researchers have replicated it. They might also note that media reporting often overstates certainty ('confirm') beyond what a single study can support, and that funding source is worth knowing given potential conflicts of interest.",
+    "rubric": {
+      "strong": "Raises multiple distinct, substantive concerns (sample size, study design/control group, replication, statistical significance) rather than a single vague objection, and explains why the word 'confirm' overstates what one small study can show.",
+      "developing": "Raises sample size as a concern but doesn't identify other relevant issues like study design or replication.",
+      "weak": "Accepts the headline's claim at face value, or dismisses all small studies as worthless with no nuanced reasoning."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says 'small studies are always useless' with no further nuance",
+        "reveals": "Hasn't recognised that small studies can be legitimate PRELIMINARY evidence — the issue is treating them as confirmed/proven fact, not that they have zero value"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If five more studies with much larger sample sizes all found the same result, would that change your view?",
+        "goodResponse": "Recognises that replication with larger samples would substantially strengthen the claim — showing they understand accumulating evidence, not blanket scepticism"
+      }
+    ],
+    "hints": [
+      "Is 24 people a large or small sample for a scientific study?",
+      "What would you want to know about how the study was designed?",
+      "Does one study 'confirm' something, scientifically speaking?"
+    ]
+  },
+  {
+    "id": "MED-D8",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "Splitting a Fixed Budget",
+    "tags": [
+      "prioritisation",
+      "resource-allocation",
+      "healthcare-policy"
+    ],
+    "question": "A hospital has a small amount of unexpected extra funding this year and can only spend it in ONE of three ways: hiring two more nurses for an understaffed general ward, buying a piece of diagnostic equipment that would speed up cancer diagnosis for a moderate number of patients, or funding a mental health support programme for staff, who are reporting high burnout. How would you think through this decision?",
+    "answer": "Not a single fixed answer — the strong response is in the REASONING process, not which option is chosen. A strong answer identifies relevant criteria (scale of impact, urgency/severity of the problem being addressed, reversibility of harm from NOT acting, and knock-on effects — e.g. staff burnout can itself harm patient care indirectly) and applies them explicitly, rather than picking an option on instinct.",
+    "modelReasoningPath": "A strong candidate resists picking an option purely on gut feeling and instead names the criteria they're using to compare genuinely different types of benefit: how many people are affected and how severely, how urgent or time-sensitive the problem is, and importantly, indirect effects — for example, staff burnout isn't just a staff welfare issue, it can also degrade patient care and increase staff turnover, so it may have a bigger knock-on impact than it first appears. A strong answer might not reach a firm final decision but shows a clear, structured way of weighing genuinely different kinds of good against each other.",
+    "rubric": {
+      "strong": "Names explicit comparison criteria (scale, severity, urgency, indirect/knock-on effects) and applies them to weigh the three genuinely different options, rather than just asserting a preference.",
+      "developing": "Picks an option with some reasoning but doesn't clearly articulate the criteria being used to compare across such different types of benefit.",
+      "weak": "Picks an option with no stated reasoning, or treats the three options as obviously equivalent/impossible to compare with no attempt to structure the decision."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Dismisses the staff mental health option as 'less important than patient care'",
+        "reveals": "Hasn't considered that staff wellbeing has real knock-on effects on the quality and safety of patient care"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "How would you actually find out which of these three options would help the most people?",
+        "goodResponse": "Suggests gathering more specific data (numbers of patients affected, severity of the staffing shortage, burnout survey data) rather than guessing"
+      },
+      {
+        "probe": "Does staff burnout really affect patients, or is that just a staff welfare issue?",
+        "goodResponse": "Explains the indirect link between staff wellbeing and patient care quality/safety, showing systemic thinking"
+      }
+    ],
+    "hints": [
+      "What criteria could you use to compare three very different kinds of benefit?",
+      "Does helping staff ever indirectly help patients?",
+      "What extra information would actually help you decide here?"
+    ]
+  },
+  {
+    "id": "MED-D9",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "The Five-Year Survival Statistic",
+    "tags": [
+      "statistics",
+      "risk",
+      "critical-thinking"
+    ],
+    "question": "You're told a cancer's \"five-year survival rate\" has risen from 40% to 70% since a new screening programme began, and this is presented as proof the screening is saving lives. What would you want to check before accepting that?",
+    "answer": "Not a single fixed answer — a strong candidate should raise the concept of 'lead-time bias': earlier screening detects cancer sooner, which mechanically increases the time from diagnosis to death (and therefore the 5-year survival figure) even if the person doesn't actually live any longer overall. Other useful questions: has actual mortality (death rate) from the cancer changed, not just the survival-from-diagnosis figure; and has screening led to detecting cases that would never have caused harm (overdiagnosis)?",
+    "modelReasoningPath": "A strong candidate recognises that a rising five-year-survival statistic doesn't automatically mean people are living longer — it could be an artefact of DETECTING the disease earlier (lead-time bias), which starts the five-year clock sooner without changing the actual date of death. They'd want to see the actual mortality/death rate over time as the more meaningful measure, since that isn't affected by when diagnosis happens. A very strong candidate might also raise overdiagnosis — screening sometimes finds slow-growing cases that would never have caused problems, which would also inflate survival statistics without reflecting a real benefit. This doesn't need precise technical vocabulary — the concept, reasoned out loud, is what matters.",
+    "rubric": {
+      "strong": "Identifies that earlier detection alone can inflate a five-year-survival figure without a real increase in how long people live (the lead-time bias concept, even without using the term), and asks for the more meaningful actual mortality/death-rate data instead.",
+      "developing": "Is somewhat sceptical of the statistic but can't clearly explain why detection timing itself could distort it.",
+      "weak": "Accepts the statistic as clear proof of the screening programme's success with no further questions."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Accepts the five-year survival rise as straightforward proof screening saves lives",
+        "reveals": "Hasn't considered that earlier detection mechanically changes this statistic even without any real change in survival time"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If someone is diagnosed 2 years earlier than they otherwise would have been, but dies at exactly the same age either way, what happens to their 'five-year survival' classification?",
+        "goodResponse": "Works through the logic that earlier diagnosis alone can flip someone from 'died within 5 years' to 'survived 5 years' with no real change in outcome"
+      }
+    ],
+    "hints": [
+      "What actually changes if a disease is just detected EARLIER, even if the outcome is the same?",
+      "What other statistic, besides five-year survival, might tell you more about whether screening is really helping?",
+      "Could screening ever find something that was never going to cause harm?"
+    ]
+  },
+  {
+    "id": "MED-D10",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Data Interpretation & Prioritisation",
+    "title": "Ranking a Call-Handler's Queue",
+    "tags": [
+      "prioritisation",
+      "triage",
+      "judgement"
+    ],
+    "question": "You're helping triage calls to a non-emergency health advice line, and three calls come in at once: a parent worried about a baby who has been unusually sleepy and hard to wake for the last hour; an adult with a headache that's been present, unchanged, for two days; and someone asking whether it's safe to take a common painkiller alongside their regular medication. How would you prioritise these three calls, and why?",
+    "answer": "The defensible strong ranking: the sleepy, hard-to-wake baby first — this combination in an infant is a recognised red flag that can indicate a serious underlying problem and needs urgent same-time assessment, not a queued callback. The medication-interaction question is likely next, since it's a genuine safety question but not acutely dangerous in the time it takes to answer (and may be answerable quickly via a reference check). The two-day unchanged headache in an adult, while it should still be addressed, is the least time-critical of the three, since 'unchanged for two days' suggests it isn't rapidly worsening.",
+    "modelReasoningPath": "A strong candidate again reasons on URGENCY and RISK OF HARM FROM DELAY, not on how worried or urgent each caller sounds. A baby who is unusually sleepy and hard to wake is a recognised paediatric red flag that can indicate serious illness and deteriorate quickly — this needs to jump the queue. The medication question is a genuine safety check but is typically quick to resolve and low immediate risk if the caller simply waits a short time for a call back before taking anything. A headache that has been stable/unchanged for two days, while worth addressing, carries a lower immediate risk of rapid deterioration than the other two. The exact ordering of the second and third matters less than clearly explaining why the baby is the clear priority.",
+    "rubric": {
+      "strong": "Correctly identifies the sleepy, hard-to-wake baby as the clear top priority with a specific reason (a recognised red-flag combination in infants), and gives a reasoned basis for ordering the other two rather than an arbitrary guess.",
+      "developing": "Puts the baby first but with vague reasoning ('babies are always most urgent'), or doesn't seriously engage with ordering the other two.",
+      "weak": "Fails to prioritise the baby call appropriately, or ranks based on factors unrelated to urgency (e.g. who sounded most anxious)."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Puts the two-day headache first because 'it's been going on longest'",
+        "reveals": "Confuses duration with urgency — a long-standing, stable symptom is generally less acutely dangerous than a new, concerning change"
+      },
+      {
+        "mistake": "Doesn't specifically flag WHY the baby call is different, just says 'babies come first'",
+        "reveals": "Hasn't engaged with the actual clinical reasoning being tested, just applied a generic rule"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the headache patient mentioned it was the worst headache of their life and started suddenly?",
+        "goodResponse": "Recognises this would be a major red-flag change requiring the ranking to shift substantially, showing they're reasoning from the specific details, not fixed categories"
+      }
+    ],
+    "hints": [
+      "Which of these three symptoms is most associated with a baby being seriously unwell?",
+      "Does 'unchanged for two days' suggest something rapidly dangerous, or something more stable?",
+      "How urgent is a medication-safety question, typically, compared to a new symptom?"
+    ]
+  },
+  {
+    "id": "MED-E1",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Resource Allocation",
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "justice"
+    ],
+    "question": "A small rural hospital has five ICU beds and, tonight, six patients who each need one to survive. You are on the admissions panel. How would you decide who gets a bed — and who doesn't?",
+    "answer": "Discussion question — there is no single correct verdict. Assess the reasoning, not which criteria they land on. A strong answer names an explicit, defensible criterion (e.g. likelihood of benefit / prognosis, not simply age or perceived social worth), acknowledges this is a genuine tragedy either way, and recognises that a hospital would normally use an agreed clinical framework rather than one person deciding alone.",
+    "modelReasoningPath": "A strong candidate resists the urge to give an instant, comfortable answer. They name the tension explicitly: fairness (equal claim to care) versus utility (maximising lives/years saved) versus first-come-first-served. They pick a defensible criterion — most commonly, clinical likelihood of benefit — and explain WHY that criterion is more defensible than alternatives like age, lifestyle, or perceived social value, which risk being discriminatory. They note this shouldn't be one person's unilateral call in reality — hospitals use triage protocols and multidisciplinary input. They stay honest that whatever is decided, it is a tragic outcome for someone.",
+    "rubric": {
+      "strong": "Names the ethical tension explicitly, commits to a defensible criterion with clear reasoning for why it's fairer than the alternatives, acknowledges the human cost of the decision, and recognises real hospitals use structured protocols rather than ad hoc individual judgement.",
+      "developing": "Reaches a position but the reasoning is thin or relies on one factor (e.g. 'youngest first') without defending why that's fairer than other criteria; needs a probe to go further.",
+      "weak": "Gives an instant, unreflective answer with no stated reasoning, or refuses to commit to any position at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Uses age, 'who has more to live for', or perceived social worth as the primary criterion without acknowledging this is ethically contested",
+        "reveals": "Hasn't recognised that some intuitive criteria are actually discriminatory and would need much stronger justification"
+      },
+      {
+        "mistake": "Says 'I'd just let the doctors decide' with no further reasoning",
+        "reveals": "Is dodging the question rather than engaging with the dilemma they were actually asked"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the sixth patient was the youngest of the six — does that change your answer?",
+        "goodResponse": "Engages honestly with whether age should matter, rather than simply agreeing to avoid conflict"
+      },
+      {
+        "probe": "Is it fair that one person's medical need can outweigh another's just because a bed became free five minutes earlier?",
+        "goodResponse": "Considers first-come-first-served as one competing principle among several, rather than dismissing it outright"
+      }
+    ],
+    "hints": [
+      "Think about what makes one criterion for choosing fairer than another.",
+      "Is there a difference between 'who deserves it most' and 'who is most likely to survive'?",
+      "Real hospitals don't leave this to one person's gut feeling — what do you think they use instead?"
+    ]
+  },
+  {
+    "id": "MED-E2",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Confidentiality and a Young Patient",
+    "tags": [
+      "ethics",
+      "confidentiality",
+      "consent",
+      "gillick-competence"
+    ],
+    "question": "A 15-year-old comes to see you alone and asks about getting tested for a sexually transmitted infection. She says she doesn't want her parents to know. As a doctor, what would you do?",
+    "answer": "Discussion question — there is no single correct verdict, though UK practice (Gillick competence / Fraser guidelines) is a relevant real-world framework a strong candidate may reach for. A strong answer weighs the patient's right to confidential healthcare and the risk that refusing it could stop her seeking care at all, against safeguarding duties if there are signs of coercion, abuse, or a much older partner — and recognises confidentiality is not absolute.",
+    "modelReasoningPath": "A strong candidate recognises the central tension: respecting a young patient's autonomy and right to confidential healthcare (and the practical risk that breaking confidence could simply stop her seeking care at all) versus a safeguarding duty if the situation suggests coercion, abuse, or a significant power imbalance (e.g. a much older partner). They might reach for the idea that competence to consent isn't purely about age — a doctor would assess whether she understands what's involved — while being honest that they don't have full clinical/legal knowledge and are reasoning from principle. Confidentiality is presented as a strong default, not an absolute one.",
+    "rubric": {
+      "strong": "Identifies both the confidentiality/autonomy side and the safeguarding side explicitly, explains what facts would change their approach (e.g. age gap of the partner, signs of coercion), and is honest about the limits of their own clinical/legal knowledge rather than bluffing a definitive rule.",
+      "developing": "Leans hard to one side (either 'always tell the parents' or 'it's none of the parents' business') without engaging with the other consideration, or only shifts position when directly pushed.",
+      "weak": "Doesn't recognise any tension at all — treats it as an obviously easy call in either direction with no reasoning given."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "States confidently that 'doctors legally must tell parents if under 16' as a flat rule",
+        "reveals": "Is bluffing a specific legal rule rather than reasoning from principle — a good moment to probe whether they're guessing"
+      },
+      {
+        "mistake": "Says confidentiality is absolute with no exceptions at all",
+        "reveals": "Hasn't considered safeguarding scenarios where a duty to protect could override confidentiality"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if she told you her partner was 30 years old? Does that change anything?",
+        "goodResponse": "Recognises this shifts the situation toward a safeguarding concern and explains why"
+      },
+      {
+        "probe": "If you did decide to keep this confidential, is there anyone else you might involve, even without her parents?",
+        "goodResponse": "Considers involving other clinical safeguards (e.g. a senior colleague, safeguarding lead) without necessarily breaking confidentiality to the parents specifically"
+      }
+    ],
+    "hints": [
+      "What would make you MORE worried about this situation, beyond just her age?",
+      "Is confidentiality ever something a doctor should break — and if so, when?",
+      "Think about what would happen to her willingness to seek healthcare at all if you told her parents anyway."
+    ]
+  },
+  {
+    "id": "MED-E3",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Refusing Treatment",
+    "tags": [
+      "ethics",
+      "autonomy",
+      "capacity",
+      "consent"
+    ],
+    "question": "An elderly patient with full mental capacity refuses a blood transfusion that doctors believe she needs to survive, for personal reasons she won't fully explain. Her family is begging the medical team to give it to her anyway. What should happen?",
+    "answer": "Discussion question — there is no single correct verdict. A strong answer centres patient autonomy: a patient with full mental capacity has the right to refuse treatment, even a life-saving one, even if others disagree with the reason. It should also acknowledge the family's distress is real and worth taking seriously, without letting it override the patient's own decision.",
+    "modelReasoningPath": "A strong candidate recognises that respect for autonomy is a core medical ethics principle, and that having capacity means the patient has the right to make choices doctors and family may disagree with — she doesn't have to justify her reasons to anyone. They also show empathy for the family's position without concluding the family should get to override the decision. A genuinely strong answer might note the medical team's role is to make sure her decision is properly informed (she understands the consequences), not to talk her out of it once it's clear she does.",
+    "rubric": {
+      "strong": "Clearly centres the patient's autonomy as the deciding factor given full capacity, explains why capacity (not agreement with the reasoning) is what matters, and shows genuine empathy for the family without concluding they should override the patient.",
+      "developing": "Sympathises with the family and wobbles on whether the patient's wishes should really be final, without a clear line for why capacity should decide it.",
+      "weak": "Concludes the family or doctors should give the transfusion anyway 'because they know best' or 'because she'll die otherwise', without addressing what mental capacity means for the right to refuse."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says doctors should 'do whatever it takes' to save her life regardless of her wishes",
+        "reveals": "Hasn't grasped that respecting capacity is a foundational ethical (and legal) principle in medicine, not just a nice-to-have"
+      },
+      {
+        "mistake": "Assumes she must not really have capacity because the decision seems irrational",
+        "reveals": "A common misconception — capacity is about the ABILITY to understand and weigh the decision, not about agreeing with the outcome"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Her family says she must be confused or depressed to make this choice — should that change anything?",
+        "goodResponse": "Distinguishes between 'I disagree with her reasoning' and 'she lacks capacity' — the two are not the same, though real confusion or depression WOULD be worth properly assessing"
+      },
+      {
+        "probe": "Is there anything the medical team should still do, even if they respect her decision?",
+        "goodResponse": "Suggests making sure she is fully informed, offering support, and continuing to care for her within her wishes rather than simply walking away"
+      }
+    ],
+    "hints": [
+      "What does having 'full mental capacity' actually mean for her right to decide?",
+      "Is there a difference between disagreeing with someone's reasons and saying they're not allowed to decide?",
+      "What role is left for the doctors and family if her decision has to be respected?"
+    ]
+  },
+  {
+    "id": "MED-E4",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Spotting a Colleague's Mistake",
+    "tags": [
+      "ethics",
+      "whistleblowing",
+      "professionalism",
+      "honesty"
+    ],
+    "question": "You're shadowing a senior doctor you respect enormously. You notice they've made a genuine error in a patient's medication dose — one that could cause harm. What do you do?",
+    "answer": "Discussion question — there is no single correct verdict, but UK medical professional guidance (e.g. GMC 'duty of candour') is a relevant real-world anchor: patient safety comes first, and doctors have a professional duty to raise safety concerns even about senior colleagues. A strong answer prioritises the patient's safety, raises the concern promptly and appropriately (rather than staying silent out of deference or fear), and does so in a way that's professional rather than accusatory.",
+    "modelReasoningPath": "A strong candidate resolves the tension quickly in favour of patient safety — that has to come first, regardless of hierarchy or how much they respect the senior doctor. But HOW they raise it matters: a thoughtful answer describes raising it directly and promptly with the doctor first (assuming good faith — it could be a genuine slip), rather than immediately going over their head, while being clear they WOULD escalate further if the concern wasn't addressed. This shows they understand professional escalation isn't about being disloyal, it's about the patient.",
+    "rubric": {
+      "strong": "Prioritises patient safety unambiguously, describes a professional and proportionate way of raising it (starting with the doctor directly where appropriate, escalating if unaddressed), and shows they understand this isn't about disloyalty or fear of hierarchy.",
+      "developing": "Says they would report it but hasn't thought through HOW, or shows some hesitation about challenging a senior figure that they don't fully resolve.",
+      "weak": "Says they would stay quiet because the doctor is senior/respected, or because it's 'not their place' as a student/junior."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says they'd say nothing because they don't want to embarrass or contradict a senior doctor",
+        "reveals": "Prioritises hierarchy and social comfort over patient safety — a significant red flag for a doctor"
+      },
+      {
+        "mistake": "Jumps straight to 'I'd report them to the GMC' with no attempt to raise it directly first",
+        "reveals": "Hasn't thought about proportionate, professional escalation — going straight to the most severe option isn't necessarily the most thoughtful"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the doctor brushed off your concern when you raised it?",
+        "goodResponse": "Describes escalating further (e.g. to a supervisor or safety lead) rather than dropping it"
+      },
+      {
+        "probe": "Does it matter that you're just a student shadowing, not a qualified doctor yet?",
+        "goodResponse": "Recognises that raising a safety concern is still appropriate regardless of seniority, even if HOW they do it (e.g. tone, going through a supervisor) might differ"
+      }
+    ],
+    "hints": [
+      "What should come first here — the hierarchy, or the patient?",
+      "Is there a difference between raising a concern and publicly accusing someone?",
+      "What would you do next if raising it quietly didn't work?"
+    ]
+  },
+  {
+    "id": "MED-E5",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "The Exam Hall Favour",
+    "tags": [
+      "ethics",
+      "honesty",
+      "everyday-ethics"
+    ],
+    "question": "A close friend asks you to sign the attendance register for them at a lecture they skipped, so they don't get marked absent. It seems harmless. Would you do it?",
+    "answer": "Discussion question — there is no single correct verdict. A strong answer recognises this is a small dishonesty, not a harmless favour, and reasons about WHY that matters (trust, precedent, what it says about their own integrity) rather than dismissing the question as trivial.",
+    "modelReasoningPath": "A strong candidate resists treating this as too trivial to think about seriously — the interviewer is testing whether they can see that small dishonesty has the same STRUCTURE as bigger dishonesty, even if the stakes are lower. They might note the honest thing is to say no, kindly, and explain why. A genuinely strong answer also considers the friendship dimension — how do you say no to a friend without damaging the relationship — showing they can hold more than one consideration at once.",
+    "rubric": {
+      "strong": "Recognises this is a genuine (if small) act of dishonesty, explains what principle is at stake (trust, integrity, precedent) rather than just 'it's against the rules', and thoughtfully considers how to handle the friendship, not just the ethics in the abstract.",
+      "developing": "Says they wouldn't do it but only because 'you could get caught' or 'it's against the rules', without engaging with WHY honesty matters here.",
+      "weak": "Says they'd do it because it's harmless and helping a friend matters more, with no engagement with the dishonesty at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treats the question as too small to reason about seriously ('it's just a lecture register, who cares')",
+        "reveals": "Misses that the interviewer is testing pattern-recognition for integrity, not literally how serious lecture attendance is"
+      },
+      {
+        "mistake": "Justifies it purely on 'no one gets hurt'",
+        "reveals": "Hasn't considered that trust and honesty have value even without a directly identifiable victim"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the same friend asked you to do this every week?",
+        "goodResponse": "Notices that repetition changes the picture — a one-off lapse in judgement versus an established pattern of dishonesty"
+      },
+      {
+        "probe": "Does it make a difference that it's your friend asking, not a stranger?",
+        "goodResponse": "Honestly grapples with how personal relationships create pressure to compromise principles, rather than pretending the friendship makes no difference"
+      }
+    ],
+    "hints": [
+      "Is this really about lecture attendance, or about something bigger?",
+      "What would you actually say to your friend, in the moment, to turn them down kindly?",
+      "Does doing it once make it easier to do again?"
+    ]
+  },
+  {
+    "id": "MED-E6",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Telling the Truth About a Prognosis",
+    "tags": [
+      "ethics",
+      "honesty",
+      "communication",
+      "end-of-life"
+    ],
+    "question": "A patient asks you directly: \"Am I going to die from this?\" You believe the honest answer is that their condition is very likely terminal. What do you say?",
+    "answer": "Discussion question — there is no single correct verdict. A strong answer values honesty as a foundation of trust and respects the patient's right to know about their own health, while showing this can be done with genuine compassion, checking what and how much the patient wants to know, and not being needlessly blunt or cold.",
+    "modelReasoningPath": "A strong candidate resists both extremes: neither lying/deflecting to avoid a hard conversation, nor delivering the truth in a cold, clinical way. They recognise patients generally have a right to know about their own condition, and that trust depends on honesty. A genuinely thoughtful answer notes that HOW you tell someone matters as much as WHAT you tell them — checking what the patient already understands or wants to know, giving them space, not overwhelming them with detail in one go, and making clear they won't be abandoned. They might also note that avoiding the truth to protect yourself from a hard conversation (rather than to protect the patient) would be dishonest for the wrong reasons.",
+    "rubric": {
+      "strong": "Commits to honesty as the right general approach while showing real thought about compassionate delivery (checking readiness, pacing, not overwhelming, ongoing support) — not just declaring 'I'd tell them the truth' with no further nuance.",
+      "developing": "Says they would be honest but the answer stops there, with little thought about how to actually deliver such news well.",
+      "weak": "Says they would avoid the question, lie, or defer entirely to a superior with no engagement with the patient's right to know."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says they would deflect or lie to spare the patient's feelings",
+        "reveals": "Prioritises short-term emotional comfort over the patient's autonomy and right to make informed decisions about their remaining time"
+      },
+      {
+        "mistake": "Describes delivering the news bluntly with no thought for how it's said",
+        "reveals": "Confuses honesty with tactlessness — the two are not the same"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the patient's family had asked you beforehand not to tell them?",
+        "goodResponse": "Recognises the patient's own wishes generally take priority over the family's, while being thoughtful about how to navigate the family's concern too"
+      },
+      {
+        "probe": "Is there a version of honesty that's actually unkind?",
+        "goodResponse": "Distinguishes between being truthful and being needlessly blunt or dismissive of the patient's emotional state"
+      }
+    ],
+    "hints": [
+      "Think about the difference between WHAT you say and HOW you say it.",
+      "Why might a patient want to know the truth, even if it's painful?",
+      "What would you check with the patient before launching into the full answer?"
+    ]
+  },
+  {
+    "id": "MED-E7",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Organ Donation Priority",
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "justice"
+    ],
+    "question": "Two patients need the same donor liver and only one can have it: a 45-year-old with no history of alcohol use, and a 50-year-old whose liver failure was caused by years of heavy drinking but who has been sober for two years. How would you think about who should be prioritised?",
+    "answer": "Discussion question — there is no single correct verdict. A strong answer recognises the tension between 'medical utility' criteria (likelihood of a good outcome, which real transplant systems do use) and the temptation to factor in 'blame' for how someone became ill — and is wary of the latter, since it risks penalising addiction (increasingly understood as a health condition) rather than judging purely on clinical grounds.",
+    "modelReasoningPath": "A strong candidate resists the instinctive pull to say the non-drinker 'deserves it more' and instead asks what criteria transplant medicine actually should use — primarily likelihood of a successful outcome and how long the organ is likely to last, which is a clinical judgement, not a moral one. They note two years of sobriety is itself real evidence of commitment to using the organ well. They're wary of a system that penalises illness caused partly by addiction, since addiction has real biological and social drivers, not just 'poor choices' in a simple sense — while still being honest that they don't know the exact clinical criteria used in practice.",
+    "rubric": {
+      "strong": "Explicitly separates 'clinical likelihood of success' from 'moral desert', questions whether blaming someone for the cause of their illness is the right basis for a medical decision, and credits the two years of sobriety as relevant evidence rather than irrelevant.",
+      "developing": "Leans toward one candidate but the reasoning rests mainly on which one 'deserves' the organ more, without questioning that framing.",
+      "weak": "Rules out the second patient purely because their illness was self-caused, with no engagement with clinical criteria or the nature of addiction."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "States confidently that alcohol-related liver failure should be deprioritised because 'it's their own fault'",
+        "reveals": "Hasn't engaged with why medical allocation is generally NOT meant to be a moral judgement on how someone became ill"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Plenty of illness is partly linked to lifestyle — smoking, diet, stress. Should all of those affect priority too?",
+        "goodResponse": "Recognises the logic would need to apply consistently, which reveals how fraught a pure 'fault' based system would be"
+      }
+    ],
+    "hints": [
+      "What criteria do you think transplant decisions SHOULD be based on?",
+      "Does two years of sobriety tell you anything relevant?",
+      "Would the same logic apply to a smoker needing a lung transplant?"
+    ]
+  },
+  {
+    "id": "MED-E8",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "A Patient's Religious Objection to Treatment",
+    "tags": [
+      "ethics",
+      "autonomy",
+      "religion",
+      "consent"
+    ],
+    "question": "A patient who is a Jehovah's Witness is losing a lot of blood after an accident and, based on their religious beliefs, has clearly and repeatedly refused a blood transfusion, even knowing it could cost their life. The medical team believes a transfusion would very likely save them. What should happen?",
+    "answer": "Discussion question — there is no single correct verdict, though this is a well-established real-world scenario in medical ethics, and a strong answer should land close to respecting the refusal given full capacity, mirroring the reasoning in the elderly-patient capacity scenario. The key extra layer here is recognising that a religious reason is not a 'lesser' reason than any other, and must not be treated with less respect just because the doctor may not share or understand the belief.",
+    "modelReasoningPath": "A strong candidate applies the same core principle as any capacity-based refusal — a patient with capacity has the right to refuse treatment, even a life-saving one — but goes further to notice the specific temptation in THIS scenario: subtly treating a religious reason as less valid or less 'rational' than another patient's reason would be a form of bias. They might note the medical team's role becomes making sure the patient's decision is fully informed, exploring whether there are alternative treatments consistent with the patient's beliefs (e.g. certain blood products may be religiously acceptable while whole blood is not), and continuing to provide the best possible care within the patient's wishes.",
+    "rubric": {
+      "strong": "Applies capacity-based autonomy consistently, explicitly notices and rejects the temptation to treat a religious reason as less legitimate than another kind of reason, and considers whether alternative treatments within the patient's belief system exist.",
+      "developing": "Respects the refusal but without engaging with why a religious reason specifically might tempt a different standard than other refusals.",
+      "weak": "Suggests overriding the refusal because the reason is religious rather than 'medical', or because the team disagrees with the belief."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Implies religious refusals should be treated with more scepticism than a 'rational' medical reason for refusal",
+        "reveals": "Is applying an inconsistent standard based on discomfort with the specific belief, rather than the principle of capacity and autonomy"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Would your answer be any different if the patient refused for a non-religious personal reason instead?",
+        "goodResponse": "Recognises it shouldn't be — capacity and autonomy apply regardless of WHY the patient is refusing"
+      },
+      {
+        "probe": "Is there anything the team could offer that respects both the patient's life and their beliefs?",
+        "goodResponse": "Considers alternative treatments or products that might be compatible with the patient's specific beliefs"
+      }
+    ],
+    "hints": [
+      "Does the REASON for a refusal change whether a patient with capacity has the right to make it?",
+      "Are there treatment options that might respect both medical need and the patient's beliefs?",
+      "What would make this different from, or the same as, any other capacity-based refusal?"
+    ]
+  },
+  {
+    "id": "MED-E9",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "The Expensive New Drug",
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "healthcare-policy",
+      "justice"
+    ],
+    "question": "A new drug could meaningfully extend the life of patients with a rare condition, but it costs so much that funding it for the small number of patients who need it would mean cutting funding elsewhere in the health system. Should it be funded?",
+    "answer": "Discussion question — there is no single correct verdict. A strong answer recognises this as a genuine resource-allocation tension between two real principles — the value of every individual life, and the reality that money spent here is money not available for treatments that could help larger numbers of other patients elsewhere — and engages honestly with trade-offs rather than treating either principle as obviously overriding.",
+    "modelReasoningPath": "A strong candidate resists a simple 'of course we should save lives regardless of cost' answer, because healthcare budgets are genuinely finite and every funding decision has an opportunity cost elsewhere in the system. They engage with real considerations real health systems use: cost-effectiveness relative to the benefit gained (sometimes expressed as cost per year of life gained), how rare and severe the condition is, and whether there are truly no other options for these patients. A genuinely strong answer notes that a decision NOT to fund something is still a moral decision with real victims, just less visible ones (the patients who don't get this drug) versus more visible ones (patients denied elsewhere if it IS funded) — both matter.",
+    "rubric": {
+      "strong": "Engages honestly with the resource trade-off on both sides, doesn't default to either 'always fund it' or 'never fund the rare case', and shows awareness that funding decisions are comparative, not just about whether one treatment in isolation is 'worth it'.",
+      "developing": "Leans toward funding or not funding but the reasoning doesn't seriously engage with what's being traded off elsewhere.",
+      "weak": "Says funding decisions should simply save the most lives with no engagement with the value of rare/individual cases, or insists cost should never be a factor at all with no engagement with the reality of finite budgets."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says 'every life is priceless so of course it should be funded' with no engagement with opportunity cost",
+        "reveals": "Hasn't grappled with the reality that healthcare budgets are finite and that funding decisions are always comparative"
+      },
+      {
+        "mistake": "Says rare-disease treatment should never be funded because it doesn't help enough people",
+        "reveals": "Hasn't considered that a pure numbers-maximising approach can feel unjust to individuals with rare conditions, and that most health systems weight rarity/severity too"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would you say to a patient with this rare condition who is told the drug won't be funded?",
+        "goodResponse": "Shows genuine empathy for the individual impact while still being able to explain the systemic reasoning, rather than dismissing their situation"
+      },
+      {
+        "probe": "Does it matter HOW much benefit the drug provides, not just that it provides some?",
+        "goodResponse": "Recognises that the scale of benefit (a few extra weeks vs. years of good-quality life) is relevant to a cost-effectiveness judgement"
+      }
+    ],
+    "hints": [
+      "What is the money NOT being spent on, if it goes to this drug?",
+      "Is a decision not to fund something still a decision with real consequences?",
+      "What information would you want about how much benefit the drug actually provides?"
+    ]
+  },
+  {
+    "id": "MED-E10",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "A Colleague Who Seems Impaired",
+    "tags": [
+      "ethics",
+      "professionalism",
+      "patient-safety",
+      "whistleblowing"
+    ],
+    "question": "You notice a senior colleague seems to be smelling of alcohol before a shift, and their behaviour is slightly off. You have no proof, just a strong suspicion. What do you do?",
+    "answer": "Discussion question — there is no single correct verdict, but patient safety should be the clear priority. A strong answer raises the concern appropriately and promptly, even without certainty, rather than waiting for definitive proof, while being fair and non-accusatory given the uncertainty involved.",
+    "modelReasoningPath": "A strong candidate recognises the core tension: acting on suspicion without proof feels uncomfortable and risks being wrong or unfair to a colleague, but staying silent risks patient harm if the suspicion is correct. They resolve this in favour of raising the concern — patient safety cannot wait for certainty — but describe doing so appropriately: privately, factually (describing what was observed, not accusing), and through a proper channel (e.g. a supervisor or the colleague directly, depending on context) rather than public accusation or gossip. They might note that a genuine, good-faith concern raised professionally protects the colleague too, potentially catching a problem early.",
+    "rubric": {
+      "strong": "Prioritises patient safety over the discomfort of confronting a respected colleague, describes a fair, professional and proportionate way of raising the concern despite the uncertainty, and doesn't require full proof before acting.",
+      "developing": "Says they'd do something but is vague about how, or shows unresolved hesitation about whether uncertainty is enough reason to act at all.",
+      "weak": "Says they'd wait for definitive proof before doing anything, or would say nothing to avoid an awkward situation."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says they'd need to be certain before raising it",
+        "reveals": "Hasn't grasped that patient-safety concerns should be raised on reasonable suspicion, not only on proof — the appropriate channel exists precisely to investigate uncertain concerns"
+      },
+      {
+        "mistake": "Suggests confronting the colleague publicly or accusing them directly of being drunk",
+        "reveals": "Hasn't thought through a fair, professional way to raise a serious but uncertain concern"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if you're wrong, and there's an innocent explanation?",
+        "goodResponse": "Accepts this risk as a reasonable cost of prioritising patient safety, provided the concern is raised fairly and factually rather than as a public accusation"
+      },
+      {
+        "probe": "Does it matter that this is a senior, well-respected colleague?",
+        "goodResponse": "Recognises seniority shouldn't change whether a safety concern gets raised, even if it makes it socially harder to do"
+      }
+    ],
+    "hints": [
+      "Does the concern need to be certain before it's worth raising?",
+      "What's a fair, private way to raise something you're not 100% sure about?",
+      "What's actually at stake if you say nothing and you turn out to be right?"
+    ]
+  },
+  {
+    "id": "MED-E11",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "A Grateful Patient's Gift",
+    "tags": [
+      "ethics",
+      "professionalism",
+      "boundaries"
+    ],
+    "question": "After a successful treatment, a patient you've cared for wants to give you an expensive gift as a thank-you, and seems genuinely hurt when you hesitate. How would you handle it?",
+    "answer": "Discussion question — there is no single correct verdict, though most professional medical guidance discourages accepting expensive or ongoing gifts from patients, to preserve boundaries and avoid the appearance (even unintentional) of favouritism or influence. A strong answer balances this professional boundary with genuine warmth and tact, so the patient doesn't feel rejected or that their gratitude wasn't valued.",
+    "modelReasoningPath": "A strong candidate recognises the professional reason for caution — accepting expensive gifts risks creating (or appearing to create) unequal treatment between patients, or blurring the professional relationship — while also recognising the patient's gesture comes from real gratitude and shouldn't be handled coldly or bluntly. They describe a warm, tactful way of declining or redirecting (e.g. suggesting a donation to the department or a charity instead), making clear the refusal is about professional principle, not about the patient or the relationship.",
+    "rubric": {
+      "strong": "Identifies the professional boundary reasoning clearly, and separately shows genuine thought about how to decline warmly so the patient doesn't feel hurt or rejected — treating both halves of the problem seriously.",
+      "developing": "Says they'd decline the gift but with little thought for how to do so without damaging the relationship or the patient's feelings.",
+      "weak": "Says they'd simply accept the gift with no engagement with why that might be professionally problematic, or declines bluntly with no thought for the patient's feelings."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Accepts the gift because 'it would be rude not to' with no engagement with professional boundaries",
+        "reveals": "Hasn't considered why an expensive gift specifically (versus a card or small token) could complicate the professional relationship"
+      },
+      {
+        "mistake": "Declines bluntly with no thought for the patient's feelings",
+        "reveals": "Solves the professional problem but misses the interpersonal/communication half of the question"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Would your answer be different for a small, inexpensive token versus this expensive gift?",
+        "goodResponse": "Recognises that scale/value plausibly matters to the professional concern, even if the underlying gratitude is the same"
+      },
+      {
+        "probe": "What would you actually say to the patient in the moment?",
+        "goodResponse": "Offers a specific, warm form of words rather than just asserting they'd 'decline politely'"
+      }
+    ],
+    "hints": [
+      "Why might an expensive gift specifically be different from a thank-you card?",
+      "How could you decline without the patient feeling like their gratitude was rejected?",
+      "Is there an alternative that lets you honour the gesture without accepting it personally?"
+    ]
+  },
+  {
+    "id": "MED-E12",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Assisted Dying",
+    "tags": [
+      "ethics",
+      "end-of-life",
+      "autonomy",
+      "policy"
+    ],
+    "question": "Should terminally ill patients have the legal right to choose an assisted death? Talk me through your thinking.",
+    "answer": "Discussion question — there is no single correct verdict; this is a genuinely and legitimately contested real-world policy debate. A strong answer engages seriously with strong arguments on BOTH sides — patient autonomy and relief of suffering on one hand, risks of coercion or pressure on vulnerable patients and the role of the doctor on the other — rather than treating it as an obviously easy call in either direction.",
+    "modelReasoningPath": "A strong candidate treats this as a genuinely hard policy and ethical question, not a simple one. On one side: respecting a competent, terminally ill patient's autonomy over their own suffering and death, and the argument that prolonging suffering against someone's wishes can itself be a harm. On the other: real concerns about coercion (a patient feeling like a burden and choosing death for others' sake rather than their own), the difficulty of assessing capacity/depression at the end of life, and how such a change could affect the doctor-patient relationship and trust. A strong candidate can articulate BOTH sides with genuine force, even while holding their own view, and is honest that reasonable, thoughtful people land in different places.",
+    "rubric": {
+      "strong": "Articulates strong arguments on both sides with genuine engagement (not a strawman version of the opposing view), reaches or is open to a personal position while acknowledging its weaknesses, and shows awareness this is a genuinely contested real-world debate, not a settled question.",
+      "developing": "Has a position with some reasoning but only seriously engages with one side, treating the other as obviously weaker without real engagement.",
+      "weak": "Treats the question as having an obvious answer either way, or refuses to engage with any substantive reasoning at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Presents only one side's arguments and dismisses the other as obviously wrong",
+        "reveals": "Hasn't demonstrated the perspective-taking this kind of question is specifically testing"
+      },
+      {
+        "mistake": "Refuses to take any position at all, even when pushed",
+        "reveals": "Is avoiding engagement rather than genuinely weighing a hard question — a well-reasoned tentative position is stronger than pure fence-sitting"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's the strongest argument AGAINST the position you've just taken?",
+        "goodResponse": "Can genuinely articulate the opposing case with force, not a weakened strawman of it"
+      },
+      {
+        "probe": "How would you address the concern that vulnerable patients might feel pressured into this choice?",
+        "goodResponse": "Engages seriously with the coercion concern rather than dismissing it"
+      }
+    ],
+    "hints": [
+      "Try to name the strongest argument on the side you DON'T currently favour.",
+      "What safeguards, if any, might address the biggest risks of a policy like this?",
+      "Is it possible for two thoughtful people to disagree on this?"
+    ]
+  },
+  {
+    "id": "MED-M1",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Why Medicine",
+    "tags": [
+      "motivation",
+      "reflection"
+    ],
+    "question": "Why do you want to study medicine? I'd like a specific, honest answer, not the version you think I want to hear.",
+    "answer": "No single correct answer. Assess specificity, honesty, and genuine reflection — not the content of the reason itself. A strong answer is grounded in a concrete experience or realisation, acknowledges the difficult and unglamorous parts of the career (not just the noble parts), and doesn't rely on generic lines like 'I want to help people' as the whole answer.",
+    "modelReasoningPath": "A strong candidate goes past the socially expected opening line ('I want to help people') to something specific and personally true — a particular experience, person, or moment that shaped the interest — and can explain WHY that experience mattered to them, not just describe it. They show awareness that medicine involves long hours, emotional difficulty, bureaucracy, and years of training, not just the rewarding moments, which signals they've thought realistically about the career rather than romanticised it.",
+    "rubric": {
+      "strong": "Gives a specific, personal reason grounded in real experience or reflection, explains the reasoning behind it rather than just describing the experience, and shows awareness of the harder or less glamorous realities of the career.",
+      "developing": "Gives a reason that's somewhat personal but stays fairly general or surface-level, or only mentions the positive/appealing side of medicine without prompting.",
+      "weak": "Relies entirely on a generic, rehearsed line ('I've always wanted to help people') with no specific example or personal reflection behind it."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Answers only with 'I want to help people' and stops there",
+        "reveals": "Hasn't done the reflective work to identify what's specifically true and personal about their own motivation"
+      },
+      {
+        "mistake": "Only mentions the appealing or noble parts of medicine (saving lives, being respected)",
+        "reveals": "May not have engaged realistically with the demanding, unglamorous, and emotionally difficult sides of the career"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Plenty of careers let you help people — why medicine specifically, and not nursing, social work, or something else?",
+        "goodResponse": "Engages seriously with what's distinctive about being a doctor specifically, rather than repeating a generic 'helping people' framing"
+      },
+      {
+        "probe": "What's the least appealing part of a doctor's working life that you've thought about?",
+        "goodResponse": "Names something genuine and specific (long hours, emotionally difficult conversations, bureaucracy, delayed gratification of training) rather than deflecting the question"
+      }
+    ],
+    "hints": [
+      "Try to think of one specific moment or experience, not a general feeling.",
+      "What's different about medicine specifically, compared to other caring professions?",
+      "Have you thought about the hard parts of the job, not just the rewarding ones?"
+    ]
+  },
+  {
+    "id": "MED-M2",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "A Difficult Team Experience",
+    "tags": [
+      "teamwork",
+      "reflection"
+    ],
+    "question": "Tell me about a time you worked in a team and it didn't go well. What happened, and what did you learn?",
+    "answer": "No single correct answer. Assess whether they give a genuine example of difficulty (not a disguised humble-brag), take real ownership of their own part in it, and articulate a specific, credible lesson rather than a vague platitude.",
+    "modelReasoningPath": "A strong candidate picks a genuine example where something actually went wrong — not a thinly disguised success story ('we disagreed but then we won the competition!'). They take real ownership of their own role in the difficulty, rather than placing all the blame elsewhere, and describe a specific, concrete change in how they now approach teamwork, not a vague statement like 'I learned communication is important'.",
+    "rubric": {
+      "strong": "Describes a genuine team difficulty with honest detail, takes clear ownership of their own contribution to the problem (not just others' faults), and names a specific, credible lesson or change in behaviour since.",
+      "developing": "Gives a real example but is vague about their own role, or the lesson learned is generic ('teamwork is important') rather than specific.",
+      "weak": "Describes a disguised success story with no real difficulty, or blames the difficulty entirely on other people with no self-reflection."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Picks an example that's actually a success story in disguise",
+        "reveals": "Is avoiding genuine vulnerability or hasn't understood the question is looking for real difficulty"
+      },
+      {
+        "mistake": "Blames teammates entirely with no acknowledgment of their own part",
+        "reveals": "May lack self-awareness or the capacity for honest self-reflection, both important for working in clinical teams"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What was YOUR part in why it went wrong — not what others did?",
+        "goodResponse": "Takes genuine ownership rather than redirecting back to other people's behaviour"
+      },
+      {
+        "probe": "If the exact same situation happened again tomorrow, what would you specifically do differently?",
+        "goodResponse": "Names a concrete, specific action rather than a vague intention"
+      }
+    ],
+    "hints": [
+      "Try to think of a moment where something genuinely went wrong, not a near-miss success.",
+      "What did YOU do, or not do, that contributed to the problem?",
+      "Can you name one specific thing you'd do differently next time?"
+    ]
+  },
+  {
+    "id": "MED-M3",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "A Mistake You Made",
+    "tags": [
+      "failure",
+      "reflection",
+      "honesty"
+    ],
+    "question": "Tell me about a time you made a genuine mistake — academic, personal, anything — and what it taught you.",
+    "answer": "No single correct answer. Assess honesty (a real mistake, not a disguised strength), the depth of reflection, and whether the stated lesson is specific and credible rather than a rehearsed-sounding platitude.",
+    "modelReasoningPath": "A strong candidate is willing to be genuinely vulnerable and name a real mistake, rather than the classic interview dodge of describing a 'flaw' that's secretly a strength ('I work too hard' or 'I care too much'). They take clear ownership without excessive self-flagellation, and describe a specific, believable change in behaviour or thinking since — something that sounds like it actually happened, not a lesson manufactured to sound good in an interview.",
+    "rubric": {
+      "strong": "Names a genuine, specific mistake with real honesty, takes clear ownership without deflecting blame, and describes a credible, specific lesson or change since.",
+      "developing": "Gives a real mistake but the reflection is somewhat shallow or the 'lesson' sounds rehearsed rather than genuinely earned.",
+      "weak": "Describes a disguised strength as a weakness ('I care too much about getting things right'), or gives no real ownership of the mistake."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Answers with a classic disguised-strength dodge ('I'm a perfectionist' or 'I work too hard')",
+        "reveals": "Is avoiding genuine vulnerability rather than engaging honestly with the question"
+      },
+      {
+        "mistake": "Describes the mistake but the stated lesson doesn't actually follow from it, or sounds generic",
+        "reveals": "May not have genuinely reflected on the experience, just prepared an answer that sounds reflective"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "That sounds like it worked out fine in the end — was there a real cost to this mistake?",
+        "goodResponse": "Is honest about genuine consequences rather than minimising them to make the story more comfortable"
+      },
+      {
+        "probe": "How do you know you've actually changed, rather than just knowing you're supposed to say you have?",
+        "goodResponse": "Points to a specific instance since where they behaved differently, rather than just asserting they've changed"
+      }
+    ],
+    "hints": [
+      "Try to think of something that had a real, uncomfortable consequence.",
+      "Is the lesson you're describing something you can point to evidence of, since then?",
+      "Avoid a 'weakness' that's secretly a strength — what's a genuine mistake?"
+    ]
+  },
+  {
+    "id": "MED-M4",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Work Experience Reality Check",
+    "tags": [
+      "work-experience",
+      "reflection",
+      "realism"
+    ],
+    "question": "Tell me about a piece of work experience, volunteering, or shadowing you've done. What did it teach you about the REALITY of a medical career, as opposed to what you expected beforehand?",
+    "answer": "No single correct answer. Assess whether they describe a genuine shift in understanding (something they didn't expect, learned, or found harder/different than imagined) rather than simply listing what they did or restating that it 'confirmed' their existing view with no new insight.",
+    "modelReasoningPath": "A strong candidate identifies a genuine gap between what they expected beforehand and what they actually observed — this shows real engagement and reflection, not just box-ticking. It could be about the emotional weight of certain conversations, the amount of non-clinical admin work, the pace and unpredictability, or the teamwork involved. A weaker candidate simply narrates what they did ('I shadowed a GP for a week') without reflecting on what it changed in their understanding.",
+    "rubric": {
+      "strong": "Identifies a specific, genuine shift in understanding — something unexpected, harder, or different from what they assumed beforehand — with concrete detail from the experience.",
+      "developing": "Describes the experience reasonably but the 'lesson' is vague or just confirms what they already believed with no real new insight.",
+      "weak": "Simply lists what they did with no reflection at all on what it taught them or changed in their thinking."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Just narrates a timeline of what they did ('first I observed X, then I did Y')",
+        "reveals": "Hasn't engaged with the reflective part of the question, only the descriptive part"
+      },
+      {
+        "mistake": "Says the experience 'confirmed everything I already thought' with no specific new insight",
+        "reveals": "May not have engaged critically with the experience, or is giving a safe but unreflective answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's something that surprised you, even a small thing?",
+        "goodResponse": "Names something specific and genuine, even if minor, rather than insisting nothing was surprising"
+      },
+      {
+        "probe": "Did anything make you question whether medicine is really right for you?",
+        "goodResponse": "Engages honestly with this rather than reflexively denying any doubt at all"
+      }
+    ],
+    "hints": [
+      "Try to think of one moment that didn't match what you expected beforehand.",
+      "What was harder, less glamorous, or more surprising than you imagined?",
+      "Did you see anything that made you think differently about the job?"
+    ]
+  },
+  {
+    "id": "MED-M5",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Handling Pressure",
+    "tags": [
+      "resilience",
+      "reflection"
+    ],
+    "question": "Medicine involves real pressure — long hours, high stakes, difficult news. Tell me about a genuinely stressful situation you've faced, and how you actually handled it.",
+    "answer": "No single correct answer. Assess whether they give a specific, real example of stress (not a vague generalisation), describe honestly how they coped — including anything that DIDN'T work well — and show self-awareness about their own coping style rather than an idealised version of themselves.",
+    "modelReasoningPath": "A strong candidate names a specific, genuinely stressful situation rather than a vague generalisation ('exams are stressful'). They describe their actual coping strategy with enough concrete detail to sound real, and — crucially — are willing to admit the coping wasn't perfect or that they're still working on it, rather than presenting an implausibly polished picture of themselves handling every pressure flawlessly.",
+    "rubric": {
+      "strong": "Gives a specific, genuine example of a stressful situation, describes concrete coping strategies with real detail, and shows honest self-awareness including imperfections or ongoing growth areas.",
+      "developing": "Gives a real example but the coping description is generic ('I just stayed calm and focused'), or the account sounds slightly too polished to be fully honest.",
+      "weak": "Gives a vague, generic example with no specific detail, or claims to have handled it perfectly with no honest reflection on difficulty."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says something vague like 'I just try to stay positive' with no concrete detail",
+        "reveals": "Hasn't given a specific enough answer to demonstrate genuine self-awareness or a real coping strategy"
+      },
+      {
+        "mistake": "Presents themselves as having handled the stress perfectly with no difficulty at all",
+        "reveals": "May be giving an idealised rather than honest account — real resilience usually includes some struggle"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Was there a moment during that situation where your coping strategy DIDN'T work?",
+        "goodResponse": "Honestly acknowledges a moment of real struggle rather than insisting everything went smoothly throughout"
+      },
+      {
+        "probe": "What do you do now, differently, because of that experience?",
+        "goodResponse": "Names something concrete and specific they've changed, rather than a vague statement about being 'more resilient now'"
+      }
+    ],
+    "hints": [
+      "Try to think of one specific moment, not a general category of stress like 'exams'.",
+      "What did you actually DO, step by step, to cope?",
+      "Was there a part of it that didn't go well, or that you're still working on?"
+    ]
+  },
+  {
+    "id": "MED-M6",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "A Time You Led Something",
+    "tags": [
+      "leadership",
+      "reflection"
+    ],
+    "question": "Tell me about a time you took the lead on something — formally or informally. What made it work, or not work?",
+    "answer": "No single correct answer. Assess whether the example shows genuine initiative and specific detail about what leadership actually looked like in practice (not just a title held), and honest reflection on what did or didn't go well, rather than a purely self-congratulatory account.",
+    "modelReasoningPath": "A strong candidate picks a concrete example where they can describe SPECIFIC actions they took to lead, not just a role or title they held ('I was team captain' says nothing on its own — what did they actually DO as captain?). They show awareness that leadership isn't just giving instructions — it might involve listening, delegating, resolving a disagreement, or motivating someone struggling. A genuinely strong answer includes honest reflection on something that didn't go perfectly, showing self-awareness rather than presenting an implausibly flawless account of their own leadership.",
+    "rubric": {
+      "strong": "Describes specific actions taken (not just a title held), shows understanding that leadership involves more than giving orders, and reflects honestly on what worked and what didn't.",
+      "developing": "Names a leadership role but the description stays fairly generic about what they actually did, or the reflection is one-sided (all positive).",
+      "weak": "Names a title or position with no concrete description of actions taken, or takes full credit for a group's success with no reflection."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Describes holding a title (captain, prefect, project lead) with no detail on specific actions taken",
+        "reveals": "Hasn't reflected on what leadership actually involved in practice, only that they held a position"
+      },
+      {
+        "mistake": "Presents the experience as a flawless success with no honest reflection on difficulty",
+        "reveals": "May be less self-aware, or is giving a polished rather than genuine account"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Was there a moment someone disagreed with your approach — what did you do?",
+        "goodResponse": "Describes a specific, real moment of friction and how they actually handled it, rather than claiming universal agreement"
+      },
+      {
+        "probe": "What would you do differently if you led the same thing again?",
+        "goodResponse": "Names a specific, genuine change rather than a vague 'communicate better'"
+      }
+    ],
+    "hints": [
+      "Try to describe specific actions you took, not just the role or title you held.",
+      "Was there a moment of disagreement or difficulty you had to navigate?",
+      "What's one thing you'd genuinely do differently next time?"
+    ]
+  },
+  {
+    "id": "MED-M7",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Communicating Across a Barrier",
+    "tags": [
+      "communication",
+      "empathy",
+      "reflection"
+    ],
+    "question": "Tell me about a time you had to communicate something important to someone when there was a real barrier — a language difference, an age gap, a difference in understanding, or something else. How did you handle it?",
+    "answer": "No single correct answer. Assess whether the example is specific and genuine, whether they describe concrete adaptations they made to communicate effectively (not just 'I spoke slowly and clearly'), and whether they reflect on how they knew or checked that the communication had actually worked.",
+    "modelReasoningPath": "A strong candidate picks a real, specific example — this could be with a grandparent, a young child, someone with a different first language, or someone with a different level of technical understanding. They describe concrete adaptations (using simpler language, checking understanding by asking the person to explain it back, using an analogy, being patient with repetition) rather than just asserting they communicated well. A genuinely strong answer reflects on how they actually KNEW the communication worked — did they check, or just assume — since checking understanding is a core clinical communication skill.",
+    "rubric": {
+      "strong": "Gives a specific example with concrete adaptations described, and explains how they checked or confirmed the communication actually landed, rather than assuming it did.",
+      "developing": "Gives a real example but the adaptations described are vague ('I explained clearly'), or there's no reflection on whether it actually worked.",
+      "weak": "Gives a generic or hypothetical answer with no specific real example, or shows no awareness of the need to check understanding."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Describes only 'speaking slowly and clearly' with no other adaptation",
+        "reveals": "Hasn't thought deeply about what genuinely effective cross-barrier communication requires beyond volume and pace"
+      },
+      {
+        "mistake": "Assumes the communication worked with no mention of checking understanding",
+        "reveals": "Misses a core communication principle — that the speaker's intention isn't the same as the listener's actual understanding"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "How did you actually know they understood, rather than just nodding politely?",
+        "goodResponse": "Describes a specific check — asking them to explain it back, asking a follow-up question, observing their subsequent actions"
+      },
+      {
+        "probe": "What would you do differently if it happened again?",
+        "goodResponse": "Names something specific and genuine rather than a generic 'be more patient'"
+      }
+    ],
+    "hints": [
+      "What specific adaptation did you make, beyond just speaking slower?",
+      "How did you check whether the message had actually landed?",
+      "Was there a moment it wasn't working, and what did you do then?"
+    ]
+  },
+  {
+    "id": "MED-M8",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Disagreeing With Someone in Authority",
+    "tags": [
+      "professionalism",
+      "reflection",
+      "hierarchy"
+    ],
+    "question": "Tell me about a time you disagreed with a decision made by someone in authority over you — a teacher, a coach, a boss. What did you do?",
+    "answer": "No single correct answer. Assess whether the candidate describes handling the disagreement respectfully and constructively (not simply complying silently, and not being insubordinate), and whether they show genuine reflection on the outcome, including if they turned out to be wrong.",
+    "modelReasoningPath": "A strong candidate describes a real instance of disagreement and how they navigated the tension between respecting the person's authority/experience and voicing a genuine concern. This could involve raising the disagreement privately and respectfully, providing reasoning rather than just objecting, and accepting the final decision professionally even if it didn't go their way. A genuinely strong answer is honest about the outcome — including if they were ultimately wrong, or if the authority figure had context they didn't — showing they can hold a view without needing to have been right to find the experience valuable.",
+    "rubric": {
+      "strong": "Describes raising the disagreement respectfully and with reasoning, shows they can accept a decision professionally even without agreeing, and reflects honestly on the outcome including any ways they were wrong or learned something.",
+      "developing": "Describes a real disagreement but the resolution is vague, or the reflection doesn't seriously engage with the possibility they were wrong.",
+      "weak": "Describes either simply complying with no real engagement, or being confrontational/insubordinate with no awareness that this would be inappropriate in a clinical hierarchy."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Describes the disagreement resolving because they 'won' or were proven completely right",
+        "reveals": "May be selecting an example that avoids genuine reflection on complexity or being wrong"
+      },
+      {
+        "mistake": "Says they'd never disagree with someone in authority",
+        "reveals": "May not understand that raising genuine, respectful concerns (including patient-safety-adjacent ones) is sometimes professionally necessary, not simply insubordinate"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Looking back, do you think you were right to disagree?",
+        "goodResponse": "Gives an honest, nuanced answer rather than automatically defending their original position"
+      },
+      {
+        "probe": "How did you raise it, specifically — what did you actually say?",
+        "goodResponse": "Describes a concrete, respectful approach rather than a vague description"
+      }
+    ],
+    "hints": [
+      "How did you actually raise the disagreement — what did you say, and to whom?",
+      "Looking back honestly, were you right?",
+      "How did you handle it if the final decision didn't go your way?"
+    ]
+  },
+  {
+    "id": "MED-M9",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "Handling an Unsuccessful Outcome",
+    "tags": [
+      "resilience",
+      "reflection",
+      "honesty"
+    ],
+    "question": "Tell me about a time you worked hard toward something and it didn't work out — you didn't get the grade, the place, the result you wanted. How did you respond?",
+    "answer": "No single correct answer. Assess honesty about the disappointment (rather than pretending it didn't matter), and whether they describe a genuine, specific process of moving forward rather than a vague platitude like 'I just tried harder next time'.",
+    "modelReasoningPath": "A strong candidate is honest that the setback was genuinely disappointing, rather than performing indifference to seem resilient. They describe a specific, credible process of processing the disappointment and moving forward — what they actually did differently, what they learned about themselves, or how they sought feedback or support. This is directly relevant to medicine, a career with high stakes and frequent setbacks (competitive training posts, difficult outcomes despite best efforts), so genuine evidence of resilience — not the performance of resilience — matters.",
+    "rubric": {
+      "strong": "Is honest about genuine disappointment, describes a specific and credible process of responding and moving forward, and shows real self-reflection about what they learned.",
+      "developing": "Gives a real example but the response described is somewhat generic ('I just worked harder'), without specific detail.",
+      "weak": "Claims the setback didn't really bother them, or gives no specific detail about how they actually responded."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says the setback 'didn't really affect me' or similar",
+        "reveals": "May be performing resilience rather than demonstrating genuine emotional honesty and self-reflection"
+      },
+      {
+        "mistake": "Gives only a generic response ('I worked harder next time') with no specific detail",
+        "reveals": "Hasn't reflected deeply enough on what actually changed in their approach"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What did you actually change afterward, specifically?",
+        "goodResponse": "Names a concrete, specific change rather than a vague intention"
+      },
+      {
+        "probe": "Did anyone help you process it, or did you do it alone?",
+        "goodResponse": "Answers honestly, showing self-awareness about how they cope, including whether they sought support"
+      }
+    ],
+    "hints": [
+      "Be honest about how it actually felt at the time.",
+      "What specifically did you do differently afterward?",
+      "Did you talk to anyone about it, or process it on your own?"
+    ]
+  },
+  {
+    "id": "MED-M10",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Motivation & Reflection",
+    "title": "The Realities of Training",
+    "tags": [
+      "motivation",
+      "realism",
+      "reflection"
+    ],
+    "question": "Medical training takes at least five or six years at university, followed by many more years of postgraduate training before you're fully qualified in a specialty — often a decade or more in total. What have you actually done to understand whether that reality is right for you?",
+    "answer": "No single correct answer. Assess whether the candidate has done genuine, specific research or reflection into the length and structure of training (not just a vague awareness that 'it takes a long time'), and whether they can speak honestly about the trade-offs involved rather than only the appeal of the eventual outcome.",
+    "modelReasoningPath": "A strong candidate goes beyond a generic acknowledgement that training is long, and describes something SPECIFIC they've done to understand it — talking to a junior doctor or medical student about their actual experience, researching the structure of postgraduate training, or reflecting on a work experience placement that gave them a realistic view. They're able to speak honestly about the trade-offs (delayed independence, delayed earning potential relative to some other paths, the demands of exams throughout training) rather than only focusing on the appeal of eventually being a doctor.",
+    "rubric": {
+      "strong": "Describes specific, genuine research or experience that informed their understanding of training length and structure, and can speak honestly about real trade-offs, not just the appeal of the destination.",
+      "developing": "Shows general awareness that training is long but hasn't done much specific research, or only discusses the appeal rather than genuine trade-offs.",
+      "weak": "Gives a vague or dismissive answer ('I know it's long but I'm ready') with no specific evidence of having engaged with what that actually means."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says simply 'I know it will be hard but I'm committed' with no specific detail",
+        "reveals": "Hasn't done the concrete research or reflection the question is actually asking about"
+      },
+      {
+        "mistake": "Only discusses the appeal of eventually qualifying, not the years of training itself",
+        "reveals": "May be focused on the destination without having genuinely grappled with the long process required to get there"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's the one part of the training pathway that concerns you the most, honestly?",
+        "goodResponse": "Names something specific and genuine, showing they've actually thought about the realistic downsides, not just the positives"
+      },
+      {
+        "probe": "Have you spoken to anyone currently going through training?",
+        "goodResponse": "Describes a specific conversation or source of insight, rather than a vague general awareness"
+      }
+    ],
+    "hints": [
+      "What SPECIFIC thing have you done to research the actual training pathway?",
+      "What's a genuine downside or difficulty of the training process, not just the appeal of the end result?",
+      "Have you spoken to anyone currently in training, or read about their real experience?"
+    ]
+  }
+]

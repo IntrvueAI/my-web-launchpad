@@ -15,7 +15,7 @@ export interface InterviewType {
   id: string;
   name: string;
   description: string;
-  category: 'academic' | 'logic' | 'behaviour' | 'maths' | 'school_specific' | 'other' | 'free';
+  category: 'academic' | 'logic' | 'behaviour' | 'maths' | 'school_specific' | 'other' | 'free' | 'medicine';
   promptFile: string;
   duration: number; // in minutes
   scoringSystem: '0-5' | '0-9' | '0-10' | '0-7';
@@ -194,6 +194,32 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
       "I'll gently push back on whatever you say. That's not because you're wrong; I just love hearing how you think, and it's completely fine to say you're not sure.\n\n" +
       "Just share your honest view and your reasons."
   },
+  'medicine-mmi': {
+    id: 'medicine-mmi',
+    name: 'Medicine MMI Interview',
+    description: 'Practice UK medicine/healthcare MMI-style stations with Clara — ethical scenarios, data interpretation and prioritisation, and motivation & reflection',
+    category: 'medicine',
+    promptFile: 'medicine/medicine-mmi.md', // vestigial, ignored when engineDriven
+    duration: 25,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Ethical & Clinical Reasoning',
+      'Structured Judgement & Prioritisation',
+      'Communication & Clarity',
+      'Insight, Motivation & Professionalism'
+    ],
+    difficultyLevel: 3,
+    tags: ['medicine', 'MMI', 'university admissions', 'ethics', 'beta'],
+    icon: 'Stethoscope',
+    engineDriven: true,
+    engineSubject: 'medicine',
+    adminOnly: true,
+    preStartNote:
+      "This is a practice MMI (Multiple Mini Interview) circuit for UK medicine and healthcare admissions.\n\n" +
+      "Clara will move between short stations — ethical scenarios with no right answer, data interpretation and prioritisation questions, and questions about your own motivation and experience. She'll push back on whatever you say, just like a real MMI assessor.\n\n" +
+      "This is a text/voice-only practice tool — it assesses what you SAY, not your tone or expression, so make your reasoning explicit rather than assuming it comes across.\n\n" +
+      "Ready when you are."
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -250,6 +276,11 @@ export const INTERVIEW_CATEGORIES = {
     name: 'Free',
     description: 'Free demo and trial interviews',
     color: 'emerald'
+  },
+  medicine: {
+    name: 'Medicine',
+    description: 'MMI-style medicine and healthcare admissions practice',
+    color: 'teal'
   }
 } as const;
 
@@ -561,6 +592,58 @@ const CURRENT_AFFAIRS_INTERVIEW_CONFIG: InterviewTypeConfig = {
   ]
 };
 
+// Medicine MMI Interview Configuration (20 points total: 5+5+5+5)
+// Reuses the logic-puzzles score fields so no new DB columns are needed,
+// but presents MMI-appropriate section titles.
+const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
+  name: 'Medicine MMI Interview',
+  description: 'Spoken MMI-style practice for medicine and healthcare admissions with Clara',
+  scoringSystem: '0-5',
+  maxTotalScore: 20,
+  maxSectionScore: 5,
+  sections: [
+    {
+      id: 'ethical-clinical-reasoning',
+      title: 'Ethical & Clinical Reasoning',
+      iconName: 'Stethoscope',
+      description: 'Weighing stakeholders and reaching a defensible position on ethics scenarios',
+      scoreField: 'pattern_recognition_score',
+      feedbackField: 'pattern_recognition'
+    },
+    {
+      id: 'structured-judgement',
+      title: 'Structured Judgement & Prioritisation',
+      iconName: 'ClipboardList',
+      description: 'Justified reasoning on data-interpretation and prioritisation stations',
+      scoreField: 'logical_deduction_score',
+      feedbackField: 'logical_deduction'
+    },
+    {
+      id: 'communication-clarity',
+      title: 'Communication & Clarity',
+      iconName: 'MessageCircle',
+      description: 'Organised, explicit reasoning — since only the transcript is assessed',
+      scoreField: 'mathematical_logic_score',
+      feedbackField: 'mathematical_logic'
+    },
+    {
+      id: 'insight-motivation-professionalism',
+      title: 'Insight, Motivation & Professionalism',
+      iconName: 'HeartHandshake',
+      description: 'Specific, honest reflection and professionalism throughout',
+      scoreField: 'clarity_of_thought_score',
+      feedbackField: 'clarity_of_thought'
+    }
+  ],
+  bandThresholds: [
+    { minScore: 18, label: 'Exceptional', colorClass: 'bg-emerald-500', description: 'Outstanding reasoning, judgement and professionalism' },
+    { minScore: 15, label: 'Strong', colorClass: 'bg-green-500', description: 'Strong MMI performance across stations' },
+    { minScore: 12, label: 'Good', colorClass: 'bg-blue-500', description: 'Good engagement with room for development' },
+    { minScore: 8, label: 'Developing', colorClass: 'bg-yellow-500', description: 'Developing reasoning, needs practice' },
+    { minScore: 0, label: 'Needs Support', colorClass: 'bg-red-500', description: 'Requires significant development' }
+  ]
+};
+
 /**
  * Enhanced configurations mapped by modern interview type
  */
@@ -571,6 +654,7 @@ export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeCo
   'maths-interview': MATHS_INTERVIEW_CONFIG,
   'verbal-interview': VERBAL_INTERVIEW_CONFIG,
   'current-affairs-interview': CURRENT_AFFAIRS_INTERVIEW_CONFIG,
+  'medicine-mmi': MEDICINE_MMI_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types
   'oxbridge': {

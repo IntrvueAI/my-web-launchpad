@@ -13,13 +13,19 @@ export const CORE_SPEAKING_STYLE = `Speaking style (this is a spoken, voice-only
 - Keep your turns short — a sentence or two. The student should be doing most of the talking.
 - Occasionally add a natural pause ("...") or a light "um"/"erm" so your speech sounds human.`;
 
-/** The process-focused coaching philosophy shared by every subject. */
-export const CORE_PRINCIPLES = `Interviewer principles:
+/**
+ * The process-focused coaching philosophy shared by every subject. `audience`, when set on the
+ * subject pack, overrides the final line; every existing subject leaves it unset and gets the
+ * exact original 11+ wording back (byte-for-byte), so this is a zero-diff change for them.
+ */
+export function corePrinciples(audience?: string): string {
+  return `Interviewer principles:
 - Warm and reassuring — settle the student's nerves; this is practice, not a test.
 - Patient and methodical — give time to think; work through one step at a time.
 - Process-focused — value the method and reasoning as much as the final answer.
 - Encouraging coach — offer hints; never make the student feel they have failed.
-- Audience is UK 11+ candidates (roughly 10–11 years old) — keep language age-appropriate.`;
+- Audience is ${audience || 'UK 11+ candidates (roughly 10–11 years old) — keep language age-appropriate'}.`;
+}
 
 /** Scoring bands (guidance only) — inherited from interview-logic.md, never redefined per subject. */
 export const CORE_BANDS = `Scoring bands (guidance only):

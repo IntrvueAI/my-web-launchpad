@@ -18,6 +18,14 @@ export interface SubjectPack {
   subject: string;            // 'maths'
   /** Interviewer name + one-line character, e.g. "Clara — warm, patient British examiner". */
   persona: string;
+  /**
+   * Who the candidate is, for the two audience-specific lines in the shared prompt builder
+   * (buildSystemPrompt in engine/agent.ts). When unset, those lines fall back to their original
+   * hardcoded 11+ wording verbatim — every existing pack is unaffected by this field's addition.
+   * Set this for packs whose candidates are NOT 10-11 year old 11+ applicants, e.g.
+   * "a UK university applicant (about 17-18 years old) preparing for medicine admissions interviews".
+   */
+  audience?: string;
   /** Subject-specific speaking notes appended to CORE_SPEAKING_STYLE. */
   speakingNotes?: string;
   /** Guardrails for this subject (no answer leakage, no new content taught, etc.). */

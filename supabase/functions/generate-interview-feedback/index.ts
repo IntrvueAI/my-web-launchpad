@@ -5,6 +5,7 @@ import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
 import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
+import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
 
 // Engine-driven subjects score from their OWN subject pack — the same file that drives the
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
@@ -14,6 +15,7 @@ const ENGINE_PACKS: Record<string, any> = {
   'logic-puzzles': logicPack,
   'current-affairs-interview': currentaffairsPack,
   '11-plus': elevenplusPack,
+  'medicine-mmi': medicinePack,
 };
 
 function buildEngineDrivenSystemPrompt(pack: any): string {
@@ -329,6 +331,18 @@ const INTERVIEW_TYPES: Record<string, any> = {
       'Forming & Defending a View',
       'Considering Other Perspectives',
       'Moral Maturity & Clarity'
+    ]
+  },
+  'medicine-mmi': {
+    id: 'medicine-mmi',
+    name: 'Medicine MMI Interview',
+    category: 'medicine',
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Ethical & Clinical Reasoning',
+      'Structured Judgement & Prioritisation',
+      'Communication & Clarity',
+      'Insight, Motivation & Professionalism'
     ]
   },
   'demo': {
@@ -968,7 +982,7 @@ try {
         }
         
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview') {
+        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi') {
           // Logic / maths / verbal / current-affairs validation (shared score fields)
           const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
           for (const field of requiredFields) {
@@ -1014,7 +1028,7 @@ try {
       console.error('JSON parsing error:', e.message);
       
       // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview') {
+      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi') {
         feedbackData = {
           pattern_recognition_score: 3,
           logical_deduction_score: 3,
@@ -1281,7 +1295,7 @@ STUDENT PERFORMANCE DATA:`;
     };
 
     // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview') {
+    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi') {
       insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
       insertData.logical_deduction_score = feedbackData.logical_deduction_score;
       insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;

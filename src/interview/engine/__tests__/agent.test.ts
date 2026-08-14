@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   advanceAgent,
+  buildSystemPrompt,
   initAgentState,
   type AgentDeps,
   type AgentState,
@@ -8,6 +9,7 @@ import {
 } from '../agent';
 import { mathsPack } from '../../subjects/maths/pack';
 import { elevenplusPack } from '../../subjects/elevenplus/pack';
+import { medicinePack } from '../../subjects/medicine/pack';
 import { phaseInfo } from '../agent';
 import type { BankQuestion } from '../types';
 
@@ -151,5 +153,24 @@ describe('LLM-driven agent', () => {
     expect(r.state.evidence).toHaveLength(1);
     expect(r.state.evidence[0].skipped).toBe(true);
     expect(r.state.evidence[0].outcome).toBe('skipped');
+  });
+
+  it('audience-conditioned prompt lines: medicine (has pack.audience) never says "child"; maths (no pack.audience) is untouched', () => {
+    const mathsState = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    const mathsPrompt = buildSystemPrompt(mathsPack, mathsState);
+    expect(mathsPrompt).toContain('10–11 year old'); // original wording, byte-for-byte, unaffected
+    expect(mathsPrompt).toContain('a real teacher SPEAKING OUT LOUD to a 10–11 year old');
+
+    const medState = initAgentState({ subject: 'medicine', mode: 'mock', pack: medicinePack, seed: 1 });
+    const medPrompt = buildSystemPrompt(medicinePack, medState);
+    // The 5 specific 11+-flavoured phrases swapped out for medicine — not a bare "child" ban, since
+    // the pack's own persona text intentionally says "treat the candidate as a near-adult, not a child".
+    expect(medPrompt).not.toContain('let the child talk');
+    expect(medPrompt).not.toContain('the child tries to chat');
+    expect(medPrompt).not.toContain('a child says something unexpected');
+    expect(medPrompt).not.toContain('a child goes quiet');
+    expect(medPrompt).not.toContain('a child is mid-interview');
+    expect(medPrompt).toContain('a real interviewer SPEAKING OUT LOUD to a UK university applicant');
+    expect(medPrompt).toContain('candidate');
   });
 });

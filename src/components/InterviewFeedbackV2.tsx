@@ -175,12 +175,13 @@ export const InterviewFeedbackV2 = ({
   const isMathsInterview = interviewType === 'maths-interview';
   const isVerbalInterview = interviewType === 'verbal-interview';
   const isCurrentAffairs = interviewType === 'current-affairs-interview';
+  const isMedicineMMI = interviewType === 'medicine-mmi';
 
   let maxScore, maxIndividualScore;
   if (isIELTS) {
     maxScore = 9;
     maxIndividualScore = 9;
-  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview || isCurrentAffairs) {
+  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview || isCurrentAffairs || isMedicineMMI) {
     maxScore = 20;
     maxIndividualScore = 5;
   } else {
@@ -324,6 +325,34 @@ export const InterviewFeedbackV2 = ({
       {
         title: 'Moral Maturity & Clarity',
         icon: 'MessageCircle',
+        score: feedback.clarity_of_thought_score || 0,
+        feedback: feedback.detailed_feedback.clarity_of_thought || '',
+      },
+    ];
+  } else if (isMedicineMMI) {
+    // Medicine MMI interview reuses the logic score fields with MMI station titles
+    sections = [
+      {
+        title: 'Ethical & Clinical Reasoning',
+        icon: 'Stethoscope',
+        score: feedback.pattern_recognition_score || 0,
+        feedback: feedback.detailed_feedback.pattern_recognition || '',
+      },
+      {
+        title: 'Structured Judgement & Prioritisation',
+        icon: 'ClipboardList',
+        score: feedback.logical_deduction_score || 0,
+        feedback: feedback.detailed_feedback.logical_deduction || '',
+      },
+      {
+        title: 'Communication & Clarity',
+        icon: 'MessageCircle',
+        score: feedback.mathematical_logic_score || 0,
+        feedback: feedback.detailed_feedback.mathematical_logic || '',
+      },
+      {
+        title: 'Insight, Motivation & Professionalism',
+        icon: 'HeartHandshake',
         score: feedback.clarity_of_thought_score || 0,
         feedback: feedback.detailed_feedback.clarity_of_thought || '',
       },
