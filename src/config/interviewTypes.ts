@@ -226,7 +226,10 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     description: 'A free, relaxed conversation with Clara to get to know you — no prep needed, just be yourself.',
     category: 'free',
     promptFile: 'chat/chat-with-clara.md', // vestigial, ignored when engineDriven
-    duration: 5,
+    // 7, not 5: richer bridges/follow-ups/self-disclosure mean turns run longer than a bare Q&A loop,
+    // but the session still hard-cuts at duration*60s (Anam-enforced) with no time-awareness signal
+    // in the prompt — this is the same structural cause diagnosed for the old demo's abrupt cutoffs.
+    duration: 7,
     scoringSystem: '0-5',
     scoringCriteria: [
       'Warmth & Openness',
