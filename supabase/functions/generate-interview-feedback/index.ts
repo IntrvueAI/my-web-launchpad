@@ -349,7 +349,7 @@ const INTERVIEW_TYPES: Record<string, any> = {
   },
   'chat-with-clara': {
     id: 'chat-with-clara',
-    name: 'Chat with Clara',
+    name: 'Demo Interview New',
     category: 'free',
     scoringSystem: '0-5',
     scoringCriteria: [
@@ -361,7 +361,7 @@ const INTERVIEW_TYPES: Record<string, any> = {
   },
   'demo': {
     id: 'demo',
-    name: 'Free Demo Interview',
+    name: 'Demo Interview Old',
     category: 'language',
     scoringSystem: '0-5',
     scoringCriteria: [

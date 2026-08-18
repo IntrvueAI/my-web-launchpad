@@ -17,8 +17,8 @@ const SHORT_INTERVIEW_LABELS: Record<string, string> = {
   'maths-interview': 'Maths',
   'current-affairs-interview': 'Current Affairs',
   'medicine-mmi': 'Medicine MMI',
-  'chat-with-clara': 'Chat with Clara',
-  'demo': 'Demo',
+  'chat-with-clara': 'Demo Interview New',
+  'demo': 'Demo Interview Old',
 };
 
 export const shortInterviewLabel = (id: string | null | undefined): string =>

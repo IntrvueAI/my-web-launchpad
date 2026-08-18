@@ -222,7 +222,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   },
   'chat-with-clara': {
     id: 'chat-with-clara',
-    name: 'Chat with Clara',
+    name: 'Demo Interview New',
     description: 'A free, relaxed conversation with Clara to get to know you — no prep needed, just be yourself.',
     category: 'free',
     promptFile: 'chat/chat-with-clara.md', // vestigial, ignored when engineDriven
@@ -247,7 +247,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   },
   'demo': {
     id: 'demo',
-    name: 'Free Demo Interview',
+    name: 'Demo Interview Old',
     description: 'Try a free 2-minute demo interview. Practice the flow and see feedback without using any credits.',
     category: 'free',
     promptFile: 'demo/demo.md',
@@ -673,7 +673,7 @@ const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
 // Reuses the logic-puzzles score fields so no new DB columns are needed,
 // but presents warm, conversational section titles.
 const CHAT_WITH_CLARA_CONFIG: InterviewTypeConfig = {
-  name: 'Chat with Clara',
+  name: 'Demo Interview New',
   description: 'A free, relaxed getting-to-know-you conversation with Clara',
   scoringSystem: '0-5',
   maxTotalScore: 20,
