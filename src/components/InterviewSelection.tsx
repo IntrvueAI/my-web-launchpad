@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { getAllInterviewTypes, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
 import { cn } from '@/lib/utils';
 import { useCredits } from '@/hooks/useCredits';
-import { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, Sparkles, Clock, type LucideIcon } from 'lucide-react';
+import { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, Sparkles, Clock, MessageCircle, type LucideIcon } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 interface InterviewSelectionProps {
   onSelectInterview: (interviewType: InterviewType) => void;
 }
 
-const ICONS: Record<string, LucideIcon> = { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen };
+const ICONS: Record<string, LucideIcon> = { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, MessageCircle };
 const ACCENT: Record<string, string> = {
   '11-plus': '#FF7F50', 'maths-interview': '#38BDF8', 'logic-puzzles': '#8B5CF6',
-  'current-affairs-interview': '#34D399', demo: '#FBBF24',
+  'current-affairs-interview': '#34D399', demo: '#FBBF24', 'chat-with-clara': '#F472B6',
 };
 const DIFF: Record<number, { label: string; cls: string }> = {
   1: { label: 'Beginner', cls: 'text-emerald' },

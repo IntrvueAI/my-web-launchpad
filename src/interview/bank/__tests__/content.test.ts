@@ -6,7 +6,7 @@ import { getBank } from '../index';
 // validation (typos, missing required fields), not engine logic, but nothing else exercises it against
 // the real files today. Covers every subject folder, not just the newest one.
 describe('question bank content', () => {
-  const subjects = ['maths', 'logic', 'currentaffairs', 'elevenplus', 'medicine'];
+  const subjects = ['maths', 'logic', 'currentaffairs', 'elevenplus', 'medicine', 'chat'];
 
   it.each(subjects)('%s bank validates against the schema', (subject) => {
     const bank = getBank(subject);

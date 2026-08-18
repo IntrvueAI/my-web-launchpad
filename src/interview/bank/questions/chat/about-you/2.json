@@ -1,0 +1,50 @@
+[
+  {
+    "id": "CHAT-A1",
+    "subject": "chat",
+    "topic": "about-you",
+    "difficulty": 2,
+    "questionType": "About You",
+    "title": "Tell Me About Yourself",
+    "tags": [],
+    "question": "So, tell me a little bit about yourself — your family, where you live, whatever feels natural to share.",
+    "answer": "Discussion question — there is no single correct answer. Assess warmth, openness and specific detail, not content.",
+    "modelReasoningPath": "What to listen for: specific, concrete detail (names, places, particular family members or routines) versus a generic one-line answer. Note anything specific enough to come back to later — a sibling's name, a pet, a place they live, a hobby they mention in passing."
+  },
+  {
+    "id": "CHAT-A2",
+    "subject": "chat",
+    "topic": "about-you",
+    "difficulty": 2,
+    "questionType": "About You",
+    "title": "A Typical Day",
+    "tags": [],
+    "question": "What does a normal day look like for you, from when you wake up to when you go to bed?",
+    "answer": "Discussion question — there is no single correct answer. Assess specific, genuine detail versus a vague generic routine.",
+    "modelReasoningPath": "What to listen for: do they mention anything specific and personal (a particular after-school activity, a routine with a family member, something they look forward to) worth remembering and possibly returning to later."
+  },
+  {
+    "id": "CHAT-A3",
+    "subject": "chat",
+    "topic": "about-you",
+    "difficulty": 2,
+    "questionType": "About You",
+    "title": "Who You Spend Time With",
+    "tags": [],
+    "question": "Who do you spend most of your time with, and what do you usually get up to together?",
+    "answer": "Discussion question — there is no single correct answer. Assess warmth and specific detail about relationships.",
+    "modelReasoningPath": "What to listen for: a named person (friend, sibling, grandparent) and a specific shared activity — this is excellent callback material later in the chat."
+  },
+  {
+    "id": "CHAT-A4",
+    "subject": "chat",
+    "topic": "about-you",
+    "difficulty": 2,
+    "questionType": "About You",
+    "title": "Somewhere You Love",
+    "tags": [],
+    "question": "Is there somewhere — a place, a room, a spot outside — that feels really special to you? What makes it special?",
+    "answer": "Discussion question — there is no single correct answer. Assess genuine reflection versus a surface-level answer.",
+    "modelReasoningPath": "What to listen for: a real, specific reason the place matters (not just 'it's nice') — genuine reflection is the strong signal here."
+  }
+]

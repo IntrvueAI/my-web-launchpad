@@ -7,6 +7,13 @@ verify_jwt = true
 [functions.tavus-webhook]
 verify_jwt = false
 
+# Stripe calls this directly as a webhook (signed with stripe-signature, not a Supabase JWT) — without
+# this override the platform's default verify_jwt=true 401s every real Stripe event before the
+# function's own signature check ever runs, silently breaking the payment-confirmation safety net for
+# any customer who closes the tab before the client-side redirect completes.
+[functions.stripe-webhook]
+verify_jwt = false
+
 [functions.tavus-create-conversation]
 verify_jwt = true
 

@@ -4,6 +4,7 @@ import { logicPack } from './logic';
 import { currentaffairsPack } from './currentaffairs';
 import { elevenplusPack } from './elevenplus';
 import { medicinePack } from './medicine';
+import { chatPack } from './chat';
 
 /** Registry of available subject packs. Add verbal/general here as they land. */
 const PACKS: Record<string, SubjectPack> = {
@@ -12,6 +13,7 @@ const PACKS: Record<string, SubjectPack> = {
   currentaffairs: currentaffairsPack,
   elevenplus: elevenplusPack,
   medicine: medicinePack,
+  chat: chatPack,
 };
 
 export function getSubjectPack(subject: string): SubjectPack | undefined {

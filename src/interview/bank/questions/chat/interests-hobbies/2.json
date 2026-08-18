@@ -1,0 +1,50 @@
+[
+  {
+    "id": "CHAT-I1",
+    "subject": "chat",
+    "topic": "interests-hobbies",
+    "difficulty": 2,
+    "questionType": "Interests & Hobbies",
+    "title": "What You Love Doing",
+    "tags": [],
+    "question": "What's something you absolutely love doing — the thing that if you had a completely free afternoon, you'd choose to do?",
+    "answer": "Discussion question — there is no single correct answer. Assess genuine enthusiasm and specific detail.",
+    "modelReasoningPath": "What to listen for: a SPECIFIC named interest (a sport, an instrument, a subject, a game, drawing, reading a particular series) rather than something vague. This is the single best moment in the whole chat to flag for a possible later bonus callback question — if they name something like maths, chess, football, an instrument, remember it clearly."
+  },
+  {
+    "id": "CHAT-I2",
+    "subject": "chat",
+    "topic": "interests-hobbies",
+    "difficulty": 2,
+    "questionType": "Interests & Hobbies",
+    "title": "Getting Good At Something",
+    "tags": [],
+    "question": "Is there something you've worked hard at and gotten better at over time? Tell me about it.",
+    "answer": "Discussion question — there is no single correct answer. Assess specific detail and genuine reflection on effort/progress.",
+    "modelReasoningPath": "What to listen for: a real example of practice and improvement, not just a claimed skill — asking 'how long have you been doing that?' as a natural, genuine follow-up works well here."
+  },
+  {
+    "id": "CHAT-I3",
+    "subject": "chat",
+    "topic": "interests-hobbies",
+    "difficulty": 2,
+    "questionType": "Interests & Hobbies",
+    "title": "How You Got Into It",
+    "tags": [],
+    "question": "How did you first get into the thing you're most into right now? What got you hooked?",
+    "answer": "Discussion question — there is no single correct answer. Assess a specific origin story versus a vague non-answer.",
+    "modelReasoningPath": "What to listen for: a real, specific memory or moment (someone who introduced them to it, a first time trying it) — genuine stories here are exactly the kind of detail worth a warm callback later."
+  },
+  {
+    "id": "CHAT-I4",
+    "subject": "chat",
+    "topic": "interests-hobbies",
+    "difficulty": 2,
+    "questionType": "Interests & Hobbies",
+    "title": "Something New",
+    "tags": [],
+    "question": "If you could instantly become brilliant at one new thing you've never tried, what would you pick?",
+    "answer": "Discussion question — there is no single correct answer. Assess genuine, specific curiosity versus a generic answer.",
+    "modelReasoningPath": "What to listen for: whether they give a specific choice with a real reason, versus 'I don't know' — a gentle, warm nudge to say more is appropriate if the first answer is very short."
+  }
+]

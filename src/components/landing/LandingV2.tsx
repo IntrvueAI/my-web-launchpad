@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 // and wire its "Try free demo / Get started / Sign in" CTAs into the app's auth flow.
 import rawHtml from '@/assets/landing.html?raw';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const styleCss = rawHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '';
 const scriptJs = rawHtml.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
@@ -16,6 +17,7 @@ const FONT_HREF =
 
 export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -54,7 +56,19 @@ export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
           const email = input.value.trim();
           if (!email || !/.+@.+\..+/.test(email)) return;
           supabase.from('marketing_waitlist').insert({ email, source: 'landing_page' }).then(({ error }) => {
-            if (error && error.code !== '23505') console.error('Failed to save waitlist email:', error.message);
+            if (error && error.code !== '23505') {
+              // Not a duplicate-email conflict — a genuine failure. The static page's own script still
+              // shows its "you're on the list!" success state regardless (it isn't aware this insert
+              // exists at all), so without this the visitor would be told they're signed up when they
+              // are not. A toast is the least invasive way to surface the real failure on top of that
+              // decoupled static UI without having to reverse-engineer its own success/error toggle.
+              console.error('Failed to save waitlist email:', error.message);
+              toast({
+                title: "Something went wrong",
+                description: "We couldn't save your email just now — please try again, or email us directly.",
+                variant: 'destructive',
+              });
+            }
           });
         };
         form.addEventListener('submit', onSubmit);

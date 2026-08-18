@@ -220,6 +220,31 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
       "This is a text/voice-only practice tool — it assesses what you SAY, not your tone or expression, so make your reasoning explicit rather than assuming it comes across.\n\n" +
       "Ready when you are."
   },
+  'chat-with-clara': {
+    id: 'chat-with-clara',
+    name: 'Chat with Clara',
+    description: 'A free, relaxed conversation with Clara to get to know you — no prep needed, just be yourself.',
+    category: 'free',
+    promptFile: 'chat/chat-with-clara.md', // vestigial, ignored when engineDriven
+    duration: 5,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Warmth & Openness',
+      'Specific & Genuine Detail',
+      'Communication & Clarity',
+      'Curiosity & Engagement'
+    ],
+    difficultyLevel: 1,
+    tags: ['free', 'demo', 'get to know you', 'conversation'],
+    icon: 'MessageCircle',
+    costCredits: 0,
+    engineDriven: true,
+    engineSubject: 'chat',
+    preStartNote:
+      "This isn't a test — just a relaxed chat so Clara can get to know you a bit.\n\n" +
+      "She'll ask a few easy, friendly questions about you and your interests. Answer honestly and in your own words — there's nothing to prepare and no wrong answers.\n\n" +
+      "Ready when you are."
+  },
   'demo': {
     id: 'demo',
     name: 'Free Demo Interview',
@@ -644,6 +669,58 @@ const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
   ]
 };
 
+// Chat with Clara Configuration (20 points total: 5+5+5+5)
+// Reuses the logic-puzzles score fields so no new DB columns are needed,
+// but presents warm, conversational section titles.
+const CHAT_WITH_CLARA_CONFIG: InterviewTypeConfig = {
+  name: 'Chat with Clara',
+  description: 'A free, relaxed getting-to-know-you conversation with Clara',
+  scoringSystem: '0-5',
+  maxTotalScore: 20,
+  maxSectionScore: 5,
+  sections: [
+    {
+      id: 'warmth-openness',
+      title: 'Warmth & Openness',
+      iconName: 'Heart',
+      description: 'How comfortable and genuine they seemed, not guarded or rehearsed',
+      scoreField: 'pattern_recognition_score',
+      feedbackField: 'pattern_recognition'
+    },
+    {
+      id: 'specific-genuine-detail',
+      title: 'Specific & Genuine Detail',
+      iconName: 'Sparkles',
+      description: 'Concrete examples and real detail versus generic answers',
+      scoreField: 'logical_deduction_score',
+      feedbackField: 'logical_deduction'
+    },
+    {
+      id: 'communication-clarity',
+      title: 'Communication & Clarity',
+      iconName: 'MessageCircle',
+      description: 'How clearly and confidently they expressed themselves',
+      scoreField: 'mathematical_logic_score',
+      feedbackField: 'mathematical_logic'
+    },
+    {
+      id: 'curiosity-engagement',
+      title: 'Curiosity & Engagement',
+      iconName: 'Smile',
+      description: 'Elaborating, engaging with follow-ups, genuine enthusiasm',
+      scoreField: 'clarity_of_thought_score',
+      feedbackField: 'clarity_of_thought'
+    }
+  ],
+  bandThresholds: [
+    { minScore: 18, label: 'Wonderful chat', colorClass: 'bg-emerald-500', description: 'Warm, specific, genuinely engaged throughout' },
+    { minScore: 15, label: 'Great chat', colorClass: 'bg-green-500', description: 'Open and specific with real personality coming through' },
+    { minScore: 12, label: 'Good chat', colorClass: 'bg-blue-500', description: 'Comfortable and engaged, with room to open up more' },
+    { minScore: 8, label: 'A little guarded', colorClass: 'bg-yellow-500', description: 'Answered but often briefly — try to share more next time' },
+    { minScore: 0, label: 'Just getting started', colorClass: 'bg-red-500', description: 'A quiet chat — no worries, try again whenever you like' }
+  ]
+};
+
 /**
  * Enhanced configurations mapped by modern interview type
  */
@@ -655,6 +732,7 @@ export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeCo
   'verbal-interview': VERBAL_INTERVIEW_CONFIG,
   'current-affairs-interview': CURRENT_AFFAIRS_INTERVIEW_CONFIG,
   'medicine-mmi': MEDICINE_MMI_CONFIG,
+  'chat-with-clara': CHAT_WITH_CLARA_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types
   'oxbridge': {

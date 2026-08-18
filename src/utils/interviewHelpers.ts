@@ -17,6 +17,7 @@ const SHORT_INTERVIEW_LABELS: Record<string, string> = {
   'maths-interview': 'Maths',
   'current-affairs-interview': 'Current Affairs',
   'medicine-mmi': 'Medicine MMI',
+  'chat-with-clara': 'Chat with Clara',
   'demo': 'Demo',
 };
 

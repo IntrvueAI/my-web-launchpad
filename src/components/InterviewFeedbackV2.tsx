@@ -176,12 +176,13 @@ export const InterviewFeedbackV2 = ({
   const isVerbalInterview = interviewType === 'verbal-interview';
   const isCurrentAffairs = interviewType === 'current-affairs-interview';
   const isMedicineMMI = interviewType === 'medicine-mmi';
+  const isChatWithClara = interviewType === 'chat-with-clara';
 
   let maxScore, maxIndividualScore;
   if (isIELTS) {
     maxScore = 9;
     maxIndividualScore = 9;
-  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview || isCurrentAffairs || isMedicineMMI) {
+  } else if (isLogicPuzzles || isMathsInterview || isVerbalInterview || isCurrentAffairs || isMedicineMMI || isChatWithClara) {
     maxScore = 20;
     maxIndividualScore = 5;
   } else {
@@ -353,6 +354,34 @@ export const InterviewFeedbackV2 = ({
       {
         title: 'Insight, Motivation & Professionalism',
         icon: 'HeartHandshake',
+        score: feedback.clarity_of_thought_score || 0,
+        feedback: feedback.detailed_feedback.clarity_of_thought || '',
+      },
+    ];
+  } else if (isChatWithClara) {
+    // Chat with Clara reuses the logic score fields with warm, conversational titles
+    sections = [
+      {
+        title: 'Warmth & Openness',
+        icon: 'Heart',
+        score: feedback.pattern_recognition_score || 0,
+        feedback: feedback.detailed_feedback.pattern_recognition || '',
+      },
+      {
+        title: 'Specific & Genuine Detail',
+        icon: 'Sparkles',
+        score: feedback.logical_deduction_score || 0,
+        feedback: feedback.detailed_feedback.logical_deduction || '',
+      },
+      {
+        title: 'Communication & Clarity',
+        icon: 'MessageCircle',
+        score: feedback.mathematical_logic_score || 0,
+        feedback: feedback.detailed_feedback.mathematical_logic || '',
+      },
+      {
+        title: 'Curiosity & Engagement',
+        icon: 'Smile',
         score: feedback.clarity_of_thought_score || 0,
         feedback: feedback.detailed_feedback.clarity_of_thought || '',
       },

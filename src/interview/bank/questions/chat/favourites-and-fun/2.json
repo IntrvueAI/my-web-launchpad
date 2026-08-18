@@ -1,0 +1,50 @@
+[
+  {
+    "id": "CHAT-F1",
+    "subject": "chat",
+    "topic": "favourites-and-fun",
+    "difficulty": 2,
+    "questionType": "Favourites & Fun",
+    "title": "Favourite Subject",
+    "tags": [],
+    "question": "What's your favourite subject at school at the moment, and what do you like about it?",
+    "answer": "Discussion question — there is no single correct answer. Assess specific reasoning versus a bare one-word answer.",
+    "modelReasoningPath": "What to listen for: a real reason, not just the subject name. If they name maths, science, or a subject with a clear 'quick fun question' angle, this is a strong candidate for the one light bonus callback question later — remember it clearly."
+  },
+  {
+    "id": "CHAT-F2",
+    "subject": "chat",
+    "topic": "favourites-and-fun",
+    "difficulty": 2,
+    "questionType": "Favourites & Fun",
+    "title": "A Book or Story You Loved",
+    "tags": [],
+    "question": "Tell me about a book, story or film that you really loved — what was it about it that stuck with you?",
+    "answer": "Discussion question — there is no single correct answer. Assess specific detail versus a generic title-only answer.",
+    "modelReasoningPath": "What to listen for: can they say something specific about WHY it stuck with them, not just name it. A genuine, enthusiastic answer here is a strong signal, and a great thing to reference later ('you mentioned you loved that book...')."
+  },
+  {
+    "id": "CHAT-F3",
+    "subject": "chat",
+    "topic": "favourites-and-fun",
+    "difficulty": 2,
+    "questionType": "Favourites & Fun",
+    "title": "What Makes You Laugh",
+    "tags": [],
+    "question": "What's something that always makes you laugh, no matter what?",
+    "answer": "Discussion question — there is no single correct answer. Assess genuine, specific personality versus a vague answer.",
+    "modelReasoningPath": "What to listen for: this question exists to let real personality come through — a specific, genuine answer (an in-joke, a person, a type of humour) is a strong signal of warmth and openness."
+  },
+  {
+    "id": "CHAT-F4",
+    "subject": "chat",
+    "topic": "favourites-and-fun",
+    "difficulty": 2,
+    "questionType": "Favourites & Fun",
+    "title": "Proud Moment",
+    "tags": [],
+    "question": "What's something you're genuinely proud of — big or small?",
+    "answer": "Discussion question — there is no single correct answer. Assess genuine reflection versus a rehearsed or generic answer.",
+    "modelReasoningPath": "What to listen for: specificity and genuine feeling, not a polished 'achievement list' answer — a small, honest moment they're proud of is just as strong a signal as a big one."
+  }
+]
