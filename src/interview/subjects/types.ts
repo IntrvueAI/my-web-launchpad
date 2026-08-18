@@ -61,4 +61,15 @@ export interface SubjectPack {
    * framework that sits behind every question.
    */
   scoringPhilosophy?: string;
+  /**
+   * Deterministically strip a turn down to its first sentence-ending "?" whenever the model stacks
+   * two questions in one breath (agent.ts's enforceSingleAsk backstop). Historically this
+   * only ran during 11+'s mixedBank "about-you" phase — everywhere else (including single-phase
+   * packs with no mixedBank at all, like medicine/chat) got no backstop, relying purely on the
+   * model following the "one question per turn" prompt rule, which it does sometimes violate.
+   * Only set this true for packs whose ENTIRE bank is quick-fire, single-"?" questions — a pack with
+   * legitimately compound authored questions (two "?"s meant to be read as one, e.g. some
+   * current-affairs moral dilemmas) would have real content silently clipped by this.
+   */
+  singleQuestionPerTurn?: boolean;
 }

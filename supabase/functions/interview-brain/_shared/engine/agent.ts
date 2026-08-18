@@ -524,19 +524,20 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     }
   }
 
-  if (phaseInfo(deps.pack, state).phase === 'about-you') say = enforceSingleAskInAboutYou(say);
+  // Deterministic backstop for the "one question per turn" rule (the prompt asks for it, but the
+  // model still slips sometimes). Safe to apply during 11+'s about-you phase (always improvised
+  // phrasing, never verbatim bank text) and for any pack that opts in via singleQuestionPerTurn
+  // (its whole bank is single-"?" quick-fire content, audited to have nothing to wrongly clip).
+  // NOT applied elsewhere by default — several authored current-affairs problems (moral dilemmas
+  // especially) legitimately contain two "?" as ONE question that must be read in full, and a blind
+  // truncation there would silently drop authored content.
+  if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn) say = enforceSingleAsk(say);
 
   state.transcript.push({ role: 'assistant', content: say });
   return { say, state, done: state.done };
 }
 
-// The prompt repeatedly forbids stacking two asks in one breath (see "ONE QUESTION PER TURN"),
-// but the model still slips sometimes — this is a deterministic backstop for the about-you phase
-// specifically, where it's safe: those questions are always the model's own improvised phrasing,
-// never verbatim bank text. NOT applied to the challenge phase — several authored current-affairs
-// problems (moral dilemmas especially) legitimately contain two "?" as ONE question that must be
-// read in full, and a blind truncation there would silently drop authored content.
-function enforceSingleAskInAboutYou(say: string): string {
+function enforceSingleAsk(say: string): string {
   if ((say.match(/\?/g) || []).length < 2) return say;
   const sentences = say.match(/[^.?!]+[.?!]+|[^.?!]+$/g);
   if (!sentences) return say;

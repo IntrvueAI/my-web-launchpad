@@ -74,6 +74,9 @@ export const medicinePack: SubjectPack = {
   domains: ['Ethical & Clinical Reasoning', 'Structured Judgement & Prioritisation', 'Communication & Clarity', 'Insight, Motivation & Professionalism'],
   startDifficulty: 2, // MMI-style stations are not star-rated; all bank questions default to 2
   mockTargetQuestions: 6,
+  // Every authored question here is single-"?" (audited) — safe to always deterministically
+  // enforce one question per turn, not just during an elevenplus-style mixedBank phase.
+  singleQuestionPerTurn: true,
   scoringPhilosophy: [
     'THE GOLDEN RULE ON ETHICS STATIONS: you are scoring the THINKING, never the verdict. A candidate ' +
       'who reaches an unfashionable position with real, weighed reasoning scores HIGHER than one who ' +

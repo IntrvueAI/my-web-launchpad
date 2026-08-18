@@ -65,6 +65,9 @@ export const chatPack: SubjectPack = {
   domains: ['Warmth & Openness', 'Specific & Genuine Detail', 'Communication & Clarity', 'Curiosity & Engagement'],
   startDifficulty: 2, // conversational, not star-rated
   mockTargetQuestions: 5,
+  // Every authored question here is single-"?" quick-fire content (audited) — safe to always
+  // deterministically enforce one question per turn, not just during an elevenplus-style phase.
+  singleQuestionPerTurn: true,
   scoringPhilosophy: [
     'THE GOAL: this is a warm free taste of the product, not an assessment — score generously and kindly. ' +
       'You are noticing genuine engagement and specific, honest self-expression, not correctness.',

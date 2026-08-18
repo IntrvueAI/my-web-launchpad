@@ -43,7 +43,7 @@
     "questionType": "About You",
     "title": "Somewhere You Love",
     "tags": [],
-    "question": "Is there somewhere — a place, a room, a spot outside — that feels really special to you? What makes it special?",
+    "question": "Is there somewhere — a place, a room, a spot outside — that feels really special to you, and what makes it special?",
     "answer": "Discussion question — there is no single correct answer. Assess genuine reflection versus a surface-level answer.",
     "modelReasoningPath": "What to listen for: a real, specific reason the place matters (not just 'it's nice') — genuine reflection is the strong signal here."
   },
@@ -127,7 +127,7 @@
     "questionType": "Interests & Hobbies",
     "title": "How You Got Into It",
     "tags": [],
-    "question": "How did you first get into the thing you're most into right now? What got you hooked?",
+    "question": "How did you first get into the thing you're most into right now, and what got you hooked?",
     "answer": "Discussion question — there is no single correct answer. Assess a specific origin story versus a vague non-answer.",
     "modelReasoningPath": "What to listen for: a real, specific memory or moment (someone who introduced them to it, a first time trying it) — genuine stories here are exactly the kind of detail worth a warm callback later."
   },

@@ -10,6 +10,7 @@ import {
 import { mathsPack } from '../../subjects/maths/pack';
 import { elevenplusPack } from '../../subjects/elevenplus/pack';
 import { medicinePack } from '../../subjects/medicine/pack';
+import { chatPack } from '../../subjects/chat/pack';
 import { phaseInfo } from '../agent';
 import type { BankQuestion } from '../types';
 
@@ -172,5 +173,30 @@ describe('LLM-driven agent', () => {
     expect(medPrompt).not.toContain('a child is mid-interview');
     expect(medPrompt).toContain('a real interviewer SPEAKING OUT LOUD to a UK university applicant');
     expect(medPrompt).toContain('candidate');
+  });
+
+  it('singleQuestionPerTurn packs (chat) get a stacked double-question turn truncated to one; packs without it (maths) do not', async () => {
+    // Reproduces a real observed failure: Clara asks a follow-up AND jumps to a brand new question
+    // in the same breath ("...do you have a favourite character? ... What's your favourite subject
+    // at school?"). enforceSingleAsk should cut this down to the first question only for a pack that
+    // opts in via singleQuestionPerTurn (chat), and leave it untouched for one that doesn't (maths),
+    // preserving the existing behavior for packs with legitimately compound authored content.
+    const stackedTurn =
+      "Brilliant — do you have a favourite character? What makes them stand out? Let's switch over… What's your favourite subject at school these days, and what do you like about it?";
+
+    const chatBank: BankQuestion[] = [
+      { id: 'c1', subject: 'chat', topic: 'about-you', difficulty: 2, question: 'Tell me about yourself?', answer: 'n/a' },
+    ];
+    const chatDeps: AgentDeps = { bank: chatBank, pack: chatPack, chat: fakeChat([say(stackedTurn)]) };
+    const chatState = initAgentState({ subject: 'chat', mode: 'mock', pack: chatPack, seed: 1 });
+    const chatResult = await advanceAgent(chatState, { action: 'start' }, chatDeps);
+    expect((chatResult.say.match(/\?/g) || []).length).toBe(1);
+    expect(chatResult.say).toContain('do you have a favourite character?');
+    expect(chatResult.say).not.toContain('favourite subject');
+
+    const mathsDeps: AgentDeps = { bank: BANK, pack: mathsPack, chat: fakeChat([say(stackedTurn)]) };
+    const mathsState2 = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    const mathsResult = await advanceAgent(mathsState2, { action: 'start' }, mathsDeps);
+    expect(mathsResult.say).toBe(stackedTurn); // untouched — no backstop applies to this pack/phase
   });
 });

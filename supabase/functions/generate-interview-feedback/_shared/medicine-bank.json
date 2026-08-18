@@ -665,7 +665,7 @@
       "communication",
       "end-of-life"
     ],
-    "question": "A patient asks you directly: \"Am I going to die from this?\" You believe the honest answer is that their condition is very likely terminal. What do you say?",
+    "question": "A patient looks at you and asks whether they are going to die from this. You believe the honest answer is that their condition is very likely terminal. What do you say?",
     "answer": "Discussion question — there is no single correct verdict. A strong answer values honesty as a foundation of trust and respects the patient's right to know about their own health, while showing this can be done with genuine compassion, checking what and how much the patient wants to know, and not being needlessly blunt or cold.",
     "modelReasoningPath": "A strong candidate resists both extremes: neither lying/deflecting to avoid a hard conversation, nor delivering the truth in a cold, clinical way. They recognise patients generally have a right to know about their own condition, and that trust depends on honesty. A genuinely thoughtful answer notes that HOW you tell someone matters as much as WHAT you tell them — checking what the patient already understands or wants to know, giving them space, not overwhelming them with detail in one go, and making clear they won't be abandoned. They might also note that avoiding the truth to protect yourself from a hard conversation (rather than to protect the patient) would be dishonest for the wrong reasons.",
     "rubric": {
