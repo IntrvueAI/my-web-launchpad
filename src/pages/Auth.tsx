@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { validateEmail, validatePassword, validateName, sanitizeInput } from '@/utils/inputValidation';
 import { sanitizeErrorMessage, authRateLimiter } from '@/utils/secureErrorHandler';
 import { useSimpleAuth } from '@/hooks/useSimpleAuth';
+import { ArrowLeft } from 'lucide-react';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -143,7 +144,16 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+        <CardHeader className="text-center relative">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/')}
+            className="absolute left-4 top-4 gap-1.5 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Button>
           <CardTitle className="text-2xl font-bold">Intrvue AI</CardTitle>
           <CardDescription>
             Access your personalized interview practice platform
