@@ -58,6 +58,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   const nextName = dates[0]?.school;
   const nextDays = dates[0]?.daysUntil;
 
+  // Hero card copy — different for someone who hasn't interviewed yet vs. a returning user, and
+  // leads with their actual chosen school's countdown when there's one, rather than generic filler.
+  const hasInterviewed = totalSessions > 0;
+  const heroEyebrow = nextName
+    ? `${nextName} in ${nextDays} ${nextDays === 1 ? 'day' : 'days'}`
+    : hasInterviewed ? 'Ready when you are' : "Let's get started";
+  const heroHeadline = hasInterviewed ? <>Start your next<br />interview</> : <>Practise for your<br />first interview</>;
+  const heroSubtext = hasInterviewed
+    ? 'A friendly mock with instant feedback. Earn up to +200 XP!'
+    : 'No pressure, just practice — see exactly what a real interview feels like before it counts.';
+
   const skills = SKILLS.map((s) => ({ ...s, value: stats?.skills[s.key] ?? null })).filter((s) => s.value !== null) as (typeof SKILLS[number] & { value: number })[];
   const coachNote = (stats?.goodPoints ?? [])[0] ?? null;
 
@@ -95,13 +106,25 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         >
           <Play className="absolute right-3 bottom-3 h-28 w-28 text-white/[0.14] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" strokeWidth={1.2} />
           <div>
-            <div className="text-xs font-extrabold uppercase tracking-wide text-white/85">Ready when you are</div>
-            <div className="font-display text-[27px] font-semibold text-white leading-[1.1] mt-1.5">Start your next<br />interview</div>
-            <p className="mt-2 text-[13px] font-bold text-white/90 max-w-[230px]">A friendly mock with instant feedback. Earn up to +200 XP!</p>
+            <div className="text-xs font-extrabold uppercase tracking-wide text-white/85">{heroEyebrow}</div>
+            <div className="font-display text-[27px] font-semibold text-white leading-[1.1] mt-1.5">{heroHeadline}</div>
+            <p className="mt-2 text-[13px] font-bold text-white/90 max-w-[230px]">{heroSubtext}</p>
           </div>
-          <span className="mt-4 inline-flex items-center gap-1.5 self-start rounded-[14px] bg-white px-5 py-3 text-sm font-extrabold text-[#EF4444] shadow-lg transition-transform duration-200 group-hover:scale-105">
-            <Play className="h-3 w-3 fill-current" /> Let&rsquo;s go
-          </span>
+          <div className="flex items-end justify-between w-full mt-4 gap-3">
+            <span className="inline-flex items-center gap-1.5 self-start rounded-[14px] bg-white px-5 py-3 text-sm font-extrabold text-[#EF4444] shadow-lg transition-transform duration-200 group-hover:scale-105">
+              <Play className="h-3 w-3 fill-current" /> Let&rsquo;s go
+            </span>
+            {dates.length > 0 && (
+              <div className="hidden sm:flex flex-col gap-1 items-end text-right relative z-10">
+                <span className="text-[10px] font-extrabold uppercase tracking-wide text-white/70">Upcoming</span>
+                {dates.slice(0, 2).map((d) => (
+                  <div key={`${d.school}-${d.date}`} className="text-[11.5px] font-bold text-white/90 leading-tight">
+                    {d.school} <span className="text-white/60">· {d.daysUntil === 0 ? 'today' : d.daysUntil === 1 ? '1 day' : `${d.daysUntil}d`}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </button>
 
         {/* Level */}

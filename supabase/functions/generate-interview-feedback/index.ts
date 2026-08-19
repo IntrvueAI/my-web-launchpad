@@ -355,7 +355,7 @@ const INTERVIEW_TYPES: Record<string, any> = {
   },
   'chat-with-clara': {
     id: 'chat-with-clara',
-    name: 'Demo Interview New',
+    name: 'Demo Interview',
     category: 'free',
     scoringSystem: '0-5',
     scoringCriteria: [
