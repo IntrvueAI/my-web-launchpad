@@ -27,10 +27,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut, UserCog, HelpCircle, Info } from 'lucide-react';
+import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut, UserCog } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -412,14 +411,6 @@ const Index = () => {
                 <DropdownMenuItem onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('grownup') : setCurrentView('grownup')}>
                   <UserCog className="w-4 h-4 mr-2" /> Grown-up view
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate('/faq')}>
-                  <HelpCircle className="w-4 h-4 mr-2" /> FAQ
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/about')}>
-                  <Info className="w-4 h-4 mr-2" /> About us
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" /> Sign out
                 </DropdownMenuItem>

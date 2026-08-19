@@ -457,6 +457,8 @@
       <a href="#parents">Why intrvue</a>
       <a href="#value">Compare</a>
       <a href="#stories">Results</a>
+      <a href="/faq">FAQ</a>
+      <a href="/about">About</a>
     </nav>
     <div class="nav-cta">
       <!-- TEMP: direct sign-in so the team can log in; wired to /auth by LandingV2 -->
@@ -472,6 +474,8 @@
     <a href="#parents">Why intrvue</a>
     <a href="#value">Compare</a>
     <a href="#stories">Results</a>
+    <a href="/faq">FAQ</a>
+    <a href="/about">About</a>
     <!-- TEMP: direct sign-in for the team -->
     <a href="#signin" class="btn btn-ghost">Sign in</a>
     <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
@@ -918,6 +922,7 @@
 </footer>
 
 <script>
+(function(){
   // sticky nav shadow
   const nav=document.getElementById('nav');
   addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>12),{passive:true});
@@ -961,6 +966,7 @@
     const io=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'))}
+})();
 </script>
 </body>
 </html>
