@@ -62,13 +62,16 @@ export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProp
                 <div className="h-11 w-11 rounded-xl flex items-center justify-center flex-none" style={{ background: `${accent}22` }}>
                   <Icon className="h-5 w-5" style={{ color: accent }} />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="font-display text-[16px] font-semibold text-white leading-tight">{iv.name}</div>
                   <div className="flex items-center gap-2.5 mt-0.5 text-[12px] font-bold text-muted-foreground">
                     <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {iv.duration} min</span>
                     <span className={diff.cls}>{diff.label}</span>
                   </div>
                 </div>
+                <span className="flex-none rounded-full bg-white/[0.06] px-2.5 py-1 text-[11px] font-extrabold text-[#DCE4F2]">
+                  {(iv.costCredits ?? 1) === 0 ? 'Free' : `${iv.costCredits ?? 1} credit${(iv.costCredits ?? 1) === 1 ? '' : 's'}`}
+                </span>
               </div>
               <p className="text-[13px] font-semibold text-muted-foreground leading-[1.5]">{iv.description}</p>
               <button
@@ -87,10 +90,17 @@ export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProp
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent className="mx-4 max-w-[calc(100vw-2rem)] md:max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-lg">Use 1 credit to start?</AlertDialogTitle>
-            <AlertDialogDescription className="text-sm leading-relaxed">
-              Starting this interview will deduct 1 credit. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
-            </AlertDialogDescription>
+            {(() => {
+              const cost = pending?.costCredits ?? 1;
+              return (
+                <>
+                  <AlertDialogTitle className="text-lg">Use {cost} credit{cost === 1 ? '' : 's'} to start?</AlertDialogTitle>
+                  <AlertDialogDescription className="text-sm leading-relaxed">
+                    Starting this interview will deduct {cost} credit{cost === 1 ? '' : 's'}. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
+                  </AlertDialogDescription>
+                </>
+              );
+            })()}
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
             <AlertDialogCancel className="w-full sm:w-auto min-h-[44px]">Cancel</AlertDialogCancel>

@@ -12,7 +12,7 @@ import { chatPack } from "./_shared/subjects/chat/pack.ts";
 // must be exempted from consume_credit() below, or brand-new users (who have NO credits_balance row
 // at all until their first purchase — see consume_credit()'s WHERE credits > 0 clause) hit a 402
 // "Insufficient credits" wall on their first "free" interview instead of ever seeing feedback.
-const FREE_INTERVIEW_TYPES = new Set(['demo', 'chat-with-clara', 'medicine-mmi']);
+const FREE_INTERVIEW_TYPES = new Set(['demo', 'medicine-mmi']);
 
 // Engine-driven subjects score from their OWN subject pack — the same file that drives the
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
@@ -356,7 +356,7 @@ const INTERVIEW_TYPES: Record<string, any> = {
   'chat-with-clara': {
     id: 'chat-with-clara',
     name: 'Demo Interview',
-    category: 'free',
+    category: 'other',
     scoringSystem: '0-5',
     scoringCriteria: [
       'Warmth & Openness',

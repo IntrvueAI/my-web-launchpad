@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
-import { PostSignupForm } from '@/components/PostSignupForm';
+import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
 // Everything below only ever renders after a user navigates away from the dashboard (the one
@@ -27,9 +27,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut, UserCog } from 'lucide-react';
+import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut, UserCog, HelpCircle, Info } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useToast } from '@/hooks/use-toast';
@@ -56,8 +57,22 @@ const Index = () => {
   const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'grownup'>('dashboard');
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
-  // Testing aid: bump to force-restart the guided tour (see Dashboard's "Replay tour" button).
+  // Testing aid: bump to force-restart the guided tour (see Dashboard's "Replay onboarding flow"
+  // button, admin-only). replayingOnboarding gates the school-selection step back in first, so the
+  // whole chain (schools -> founder video -> walkthrough) replays like a real fresh sign-on.
   const [tourRestartKey, setTourRestartKey] = useState(0);
+  const [replayingOnboarding, setReplayingOnboarding] = useState(false);
+  const handleReplayOnboarding = () => {
+    setReplayingOnboarding(true);
+    setShowPostSignupForm(true);
+  };
+  const handleOnboardingComplete = () => {
+    setShowPostSignupForm(false);
+    if (replayingOnboarding) {
+      setReplayingOnboarding(false);
+      setTourRestartKey((k) => k + 1);
+    }
+  };
   // Dashboard 1 (top-nav) vs Dashboard 2 (left sidebar) — admin-only preview now, not a public
   // toggle. Reachable via /admin's "Preview Dashboard 2" link (?dashboardLayout=sidebar) or the
   // corner toggle, both hidden from regular users; non-admins are force-reset to topnav below in
@@ -197,6 +212,12 @@ const Index = () => {
   // Show landing page if not authenticated
   if (!user) {
     return <LandingV2 onSignUp={() => navigate('/auth')} />;
+  }
+
+  // Full-page takeover for onboarding (fresh sign-ups, or the admin "Replay onboarding flow" aid)
+  // — its own header stands in for the real nav, then chains into the guided tour + founder video.
+  if (showPostSignupForm) {
+    return <OnboardingFlow userId={user.id} onComplete={handleOnboardingComplete} />;
   }
 
   // Show main app for authenticated users
@@ -391,6 +412,14 @@ const Index = () => {
                 <DropdownMenuItem onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('grownup') : setCurrentView('grownup')}>
                   <UserCog className="w-4 h-4 mr-2" /> Grown-up view
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate('/faq')}>
+                  <HelpCircle className="w-4 h-4 mr-2" /> FAQ
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/about')}>
+                  <Info className="w-4 h-4 mr-2" /> About us
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" /> Sign out
                 </DropdownMenuItem>
@@ -436,7 +465,7 @@ const Index = () => {
             onViewHistory={() => setCurrentView('history')}
             onManageDates={() => setCurrentView('settings')}
             onAchievements={() => setCurrentView('achievements')}
-            onReplayTour={() => setTourRestartKey((k) => k + 1)}
+            onReplayTour={isAdmin ? handleReplayOnboarding : undefined}
           />
         ) : currentView === 'selection' ? (
           <InterviewSelection onSelectInterview={handleSelectInterview} />
@@ -481,17 +510,8 @@ const Index = () => {
       </main>
       </div>
 
-      {/* Post-signup form */}
-      {user && showPostSignupForm && (
-        <PostSignupForm
-          isOpen={showPostSignupForm}
-          onClose={() => setShowPostSignupForm(false)}
-          userId={user.id}
-        />
-      )}
-
       {/* First-time guided tour — paused while another modal/form is already on top */}
-      <TourOverlay suspended={showPostSignupForm || showPaymentSuccess} restartKey={tourRestartKey} />
+      <TourOverlay suspended={showPaymentSuccess} restartKey={tourRestartKey} />
 
       {/* Dashboard layout toggle — admin-only (regular users always get top-nav). Desktop-only
           (the sidebar itself doesn't apply on mobile, so there's nothing to toggle). */}

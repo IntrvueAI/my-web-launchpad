@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
-// Draft FAQ page, adapted from design-reference/FAQ.dc.html. Same pattern as AboutUsPreview /
-// LandingV2: self-contained authored HTML, injected verbatim, own fonts + inline script re-run.
-// TEMP admin-only preview — not linked from anywhere public. The demo video thumbnail isn't ready
-// yet, marked TBC directly on the page.
-import rawHtml from '@/assets/faq.html?raw';
+// "About us" page, rendered the same way as the marketing landing page (LandingV2): authored as
+// self-contained HTML, injected verbatim so it stays 1:1 with the design, with its own fonts +
+// inline script re-run. Founder photos aren't ready yet, marked TBC directly on the page.
+import rawHtml from '@/assets/about-us.html?raw';
 
 const styleCss = rawHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '';
 const scriptJs = rawHtml.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
@@ -13,7 +12,7 @@ const bodyHtml = (rawHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/)?.[1] ?? rawHtml
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap';
 
-export function FaqPreview() {
+export function AboutUsContent() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -3,7 +3,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { Pip } from '@/components/brand/Pip';
 import { QuestionOfTheDay } from '@/components/questions/QuestionOfTheDay';
-import { Play, Calendar, Trophy, BarChart3, Flame, Zap, Award } from 'lucide-react';
+import { SkillBreakdown } from '@/components/dashboard/SkillBreakdown';
+import { SchoolTimeline } from '@/components/dashboard/SchoolTimeline';
+import { Play, Trophy, Flame, Zap, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DashboardProps {
@@ -16,16 +18,6 @@ interface DashboardProps {
 }
 
 const MAX_TOTAL_SCORE = 20;
-const MAX_SKILL_SCORE = 5;
-
-const SKILLS: { key: 'reasoning' | 'personalInsight' | 'currentAwareness' | 'extracurricular'; label: string; bar: string }[] = [
-  { key: 'personalInsight', label: 'Personal Insight & Expression', bar: 'bg-amber' },
-  { key: 'reasoning', label: 'Reasoning & Intellectual Agility', bar: 'bg-sky' },
-  { key: 'extracurricular', label: 'Extracurricular Engagement', bar: 'bg-emerald' },
-  { key: 'currentAwareness', label: 'Current Awareness & Curiosity', bar: 'bg-primary' },
-];
-
-const DATE_ACCENTS = ['#FF9E77', '#DCE4F2', '#DCE4F2'];
 
 export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHistory, onAchievements, onReplayTour }) => {
   const { user } = useAuth();
@@ -69,7 +61,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
     ? 'A friendly mock with instant feedback. Earn up to +200 XP!'
     : 'No pressure, just practice — see exactly what a real interview feels like before it counts.';
 
-  const skills = SKILLS.map((s) => ({ ...s, value: stats?.skills[s.key] ?? null })).filter((s) => s.value !== null) as (typeof SKILLS[number] & { value: number })[];
   const coachNote = (stats?.goodPoints ?? [])[0] ?? null;
 
   const achievements = [
@@ -78,8 +69,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
     (stats?.skills.reasoning ?? 0) >= 3 && { emoji: '🧠', label: 'Deep Thinker', color: 'text-sky', bg: 'bg-sky/10 border-sky/20' },
     totalSessions >= 10 && { emoji: '⭐', label: 'Ten Club', color: 'text-purple', bg: 'bg-purple/10 border-purple/20' },
   ].filter(Boolean) as { emoji: string; label: string; color: string; bg: string }[];
-
-  const fmtDate = (d: string) => new Date(`${d}T00:00:00`).toLocaleDateString('en-GB', { month: 'short', day: '2-digit' });
 
   return (
     <div data-tour="page-dashboard" className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-[13px]">
@@ -177,23 +166,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
       </div>
 
       {/* Interview dates */}
-      {dates.length > 0 && (
-        <div className="tile px-5 py-4 flex items-center gap-4 flex-wrap">
-          <div className="font-display font-semibold text-[15px] text-white flex items-center gap-2 flex-none">
-            <Calendar className="h-[17px] w-[17px] text-[#F0A579]" /> Interview dates
-          </div>
-          <div className="flex gap-2.5 flex-1 flex-wrap">
-            {dates.slice(0, 3).map((d, i) => (
-              <div key={`${d.school}-${d.date}`} className="flex items-center gap-2.5 rounded-xl px-3.5 py-2 border" style={{ background: i === 0 ? 'rgba(255,127,80,.12)' : 'rgba(255,255,255,.04)', borderColor: i === 0 ? 'rgba(255,127,80,.3)' : 'rgba(255,255,255,.08)' }}>
-                <div className="font-display text-xl font-semibold" style={{ color: DATE_ACCENTS[i] }}>{fmtDate(d.date)}</div>
-                <div className="text-[11.5px] font-extrabold text-[#EAF0FA] leading-tight">
-                  {d.school}<br /><span className="text-muted-foreground font-bold">{d.daysUntil === 0 ? 'Today' : d.daysUntil === 1 ? '1 day' : `${d.daysUntil} days`}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <SchoolTimeline dates={dates} />
 
       {/* Achievements strip */}
       {achievements.length > 0 && (
@@ -217,29 +190,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
 
       {/* Skills + Pip says */}
       <div className="grid gap-[13px] lg:grid-cols-[1.3fr_1fr]">
-        <div className="tile p-5">
-          <div className="flex items-center justify-between mb-3.5">
-            <span className="font-display font-semibold text-[15px] text-white flex items-center gap-2"><BarChart3 className="h-4 w-4 text-sky" /> Skill breakdown</span>
-            <span className="text-[10.5px] font-bold text-muted-foreground px-2.5 py-[3px] rounded-full border border-white/10">Avg. across sessions</span>
-          </div>
-          {skills.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Finish a session to see your skills grow!</p>
-          ) : (
-            <div className="flex flex-col gap-3">
-              {skills.map((s) => (
-                <div key={s.key}>
-                  <div className="flex justify-between text-xs font-bold mb-1.5">
-                    <span className="text-[#DCE4F2]">{s.label}</span>
-                    <span className="text-muted-foreground">{s.value}/5</span>
-                  </div>
-                  <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div className={cn('h-full rounded-full', s.bar)} style={{ width: `${(s.value / MAX_SKILL_SCORE) * 100}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <SkillBreakdown stats={stats} />
 
         <div className="tile p-5 flex flex-col">
           <span className="font-display font-semibold text-[15px] text-white flex items-center gap-2 mb-3"><Zap className="h-4 w-4 text-amber" /> Pip says</span>
@@ -252,13 +203,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
         </div>
       </div>
 
-      {/* Testing aid — replays the first-time guided tour on demand. */}
+      {/* Admin-only testing aid — replays the full fresh-signup flow (schools, founder video, walkthrough) on demand. */}
       {onReplayTour && (
         <button
           onClick={onReplayTour}
           className="fixed bottom-5 right-5 z-40 flex items-center gap-1.5 rounded-full border border-white/12 bg-[#152036] px-4 py-2.5 text-[12.5px] font-extrabold text-[#C7D2E4] shadow-lg hover:bg-white/10 hover:text-white transition-colors"
         >
-          <Zap className="h-3.5 w-3.5 text-amber" /> Replay tour
+          <Zap className="h-3.5 w-3.5 text-amber" /> Replay onboarding flow
         </button>
       )}
     </div>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { FileText } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FileText, Filter } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface SessionRow {
@@ -33,6 +34,9 @@ export const AdminInterviews: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewing, setViewing] = useState<{ email: string; when: string; text: string } | null>(null);
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
 
   const openTranscript = async (s: SessionRow) => {
     const email = emails[s.user_id] || s.user_id.slice(0, 8) + '…';
@@ -76,11 +80,54 @@ export const AdminInterviews: React.FC = () => {
     })();
   }, []);
 
+  const typeOptions = useMemo(
+    () => [...new Set(rows.map((r) => r.interview_type || r.subject).filter((v): v is string => !!v))].sort(),
+    [rows]
+  );
+  const statusOptions = useMemo(
+    () => [...new Set(rows.map((r) => r.status).filter((v): v is string => !!v))].sort(),
+    [rows]
+  );
+  const visibleRows = useMemo(() => {
+    let out = rows;
+    if (typeFilter !== 'all') out = out.filter((r) => (r.interview_type || r.subject) === typeFilter);
+    if (statusFilter !== 'all') out = out.filter((r) => r.status === statusFilter);
+    return [...out].sort((a, b) => {
+      const diff = new Date(a.started_at).getTime() - new Date(b.started_at).getTime();
+      return sortOrder === 'newest' ? -diff : diff;
+    });
+  }, [rows, typeFilter, statusFilter, sortOrder]);
+
   if (loading) return <p className="text-muted-foreground">Loading interviews…</p>;
   if (error) return <p className="text-destructive">Failed to load interviews: {error}</p>;
 
   return (
     <Card>
+      <div className="flex flex-wrap items-center gap-2.5 p-4 border-b">
+        <Filter className="h-4 w-4 text-muted-foreground" />
+        <Select value={typeFilter} onValueChange={setTypeFilter}>
+          <SelectTrigger className="h-8 w-[190px] text-xs"><SelectValue placeholder="Interview type" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All interview types</SelectItem>
+            {typeOptions.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+          </SelectContent>
+        </Select>
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="h-8 w-[150px] text-xs"><SelectValue placeholder="Status" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            {statusOptions.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+          </SelectContent>
+        </Select>
+        <Select value={sortOrder} onValueChange={(v) => setSortOrder(v as 'newest' | 'oldest')}>
+          <SelectTrigger className="h-8 w-[150px] text-xs"><SelectValue placeholder="Sort" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="newest">Newest first</SelectItem>
+            <SelectItem value="oldest">Oldest first</SelectItem>
+          </SelectContent>
+        </Select>
+        <span className="text-xs text-muted-foreground ml-auto">{visibleRows.length} of {rows.length}</span>
+      </div>
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -96,7 +143,7 @@ export const AdminInterviews: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {rows.map((s) => (
+              {visibleRows.map((s) => (
                 <tr key={s.id} className="border-b hover:bg-muted/30">
                   <td className="p-3">{emails[s.user_id] || <span className="text-muted-foreground font-mono text-xs">{s.user_id.slice(0, 8)}…</span>}</td>
                   <td className="p-3">{s.interview_type || s.subject || '—'}</td>
@@ -115,8 +162,8 @@ export const AdminInterviews: React.FC = () => {
                   </td>
                 </tr>
               ))}
-              {rows.length === 0 && (
-                <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">No interviews yet.</td></tr>
+              {visibleRows.length === 0 && (
+                <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">{rows.length === 0 ? 'No interviews yet.' : 'No interviews match these filters.'}</td></tr>
               )}
             </tbody>
           </table>

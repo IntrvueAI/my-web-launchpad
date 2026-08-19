@@ -146,26 +146,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* TEMP: design-reference page previews — remove once they're finalised or scrapped. */}
-        <div className="flex flex-wrap items-center gap-2 mb-3 rounded-lg border border-dashed p-3">
-          <span className="text-xs font-medium text-muted-foreground mr-1">Design previews (draft, not live):</span>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/about-preview" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> About us
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/faq-preview" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> FAQ
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/onboarding-preview" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Onboarding flow
-            </Link>
-          </Button>
-        </div>
-
         {/* TEMP: internal testing tools, admin-only, not linked anywhere public. */}
         <div className="flex flex-wrap items-center gap-2 mb-6 rounded-lg border border-dashed p-3">
           <span className="text-xs font-medium text-muted-foreground mr-1">Testing tools:</span>

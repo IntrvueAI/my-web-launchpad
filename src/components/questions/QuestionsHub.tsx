@@ -23,8 +23,6 @@ export function QuestionsHub({ name = 'superstar', onViewHistory }: { name?: str
       </div>
 
       <div className="pt-2">
-        <h2 className="font-display text-lg font-semibold text-white">Quick practice</h2>
-        <p className="text-[13px] font-semibold text-muted-foreground mb-4">Sharpen up with quick 10-question rounds.</p>
         <MinigameSection />
       </div>
     </div>

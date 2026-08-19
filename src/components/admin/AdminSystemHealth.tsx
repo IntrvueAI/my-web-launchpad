@@ -1,47 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Activity, Database, Users, AlertCircle, CheckCircle, Clock, Radio } from 'lucide-react';
+import { Activity, Database, Users, AlertCircle, CheckCircle, Clock, Radio, CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const LIVE_WINDOW_MINUTES = 10;
+const DEFAULT_RANGE_DAYS = 30;
+const startOfDay = (d: Date) => { const c = new Date(d); c.setHours(0, 0, 0, 0); return c; };
+const endOfDay = (d: Date) => { const c = new Date(d); c.setHours(23, 59, 59, 999); return c; };
 
 export const AdminSystemHealth = () => {
+  // Drives every "in range" stat below. null dateFrom = All time. Defaults to the last 30 days.
+  const [dateFrom, setDateFrom] = useState<Date | null>(startOfDay(new Date(Date.now() - DEFAULT_RANGE_DAYS * 24 * 60 * 60 * 1000)));
+  const [dateTo, setDateTo] = useState<Date>(new Date());
+  const isAllTime = dateFrom === null;
+
   const { data: healthData, isLoading } = useQuery({
-    queryKey: ['admin-system-health'],
+    queryKey: ['admin-system-health', dateFrom?.toISOString() ?? 'all', dateTo.toISOString()],
     queryFn: async () => {
       const now = new Date();
-      const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-      const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
-      const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      const rangeEnd = endOfDay(dateTo);
       const liveWindowAgo = new Date(now.getTime() - LIVE_WINDOW_MINUTES * 60 * 1000);
 
       // "Query latency" doubles as the database-health check: if this fails, everything below fails
       // too, and the real error surfaces — no more hardcoded 'Connected'.
       const latencyStart = performance.now();
-      const { count: recentSessions } = await supabase
-        .from('interview_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gte('started_at', oneDayAgo.toISOString());
+      let sessionsQuery = supabase.from('interview_sessions').select('*', { count: 'exact', head: true }).lte('started_at', rangeEnd.toISOString());
+      if (dateFrom) sessionsQuery = sessionsQuery.gte('started_at', dateFrom.toISOString());
+      const { count: recentSessions } = await sessionsQuery;
       const queryLatencyMs = Math.round(performance.now() - latencyStart);
 
-      // Distinct active users (24h) — head:true only returns a row count, so genuine dedup needs the
+      // Distinct users in range — head:true only returns a row count, so genuine dedup needs the
       // actual user_id values fetched and deduped client-side (the old version of this metric counted
       // rows, not distinct users, and was never even rendered — see git history).
-      const { data: recentUserRows } = await supabase
-        .from('interview_sessions')
-        .select('user_id')
-        .gte('started_at', oneDayAgo.toISOString());
+      let userRowsQuery = supabase.from('interview_sessions').select('user_id').lte('started_at', rangeEnd.toISOString());
+      if (dateFrom) userRowsQuery = userRowsQuery.gte('started_at', dateFrom.toISOString());
+      const { data: recentUserRows } = await userRowsQuery;
       const distinctActiveUsers = new Set((recentUserRows ?? []).map((r: any) => r.user_id)).size;
 
       // Real error rate, grounded in interview_sessions.status (not the old "feedback.total_score is
-      // null" proxy) — session outcomes over the last 7 days.
-      const { data: outcomeRows } = await supabase
-        .from('interview_sessions')
-        .select('status')
-        .gte('started_at', sevenDaysAgo.toISOString());
+      // null" proxy) — session outcomes over the selected range.
+      let outcomeQuery = supabase.from('interview_sessions').select('status').lte('started_at', rangeEnd.toISOString());
+      if (dateFrom) outcomeQuery = outcomeQuery.gte('started_at', dateFrom.toISOString());
+      const { data: outcomeRows } = await outcomeQuery;
       const outcomes = { completed: 0, error: 0, abandoned: 0, active: 0, other: 0 };
       for (const r of (outcomeRows ?? []) as any[]) {
         if (r.status in outcomes) outcomes[r.status as keyof typeof outcomes]++;
@@ -50,15 +58,10 @@ export const AdminSystemHealth = () => {
       const totalOutcomes = Object.values(outcomes).reduce((a, b) => a + b, 0);
       const errorRatePct = totalOutcomes > 0 ? Math.round((outcomes.error / totalOutcomes) * 100) : 0;
 
-      const { count: recentErrors } = await supabase
-        .from('interview_sessions')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'error')
-        .gte('started_at', oneHourAgo.toISOString());
-
       // Genuinely live right now: status='active' AND recently touched — a stale 'active' row from an
       // abandoned session (browser closed mid-interview) never flips to another status, so without the
-      // last_activity_at filter this would overcount indefinitely.
+      // last_activity_at filter this would overcount indefinitely. Not affected by the date range —
+      // "live" is inherently now, not historical.
       const { data: liveRows } = await supabase
         .from('interview_sessions')
         .select('id, user_id, interview_type, last_activity_at, started_at')
@@ -84,7 +87,6 @@ export const AdminSystemHealth = () => {
       return {
         recentSessions: recentSessions || 0,
         distinctActiveUsers,
-        recentErrors: recentErrors || 0,
         outcomes,
         errorRatePct,
         queryLatencyMs,
@@ -133,13 +135,13 @@ export const AdminSystemHealth = () => {
     {
       title: 'System Status',
       value: getStatusBadge(healthData?.systemStatus || 'unknown'),
-      description: `${healthData?.errorRatePct ?? 0}% of sessions errored in the last 7 days`,
+      description: `${healthData?.errorRatePct ?? 0}% of sessions errored in the selected range`,
       icon: Activity,
     },
     {
-      title: 'Sessions (24h)',
+      title: 'Sessions',
       value: healthData?.recentSessions || 0,
-      description: `${healthData?.distinctActiveUsers ?? 0} distinct users`,
+      description: `${healthData?.distinctActiveUsers ?? 0} distinct users in range`,
       icon: Users,
     },
     {
@@ -149,9 +151,9 @@ export const AdminSystemHealth = () => {
       icon: Database,
     },
     {
-      title: 'Errored Sessions (1h)',
-      value: healthData?.recentErrors || 0,
-      description: 'interview_sessions.status = \'error\', last hour',
+      title: 'Errored Sessions',
+      value: healthData?.outcomes.error ?? 0,
+      description: 'interview_sessions.status = \'error\', in range',
       icon: AlertCircle,
     },
     {
@@ -166,11 +168,48 @@ export const AdminSystemHealth = () => {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold mb-2">System Health</h2>
-        <p className="text-muted-foreground">
-          Monitor system performance and identify potential issues
-        </p>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">System Health</h2>
+          <p className="text-muted-foreground">
+            Monitor system performance and identify potential issues
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className={cn('gap-1.5', isAllTime && 'text-muted-foreground')} disabled={isAllTime}>
+                <CalendarIcon className="h-3.5 w-3.5" />
+                {dateFrom ? format(dateFrom, 'd MMM yyyy') : 'All time'}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="end">
+              <Calendar mode="single" selected={dateFrom ?? undefined} onSelect={(d) => d && setDateFrom(startOfDay(d))} disabled={(d) => d > dateTo} initialFocus />
+            </PopoverContent>
+          </Popover>
+          <span className="text-sm text-muted-foreground">to</span>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <CalendarIcon className="h-3.5 w-3.5" />
+                {format(dateTo, 'd MMM yyyy')}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="end">
+              <Calendar mode="single" selected={dateTo} onSelect={(d) => d && setDateTo(d)} disabled={(d) => dateFrom !== null && d < dateFrom} initialFocus />
+            </PopoverContent>
+          </Popover>
+          <Button
+            variant={isAllTime ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => (isAllTime
+              ? setDateFrom(startOfDay(new Date(Date.now() - DEFAULT_RANGE_DAYS * 24 * 60 * 60 * 1000)))
+              : setDateFrom(null))}
+          >
+            All time
+          </Button>
+        </div>
       </div>
 
       <Card>
@@ -225,7 +264,7 @@ export const AdminSystemHealth = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Session outcomes (7 days)</CardTitle>
+          <CardTitle>Session outcomes {isAllTime ? '(all time)' : `(${format(dateFrom!, 'd MMM')} – ${format(dateTo, 'd MMM')})`}</CardTitle>
           <CardDescription>Real breakdown from interview_sessions.status, not a heuristic.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -263,7 +302,7 @@ export const AdminSystemHealth = () => {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Elevated error rate</AlertTitle>
               <AlertDescription className={healthData!.errorRatePct < 30 ? 'text-yellow-700' : undefined}>
-                {healthData!.errorRatePct}% of sessions ({healthData!.outcomes.error} of {Object.values(healthData!.outcomes).reduce((a, b) => a + b, 0)}) errored in the last 7 days. Worth investigating in the Interviews tab.
+                {healthData!.errorRatePct}% of sessions ({healthData!.outcomes.error} of {Object.values(healthData!.outcomes).reduce((a, b) => a + b, 0)}) errored in the selected range. Worth investigating in the Interviews tab.
               </AlertDescription>
             </Alert>
           )}
@@ -272,7 +311,7 @@ export const AdminSystemHealth = () => {
             <Alert className="border-blue-200 bg-blue-50 text-blue-800 [&>svg]:text-blue-600">
               <Activity className="h-4 w-4" />
               <AlertTitle>Low activity period</AlertTitle>
-              <AlertDescription className="text-blue-700">No sessions in the last 24 hours. This might be normal during off-hours.</AlertDescription>
+              <AlertDescription className="text-blue-700">No sessions in the selected range. This might be normal during off-hours.</AlertDescription>
             </Alert>
           )}
         </CardContent>

@@ -62,10 +62,10 @@ const BUBBLE_H = 176;
 const GAP = 14;
 const EDGE_PAD = 10;
 const HOLE_PAD = 8;
-/** Founder video, shown before the product walkthrough for first-time users. Self-activating: if
- *  this file doesn't exist yet, a HEAD check (see useFounderVideoAvailable below) fails fast and
- *  the founder step is skipped straight to the existing walkthrough — no manual flag to flip once
- *  the real file is dropped in, and nobody ever sees a broken video. */
+/** Founder video, shown as a send-off after the guided walkthrough for first-time users.
+ *  Self-activating: if this file doesn't exist yet, a HEAD check (see useFounderVideoAvailable
+ *  below) fails fast and the founder step is skipped straight to done — no manual flag to flip
+ *  once the real file is dropped in, and nobody ever sees a broken video. */
 const FOUNDER_VIDEO_SRC = '/lovable-uploads/FounderVideo.mp4';
 /** If a step's target hasn't been found by this long after becoming active, skip it rather than
  *  stall the tour forever (e.g. no Question of the Day seeded for today). */
@@ -279,31 +279,25 @@ function useFounderVideoAvailable(shouldCheck: boolean): boolean | null {
 
 export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?: boolean; restartKey?: number }) {
   const { user } = useAuth();
-  // 'founder' = founder video (only if the file exists — see useFounderVideoAvailable), then
-  // 'intro' = onboarding walkthrough video, both shown once before the guided steps start.
-  const [phase, setPhase] = useState<'idle' | 'checking-founder' | 'founder' | 'intro' | 'active' | 'done'>('idle');
+  // Order: 'active' (the live guided walkthrough of the site) runs first, then — once it's
+  // finished — 'founder' (a short video from the founder, only if the file exists, see
+  // useFounderVideoAvailable) plays as a send-off before 'done'. The founder-video-exists check
+  // kicks off as soon as the tour starts so the answer is already known by the time it finishes.
+  const [phase, setPhase] = useState<'idle' | 'active' | 'founder' | 'done'>('idle');
   const [stepIndex, setStepIndex] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
 
   // Decide once per user whether they've already seen the tour.
   useEffect(() => {
     if (!user || phase !== 'idle') return;
-    setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'checking-founder');
+    setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'active');
   }, [user, phase]);
 
-  const founderVideoAvailable = useFounderVideoAvailable(phase === 'checking-founder');
-  useEffect(() => {
-    if (phase !== 'checking-founder' || founderVideoAvailable === null) return;
-    setPhase(founderVideoAvailable ? 'founder' : 'intro');
-  }, [phase, founderVideoAvailable]);
+  const founderVideoAvailable = useFounderVideoAvailable(phase === 'active' || phase === 'founder');
 
-  const handleFounderClose = useCallback((open: boolean) => {
-    if (!open) setPhase('intro');
-  }, []);
-
-  // Bumping restartKey (e.g. a "Replay tour" test button) force-restarts the guided steps
-  // directly (skips re-showing the intro video, so repeat test runs stay quick), regardless of
-  // hasSeenTour. Skipped on the very first render (restartKey starts at 0 with no prior value).
+  // Bumping restartKey (the admin-only "Replay onboarding flow" button) force-restarts the guided
+  // steps regardless of hasSeenTour, so it plays out like a real fresh sign-on. Skipped on the
+  // very first render (restartKey starts at 0 with no prior value).
   const prevRestartKey = useRef(restartKey);
   useEffect(() => {
     if (restartKey === prevRestartKey.current) return;
@@ -319,11 +313,11 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
     });
   }, []);
 
-  // Closing the intro video (played fully, X, backdrop click, or Escape — Dialog reports all of
-  // these the same way) moves straight into the guided steps.
-  const handleIntroClose = useCallback((open: boolean) => {
-    if (!open) setPhase('active');
-  }, []);
+  // Closing the founder video (played fully, X, backdrop click, or Escape — Dialog reports all of
+  // these the same way) finishes onboarding.
+  const handleFounderClose = useCallback((open: boolean) => {
+    if (!open) { markSeen(); setShowWelcome(true); }
+  }, [markSeen]);
 
   const active = phase === 'active' && !suspended;
   const currentStep = TOUR_STEPS[stepIndex];
@@ -339,9 +333,13 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
     });
   }, []);
   const handleFinish = useCallback(() => {
-    markSeen();
-    setShowWelcome(true);
-  }, [markSeen]);
+    if (founderVideoAvailable) {
+      setPhase('founder');
+    } else {
+      markSeen();
+      setShowWelcome(true);
+    }
+  }, [founderVideoAvailable, markSeen]);
   const advanceOrFinish = useCallback(() => {
     if (stepIndex === TOUR_STEPS.length - 1) handleFinish();
     else handleAdvance();
@@ -353,7 +351,6 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
   return (
     <>
       <IntroVideoModal open={phase === 'founder'} onOpenChange={handleFounderClose} src={FOUNDER_VIDEO_SRC} />
-      <IntroVideoModal open={phase === 'intro'} onOpenChange={handleIntroClose} />
       {displayRect && viewport.w > 0 && (
         <div className="transition-opacity duration-200" style={{ opacity: visible ? 1 : 0 }}>
           <TourVisuals

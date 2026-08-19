@@ -1,7 +1,6 @@
 /**
  * Pure logic for the onboarding "mini plan" step — no UI, no fetching. Kept separate from
- * OnboardingFlowPreview.tsx so the plan-building rules can be unit tested or reused once this
- * flow graduates from the temp preview into the real signup path.
+ * OnboardingFlow.tsx so the plan-building rules can be unit tested or reused independently.
  */
 
 export type ExperienceLevel = 'new' | 'some-practice' | 'almost-ready';

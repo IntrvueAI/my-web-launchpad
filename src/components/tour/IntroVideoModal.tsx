@@ -1,16 +1,15 @@
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
-/** A full-bleed video modal, shown as one of the onboarding steps (first-time users only).
- *  Generalized from the original hardcoded onboarding-walkthrough-only modal so the same component
- *  serves both the founder video and the product walkthrough. */
+/** A full-bleed video modal — currently used for the founder send-off video shown at the end of
+ *  onboarding (first-time users only, see TourOverlay). */
 export function IntroVideoModal({
   open,
   onOpenChange,
-  src = '/lovable-uploads/OnboardingWalkthrough.mp4',
+  src,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  src?: string;
+  src: string;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

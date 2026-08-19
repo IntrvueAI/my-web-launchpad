@@ -77,6 +77,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school'],
     icon: 'GraduationCap',
+    costCredits: 2,
     engineDriven: true,
     engineSubject: 'elevenplus',
     topicPracticeEnabled: false, // whole-child interview built around its two-phase mixedBank structure — no single-topic drill mode
@@ -103,6 +104,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school', 'beta'],
     icon: 'GraduationCap',
+    costCredits: 2,
     engineDriven: true,
     engineSubject: 'elevenplus',
     provider: 'anam-deepgram',
@@ -131,6 +133,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 3,
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
     icon: 'Brain',
+    costCredits: 1,
     engineDriven: true,
     engineSubject: 'logic',
     preStartNote:
@@ -155,6 +158,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning'],
     icon: 'Calculator',
+    costCredits: 1,
     engineDriven: true,
     engineSubject: 'maths'
   },
@@ -175,6 +179,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning', 'beta'],
     icon: 'Calculator',
+    costCredits: 1,
     provider: 'tavus',
     adminOnly: true, // was publicly visible + credit-gated despite being tagged 'beta' — 11-plus-v2 already gets this treatment, this didn't; now consistent
     preStartNote:
@@ -199,6 +204,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 3,
     tags: ['11+', 'current affairs', 'moral reasoning', 'ethics', 'discussion'],
     icon: 'Globe',
+    costCredits: 1,
     engineDriven: true,
     engineSubject: 'currentaffairs',
     topicPracticeEnabled: false, // pushback-driven discussion format — drilling one topic (e.g. just 'moral-dilemmas') forever doesn't reflect the real thing
@@ -237,8 +243,8 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   'chat-with-clara': {
     id: 'chat-with-clara',
     name: 'Demo Interview',
-    description: 'A free, relaxed conversation with Clara to get to know you — no prep needed, just be yourself.',
-    category: 'free',
+    description: 'A beginner-friendly introduction to Clara — a relaxed conversation to get to know you, no prep needed.',
+    category: 'other',
     promptFile: 'chat/chat-with-clara.md', // vestigial, ignored when engineDriven
     // 7, not 5: richer bridges/follow-ups/self-disclosure mean turns run longer than a bare Q&A loop,
     // but the session still hard-cuts at duration*60s (Anam-enforced) with no time-awareness signal
@@ -252,9 +258,9 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
       'Curiosity & Engagement'
     ],
     difficultyLevel: 1,
-    tags: ['free', 'demo', 'get to know you', 'conversation'],
+    tags: ['beginner', 'demo', 'get to know you', 'conversation'],
     icon: 'MessageCircle',
-    costCredits: 0,
+    costCredits: 1,
     engineDriven: true,
     engineSubject: 'chat',
     preStartNote:
@@ -692,7 +698,7 @@ const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
 // but presents warm, conversational section titles.
 const CHAT_WITH_CLARA_CONFIG: InterviewTypeConfig = {
   name: 'Demo Interview',
-  description: 'A free, relaxed getting-to-know-you conversation with Clara',
+  description: 'A beginner-friendly, relaxed getting-to-know-you conversation with Clara',
   scoringSystem: '0-5',
   maxTotalScore: 20,
   maxSectionScore: 5,

@@ -2,8 +2,8 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Pip } from '@/components/brand/Pip';
 
-/** Text-only send-off shown once the guided tour's last step is complete (replaces the old
- *  end-of-tour demo video — the walkthrough now plays at the START instead, see IntroVideoModal). */
+/** Text-only send-off shown once onboarding is fully done — after the guided tour and, if
+ *  available, the founder video (see IntroVideoModal / TourOverlay). */
 export function WelcomeModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

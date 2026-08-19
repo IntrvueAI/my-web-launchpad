@@ -9,7 +9,6 @@ import {
   Flame,
   Leaf,
   PartyPopper,
-  RotateCcw,
   Search,
   Sparkles,
   TrendingUp,
@@ -21,6 +20,7 @@ import { Pip } from '@/components/brand/Pip';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import {
   buildMiniPlan,
   INTENSITY_OPTIONS,
@@ -33,9 +33,11 @@ import {
 } from '@/data/onboarding/studyPlan';
 
 /**
- * Redesigned signup onboarding: name → schools → experience level → study intensity → a generated
- * mini plan. Standalone and self-contained (no Supabase writes) so it can be reviewed as a preview
- * before it replaces the free-text `PostSignupForm.tsx` dialog in the real signup path.
+ * Real post-signup onboarding: name -> schools -> experience level -> study intensity -> a
+ * generated mini plan. On the last step, saves the name + chosen schools to the profile and hands
+ * off to the caller (Index.tsx chains straight into the guided site tour + founder video from
+ * there). Interview dates aren't collected here — schools picked here have no date yet; add one
+ * later from Settings.
  */
 
 type Step = 'name' | 'schools' | 'level' | 'intensity' | 'plan';
@@ -73,7 +75,7 @@ function useSchoolsData() {
         const data = await res.json();
         if (!cancelled && Array.isArray(data)) setSchools(data);
       } catch {
-        // Search just comes back empty — not fatal for a preview flow.
+        // Search just comes back empty — not fatal.
       }
     })();
     return () => {
@@ -95,13 +97,14 @@ const fadeUp: Variants = {
   show: { opacity: 1, y: 0 },
 };
 
-export function OnboardingFlowPreview() {
+export function OnboardingFlow({ userId, onComplete }: { userId: string; onComplete: () => void }) {
   const [stepIndex, setStepIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [name, setName] = useState('');
   const [selectedSchools, setSelectedSchools] = useState<SchoolEntry[]>([]);
   const [level, setLevel] = useState<ExperienceLevel | null>(null);
   const [intensity, setIntensity] = useState<StudyIntensity | null>(null);
+  const [saving, setSaving] = useState(false);
 
   const step = STEPS[stepIndex];
   const schools = useSchoolsData();
@@ -121,13 +124,37 @@ export function OnboardingFlowPreview() {
     setDirection(-1);
     setStepIndex((i) => Math.max(i - 1, 0));
   };
-  const restart = () => {
-    setDirection(-1);
-    setStepIndex(0);
-    setName('');
-    setSelectedSchools([]);
-    setLevel(null);
-    setIntensity(null);
+
+  const finish = async () => {
+    setSaving(true);
+    try {
+      const trimmedName = name.trim();
+      const schoolInterviews = selectedSchools.map((s) => ({ school: s.name, interview_date: null as string | null }));
+      await Promise.all([
+        supabase
+          .from('profiles')
+          .update({
+            full_name: trimmedName || null,
+            school_interviews: schoolInterviews,
+            schools: selectedSchools.length > 0 ? selectedSchools.map((s) => s.name) : null,
+          })
+          .eq('id', userId),
+        // No profiles columns for these yet — stored in user_metadata alongside hasSeenTour,
+        // read back by the Feedback page's "on target" pacing card (see studyPlan.ts).
+        supabase.auth.updateUser({
+          data: {
+            ...(trimmedName ? { full_name: trimmedName } : {}),
+            study_intensity: intensity,
+            experience_level: level,
+          },
+        }),
+      ]);
+    } catch (e) {
+      console.warn('Failed to save onboarding details:', e);
+    } finally {
+      setSaving(false);
+      onComplete();
+    }
   };
 
   const plan = useMemo(() => {
@@ -136,80 +163,86 @@ export function OnboardingFlowPreview() {
   }, [level, intensity, selectedSchools]);
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 flex items-center justify-center px-4 py-10">
-      {/* Ambient blobs — same treatment as LandingHero */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-16 left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-12 w-56 h-56 bg-sky/10 rounded-full blur-3xl animate-pulse [animation-delay:700ms]" />
-        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-purple/10 rounded-full blur-2xl animate-pulse [animation-delay:1200ms]" />
-      </div>
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+      <header className="sticky top-0 z-20 flex items-center justify-center py-4 bg-background/80 backdrop-blur border-b border-border/60">
+        <img src="/lovable-uploads/logo.png" alt="intrvue.ai" className="h-7 w-auto" />
+      </header>
 
-      {step === 'plan' && <PlanConfetti />}
-
-      <div className="relative z-10 w-full max-w-xl">
-        {/* Pip + speech bubble */}
-        <div className="flex items-end gap-3 mb-5 px-2">
-          <Pip size={56} float />
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={step}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.25 }}
-              className="relative bg-card border border-border rounded-2xl rounded-bl-sm px-4 py-2.5 shadow-sm max-w-[320px]"
-            >
-              <p className="text-sm font-medium text-foreground leading-snug">{PIP_LINES[step](name)}</p>
-            </motion.div>
-          </AnimatePresence>
+      <div className="relative flex items-center justify-center px-4 py-10">
+        {/* Ambient blobs — same treatment as LandingHero */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-16 left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-10 right-12 w-56 h-56 bg-sky/10 rounded-full blur-3xl animate-pulse [animation-delay:700ms]" />
+          <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-purple/10 rounded-full blur-2xl animate-pulse [animation-delay:1200ms]" />
         </div>
 
-        <StepProgress current={stepIndex} total={STEPS.length} />
+        {step === 'plan' && <PlanConfetti />}
 
-        <div className="mt-5 rounded-[28px] border border-border bg-card shadow-xl p-6 sm:p-8 min-h-[440px] flex flex-col">
-          <div className="flex-1 overflow-hidden relative">
-            <AnimatePresence mode="wait" custom={direction} initial={false}>
+        <div className="relative z-10 w-full max-w-xl">
+          {/* Pip + speech bubble */}
+          <div className="flex items-end gap-3 mb-5 px-2">
+            <Pip size={56} float />
+            <AnimatePresence mode="wait">
               <motion.div
                 key={step}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.28, ease: 'easeOut' }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.25 }}
+                className="relative bg-card border border-border rounded-2xl rounded-bl-sm px-4 py-2.5 shadow-sm max-w-[320px]"
               >
-                {step === 'name' && <NameStep name={name} onChange={setName} onEnter={goNext} />}
-                {step === 'schools' && (
-                  <SchoolsStep schools={schools} selected={selectedSchools} onChange={setSelectedSchools} />
-                )}
-                {step === 'level' && <LevelStep value={level} onChange={setLevel} />}
-                {step === 'intensity' && <IntensityStep value={intensity} onChange={setIntensity} />}
-                {step === 'plan' && plan && (
-                  <PlanStep name={name} schools={selectedSchools} level={level!} intensity={intensity!} plan={plan} />
-                )}
+                <p className="text-sm font-medium text-foreground leading-snug">{PIP_LINES[step](name)}</p>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          <div className="flex items-center justify-between pt-6 mt-2 border-t border-border/60">
-            <Button
-              variant="ghost"
-              onClick={goBack}
-              disabled={stepIndex === 0}
-              className={cn('gap-1.5', stepIndex === 0 && 'invisible')}
-            >
-              <ArrowLeft className="h-4 w-4" /> Back
-            </Button>
-            {step === 'plan' ? (
-              <Button onClick={restart} variant="outline" className="gap-1.5 rounded-full font-semibold">
-                <RotateCcw className="h-4 w-4" /> Preview again
+          <StepProgress current={stepIndex} total={STEPS.length} />
+
+          <div className="mt-5 rounded-[28px] border border-border bg-card shadow-xl p-6 sm:p-8 min-h-[440px] flex flex-col">
+            <div className="flex-1 overflow-hidden relative">
+              <AnimatePresence mode="wait" custom={direction} initial={false}>
+                <motion.div
+                  key={step}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.28, ease: 'easeOut' }}
+                >
+                  {step === 'name' && <NameStep name={name} onChange={setName} onEnter={goNext} />}
+                  {step === 'schools' && (
+                    <SchoolsStep schools={schools} selected={selectedSchools} onChange={setSelectedSchools} />
+                  )}
+                  {step === 'level' && <LevelStep value={level} onChange={setLevel} />}
+                  {step === 'intensity' && <IntensityStep value={intensity} onChange={setIntensity} />}
+                  {step === 'plan' && plan && (
+                    <PlanStep name={name} schools={selectedSchools} level={level!} intensity={intensity!} plan={plan} />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className="flex items-center justify-between pt-6 mt-2 border-t border-border/60">
+              <Button
+                variant="ghost"
+                onClick={goBack}
+                disabled={stepIndex === 0}
+                className={cn('gap-1.5', stepIndex === 0 && 'invisible')}
+              >
+                <ArrowLeft className="h-4 w-4" /> Back
               </Button>
-            ) : (
-              <Button onClick={goNext} disabled={!canContinue} className="gap-1.5 rounded-full font-semibold px-6">
-                {step === 'schools' && selectedSchools.length === 0 ? "I'm not sure yet" : 'Continue'}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            )}
+              {step === 'plan' ? (
+                <Button onClick={finish} disabled={saving} className="gap-1.5 rounded-full font-semibold px-6">
+                  {saving ? 'Saving…' : 'Next'} <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button onClick={goNext} disabled={!canContinue} className="gap-1.5 rounded-full font-semibold px-6">
+                  {step === 'schools' && selectedSchools.length === 0 ? "I'm not sure yet" : 'Continue'}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -263,15 +296,20 @@ function SchoolsStep({
   onChange: (schools: SchoolEntry[]) => void;
 }) {
   const [query, setQuery] = useState('');
+  const [focused, setFocused] = useState(false);
 
+  // Empty query + focused still shows the full remaining list (sorted, scrollable) rather than
+  // nothing — lets a student browse by clicking straight into the search bar without typing.
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return schools
-      .filter((s) => !selected.some((sel) => sel.name === s.name))
+    const pool = schools.filter((s) => !selected.some((sel) => sel.name === s.name));
+    if (!q) return [...pool].sort((a, b) => a.name.localeCompare(b.name));
+    return pool
       .filter((s) => s.name.toLowerCase().includes(q) || s.region?.toLowerCase().includes(q))
       .slice(0, 6);
   }, [schools, query, selected]);
+
+  const showDropdown = focused && filtered.length > 0;
 
   const addSchool = (s: SchoolEntry) => {
     onChange([...selected, s]);
@@ -291,20 +329,22 @@ function SchoolsStep({
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setTimeout(() => setFocused(false), 150)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && filtered[0]) addSchool(filtered[0]);
           }}
-          placeholder="Search by school name or region…"
+          placeholder="Search, or click and scroll to browse…"
           className="h-12 rounded-2xl pl-10"
         />
         <AnimatePresence>
-          {filtered.length > 0 && (
+          {showDropdown && (
             <motion.div
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.15 }}
-              className="absolute z-20 mt-2 w-full rounded-2xl border border-border bg-card shadow-lg overflow-hidden"
+              className="absolute z-20 mt-2 w-full max-h-72 overflow-y-auto rounded-2xl border border-border bg-card shadow-lg"
             >
               {filtered.map((s) => (
                 <button

@@ -18,13 +18,12 @@ import Index from "./pages/Index";
 const Auth = lazy(() => import("./pages/Auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const AdminAboutPreview = lazy(() => import("./pages/AdminAboutPreview"));
-const AdminFaqPreview = lazy(() => import("./pages/AdminFaqPreview"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const Faq = lazy(() => import("./pages/Faq"));
 const AdminSttBakeoff = lazy(() => import("./pages/AdminSttBakeoff"));
 const AdminSchoolFinder = lazy(() => import("./pages/AdminSchoolFinder"));
 const AdminUnreleasedInterviews = lazy(() => import("./pages/AdminUnreleasedInterviews"));
 const AdminMedicineInterviews = lazy(() => import("./pages/AdminMedicineInterviews"));
-const AdminOnboardingPreview = lazy(() => import("./pages/AdminOnboardingPreview"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
 
@@ -117,14 +116,13 @@ const AppContent = () => {
               <Route path="/landing" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/faq" element={<Faq />} />
               <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/about-preview" element={<AdminAboutPreview />} />
-              <Route path="/admin/faq-preview" element={<AdminFaqPreview />} />
               <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
               <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />
               <Route path="/admin/unreleased-interviews" element={<AdminUnreleasedInterviews />} />
               <Route path="/admin/medicine-interviews" element={<AdminMedicineInterviews />} />
-              <Route path="/admin/onboarding-preview" element={<AdminOnboardingPreview />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route
                 path="/minigames"

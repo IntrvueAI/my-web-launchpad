@@ -18,7 +18,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FeedbackVersions } from './FeedbackVersions';
 import { useAuth } from '@/contexts/AuthContext';
-import { CalendarDays, ChevronRight } from 'lucide-react';
+import { useDashboardStats } from '@/hooks/useDashboardStats';
+import { SkillBreakdown } from '@/components/dashboard/SkillBreakdown';
+import { SchoolTimeline } from '@/components/dashboard/SchoolTimeline';
+import { INTENSITY_OPTIONS, type StudyIntensity } from '@/data/onboarding/studyPlan';
+import { CalendarDays, ChevronRight, Trophy, Target, CheckCircle2 } from 'lucide-react';
 
 import { FeedbackRecord } from '@/types/interview';
 import { getBandLabel, getBandColor, shortInterviewLabel } from '@/utils/interviewHelpers';
@@ -35,6 +39,31 @@ export const FeedbackHistory: React.FC = () => {
   const [selectedFeedback, setSelectedFeedback] = useState<FeedbackRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const { stats } = useDashboardStats();
+
+  const firstName =
+    (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0] ||
+    user?.email?.split('@')[0] ||
+    'there';
+  const totalSessions = stats?.totalSessions ?? 0;
+  const averageScore = stats?.averageScore ?? 0;
+  const level = Math.floor(totalSessions / 5) + 1;
+  const xpInLevel = (totalSessions % 5) * 40 + Math.round(averageScore * 5);
+  const xpPct = Math.min(100, Math.round((xpInLevel / 300) * 100));
+
+  // Training-plan pacing — the intensity chosen during onboarding (see OnboardingFlow.tsx),
+  // stored on user_metadata since there's no profiles column for it. Days-active-this-week (not
+  // raw session count) is what weekStrip gives us, so that's the pace proxy used here.
+  const intensityId = user?.user_metadata?.study_intensity as StudyIntensity | undefined;
+  const intensityOption = INTENSITY_OPTIONS.find((o) => o.id === intensityId) ?? null;
+  const daysActiveThisWeek = stats?.weekStrip.filter((d) => d.completed).length ?? 0;
+  const paceStatus = !intensityOption
+    ? null
+    : daysActiveThisWeek >= intensityOption.sessionsPerWeek
+    ? 'on-target'
+    : daysActiveThisWeek >= intensityOption.sessionsPerWeek - 1
+    ? 'close'
+    : 'behind';
 
   useEffect(() => {
     if (user) {
@@ -157,6 +186,71 @@ export const FeedbackHistory: React.FC = () => {
   // Main feedback history list view
   return (
     <div data-tour="page-history" className="space-y-6">
+      {/* Profile overview — same stat language as the Dashboard, so this reads as "your progress
+          so far" rather than just a raw list. */}
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-rose flex items-center justify-center font-extrabold text-lg text-white select-none flex-none">
+          {(user?.user_metadata?.full_name || user?.email || 'U').charAt(0).toUpperCase()}
+        </div>
+        <div>
+          <h2 className="font-display text-[22px] font-semibold text-white">{firstName}&rsquo;s progress</h2>
+          <p className="text-[13px] font-semibold text-muted-foreground">Your stats, skills, and school timeline in one place.</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-[13px] md:grid-cols-4">
+        <div className="rounded-[20px] p-[18px] text-white" style={{ background: 'linear-gradient(150deg,#8B5CF6,#6366F1)' }}>
+          <div className="text-[11px] font-extrabold uppercase tracking-wide opacity-85">Level</div>
+          <div className="font-display text-[28px] font-semibold leading-none my-1 flex items-center gap-2">{level}<Trophy className="h-4 w-4" /></div>
+          <div className="h-2 rounded-full bg-white/25 overflow-hidden"><div className="h-full rounded-full bg-white" style={{ width: `${xpPct}%` }} /></div>
+        </div>
+        <div className="tile p-[18px]">
+          <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Avg score</div>
+          <div className="font-display text-[28px] font-semibold text-white leading-none my-1">{averageScore}<span className="text-[13px] text-muted-foreground font-bold"> /20</span></div>
+        </div>
+        <div className="tile p-[18px]">
+          <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Streak</div>
+          <div className="font-display text-[28px] font-semibold text-white leading-none my-1">{stats?.streak ?? 0}<span className="text-[13px] text-muted-foreground font-bold"> days</span></div>
+        </div>
+        <div className="tile p-[18px]">
+          <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Interviews</div>
+          <div className="font-display text-[28px] font-semibold text-white leading-none my-1">{totalSessions}</div>
+        </div>
+      </div>
+
+      <SchoolTimeline dates={stats?.upcomingSchoolInterviews ?? []} />
+
+      <div className="grid gap-[13px] lg:grid-cols-[1.3fr_1fr]">
+        <SkillBreakdown stats={stats} />
+
+        <div className="tile p-5 flex flex-col">
+          <span className="font-display font-semibold text-[15px] text-white flex items-center gap-2 mb-3"><Target className="h-4 w-4 text-emerald" /> Training plan</span>
+          {intensityOption ? (
+            <div className="flex-1 flex flex-col justify-center gap-2.5">
+              <div className="flex items-center gap-2">
+                {paceStatus === 'on-target' && <CheckCircle2 className="h-4 w-4 text-emerald flex-none" />}
+                <span className="text-[13.5px] font-semibold text-[#C7D2E4]">
+                  {paceStatus === 'on-target' && "You're on target — "}
+                  {paceStatus === 'close' && "Almost there — "}
+                  {paceStatus === 'behind' && "Behind pace — "}
+                  {daysActiveThisWeek} of {intensityOption.sessionsPerWeek} days practised this week ({intensityOption.label.toLowerCase()} plan).
+                </span>
+              </div>
+              <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${paceStatus === 'on-target' ? 'bg-emerald' : paceStatus === 'close' ? 'bg-amber' : 'bg-[#F87171]'}`}
+                  style={{ width: `${Math.min(100, Math.round((daysActiveThisWeek / intensityOption.sessionsPerWeek) * 100))}%` }}
+                />
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground flex-1 flex items-center">
+              No training plan set yet — pick a pace next time you go through onboarding, or from Settings.
+            </p>
+          )}
+        </div>
+      </div>
+
       <div>
         <h2 className="text-2xl font-bold mb-2">Feedback History</h2>
         <p className="text-muted-foreground">
