@@ -271,9 +271,17 @@ const Index = () => {
                     </button>
                   );
                 })}
+                {isAdmin && (
+                  <button
+                    onClick={() => navigate('/admin')}
+                    className="px-3 py-2 rounded-xl text-[13px] font-extrabold whitespace-nowrap transition-colors text-muted-foreground hover:text-white hover:bg-white/5"
+                  >
+                    Admin Dashboard
+                  </button>
+                )}
               </nav>
             )}
-            
+
             {/* Mobile Navigation - Icons Only */}
             {currentView !== 'interview' && (
               <nav className="flex lg:hidden gap-1 ml-auto">
@@ -344,6 +352,17 @@ const Index = () => {
                 >
                   <Settings className="w-4 h-4" />
                 </Button>
+                {isAdmin && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate('/admin')}
+                    className="p-2"
+                    aria-label="Admin Dashboard"
+                  >
+                    <UserCog className="w-4 h-4" />
+                  </Button>
+                )}
               </nav>
             )}
           </div>

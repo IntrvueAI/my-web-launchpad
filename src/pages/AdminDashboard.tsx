@@ -21,7 +21,7 @@ import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut, ExternalLink, Stethoscope } from 'lucide-react';
+import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { isAdmin, isLoading, error } = useAdminStatus();
@@ -137,6 +137,9 @@ export default function AdminDashboard() {
           </div>
           <div className="ml-auto flex items-center gap-3">
             {user && <span className="text-sm text-muted-foreground hidden sm:inline">{user.email}</span>}
+            <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate('/')}>
+              <ArrowLeft className="h-4 w-4" /> Back to app
+            </Button>
             <Button variant="outline" size="sm" className="gap-2" onClick={handleSignOut}>
               <LogOut className="h-4 w-4" /> Sign out
             </Button>
