@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -24,9 +25,6 @@ const blank = (): any => ({
              { key: 'C', text: '', correct: false, reasoning: '' }, { key: 'D', text: '', correct: false, reasoning: '' } ],
 });
 
-const Ta = (p: any) => (
-  <textarea {...p} className={`w-full rounded-md border border-input bg-background p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary ${p.className || ''}`} />
-);
 
 export const AdminDailyQuestions: React.FC = () => {
   const { toast } = useToast();
@@ -123,7 +121,7 @@ export const AdminDailyQuestions: React.FC = () => {
                 <div><Label>Subject</Label><Input value={draft.subject} onChange={(e) => set('subject', e.target.value)} placeholder="maths" /></div>
                 <div><Label>Title</Label><Input value={draft.title} onChange={(e) => set('title', e.target.value)} /></div>
               </div>
-              <div><Label>Question</Label><Ta rows={2} value={draft.question} onChange={(e: any) => set('question', e.target.value)} /></div>
+              <div><Label>Question</Label><Textarea rows={2} value={draft.question} onChange={(e: any) => set('question', e.target.value)} /></div>
               <div className="space-y-2">
                 <Label className="font-semibold">Options (click the ✓ to mark the correct one)</Label>
                 {draft.options.map((o: Opt, i: number) => (
@@ -133,12 +131,12 @@ export const AdminDailyQuestions: React.FC = () => {
                       <Input value={o.text} onChange={(e) => setOpt(i, 'text', e.target.value)} placeholder={`Option ${o.key} text`} />
                       {draft.options.length > 2 && <Button type="button" size="sm" variant="ghost" onClick={() => removeOpt(i)}><Trash2 className="w-4 h-4 text-destructive" /></Button>}
                     </div>
-                    <Ta rows={2} value={o.reasoning} onChange={(e: any) => setOpt(i, 'reasoning', e.target.value)} placeholder={o.correct ? 'Why this is correct…' : 'Why this is wrong…'} className="text-xs" />
+                    <Textarea rows={2} value={o.reasoning} onChange={(e: any) => setOpt(i, 'reasoning', e.target.value)} placeholder={o.correct ? 'Why this is correct…' : 'Why this is wrong…'} className="text-xs" />
                   </div>
                 ))}
                 {draft.options.length < KEYS.length && <Button type="button" size="sm" variant="outline" onClick={addOpt} className="gap-1"><Plus className="w-3 h-3" /> Add option</Button>}
               </div>
-              <div><Label>Overall takeaway (optional)</Label><Ta rows={2} value={draft.explanation} onChange={(e: any) => set('explanation', e.target.value)} /></div>
+              <div><Label>Overall takeaway (optional)</Label><Textarea rows={2} value={draft.explanation} onChange={(e: any) => set('explanation', e.target.value)} /></div>
             </div>
           )}
           <DialogFooter>

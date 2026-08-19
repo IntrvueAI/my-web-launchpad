@@ -180,8 +180,8 @@ export default function AdminDashboard() {
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/demo-interviews" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Demo interviews
+            <Link to="/admin/unreleased-interviews" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3.5 w-3.5" /> Unreleased interviews
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>

@@ -264,6 +264,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
       'Relevance'
     ],
     difficultyLevel: 1,
+    adminOnly: true, // retired from the public picker — superseded by 'chat-with-clara' ("Demo Interview New"); kept reachable from Admin -> Unreleased Interviews
     tags: ['demo', 'free', 'quick test', 'trial'],
     icon: 'Timer',
     costCredits: 0

@@ -7,9 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { INTERVIEW_TYPES, InterviewType } from '@/config/interviewTypes';
-import { InterviewPlatform } from '@/components/InterviewPlatform';
-import { InterviewPlatformV2 } from '@/components/InterviewPlatformV2';
-import { TavusInterviewPlatform } from '@/components/TavusInterviewPlatform';
+import { pickPlatform } from '@/components/admin/AdminInterviewLauncher';
 import { ArrowLeft, Stethoscope, ListChecks, MessageCircleQuestion, KeyRound } from 'lucide-react';
 
 /**
@@ -116,12 +114,9 @@ export default function AdminMedicineInterviews() {
   }
 
   if (active) {
-    // Route by provider, same logic as pages/Index.tsx — medicine-mmi has no provider set, so it
-    // takes the default (proven) InterviewPlatform, not the Deepgram/V2 experiment.
-    const Platform =
-      active.provider === 'tavus' ? TavusInterviewPlatform :
-      active.provider === 'anam-deepgram' ? InterviewPlatformV2 :
-      InterviewPlatform;
+    // Provider-aware routing, shared with every other admin launcher page (AdminInterviewLauncher.pickPlatform) —
+    // medicine-mmi has no provider set, so it takes the default (proven) InterviewPlatform.
+    const Platform = pickPlatform(active);
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 pt-6">

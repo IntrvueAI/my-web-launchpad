@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
@@ -37,10 +38,6 @@ const rowToDraft = (r: QRow): any => ({
   hints_text: (r.hints ?? []).join('\n'),
   tags_csv: (r.tags ?? []).join(', '), active: r.active, warmup: r.warmup ?? true,
 });
-
-const Ta = (p: any) => (
-  <textarea {...p} className={`w-full rounded-md border border-input bg-background p-2 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-primary ${p.className || ''}`} />
-);
 
 export const AdminQuestions: React.FC = () => {
   const { toast } = useToast();
@@ -226,17 +223,17 @@ export const AdminQuestions: React.FC = () => {
                 <div><Label>Question type</Label><Input value={draft.question_type} onChange={(e) => set('question_type', e.target.value)} placeholder="e.g. Numerical" /></div>
                 <div><Label>Title</Label><Input value={draft.title} onChange={(e) => set('title', e.target.value)} placeholder="e.g. Digit Reversal" /></div>
               </div>
-              <div><Label>Question (read verbatim)</Label><Ta rows={2} value={draft.question} onChange={(e: any) => set('question', e.target.value)} /></div>
+              <div><Label>Question (read verbatim)</Label><Textarea rows={2} value={draft.question} onChange={(e: any) => set('question', e.target.value)} /></div>
               <div><Label>Answer (private — never spoken)</Label><Input value={draft.answer} onChange={(e) => set('answer', e.target.value)} /></div>
-              <div><Label>Model reasoning path</Label><Ta rows={3} value={draft.model_reasoning_path} onChange={(e: any) => set('model_reasoning_path', e.target.value)} /></div>
+              <div><Label>Model reasoning path</Label><Textarea rows={3} value={draft.model_reasoning_path} onChange={(e: any) => set('model_reasoning_path', e.target.value)} /></div>
               <div className="grid grid-cols-1 gap-2">
                 <Label className="font-semibold">Rubric</Label>
-                <Ta rows={2} value={draft.rubric_strong} onChange={(e: any) => set('rubric_strong', e.target.value)} placeholder="Strong — …" />
-                <Ta rows={2} value={draft.rubric_developing} onChange={(e: any) => set('rubric_developing', e.target.value)} placeholder="Developing — …" />
-                <Ta rows={2} value={draft.rubric_weak} onChange={(e: any) => set('rubric_weak', e.target.value)} placeholder="Weak — …" />
+                <Textarea rows={2} value={draft.rubric_strong} onChange={(e: any) => set('rubric_strong', e.target.value)} placeholder="Strong — …" />
+                <Textarea rows={2} value={draft.rubric_developing} onChange={(e: any) => set('rubric_developing', e.target.value)} placeholder="Developing — …" />
+                <Textarea rows={2} value={draft.rubric_weak} onChange={(e: any) => set('rubric_weak', e.target.value)} placeholder="Weak — …" />
                 <Input value={draft.rubric_final} onChange={(e) => set('rubric_final', e.target.value)} placeholder="Final answer note (optional)" />
               </div>
-              <div><Label>Hints (one per line, gentle → near-reveal)</Label><Ta rows={3} value={draft.hints_text} onChange={(e: any) => set('hints_text', e.target.value)} /></div>
+              <div><Label>Hints (one per line, gentle → near-reveal)</Label><Textarea rows={3} value={draft.hints_text} onChange={(e: any) => set('hints_text', e.target.value)} /></div>
               <div className="grid grid-cols-2 gap-3 items-end">
                 <div><Label>Tags (comma-separated)</Label><Input value={draft.tags_csv} onChange={(e) => set('tags_csv', e.target.value)} placeholder="e.g. algebra, hard" /></div>
                 <div className="flex flex-col gap-1 pb-1">
