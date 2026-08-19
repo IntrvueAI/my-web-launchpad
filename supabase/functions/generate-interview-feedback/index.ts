@@ -8,6 +8,12 @@ import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
 import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
 import { chatPack } from "./_shared/subjects/chat/pack.ts";
 
+// Interview types that cost 0 credits client-side (src/config/interviewTypes.ts costCredits: 0) —
+// must be exempted from consume_credit() below, or brand-new users (who have NO credits_balance row
+// at all until their first purchase — see consume_credit()'s WHERE credits > 0 clause) hit a 402
+// "Insufficient credits" wall on their first "free" interview instead of ever seeing feedback.
+const FREE_INTERVIEW_TYPES = new Set(['demo', 'chat-with-clara', 'medicine-mmi']);
+
 // Engine-driven subjects score from their OWN subject pack — the same file that drives the
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
 // rubric. Maps the four assessed domains onto the existing four score columns.
@@ -757,16 +763,19 @@ try {
     });
   }
 
-  // Consume one credit before any expensive work — rejects with 402 if balance is zero
-  const supabaseUser = createClient(supabaseUrl, supabaseAnonKey, {
-    global: { headers: { Authorization: `Bearer ${token}` } },
-  });
-  const { data: creditConsumed, error: creditError } = await supabaseUser.rpc('consume_credit');
-  if (creditError || !creditConsumed) {
-    return new Response(JSON.stringify({ error: 'Insufficient credits' }), {
-      status: 402,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  // Consume one credit before any expensive work — rejects with 402 if balance is zero. Skipped
+  // entirely for free interview types (see FREE_INTERVIEW_TYPES above).
+  if (!FREE_INTERVIEW_TYPES.has(interviewType as string)) {
+    const supabaseUser = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
     });
+    const { data: creditConsumed, error: creditError } = await supabaseUser.rpc('consume_credit');
+    if (creditError || !creditConsumed) {
+      return new Response(JSON.stringify({ error: 'Insufficient credits' }), {
+        status: 402,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
   }
 
     // Sanitize and validate transcription length

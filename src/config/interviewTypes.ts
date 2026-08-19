@@ -211,6 +211,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 3,
     tags: ['medicine', 'MMI', 'university admissions', 'ethics', 'beta'],
     icon: 'Stethoscope',
+    costCredits: 0, // beta/pilot content — admins and invited testers shouldn't spend real credits on it
     engineDriven: true,
     engineSubject: 'medicine',
     adminOnly: true,
