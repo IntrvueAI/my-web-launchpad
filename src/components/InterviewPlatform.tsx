@@ -490,7 +490,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         {/* Engine-driven setup gate (Practice vs Mock) — shown before connecting. */}
         {engineDriven && !setupChoice && !isStreaming && (
           <div className="mb-8">
-            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} note={interviewType.preStartNote} />
+            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} note={interviewType.preStartNote} allowTopicPractice={interviewType.topicPracticeEnabled ?? true} />
           </div>
         )}
 

@@ -17,6 +17,8 @@ interface InterviewSetupProps {
   onConfirm: (choice: SetupChoice) => void;
   /** Optional reassuring note shown above the setup (paragraphs split by a blank line). */
   note?: string;
+  /** When false, skips the Full mock / Topic practice choice entirely — straight into a full mock. */
+  allowTopicPractice?: boolean;
 }
 
 /**
@@ -24,7 +26,7 @@ interface InterviewSetupProps {
  * Mock samples all strands adaptively; Practice lets the student pick a single strand to drill
  * (and switch any time once live). Mirrors maths-mini-interview-flow.json.
  */
-export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfirm, note }) => {
+export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfirm, note, allowTopicPractice = true }) => {
   const [mode, setMode] = useState<Mode>('mock');
   const [topic, setTopic] = useState<string>(topics[0]?.id ?? '');
 
@@ -48,12 +50,21 @@ export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfir
         </div>
       )}
 
-      <h2 className="text-xl font-bold mb-1">How would you like to practise?</h2>
-      <p className="text-sm text-muted-foreground mb-5">
-        You can switch topics any time once you've started.
-      </p>
+      {!allowTopicPractice ? (
+        <>
+          <h2 className="text-xl font-bold mb-1">Ready to begin?</h2>
+          <p className="text-sm text-muted-foreground mb-6">
+            This is a full mock — no need to choose a mode.
+          </p>
+        </>
+      ) : (
+        <>
+          <h2 className="text-xl font-bold mb-1">How would you like to practise?</h2>
+          <p className="text-sm text-muted-foreground mb-5">
+            You can switch topics any time once you've started.
+          </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
         <button
           type="button"
           onClick={() => setMode('mock')}
@@ -89,28 +100,30 @@ export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfir
         </button>
       </div>
 
-      {mode === 'practice' && (
-        <div className="mb-6">
-          <p className="text-sm font-medium mb-2">Choose a topic to start with</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {topics.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() => setTopic(t.id)}
-                className={`text-left rounded-md border p-3 transition-colors ${
-                  topic === t.id ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/40'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">{t.label}</span>
-                  {topic === t.id && <Badge variant="secondary" className="ml-auto text-[10px]">Selected</Badge>}
-                </div>
-                <p className="text-xs text-muted-foreground mt-0.5">{t.blurb}</p>
-              </button>
-            ))}
-          </div>
-        </div>
+          {mode === 'practice' && (
+            <div className="mb-6">
+              <p className="text-sm font-medium mb-2">Choose a topic to start with</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {topics.map((t) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setTopic(t.id)}
+                    className={`text-left rounded-md border p-3 transition-colors ${
+                      topic === t.id ? 'border-primary bg-primary/5' : 'border-muted hover:border-primary/40'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium">{t.label}</span>
+                      {topic === t.id && <Badge variant="secondary" className="ml-auto text-[10px]">Selected</Badge>}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t.blurb}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       <Button

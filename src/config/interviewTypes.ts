@@ -47,6 +47,16 @@ export interface InterviewType {
   provider?: 'anam' | 'tavus' | 'anam-deepgram';
   /** When true, hidden from the normal interview picker — only reachable from an admin page. */
   adminOnly?: boolean;
+  /**
+   * When false, the pre-interview setup screen skips the "Full mock / Topic practice" choice
+   * entirely and goes straight into a full mock — no per-topic drilling option. Defaults to true
+   * (every existing engine-driven type keeps offering topic practice unless explicitly opted out).
+   * Set false for types where drilling a single topic in isolation doesn't reflect the real thing:
+   * 11-plus is a whole-child interview built around its two-phase mixedBank structure, and
+   * current-affairs is a pushback-driven discussion format — neither makes sense as "practice just
+   * the 'family' topic forever" or "practice just 'moral-dilemmas' forever".
+   */
+  topicPracticeEnabled?: boolean;
 }
 
 export const INTERVIEW_TYPES: Record<string, InterviewType> = {
@@ -69,6 +79,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     icon: 'GraduationCap',
     engineDriven: true,
     engineSubject: 'elevenplus',
+    topicPracticeEnabled: false, // whole-child interview built around its two-phase mixedBank structure — no single-topic drill mode
     preStartNote:
       "This is the main whole-child interview — like the real thing at a top independent school.\n\n" +
       "Clara will move between getting to know you, how you think, what you love, and how you see the world. " +
@@ -165,6 +176,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning', 'beta'],
     icon: 'Calculator',
     provider: 'tavus',
+    adminOnly: true, // was publicly visible + credit-gated despite being tagged 'beta' — 11-plus-v2 already gets this treatment, this didn't; now consistent
     preStartNote:
       "This is a new version of the maths interview, running on our new video platform — you're one of the first to try it.\n\n" +
       "Clara will read out real 11+ questions and talk you through them one at a time. Explain your thinking out loud as you go.\n\n" +
@@ -189,6 +201,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     icon: 'Globe',
     engineDriven: true,
     engineSubject: 'currentaffairs',
+    topicPracticeEnabled: false, // pushback-driven discussion format — drilling one topic (e.g. just 'moral-dilemmas') forever doesn't reflect the real thing
     preStartNote:
       "There are no right or wrong answers here — it's a discussion.\n\n" +
       "I'll gently push back on whatever you say. That's not because you're wrong; I just love hearing how you think, and it's completely fine to say you're not sure.\n\n" +

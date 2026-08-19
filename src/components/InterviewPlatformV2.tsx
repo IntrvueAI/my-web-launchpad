@@ -455,7 +455,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
 
         {engineDriven && !setupChoice && !isStreaming && (
           <div className="mb-8">
-            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} note={interviewType.preStartNote} />
+            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} note={interviewType.preStartNote} allowTopicPractice={interviewType.topicPracticeEnabled ?? true} />
           </div>
         )}
 
