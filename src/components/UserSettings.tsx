@@ -9,6 +9,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Trash2, Key, User, Mail, School, Calendar, X, Bug } from 'lucide-react';
 import { BugReportDialog } from '@/components/BugReportDialog';
+import { SchoolCombobox } from '@/components/shared/SchoolCombobox';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
@@ -369,10 +370,9 @@ export const UserSettings = () => {
                 <div className="space-y-3 mt-2">
                   {formData.schoolInterviews.map((row, index) => (
                     <div key={index} className="flex flex-col sm:flex-row gap-2">
-                      <Input
+                      <SchoolCombobox
                         value={row.school}
-                        onChange={(e) => updateSchool(index, e.target.value)}
-                        placeholder="Enter school name"
+                        onChange={(value) => updateSchool(index, value)}
                         className="sm:flex-1"
                       />
                       <Popover>

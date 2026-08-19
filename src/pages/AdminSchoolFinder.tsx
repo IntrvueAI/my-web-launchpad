@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ExternalLink } from 'lucide-react';
+import { useSchoolsData } from '@/hooks/useSchoolsData';
 
 /**
  * Admin-only school finder: pick a UK independent school, see whatever admissions/interview timing
@@ -14,47 +15,6 @@ import { ExternalLink } from 'lucide-react';
  * site before relying on it. Not linked anywhere public — reached via /admin/school-finder.
  */
 
-interface SchoolEntry {
-  name: string;
-  website: string;
-  region: string;
-  type?: string;
-  gender?: string;
-  notes?: string;
-  admissionsUrl?: string;
-  interview?: {
-    registrationDeadline?: string;
-    examDate?: string;
-    interviewWindow?: string;
-    notes?: string;
-  };
-  source?: string;
-}
-
-function useSchoolsData() {
-  const [schools, setSchools] = useState<SchoolEntry[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      // Prefer the richer interviews file; fall back to the plain master list if that's all
-      // that's been built so far.
-      for (const path of ['/data/uk-schools-interviews.json', '/data/uk-schools-master-list.json']) {
-        try {
-          const res = await fetch(path);
-          if (!res.ok) continue;
-          const data = await res.json();
-          if (!cancelled && Array.isArray(data)) { setSchools(data); return; }
-        } catch { /* try next path */ }
-      }
-      if (!cancelled) setError('No schools data file found yet.');
-    })();
-    return () => { cancelled = true; };
-  }, []);
-
-  return { schools, error };
-}
 
 export default function AdminSchoolFinder() {
   const { isAdmin, isLoading } = useAdminStatus();

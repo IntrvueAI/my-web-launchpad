@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -10,6 +9,7 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { SchoolCombobox } from "@/components/shared/SchoolCombobox";
 import { cn } from "@/lib/utils";
 
 interface PostSignupFormProps {
@@ -18,37 +18,56 @@ interface PostSignupFormProps {
   userId: string;
 }
 
+interface SchoolRow {
+  school: string;
+  date: Date | undefined;
+}
+
 export const PostSignupForm = ({ isOpen, onClose, userId }: PostSignupFormProps) => {
-  const [schools, setSchools] = useState<string[]>([""]);
-  const [interviewDate, setInterviewDate] = useState<Date>();
+  const [rows, setRows] = useState<SchoolRow[]>([{ school: "", date: undefined }]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const addSchoolField = () => {
-    setSchools([...schools, ""]);
+    setRows([...rows, { school: "", date: undefined }]);
   };
 
   const removeSchoolField = (index: number) => {
-    setSchools(schools.filter((_, i) => i !== index));
+    setRows(rows.filter((_, i) => i !== index));
   };
 
   const updateSchool = (index: number, value: string) => {
-    const updatedSchools = [...schools];
-    updatedSchools[index] = value;
-    setSchools(updatedSchools);
+    setRows(rows.map((row, i) => (i === index ? { ...row, school: value } : row)));
+  };
+
+  const updateSchoolDate = (index: number, date: Date | undefined) => {
+    setRows(rows.map((row, i) => (i === index ? { ...row, date } : row)));
   };
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    
+
     try {
-      const filteredSchools = schools.filter(school => school.trim() !== "");
-      
+      const filteredRows = rows.filter((row) => row.school.trim() !== "");
+
+      // Same shape UserSettings.tsx writes — school_interviews is the current/preferred column
+      // (one row per school, its own date); schools[]/interview_date are kept in sync too since
+      // some older readers still use them (see school_interviews migration comment).
+      const schoolInterviews = filteredRows.map((row) => ({
+        school: row.school.trim(),
+        interview_date: row.date ? row.date.toISOString().split("T")[0] : null,
+      }));
+      const datedRows = filteredRows.filter((row): row is { school: string; date: Date } => !!row.date);
+      const earliestDate = datedRows.length
+        ? new Date(Math.min(...datedRows.map((row) => row.date.getTime())))
+        : null;
+
       const { error } = await supabase
         .from("profiles")
         .update({
-          schools: filteredSchools.length > 0 ? filteredSchools : null,
-          interview_date: interviewDate ? interviewDate.toISOString().split('T')[0] : null,
+          school_interviews: schoolInterviews,
+          schools: filteredRows.length > 0 ? filteredRows.map((row) => row.school.trim()) : null,
+          interview_date: earliestDate ? earliestDate.toISOString().split('T')[0] : null,
         })
         .eq("id", userId);
 
@@ -58,7 +77,7 @@ export const PostSignupForm = ({ isOpen, onClose, userId }: PostSignupFormProps)
         title: "Information saved!",
         description: "Your school and interview details have been saved.",
       });
-      
+
       onClose();
     } catch (error) {
       console.error("Error saving post-signup info:", error);
@@ -92,23 +111,35 @@ export const PostSignupForm = ({ isOpen, onClose, userId }: PostSignupFormProps)
             <div>
               <Label htmlFor="schools">Schools you're applying to</Label>
               <div className="space-y-2 mt-2">
-                {schools.map((school, index) => (
-                  <div key={index} className="flex gap-2">
-                    <Input
-                      value={school}
-                      onChange={(e) => updateSchool(index, e.target.value)}
-                      placeholder="Enter school name"
-                    />
-                    {schools.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        onClick={() => removeSchoolField(index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
+                {rows.map((row, index) => (
+                  <div key={index} className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <SchoolCombobox
+                        value={row.school}
+                        onChange={(value) => updateSchool(index, value)}
+                        className="flex-1"
+                      />
+                      {rows.length > 1 && (
+                        <Button type="button" variant="outline" size="icon" onClick={() => removeSchoolField(index)}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className={cn("w-full justify-start text-left font-normal", !row.date && "text-muted-foreground")}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {row.date ? format(row.date, "PPP") : "Select interview date (optional)"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar mode="single" selected={row.date} onSelect={(date) => updateSchoolDate(index, date)} initialFocus />
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 ))}
                 <Button
@@ -120,32 +151,6 @@ export const PostSignupForm = ({ isOpen, onClose, userId }: PostSignupFormProps)
                   Add another school
                 </Button>
               </div>
-            </div>
-
-            <div>
-              <Label>Interview date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal mt-2",
-                      !interviewDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {interviewDate ? format(interviewDate, "PPP") : "Select interview date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={interviewDate}
-                    onSelect={setInterviewDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
             </div>
 
             <div className="flex gap-2 pt-4">

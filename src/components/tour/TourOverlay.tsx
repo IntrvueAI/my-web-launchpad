@@ -62,6 +62,11 @@ const BUBBLE_H = 176;
 const GAP = 14;
 const EDGE_PAD = 10;
 const HOLE_PAD = 8;
+/** Founder video, shown before the product walkthrough for first-time users. Self-activating: if
+ *  this file doesn't exist yet, a HEAD check (see useFounderVideoAvailable below) fails fast and
+ *  the founder step is skipped straight to the existing walkthrough — no manual flag to flip once
+ *  the real file is dropped in, and nobody ever sees a broken video. */
+const FOUNDER_VIDEO_SRC = '/lovable-uploads/FounderVideo.mp4';
 /** If a step's target hasn't been found by this long after becoming active, skip it rather than
  *  stall the tour forever (e.g. no Question of the Day seeded for today). */
 const STALL_SKIP_MS = 2500;
@@ -79,31 +84,39 @@ export function findVisibleTarget(key: string): HTMLElement | null {
 }
 
 type BubblePos =
-  | { mode: 'below' | 'above'; top: number; left: number; arrowLeft: number }
-  | { mode: 'left' | 'right'; top: number; left: number; arrowTop: number }
+  | { mode: 'below' | 'above'; top: number; left: number; arrowLeft: number; bw: number }
+  | { mode: 'left' | 'right'; top: number; left: number; arrowTop: number; bw: number }
   | { mode: 'banner' };
 
+/** Effective bubble width for this viewport — BUBBLE_W is a target, not a guarantee. On a narrow
+ *  phone (~320-340px) the fixed 300px width plus edge padding on both sides could leave no valid
+ *  clamp range at all (or pin the bubble past the true viewport edge); this shrinks it to fit. */
+function effectiveBubbleWidth(vw: number): number {
+  return Math.max(220, Math.min(BUBBLE_W, vw - EDGE_PAD * 2));
+}
+
 export function computeBubblePos(rect: DOMRect, vw: number, vh: number): BubblePos {
+  const bw = effectiveBubbleWidth(vw);
   const targetCenterX = rect.left + rect.width / 2;
   const targetCenterY = rect.top + rect.height / 2;
-  const clampLeft = (l: number) => Math.min(Math.max(EDGE_PAD, l), vw - BUBBLE_W - EDGE_PAD);
+  const clampLeft = (l: number) => Math.min(Math.max(EDGE_PAD, l), vw - bw - EDGE_PAD);
   const clampTop = (t: number) => Math.min(Math.max(EDGE_PAD, t), vh - BUBBLE_H - EDGE_PAD);
 
   if (rect.bottom + GAP + BUBBLE_H <= vh - EDGE_PAD) {
-    const left = clampLeft(targetCenterX - BUBBLE_W / 2);
-    return { mode: 'below', top: rect.bottom + GAP, left, arrowLeft: Math.min(Math.max(16, targetCenterX - left), BUBBLE_W - 16) };
+    const left = clampLeft(targetCenterX - bw / 2);
+    return { mode: 'below', top: rect.bottom + GAP, left, arrowLeft: Math.min(Math.max(16, targetCenterX - left), bw - 16), bw };
   }
   if (rect.top - GAP - BUBBLE_H >= EDGE_PAD) {
-    const left = clampLeft(targetCenterX - BUBBLE_W / 2);
-    return { mode: 'above', top: rect.top - GAP - BUBBLE_H, left, arrowLeft: Math.min(Math.max(16, targetCenterX - left), BUBBLE_W - 16) };
+    const left = clampLeft(targetCenterX - bw / 2);
+    return { mode: 'above', top: rect.top - GAP - BUBBLE_H, left, arrowLeft: Math.min(Math.max(16, targetCenterX - left), bw - 16), bw };
   }
-  if (rect.right + GAP + BUBBLE_W <= vw - EDGE_PAD) {
+  if (rect.right + GAP + bw <= vw - EDGE_PAD) {
     const top = clampTop(targetCenterY - BUBBLE_H / 2);
-    return { mode: 'right', top, left: rect.right + GAP, arrowTop: Math.min(Math.max(16, targetCenterY - top), BUBBLE_H - 16) };
+    return { mode: 'right', top, left: rect.right + GAP, arrowTop: Math.min(Math.max(16, targetCenterY - top), BUBBLE_H - 16), bw };
   }
-  if (rect.left - GAP - BUBBLE_W >= EDGE_PAD) {
+  if (rect.left - GAP - bw >= EDGE_PAD) {
     const top = clampTop(targetCenterY - BUBBLE_H / 2);
-    return { mode: 'left', top, left: rect.left - GAP - BUBBLE_W, arrowTop: Math.min(Math.max(16, targetCenterY - top), BUBBLE_H - 16) };
+    return { mode: 'left', top, left: rect.left - GAP - bw, arrowTop: Math.min(Math.max(16, targetCenterY - top), BUBBLE_H - 16), bw };
   }
   return { mode: 'banner' };
 }
@@ -155,12 +168,25 @@ export function useTourTarget(key: string, active: boolean) {
     raf = requestAnimationFrame(doMeasure);
     setViewport({ w: window.innerWidth, h: window.innerHeight });
 
-    const onWin = () => { doMeasure(); setViewport({ w: window.innerWidth, h: window.innerHeight }); };
+    // Coalesced to one measurement per animation frame — scroll fires far faster than that (every
+    // few ms during a smooth scrollIntoView), and measuring synchronously on each event was
+    // triggering a fresh 200ms CSS transition dozens of times a second, so the spotlight visibly
+    // stuttered/chased instead of the transition ever completing.
+    let scrollRaf = 0;
+    const onWin = () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = 0;
+        doMeasure();
+        setViewport({ w: window.innerWidth, h: window.innerHeight });
+      });
+    };
     window.addEventListener('resize', onWin);
     window.addEventListener('scroll', onWin, true);
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(scrollRaf);
       window.removeEventListener('resize', onWin);
       window.removeEventListener('scroll', onWin, true);
       ro?.disconnect();
@@ -168,6 +194,41 @@ export function useTourTarget(key: string, active: boolean) {
   }, [active, key]);
 
   return { rect, ringRadius, viewport };
+}
+
+/** How long a fade-out is allowed to run before we give up holding the old position (a real page
+ *  navigation between steps means no new rect is coming — this is what stops a stale spotlight
+ *  from lingering on a since-unmounted target). Matches TourVisuals' own transition-all duration. */
+const FADE_MS = 200;
+
+/**
+ * Cross-fades between tour steps instead of the spotlight hard-popping in/out. `rect` from
+ * useTourTarget goes null the instant a step changes (by design — a fresh target might be on a
+ * different page, so nothing should persist that measurement). Left as-is, that null causes
+ * TourVisuals to unmount immediately: the whole overlay blinks out, then blinks back in once the
+ * new target is found. This keeps the LAST valid rect mounted (opacity faded down, not removed)
+ * for one fade duration so there's something for the CSS transition to animate, then drops it if
+ * nothing new has shown up by then.
+ */
+function useDisplayRect(rect: DOMRect | null) {
+  const [displayRect, setDisplayRect] = useState<DOMRect | null>(null);
+  const [visible, setVisible] = useState(false);
+  const hideTimer = useRef<number>();
+
+  useEffect(() => {
+    window.clearTimeout(hideTimer.current);
+    if (rect) {
+      setDisplayRect(rect);
+      // Next frame so the opacity transition actually animates from 0 -> 1 rather than snapping.
+      const raf = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(raf);
+    }
+    setVisible(false);
+    hideTimer.current = window.setTimeout(() => setDisplayRect(null), FADE_MS);
+    return () => window.clearTimeout(hideTimer.current);
+  }, [rect]);
+
+  return { displayRect, visible };
 }
 
 /**
@@ -200,18 +261,45 @@ function useStallWatchdog(active: boolean, rect: DOMRect | null, stepKey: string
   }, [active, rect, stepKey]);
 }
 
+/** Checks once whether FOUNDER_VIDEO_SRC actually exists (a fast same-origin HEAD request) — lets
+ *  the founder-video step self-activate the moment the real file is added, and self-skip cleanly
+ *  (no broken <video>, no manual flag) while it doesn't. `null` = still checking. */
+function useFounderVideoAvailable(shouldCheck: boolean): boolean | null {
+  const [available, setAvailable] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (!shouldCheck || available !== null) return;
+    let cancelled = false;
+    fetch(FOUNDER_VIDEO_SRC, { method: 'HEAD' })
+      .then((res) => { if (!cancelled) setAvailable(res.ok); })
+      .catch(() => { if (!cancelled) setAvailable(false); });
+    return () => { cancelled = true; };
+  }, [shouldCheck, available]);
+  return available;
+}
+
 export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?: boolean; restartKey?: number }) {
   const { user } = useAuth();
-  // 'intro' = onboarding walkthrough video, shown once before the guided steps start.
-  const [phase, setPhase] = useState<'idle' | 'intro' | 'active' | 'done'>('idle');
+  // 'founder' = founder video (only if the file exists — see useFounderVideoAvailable), then
+  // 'intro' = onboarding walkthrough video, both shown once before the guided steps start.
+  const [phase, setPhase] = useState<'idle' | 'checking-founder' | 'founder' | 'intro' | 'active' | 'done'>('idle');
   const [stepIndex, setStepIndex] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
 
   // Decide once per user whether they've already seen the tour.
   useEffect(() => {
     if (!user || phase !== 'idle') return;
-    setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'intro');
+    setPhase(user.user_metadata?.hasSeenTour ? 'done' : 'checking-founder');
   }, [user, phase]);
+
+  const founderVideoAvailable = useFounderVideoAvailable(phase === 'checking-founder');
+  useEffect(() => {
+    if (phase !== 'checking-founder' || founderVideoAvailable === null) return;
+    setPhase(founderVideoAvailable ? 'founder' : 'intro');
+  }, [phase, founderVideoAvailable]);
+
+  const handleFounderClose = useCallback((open: boolean) => {
+    if (!open) setPhase('intro');
+  }, []);
 
   // Bumping restartKey (e.g. a "Replay tour" test button) force-restarts the guided steps
   // directly (skips re-showing the intro video, so repeat test runs stay quick), regardless of
@@ -242,6 +330,7 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
   const isButtonMode = currentStep.advanceMode === 'button';
   const isPageKind = currentStep.kind === 'page';
   const { rect, ringRadius, viewport } = useTourTarget(currentStep.key, active);
+  const { displayRect, visible } = useDisplayRect(rect);
 
   const handleAdvance = useCallback(() => {
     setStepIndex((i) => {
@@ -263,19 +352,22 @@ export function TourOverlay({ suspended = false, restartKey = 0 }: { suspended?:
 
   return (
     <>
+      <IntroVideoModal open={phase === 'founder'} onOpenChange={handleFounderClose} src={FOUNDER_VIDEO_SRC} />
       <IntroVideoModal open={phase === 'intro'} onOpenChange={handleIntroClose} />
-      {active && rect && viewport.w > 0 && (
-        <TourVisuals
-          rect={rect}
-          ringRadius={ringRadius}
-          viewport={viewport}
-          step={stepIndex}
-          message={currentStep.message}
-          onSkip={markSeen}
-          clickable={!isButtonMode}
-          isPageKind={isPageKind}
-          onNext={isButtonMode ? advanceOrFinish : undefined}
-        />
+      {displayRect && viewport.w > 0 && (
+        <div className="transition-opacity duration-200" style={{ opacity: visible ? 1 : 0 }}>
+          <TourVisuals
+            rect={displayRect}
+            ringRadius={ringRadius}
+            viewport={viewport}
+            step={stepIndex}
+            message={currentStep.message}
+            onSkip={markSeen}
+            clickable={!isButtonMode}
+            isPageKind={isPageKind}
+            onNext={isButtonMode ? advanceOrFinish : undefined}
+          />
+        </div>
       )}
       <WelcomeModal open={showWelcome} onOpenChange={setShowWelcome} />
     </>
@@ -415,7 +507,7 @@ export function TourBubble({
   return (
     <div
       className="tile fixed p-4 pr-9 transition-all duration-200"
-      style={{ top: bubble.top, left: bubble.left, width: BUBBLE_W, pointerEvents: 'auto' }}
+      style={{ top: bubble.top, left: bubble.left, width: bubble.bw, pointerEvents: 'auto' }}
     >
       <div className={arrowBase} style={arrowStyle} />
       {skipButton}
