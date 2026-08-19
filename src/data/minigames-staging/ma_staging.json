@@ -1,0 +1,2072 @@
+[
+  {
+    "subject": "Maths",
+    "topic": "Place value",
+    "difficulty": "Standard",
+    "question": "What is the value of the digit 8 in the number 14,868?",
+    "options": [
+      "80",
+      "8000",
+      "8",
+      "800"
+    ],
+    "answer": "800",
+    "explanation": "The 8 is in the hundreds column, so it is worth 8 x 100 = 800.",
+    "id": "MA-054"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Place value",
+    "difficulty": "Standard",
+    "question": "What is the value of the digit 7 in the number 77,350?",
+    "options": [
+      "7",
+      "70000",
+      "7000",
+      "700"
+    ],
+    "answer": "7000",
+    "explanation": "The 7 is in the thousands column, so it is worth 7 x 1000 = 7000.",
+    "id": "MA-055"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Place value",
+    "difficulty": "Standard",
+    "question": "What is the value of the digit 2 in the number 37,928?",
+    "options": [
+      "200",
+      "20",
+      "2",
+      "14"
+    ],
+    "answer": "20",
+    "explanation": "The 2 is in the tens column, so it is worth 2 x 10 = 20.",
+    "id": "MA-056"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Place value",
+    "difficulty": "Standard",
+    "question": "What is the value of the digit 2 in the number 92,462?",
+    "options": [
+      "2",
+      "-4",
+      "20",
+      "-6"
+    ],
+    "answer": "2",
+    "explanation": "The 2 is in the units column, so it is worth 2 x 1 = 2.",
+    "id": "MA-057"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Place value",
+    "difficulty": "Standard",
+    "question": "What is the value of the digit 3 in the number 70,732?",
+    "options": [
+      "35",
+      "3",
+      "30",
+      "300"
+    ],
+    "answer": "30",
+    "explanation": "The 3 is in the tens column, so it is worth 3 x 10 = 30.",
+    "id": "MA-058"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Rounding",
+    "difficulty": "Standard",
+    "question": "Round 9623 to the nearest 1000.",
+    "options": [
+      "11000",
+      "10000",
+      "9997",
+      "9000"
+    ],
+    "answer": "10000",
+    "explanation": "9623 is closer to 10000 than to 9000 when rounding to the nearest 1000.",
+    "id": "MA-059"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Rounding",
+    "difficulty": "Standard",
+    "question": "Round 1769 to the nearest 100.",
+    "options": [
+      "1700",
+      "1796",
+      "1800",
+      "1900"
+    ],
+    "answer": "1800",
+    "explanation": "1769 is closer to 1800 than to 1700 when rounding to the nearest 100.",
+    "id": "MA-060"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Rounding",
+    "difficulty": "Standard",
+    "question": "Round 5012 to the nearest 10.",
+    "options": [
+      "5011",
+      "5010",
+      "5020",
+      "5002"
+    ],
+    "answer": "5010",
+    "explanation": "5012 is closer to 5010 than to 5020 when rounding to the nearest 10.",
+    "id": "MA-061"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Rounding",
+    "difficulty": "Standard",
+    "question": "Round 409 to the nearest 1000.",
+    "options": [
+      "0",
+      "-4",
+      "-5",
+      "1000"
+    ],
+    "answer": "0",
+    "explanation": "409 is closer to 0 than to 1000 when rounding to the nearest 1000.",
+    "id": "MA-062"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Rounding",
+    "difficulty": "Standard",
+    "question": "Round 9441 to the nearest 100.",
+    "options": [
+      "9401",
+      "9402",
+      "9500",
+      "9400"
+    ],
+    "answer": "9400",
+    "explanation": "9441 is closer to 9400 than to 9500 when rounding to the nearest 100.",
+    "id": "MA-063"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Standard",
+    "question": "A school has 56 pupils in Year 6 and 83 pupils in Year 5. How many pupils is that in total?",
+    "options": [
+      "149",
+      "27",
+      "139",
+      "138"
+    ],
+    "answer": "139",
+    "explanation": "56 + 83 = 139.",
+    "id": "MA-064"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Standard",
+    "question": "A school has 23 pupils in Year 6 and 51 pupils in Year 5. How many pupils is that in total?",
+    "options": [
+      "84",
+      "28",
+      "74",
+      "73"
+    ],
+    "answer": "74",
+    "explanation": "23 + 51 = 74.",
+    "id": "MA-065"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Standard",
+    "question": "A school has 40 pupils in Year 6 and 51 pupils in Year 5. How many pupils is that in total?",
+    "options": [
+      "11",
+      "101",
+      "90",
+      "91"
+    ],
+    "answer": "91",
+    "explanation": "40 + 51 = 91.",
+    "id": "MA-066"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Standard",
+    "question": "A shop had 79 apples. It sold 51 of them. How many apples are left?",
+    "options": [
+      "38",
+      "28",
+      "130",
+      "27"
+    ],
+    "answer": "28",
+    "explanation": "79 - 51 = 28.",
+    "id": "MA-067"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Standard",
+    "question": "A school has 31 pupils in Year 6 and 13 pupils in Year 5. How many pupils is that in total?",
+    "options": [
+      "54",
+      "43",
+      "18",
+      "44"
+    ],
+    "answer": "44",
+    "explanation": "31 + 13 = 44.",
+    "id": "MA-068"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Standard",
+    "question": "A school has 16 pupils in Year 6 and 83 pupils in Year 5. How many pupils is that in total?",
+    "options": [
+      "98",
+      "67",
+      "109",
+      "99"
+    ],
+    "answer": "99",
+    "explanation": "16 + 83 = 99.",
+    "id": "MA-069"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Challenge",
+    "question": "A minibus has 12 rows of seats with 8 seats in each row. How many seats are there in total?",
+    "options": [
+      "96",
+      "108",
+      "88",
+      "20"
+    ],
+    "answer": "96",
+    "explanation": "12 x 8 = 96.",
+    "id": "MA-070"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Challenge",
+    "question": "A minibus has 6 rows of seats with 8 seats in each row. How many seats are there in total?",
+    "options": [
+      "14",
+      "40",
+      "48",
+      "54"
+    ],
+    "answer": "48",
+    "explanation": "6 x 8 = 48.",
+    "id": "MA-071"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Challenge",
+    "question": "A minibus has 10 rows of seats with 6 seats in each row. How many seats are there in total?",
+    "options": [
+      "60",
+      "70",
+      "16",
+      "54"
+    ],
+    "answer": "60",
+    "explanation": "10 x 6 = 60.",
+    "id": "MA-072"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Arithmetic",
+    "difficulty": "Challenge",
+    "question": "A minibus has 6 rows of seats with 11 seats in each row. How many seats are there in total?",
+    "options": [
+      "55",
+      "72",
+      "66",
+      "17"
+    ],
+    "answer": "66",
+    "explanation": "6 x 11 = 66.",
+    "id": "MA-073"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Order of operations",
+    "difficulty": "Challenge",
+    "question": "Work out: 6 + 9 x 8",
+    "options": [
+      "62",
+      "79",
+      "120",
+      "78"
+    ],
+    "answer": "78",
+    "explanation": "Multiplication is done before addition: 9 x 8 = 72, then 6 + 72 = 78.",
+    "id": "MA-074"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Order of operations",
+    "difficulty": "Challenge",
+    "question": "Work out: 4 + 9 x 8",
+    "options": [
+      "77",
+      "76",
+      "44",
+      "104"
+    ],
+    "answer": "76",
+    "explanation": "Multiplication is done before addition: 9 x 8 = 72, then 4 + 72 = 76.",
+    "id": "MA-075"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Order of operations",
+    "difficulty": "Challenge",
+    "question": "Work out: 2 + 3 x 3",
+    "options": [
+      "15",
+      "9",
+      "12",
+      "11"
+    ],
+    "answer": "11",
+    "explanation": "Multiplication is done before addition: 3 x 3 = 9, then 2 + 9 = 11.",
+    "id": "MA-076"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Order of operations",
+    "difficulty": "Challenge",
+    "question": "Work out: 7 + 8 x 9",
+    "options": [
+      "79",
+      "135",
+      "65",
+      "80"
+    ],
+    "answer": "79",
+    "explanation": "Multiplication is done before addition: 8 x 9 = 72, then 7 + 72 = 79.",
+    "id": "MA-077"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Order of operations",
+    "difficulty": "Challenge",
+    "question": "Work out: 8 + 8 x 7",
+    "options": [
+      "71",
+      "64",
+      "112",
+      "65"
+    ],
+    "answer": "64",
+    "explanation": "Multiplication is done before addition: 8 x 7 = 56, then 8 + 56 = 64.",
+    "id": "MA-078"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Negative numbers",
+    "difficulty": "Standard",
+    "question": "The temperature is 10°C. It rises by 13°C. What is the new temperature?",
+    "options": [
+      "-23°C",
+      "-3°C",
+      "24°C",
+      "23°C"
+    ],
+    "answer": "23°C",
+    "explanation": "10 + 13 = 23.",
+    "id": "MA-079"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Negative numbers",
+    "difficulty": "Standard",
+    "question": "The temperature is 3°C. It falls by 11°C. What is the new temperature?",
+    "options": [
+      "-7°C",
+      "-8°C",
+      "14°C",
+      "8°C"
+    ],
+    "answer": "-8°C",
+    "explanation": "3 - 11 = -8.",
+    "id": "MA-080"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Negative numbers",
+    "difficulty": "Standard",
+    "question": "The temperature is 0°C. It falls by 9°C. What is the new temperature?",
+    "options": [
+      "9°C",
+      "-8°C",
+      "-6°C",
+      "-9°C"
+    ],
+    "answer": "-9°C",
+    "explanation": "0 - 9 = -9.",
+    "id": "MA-081"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Negative numbers",
+    "difficulty": "Standard",
+    "question": "The temperature is -3°C. It rises by 7°C. What is the new temperature?",
+    "options": [
+      "-4°C",
+      "-10°C",
+      "5°C",
+      "4°C"
+    ],
+    "answer": "4°C",
+    "explanation": "-3 + 7 = 4.",
+    "id": "MA-082"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Negative numbers",
+    "difficulty": "Standard",
+    "question": "The temperature is 10°C. It rises by 13°C. What is the new temperature?",
+    "options": [
+      "24°C",
+      "-3°C",
+      "-23°C",
+      "23°C"
+    ],
+    "answer": "23°C",
+    "explanation": "10 + 13 = 23.",
+    "id": "MA-083"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Factors & multiples",
+    "difficulty": "Standard",
+    "question": "Which of these is a factor of 12?",
+    "options": [
+      "6",
+      "11",
+      "7",
+      "13"
+    ],
+    "answer": "6",
+    "explanation": "12 ÷ 6 = 2, with no remainder, so 6 is a factor of 12.",
+    "id": "MA-084"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Factors & multiples",
+    "difficulty": "Standard",
+    "question": "Which of these is a factor of 18?",
+    "options": [
+      "9",
+      "7",
+      "17",
+      "19"
+    ],
+    "answer": "9",
+    "explanation": "18 ÷ 9 = 2, with no remainder, so 9 is a factor of 18.",
+    "id": "MA-085"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Factors & multiples",
+    "difficulty": "Standard",
+    "question": "Which of these is a factor of 24?",
+    "options": [
+      "7",
+      "12",
+      "25",
+      "23"
+    ],
+    "answer": "12",
+    "explanation": "24 ÷ 12 = 2, with no remainder, so 12 is a factor of 24.",
+    "id": "MA-086"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Factors & multiples",
+    "difficulty": "Standard",
+    "question": "Which of these is a factor of 30?",
+    "options": [
+      "29",
+      "15",
+      "7",
+      "31"
+    ],
+    "answer": "15",
+    "explanation": "30 ÷ 15 = 2, with no remainder, so 15 is a factor of 30.",
+    "id": "MA-087"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Factors & multiples",
+    "difficulty": "Standard",
+    "question": "Which of these is a factor of 36?",
+    "options": [
+      "7",
+      "35",
+      "18",
+      "37"
+    ],
+    "answer": "18",
+    "explanation": "36 ÷ 18 = 2, with no remainder, so 18 is a factor of 36.",
+    "id": "MA-088"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Primes",
+    "difficulty": "Standard",
+    "question": "Which of these numbers is a prime number?",
+    "options": [
+      "15",
+      "16",
+      "18",
+      "43"
+    ],
+    "answer": "43",
+    "explanation": "43 can only be divided evenly by 1 and itself, so it is prime. The others have more than two factors.",
+    "id": "MA-089"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Primes",
+    "difficulty": "Standard",
+    "question": "Which of these numbers is a prime number?",
+    "options": [
+      "16",
+      "10",
+      "11",
+      "21"
+    ],
+    "answer": "11",
+    "explanation": "11 can only be divided evenly by 1 and itself, so it is prime. The others have more than two factors.",
+    "id": "MA-090"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Primes",
+    "difficulty": "Standard",
+    "question": "Which of these numbers is a prime number?",
+    "options": [
+      "16",
+      "20",
+      "6",
+      "13"
+    ],
+    "answer": "13",
+    "explanation": "13 can only be divided evenly by 1 and itself, so it is prime. The others have more than two factors.",
+    "id": "MA-091"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Primes",
+    "difficulty": "Standard",
+    "question": "Which of these numbers is a prime number?",
+    "options": [
+      "8",
+      "14",
+      "23",
+      "4"
+    ],
+    "answer": "23",
+    "explanation": "23 can only be divided evenly by 1 and itself, so it is prime. The others have more than two factors.",
+    "id": "MA-092"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square numbers",
+    "difficulty": "Standard",
+    "question": "What is 7 squared (7²)?",
+    "options": [
+      "49",
+      "14",
+      "42",
+      "56"
+    ],
+    "answer": "49",
+    "explanation": "7² means 7 x 7 = 49.",
+    "id": "MA-093"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square numbers",
+    "difficulty": "Standard",
+    "question": "What is 11 squared (11²)?",
+    "options": [
+      "132",
+      "22",
+      "121",
+      "110"
+    ],
+    "answer": "121",
+    "explanation": "11² means 11 x 11 = 121.",
+    "id": "MA-094"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square numbers",
+    "difficulty": "Standard",
+    "question": "What is 7 squared (7²)?",
+    "options": [
+      "56",
+      "49",
+      "14",
+      "42"
+    ],
+    "answer": "49",
+    "explanation": "7² means 7 x 7 = 49.",
+    "id": "MA-095"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square numbers",
+    "difficulty": "Standard",
+    "question": "What is 13 squared (13²)?",
+    "options": [
+      "156",
+      "169",
+      "26",
+      "182"
+    ],
+    "answer": "169",
+    "explanation": "13² means 13 x 13 = 169.",
+    "id": "MA-096"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square roots",
+    "difficulty": "Standard",
+    "question": "What is the square root of 16?",
+    "options": [
+      "8",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": "4",
+    "explanation": "4 x 4 = 16, so √16 = 4.",
+    "id": "MA-097"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square roots",
+    "difficulty": "Standard",
+    "question": "What is the square root of 25?",
+    "options": [
+      "6",
+      "4",
+      "12.5",
+      "5"
+    ],
+    "answer": "5",
+    "explanation": "5 x 5 = 25, so √25 = 5.",
+    "id": "MA-098"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square roots",
+    "difficulty": "Standard",
+    "question": "What is the square root of 36?",
+    "options": [
+      "18",
+      "7",
+      "6",
+      "5"
+    ],
+    "answer": "6",
+    "explanation": "6 x 6 = 36, so √36 = 6.",
+    "id": "MA-099"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Square roots",
+    "difficulty": "Standard",
+    "question": "What is the square root of 49?",
+    "options": [
+      "6",
+      "8",
+      "7",
+      "24.5"
+    ],
+    "answer": "7",
+    "explanation": "7 x 7 = 49, so √49 = 7.",
+    "id": "MA-100"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fractions",
+    "difficulty": "Standard",
+    "question": "What is 1/4 of 80?",
+    "options": [
+      "13",
+      "24",
+      "20",
+      "60"
+    ],
+    "answer": "20",
+    "explanation": "80 ÷ 4 = 20, then 20 x 1 = 20.",
+    "id": "MA-101"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fractions",
+    "difficulty": "Standard",
+    "question": "What is 1/5 of 20?",
+    "options": [
+      "9",
+      "16",
+      "3",
+      "4"
+    ],
+    "answer": "4",
+    "explanation": "20 ÷ 5 = 4, then 4 x 1 = 4.",
+    "id": "MA-102"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fractions",
+    "difficulty": "Standard",
+    "question": "What is 2/8 of 80?",
+    "options": [
+      "60",
+      "20",
+      "28",
+      "10"
+    ],
+    "answer": "20",
+    "explanation": "80 ÷ 8 = 10, then 10 x 2 = 20.",
+    "id": "MA-103"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fractions",
+    "difficulty": "Standard",
+    "question": "What is 7/10 of 120?",
+    "options": [
+      "84",
+      "36",
+      "12",
+      "94"
+    ],
+    "answer": "84",
+    "explanation": "120 ÷ 10 = 12, then 12 x 7 = 84.",
+    "id": "MA-104"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fractions",
+    "difficulty": "Standard",
+    "question": "What is 1/3 of 120?",
+    "options": [
+      "32",
+      "43",
+      "80",
+      "40"
+    ],
+    "answer": "40",
+    "explanation": "120 ÷ 3 = 40, then 40 x 1 = 40.",
+    "id": "MA-105"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fractions",
+    "difficulty": "Standard",
+    "question": "What is 3/6 of 60?",
+    "options": [
+      "25",
+      "30",
+      "10",
+      "36"
+    ],
+    "answer": "30",
+    "explanation": "60 ÷ 6 = 10, then 10 x 3 = 30.",
+    "id": "MA-106"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Decimals",
+    "difficulty": "Standard",
+    "question": "Work out: 9.8 + 1.8",
+    "options": [
+      "12.6",
+      "8.0",
+      "10.8",
+      "11.6"
+    ],
+    "answer": "11.6",
+    "explanation": "9.8 + 1.8 = 11.6.",
+    "id": "MA-107"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Decimals",
+    "difficulty": "Standard",
+    "question": "Work out: 8.3 + 3.2",
+    "options": [
+      "5.1",
+      "12.5",
+      "11.3",
+      "11.5"
+    ],
+    "answer": "11.5",
+    "explanation": "8.3 + 3.2 = 11.5.",
+    "id": "MA-108"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Decimals",
+    "difficulty": "Standard",
+    "question": "Work out: 5.9 + 3.7",
+    "options": [
+      "2.2",
+      "9.6",
+      "10.6",
+      "8.9"
+    ],
+    "answer": "9.6",
+    "explanation": "5.9 + 3.7 = 9.6.",
+    "id": "MA-109"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Decimals",
+    "difficulty": "Standard",
+    "question": "Work out: 3.3 + 2.4",
+    "options": [
+      "5.3",
+      "0.9",
+      "6.7",
+      "5.7"
+    ],
+    "answer": "5.7",
+    "explanation": "3.3 + 2.4 = 5.7.",
+    "id": "MA-110"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Decimals",
+    "difficulty": "Standard",
+    "question": "Work out: 8 + 8.8",
+    "options": [
+      "16.0",
+      "16.8",
+      "-0.8",
+      "17.8"
+    ],
+    "answer": "16.8",
+    "explanation": "8 + 8.8 = 16.8.",
+    "id": "MA-111"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fraction-decimal",
+    "difficulty": "Standard",
+    "question": "Which decimal is equal to 1/4?",
+    "options": [
+      "0.6",
+      "0.15",
+      "0.25",
+      "0.05"
+    ],
+    "answer": "0.25",
+    "explanation": "1/4 = 1 ÷ 4 = 0.25.",
+    "id": "MA-112"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fraction-decimal",
+    "difficulty": "Standard",
+    "question": "Which decimal is equal to 1/2?",
+    "options": [
+      "0.05",
+      "0.15",
+      "0.6",
+      "0.5"
+    ],
+    "answer": "0.5",
+    "explanation": "1/2 = 1 ÷ 2 = 0.5.",
+    "id": "MA-113"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fraction-decimal",
+    "difficulty": "Standard",
+    "question": "Which decimal is equal to 3/4?",
+    "options": [
+      "0.6",
+      "0.15",
+      "0.05",
+      "0.75"
+    ],
+    "answer": "0.75",
+    "explanation": "3/4 = 3 ÷ 4 = 0.75.",
+    "id": "MA-114"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fraction-decimal",
+    "difficulty": "Standard",
+    "question": "Which decimal is equal to 1/5?",
+    "options": [
+      "0.15",
+      "0.6",
+      "0.05",
+      "0.2"
+    ],
+    "answer": "0.2",
+    "explanation": "1/5 = 1 ÷ 5 = 0.2.",
+    "id": "MA-115"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fraction-decimal",
+    "difficulty": "Standard",
+    "question": "Which decimal is equal to 1/10?",
+    "options": [
+      "0.15",
+      "0.1",
+      "0.6",
+      "0.05"
+    ],
+    "answer": "0.1",
+    "explanation": "1/10 = 1 ÷ 10 = 0.1.",
+    "id": "MA-116"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Fraction-decimal",
+    "difficulty": "Standard",
+    "question": "Which decimal is equal to 3/10?",
+    "options": [
+      "0.6",
+      "0.3",
+      "0.05",
+      "0.15"
+    ],
+    "answer": "0.3",
+    "explanation": "3/10 = 3 ÷ 10 = 0.3.",
+    "id": "MA-117"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Percentages",
+    "difficulty": "Standard",
+    "question": "What is 10% of 80?",
+    "options": [
+      "18",
+      "8",
+      "72",
+      "16"
+    ],
+    "answer": "8",
+    "explanation": "10% of 80 = (10/100) x 80 = 8.",
+    "id": "MA-118"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Percentages",
+    "difficulty": "Standard",
+    "question": "What is 20% of 40?",
+    "options": [
+      "16",
+      "32",
+      "8",
+      "18"
+    ],
+    "answer": "8",
+    "explanation": "20% of 40 = (20/100) x 40 = 8.",
+    "id": "MA-119"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Percentages",
+    "difficulty": "Standard",
+    "question": "What is 25% of 120?",
+    "options": [
+      "30",
+      "90",
+      "40",
+      "60"
+    ],
+    "answer": "30",
+    "explanation": "25% of 120 = (25/100) x 120 = 30.",
+    "id": "MA-120"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Percentages",
+    "difficulty": "Standard",
+    "question": "What is 50% of 200?",
+    "options": [
+      "110",
+      "200",
+      "96",
+      "100"
+    ],
+    "answer": "100",
+    "explanation": "50% of 200 = (50/100) x 200 = 100.",
+    "id": "MA-121"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Percentages",
+    "difficulty": "Standard",
+    "question": "What is 75% of 60?",
+    "options": [
+      "55",
+      "90",
+      "15",
+      "45"
+    ],
+    "answer": "45",
+    "explanation": "75% of 60 = (75/100) x 60 = 45.",
+    "id": "MA-122"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Percentages",
+    "difficulty": "Standard",
+    "question": "What is 5% of 120?",
+    "options": [
+      "114",
+      "6",
+      "16",
+      "12"
+    ],
+    "answer": "6",
+    "explanation": "5% of 120 = (5/100) x 120 = 6.",
+    "id": "MA-123"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Ratio",
+    "difficulty": "Challenge",
+    "question": "Share 56 sweets in the ratio 3:5. How many sweets does the first person get?",
+    "options": [
+      "35",
+      "12",
+      "21",
+      "28"
+    ],
+    "answer": "21",
+    "explanation": "The ratio 3:5 has 8 parts. 56 ÷ 8 = 7 per part, so the first share is 3 x 7 = 21.",
+    "id": "MA-124"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Ratio",
+    "difficulty": "Challenge",
+    "question": "Share 24 sweets in the ratio 4:4. How many sweets does the first person get?",
+    "options": [
+      "12",
+      "15",
+      "19",
+      "6"
+    ],
+    "answer": "12",
+    "explanation": "The ratio 4:4 has 8 parts. 24 ÷ 8 = 3 per part, so the first share is 4 x 3 = 12.",
+    "id": "MA-125"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Ratio",
+    "difficulty": "Challenge",
+    "question": "Share 49 sweets in the ratio 2:5. How many sweets does the first person get?",
+    "options": [
+      "35",
+      "14",
+      "21",
+      "24.5"
+    ],
+    "answer": "14",
+    "explanation": "The ratio 2:5 has 7 parts. 49 ÷ 7 = 7 per part, so the first share is 2 x 7 = 14.",
+    "id": "MA-126"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Ratio",
+    "difficulty": "Challenge",
+    "question": "Share 30 sweets in the ratio 2:3. How many sweets does the first person get?",
+    "options": [
+      "18",
+      "12",
+      "17",
+      "15"
+    ],
+    "answer": "12",
+    "explanation": "The ratio 2:3 has 5 parts. 30 ÷ 5 = 6 per part, so the first share is 2 x 6 = 12.",
+    "id": "MA-127"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Ratio",
+    "difficulty": "Challenge",
+    "question": "Share 32 sweets in the ratio 3:5. How many sweets does the first person get?",
+    "options": [
+      "12",
+      "16",
+      "20",
+      "4"
+    ],
+    "answer": "12",
+    "explanation": "The ratio 3:5 has 8 parts. 32 ÷ 8 = 4 per part, so the first share is 3 x 4 = 12.",
+    "id": "MA-128"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Proportion",
+    "difficulty": "Challenge",
+    "question": "6 pencils cost £54. How much would 8 pencils cost, at the same price each?",
+    "options": [
+      "£81",
+      "£72",
+      "£62",
+      "£63"
+    ],
+    "answer": "£72",
+    "explanation": "Each pencil costs £54 ÷ 6 = £9. 8 pencils cost 8 x £9 = £72.",
+    "id": "MA-129"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Proportion",
+    "difficulty": "Challenge",
+    "question": "4 pencils cost £28. How much would 10 pencils cost, at the same price each?",
+    "options": [
+      "£38",
+      "£70",
+      "£63",
+      "£77"
+    ],
+    "answer": "£70",
+    "explanation": "Each pencil costs £28 ÷ 4 = £7. 10 pencils cost 10 x £7 = £70.",
+    "id": "MA-130"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Proportion",
+    "difficulty": "Challenge",
+    "question": "4 pencils cost £32. How much would 12 pencils cost, at the same price each?",
+    "options": [
+      "£96",
+      "£44",
+      "£88",
+      "£104"
+    ],
+    "answer": "£96",
+    "explanation": "Each pencil costs £32 ÷ 4 = £8. 12 pencils cost 12 x £8 = £96.",
+    "id": "MA-131"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Proportion",
+    "difficulty": "Challenge",
+    "question": "5 pencils cost £25. How much would 12 pencils cost, at the same price each?",
+    "options": [
+      "£65",
+      "£55",
+      "£60",
+      "£37"
+    ],
+    "answer": "£60",
+    "explanation": "Each pencil costs £25 ÷ 5 = £5. 12 pencils cost 12 x £5 = £60.",
+    "id": "MA-132"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If x + 11 = 26, what is x?",
+    "options": [
+      "-4",
+      "37",
+      "15",
+      "25"
+    ],
+    "answer": "15",
+    "explanation": "x = 26 - 11 = 15.",
+    "id": "MA-133"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If x + 17 = 32, what is x?",
+    "options": [
+      "15",
+      "31",
+      "2",
+      "49"
+    ],
+    "answer": "15",
+    "explanation": "x = 32 - 17 = 15.",
+    "id": "MA-134"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If x + 14 = 26, what is x?",
+    "options": [
+      "12",
+      "2",
+      "25",
+      "40"
+    ],
+    "answer": "12",
+    "explanation": "x = 26 - 14 = 12.",
+    "id": "MA-135"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If x + 9 = 12, what is x?",
+    "options": [
+      "21",
+      "11",
+      "6",
+      "3"
+    ],
+    "answer": "3",
+    "explanation": "x = 12 - 9 = 3.",
+    "id": "MA-136"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If x + 2 = 6, what is x?",
+    "options": [
+      "8",
+      "4",
+      "5",
+      "-2"
+    ],
+    "answer": "4",
+    "explanation": "x = 6 - 2 = 4.",
+    "id": "MA-137"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If x + 12 = 24, what is x?",
+    "options": [
+      "12",
+      "23",
+      "0",
+      "36"
+    ],
+    "answer": "12",
+    "explanation": "x = 24 - 12 = 12.",
+    "id": "MA-138"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If 5x = 40, what is x?",
+    "options": [
+      "-3",
+      "35",
+      "200",
+      "8"
+    ],
+    "answer": "8",
+    "explanation": "x = 40 ÷ 5 = 8.",
+    "id": "MA-139"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If 4x = 16, what is x?",
+    "options": [
+      "4",
+      "12",
+      "0",
+      "64"
+    ],
+    "answer": "4",
+    "explanation": "x = 16 ÷ 4 = 4.",
+    "id": "MA-140"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Algebra",
+    "difficulty": "Challenge",
+    "question": "If 3x = 27, what is x?",
+    "options": [
+      "-6",
+      "24",
+      "9",
+      "81"
+    ],
+    "answer": "9",
+    "explanation": "x = 27 ÷ 3 = 9.",
+    "id": "MA-141"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Sequences",
+    "difficulty": "Standard",
+    "question": "What is the next number in this sequence? 4, 6, 8, 10, ___",
+    "options": [
+      "11",
+      "12",
+      "17",
+      "14"
+    ],
+    "answer": "12",
+    "explanation": "Each term increases by 2, so the next term is 10 + 2 = 12.",
+    "id": "MA-142"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Sequences",
+    "difficulty": "Standard",
+    "question": "What is the next number in this sequence? 4, 8, 12, 16, ___",
+    "options": [
+      "20",
+      "12",
+      "24",
+      "19"
+    ],
+    "answer": "20",
+    "explanation": "Each term increases by 4, so the next term is 16 + 4 = 20.",
+    "id": "MA-143"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Sequences",
+    "difficulty": "Standard",
+    "question": "What is the next number in this sequence? 2, 5, 8, 11, ___",
+    "options": [
+      "13",
+      "17",
+      "5",
+      "14"
+    ],
+    "answer": "14",
+    "explanation": "Each term increases by 3, so the next term is 11 + 3 = 14.",
+    "id": "MA-144"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Sequences",
+    "difficulty": "Standard",
+    "question": "What is the next number in this sequence? 3, 10, 17, 24, ___",
+    "options": [
+      "25",
+      "38",
+      "31",
+      "30"
+    ],
+    "answer": "31",
+    "explanation": "Each term increases by 7, so the next term is 24 + 7 = 31.",
+    "id": "MA-145"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Sequences",
+    "difficulty": "Standard",
+    "question": "What is the next number in this sequence? 4, 7, 10, 13, ___",
+    "options": [
+      "24",
+      "15",
+      "16",
+      "19"
+    ],
+    "answer": "16",
+    "explanation": "Each term increases by 3, so the next term is 13 + 3 = 16.",
+    "id": "MA-146"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Perimeter",
+    "difficulty": "Standard",
+    "question": "A rectangle is 7cm long and 8cm wide. What is its perimeter?",
+    "options": [
+      "32cm",
+      "15cm",
+      "56cm",
+      "30cm"
+    ],
+    "answer": "30cm",
+    "explanation": "Perimeter = 2 x (length + width) = 2 x (7 + 8) = 30cm.",
+    "id": "MA-147"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Perimeter",
+    "difficulty": "Standard",
+    "question": "A rectangle is 12cm long and 10cm wide. What is its perimeter?",
+    "options": [
+      "120cm",
+      "44cm",
+      "22cm",
+      "46cm"
+    ],
+    "answer": "44cm",
+    "explanation": "Perimeter = 2 x (length + width) = 2 x (12 + 10) = 44cm.",
+    "id": "MA-148"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Perimeter",
+    "difficulty": "Standard",
+    "question": "A rectangle is 7cm long and 4cm wide. What is its perimeter?",
+    "options": [
+      "22cm",
+      "28cm",
+      "24cm",
+      "11cm"
+    ],
+    "answer": "22cm",
+    "explanation": "Perimeter = 2 x (length + width) = 2 x (7 + 4) = 22cm.",
+    "id": "MA-149"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Perimeter",
+    "difficulty": "Standard",
+    "question": "A rectangle is 11cm long and 15cm wide. What is its perimeter?",
+    "options": [
+      "54cm",
+      "165cm",
+      "52cm",
+      "26cm"
+    ],
+    "answer": "52cm",
+    "explanation": "Perimeter = 2 x (length + width) = 2 x (11 + 15) = 52cm.",
+    "id": "MA-150"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Area",
+    "difficulty": "Standard",
+    "question": "A rectangle is 11cm long and 7cm wide. What is its area?",
+    "options": [
+      "66cm²",
+      "84cm²",
+      "36cm²",
+      "77cm²"
+    ],
+    "answer": "77cm²",
+    "explanation": "Area = length x width = 11 x 7 = 77cm².",
+    "id": "MA-151"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Area",
+    "difficulty": "Standard",
+    "question": "A rectangle is 9cm long and 12cm wide. What is its area?",
+    "options": [
+      "42cm²",
+      "120cm²",
+      "99cm²",
+      "108cm²"
+    ],
+    "answer": "108cm²",
+    "explanation": "Area = length x width = 9 x 12 = 108cm².",
+    "id": "MA-152"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Area",
+    "difficulty": "Standard",
+    "question": "A rectangle is 7cm long and 9cm wide. What is its area?",
+    "options": [
+      "63cm²",
+      "32cm²",
+      "72cm²",
+      "56cm²"
+    ],
+    "answer": "63cm²",
+    "explanation": "Area = length x width = 7 x 9 = 63cm².",
+    "id": "MA-153"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Area",
+    "difficulty": "Standard",
+    "question": "A rectangle is 5cm long and 9cm wide. What is its area?",
+    "options": [
+      "40cm²",
+      "45cm²",
+      "54cm²",
+      "28cm²"
+    ],
+    "answer": "45cm²",
+    "explanation": "Area = length x width = 5 x 9 = 45cm².",
+    "id": "MA-154"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Area",
+    "difficulty": "Challenge",
+    "question": "A triangle has a base of 11cm and a height of 4cm. What is its area?",
+    "options": [
+      "44cm²",
+      "22cm²",
+      "33cm²",
+      "18cm²"
+    ],
+    "answer": "22cm²",
+    "explanation": "Area of a triangle = (base x height) ÷ 2 = (11 x 4) ÷ 2 = 22cm².",
+    "id": "MA-155"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Area",
+    "difficulty": "Challenge",
+    "question": "A triangle has a base of 15cm and a height of 10cm. What is its area?",
+    "options": [
+      "75cm²",
+      "150cm²",
+      "90cm²",
+      "65cm²"
+    ],
+    "answer": "75cm²",
+    "explanation": "Area of a triangle = (base x height) ÷ 2 = (15 x 10) ÷ 2 = 75cm².",
+    "id": "MA-156"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Angles",
+    "difficulty": "Standard",
+    "question": "On a straight line, two angles are 65° and x. What is x?",
+    "options": [
+      "115°",
+      "100°",
+      "65°",
+      "125°"
+    ],
+    "answer": "115°",
+    "explanation": "65 + 115 = 180 (angles on a straight line add to 180°).",
+    "id": "MA-157"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Angles",
+    "difficulty": "Standard",
+    "question": "A triangle has angles of 50° and 60°. What is the third angle?",
+    "options": [
+      "55°",
+      "110°",
+      "70°",
+      "80°"
+    ],
+    "answer": "70°",
+    "explanation": "50 + 60 + 70 = 180 (angles in a triangle add to 180°).",
+    "id": "MA-158"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Angles",
+    "difficulty": "Standard",
+    "question": "Two angles on a straight line are 110° and x. What is x?",
+    "options": [
+      "80°",
+      "55°",
+      "110°",
+      "70°"
+    ],
+    "answer": "70°",
+    "explanation": "110 + 70 = 180 (angles on a straight line add to 180°).",
+    "id": "MA-159"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Angles",
+    "difficulty": "Standard",
+    "question": "A triangle has angles of 90° and 35°. What is the third angle?",
+    "options": [
+      "65°",
+      "125°",
+      "40°",
+      "55°"
+    ],
+    "answer": "55°",
+    "explanation": "90 + 35 + 55 = 180 (angles in a triangle add to 180°).",
+    "id": "MA-160"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Angles",
+    "difficulty": "Standard",
+    "question": "The angles in a quadrilateral are 90°, 90°, 85°, and x. What is x?",
+    "options": [
+      "105°",
+      "85°",
+      "80°",
+      "95°"
+    ],
+    "answer": "95°",
+    "explanation": "Angles in a quadrilateral add to 360°: 90 + 90 + 85 + 95 = 360.",
+    "id": "MA-161"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Volume",
+    "difficulty": "Challenge",
+    "question": "A box (cuboid) is 3cm long, 7cm wide and 2cm high. What is its volume?",
+    "options": [
+      "23cm³",
+      "44cm³",
+      "24cm³",
+      "42cm³"
+    ],
+    "answer": "42cm³",
+    "explanation": "Volume = length x width x height = 3 x 7 x 2 = 42cm³.",
+    "id": "MA-162"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Volume",
+    "difficulty": "Challenge",
+    "question": "A box (cuboid) is 3cm long, 5cm wide and 6cm high. What is its volume?",
+    "options": [
+      "96cm³",
+      "21cm³",
+      "28cm³",
+      "90cm³"
+    ],
+    "answer": "90cm³",
+    "explanation": "Volume = length x width x height = 3 x 5 x 6 = 90cm³.",
+    "id": "MA-163"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Volume",
+    "difficulty": "Challenge",
+    "question": "A box (cuboid) is 2cm long, 4cm wide and 5cm high. What is its volume?",
+    "options": [
+      "13cm³",
+      "40cm³",
+      "45cm³",
+      "22cm³"
+    ],
+    "answer": "40cm³",
+    "explanation": "Volume = length x width x height = 2 x 4 x 5 = 40cm³.",
+    "id": "MA-164"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Volume",
+    "difficulty": "Challenge",
+    "question": "A box (cuboid) is 6cm long, 6cm wide and 5cm high. What is its volume?",
+    "options": [
+      "41cm³",
+      "180cm³",
+      "34cm³",
+      "185cm³"
+    ],
+    "answer": "180cm³",
+    "explanation": "Volume = length x width x height = 6 x 6 x 5 = 180cm³.",
+    "id": "MA-165"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Measures",
+    "difficulty": "Standard",
+    "question": "How many centimetres are there in 3.5 metres?",
+    "options": [
+      "360cm",
+      "350cm",
+      "35cm",
+      "3500cm"
+    ],
+    "answer": "350cm",
+    "explanation": "1m = 100cm, so 3.5 x 100 = 350cm.",
+    "id": "MA-166"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Measures",
+    "difficulty": "Standard",
+    "question": "How many grams are there in 2.25 kilograms?",
+    "options": [
+      "2250g",
+      "225g",
+      "2260g",
+      "22500g"
+    ],
+    "answer": "2250g",
+    "explanation": "1kg = 1000g, so 2.25 x 1000 = 2250g.",
+    "id": "MA-167"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Measures",
+    "difficulty": "Standard",
+    "question": "How many millilitres are there in 1.4 litres?",
+    "options": [
+      "14000ml",
+      "140ml",
+      "1400ml",
+      "1410ml"
+    ],
+    "answer": "1400ml",
+    "explanation": "1 litre = 1000ml, so 1.4 x 1000 = 1400ml.",
+    "id": "MA-168"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Measures",
+    "difficulty": "Standard",
+    "question": "How many minutes are there in 2 hours 15 minutes?",
+    "options": [
+      "13.5min",
+      "1350min",
+      "135min",
+      "145min"
+    ],
+    "answer": "135min",
+    "explanation": "2 hours = 120 minutes, plus 15 minutes = 135 minutes.",
+    "id": "MA-169"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Measures",
+    "difficulty": "Standard",
+    "question": "How many metres are there in 4.2 kilometres?",
+    "options": [
+      "4200m",
+      "42000m",
+      "4210m",
+      "420m"
+    ],
+    "answer": "4200m",
+    "explanation": "1km = 1000m, so 4.2 x 1000 = 4200m.",
+    "id": "MA-170"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Averages",
+    "difficulty": "Challenge",
+    "question": "Find the mean of these numbers: 15, 16, 9, 20",
+    "options": [
+      "20",
+      "15",
+      "60",
+      "16"
+    ],
+    "answer": "15",
+    "explanation": "Mean = total ÷ how many numbers = 60 ÷ 4 = 15.",
+    "id": "MA-171"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Averages",
+    "difficulty": "Challenge",
+    "question": "Find the mean of these numbers: 6, 20, 19, 15",
+    "options": [
+      "60",
+      "20",
+      "15",
+      "16"
+    ],
+    "answer": "15",
+    "explanation": "Mean = total ÷ how many numbers = 60 ÷ 4 = 15.",
+    "id": "MA-172"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Averages",
+    "difficulty": "Challenge",
+    "question": "Find the mean of these numbers: 13, 11, 16, 8",
+    "options": [
+      "13",
+      "16",
+      "48",
+      "12"
+    ],
+    "answer": "12",
+    "explanation": "Mean = total ÷ how many numbers = 48 ÷ 4 = 12.",
+    "id": "MA-173"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Averages",
+    "difficulty": "Challenge",
+    "question": "Find the mean of these numbers: 15, 7, 3, 19",
+    "options": [
+      "11",
+      "44",
+      "12",
+      "19"
+    ],
+    "answer": "11",
+    "explanation": "Mean = total ÷ how many numbers = 44 ÷ 4 = 11.",
+    "id": "MA-174"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Data handling",
+    "difficulty": "Standard",
+    "question": "A class recorded 5 scores: 1, 2, 4, 8, 8. What is the range?",
+    "options": [
+      "1",
+      "7",
+      "15",
+      "8"
+    ],
+    "answer": "7",
+    "explanation": "Range = highest - lowest = 8 - 1 = 7.",
+    "id": "MA-175"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Data handling",
+    "difficulty": "Standard",
+    "question": "A class recorded 5 scores: 1, 2, 5, 7, 9. What is the range?",
+    "options": [
+      "9",
+      "8",
+      "1",
+      "0"
+    ],
+    "answer": "8",
+    "explanation": "Range = highest - lowest = 9 - 1 = 8.",
+    "id": "MA-176"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Data handling",
+    "difficulty": "Standard",
+    "question": "A class recorded 5 scores: 3, 6, 8, 10, 10. What is the range?",
+    "options": [
+      "10",
+      "3",
+      "7",
+      "8"
+    ],
+    "answer": "7",
+    "explanation": "Range = highest - lowest = 10 - 3 = 7.",
+    "id": "MA-177"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Data handling",
+    "difficulty": "Standard",
+    "question": "Find the median of these numbers: 6, 6, 6, 6, 6",
+    "options": [
+      "6",
+      "15",
+      "7",
+      "14"
+    ],
+    "answer": "6",
+    "explanation": "When ordered, the middle value of these 5 numbers is 6.",
+    "id": "MA-178"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Data handling",
+    "difficulty": "Standard",
+    "question": "Find the median of these numbers: 2, 3, 4, 5, 9",
+    "options": [
+      "5",
+      "9",
+      "2",
+      "4"
+    ],
+    "answer": "4",
+    "explanation": "When ordered, the middle value of these 5 numbers is 4.",
+    "id": "MA-179"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Coordinates",
+    "difficulty": "Standard",
+    "question": "A point starts at (2, 7) and is translated 1 right and 2 up. What are its new coordinates?",
+    "options": [
+      "(1, 5)",
+      "(2, 9)",
+      "(3, 7)",
+      "(3, 9)"
+    ],
+    "answer": "(3, 9)",
+    "explanation": "Moving right increases x by 1, moving up increases y by 2: (2+1, 7+2) = (3, 9).",
+    "id": "MA-180"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Coordinates",
+    "difficulty": "Standard",
+    "question": "A point starts at (7, 4) and is translated 1 right and 4 up. What are its new coordinates?",
+    "options": [
+      "(8, 8)",
+      "(6, 0)",
+      "(7, 8)",
+      "(8, 4)"
+    ],
+    "answer": "(8, 8)",
+    "explanation": "Moving right increases x by 1, moving up increases y by 4: (7+1, 4+4) = (8, 8).",
+    "id": "MA-181"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Coordinates",
+    "difficulty": "Standard",
+    "question": "A point starts at (4, 7) and is translated 4 right and 3 up. What are its new coordinates?",
+    "options": [
+      "(4, 10)",
+      "(0, 4)",
+      "(8, 10)",
+      "(8, 7)"
+    ],
+    "answer": "(8, 10)",
+    "explanation": "Moving right increases x by 4, moving up increases y by 3: (4+4, 7+3) = (8, 10).",
+    "id": "MA-182"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Probability",
+    "difficulty": "Challenge",
+    "question": "A bag has 3 red and 2 blue balls. What is the probability of picking a red ball?",
+    "options": [
+      "1/2",
+      "2/5",
+      "3/5",
+      "3/2"
+    ],
+    "answer": "3/5",
+    "explanation": "There are 5 balls in total, 3 of which are red, so the probability is 3/5.",
+    "id": "MA-183"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Probability",
+    "difficulty": "Challenge",
+    "question": "A fair coin is flipped. What is the probability of getting heads?",
+    "options": [
+      "1/4",
+      "1/3",
+      "1/2",
+      "2/3"
+    ],
+    "answer": "1/2",
+    "explanation": "A coin has 2 equally likely outcomes, so the probability of heads is 1/2.",
+    "id": "MA-184"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Probability",
+    "difficulty": "Challenge",
+    "question": "A bag has 4 green and 6 yellow counters. What is the probability of picking a yellow counter?",
+    "options": [
+      "6/10",
+      "6/4",
+      "1/2",
+      "4/10"
+    ],
+    "answer": "6/10",
+    "explanation": "There are 10 counters in total, 6 of which are yellow, so the probability is 6/10.",
+    "id": "MA-185"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Probability",
+    "difficulty": "Challenge",
+    "question": "A dice is rolled once. What is the probability of rolling a 6?",
+    "options": [
+      "1/2",
+      "1/3",
+      "6/1",
+      "1/6"
+    ],
+    "answer": "1/6",
+    "explanation": "A dice has 6 equally likely faces, so the probability of any one number is 1/6.",
+    "id": "MA-186"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Word problem",
+    "difficulty": "Challenge",
+    "question": "Tom buys 4 notebooks at £2 each and pays with a £15 note. How much change does he get?",
+    "options": [
+      "£13",
+      "£9",
+      "£8",
+      "£7"
+    ],
+    "answer": "£7",
+    "explanation": "4 notebooks cost 4 x £2 = £8. Change = £15 - £8 = £7.",
+    "id": "MA-187"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Word problem",
+    "difficulty": "Challenge",
+    "question": "Tom buys 4 notebooks at £8 each and pays with a £37 note. How much change does he get?",
+    "options": [
+      "£13",
+      "£5",
+      "£29",
+      "£32"
+    ],
+    "answer": "£5",
+    "explanation": "4 notebooks cost 4 x £8 = £32. Change = £37 - £32 = £5.",
+    "id": "MA-188"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Word problem",
+    "difficulty": "Challenge",
+    "question": "Tom buys 6 notebooks at £5 each and pays with a £45 note. How much change does he get?",
+    "options": [
+      "£20",
+      "£15",
+      "£40",
+      "£30"
+    ],
+    "answer": "£15",
+    "explanation": "6 notebooks cost 6 x £5 = £30. Change = £45 - £30 = £15.",
+    "id": "MA-189"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Word problem",
+    "difficulty": "Challenge",
+    "question": "Tom buys 4 notebooks at £6 each and pays with a £40 note. How much change does he get?",
+    "options": [
+      "£16",
+      "£22",
+      "£34",
+      "£24"
+    ],
+    "answer": "£16",
+    "explanation": "4 notebooks cost 4 x £6 = £24. Change = £40 - £24 = £16.",
+    "id": "MA-190"
+  },
+  {
+    "subject": "Maths",
+    "topic": "Word problem",
+    "difficulty": "Challenge",
+    "question": "Tom buys 5 notebooks at £2 each and pays with a £30 note. How much change does he get?",
+    "options": [
+      "£22",
+      "£20",
+      "£28",
+      "£10"
+    ],
+    "answer": "£20",
+    "explanation": "5 notebooks cost 5 x £2 = £10. Change = £30 - £10 = £20.",
+    "id": "MA-191"
+  }
+]
