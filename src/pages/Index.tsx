@@ -99,6 +99,21 @@ const Index = () => {
     }
   }, [isAdmin]);
 
+  // Reachable from /admin's "Replay onboarding flow" link (?replayOnboarding=true) as well as the
+  // Dashboard's own floating button — same handler either way.
+  useEffect(() => {
+    if (!isAdmin) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('replayOnboarding') === 'true') {
+      handleReplayOnboarding();
+      params.delete('replayOnboarding');
+      const url = new URL(window.location.href);
+      url.search = params.toString();
+      window.history.replaceState({}, '', url.toString());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAdmin]);
+
   const { credits, refetchCredits } = useCredits();
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -217,6 +232,22 @@ const Index = () => {
   // — its own header stands in for the real nav, then chains into the guided tour + founder video.
   if (showPostSignupForm) {
     return <OnboardingFlow userId={user.id} onComplete={handleOnboardingComplete} />;
+  }
+
+  // Grown-up view is a full-page takeover, not another tab inside the kid-facing nav — it has its
+  // own "Back to home" button, and showing the Practise/Questions/Feedback pills alongside it let
+  // you click straight through it into another view while its own transcript dialog was still
+  // mounted, leaving the page in a broken state.
+  if (currentView === 'grownup') {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+        </div>
+      }>
+        <GrownupView onBack={() => setCurrentView('dashboard')} />
+      </Suspense>
+    );
   }
 
   // Show main app for authenticated users
@@ -464,8 +495,6 @@ const Index = () => {
           <QuestionsHub name={(user.user_metadata?.full_name as string | undefined)?.split(' ')[0] || user.email?.split('@')[0]} onViewHistory={() => setCurrentView('history')} />
         ) : currentView === 'achievements' ? (
           <AchievementsPage />
-        ) : currentView === 'grownup' ? (
-          <GrownupView onBack={() => setCurrentView('dashboard')} />
         ) : currentView === 'interview' ? (
           selectedInterviewType?.provider === 'tavus' ? (
             <div className="container mx-auto px-4 py-8">

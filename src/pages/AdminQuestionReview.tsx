@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 import { Check, Search } from 'lucide-react';
 
 import maStaging from '@/data/minigames-staging/ma_staging.json';
-import vrStaging from '@/data/minigames-staging/vr_staging.json';
 import enStaging from '@/data/minigames-staging/en_staging.json';
 
 interface StagedQuestion {
@@ -25,22 +24,22 @@ interface StagedQuestion {
   passage?: string;
 }
 
-const ALL: StagedQuestion[] = [...(maStaging as StagedQuestion[]), ...(vrStaging as StagedQuestion[]), ...(enStaging as StagedQuestion[])];
-const SUBJECTS = ['All', 'Maths', 'Verbal reasoning', 'English comprehension'] as const;
+const ALL: StagedQuestion[] = [...(maStaging as StagedQuestion[]), ...(enStaging as StagedQuestion[])];
+const SUBJECTS = ['All', 'Maths', 'English comprehension'] as const;
 const PAGE_SIZE = 30;
 
 /**
- * Read-only review of the overnight batch of 300+ new Quick Practice questions, staged in
- * src/data/minigames-staging/ rather than the live src/data/minigames/*.json — nothing here is
- * wired into MinigameService, so none of it is reachable by real users until someone reviews it
- * and merges the approved ones into the live files by hand.
- *
- * Maths (fully computed, not hand-typed) and the mechanical verbal-reasoning types (anagrams,
- * codes, letter sequences, days/time logic, hidden words) were generated and verified
- * programmatically. Synonyms/antonyms/analogies and the English comprehension passages were
- * hand-written and cross-checked against the passage text. Non-verbal reasoning (SVG-based) was
- * deliberately skipped this round — no way to visually verify the shapes render correctly without
- * a rendering/screenshot step, and a wrong visual-logic question is worse than no new one.
+ * Read-only review of what's left of the overnight question batch. The 121 verbal reasoning
+ * questions were approved and are already merged into the live src/data/minigames/vr_questions.json
+ * (170 questions now, up from 49) — nothing left to review there. What's left, still staged in
+ * src/data/minigames-staging/ and NOT reachable by real users:
+ * - Maths (138, fully computed not hand-typed): judged too easy for Quick Practice, earmarked for
+ *   Question of the Day instead — that's a Supabase `daily_questions` table write, blocked on DB
+ *   credentials this session doesn't have. Still shown here so the content itself can be reviewed.
+ * - English comprehension (59, hand-written and checked against the passage text): no routing
+ *   decision yet — hasn't been given a go/no-go.
+ * Non-verbal reasoning (SVG-based) was deliberately skipped in the original batch — no way to
+ * visually verify the shapes render correctly without a rendering/screenshot step.
  */
 export default function AdminQuestionReview() {
   const { isAdmin, isLoading } = useAdminStatus();
@@ -103,8 +102,9 @@ export default function AdminQuestionReview() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <h1 className="text-2xl font-bold mb-1">Question review — overnight batch</h1>
         <p className="text-muted-foreground mb-4">
-          {ALL.length} new Quick Practice questions, staged for review. Nothing here is live —
-          tell me which ones (or which topics) to merge into the real question bank and I'll wire them in.
+          Verbal reasoning (121) is approved and already live in Quick Practice. {ALL.length} left here:
+          Maths is earmarked for Question of the Day (blocked on DB access), English comprehension is
+          still awaiting a decision. Nothing below is live.
         </p>
 
         <div className="flex flex-wrap gap-2 mb-4">

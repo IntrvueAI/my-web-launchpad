@@ -13,18 +13,67 @@
   a:hover{color:#FF4D5E}
   .faq-a{display:none}
   .faq-item.open .faq-a{display:block}
+  :root{--ink:#F3F6FB;--muted:#A6AFC1;--line:rgba(255,255,255,.09);--line-strong:rgba(255,255,255,.16);--grad:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;border:0;padding:14px 22px;border-radius:12px;transition:transform .18s,box-shadow .18s,background .18s;min-height:48px;text-decoration:none}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px -8px rgba(255,90,78,.5)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:rgba(255,255,255,.05);color:var(--ink);border:1px solid var(--line-strong)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09)}
+  header.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(10,15,28,.72);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;height:70px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand-logo{height:32px;width:auto;display:block}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-size:15.5px;color:var(--muted);font-weight:500;transition:color .2s;text-decoration:none}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;align-items:center;gap:12px}
+  .nav-cta .btn{padding:10px 18px;min-height:42px;font-size:15px}
+  .hamburger{display:none;background:none;border:1px solid var(--line-strong);border-radius:10px;width:44px;height:44px;cursor:pointer;color:var(--ink)}
+  .mobile-menu{display:none;flex-direction:column;gap:6px;padding:14px 24px 22px;border-bottom:1px solid var(--line);background:rgba(10,15,28,.98)}
+  .mobile-menu a{padding:12px 8px;color:var(--muted);font-weight:500;border-radius:10px;text-decoration:none}
+  .mobile-menu a:hover{background:rgba(255,255,255,.05);color:var(--ink)}
+  .mobile-menu .btn{margin-top:8px;width:100%}
+  @media(max-width:960px){
+    .nav-links{display:none}
+    .nav-cta .btn-ghost{display:none}
+    .hamburger{display:grid;place-items:center}
+  }
 </style>
 </head>
 <body>
 
 <div style="background:radial-gradient(1100px 640px at 84% -10%, rgba(255,107,69,.10), transparent 60%), radial-gradient(1000px 560px at -12% 10%, rgba(255,77,94,.06), transparent 55%), #0A0F1C; min-height:100vh; color:#F3F6FB; font-family:'Inter Tight',system-ui,-apple-system,sans-serif; font-size:17px; line-height:1.6;">
 
-  <header style="position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(10,15,28,.72);border-bottom:1px solid rgba(255,255,255,.09);">
-    <div style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;height:70px;">
-      <a href="/" aria-label="intrvue.ai home" style="display:flex;align-items:center;">
-        <img src="/lovable-uploads/logo.png" alt="intrvue.ai" style="height:32px;width:auto;display:block;" />
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="intrvue.ai home">
+        <img class="brand-logo" src="/lovable-uploads/logo.png" alt="intrvue.ai" />
       </a>
-      <a href="/auth" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;padding:10px 18px;border-radius:12px;background:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%);color:#fff;text-decoration:none;">Start practising</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#how">How it works</a>
+        <a href="/#parents">Why intrvue</a>
+        <a href="/#value">Compare</a>
+        <a href="/#stories">Results</a>
+        <a href="/faq">FAQ</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="/auth" class="btn btn-ghost" style="display:inline-flex">Sign in</a>
+        <a href="/#waitlist" class="btn btn-primary">Join waitlist</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/#how">How it works</a>
+      <a href="/#parents">Why intrvue</a>
+      <a href="/#value">Compare</a>
+      <a href="/#stories">Results</a>
+      <a href="/faq">FAQ</a>
+      <a href="/about">About</a>
+      <a href="/auth" class="btn btn-ghost">Sign in</a>
+      <a href="/#waitlist" class="btn btn-primary">Join waitlist</a>
     </div>
   </header>
 
@@ -159,6 +208,21 @@
 
 <script>
   (function () {
+    var burger = document.getElementById('hamburger'), menu = document.getElementById('mobileMenu');
+    if (burger && menu) {
+      burger.addEventListener('click', function () {
+        var open = menu.style.display === 'flex';
+        menu.style.display = open ? 'none' : 'flex';
+        burger.setAttribute('aria-expanded', String(!open));
+      });
+      menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          menu.style.display = 'none';
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
     document.querySelectorAll('.faq-item').forEach(function (item) {
       var btn = item.querySelector('.faq-q');
       var sign = item.querySelector('.faq-sign');
