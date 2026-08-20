@@ -132,6 +132,11 @@ CRITICAL INSTRUCTIONS:
 - Categories: "strength", "grammar", "fluency", "lexical" (aim for 2-3 annotations per category)
 - For each quote, provide: { "quote": string, "category": string, "explanation": string, "suggestion": string }
 - IMPORTANT: "quote" must be an EXACT substring copied from a Student line (preserve casing/punctuation/spacing)
+- This is a transcript of a SPOKEN interview (sometimes typed casually instead) — casing and
+  punctuation carry no meaning here and must NEVER be flagged as an error or "grammar" issue, even
+  though the raw text preserves whatever casing/punctuation it happened to have. "grammar" means
+  real sentence construction (tense, subject-verb agreement, word order, sentence completeness) —
+  never capitalization or missing full stops/apostrophes.
 - Focus on this segment only - do not analyze other parts of the conversation
 - Be thorough and granular: annotate specific words, phrases, grammatical structures, vocabulary choices
 - Return ONLY valid JSON: { "annotations": Annotation[] }
@@ -201,6 +206,11 @@ CRITICAL: You MUST provide exactly 30-35 annotations to give thorough feedback c
 - IMPORTANT: For each quote, COPY the exact substring from the transcript (preserve casing/punctuation/spacing) and include character indexes.
 - For each item provide: { "quote": string, "category": one of the four, "explanation": string, "suggestion": string, "start": number, "end": number }
 - start/end are 0-based character offsets into the full transcript string, such that transcript.slice(start, end) === quote.
+- This is a transcript of a SPOKEN interview (sometimes typed casually instead) — casing and
+  punctuation carry no meaning here and must NEVER be flagged as an error or "grammar" issue, even
+  though the raw text preserves whatever casing/punctuation it happened to have. "grammar" means
+  real sentence construction (tense, subject-verb agreement, word order, sentence completeness) —
+  never capitalization or missing full stops/apostrophes.
 - SYSTEMATIC ANALYSIS REQUIRED:
   * Process the conversation chronologically from beginning to end
   * Ensure annotations are distributed throughout: early (25%), early-middle (25%), late-middle (25%), end (25%)

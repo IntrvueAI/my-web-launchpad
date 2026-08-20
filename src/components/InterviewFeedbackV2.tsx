@@ -577,8 +577,14 @@ export const InterviewFeedbackV2 = ({
       {/* Warm, concise summary — bullets that quote exactly what the child said (V2) */}
       {(feedback.overall_improvement_feedback || (feedback.annotations && feedback.annotations.length > 0)) && (() => {
         const anns = feedback.annotations || [];
+        // Transcripts (spoken or typed) don't carry meaningful casing/punctuation — belt-and-braces
+        // filter in case the annotation prompt still slips one through despite being told not to.
+        const isMechanicalNitpick = (text?: string) =>
+          /\b(capitali[sz]ation|capitalis|capitaliz|punctuation|apostrophe|full stop|uppercase|lowercase)\b/i.test(text || '');
         const strengths = anns.filter((a) => a.category === 'strength').slice(0, 4);
-        const improves = anns.filter((a) => a.category !== 'strength').slice(0, 4);
+        const improves = anns
+          .filter((a) => a.category !== 'strength' && !isMechanicalNitpick(a.suggestion) && !isMechanicalNitpick(a.explanation))
+          .slice(0, 4);
 
         // Fallback when there are no annotations: pull concise bullets from the AI summary text.
         const textBullets = (marker: string) => {

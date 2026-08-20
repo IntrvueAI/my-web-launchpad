@@ -6,6 +6,7 @@ import { InterviewType } from '@/config/interviewTypes';
 import { useInterviewSessionLogger } from './useInterviewSessionLogger';
 import { useConnectionHealthCheck } from './useConnectionHealthCheck';
 import { useDeepgramMic } from './useDeepgramMic';
+import { useToast } from './use-toast';
 import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
 
@@ -83,6 +84,7 @@ export const useInterviewSessionV2 = (
   const peerAudioRef = useRef<{ ctx: AudioContext; raf: number } | null>(null);
 
   const sessionLogger = useInterviewSessionLogger();
+  const { toast } = useToast();
   const connectionHealth = useConnectionHealthCheck(15000);
   const deepgramMic = useDeepgramMic();
 
@@ -120,6 +122,16 @@ export const useInterviewSessionV2 = (
       console.error('Brain turn failed:', err);
       sessionLogger.logError(`Brain turn (${action}) failed: ${(err as Error)?.message || err}`)
         .catch(() => {});
+      // A failed 'answer' call must not silently drop what the student just said — put it back
+      // at the front of the queue so the pending-flush below retries it automatically, and tell
+      // them, so a slow/failed reply reads as "hang on" rather than looking like nothing happened.
+      if (action === 'answer' && payload.studentText) {
+        pendingStudentRef.current = [payload.studentText, ...pendingStudentRef.current];
+      }
+      toast({
+        title: "Didn't quite catch that",
+        description: 'Retrying your last message…',
+      });
     } finally {
       brainBusyRef.current = false;
       if (pendingStudentRef.current.length > 0) {
@@ -127,7 +139,7 @@ export const useInterviewSessionV2 = (
         flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
       }
     }
-  }, [speak, sessionLogger]);
+  }, [speak, sessionLogger, toast]);
 
   const flushStudentBuffer = useCallback(() => {
     if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
