@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 // "About us" page, rendered the same way as the marketing landing page (LandingV2): authored as
 // self-contained HTML, injected verbatim so it stays 1:1 with the design, with its own fonts +
-// inline script re-run. Founder photos aren't ready yet, marked TBC directly on the page.
+// inline script re-run. Founder photos aren't ready yet, using placeholder penguin avatars.
 import rawHtml from '@/assets/about-us.html?raw';
 
 const styleCss = rawHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '';
