@@ -7,10 +7,22 @@ import rawHtml from '@/assets/landing.html?raw';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+// The three screenshots the page embeds were originally inlined as base64 data URIs directly in
+// landing.html — 2.2MB of it, ~87% of the entire app's main JS bundle (gzipped), all shipped and
+// parsed before the page could become interactive. Now they're real image files, imported through
+// Vite's normal asset pipeline (hashed, cached, downloaded in parallel instead of blocking JS
+// parse) and swapped in for the placeholder tokens landing.html carries in their place.
+import landingHeroShot from '@/assets/landing-hero-shot.png';
+import landingFeedbackShot from '@/assets/landing-feedback-shot.png';
+import landingGrownupShot from '@/assets/landing-grownup-shot.png';
+
 const styleCss = rawHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '';
 const scriptJs = rawHtml.match(/<script>([\s\S]*?)<\/script>/)?.[1] ?? '';
 const bodyHtml = (rawHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/)?.[1] ?? rawHtml)
-  .replace(/<script>[\s\S]*?<\/script>/g, '');
+  .replace(/<script>[\s\S]*?<\/script>/g, '')
+  .replace('%%LANDING_HERO_SHOT%%', landingHeroShot)
+  .replace('%%LANDING_FEEDBACK_SHOT%%', landingFeedbackShot)
+  .replace('%%LANDING_GROWNUP_SHOT%%', landingGrownupShot);
 
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap';
