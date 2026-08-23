@@ -9,7 +9,8 @@
     "tags": [],
     "question": "A man lives completely alone and keeps no calendar, phone, or newspaper anywhere in his house - only a clock that shows the time but never the date. And yet, every single morning, he looks in the mirror and can tell you correctly exactly what day of the week it is. He never speaks to anyone before making this judgement. How does he know?",
     "answer": "He shaves himself completely clean every Sunday night and never shaves again until the following Sunday. Each morning, the length of his stubble tells him exactly how many days have passed since Sunday, and therefore exactly which day of the week it is.",
-    "modelReasoningPath": "Listen for whether the child looks for something about the man himself that changes on a fixed, predictable schedule, rather than assuming he must be getting information from outside. If they are stuck, ask what changes on his own body a little every day in a way he could reliably count. A weak line of questioning keeps hunting for a hidden calendar or phone; a strong one asks what routine he might keep that resets every week."
+    "modelReasoningPath": "Listen for whether the child looks for something about the man himself that changes on a fixed, predictable schedule, rather than assuming he must be getting information from outside. If they are stuck, ask what changes on his own body a little every day in a way he could reliably count. A weak line of questioning keeps hunting for a hidden calendar or phone; a strong one asks what routine he might keep that resets every week.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N2",
@@ -21,7 +22,8 @@
     "tags": [],
     "question": "Two twin brothers, Tomas and Erik, run neighbouring watch shops. Every watch that leaves Tomas's shop keeps perfect time forever. Every watch that leaves Erik's shop loses exactly one minute a day, every single day, without fail. And yet Erik has far more returning, loyal customers than his brother. Why would a watchmaker whose watches are never quite right end up with more repeat customers than one whose watches are always perfect?",
     "answer": "Because Erik's watches drift, his customers have to keep coming back to have them reset and checked - giving him a steady, recurring reason to see them, build a relationship, and sell them other things. Tomas's watches are perfect the moment they are sold, so once a customer buys one, they never have any reason to walk back through his door again.",
-    "modelReasoningPath": "Listen for whether the child questions the assumption that a better product automatically means more loyal customers. A good nudge if they are stuck is to ask why anyone would ever need to visit a watchmaker a second time. The strong answer flips the obvious link between quality and loyalty; a weaker answer just insists Erik's customers must be less discerning."
+    "modelReasoningPath": "Listen for whether the child questions the assumption that a better product automatically means more loyal customers. A good nudge if they are stuck is to ask why anyone would ever need to visit a watchmaker a second time. The strong answer flips the obvious link between quality and loyalty; a weaker answer just insists Erik's customers must be less discerning.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N3",
@@ -33,7 +35,8 @@
     "tags": [],
     "question": "A lighthouse keeper lives entirely alone on a remote rock, and a supply boat visits only once a month. His radio broke years ago and was never repaired, so he has no way to speak to any ship at all. And yet, on stormy nights, ships far out at sea always know exactly how many minutes remain before the tide turns and the reef becomes deadly. How does the keeper warn them with no radio?",
     "answer": "He signals through the lighthouse light itself - for example, by counting out the number of flashes to represent minutes remaining - so that ships can read the warning visually in the beam, without needing any radio at all.",
-    "modelReasoningPath": "Listen for whether the child questions the assumption that communication must mean speech or radio, and instead notices the one tool already built into the scenario for signalling ships. A good prompt if they are stuck is to ask what the lighthouse already does, all night, whether or not anyone is in danger. The strong answer treats the beam itself as a message carrier rather than just a fixed warning light."
+    "modelReasoningPath": "Listen for whether the child questions the assumption that communication must mean speech or radio, and instead notices the one tool already built into the scenario for signalling ships. A good prompt if they are stuck is to ask what the lighthouse already does, all night, whether or not anyone is in danger. The strong answer treats the beam itself as a message carrier rather than just a fixed warning light.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N4",
@@ -45,7 +48,8 @@
     "tags": [],
     "question": "A bank vault has a single combination lock, and only two people in the whole company know the code: the manager and her deputy. One Monday morning the manager finds the vault standing wide open, nothing missing, no sign of forced entry. She is certain she locked it herself on Friday, and her deputy was proven, by boarding pass and airport cameras, to have been on a plane abroad the entire weekend. No one else has ever been told the code. How was the vault opened correctly from the outside?",
     "answer": "Someone did not need to be told the code to reproduce it - they only needed to have watched it being entered once, for example by secretly filming the manager typing it in on a previous occasion, and then simply repeating the exact sequence they had seen.",
-    "modelReasoningPath": "Listen for whether the child separates 'being told a secret' from 'being able to reproduce it', which is the whole trick of the puzzle. If stuck, ask whether there is any way to get hold of a code without ever having been officially told it. A strong line of questioning explores who could have been watching, even unofficially, when the code was last entered."
+    "modelReasoningPath": "Listen for whether the child separates 'being told a secret' from 'being able to reproduce it', which is the whole trick of the puzzle. If stuck, ask whether there is any way to get hold of a code without ever having been officially told it. A strong line of questioning explores who could have been watching, even unofficially, when the code was last entered.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N5",
@@ -57,7 +61,8 @@
     "tags": [],
     "question": "A collector owns two paintings that look, brushstroke for brushstroke, absolutely identical - same subject, same frame, same artist's signature. An expert examines both for an hour, then confidently declares one worth a fortune and the other worthless, without touching either canvas and without any label, date, or document to go on. What did the expert look at to be so certain?",
     "answer": "She examined the parts nobody was meant to see - the backs of the canvases and the wooden stretcher frames underneath. The genuine old painting had construction details appropriate to its claimed age, such as hand-forged nails and naturally aged, warped wood, while the forgery's frame used modern materials like machine-cut nails and uniform screws that could not have existed when the painting was supposedly made.",
-    "modelReasoningPath": "Listen for whether the child thinks to look beyond the visible image itself, since the puzzle explicitly removes labels and documents as clues. A useful nudge is to ask what parts of a very old object are hardest to fake convincingly. The strongest answers reach for materials or construction methods rather than the artwork's style, since style alone can be copied perfectly."
+    "modelReasoningPath": "Listen for whether the child thinks to look beyond the visible image itself, since the puzzle explicitly removes labels and documents as clues. A useful nudge is to ask what parts of a very old object are hardest to fake convincingly. The strongest answers reach for materials or construction methods rather than the artwork's style, since style alone can be copied perfectly.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N6",
@@ -69,7 +74,8 @@
     "tags": [],
     "question": "A woman finishes a major city marathon in a very respectable time, having run the entire 26.2 miles herself, start to finish, exactly as required. Officials disqualify her anyway - not for cutting the course, not for banned substances, and not for getting any help along the way. Why might someone be disqualified from a race they ran completely honestly, start to finish, under their own power?",
     "answer": "She ran under someone else's official race number - her sister's, who was the one actually registered for the event - rather than her own. Using another runner's registered entry breaks the rules regardless of how honestly the course itself was run.",
-    "modelReasoningPath": "Listen for whether the child assumes disqualification always means cheating on the physical course, and can be nudged past that. Ask what other kinds of rules a race might have besides how you run it. A strong answer separates 'ran it honestly' from 'was allowed to be there at all'."
+    "modelReasoningPath": "Listen for whether the child assumes disqualification always means cheating on the physical course, and can be nudged past that. Ask what other kinds of rules a race might have besides how you run it. A strong answer separates 'ran it honestly' from 'was allowed to be there at all'.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N7",
@@ -81,7 +87,8 @@
     "tags": [],
     "question": "A hotel's large swimming pool sits completely empty of water for an entire week in the middle of a scorching summer, and the manager is delighted about it rather than upset. Nothing is broken and no repairs are underway. Why would an empty pool, in the hottest week of the year, make a hotel manager happy?",
     "answer": "The town is under an official water-use restriction, and hotels that voluntarily drain and refill responsibly - or avoid using their pools during the restriction - receive a significant rebate or avoid a much larger penalty. Emptying the pool for the week saves the hotel far more money than the lost guest enjoyment costs.",
-    "modelReasoningPath": "Listen for whether the child looks past the obvious guest-experience angle and considers money or rules imposed from outside the hotel. A good nudge is to ask what might make a business happy to lose a service temporarily. Strong reasoning treats the empty pool as a deliberate cost-saving or rule-following choice rather than a mistake."
+    "modelReasoningPath": "Listen for whether the child looks past the obvious guest-experience angle and considers money or rules imposed from outside the hotel. A good nudge is to ask what might make a business happy to lose a service temporarily. Strong reasoning treats the empty pool as a deliberate cost-saving or rule-following choice rather than a mistake.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N8",
@@ -93,7 +100,8 @@
     "tags": [],
     "question": "A man buys a rare violin at auction for a huge sum, paying with a single genuine bank cheque that clears in full. Weeks later, the seller is astonished to learn the buyer effectively paid nothing at all for it - and yet the cheque was never disputed, reversed, or refunded by anyone, and no fraud took place. How could he end up paying nothing, in effect, for something he genuinely and legally bought at full price?",
     "answer": "He donated the violin to a museum shortly after buying it, and claimed tax relief on the donation equal to the full price he had paid - so the money he saved on tax exactly cancelled out the money he had spent, leaving his net cost at zero even though the original payment was completely genuine.",
-    "modelReasoningPath": "Listen for whether the child looks beyond the auction transaction itself to what happened to the violin afterwards. A useful prompt is to ask whether 'paying nothing' has to mean the payment itself was fake. The strongest answers bring in some later event - like a donation, resale, or refund of a different kind - that offsets the original cost."
+    "modelReasoningPath": "Listen for whether the child looks beyond the auction transaction itself to what happened to the violin afterwards. A useful prompt is to ask whether 'paying nothing' has to mean the payment itself was fake. The strongest answers bring in some later event - like a donation, resale, or refund of a different kind - that offsets the original cost.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N9",
@@ -105,7 +113,8 @@
     "tags": [],
     "question": "A doctor at a small clinic has never once, in twenty years, given a wrong diagnosis of chicken pox in a child, even though chicken pox can look similar to other rashes in its early stages and even experienced doctors sometimes get it wrong. She has no special test or lab, and examines each child no more closely than any other doctor would. What is she doing differently?",
     "answer": "She never commits to the diagnosis on the very first visit if there is any doubt - she waits, or asks the family to bring the child back a day or two later, and only confirms chicken pox once the telltale signs are completely unambiguous. Her flawless record exists because she avoids ever being wrong by refusing to guess early, not because she is better at spotting it early than anyone else.",
-    "modelReasoningPath": "Listen for whether the child spots that 'never wrong' is not the same as 'always right immediately' - it might just mean she avoids answering when unsure. If stuck, ask what someone could do to guarantee they are never wrong, even without being especially skilled. A strong answer identifies that caution, not accuracy, is producing the record."
+    "modelReasoningPath": "Listen for whether the child spots that 'never wrong' is not the same as 'always right immediately' - it might just mean she avoids answering when unsure. If stuck, ask what someone could do to guarantee they are never wrong, even without being especially skilled. A strong answer identifies that caution, not accuracy, is producing the record.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N10",
@@ -117,7 +126,8 @@
     "tags": [],
     "question": "A man plays thousands of games of chess against strangers online, always as White, and has never once lost a single completed game in three years - no losses, no draws. He is not a grandmaster and does not use any computer assistance; he genuinely thinks over every move himself. How does he maintain a flawless record without being an exceptional player?",
     "answer": "The moment a game starts to look bad for him, he simply resigns or abandons it before it finishes, so it is never recorded as a completed loss - only games he plays all the way to the end, which he only does when he is winning, ever count towards his record.",
-    "modelReasoningPath": "Listen for whether the child questions what is actually being counted as 'a game' in his record, rather than assuming his skill must be genuinely flawless. A good nudge is to ask what happens to the games that were going badly for him. This is a nice early brush with the idea of a record only reflecting the outcomes someone chooses to let count."
+    "modelReasoningPath": "Listen for whether the child questions what is actually being counted as 'a game' in his record, rather than assuming his skill must be genuinely flawless. A good nudge is to ask what happens to the games that were going badly for him. This is a nice early brush with the idea of a record only reflecting the outcomes someone chooses to let count.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N11",
@@ -129,7 +139,8 @@
     "tags": [],
     "question": "A farmer owns a large rectangular field and wants to fence off exactly the area with the richest soil, to plant one special crop there, leaving the rest for cattle to graze. Rather than measuring and testing the soil himself, he lets his cattle wander freely over the entire field for a whole winter before building a single new fence. Why would letting the animals roam everywhere first help him decide exactly where to put the dividing fence?",
     "answer": "Cattle naturally avoid poor, waterlogged, or infertile ground and spend far more time grazing and gathering on richer soil, so by watching where the grass recovers fastest, where the animals cluster, and where the ground is most worn by hooves, the farmer can literally see the boundary of the best soil traced out by the animals' own behaviour.",
-    "modelReasoningPath": "Listen for whether the child treats the animals as unintentional 'instruments' that reveal information through their ordinary behaviour, rather than as an unrelated detail. A useful prompt is to ask what animals naturally seek out without being told to. The strongest reasoning connects a simple daily habit to a much bigger measurement problem."
+    "modelReasoningPath": "Listen for whether the child treats the animals as unintentional 'instruments' that reveal information through their ordinary behaviour, rather than as an unrelated detail. A useful prompt is to ask what animals naturally seek out without being told to. The strongest reasoning connects a simple daily habit to a much bigger measurement problem.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N12",
@@ -141,7 +152,8 @@
     "tags": [],
     "question": "A wine expert is blindfolded and given twelve identical glasses - eleven poured from one ordinary bottle, one poured from a far more expensive bottle. Following strict rules, she takes exactly one sip from each glass, never repeats a glass, and makes no written notes - yet she correctly identifies the odd glass out every single time she is tested. Her palate is very good, but not supernatural. What is the simplest explanation for how she always succeeds under these exact rules?",
     "answer": "The odd glass was opened and poured only moments before the tasting, rather than in advance like the other eleven, so it is very slightly warmer and has had less time to breathe. She is likely detecting that physical difference in temperature or aeration on her lips and tongue, not necessarily judging the quality of the wine itself.",
-    "modelReasoningPath": "Listen for whether the child questions the assumption that her success must come purely from tasting quality, and instead looks for some other physical difference the setup accidentally creates. A good nudge is to ask what else might differ between a glass poured five minutes ago and one poured an hour ago. The strongest reasoning separates 'she always gets it right' from 'she must be an incredible judge of quality'."
+    "modelReasoningPath": "Listen for whether the child questions the assumption that her success must come purely from tasting quality, and instead looks for some other physical difference the setup accidentally creates. A good nudge is to ask what else might differ between a glass poured five minutes ago and one poured an hour ago. The strongest reasoning separates 'she always gets it right' from 'she must be an incredible judge of quality'.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N13",
@@ -153,7 +165,8 @@
     "tags": [],
     "question": "A small independent bookshop down a quiet side street has no website, no social media, no sign visible from the main road, and has never once run an advert - yet for fifteen years it has been the busiest, most profitable bookshop in town, with a loyal queue most mornings. The owner has kept it deliberately invisible on purpose. Why might staying hard to find actually make a shop more successful rather than less?",
     "answer": "By relying entirely on word of mouth, the owner filters for customers who were personally told about the shop or sought it out deliberately, which creates a loyal, invested customer base that tells others in turn and returns often - rather than a large but shallow crowd of casual passers-by, which would also cost more to serve without necessarily being more profitable.",
-    "modelReasoningPath": "Listen for whether the child challenges the assumption that more visibility always means more success. If stuck, ask what kind of customer finds a shop that has no sign and no adverts at all. A strong answer connects scarcity or exclusivity to loyalty, rather than simply saying the shop must have amazing books."
+    "modelReasoningPath": "Listen for whether the child challenges the assumption that more visibility always means more success. If stuck, ask what kind of customer finds a shop that has no sign and no adverts at all. A strong answer connects scarcity or exclusivity to loyalty, rather than simply saying the shop must have amazing books.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N14",
@@ -165,7 +178,8 @@
     "tags": [],
     "question": "A jury convicts a man largely on the word of a single eyewitness who insists she clearly saw his face for several seconds, under a bright streetlamp, from twenty metres away, at half past midnight. On appeal, the conviction is overturned - not because she lied, and not because anyone disputes the distance or the lighting, but because of something true about human eyesight itself that nobody at the original trial thought to question. What did the appeal lawyers point out?",
     "answer": "At that distance, even under good lighting, the level of fine detail needed to reliably identify one specific face - rather than just a general height, build, or outline - is beyond what human eyesight can actually resolve. Confident, sincere testimony about 'seeing a face clearly' from twenty metres away at night is not proof of accuracy, because the limitation is physical, not a matter of the witness's honesty or attention.",
-    "modelReasoningPath": "Listen for whether the child separates how confident or sincere a witness sounds from how reliable their identification actually could be. A useful prompt is to ask whether feeling certain about something always means you are correct. The strongest reasoning brings in a genuine physical limit - distance and detail - rather than just doubting the witness's character."
+    "modelReasoningPath": "Listen for whether the child separates how confident or sincere a witness sounds from how reliable their identification actually could be. A useful prompt is to ask whether feeling certain about something always means you are correct. The strongest reasoning brings in a genuine physical limit - distance and detail - rather than just doubting the witness's character.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N15",
@@ -177,7 +191,8 @@
     "tags": [],
     "question": "Three sealed jars sit on a shelf. One contains only chocolate buttons, one contains only jelly beans, and one contains a mixture of both. Each jar has a label - 'Chocolate', 'Jelly Beans', or 'Mixed' - but you are told, reliably, that every single label is wrong; not one jar's label matches its true contents. You may pull out just one sweet from just one jar of your choosing, without looking inside, and from that single sweet alone you must correctly work out the true contents of all three jars. Which jar should you pick from, and how does one sweet solve all three?",
     "answer": "Pick from the jar labelled 'Mixed'. Since every label is wrong, that jar cannot actually be mixed, so it must be pure chocolate or pure jelly beans, and the single sweet you draw reveals which. Once you know that jar's true contents, the jar labelled with the other pure flavour cannot truly be that flavour (its label is also wrong) and cannot be the flavour you have just identified either, so it must be the mixed jar - which leaves the remaining jar as the flavour nobody has assigned yet.",
-    "modelReasoningPath": "Listen for whether the child works out that the 'Mixed' jar is the only one where a single label tells you something certain, since it cannot possibly be correct in the way the others might coincidentally seem to be. If stuck, ask which jar's label being wrong rules out the most possibilities at once. A strong answer chains the deduction all the way through to all three jars, not just the one that was tested."
+    "modelReasoningPath": "Listen for whether the child works out that the 'Mixed' jar is the only one where a single label tells you something certain, since it cannot possibly be correct in the way the others might coincidentally seem to be. If stuck, ask which jar's label being wrong rules out the most possibilities at once. A strong answer chains the deduction all the way through to all three jars, not just the one that was tested.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N16",
@@ -189,7 +204,8 @@
     "tags": [],
     "question": "You have eight identical-looking gold coins. Seven are genuine and one is a fake that looks and feels the same but is very slightly lighter. You have a simple two-pan balance scale and are allowed exactly two weighings to guarantee finding the fake coin. How do you do it?",
     "answer": "Split the coins into two groups of three and one group of two. Weigh the two groups of three against each other. If they balance, the fake is one of the remaining two coins, so weigh those two against each other directly to see which is lighter. If the groups of three do not balance, the fake is in the lighter group of three; weigh any two of those three coins against each other, setting one aside - if they balance, the one set aside is the fake, and if they do not balance, the lighter one is the fake.",
-    "modelReasoningPath": "Listen for whether the child realises the trick is to split into groups of roughly equal size so that each weighing narrows the possibilities as much as possible, rather than weighing coins one at a time. A good nudge if they are stuck is to ask what a balanced result on the first weighing would actually tell them. Strong reasoning plans out what happens in every possible outcome of the first weighing before deciding how to do the second."
+    "modelReasoningPath": "Listen for whether the child realises the trick is to split into groups of roughly equal size so that each weighing narrows the possibilities as much as possible, rather than weighing coins one at a time. A good nudge if they are stuck is to ask what a balanced result on the first weighing would actually tell them. Strong reasoning plans out what happens in every possible outcome of the first weighing before deciding how to do the second.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N17",
@@ -201,7 +217,8 @@
     "tags": [],
     "question": "I am thinking of a four-digit number, written as four digits in a row. The first digit tells you exactly how many 0s appear anywhere in the whole four-digit number. The second digit tells you exactly how many 1s appear anywhere in the number. The third digit tells you exactly how many 2s appear. And the fourth digit tells you exactly how many 3s appear. What is the number?",
     "answer": "1210 works: it has one 0, two 1s, one 2, and zero 3s - exactly matching its own digits in order. There is also a second valid answer, 2020: it has two 0s, zero 1s, two 2s, and zero 3s, which also matches its own digits perfectly. Either answer is correct.",
-    "modelReasoningPath": "Listen for whether the child treats this as a puzzle to be solved by systematic trial rather than pure guessing, checking each candidate number against its own claimed counts. A good nudge is to suggest starting by guessing how many 0s a number like this is likely to contain, since most digits in a four-digit number probably are not 0, 1, 2, or 3. Finding either correct answer through genuine checking, rather than luck, is a strong sign of careful reasoning."
+    "modelReasoningPath": "Listen for whether the child treats this as a puzzle to be solved by systematic trial rather than pure guessing, checking each candidate number against its own claimed counts. A good nudge is to suggest starting by guessing how many 0s a number like this is likely to contain, since most digits in a four-digit number probably are not 0, 1, 2, or 3. Finding either correct answer through genuine checking, rather than luck, is a strong sign of careful reasoning.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N18",
@@ -213,7 +230,8 @@
     "tags": [],
     "question": "Three friends - Amir, Priya, and Jonas - each play a different sport (football, tennis, or swimming) and each has a different favourite colour (red, blue, or green). Here is what you know: the football player's favourite colour is not red. Priya does not play tennis. Jonas's favourite colour is blue. The swimmer's favourite colour is red. Amir does not swim. The tennis player's favourite colour is green. Work out each person's sport and favourite colour.",
     "answer": "Priya swims and her favourite colour is red. Jonas plays football and his favourite colour is blue. Amir plays tennis and his favourite colour is green.",
-    "modelReasoningPath": "Listen for whether the child works through the clues in a sensible order, starting from the most restrictive facts - Jonas's colour and the swimmer's colour - rather than guessing randomly. If stuck, ask them to first decide who cannot possibly be the swimmer. A strong solver eliminates possibilities one at a time and checks every clue against their final answer before committing to it."
+    "modelReasoningPath": "Listen for whether the child works through the clues in a sensible order, starting from the most restrictive facts - Jonas's colour and the swimmer's colour - rather than guessing randomly. If stuck, ask them to first decide who cannot possibly be the swimmer. A strong solver eliminates possibilities one at a time and checks every clue against their final answer before committing to it.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N19",
@@ -225,7 +243,8 @@
     "tags": [],
     "question": "A rectangular bar of chocolate is scored into an eight-by-eight grid of sixty-four equal squares, alternating between milk and white chocolate like a chessboard. Two squares are broken off and eaten - specifically the two squares at diagonally opposite corners of the bar, which are always the same type of chocolate as each other on a chessboard pattern. You have small domino-shaped pieces, each sized to exactly cover two neighbouring squares at a time. Is it possible to cover the remaining sixty-two squares completely using thirty-one of these dominoes, with no overlaps and nothing left over? Explain your reasoning, not just your answer.",
     "answer": "No, it is impossible. Removing two opposite corners removes two squares of the same colour, leaving thirty squares of one colour and thirty-two of the other. But every domino, wherever it is placed, must cover exactly one milk square and one white square, since neighbouring squares are always different colours. So thirty-one dominoes could only ever cover thirty-one milk squares and thirty-one white squares in total - never the unequal thirty and thirty-two that are actually left.",
-    "modelReasoningPath": "Listen for whether the child notices that every single domino must cover one square of each colour, no matter where it is placed - that fact is the whole key to the puzzle. If stuck, ask them to count how many squares of each colour are left after the corners are removed. A strong answer proves impossibility using this colour-counting argument rather than simply trying and failing to fit the dominoes by trial and error."
+    "modelReasoningPath": "Listen for whether the child notices that every single domino must cover one square of each colour, no matter where it is placed - that fact is the whole key to the puzzle. If stuck, ask them to count how many squares of each colour are left after the corners are removed. A strong answer proves impossibility using this colour-counting argument rather than simply trying and failing to fit the dominoes by trial and error.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N20",
@@ -237,7 +256,8 @@
     "tags": [],
     "question": "All the girls in Year 6 who play the violin also play in the string orchestra. Everyone in the string orchestra rehearses on Wednesdays. Mia is in Year 6 and plays the violin. Does Mia necessarily rehearse on Wednesdays? Explain your reasoning step by step.",
     "answer": "Yes, she necessarily does. Since Mia is in Year 6 and plays the violin, the first fact tells us she must be in the string orchestra. Since everyone in the string orchestra rehearses on Wednesdays, Mia must rehearse on Wednesdays too.",
-    "modelReasoningPath": "Listen for whether the child links the two facts together in the correct order, rather than jumping straight to the answer without showing the chain. A good prompt if they hesitate is to ask what the first fact alone tells them about Mia specifically. A strong answer states each link of the chain explicitly and only concludes at the very end."
+    "modelReasoningPath": "Listen for whether the child links the two facts together in the correct order, rather than jumping straight to the answer without showing the chain. A good prompt if they hesitate is to ask what the first fact alone tells them about Mia specifically. A strong answer states each link of the chain explicitly and only concludes at the very end.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N21",
@@ -249,7 +269,8 @@
     "tags": [],
     "question": "Four sprinters - Owen, Priti, Quincy, and Rosa - finished first, second, third, and fourth in a race, in some order, with no ties. Priti finished immediately ahead of Quincy. Owen finished last. Rosa did not finish immediately before or immediately after Owen. Work out the full finishing order.",
     "answer": "Rosa finished first, Priti finished second, Quincy finished third, and Owen finished fourth.",
-    "modelReasoningPath": "Listen for whether the child fixes the most certain fact first - that Owen finished last - before working through the rest, rather than trying to place everyone at once. If stuck, ask what positions are actually left once Owen's place is settled. A strong solver checks the 'immediately before or after' clue carefully against their answer at the end, since it is easy to misread which positions count as neighbouring."
+    "modelReasoningPath": "Listen for whether the child fixes the most certain fact first - that Owen finished last - before working through the rest, rather than trying to place everyone at once. If stuck, ask what positions are actually left once Owen's place is settled. A strong solver checks the 'immediately before or after' clue carefully against their answer at the end, since it is easy to misread which positions count as neighbouring.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N22",
@@ -261,7 +282,8 @@
     "tags": [],
     "question": "Five people are being questioned about a missing trophy: Amara, Ben, Cass, Dev, and a witness named Eli who saw part of what happened. Exactly one of the following five statements is false - the other four are completely true. Amara says: 'I didn't take it.' Ben says: 'Cass took it.' Cass says: 'Ben is lying.' Dev says: 'I didn't take it either.' Eli says: 'It wasn't Ben.' Who took the trophy?",
     "answer": "Cass took it. Ben's statement ('Cass took it') and Cass's statement ('Ben is lying') are direct opposites of each other, so exactly one of that pair must already be false, no matter what. Since only one false statement is allowed in total, Amara's, Dev's, and Eli's statements must all be true - meaning Amara is innocent, Dev is innocent, and Ben is innocent, leaving only Cass. This also checks out perfectly: it makes Ben's statement true and Cass's statement false, which is exactly the one false statement required.",
-    "modelReasoningPath": "Listen for whether the child spots that Ben's and Cass's statements are exact opposites of each other, which guarantees one of that pair is already false before considering anyone else. If stuck, ask what it means that two statements directly contradict one another. A strong answer uses that pair to work out that all three remaining statements must be true, rather than testing each suspect one at a time from scratch."
+    "modelReasoningPath": "Listen for whether the child spots that Ben's and Cass's statements are exact opposites of each other, which guarantees one of that pair is already false before considering anyone else. If stuck, ask what it means that two statements directly contradict one another. A strong answer uses that pair to work out that all three remaining statements must be true, rather than testing each suspect one at a time from scratch.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N23",
@@ -273,7 +295,8 @@
     "tags": [],
     "question": "No amphibians can survive in salt water. All frogs are amphibians. Some pond creatures are frogs. From these three facts alone, can you conclude that some pond creatures cannot survive in salt water? Explain exactly how, or exactly why not.",
     "answer": "Yes, you can conclude it. Since all frogs are amphibians, and no amphibians can survive in salt water, it follows that no frogs can survive in salt water either. Since some pond creatures are frogs, those particular pond creatures - the ones that are frogs - cannot survive in salt water, which means some pond creatures cannot survive in salt water.",
-    "modelReasoningPath": "Listen for whether the child builds the chain in the right order - first combining the two universal facts about frogs and amphibians, then applying that combined fact to the specific pond creatures that are frogs. A good nudge is to ask what we can say about frogs alone before bringing pond creatures into it at all. A strong answer explains why the conclusion follows necessarily, not just that it happens to sound true."
+    "modelReasoningPath": "Listen for whether the child builds the chain in the right order - first combining the two universal facts about frogs and amphibians, then applying that combined fact to the specific pond creatures that are frogs. A good nudge is to ask what we can say about frogs alone before bringing pond creatures into it at all. A strong answer explains why the conclusion follows necessarily, not just that it happens to sound true.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N24",
@@ -285,7 +308,8 @@
     "tags": [],
     "question": "In a classroom, it is true that 'some students walked to school today', and it is also true that 'not all students walked to school today'. Priya says: 'That means at least one student did not walk to school, and at least one student did walk.' Is Priya's reasoning correct? Explain why or why not.",
     "answer": "Yes, Priya is completely correct. 'Some students walked' guarantees that at least one student did walk. 'Not all students walked' guarantees that at least one student did not walk, because if every single student had walked, the statement 'not all walked' would be false.",
-    "modelReasoningPath": "Listen for whether the child can explain why each half of Priya's claim follows from a different one of the two original statements, rather than just agreeing that it 'sounds right'. If stuck, ask what would have to be true for 'not all students walked' to be false. A strong answer treats 'some' and 'not all' as making two separate, precise guarantees rather than one vague impression."
+    "modelReasoningPath": "Listen for whether the child can explain why each half of Priya's claim follows from a different one of the two original statements, rather than just agreeing that it 'sounds right'. If stuck, ask what would have to be true for 'not all students walked' to be false. A strong answer treats 'some' and 'not all' as making two separate, precise guarantees rather than one vague impression.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N25",
@@ -297,7 +321,8 @@
     "tags": [],
     "question": "You have three identical-looking boxes of nails. Each box is supposed to contain exactly one hundred nails, each weighing exactly 10 grams. Exactly one whole box is faulty - every nail in it weighs only 9 grams instead of 10 - but you do not know which box. You have a digital scale you may use exactly once, and you are allowed to take out and weigh as many nails as you like from each box beforehand, all together in a single weighing. How do you identify the faulty box with just that one weighing?",
     "answer": "Take one nail from the first box, two nails from the second box, and three nails from the third box, then weigh all six together at once. If every nail were genuine, they would weigh exactly 60 grams in total. The actual weight will be short by exactly 1 gram for every faulty nail included: a total of 59 grams means the faulty box is the one you took one nail from, 58 grams means it is the one you took two nails from, and 57 grams means it is the one you took three nails from.",
-    "modelReasoningPath": "Listen for whether the child sees that taking a different, deliberately chosen number of nails from each box is what lets a single combined weighing point to one specific box. If stuck, ask what the total weight would be if nothing at all were faulty, as a starting point for comparison. A strong answer explains how the exact size of the shortfall identifies which box it came from, not just that there will be a shortfall."
+    "modelReasoningPath": "Listen for whether the child sees that taking a different, deliberately chosen number of nails from each box is what lets a single combined weighing point to one specific box. If stuck, ask what the total weight would be if nothing at all were faulty, as a starting point for comparison. A strong answer explains how the exact size of the shortfall identifies which box it came from, not just that there will be a shortfall.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N26",
@@ -309,7 +334,8 @@
     "tags": [],
     "question": "Five people - A, B, C, D, and E - sit around a circular table, all facing inward, in some order. B sits immediately clockwise of A. D sits immediately anticlockwise of A. E sits immediately anticlockwise of C. Work out the full seating order going clockwise, starting from A.",
     "answer": "Going clockwise starting from A: A, B, E, C, D.",
-    "modelReasoningPath": "Listen for whether the child fixes A's two neighbours first, since those two clues are the most direct, before working out where the remaining two people go. If stuck, ask which two people's positions are already completely certain once A is placed. A strong solver checks their final circle against every clue in turn, including working out clockwise and anticlockwise directions correctly around a circle, which is easy to get backwards."
+    "modelReasoningPath": "Listen for whether the child fixes A's two neighbours first, since those two clues are the most direct, before working out where the remaining two people go. If stuck, ask which two people's positions are already completely certain once A is placed. A strong solver checks their final circle against every clue in turn, including working out clockwise and anticlockwise directions correctly around a circle, which is easy to get backwards.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N27",
@@ -321,7 +347,8 @@
     "tags": [],
     "question": "All squares are rectangles. A particular shape in front of you is a rectangle. Is this shape necessarily a square? Explain your reasoning.",
     "answer": "No, it is not necessarily a square. The fact that all squares are rectangles only tells you that being a square guarantees being a rectangle - it does not work the other way round. A shape can be a rectangle without being a square, so knowing only that something is a rectangle tells you nothing about whether it is a square.",
-    "modelReasoningPath": "Listen for whether the child recognises this as a case of assuming a rule works in reverse when it does not, rather than just guessing based on the shapes' similarity. A good prompt is to ask for an example of a rectangle that clearly is not a square. A strong answer names this kind of mistake in their own words, even without technical vocabulary, and gives a concrete counterexample."
+    "modelReasoningPath": "Listen for whether the child recognises this as a case of assuming a rule works in reverse when it does not, rather than just guessing based on the shapes' similarity. A good prompt is to ask for an example of a rectangle that clearly is not a square. A strong answer names this kind of mistake in their own words, even without technical vocabulary, and gives a concrete counterexample.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N28",
@@ -333,7 +360,8 @@
     "tags": [],
     "question": "Imagine a row of one hundred light switches, all currently switched off. A single move flips exactly two neighbouring switches at the same time, changing both of their states together. Starting from all switches off, is it ever possible - after any number of moves, in any order - to reach a state where exactly one light is switched on? Explain why or why not.",
     "answer": "No, it is never possible. Every move changes the total number of switches that are on by an even amount: flipping two switches that were both off turns on two more, flipping two that were both on turns off two, and flipping one on and one off leaves the total unchanged. Since the total starts at zero, which is even, it can only ever stay even after any number of moves, so it can never become exactly one, which is odd.",
-    "modelReasoningPath": "Listen for whether the child looks for something that stays true no matter how many moves are made, rather than trying to simulate every possible sequence of moves by hand. If stuck, ask what happens to the total count of switches that are on with each individual move, in every possible case. A strong answer proves the impossibility using this unchanging property, which is a genuinely advanced idea for this age group."
+    "modelReasoningPath": "Listen for whether the child looks for something that stays true no matter how many moves are made, rather than trying to simulate every possible sequence of moves by hand. If stuck, ask what happens to the total count of switches that are on with each individual move, in every possible case. A strong answer proves the impossibility using this unchanging property, which is a genuinely advanced idea for this age group.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N29",
@@ -345,7 +373,8 @@
     "tags": [],
     "question": "In a simple made-up code, every letter is shifted forward through the alphabet by the same fixed amount. Using this code, DOG becomes GRJ, and CAT becomes FDW. Using the exact same rule, what does BIRD become?",
     "answer": "ELUG. The code shifts every letter forward by three places (D to G, O to R, G to J, and C to F, A to D, T to W), so B becomes E, I becomes L, R becomes U, and D becomes G.",
-    "modelReasoningPath": "Listen for whether the child works out the shift amount from the two given examples before trying to apply it, rather than guessing at the answer directly. A good nudge is to ask how far D moved to become G. A strong solver checks the shift against both example words before using it on the new one, to be sure it is consistent."
+    "modelReasoningPath": "Listen for whether the child works out the shift amount from the two given examples before trying to apply it, rather than guessing at the answer directly. A good nudge is to ask how far D moved to become G. A strong solver checks the shift against both example words before using it on the new one, to be sure it is consistent.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N30",
@@ -357,7 +386,8 @@
     "tags": [],
     "question": "In a number code, A is worth 1, B is worth 2, C is worth 3, and so on up to Z being worth 26. A word's code value is the total of all its letters added together. Using this rule, CAT is worth 24, and DOG is worth 26. Using the exact same rule, what is FISH worth?",
     "answer": "42. F is 6, I is 9, S is 19, and H is 8, and 6 plus 9 plus 19 plus 8 equals 42.",
-    "modelReasoningPath": "Listen for whether the child checks their letter values against the two given examples first, to confirm they understand the rule correctly, before calculating the new word. If stuck, ask them to work out C, A, and T's values separately and check they add to 24. A strong answer shows the addition clearly rather than just stating a final number."
+    "modelReasoningPath": "Listen for whether the child checks their letter values against the two given examples first, to confirm they understand the rule correctly, before calculating the new word. If stuck, ask them to work out C, A, and T's values separately and check they add to 24. A strong answer shows the addition clearly rather than just stating a final number.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N31",
@@ -369,7 +399,8 @@
     "tags": [],
     "question": "Some words describe themselves. The word 'short' is itself a short word, so we can call it self-describing. The word 'long' is not itself a long word - it is only four letters - so it is the opposite: let's call words like that other-describing. Now here is the puzzle: is the word 'other-describing' itself self-describing, or other-describing? Think very carefully about what happens when you try to decide.",
     "answer": "It leads to a genuine paradox. If 'other-describing' is self-describing, then it must correctly describe itself, meaning it does not describe itself - which makes it other-describing instead, a contradiction. But if 'other-describing' is other-describing, meaning it does not describe itself, then it is in fact true that it does not describe itself, which is exactly what the word means - so it does describe itself after all, making it self-describing, another contradiction. The word cannot be consistently placed in either category.",
-    "modelReasoningPath": "Listen for whether the child notices the loop forming as they try to answer, rather than confidently picking one side and stopping. If stuck, ask them to test each answer by checking it against the word's own definition. You are not looking for a clean resolution here - you are looking for whether the child can clearly explain why no consistent answer exists."
+    "modelReasoningPath": "Listen for whether the child notices the loop forming as they try to answer, rather than confidently picking one side and stopping. If stuck, ask them to test each answer by checking it against the word's own definition. You are not looking for a clean resolution here - you are looking for whether the child can clearly explain why no consistent answer exists.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N32",
@@ -381,7 +412,8 @@
     "tags": [],
     "question": "Every FLIBBERT is a WOZZLE. No WOZZLE is a GLIM. Is it possible for a FLIBBERT to be a GLIM? Explain your reasoning, using only the two facts given.",
     "answer": "No, it is impossible. Every FLIBBERT is a WOZZLE, and no WOZZLE is a GLIM, so by following the chain through, no FLIBBERT can be a GLIM either.",
-    "modelReasoningPath": "Listen for whether the child can reason correctly using made-up words with no real-world meaning to lean on, which is exactly the point of the exercise. If stuck, ask them to substitute in familiar categories, like animals, to see the same pattern more clearly, then bring it back to the nonsense words. A strong answer shows that the logic holds regardless of what the words actually mean."
+    "modelReasoningPath": "Listen for whether the child can reason correctly using made-up words with no real-world meaning to lean on, which is exactly the point of the exercise. If stuck, ask them to substitute in familiar categories, like animals, to see the same pattern more clearly, then bring it back to the nonsense words. A strong answer shows that the logic holds regardless of what the words actually mean.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N33",
@@ -393,7 +425,8 @@
     "tags": [],
     "question": "Here is a word ladder connecting CAT to DOG. You change one letter at a time, and every single word along the way must be a real, common English word: CAT, COT, ___, DOG. What real word belongs in the blank, and which letter changes at each step?",
     "answer": "DOT fits: COT becomes DOT by changing C to D, and DOT becomes DOG by changing T to G. COG is also a valid answer: COT becomes COG by changing T to G, and COG becomes DOG by changing C to D. Either answer is correct.",
-    "modelReasoningPath": "Listen for whether the child checks that their chosen word is only one letter different from both COT and DOG, rather than picking any word that seems roughly right. If stuck, ask them to change just the first letter of COT and see what real word that makes. Finding either correct answer through careful checking is a strong sign of careful reasoning."
+    "modelReasoningPath": "Listen for whether the child checks that their chosen word is only one letter different from both COT and DOG, rather than picking any word that seems roughly right. If stuck, ask them to change just the first letter of COT and see what real word that makes. Finding either correct answer through careful checking is a strong sign of careful reasoning.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N34",
@@ -405,7 +438,8 @@
     "tags": [],
     "question": "In a secret code, each letter of a word is shifted forward through the alphabet by an amount equal to its position in the word: the first letter shifts forward by one, the second letter by two, the third by three, and so on. For example, the word BE becomes CG, because B (in position one) shifts forward by one to become C, and E (in position two) shifts forward by two to become G. Using the exact same rule, what does the word CAT encode as?",
     "answer": "DCW. C is the first letter, so it shifts forward by one to become D. A is the second letter, so it shifts forward by two to become C. T is the third letter, so it shifts forward by three to become W.",
-    "modelReasoningPath": "Listen for whether the child correctly tracks a different shift amount for each letter, rather than applying one fixed shift to the whole word as in a simpler code. A good nudge is to have them re-check the BE example letter by letter before attempting CAT. A strong answer works through each letter's position and shift amount explicitly."
+    "modelReasoningPath": "Listen for whether the child correctly tracks a different shift amount for each letter, rather than applying one fixed shift to the whole word as in a simpler code. A good nudge is to have them re-check the BE example letter by letter before attempting CAT. A strong answer works through each letter's position and shift amount explicitly.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N35",
@@ -417,7 +451,8 @@
     "tags": [],
     "question": "Which common English word, when you remove its last four letters, is still pronounced exactly the same way as the whole word?",
     "answer": "QUEUE. The whole word is pronounced the same as the single letter Q, and removing its last four letters (U, E, U, E) leaves just the letter Q on its own.",
-    "modelReasoningPath": "Listen for whether the child thinks about pronunciation rather than spelling, since the trick only works when you say the word aloud. If stuck, suggest they think of unusually long English words that start with a single-letter sound. Spotting this without help is a genuinely pleasing piece of wordplay."
+    "modelReasoningPath": "Listen for whether the child thinks about pronunciation rather than spelling, since the trick only works when you say the word aloud. If stuck, suggest they think of unusually long English words that start with a single-letter sound. Spotting this without help is a genuinely pleasing piece of wordplay.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N36",
@@ -429,7 +464,8 @@
     "tags": [],
     "question": "Fill in the blank with a single number word so that the finished sentence becomes completely true: 'This sentence contains ___ words.' What word goes in the blank, and why does it have to be that one?",
     "answer": "Five. The finished sentence, 'This sentence contains five words,' contains exactly five words when counted (This, sentence, contains, five, words), which matches exactly what it claims about itself.",
-    "modelReasoningPath": "Listen for whether the child realises they need to count the fixed words already in the sentence, then work out what single number word would make the total match itself - rather than just guessing numbers at random. If stuck, suggest they count how many words are in the sentence before the blank is even filled in. Genuinely understanding why the answer has to be self-consistent, not just stumbling onto it, is the strong version of this puzzle."
+    "modelReasoningPath": "Listen for whether the child realises they need to count the fixed words already in the sentence, then work out what single number word would make the total match itself - rather than just guessing numbers at random. If stuck, suggest they count how many words are in the sentence before the blank is even filled in. Genuinely understanding why the answer has to be self-consistent, not just stumbling onto it, is the strong version of this puzzle.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N37",
@@ -441,7 +477,8 @@
     "tags": [],
     "question": "Fill each blank with the correctly spelled word, then explain in one sentence what all three words have in common despite being spelled differently: 'I think ___ going to be late.' '___ house is around the corner.' 'Put the book over ___.'",
     "answer": "They're going to be late. Their house is around the corner. Put the book over there. All three words - they're, their, and there - are pronounced exactly the same way (they are homophones), even though they are spelled differently and mean completely different things.",
-    "modelReasoningPath": "Listen for whether the child can articulate the general concept of a homophone in their own words, not just get the spellings right by memory. If stuck, ask what is special about how all three blanks would sound if you read the sentences aloud. A strong answer connects the specific example to the general idea clearly."
+    "modelReasoningPath": "Listen for whether the child can articulate the general concept of a homophone in their own words, not just get the spellings right by memory. If stuck, ask what is special about how all three blanks would sound if you read the sentences aloud. A strong answer connects the specific example to the general idea clearly.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N38",
@@ -453,7 +490,8 @@
     "tags": [],
     "question": "The six letters E, I, L, N, S, and T can be rearranged to form several different real English words. One of them means 'quiet, making no sound at all'. Another means 'to formally join the army'. A third is the plural of a narrow strip of water leading inland from the sea or a lake. Name all three words.",
     "answer": "SILENT (quiet, making no sound), ENLIST (to formally join the army), and INLETS (the plural of a narrow strip of water leading inland from the sea or a lake). All three use exactly the same six letters, rearranged differently.",
-    "modelReasoningPath": "Listen for whether the child works from the meaning of each clue towards the letters, rather than randomly shuffling the same six letters and hoping to recognise a word. If stuck on one, suggest they lock in the letters they are sure of from an easier clue first. A strong answer notices, and comments on, the fact that all three words share exactly the same letters."
+    "modelReasoningPath": "Listen for whether the child works from the meaning of each clue towards the letters, rather than randomly shuffling the same six letters and hoping to recognise a word. If stuck on one, suggest they lock in the letters they are sure of from an easier clue first. A strong answer notices, and comments on, the fact that all three words share exactly the same letters.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N39",
@@ -465,7 +503,8 @@
     "tags": [],
     "question": "Here is a sentence that can genuinely mean two completely different things, depending on how you group the words: 'They fed her rabbit food.' What are the two different meanings, and what exactly causes the ambiguity?",
     "answer": "One meaning is that they gave food to her pet rabbit - 'her rabbit' is the animal being fed, and 'food' is what it received. The other meaning is that they fed her some rabbit food - 'rabbit food' is a type of food, such as vegetables, and she is the one who was fed it. The ambiguity happens because 'her rabbit food' can be grouped either as [her rabbit] plus [food], or as [her] plus [rabbit food], and spoken or written English does not always mark which grouping is intended.",
-    "modelReasoningPath": "Listen for whether the child can produce both readings clearly and explain the grouping that causes each one, rather than just noticing that the sentence feels a bit odd. A good nudge is to ask them to say the sentence aloud with a tiny pause in two different places. A strong answer explains the cause of the ambiguity precisely, not just the two meanings themselves."
+    "modelReasoningPath": "Listen for whether the child can produce both readings clearly and explain the grouping that causes each one, rather than just noticing that the sentence feels a bit odd. A good nudge is to ask them to say the sentence aloud with a tiny pause in two different places. A strong answer explains the cause of the ambiguity precisely, not just the two meanings themselves.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N40",
@@ -477,7 +516,8 @@
     "tags": [],
     "question": "Every word in this list follows one secret rule except for one, which breaks it: MOON, NOON, ROOM, RIVER, POOL. Which word breaks the rule, and what is the rule?",
     "answer": "RIVER breaks the rule. Every other word - MOON, NOON, ROOM, and POOL - contains a doubled letter (two Os in a row), while RIVER does not contain any doubled letter at all.",
-    "modelReasoningPath": "Listen for whether the child scans for a shared spelling feature systematically across all the words, rather than guessing based on meaning (since these words have nothing in common by meaning). If stuck, ask them to look letter by letter rather than at the whole word at once. A strong answer states the rule precisely, not just vaguely as 'they look similar'."
+    "modelReasoningPath": "Listen for whether the child scans for a shared spelling feature systematically across all the words, rather than guessing based on meaning (since these words have nothing in common by meaning). If stuck, ask them to look letter by letter rather than at the whole word at once. A strong answer states the rule precisely, not just vaguely as 'they look similar'.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N41",
@@ -489,7 +529,8 @@
     "tags": [],
     "question": "Amir tells you: 'Ben said that I never tell the truth.' Assume Amir is reporting Ben's words completely accurately - Ben really did say that. Does this mean Amir never tells the truth? Explain very carefully what we can and cannot conclude, being careful to separate what Ben claims from what is actually true, and from what Amir is doing right now.",
     "answer": "No, we cannot conclude that Amir never tells the truth. All we know for certain is that Ben made that claim, and that Amir accurately reported it - but Ben's claim itself could simply be false, since people are sometimes wrong, or lying, about others. In fact, if Amir really is reporting truthfully here, that is itself one example of Amir telling the truth, which would directly contradict Ben's claim that Amir 'never' tells the truth, since 'never' would have to mean not even once.",
-    "modelReasoningPath": "Listen for whether the child separates three different things: what Ben claims, whether that claim is true, and what Amir's own act of reporting shows. If stuck, ask what the word 'never' would require to actually be true. A strong answer notices that Amir's honest reporting right now is itself evidence against Ben's absolute claim."
+    "modelReasoningPath": "Listen for whether the child separates three different things: what Ben claims, whether that claim is true, and what Amir's own act of reporting shows. If stuck, ask what the word 'never' would require to actually be true. A strong answer notices that Amir's honest reporting right now is itself evidence against Ben's absolute claim.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N42",
@@ -501,7 +542,8 @@
     "tags": [],
     "question": "A sign outside a museum reads: 'Entry is free for children under 12 or accompanied by an adult.' A ten-year-old arrives completely alone, with no adult. According to the strict wording of the sign - not what the museum probably intended - should she be let in for free? Explain exactly why the wording does or does not require it, and then explain what the sign-writer most likely actually meant.",
     "answer": "Strictly by the wording, yes - the word 'or' means the condition is met if either part is true, and she is under 12, so that alone satisfies the sign as written, regardless of the second part about being accompanied by an adult. However, the sign-writer almost certainly intended something closer to 'children under 12, provided they are accompanied by an adult' - a stricter meaning that the loose use of 'or' in everyday English accidentally fails to capture.",
-    "modelReasoningPath": "Listen for whether the child sticks strictly to the literal wording first, before separately considering what was probably intended - the puzzle asks for both, in that order. If stuck, ask what 'or' means in a strict, logical sense compared to how people often use it casually. A strong answer clearly explains the gap between the literal wording and the likely real-world intention."
+    "modelReasoningPath": "Listen for whether the child sticks strictly to the literal wording first, before separately considering what was probably intended - the puzzle asks for both, in that order. If stuck, ask what 'or' means in a strict, logical sense compared to how people often use it casually. A strong answer clearly explains the gap between the literal wording and the likely real-world intention.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N43",
@@ -513,7 +555,8 @@
     "tags": [],
     "question": "Complete this analogy and explain the relationship you used: THERMOMETER is to TEMPERATURE as SPEEDOMETER is to ___.",
     "answer": "SPEED. A thermometer is an instrument that measures temperature, and in exactly the same way, a speedometer is an instrument that measures speed.",
-    "modelReasoningPath": "Listen for whether the child can name the underlying relationship - 'instrument that measures a quantity' - rather than just guessing a word that feels related. Ask 'why?' after they answer, even if the answer is correct. A strong response states the relationship clearly enough that it could be applied to a brand new pair of words."
+    "modelReasoningPath": "Listen for whether the child can name the underlying relationship - 'instrument that measures a quantity' - rather than just guessing a word that feels related. Ask 'why?' after they answer, even if the answer is correct. A strong response states the relationship clearly enough that it could be applied to a brand new pair of words.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N44",
@@ -525,7 +568,8 @@
     "tags": [],
     "question": "Is a tomato a fruit, or a vegetable? Explain why both answers can genuinely be defended, and what is really going on.",
     "answer": "Botanically, a tomato is a fruit, because it develops from the flower of the plant and contains its seeds, just like an apple or a berry does. In cooking and everyday language, however, it is usually called a vegetable, because of how it is used in savoury dishes rather than desserts. Both answers are correct because they come from two different classification systems - biological structure versus culinary use - not because anyone is simply wrong.",
-    "modelReasoningPath": "Listen for whether the child recognises that two different, equally valid systems of classification are at work here, rather than trying to declare one answer definitively 'right'. If stuck, ask what a scientist studying plants might care about compared to what a chef cares about. A strong answer names both systems explicitly rather than just picking a side."
+    "modelReasoningPath": "Listen for whether the child recognises that two different, equally valid systems of classification are at work here, rather than trying to declare one answer definitively 'right'. If stuck, ask what a scientist studying plants might care about compared to what a chef cares about. A strong answer names both systems explicitly rather than just picking a side.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N45",
@@ -537,7 +581,8 @@
     "tags": [],
     "question": "Here are three pairs of words: KEY and LOCK, VACCINE and DISEASE, UMBRELLA and RAIN. Two of these three pairs share the exact same underlying relationship - 'the first thing is used to protect against the effects of the second'. Which pair does not share that relationship, and what is the true relationship in that pair instead?",
     "answer": "KEY and LOCK is the odd one out. A vaccine protects against disease, and an umbrella protects against rain, but a key does not protect against a lock - it opens or operates it. The relationship in KEY and LOCK is 'used to operate' rather than 'used to protect against'.",
-    "modelReasoningPath": "Listen for whether the child tests the same candidate relationship against all three pairs systematically, rather than judging each pair in isolation. If stuck, ask what an umbrella and a vaccine are both trying to stop from happening, and whether a key is trying to stop anything. A strong answer states the correct relationship for the odd pair out, not just that it doesn't fit."
+    "modelReasoningPath": "Listen for whether the child tests the same candidate relationship against all three pairs systematically, rather than judging each pair in isolation. If stuck, ask what an umbrella and a vaccine are both trying to stop from happening, and whether a key is trying to stop anything. A strong answer states the correct relationship for the odd pair out, not just that it doesn't fit.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N46",
@@ -549,7 +594,8 @@
     "tags": [],
     "question": "Chess is a game. Football is a game. Solitaire, played entirely alone with cards, is a game. Try to state one single rule that correctly includes chess, football, and solitaire, but correctly excludes watching television. Then test your rule properly: does it really hold up, or can you find a problem with it?",
     "answer": "There is no simple single rule that neatly separates all games from all non-games. Rules involving competition fail because solitaire has no opponent; rules involving winning or losing fail for games children play just for fun with no real outcome; rules involving physical rules or equipment fail to exclude many activities that are not games at all. This shows that 'game' is what is sometimes called a family resemblance concept - the things we call games share overlapping similarities with each other without any single feature that all of them, and only them, have in common.",
-    "modelReasoningPath": "Listen for whether the child genuinely tests their own proposed rule against tricky cases, rather than stating a rule once and stopping. A good nudge is to offer a counterexample to whatever rule they propose, and watch how they respond to it. The strongest response is not landing on a perfect rule - it's noticing that every rule attempted breaks down somewhere, and being able to say why."
+    "modelReasoningPath": "Listen for whether the child genuinely tests their own proposed rule against tricky cases, rather than stating a rule once and stopping. A good nudge is to offer a counterexample to whatever rule they propose, and watch how they respond to it. The strongest response is not landing on a perfect rule - it's noticing that every rule attempted breaks down somewhere, and being able to say why.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N47",
@@ -561,7 +607,8 @@
     "tags": [],
     "question": "Complete this analogy and explain the relationship: AUTHOR is to BOOK as ARCHITECT is to ___.",
     "answer": "BUILDING. An author is the person who creates a book, and in exactly the same way, an architect is the person who designs and creates a building.",
-    "modelReasoningPath": "Listen for whether the child identifies the relationship as 'creator to the thing they create', rather than something more specific like 'profession to tool', which would not fit here. Ask them to state the relationship in a general sentence that would also work for other creator-and-creation pairs. A strong answer offers a second example of the same relationship unprompted."
+    "modelReasoningPath": "Listen for whether the child identifies the relationship as 'creator to the thing they create', rather than something more specific like 'profession to tool', which would not fit here. Ask them to state the relationship in a general sentence that would also work for other creator-and-creation pairs. A strong answer offers a second example of the same relationship unprompted.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N48",
@@ -573,7 +620,8 @@
     "tags": [],
     "question": "Which one of these does not belong with the others, and why: CANDLE, TORCH, MATCH, MIRROR? At first glance you might group them all as 'things to do with light' - but look more carefully and explain your true reasoning.",
     "answer": "MIRROR is the odd one out. A candle, a torch, and a match all produce their own light - they are genuine light sources. A mirror does not produce any light of its own; it only reflects light that already exists from somewhere else.",
-    "modelReasoningPath": "Listen for whether the child moves past the surface-level grouping - 'they're all about light' - and digs into how each object actually relates to light. If stuck, ask what would happen to each object in a completely dark room with no other light at all. A strong answer clearly separates 'producing light' from 'reflecting light' as genuinely different mechanisms."
+    "modelReasoningPath": "Listen for whether the child moves past the surface-level grouping - 'they're all about light' - and digs into how each object actually relates to light. If stuck, ask what would happen to each object in a completely dark room with no other light at all. A strong answer clearly separates 'producing light' from 'reflecting light' as genuinely different mechanisms.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N49",
@@ -585,7 +633,8 @@
     "tags": [],
     "question": "Every dog is a mammal. Every mammal is an animal. Some animals are pets. From these three facts alone - and no other outside knowledge - can you validly conclude that some dogs are pets? Explain very carefully why or why not; this is trickier than it looks.",
     "answer": "No, you cannot validly conclude that from these facts alone. All three statements would still be perfectly true even in a world where, say, only fish were kept as pets and not a single dog ever was - 'some animals are pets' only guarantees that at least one animal somewhere is a pet, not that any dog specifically is one. Knowing dogs really are commonly kept as pets comes from outside knowledge of the real world, not from what these three sentences actually say.",
-    "modelReasoningPath": "Listen for whether the child can resist using what they already know is true in real life, and stick strictly to what the given sentences actually guarantee. If stuck, ask them to imagine a made-up world where the facts are true but no dog happens to be a pet, and check whether that world is actually possible. A strong answer explains this gap between real-world knowledge and strict logical entailment clearly."
+    "modelReasoningPath": "Listen for whether the child can resist using what they already know is true in real life, and stick strictly to what the given sentences actually guarantee. If stuck, ask them to imagine a made-up world where the facts are true but no dog happens to be a pet, and check whether that world is actually possible. A strong answer explains this gap between real-world knowledge and strict logical entailment clearly.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N50",
@@ -597,7 +646,8 @@
     "tags": [],
     "question": "Someone who is six foot two is generally considered tall. Is someone six foot one still tall? Six foot flat? Is there one exact, precise height at which a person stops being 'tall' and becomes merely 'average'? Explain what kind of word 'tall' actually is, and why trying to pin down an exact cutoff runs into real trouble.",
     "answer": "There is no single precise height that marks the boundary of 'tall' - removing a single millimetre from a clearly tall height never seems, on its own, to cross a line into 'not tall', and yet a much shorter height clearly is not tall, so somewhere a line must genuinely be crossed without there being any one obvious point where it happens. This is because 'tall' is a vague word with no sharp boundary, unlike a word such as 'even number', which has an exact, precise definition. Words like this are common in everyday language, and the difficulty of pinning down an exact cutoff is a well-known puzzle about language called the Sorites paradox.",
-    "modelReasoningPath": "Listen for whether the child notices the genuine tension - no single step should matter, yet the overall change clearly does - rather than just picking an arbitrary cutoff and moving on. If stuck, ask whether removing one single millimetre from someone's height could possibly turn a tall person into a not-tall person on its own. This has no fully tidy resolution, so reward the child for sitting with the difficulty and explaining it clearly, not for forcing a clean answer."
+    "modelReasoningPath": "Listen for whether the child notices the genuine tension - no single step should matter, yet the overall change clearly does - rather than just picking an arbitrary cutoff and moving on. If stuck, ask whether removing one single millimetre from someone's height could possibly turn a tall person into a not-tall person on its own. This has no fully tidy resolution, so reward the child for sitting with the difficulty and explaining it clearly, not for forcing a clean answer.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N51",
@@ -609,7 +659,8 @@
     "tags": [],
     "question": "What single three-letter word can be added to the end of all four of these words to make a new, real English word: RAIN, EL, CROSS, LONG?",
     "answer": "BOW. It makes RAINBOW, ELBOW, CROSSBOW, and LONGBOW, all genuine English words.",
-    "modelReasoningPath": "Listen for whether the child tests their guess against all four words rather than stopping as soon as it works for just one or two. If stuck, suggest they try their idea on the shortest word, EL, first. A strong answer confirms all four resulting words are real before settling on the final answer."
+    "modelReasoningPath": "Listen for whether the child tests their guess against all four words rather than stopping as soon as it works for just one or two. If stuck, suggest they try their idea on the shortest word, EL, first. A strong answer confirms all four resulting words are real before settling on the final answer.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N52",
@@ -621,7 +672,8 @@
     "tags": [],
     "question": "There is a single common English word with two completely unrelated meanings: it names a type of large freshwater fish often farmed for food, and as a verb it means to keep complaining, nagging, or finding fault about small, unimportant things. What is the word?",
     "answer": "CARP. As a noun, a carp is a freshwater fish. As a verb, to carp means to complain persistently about minor things.",
-    "modelReasoningPath": "Listen for whether the child treats this as genuine vocabulary detective work, working from the two very different definitions towards a single word, rather than giving up if they don't know an unusual verb straight away. If stuck, offer the fish meaning as a starting point and ask if that word could possibly mean something else entirely as a verb. Recognising an unusual secondary meaning of a familiar word is a real sign of strong vocabulary."
+    "modelReasoningPath": "Listen for whether the child treats this as genuine vocabulary detective work, working from the two very different definitions towards a single word, rather than giving up if they don't know an unusual verb straight away. If stuck, offer the fish meaning as a starting point and ask if that word could possibly mean something else entirely as a verb. Recognising an unusual secondary meaning of a familiar word is a real sign of strong vocabulary.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N53",
@@ -633,7 +685,8 @@
     "tags": [],
     "question": "Which one of these does not belong with the others, and why: DEMOCRACY, MONARCHY, PARLIAMENT, DICTATORSHIP?",
     "answer": "PARLIAMENT is the odd one out. Democracy, monarchy, and dictatorship are all types of political system - they describe who holds power and how. Parliament is not a type of system at all; it is an institution, a group of people who make laws, and it can exist within several different kinds of system, including a democracy or a constitutional monarchy.",
-    "modelReasoningPath": "Listen for whether the child distinguishes between a category of thing (a type of system) and a specific institution that can exist inside different categories, rather than grouping purely by subject matter ('these are all political words'). If stuck, ask whether a parliament could exist in a country that is also a monarchy. A strong answer explains clearly why parliament sits at a different conceptual level from the other three."
+    "modelReasoningPath": "Listen for whether the child distinguishes between a category of thing (a type of system) and a specific institution that can exist inside different categories, rather than grouping purely by subject matter ('these are all political words'). If stuck, ask whether a parliament could exist in a country that is also a monarchy. A strong answer explains clearly why parliament sits at a different conceptual level from the other three.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N54",
@@ -645,7 +698,8 @@
     "tags": [],
     "question": "Complete this analogy with a word of your own choosing, and explain your reasoning carefully: SEED is to TREE as ___ is to REPUTATION.",
     "answer": "There is no single fixed answer here - what matters is a well-justified word with a clearly explained relationship. A strong example is RUMOUR: a rumour is a small thing that, over time and with the right conditions, can grow into a large, lasting reputation, just as a seed grows into a large, lasting tree. Another reasonable answer is DEED, since a single significant action can be the small starting point that a whole reputation eventually grows from.",
-    "modelReasoningPath": "Listen for whether the child can justify their chosen word with a clear explanation of the shared 'small beginning that grows into something large over time' relationship, rather than offering a word with no reasoning attached. Push them to explain why their word specifically fits the growth pattern, not just that it is loosely related to reputation. Multiple different answers can be equally strong if the reasoning behind them is solid."
+    "modelReasoningPath": "Listen for whether the child can justify their chosen word with a clear explanation of the shared 'small beginning that grows into something large over time' relationship, rather than offering a word with no reasoning attached. Push them to explain why their word specifically fits the growth pattern, not just that it is loosely related to reputation. Multiple different answers can be equally strong if the reasoning behind them is solid.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N55",
@@ -657,7 +711,8 @@
     "tags": [],
     "question": "To become a published novelist, you must first write a novel. Priya has written a novel. Has Priya definitely become a published novelist? Separately, is it possible to become a published novelist without ever writing a novel yourself? Explain the difference between something being necessary for an outcome and something being sufficient for it, using this example.",
     "answer": "No, Priya has not necessarily become a published novelist just by writing one novel - writing it is a necessary condition, meaning you cannot become a published novelist without it, but it is not a sufficient condition, meaning it does not by itself guarantee the outcome, since she would still need a publisher to accept and publish it. And no, in the ordinary sense of the word 'novelist', it is not possible to become a published novelist without writing a novel yourself, so writing one really is necessary here, just not enough on its own.",
-    "modelReasoningPath": "Listen for whether the child can hold both ideas apart clearly - that something can be required without guaranteeing the result, and that something being required is a separate question from whether it is enough. If stuck, ask what else, besides writing the novel, still has to happen before Priya could truly be called published. A strong answer applies the general necessary-versus-sufficient distinction back to a new example of their own."
+    "modelReasoningPath": "Listen for whether the child can hold both ideas apart clearly - that something can be required without guaranteeing the result, and that something being required is a separate question from whether it is enough. If stuck, ask what else, besides writing the novel, still has to happen before Priya could truly be called published. A strong answer applies the general necessary-versus-sufficient distinction back to a new example of their own.",
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "LG-N56",
@@ -669,6 +724,7 @@
     "tags": [],
     "question": "Is the opposite of 'unhappy' exactly the same as 'happy'? Think about a person who feels neither happy nor unhappy, just neutral. Does this show that 'happy' and 'unhappy' are not true opposites in the same way that 'up' and 'down' are? Explain the difference between opposites that leave room for a middle state and opposites that do not.",
     "answer": "'Happy' and 'unhappy' are not strict opposites in the way 'up' and 'down' are, because there is a genuine middle ground - feeling neutral, neither happy nor unhappy - that is not covered by either word. This makes them what is sometimes called gradable opposites, which allow for a spectrum and a middle state, similar to 'hot' and 'cold' or 'tall' and 'short'. This is different from strict, complementary opposites such as 'true' and 'false', where standardly there genuinely is no middle option available at all.",
-    "modelReasoningPath": "Listen for whether the child can find or accept a genuine middle state for 'happy' and 'unhappy', rather than insisting the two words must divide everything between them with nothing left over. If stuck, ask them to think of a pair of opposites where there truly is no middle option, and compare it directly to happy and unhappy. A strong answer names both types of opposite and correctly sorts a new example into one category or the other."
+    "modelReasoningPath": "Listen for whether the child can find or accept a genuine middle state for 'happy' and 'unhappy', rather than insisting the two words must divide everything between them with nothing left over. If stuck, ask them to think of a pair of opposites where there truly is no middle option, and compare it directly to happy and unhappy. A strong answer names both types of opposite and correctly sorts a new example into one category or the other.",
+    "dateAdded": "2026-08-23"
   }
 ]

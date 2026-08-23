@@ -10,7 +10,7 @@
     "question": "Imagine placing 1 grain of rice on the first square of a chessboard, then 2 grains on the second square, then 4 on the third, doubling the number of grains every time you move to the next square, all the way to the 64th square. Roughly how many grains of rice would be on the 64th square alone? And roughly how many tonnes would ALL the rice on the whole board weigh together, if a single grain of rice weighs about 25 milligrams? Would that be more or less than the entire world grows in a year?",
     "answer": "The 64th square alone holds 2^63, roughly 9 quintillion (9 x 10^18) grains. The whole board holds 2^64 - 1 grains, roughly 1.8 x 10^19, which weighs around 460 billion tonnes - roughly 900 times more rice than the entire world produces in a year. Accept any answer that recognises the total is an absurdly, world-scale-exceeding amount.",
     "modelReasoningPath": "The doubling means the last square alone already dwarfs everything before it combined, since 1+2+4+...+2^62 is less than the final term 2^63. A child who says 'the last square is worth more than all the others put together' has spotted the key structural fact about doubling sequences. Converting 2^64 grains into a weight requires multiplying by the mass of one grain and then converting milligrams to tonnes, a genuinely fiddly unit-conversion chain - watch whether they track the powers of ten carefully rather than losing a factor of a thousand somewhere. What to listen for: most children guess the total board is 'a lot' but have no sense of scale; a strong candidate reasons that doubling 64 times must produce something astronomically larger than any everyday quantity, and is willing to say so confidently even without a precise final number.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N2",
@@ -23,7 +23,7 @@
     "question": "Suppose it rains steadily for one hour over Wembley Stadium's football pitch, which is roughly 100 metres by 70 metres, and exactly 10 millimetres of rain falls during that hour. Roughly how many litres of water land on the pitch? And roughly how many bathtubs' worth is that, if one bathtub holds about 150 litres?",
     "answer": "Area = 100 x 70 = 7,000 m². 10 mm depth = 0.01 m, so volume = 7,000 x 0.01 = 70 m³ = 70,000 litres. That is roughly 467 bathtubs (accept 400-550 given rounding).",
     "modelReasoningPath": "The key move is converting a depth in millimetres and an area in square metres into a volume in cubic metres, then remembering that one cubic metre is exactly one thousand litres. A child who writes 'area times depth equals volume' before touching any numbers is showing exactly the right structural instinct, and the unit conversion from millimetres to metres is the most common place for slips. What to listen for: does the child sanity-check the final number against something familiar, such as noticing that 70,000 litres sounds like an enormous number of bathtubs for what looks like a light shower, and does that prompt them to double-check their working rather than just accepting whatever falls out.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N3",
@@ -36,7 +36,7 @@
     "question": "A single sheet of paper is about 0.1 millimetres thick. Suppose you could somehow fold it in half 42 times in a row, ignoring the fact that this is physically impossible in real life. Roughly how thick would the folded stack be? Would it reach the top of a house, the top of Mount Everest, or all the way to the Moon?",
     "answer": "Thickness after 42 folds = 0.1mm x 2^42, which works out to roughly 440,000 km - further than the Moon's average distance from Earth (about 384,400 km).",
     "modelReasoningPath": "Each fold doubles the thickness, so this is exponential growth in disguise, and the whole point is that a child's gut instinct ('folding paper barely makes it thicker') is spectacularly wrong once you fold enough times. A strong candidate recognises early that doubling 42 times must produce something enormous, even before attempting to estimate 2^42, and reasons by comparison rather than trying to compute the full number precisely. What to listen for: does the child connect this to other doubling situations they may know (population growth, bacteria, chessboard squares), and are they willing to commit to 'bigger than Everest, in fact bigger than the Moon' even though it sounds absurd, rather than retreating to a safe, small-sounding guess.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N4",
@@ -49,7 +49,7 @@
     "question": "There are 30 children in a class. Each child's house number is effectively a random whole number from 1 to 100. Would you expect it to be more likely than not that at least two children have exactly the same house number? Talk me through your reasoning, then give a rough percentage before I tell you the true answer.",
     "answer": "It is overwhelmingly likely - the true probability of at least one match is about 99%, far higher than most people's instinct. Accept any answer reasoning it is very likely (well above 50%), with full credit for recognising it is close to certain.",
     "modelReasoningPath": "This is a close cousin of the classic Birthday Problem, but with only 100 possible values instead of 365, so the coincidence becomes even more likely, not less. The trap is thinking about it as '30 people, 100 numbers, so it should be roughly 30 out of 100, unlikely' - the correct way to think about it is to count the number of PAIRS of children, since any of those pairs could match, and with 30 children there are 30 x 29 / 2 = 435 pairs, each with a decent chance of colliding. What to listen for: a child who says 'there are way more pairs of people than there are numbers, so a match feels almost forced' is reasoning at exactly the right level; a child who insists it must be unlikely because '100 is much bigger than 30' is making the single most common and understandable error in this whole area of maths.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N5",
@@ -62,7 +62,7 @@
     "question": "If you are 11 years old and have slept for roughly 8 hours a night, every night, for your whole life so far, roughly how many YEARS of your life have you spent asleep? Talk me through how you'd work it out.",
     "answer": "8 hours out of 24 is a third of each day, so roughly a third of 11 years, which is about 3.7 years.",
     "modelReasoningPath": "The cleanest route is spotting that 8 out of 24 hours simplifies to exactly one-third of every day, which turns the whole problem into 'a third of 11 years' rather than a messy hour-by-hour calculation. What to listen for: does the child find that fraction shortcut themselves, or do they get bogged down multiplying hours by 365 and then dividing by 24 - both routes reach the same answer, but the fraction route shows sharper number sense. A child who says 'that seems about right, since you'd expect a third of your life asleep if you sleep a third of each day' is showing good self-checking instincts.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N6",
@@ -75,7 +75,7 @@
     "question": "The United Kingdom covers roughly 243,000 square kilometres. A football pitch is roughly 100 metres by 70 metres. Roughly how many football pitches would it take to completely cover the whole of the UK, wall to wall?",
     "answer": "About 35 million football pitches (accept anything from 20-50 million given rounding of UK area and pitch dimensions).",
     "modelReasoningPath": "The tricky part isn't the division itself, it's converting square kilometres into square metres correctly - a square kilometre is a million square metres, not a thousand, and this is the single most common place a child will lose or gain a factor of 1,000. A confident candidate converts 243,000 km² into 243,000,000,000 m², works out one pitch is 7,000 m², and divides. What to listen for: does the child pause and question whether their answer (tens of millions) feels plausible for covering an entire country, or do they accept an answer that's off by a factor of a thousand without noticing anything strange.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N7",
@@ -88,7 +88,7 @@
     "question": "A single blink of your eye takes roughly 0.15 seconds. Sound travels through air at roughly 343 metres per second. Roughly how far does a sound travel in the time it takes you to blink once? Is that closer to the length of your bedroom, a football pitch, or a whole street?",
     "answer": "About 51 metres (0.15 x 343 ≈ 51.45m) - roughly half the length of a football pitch.",
     "modelReasoningPath": "This is a straightforward speed-times-time calculation, but the interesting part is the comparison at the end - most people are surprised that something as brief and unnoticeable as a blink is long enough for sound to travel half a football pitch. What to listen for: does the child multiply confidently without needing the numbers written down, and do they engage with the comparison step rather than just stating a number - a child who says 'that's much further than I'd have guessed for such a quick blink' is showing good calibration instincts, which is really what this question is testing.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N8",
@@ -101,7 +101,7 @@
     "question": "Roughly how many ping pong balls do you think would fit inside a red London double-decker bus, if you removed all the seats and packed it completely full? Talk me through your estimate step by step - I want to hear your reasoning, not just a guess.",
     "answer": "Order of magnitude several hundred thousand (a careful Fermi estimate gives roughly 700,000-800,000). Accept any answer in the range 200,000 to 1,500,000 with sound reasoning shown.",
     "modelReasoningPath": "This is a classic Fermi estimation exercise: the child needs to estimate the bus's interior volume (length times width times height, then knock some off for the shape not being a perfect box), estimate the volume of one ping pong ball, and divide, while remembering that balls don't pack perfectly and leave gaps. What to listen for: does the child break the problem into clear stages out loud rather than trying to guess a single huge number, do they make reasonable estimates for the bus dimensions and ball size even without exact figures, and do they think to account for wasted space between the spherical balls rather than assuming the bus fills up perfectly. The exact number matters far less than whether each estimate along the way is defensible.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N9",
@@ -114,7 +114,7 @@
     "question": "Suppose every one of the UK's roughly 67 million people spends exactly 2 minutes brushing their teeth every single morning. Roughly how many YEARS of combined human time does that add up to, across the whole country, in just one single day?",
     "answer": "About 255 years of combined human time in a single day (67,000,000 x 2 minutes = 134,000,000 minutes, divided by the roughly 525,600 minutes in a year ≈ 255 years). Accept 150-350 years given rounding.",
     "modelReasoningPath": "The surprising part of this question is realising that 'combined human time' can add up to centuries even from a two-minute daily task, simply because it's multiplied across tens of millions of people simultaneously. The calculation itself is two clean steps: total minutes used by the whole population, then converting that huge number of minutes into years by dividing by the number of minutes in a year. What to listen for: does the child correctly work out roughly how many minutes are in a year (60 x 24 x 365, which they may need help deriving), and are they struck by how large the final answer feels compared to the tiny two-minute daily action that caused it.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N10",
@@ -127,7 +127,7 @@
     "question": "Roughly how many text or instant messages do you think a typical teenager sends in a whole year? Then, assuming each message takes about 10 seconds to type, roughly how many whole DAYS per year does that add up to, just spent typing messages?",
     "answer": "(see working) - this is open-ended. A reasonable estimate of 30-80 messages per day gives roughly 11,000-30,000 messages a year, and at 10 seconds each that's roughly 1-3.5 days of pure typing time a year. Accept any well-reasoned estimate in a sensible range.",
     "modelReasoningPath": "There's no single correct number here, so the whole value of the question lies in the reasoning: does the child pick a plausible number of messages per day, multiply sensibly by days in a year, then convert total seconds into days using the right conversion factors. What to listen for: a child who says something like 'I'd guess about 50 a day, so that's roughly 18,000 a year, times 10 seconds is 180,000 seconds, and dividing by 86,400 seconds in a day gives about 2 days' is demonstrating exactly the kind of structured, stage-by-stage thinking this question is designed to surface, regardless of whether their starting guess of 50 messages was 'right'.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N11",
@@ -140,7 +140,7 @@
     "question": "A bathtub takes 6 minutes to fill using a tap flowing at 12 litres per minute. Niagara Falls has a flow rate of roughly 2,400,000 litres every second. Roughly how many bathtubs' worth of water go over Niagara Falls every single second?",
     "answer": "One bathtub holds 72 litres (6 x 12). 2,400,000 ÷ 72 ≈ 33,333 bathtubs every second. Accept 25,000-40,000.",
     "modelReasoningPath": "The first hidden step is working out the size of a bathtub from the tap-filling information before the main division can even happen - a child who spots that they need to calculate 6 x 12 first, rather than dividing by 6 or by 12 directly, is reading the question carefully. What to listen for: does the final answer of roughly 33,000 bathtubs per second feel to the child like an appropriately astonishing number for one of the world's most famous waterfalls, and can they say so out loud - that kind of calibration matters as much as the arithmetic itself.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N12",
@@ -153,7 +153,7 @@
     "question": "Imagine setting up a single line of exactly one million dominoes, each spaced 25 millimetres apart from the centre of one domino to the centre of the next. Roughly how many kilometres long would the finished line stretch?",
     "answer": "1,000,000 x 25mm = 25,000,000mm = 25,000m = 25 kilometres.",
     "modelReasoningPath": "This is a clean unit-conversion chain from millimetres up to kilometres, and the value of the question is entirely in whether the child tracks the conversion carefully - a million dominoes times 25mm each gives 25 million millimetres, which needs dividing by 1,000 to get metres and by 1,000 again to get kilometres. What to listen for: does the child do the conversion in clear stages rather than trying to jump straight to kilometres and losing track of a factor of a thousand somewhere, and do they have a sense of scale for what 25 kilometres actually represents, such as roughly the distance from central London out towards the M25.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N13",
@@ -166,7 +166,7 @@
     "question": "A film lasts 2 hours and 30 minutes. If you blink on average once every 4 seconds, roughly how many times will you blink during the whole film? And if each blink lasts about 0.3 seconds, roughly how many total minutes of the film will you have spent with your eyes closed?",
     "answer": "Total film time = 150 minutes = 9,000 seconds. Number of blinks = 9,000 ÷ 4 = 2,250 blinks. Eyes-closed time = 2,250 x 0.3 = 675 seconds = 11.25 minutes.",
     "modelReasoningPath": "This is a two-stage Fermi problem: first counting how many blinks happen in total, then working out how much time those blinks themselves consume - the two stages use completely different pieces of information (blink frequency versus blink duration) and it's easy to muddle them together. What to listen for: does the child clearly separate 'how many times do I blink' from 'how long does each blink take', and does the final answer of over 11 minutes with your eyes closed during a single film feel surprisingly large to them, prompting a moment of genuine surprise rather than passive acceptance.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N14",
@@ -179,7 +179,7 @@
     "question": "A standard deck of 52 playing cards can be arranged in 52 factorial different orders - that means 52 x 51 x 50 x ... x 2 x 1. Without trying to multiply that out, is that number bigger or smaller than the estimated number of grains of sand on every beach on Earth, which is roughly 10 followed by 20 zeroes? And is it bigger or smaller than the estimated number of atoms in the entire observable universe, roughly 10 followed by 80 zeroes? Explain your reasoning using rough estimates rather than exact multiplication.",
     "answer": "52! is approximately 8 x 10^67 - vastly bigger than the number of grains of sand on Earth (10^20), but still smaller than the number of atoms in the observable universe (10^80).",
     "modelReasoningPath": "The trick is not to attempt the multiplication at all, but to reason about how quickly a product of 52 numbers, most of them in the tens and dozens, can grow - a child who says 'multiplying together fifty-ish numbers that are mostly bigger than 10 must give something absolutely enormous, way past a mere 10^20' is reasoning about scale correctly without needing the exact value. What to listen for: does the child resist the urge to just guess randomly and instead reason from the STRUCTURE of the calculation (fifty-two multiplications, most factors well above 1), and are they willing to commit to 'bigger than the sand, but I'm less sure about the atoms' as an honest, reasoned position rather than a guess.",
-    "questionType": "Estimation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N15",
@@ -192,7 +192,7 @@
     "question": "There are three identical wrapped boxes on a table. One contains a golden ticket; the other two are empty. You pick one box at random, but you don't open it yet. I then open one of the OTHER two boxes - one that I know for certain is empty - and show you that it's empty. I now offer you a choice: stick with the box you originally picked, or switch to the one remaining unopened box. Should you stick, switch, or does it not matter either way? What is your probability of winning if you switch?",
     "answer": "You should switch. Switching wins with probability 2/3, while sticking only wins with probability 1/3.",
     "modelReasoningPath": "When you first pick, there's a 1/3 chance you picked the golden ticket and a 2/3 chance it's in one of the other two boxes; opening an empty box doesn't change where the ticket actually is, it just concentrates that original 2/3 chance entirely onto the one remaining unopened box, since I always deliberately reveal an empty one. What to listen for: most children's first instinct is 'it's 50-50 now, so it doesn't matter' - a strong candidate is uneasy with that answer and tries to work out what information the opened box actually gave them, eventually realising that my choice of which box to open wasn't random, it was rigged to always avoid the prize, which is precisely why switching helps.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N16",
@@ -205,7 +205,7 @@
     "question": "Two trains start 300 km apart on the same straight track, heading directly toward each other. One travels at 80 km/h, the other at 70 km/h. At the exact moment they start, a fly takes off from the front of the first train and flies back and forth between the two trains at a constant 200 km/h, instantly reversing direction the moment it touches either train, continuing until the trains meet and the fly is squashed. What is the TOTAL distance the fly travels?",
     "answer": "400 km.",
     "modelReasoningPath": "The trap here is trying to add up an infinite series of ever-shrinking back-and-forth flights, which is genuinely very hard; the elegant route is to ignore the fly's path entirely and just work out how long the fly is flying for. The trains close the 300 km gap at a combined speed of 80 + 70 = 150 km/h, so they meet after exactly 2 hours, and since the fly flies at a constant 200 km/h for that entire 2 hours, it covers 400 km, regardless of how many times it turns around. What to listen for: does the child get lured into trying to sum the individual back-and-forth trips, or do they step back and realise that total distance is simply speed multiplied by total flying time, which sidesteps the infinite series completely - spotting that reframe is the entire point of the question.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N17",
@@ -218,7 +218,7 @@
     "question": "A shop increases the price of a jumper by 10%. A month later, they decrease the NEW price by 10%. Is the final price higher than, lower than, or the same as the original price? If the jumper started at £40, what is the final price to the nearest penny?",
     "answer": "£39.60 - lower than the original £40 by 40p.",
     "modelReasoningPath": "£40 x 1.10 = £44, then £44 x 0.90 = £39.60. What to listen for: almost every child's gut instinct is that a 10% rise followed by a 10% fall cancels out perfectly back to £40 - the key insight is that the second 10% is taken off a LARGER number (£44) than the first 10% was added to (£40), so the pound amount taken off in the second step is bigger than the pound amount added in the first, and the price must end up lower. A child who reasons this out in words before doing the arithmetic, rather than just calculating and hoping, is showing real numerical maturity.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N18",
@@ -231,7 +231,7 @@
     "question": "Pipe A can fill an empty tank on its own in 4 hours. Pipe B can fill the same tank on its own in 6 hours. A third pipe, C, can DRAIN a full tank on its own in 12 hours. If all three pipes are opened together on an empty tank at the same time, how long will it take to fill it completely?",
     "answer": "3 hours.",
     "modelReasoningPath": "Each pipe's rate is best thought of as a fraction of the tank filled (or emptied) per hour: Pipe A fills 1/4 of the tank per hour, Pipe B fills 1/6, and Pipe C empties 1/12. Adding these together with the correct sign - 1/4 + 1/6 minus 1/12 - gives 1/3 of the tank filled per hour, so the whole tank takes 3 hours. What to listen for: does the child treat pipe C's rate as NEGATIVE rather than simply ignoring it or adding it, since a draining pipe works against the filling pipes; children who confidently find a common denominator (twelfths work nicely here) across all three fractions are showing strong fluency.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N19",
@@ -244,7 +244,7 @@
     "question": "Five years ago, a mother was exactly four times as old as her daughter. In fifteen years' time, the mother will be exactly twice as old as her daughter will be then. How old is each of them right now?",
     "answer": "The mother is 45 and the daughter is 15.",
     "modelReasoningPath": "Setting the mother's current age as m and the daughter's as d gives two equations from the two clues: m - 5 = 4(d - 5), and m + 15 = 2(d + 15); solving them together gives d = 15 and m = 45, and it's worth checking both original clues against those numbers to confirm (five years ago they were 40 and 10, and 40 is indeed four times 10; in fifteen years they'll be 60 and 30, and 60 is indeed twice 30). What to listen for: a child who sets up two separate equations using both pieces of information, rather than trying to guess-and-check blindly, is thinking algebraically even if they don't use formal notation; watch whether they remember to apply the time shift (five years ago, fifteen years ahead) to BOTH people's ages consistently.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N20",
@@ -257,7 +257,7 @@
     "question": "A bacteria colony doubles in size every hour. It starts with a single bacterium at exactly 12 noon. At exactly 6pm, a scientist removes precisely half of the entire colony for an experiment, and the remaining half continues doubling every hour, exactly as before. How many bacteria are there at exactly 9pm?",
     "answer": "256.",
     "modelReasoningPath": "From noon to 6pm is six hours of doubling starting from 1, giving 2^6 = 64 bacteria; removing half leaves 32, and then three more hours of doubling from 7pm to 9pm turns 32 into 32 x 2 x 2 x 2 = 256. What to listen for: does the child correctly treat the halving event as a one-off reset partway through, rather than either ignoring it or incorrectly restarting the whole doubling process from 1; children who work through the timeline hour by hour, marking the 6pm event clearly as a separate step, are showing careful, structured thinking rather than rushing to a single big multiplication.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N21",
@@ -270,7 +270,7 @@
     "question": "What is the angle between the hour hand and the minute hand of a clock at exactly 3:40? Give an exact answer in degrees, not just a rough estimate - and be careful, the hour hand isn't exactly where you might first assume.",
     "answer": "130 degrees.",
     "modelReasoningPath": "The minute hand at 40 minutes is at 40 x 6 = 240 degrees around the clock face. The hour hand's position is the trap: at 3:40 it is NOT sitting exactly on the 3, it has moved two-thirds of the way toward the 4, since 40 minutes is two-thirds of an hour; the hour hand sits at 90 degrees (for the 3) plus 40/60 of 30 degrees, giving 90 + 20 = 110 degrees. The gap between 240 and 110 is 130 degrees. What to listen for: does the child realise the hour hand keeps moving continuously throughout the hour rather than jumping instantly from number to number - children who place the hour hand exactly on the 3 are making the single most common error in this classic problem, and catching themselves on it is a great sign.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N22",
@@ -283,7 +283,7 @@
     "question": "A five-digit number looks like 3 7 _ 9 2, where the middle digit is missing. The whole number is exactly divisible by 9. What is the missing digit?",
     "answer": "6.",
     "modelReasoningPath": "A whole number is divisible by 9 exactly when the sum of its digits is divisible by 9; here the known digits sum to 3+7+9+2 = 21, so the missing digit must bring that total up to the next multiple of 9, which is 27, meaning the missing digit is 6. What to listen for: does the child recall or reconstruct the digit-sum divisibility rule for 9 themselves, and do they check that 6 is a valid single digit (0-9) rather than stopping at the first multiple of 9 they find without checking it's achievable; a child who says 'it has to be 6 because 21 plus 6 is 27, and the next option up, 36, would need digit 15 which isn't a real digit' is reasoning completely rigorously.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N23",
@@ -296,7 +296,7 @@
     "question": "You have 300ml of fruit squash that is 20% real juice. You want to mix it with a stronger squash that is 60% real juice, to end up with a mixture that is exactly 35% real juice. How many millilitres of the 60% squash do you need to add?",
     "answer": "180ml.",
     "modelReasoningPath": "The amount of pure juice has to balance on both sides of the mix: the juice from the first squash (20% of 300ml = 60ml) plus the juice from the added squash (60% of the unknown amount) must equal 35% of the TOTAL new volume, which itself grows as you add more squash. Setting that up as 60 + 0.6x = 0.35(300 + x) and solving gives x = 180ml, and checking it back - 480ml total containing 60 + 108 = 168ml of juice, which is indeed 35% of 480 - confirms it. What to listen for: does the child realise that the target percentage applies to the FINAL combined volume, not just the added amount, since that's the step most likely to trip someone up; trial and improvement with a few sensible guesses is a reasonable fallback if algebra isn't available.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N24",
@@ -309,7 +309,7 @@
     "question": "A pond's population of fish grows by 50% every year. There are 40 fish in the pond right now, and the pond can only support a maximum of 500 fish before it becomes dangerously overcrowded. After how many WHOLE years will the population first exceed 500 fish?",
     "answer": "7 years (after 6 years there are about 456 fish, still under 500; after 7 years there are about 683, which exceeds 500).",
     "modelReasoningPath": "Rather than trying to solve this with a formula, the natural approach is to grow the population year by year: 40, 60, 90, 135, 202.5, 303.75, 455.6, 683.4 - watching carefully for the first year the total crosses 500. What to listen for: does the child track the running total accurately across seven multiplications without losing precision or rounding too aggressively partway through, since small rounding errors early on can shift the final answer by a year; a child who builds a clear table or list as they go, rather than trying to hold all the numbers in their head, is managing the complexity well.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N25",
@@ -322,7 +322,7 @@
     "question": "In a 400m race, at a certain moment Amy has run three-fifths of the distance while Ben, running the whole time alongside her, has run exactly half of the distance. If they both continue at those exact same steady speeds for the whole race, who wins, and by how many metres does the winner beat the other?",
     "answer": "Amy wins, by 200/3 metres, which is about 66.7 metres.",
     "modelReasoningPath": "Since both runners have been running for the same amount of time when we compare them, the ratio of the distances they've covered - 240m for Amy against 200m for Ben - is also the ratio of their SPEEDS, which simplifies to 6:5. In the time it takes Amy to finish the full 400m, Ben, running at five-sixths of Amy's speed, would only have covered five-sixths of 400m, which is about 333.3m, leaving him roughly 66.7m short when Amy crosses the line. What to listen for: does the child realise this is fundamentally a question about comparing SPEEDS rather than just subtracting the two distances given in the question (240 - 200 = 40, a very tempting but wrong shortcut); recognising that equal time means the distance ratio equals the speed ratio is the key leap.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N26",
@@ -335,7 +335,7 @@
     "question": "I think of a number. I double it, then add 6, then divide the whole result by 2, and finally subtract my original number. I end up with 3. Was that a coincidence, or would I always end up with 3, no matter what number I started with? Explain your answer, and confirm what final result you'd always reach.",
     "answer": "It always gives 3, no matter what number you start with - not a coincidence at all.",
     "modelReasoningPath": "Trying it with your own number - say, starting with 10: double to 20, add 6 to get 26, divide by 2 to get 13, subtract the original 10, and you land on 3 again - is a good first move, but the real test is whether the child can explain WHY, ideally by tracking a general starting number n through each step: doubling gives 2n, adding 6 gives 2n + 6, dividing by 2 gives n + 3, and subtracting the original n leaves exactly 3 regardless of what n was. What to listen for: does the child try a second or third example unprompted to test whether it's really always true, and can they push beyond 'it worked for my examples' toward an explanation of why the original number necessarily cancels itself out at the end.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N27",
@@ -348,7 +348,7 @@
     "question": "Ollie and Priya both play football all season, split into two halves. In the FIRST half of the season, Ollie scores 4 goals from 10 shots, and Priya scores 35 goals from 100 shots. In the SECOND half of the season, Ollie scores 25 goals from 100 shots, and Priya scores 2 goals from 10 shots. Work out each player's scoring percentage in each half separately - who is better in each half? Then work out each player's TOTAL scoring percentage across the WHOLE season, combining all their shots together. Who actually has the better overall rate - and does that surprise you?",
     "answer": "Ollie has the better rate in BOTH halves individually (40% vs 35% in the first half, 25% vs 20% in the second half). But combined across the whole season, Priya has the better overall rate: 33.6% (37 goals from 110 shots) versus Ollie's 26.4% (29 goals from 110 shots).",
     "modelReasoningPath": "This is a genuine example of Simpson's Paradox, where combining two sets of data can completely flip which comparison looks better, because the underlying group sizes (10 shots versus 100 shots) are wildly uneven between the two halves for each player. Ollie's strong 25% in the second half is built on a much bigger sample (100 shots) than his 40% in the first half (only 10 shots), so his overall rate gets dragged down toward his weaker large-sample number, while Priya's overall rate benefits from the reverse pattern. What to listen for: this should genuinely surprise a sharp child, since it feels logically impossible for someone to be worse in every individual half yet better overall - a strong candidate notices that the number of shots taken in each half is very different between the two players, and starts to suspect that's the reason, even without fully deriving the mechanism.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N28",
@@ -361,7 +361,7 @@
     "question": "After a 15% discount, a bicycle costs £272 in the sale. What was the original price of the bicycle before the discount was applied?",
     "answer": "£320.",
     "modelReasoningPath": "A 15% discount leaves 85% of the original price, so £272 represents 85% of the unknown original price; dividing 272 by 0.85 gives 320, and checking it back confirms 320 x 0.85 = 272. What to listen for: the common mistake here is to take 15% of £272 and ADD it back on, rather than recognising that £272 is only 85% of the ORIGINAL, unknown price - a child who explicitly says 'I need to find what number, when 85% is taken, gives 272' before diving into the arithmetic is framing the problem correctly from the start.",
-    "questionType": "Numerical Reasoning"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N29",
@@ -374,7 +374,7 @@
     "question": "A triangle's interior angles always add up to 180 degrees. A quadrilateral's always add up to 360 degrees. A pentagon's always add up to 540 degrees. Do you notice a pattern as the number of sides increases? Using your pattern, what would the interior angles of a 10-sided shape add up to? And can you explain WHY the total increases by that fixed amount every time you add a side?",
     "answer": "1,440 degrees. The pattern is (number of sides minus 2) x 180 degrees, increasing by 180 for every extra side.",
     "modelReasoningPath": "The totals go 180, 360, 540... increasing by exactly 180 each time a side is added, so a decagon gives (10-2) x 180 = 1,440 degrees. The WHY is the more interesting part: from any single vertex of any polygon, you can draw straight lines to every other vertex, splitting the whole shape into a fan of triangles, and there are always exactly (number of sides minus 2) triangles in that fan, each contributing 180 degrees. What to listen for: does the child move beyond simply extending the numerical pattern (180, 360, 540, 720...) toward actually explaining the triangle-splitting reason, ideally by imagining or sketching a pentagon split into three triangles from one corner.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N30",
@@ -387,7 +387,7 @@
     "question": "Look at this pattern: 1³ = 1. 1³ + 2³ = 9. 1³ + 2³ + 3³ = 36. 1³ + 2³ + 3³ + 4³ = 100. What do you notice about each of these totals? Without adding up five separate cubes one by one, can you predict what 1³ + 2³ + 3³ + 4³ + 5³ equals?",
     "answer": "225. Each total is itself a perfect square (1, 9, 36, 100 are 1², 3², 6², 10²), and those square roots are exactly the triangular numbers (1, 3, 6, 10). The next triangular number is 15 (1+2+3+4+5), so the prediction is 15² = 225.",
     "modelReasoningPath": "The first thing to spot is that every total is a perfect square - a child who says 'those are all square numbers' has found the surface pattern. The deeper, more impressive observation is noticing that the square ROOTS themselves (1, 3, 6, 10) are the triangular numbers, which are exactly the running totals you'd get by adding 1+2+3+4+... - once that connection is made, predicting the fifth term becomes finding the fifth triangular number (15) and squaring it, entirely without adding five cubes together. What to listen for: does the child spot just the 'these are squares' layer, or do they push further to connect the square roots to a second, more elegant pattern - the second is genuinely exceptional for this age group.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N31",
@@ -400,7 +400,7 @@
     "question": "A square has 2 diagonals. A pentagon has 5 diagonals. A hexagon has 9 diagonals. Do you see a pattern in how much the number of diagonals increases each time you add a side? Using your own reasoning, rather than a formula you might already know, how many diagonals does a 10-sided decagon have?",
     "answer": "35.",
     "modelReasoningPath": "The totals go 2, 5, 9, and the DIFFERENCES between them go up by one extra each time - 3, then 4 - so continuing that pattern of growing differences (5, 6, 7, 8) from hexagon (9) all the way to decagon gives 9, 14, 20, 27, 35. What to listen for: does the child spot the pattern in the differences rather than just the raw totals, and can they explain WHY the increase grows by one more each time - each new vertex you add can connect to every OTHER vertex except itself and its two neighbours, and that count of 'other vertices minus three' grows by exactly one with each new side, which is the underlying reason the differences themselves form a rising pattern.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N32",
@@ -413,7 +413,7 @@
     "question": "Add up the digits of 18. You get 9. Try 27, 45, 63, 108, and 999. What do you notice about the digit sums of multiples of 9? Can you explain WHY this always happens, thinking about what each digit in a number is actually worth?",
     "answer": "The digit sum of any multiple of 9 is always itself a multiple of 9 (and if you keep adding the digits of the result until you get a single digit, you always land on exactly 9).",
     "modelReasoningPath": "Every place value in our number system - the tens place, the hundreds place, the thousands place - is worth exactly one MORE than a multiple of 9 (10 = 9+1, 100 = 99+1, 1000 = 999+1), so any number is always exactly as many multiples of 9 above its own digit sum as those place values contribute; this means a number and its digit sum always differ by a multiple of 9, so if the number itself IS a multiple of 9, its digit sum must be too. What to listen for: most children will confidently spot the pattern from examples; the real challenge is the explanation, and even a partial insight like 'each 10 is basically a 9 plus 1 left over' is a genuinely strong step toward the full place-value argument.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N33",
@@ -426,7 +426,7 @@
     "question": "You want to cut a circular pizza using straight cuts all the way across, and you want to end up with as many separate pieces as possible. With 0 cuts, you have 1 piece. With 1 cut, you have 2 pieces. With 2 cleverly placed cuts, you can get 4 pieces. With 3 clever cuts, you can get 7 pieces. Do you see a pattern in how many EXTRA pieces each new cut adds? Using that pattern, what is the maximum number of pieces you could get with 6 straight cuts?",
     "answer": "22 pieces. Each new cut adds one MORE piece than the previous cut added: cut 1 adds 1 piece, cut 2 adds 2, cut 3 adds 3, and so on, so cuts 4, 5, and 6 add 4, 5, and 6 pieces respectively, giving 7 + 4 + 5 + 6 = 22.",
     "modelReasoningPath": "The sequence of totals is 1, 2, 4, 7, and the gaps between them are 1, 2, 3 - a rising pattern where each new cut adds exactly one more piece than the cut before it did. The reason is genuinely elegant: a new straight cut that crosses ALL of the previous cuts (at distinct points, never through an existing crossing) gets divided by those crossings into several segments, and each of those segments slices exactly one existing region into two, so a cut that crosses k previous cuts always adds exactly k+1 new pieces. What to listen for: spotting the rising-differences pattern (1, 2, 3, 4...) from the examples is a strong result on its own; genuinely explaining WHY the pattern rises - connecting it to how many times the new cut crosses the earlier ones - is an exceptional level of insight for this age group, and should be credited highly wherever it appears, even partially.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N34",
@@ -439,7 +439,7 @@
     "question": "Look at the last digit of each power of 3: 3¹ = 3, 3² = 9, 3³ = 27 (last digit 7), 3⁴ = 81 (last digit 1), 3⁵ = 243 (last digit 3 again). What do you notice about the last digits as the powers keep going? Using that pattern, what will the last digit of 3⁴¹ be - without working out the whole enormous number?",
     "answer": "3. The last digits repeat in a cycle of four: 3, 9, 7, 1, then back to 3, 9, 7, 1, forever. Since 41 = 40 + 1, and 40 is a whole number of complete cycles of four, 3⁴¹ lands in the same position as 3¹, giving a last digit of 3.",
     "modelReasoningPath": "The last digit repeats with a cycle length of exactly four (3, 9, 7, 1), and predicting the last digit of any power just becomes a matter of working out where that power falls within the repeating cycle - here, since 41 divided by 4 leaves a remainder of 1, the last digit of 3⁴¹ matches the last digit of 3¹, which is 3. What to listen for: does the child spot that the last digits repeat at all, rather than assuming they follow no pattern or trying to compute the actual enormous number; using the remainder when dividing the exponent by the cycle length to locate the right position in the cycle is the key transferable skill here, useful well beyond this specific question.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N35",
@@ -452,7 +452,7 @@
     "question": "On a 1x1 grid there's obviously just 1 square. On a 2x2 grid of unit squares, if you count EVERY square you can find, including the one big 2x2 square itself, there are 5 in total. On a 3x3 grid, there are 14 squares in total once you count every size. Can you find the pattern connecting grid size to total number of squares, and use it to work out how many total squares are on a full 8x8 chessboard, counting every possible size from 1x1 up to the whole 8x8 board?",
     "answer": "204 squares in total.",
     "modelReasoningPath": "The key structural insight is that on an n-by-n grid, the number of squares of a particular SIZE k-by-k is (n minus k plus 1) squared, because that's how many different positions a k-by-k square can slide into; summing that over every size from 1x1 up to n-by-n gives the total, which for a 3x3 grid is 9 + 4 + 1 = 14, matching the given example, and for an 8x8 board is 64 + 49 + 36 + 25 + 16 + 9 + 4 + 1 = 204. What to listen for: does the child recognise that squares of DIFFERENT sizes need counting separately and then added together, rather than just counting the small unit squares; systematically working through each size in turn (how many 1x1s, how many 2x2s, and so on) is a strong, structured approach even without knowing a formula in advance.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N36",
@@ -465,7 +465,7 @@
     "question": "Triangular numbers are formed by adding 1, then 2, then 3, and so on: 1, 3, 6, 10, 15, 21, 28, 36. Looking at whether each one is odd or even, you get: odd, odd, even, even, odd, odd, even, even. Does this pattern of repeating in pairs continue forever? Can you explain why, using the fact that the nth triangular number equals n times (n+1), divided by 2?",
     "answer": "Yes, the odd-odd-even-even pattern continues forever, repeating with a period of four in n.",
     "modelReasoningPath": "Using the formula n(n+1)/2, whether the result is odd or even depends on where n falls in a cycle of four: when n leaves a remainder of 1 or 2 when divided by 4, the triangular number comes out odd, and when n leaves a remainder of 3 or 0, it comes out even, which exactly matches and explains the observed odd-odd-even-even repeating pattern. What to listen for: does the child engage with the formula rather than just extending the pattern by listing more terms; even a partial explanation, such as noticing that n(n+1) is always the product of one even and one odd number, and that dividing by 2 is where the real parity question gets decided, shows they're reasoning about the underlying structure rather than just pattern-spotting from a list.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N37",
@@ -478,7 +478,7 @@
     "question": "1/7 written as a decimal is 0.142857142857142857..., repeating forever in blocks of six digits: 142857. Without doing long division, what are the first three digits after the decimal point of 5/7? Here's a hint: think about how 5/7 relates to 1/7, and what multiplying by 5 might do to that repeating block of six digits.",
     "answer": "714 - since 5/7 = 0.714285714285..., the first three digits after the decimal point are 7, 1, 4.",
     "modelReasoningPath": "Every seventh from 1/7 to 6/7 uses exactly the same six digits, 142857, just starting from a different point in that repeating cycle - 1/7 starts at '1', 2/7 starts at '2', and so on round the cycle, which is one of the genuinely striking curiosities of the number 7. Once you know that 5/7 must be some rotation of 142857, spotting that it starts with the digit '7' (since that's where the cycle happens to land for the multiplier 5) gives the first three digits as 714. What to listen for: this doesn't require the child to derive WHY the cycling happens, only to notice and use the pattern once it's pointed out - does the child accept the hint and experiment with where '5' might fit into the rotating block, showing curiosity and pattern-use rather than needing the whole answer handed to them.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N38",
@@ -491,7 +491,7 @@
     "question": "Here are the first ten prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29. Look at the GAPS between each pair of consecutive primes: 1, 2, 2, 4, 2, 4, 2, 4, 6. Do you think these gaps follow a simple, predictable pattern that continues forever, or do you think they behave more randomly and unpredictably? What does your answer tell you about how easy or hard it would be to predict exactly where the very next prime number after, say, a billion, will be?",
     "answer": "There is no simple repeating pattern in the gaps between primes - they behave irregularly, and predicting exactly where the next prime will appear is genuinely one of the hardest open problems in mathematics.",
     "modelReasoningPath": "This is deliberately an open question without a tidy numerical answer, because the honest truth is that prime gaps do NOT follow any known simple pattern - they can be small or surprisingly large, seemingly unpredictably, and understanding their true behaviour remains an active area of mathematical research, including famous unsolved questions like the Twin Prime Conjecture. What to listen for: this question is really testing intellectual honesty and comfort with genuine uncertainty - a child who tries to force a fake pattern onto the numbers just to give a tidy answer is showing weaker instincts than one who says 'I don't see an obvious repeating rule here, and I don't think there necessarily is one', which is in fact the mathematically correct and much harder-to-arrive-at conclusion.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N39",
@@ -504,7 +504,7 @@
     "question": "Take any three consecutive whole numbers, for example 4, 5, and 6. Square the middle one: 5² = 25. Now multiply the two outer numbers together: 4 x 6 = 24. The square is exactly 1 more than that product. Try it with a different set of three consecutive numbers. Can you explain why this is always true, for ANY three consecutive whole numbers?",
     "answer": "Yes, it's always true - the square of the middle number is always exactly 1 more than the product of the two numbers either side of it.",
     "modelReasoningPath": "Calling the middle number n, the two outer numbers are n-1 and n+1, and multiplying them together gives (n-1)(n+1), which expands to n² - 1 - one less than the middle number squared, in every single case, for any value of n at all. What to listen for: most children will happily verify the pattern with two or three more examples and declare it true; the more impressive step is representing the three numbers algebraically (even informally, like 'one less, the number, one more') and showing that the outer product is always exactly one less than the middle square, rather than relying purely on examples to justify a general claim.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N40",
@@ -517,7 +517,7 @@
     "question": "Here are a few rows of a well-known triangular pattern of numbers, where each number is the sum of the two numbers diagonally above it. Row 0: 1, sum = 1. Row 1: 1, 1, sum = 2. Row 2: 1, 2, 1, sum = 4. Row 3: 1, 3, 3, 1, sum = 8. Row 4: 1, 4, 6, 4, 1, sum = 16. What do you notice about how the row sums grow? Predict the sum of Row 10, without writing out or adding up all the numbers in that row.",
     "answer": "1,024. The row sums double every time - they are the powers of 2 (1, 2, 4, 8, 16...), so Row 10's sum is 2^10 = 1,024.",
     "modelReasoningPath": "The row sums 1, 2, 4, 8, 16 are clearly doubling each time, so Row 10 should be 2^10, which is 1,024. What to listen for: spotting the doubling pattern in the sums is the accessible first layer; a genuinely strong candidate goes further and tries to explain WHY it doubles - every number in a row gets used TWICE when building the next row (once for the entry to its lower-left, once for the entry to its lower-right), so the total of the next row is naturally always exactly double the row before it, which is worth drawing out with a follow-up question if the child stops at just stating the pattern.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N41",
@@ -530,7 +530,7 @@
     "question": "You probably know the sum of the first n odd numbers is always a perfect square: 1, 1+3=4, 1+3+5=9, and so on. What about the sum of the first n EVEN numbers instead - 2, then 2+4=6, then 2+4+6=12, then 2+4+6+8=20? Find a simple pattern or formula connecting each total to n, and use it to state the sum of the first 15 even numbers, without adding them all up one by one.",
     "answer": "240. The sum of the first n even numbers is always n x (n+1). For n = 15, that's 15 x 16 = 240.",
     "modelReasoningPath": "Checking the pattern against the given totals: for n=4, 4x5=20, which matches; for n=3, 3x4=12, which also matches - so the sum of the first 15 even numbers is 15 x 16 = 240. What to listen for: does the child notice the connection to the odd-number pattern they already know, perhaps reasoning that each even number is just one more than the corresponding odd number, so the running totals should be a little bigger than the perfect squares in a predictable way; spotting n x (n+1) directly from the given totals through trial is also a perfectly valid route.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N42",
@@ -543,7 +543,7 @@
     "question": "A chessboard has 64 squares, alternating black and white, 32 of each colour. Imagine removing exactly two OPPOSITE corner squares - say the top-left and bottom-right - both of which happen to be the SAME colour. Is it possible to completely cover the remaining 62 squares using 31 rectangular dominoes, where each domino covers exactly two neighbouring squares? Explain your reasoning, not just your final guess.",
     "answer": "No, it is impossible.",
     "modelReasoningPath": "Any domino placed on the board, however it's oriented, always covers one black square and one white square, because any two neighbouring squares on a chessboard are always opposite colours; so 31 dominoes would always cover exactly 31 black squares and 31 white squares, in perfect balance. But removing two same-coloured corners leaves an unbalanced board - 30 squares of one colour and 32 of the other - and no arrangement of dominoes, however clever, can ever cover an unbalanced board, since every single domino locks in one of each colour. What to listen for: does the child try to solve this by physically imagining or attempting a tiling (which will eventually fail but doesn't prove impossibility), or do they reach for the colour-counting argument that PROVES it can never work, regardless of how cleverly you try; reaching that invariant argument, rather than just failing at examples, is the mark of real mathematical proof-thinking.",
-    "questionType": "Pattern, Proof & Explanation"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N43",
@@ -556,7 +556,7 @@
     "question": "A farmer needs to cross a river with a fox, a chicken, and a sack of grain. His boat can only carry himself plus ONE of the three at a time. If left alone together WITHOUT the farmer, the fox will eat the chicken, and the chicken will eat the grain - but the fox has no interest in the grain. What is the fewest number of river crossings (counting each trip across, in either direction, separately) the farmer needs to get everything across safely?",
     "answer": "7 crossings.",
     "modelReasoningPath": "The key realisation is that the farmer sometimes has to bring something BACK across the river he's already delivered, which feels counterintuitive at first: take the chicken over, return alone, take the fox over, but then bring the CHICKEN back (since fox and chicken can't be left alone together), take the grain over, return alone, then finally bring the chicken over one last time - seven crossings in total. What to listen for: does the child recognise the danger of leaving the fox with the chicken, or the chicken with the grain, at every single stage of their proposed plan, including in-between states; the moment of real insight is usually when a child realises their first attempt fails and asks 'wait, can I bring something back with me?' rather than assuming every crossing must move something new forward.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N44",
@@ -569,7 +569,7 @@
     "question": "You have 9 identical-looking gold coins. Exactly one of them is fake and very slightly LIGHTER than the other 8 genuine coins, which all weigh exactly the same as each other. You have a simple two-pan balance scale, with no weights - it only tells you which side is heavier, or whether they balance. What is the fewest number of weighings needed to GUARANTEE finding the fake coin, no matter which one it is?",
     "answer": "2 weighings.",
     "modelReasoningPath": "Split the 9 coins into three groups of 3 and weigh two of the groups against each other; if they balance, the fake is in the group left aside, and if they don't, the fake is in the lighter group - either way, this first weighing narrows the search down from 9 coins to just 3. The second weighing then takes those 3 remaining suspect coins and weighs any two of them against each other: if they balance, the untested third coin is the fake, and if they don't, the lighter one is the fake. What to listen for: does the child realise that splitting into THREE groups, not two, is the efficient move, since a balance scale genuinely gives three possible outcomes each time (left heavier, right heavier, or balanced) - a child who instinctively reaches for groups of 3 rather than groups of 4-and-a-bit is showing real insight into how much information one weighing can actually provide.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N45",
@@ -582,7 +582,7 @@
     "question": "Two players take turns. Starting from a running total of 0, each turn a player adds either 1 or 2 to the total and says the new total out loud. Whoever is FORCED to say the number 21 loses the game. If you go first, can you guarantee a win with the right strategy? What should your very first move be?",
     "answer": "Yes, the first player can always guarantee a win. The first move should be to add 2 (reaching a total of 2). From then on, always respond so the total after your turn is one of 2, 5, 8, 11, 14, 17, or 20 - each of those is exactly 2 more than a multiple of 3 - which eventually forces the opponent to be the one who has to say 21.",
     "modelReasoningPath": "Working backwards from the end is the way in: whoever is forced to say the number 20 has already lost, because their only legal move from there is to add 1 and say 21, so 20 is a 'bad' total to be the one moving FROM; from 19, though, you can safely jump to 20 by adding just 1, forcing your opponent into that bad spot, so 19 is a 'good' total to hold. Continuing this backward logic reveals that every total which is exactly 2 more than a multiple of 3 (2, 5, 8, 11, 14, 17, 20) is a losing spot for whoever has to move from it, so the winning strategy is to always land on one of those totals yourself, starting with the very first move. What to listen for: nobody is expected to derive the full mod-3 pattern unprompted, but a child who plays the game a few times and starts to notice 'if I can force them onto certain numbers, I always seem to win' is engaging with genuine game-theoretic reasoning; credit generously for any structured attempt to work backwards from 21 rather than just guessing moves forward.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N46",
@@ -595,7 +595,7 @@
     "question": "You have two unmarked jugs: one holds exactly 5 litres, the other exactly 3 litres. Neither jug has any markings on it, but you have an unlimited supply of water and can fill a jug completely, empty a jug completely, or pour from one jug into the other until either the source is empty or the destination is full. What is the fewest number of steps needed to end up with EXACTLY 4 litres of water in the 5-litre jug?",
     "answer": "6 steps: fill the 5-litre jug; pour it into the 3-litre jug until the 3-litre jug is full (leaving 2 litres in the 5-litre jug); empty the 3-litre jug; pour the remaining 2 litres into the 3-litre jug; refill the 5-litre jug completely; top up the 3-litre jug from the 5-litre jug (which only needs 1 more litre to fill), leaving exactly 4 litres in the 5-litre jug.",
     "modelReasoningPath": "The trick that unlocks this whole family of puzzles is realising that pouring from a full jug into a partially-sized jug LEAVES a specific, useful, non-obvious amount behind - here, pouring the full 5 litres into the empty 3-litre jug leaves exactly 2 litres behind, and that 2-litre amount becomes the useful building block for reaching 4 litres later. What to listen for: does the child try random pours without a plan, or do they think ahead about what amounts are actually reachable using jugs of size 5 and 3 (which, cleverly, must always be reachable in whole litres since 5 and 3 share no common factor bigger than 1); a child who explicitly says 'I want to try to make some small leftover amount I can build on' is thinking about the structure of the problem, not just trial and error.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N47",
@@ -608,7 +608,7 @@
     "question": "You have two pieces of rope and a lighter. Each rope takes EXACTLY 60 minutes to burn all the way from one end to the other - but each rope burns unevenly along its length, so you CANNOT assume that half of a rope burns in 30 minutes, or that any particular section burns at any particular speed. How can you use only these two ropes and the lighter to measure exactly 45 minutes?",
     "answer": "Light Rope A at BOTH ends at the same time, and Rope B at just ONE end, all starting at the same moment. Rope A will finish burning after exactly 30 minutes, no matter how unevenly it burns, because the two flames are always eating through the rope's total burn-time at double speed together. The instant Rope A finishes, immediately light the OTHER end of Rope B too. Rope B, now burning from both ends, will finish its remaining unburned portion in exactly half of whatever time was left - which was 30 minutes' worth, so it finishes 15 minutes later. 30 + 15 = 45 minutes exactly.",
     "modelReasoningPath": "The crucial insight is that lighting a rope from BOTH ends always halves its total burning time to 30 minutes, regardless of how unevenly it burns along its length, because the two flames are jointly consuming the rope's entire 60 minutes' worth of burn-time twice as fast; this insight can then be reapplied to whatever is LEFT of a partially-burned rope, since that remaining piece still represents some fixed amount of burn-time that gets halved the moment you light its other end too. What to listen for: does the child correctly separate the idea of 'physical length' from 'burn time', since it's tempting but wrong to think about the ropes in terms of centimetres burned rather than minutes remaining; recognising that the both-ends trick can be applied a SECOND time, partway through, to a rope that's already partially burned, is the genuinely creative leap this puzzle is built around.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N48",
@@ -621,7 +621,7 @@
     "question": "Painter A can paint a fence alone in 6 hours. Painter B can paint the same fence alone in 3 hours. They start painting together, but after exactly 1 hour, Painter B has to leave, and Painter C joins to help Painter A finish. Painter C alone would take 4 hours to paint the whole fence. How much LONGER do Painters A and C need, working together, to finish the remaining fence?",
     "answer": "1.2 hours, which is 1 hour and 12 minutes.",
     "modelReasoningPath": "In the first hour, A and B working together complete 1/6 + 1/3, which is 1/2 of the fence, leaving the other half still to do. A and C's combined rate is 1/6 + 1/4, which comes to 5/12 of the fence per hour, so finishing the remaining 1/2 of the fence at that combined rate takes (1/2) divided by (5/12), which works out to 6/5 hours, or 1 hour 12 minutes. What to listen for: does the child correctly treat this as two separate stages with two different combined rates, rather than trying to average all three painters' speeds together across the whole job; converting the final fractional hour (1/5 of an hour) into minutes at the end, rather than leaving an awkward decimal, shows good number sense.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N49",
@@ -634,7 +634,7 @@
     "question": "I am thinking of a whole number between 1 and 100, inclusive. Each time you guess, I will only ever tell you 'higher', 'lower', or 'correct'. What is the smallest number of guesses you need to GUARANTEE finding my number, no matter what it is, if you guess in the smartest possible way?",
     "answer": "7 guesses.",
     "modelReasoningPath": "The smartest strategy always guesses roughly the MIDDLE of whatever range is still possible, since that halves the number of remaining candidates with every single guess, regardless of the answer; starting from 100 possibilities, halving repeatedly goes 100, 50, 25, 13 (rounding), 7, 4, 2, 1 - which takes 7 halvings to guarantee narrowing down to a single number. What to listen for: does the child instinctively reach for guessing near the middle of the range rather than starting at one end and counting up, and can they articulate WHY guessing the middle is better - because it guarantees the biggest possible reduction in remaining possibilities no matter which way the answer turns out to be, which is the core idea behind binary search.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N50",
@@ -647,7 +647,7 @@
     "question": "You're standing before two doors. One leads to treasure, the other to nothing at all. Two guards stand nearby, one beside each door - one guard ALWAYS tells the truth, the other ALWAYS lies, but you don't know which guard is which, or which guard stands by which door. You may ask exactly ONE question, directed at exactly ONE guard of your choosing, to guarantee you find the treasure door. What question do you ask?",
     "answer": "Ask either guard: 'If I asked the OTHER guard which door leads to the treasure, what would they say?' Then choose the OPPOSITE door to whichever one they name.",
     "modelReasoningPath": "This works because the question forces a double layer of truth-bending no matter which guard you happen to ask: if you ask the honest guard, they will truthfully report what the liar WOULD say, which is the wrong door, so they end up naming the wrong door; if you ask the liar instead, they will lie about what the honest guard would truthfully say, which again means naming the wrong door - either way, the answer you get always points to the WRONG door, so choosing the opposite door always gets you the treasure. What to listen for: don't expect a child to land on the exact classic phrasing unprompted, but genuine partial credit goes to anyone who realises the question needs to somehow involve BOTH guards at once, or who recognises that asking about what the OTHER guard would say is a way of using the liar's lie to cancel itself out; simply guessing a plausible-sounding question without explaining why it forces a guaranteed correct answer shows weaker reasoning.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N51",
@@ -660,7 +660,7 @@
     "question": "You need to toast 3 slices of bread using a toaster that holds exactly 2 slices at a time, side by side. Toasting ONE side of ONE slice takes exactly 30 seconds, and every slice needs BOTH of its sides toasted. You can take slices out and swap them at any time, and put a different slice into a free slot whenever you like. What is the minimum total time needed to fully toast all 3 slices, both sides each?",
     "answer": "90 seconds. One schedule that achieves this: in the first 30 seconds, toast side 1 of slice A and side 1 of slice B together. In the next 30 seconds, toast side 2 of slice A and side 1 of slice C together. In the final 30 seconds, toast side 2 of slice B and side 2 of slice C together. Every slice gets both sides toasted, and only 3 rounds of 30 seconds are used.",
     "modelReasoningPath": "The naive approach - toast two slices completely, then toast the third slice on its own - wastes an entire empty slot for 60 seconds while the third slice toasts alone, using 120 seconds in total; the clever schedule instead makes sure BOTH slots are always doing useful work in every single 30-second round, by having the third slice's first side toast alongside the second side of an already-started slice, rather than leaving a slot empty. What to listen for: does the child assume 120 seconds is unavoidable because '3 slices, 2 at a time, means one has to wait for a full round on its own', or do they hunt for a cleverer schedule where no toaster slot ever sits empty; explicitly checking that every slice genuinely gets BOTH sides done by the end is an important verification step that's easy to skip.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N52",
@@ -673,7 +673,7 @@
     "question": "An ant sits at one corner of a rectangular box that is 4cm long, 3cm wide, and 3cm tall. It needs to crawl along the OUTSIDE surface of the box, never leaving the surface, to reach the corner diagonally opposite. What is the length of the shortest possible path it can crawl? You don't need to compute a square root by hand - just set up the calculation and describe your reasoning clearly.",
     "answer": "The square root of 52 centimetres, which is approximately 7.21cm.",
     "modelReasoningPath": "Since the ant must stay on the surface, it has to crawl across TWO of the box's faces to get to the opposite corner, and the trick is to imagine unfolding those two faces flat, into one single flat shape, at which point the shortest path becomes a simple straight line, found using Pythagoras. There are three different pairs of faces the ant could cross, giving three different possible unfoldings, and the shortest overall route comes from unfolding across the two 3cm-by-3cm-ish faces together, giving a straight-line distance of the square root of (3+3)² + 4², which is the square root of 52. What to listen for: does the child realise a physical straight line ACROSS the surface isn't a straight line in 3D space, but becomes one once you flatten the relevant faces out - visualising or even sketching the unfolded net is a strong, concrete strategy; don't expect every child to identify all three possible unfoldings and compare them, but credit anyone who correctly sets up at least one valid unfolding using Pythagoras.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N53",
@@ -686,7 +686,7 @@
     "question": "Four houses sit along a single straight road, at distances of 0m, 10m, 25m, and 60m from the start of the road. The residents want to build ONE shared postbox somewhere along the road so that the TOTAL distance all four residents have to walk (all four distances added together) to reach it is as small as possible. Where should the postbox go, and what is the minimum possible total distance?",
     "answer": "Anywhere between the 2nd and 3rd houses along the road, from 10m to 25m - the total distance is exactly 75 metres everywhere in that range, and it gets worse the moment you step outside it.",
     "modelReasoningPath": "Most children's instinct is to place the postbox at the AVERAGE of the four positions, which would be 23.75m, but that's not actually where the true minimum lies - the correct target for minimising a TOTAL distance (as opposed to minimising something like total squared distance) is the median, not the mean, and with four houses there's a whole flat stretch between the two middle houses where the total distance stays exactly constant. Testing a point anywhere between 10m and 25m shows the total is always 75m, while testing points outside that range - even the seemingly sensible average of 23.75m is actually just barely inside the good zone, but true endpoints like 0m or 60m - always gives a bigger total. What to listen for: does the child guess the average first, then get curious enough to actually test it against a value nearer the middle houses, discovering that the average is not obviously best; recognising that there's a whole RANGE of equally good locations, not just one single best spot, is a genuinely sophisticated result to arrive at.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N54",
@@ -699,7 +699,7 @@
     "question": "A school locker system needs a 4-digit passcode using only the digits 1 to 9 (no zero allowed), where no digit can be repeated within the passcode, and the passcode must be EVEN, meaning its last digit must be even. How many different valid passcodes are possible in total?",
     "answer": "1,344.",
     "modelReasoningPath": "It helps to fix the trickiest condition first: the last digit must be even, and there are only 4 even digits available from 1 to 9 (2, 4, 6, 8), so there are 4 choices for that final position. Once that last digit is used up, there are 8 digits left to fill the first three positions, in order, with no repeats, giving 8 x 7 x 6 = 336 ways to arrange those, and multiplying the 4 choices for the last digit by the 336 arrangements for the rest gives 4 x 336 = 1,344 total passcodes. What to listen for: does the child correctly identify that the LAST digit is the most constrained one and choose to fix it first, rather than trying to work through the positions left-to-right and getting tangled up in which digits remain available for the final slot; multiplying independent choices together, in the right order, is the core combinatorial skill being tested here.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N55",
@@ -712,7 +712,7 @@
     "question": "Four friends need to cross a rickety bridge at night. They have only ONE torch between them, and the bridge can only hold at most TWO people at a time. Anyone crossing, whether alone or in a pair, must carry the torch, and it cannot be thrown across - it must be physically carried back by whoever returns. The four friends take 1, 2, 5, and 10 minutes respectively to cross alone, and when two people cross together, they must move at the SLOWER person's pace. What is the minimum total time for all four friends to get across?",
     "answer": "17 minutes.",
     "modelReasoningPath": "The naive approach - always sending the fastest person back and forth as an escort - actually wastes time, because it forces the two slowest people (5 and 10 minutes) to cross SEPARATELY, each dragging a return trip along with them; the genuinely clever move is to get the two slowest people to cross TOGETHER in a single trip, so their combined slowness only costs 10 minutes once, rather than being paid for twice. One optimal schedule: the two fastest (1 and 2) cross together (2 minutes), the fastest (1) returns with the torch (1 minute), the two slowest (5 and 10) cross together (10 minutes), the second-fastest (2) returns with the torch (2 minutes), and finally the two fastest (1 and 2) cross together again (2 minutes) - totalling 2+1+10+2+2 = 17 minutes. What to listen for: does the child eventually question their first instinct (always ferrying with the fastest person) once they notice the two slow people are costing time twice; arriving at the insight that pairing the two SLOWEST people together, even though it feels wasteful at first glance, is actually the efficient move, is the entire point of this classic puzzle, and deserves real credit even if the child can't nail the exact schedule unaided.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   },
   {
     "id": "MA-N56",
@@ -725,6 +725,6 @@
     "question": "You have a rectangular bar of chocolate made up of a 6-by-4 grid of small squares - 24 squares in total. You want to break it into all 24 individual squares, using snaps, where each snap takes ONE piece of any size (even a single row) and breaks it along a straight line into exactly two smaller pieces. What is the MINIMUM number of snaps needed, and does the order you snap in make any difference to that minimum?",
     "answer": "23 snaps, no matter what order you do them in or which pieces you choose to break at each step.",
     "modelReasoningPath": "Every single snap, whatever size the piece is and wherever the break happens to be, always takes exactly ONE piece and turns it into exactly TWO pieces - in other words, every snap increases the total number of separate pieces by precisely 1, always. Starting from a single whole bar (1 piece) and needing to reach 24 separate squares (24 pieces), you need exactly 23 increases of 1, which means exactly 23 snaps are needed, completely regardless of the strategy or order chosen. What to listen for: many children instinctively feel there must be a 'clever' way to break the bar in fewer snaps by breaking multiple rows at once - the crucial realisation is that a single snap can only ever act on ONE piece at a time, no matter how it's oriented, which is what pins the answer down as a fixed, unavoidable number rather than something to be optimised.",
-    "questionType": "Structured Problem Solving"
+    "dateAdded": "2026-08-23"
   }
 ]

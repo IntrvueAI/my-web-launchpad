@@ -23,6 +23,8 @@ interface StagedInterviewQuestion {
   question: string;
   answer: string;
   modelReasoningPath?: string;
+  /** ISO date (YYYY-MM-DD) the question was added to staging — lets old batches be filtered out. */
+  dateAdded?: string;
 }
 
 const ALL: StagedInterviewQuestion[] = [
@@ -41,6 +43,11 @@ const SUBJECT_LABELS: Record<string, string> = {
 };
 const PAGE_SIZE = 30;
 
+const formatBatchDate = (iso: string) => {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+};
+
 /**
  * Read-only review of a new thought-provoking / problem-solving interview question batch,
  * staged in src/data/interview-staging/ and NOT wired into the live interview bank
@@ -50,8 +57,17 @@ const PAGE_SIZE = 30;
  */
 export default function AdminInterviewQuestionReview() {
   const { isAdmin, isLoading } = useAdminStatus();
+
+  // Newest batch date first — every batch added later shows up ahead of older, already-reviewed ones.
+  const batchDates = useMemo(() => {
+    const d = new Set<string>();
+    ALL.forEach((q) => { if (q.dateAdded) d.add(q.dateAdded); });
+    return Array.from(d).sort((a, b) => b.localeCompare(a));
+  }, []);
+
   const [subject, setSubject] = useState<(typeof SUBJECTS)[number]>('All');
   const [topic, setTopic] = useState<string>('All');
+  const [dateFilter, setDateFilter] = useState<string>(() => batchDates[0] ?? 'All');
   const [query, setQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
@@ -59,6 +75,12 @@ export default function AdminInterviewQuestionReview() {
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
     ALL.forEach((q) => { c[q.subject] = (c[q.subject] ?? 0) + 1; });
+    return c;
+  }, []);
+
+  const dateCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    ALL.forEach((q) => { if (q.dateAdded) c[q.dateAdded] = (c[q.dateAdded] ?? 0) + 1; });
     return c;
   }, []);
 
@@ -73,6 +95,7 @@ export default function AdminInterviewQuestionReview() {
     return ALL.filter((item) => {
       if (subject !== 'All' && item.subject !== subject) return false;
       if (topic !== 'All' && item.topic !== topic) return false;
+      if (dateFilter !== 'All' && item.dateAdded !== dateFilter) return false;
       if (!q) return true;
       return (
         item.question.toLowerCase().includes(q) ||
@@ -80,7 +103,7 @@ export default function AdminInterviewQuestionReview() {
         (item.title ?? '').toLowerCase().includes(q)
       );
     });
-  }, [subject, topic, query]);
+  }, [subject, topic, dateFilter, query]);
 
   const visible = filtered.slice(0, visibleCount);
 
@@ -115,6 +138,9 @@ export default function AdminInterviewQuestionReview() {
           {ALL.length} new questions staged for the 11+, logic, maths and current-affairs interviews.
           Medicine was excluded. Nothing below is live — approved questions get merged into the real
           interview bank by hand.
+          {batchDates.length > 1 && dateFilter !== 'All' && (
+            <> Showing only the {formatBatchDate(dateFilter)} batch — pick "All dates" above to see earlier ones too.</>
+          )}
         </p>
 
         <div className="flex flex-wrap gap-2 mb-3">
@@ -132,6 +158,36 @@ export default function AdminInterviewQuestionReview() {
             </button>
           ))}
         </div>
+
+        {batchDates.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1.5 mb-3">
+            <span className="text-xs text-muted-foreground mr-1">Batch:</span>
+            {batchDates.map((d) => (
+              <button
+                key={d}
+                onClick={() => { setDateFilter(d); setVisibleCount(PAGE_SIZE); }}
+                className={cn(
+                  'px-2.5 py-1 rounded-full text-xs font-medium border transition-colors',
+                  dateFilter === d ? 'bg-primary text-primary-foreground border-primary' : 'bg-card hover:bg-muted border-border text-muted-foreground'
+                )}
+              >
+                {formatBatchDate(d)} <span className="opacity-70">({dateCounts[d] ?? 0})</span>
+                {d === batchDates[0] && <span className="ml-1 opacity-70">· newest</span>}
+              </button>
+            ))}
+            {batchDates.length > 1 && (
+              <button
+                onClick={() => { setDateFilter('All'); setVisibleCount(PAGE_SIZE); }}
+                className={cn(
+                  'px-2.5 py-1 rounded-full text-xs font-medium border transition-colors',
+                  dateFilter === 'All' ? 'bg-secondary text-secondary-foreground border-secondary' : 'bg-card hover:bg-muted border-border text-muted-foreground'
+                )}
+              >
+                All dates ({ALL.length})
+              </button>
+            )}
+          </div>
+        )}
 
         {topics.length > 1 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
