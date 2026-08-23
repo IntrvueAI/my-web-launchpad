@@ -9,7 +9,7 @@
     "tags": [],
     "question": "On an island, every inhabitant is either a knight, who always tells the truth, or a knave, who always lies. You meet two people: Alex and Beth. Alex says: 'At least one of us is a knave.' What can you work out about each of them?",
     "answer": "Alex is a knight; Beth is a knave.",
-    "modelReasoningPath": "Suppose Alex is a knave. Then his statement - \"at least one of us is a knave\" - would be false, meaning neither of them is a knave. But that contradicts Alex being a knave. So Alex cannot be a knave; he must be a knight. Since Alex (a knight) truthfully says at least one of them is a knave, and Alex is not the knave, Beth must be the knave.\n\nWhat to listen for: Does the child try both possibilities (\"suppose he's a knight... suppose he's a knave\") and check which leads to a contradiction? This is a core logical technique - proof by contradiction. A child who instinctively tests both cases is showing genuine deductive skill. ---"
+    "modelReasoningPath": "Suppose Alex is a knave. Then his statement - \"at least one of us is a knave\" - would be false, meaning neither of them is a knave. But that contradicts Alex being a knave. So Alex cannot be a knave; he must be a knight. Since Alex (a knight) truthfully says at least one of them is a knave, and Alex is not the knave, Beth must be the knave.\n\nWhat to listen for: Does the child try both possibilities (\"suppose he's a knight... suppose he's a knave\") and check which leads to a contradiction? This is a core logical technique - proof by contradiction. A child who instinctively tests both cases is showing genuine deductive skill."
   },
   {
     "id": "LG-A3",
@@ -21,6 +21,6 @@
     "tags": [],
     "question": "Here are three facts: One - all members of the science club enjoy experiments. Two - some members of the science club also play in the school orchestra. Three - Priya plays in the school orchestra but is not a member of the science club. From these facts alone, can you tell me whether Priya enjoys experiments? Explain your answer carefully.",
     "answer": "No - we cannot tell.",
-    "modelReasoningPath": "We only know that science club members enjoy experiments. Priya is not in the science club, so the first fact tells us nothing about her. She might enjoy experiments for some other reason, or she might not - we simply have no information either way.\n\nWhat to listen for: Does the child distinguish between \"we know she does\" and \"we know she doesn't\" and \"we can't tell\"? The third option is often overlooked. A child who says \"we can't say either way\" and explains why has excellent logical precision. Ask: \"What extra fact would you need to be certain?\" ---"
+    "modelReasoningPath": "We only know that science club members enjoy experiments. Priya is not in the science club, so the first fact tells us nothing about her. She might enjoy experiments for some other reason, or she might not - we simply have no information either way.\n\nWhat to listen for: Does the child distinguish between \"we know she does\" and \"we know she doesn't\" and \"we can't tell\"? The third option is often overlooked. A child who says \"we can't say either way\" and explains why has excellent logical precision. Ask: \"What extra fact would you need to be certain?\""
   }
 ]

@@ -9,7 +9,7 @@
     "tags": [],
     "question": "Is it always true that if you add two consecutive whole numbers together, the answer is always odd? Can you convince me it must always be true - not just with examples, but with a reason?",
     "answer": "Yes, always odd.",
-    "modelReasoningPath": "Any two consecutive whole numbers contain exactly one even number and one odd number. Even + odd = odd. Always.\n\nWhat to listen for: Most children will test a few examples (2+3=5, 4+5=9) and say \"yes it seems true.\" The real challenge is the explanation. Can the child say \"one of them must be even and one must be odd, and those always add to an odd\"? That is the key logical step. A child who uses n and n+1 to write 2n+1 is thinking algebraically - remarkable at 11+. ---"
+    "modelReasoningPath": "Any two consecutive whole numbers contain exactly one even number and one odd number. Even + odd = odd. Always.\n\nWhat to listen for: Most children will test a few examples (2+3=5, 4+5=9) and say \"yes it seems true.\" The real challenge is the explanation. Can the child say \"one of them must be even and one must be odd, and those always add to an odd\"? That is the key logical step. A child who uses n and n+1 to write 2n+1 is thinking algebraically - remarkable at 11+."
   },
   {
     "id": "MA-D4",
@@ -21,6 +21,6 @@
     "tags": [],
     "question": "Take any two-digit number - let's say 73. Reverse the digits to get 37. Now subtract the smaller from the larger: 73 − 37 = 36. Try this with a few other two-digit numbers. What do you notice? Can you explain why?",
     "answer": "(see working)",
-    "modelReasoningPath": "A two-digit number with tens digit a and units digit b equals 10a + b. Its reverse is 10b + a. The difference: (10a + b) − (10b + a) = 9a − 9b = 9(a − b). Always a multiple of 9.\n\nWhat to listen for: This question has three stages - noticing the pattern, stating it precisely, and explaining it. A child who reaches stage 1 (\"they're all multiples of 9\") is doing well. Stage 2 (\"it's 9 times the difference of the digits\") is excellent. Stage 3 (the algebraic explanation) is exceptional. Ask \"why do you think that happens?\" after each stage to push them further. ---"
+    "modelReasoningPath": "A two-digit number with tens digit a and units digit b equals 10a + b. Its reverse is 10b + a. The difference: (10a + b) − (10b + a) = 9a − 9b = 9(a − b). Always a multiple of 9.\n\nWhat to listen for: This question has three stages - noticing the pattern, stating it precisely, and explaining it. A child who reaches stage 1 (\"they're all multiples of 9\") is doing well. Stage 2 (\"it's 9 times the difference of the digits\") is excellent. Stage 3 (the algebraic explanation) is exceptional. Ask \"why do you think that happens?\" after each stage to push them further."
   }
 ]

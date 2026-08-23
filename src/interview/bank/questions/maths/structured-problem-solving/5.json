@@ -9,6 +9,6 @@
     "tags": [],
     "question": "A man has 3,000 bananas and a camel. He wants to transport as many bananas as possible across a 1,000-mile desert. The camel can carry at most 1,000 bananas at a time, and eats exactly one banana per mile it walks. What is the maximum number of whole bananas the man can arrive with at the other side?",
     "answer": "833 bananas (technically 833⅓, but since bananas are whole, 833).",
-    "modelReasoningPath": "What to listen for: Don't expect a full solution. Watch whether the child understands why the camel must make multiple trips. Do they figure out that leaving stockpiles at intermediate points helps? Do they see that the camel eating bananas on return trips is a real cost? Award credit generously for structural insight, even without a final answer. --- ## SECTION D - Pattern, Proof & Explanation Quality Questions that test whether a child can spot a rule, articulate it clearly, and begin to explain why it must be true. ---"
+    "modelReasoningPath": "What to listen for: Don't expect a full solution. Watch whether the child understands why the camel must make multiple trips. Do they figure out that leaving stockpiles at intermediate points helps? Do they see that the camel eating bananas on return trips is a real cost? Award credit generously for structural insight, even without a final answer."
   }
 ]

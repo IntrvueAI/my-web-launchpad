@@ -9,6 +9,6 @@
     "tags": [],
     "question": "Four people need to cross a narrow rope bridge at night. The bridge can only hold two people at a time, and the group has only one torch - they cannot cross without it. Each person takes a different amount of time to cross: one takes 1 minute, one takes 2 minutes, one takes 5 minutes, and one takes 10 minutes. When two people cross together, they move at the speed of the slower person. What is the fastest time in which all four people can get across?",
     "answer": "17 minutes.",
-    "modelReasoningPath": "What to listen for: Does the child recognise that the 10-minute person is the \"expensive\" one and think about how to minimise how often that cost is paid? Do they realise the fastest person must make return trips? This question rewards systematic experimentation - a child who tries the obvious approach, gets 19, then asks \"can I do better?\" is showing excellent adaptability. ---"
+    "modelReasoningPath": "What to listen for: Does the child recognise that the 10-minute person is the \"expensive\" one and think about how to minimise how often that cost is paid? Do they realise the fastest person must make return trips? This question rewards systematic experimentation - a child who tries the obvious approach, gets 19, then asks \"can I do better?\" is showing excellent adaptability."
   }
 ]

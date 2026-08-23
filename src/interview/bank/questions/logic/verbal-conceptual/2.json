@@ -9,7 +9,7 @@
     "tags": [],
     "question": "Complete this analogy: pen is to author as scalpel is to ___. Now tell me the relationship you used.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Can the child name the relationship, not just fill the blank? The best answers always come with an explanation. Ask \"why?\" after every answer. A child who says \"I just felt it was right\" should be encouraged to articulate the underlying logic. ---"
+    "modelReasoningPath": "What to listen for: Can the child name the relationship, not just fill the blank? The best answers always come with an explanation. Ask \"why?\" after every answer. A child who says \"I just felt it was right\" should be encouraged to articulate the underlying logic."
   },
   {
     "id": "LG-C5",
@@ -21,6 +21,6 @@
     "tags": [],
     "question": "Give me three completely different meanings of the word sharp. They must be genuinely different - not just different contexts for the same basic meaning.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child confuse \"different contexts\" with \"genuinely different meanings\"? (e.g. \"a sharp edge\" and \"a sharp point\" are the same meaning in two contexts.) Breadth of vocabulary and ability to think across domains - music, weather, intellect - is what this tests. A child who spontaneously reaches for the musical meaning or the sartorial meaning is linguistically wide-ranging. ---"
+    "modelReasoningPath": "What to listen for: Does the child confuse \"different contexts\" with \"genuinely different meanings\"? (e.g. \"a sharp edge\" and \"a sharp point\" are the same meaning in two contexts.) Breadth of vocabulary and ability to think across domains - music, weather, intellect - is what this tests. A child who spontaneously reaches for the musical meaning or the sartorial meaning is linguistically wide-ranging."
   }
 ]

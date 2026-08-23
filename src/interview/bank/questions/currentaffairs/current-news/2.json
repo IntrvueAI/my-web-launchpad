@@ -9,7 +9,7 @@
     "tags": [],
     "question": "Have you been following anything in the news recently? Tell me about it - what's happening, and what do you make of it?",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "A strong response: The child names a specific story (not just a topic), explains it accurately in their own words, and offers a genuine opinion on it - including what they find confusing, surprising, or troubling about it.\n\nA weak response: A vague topic (\"I've been hearing about climate change\") with no specific event, or an opinion with no factual grounding (\"I think the government is doing badly\").\n\nWhat to listen for: Does the child distinguish between facts and their own opinions? Do they say \"I think\" when they are giving a view, rather than presenting opinion as fact? Top schools value intellectual honesty over confident bluffing. ---"
+    "modelReasoningPath": "A strong response: The child names a specific story (not just a topic), explains it accurately in their own words, and offers a genuine opinion on it - including what they find confusing, surprising, or troubling about it.\n\nA weak response: A vague topic (\"I've been hearing about climate change\") with no specific event, or an opinion with no factual grounding (\"I think the government is doing badly\").\n\nWhat to listen for: Does the child distinguish between facts and their own opinions? Do they say \"I think\" when they are giving a view, rather than presenting opinion as fact? Top schools value intellectual honesty over confident bluffing."
   },
   {
     "id": "CA-A2",
@@ -44,7 +44,7 @@
     "tags": [],
     "question": "Can you think of a situation where breaking the law might actually be the right thing to do?",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "What to listen for: Does the child land on \"it depends on the law\" quickly, or do they initially say \"no, you should always follow the law\"? Either starting point is fine - what matters is the reasoning journey. The best responses distinguish between laws that are procedurally bad (e.g. poorly enforced) vs. laws that are morally wrong. ---"
+    "modelReasoningPath": "What to listen for: Does the child land on \"it depends on the law\" quickly, or do they initially say \"no, you should always follow the law\"? Either starting point is fine - what matters is the reasoning journey. The best responses distinguish between laws that are procedurally bad (e.g. poorly enforced) vs. laws that are morally wrong."
   },
   {
     "id": "CA-A5",

@@ -21,7 +21,7 @@
     "tags": [],
     "question": "If a student used AI to help them write an essay - not copy it entirely, but get help with ideas and structure - would you consider that cheating? Where do you draw the line?",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "What to listen for: Does the child think carefully about what learning is for, or do they only think about rule-following? A child who says \"it depends on what the teacher was trying to test\" is thinking at a sophisticated level. Also notice whether the child is honest about their own use of AI - top schools value self-awareness. ---"
+    "modelReasoningPath": "What to listen for: Does the child think carefully about what learning is for, or do they only think about rule-following? A child who says \"it depends on what the teacher was trying to test\" is thinking at a sophisticated level. Also notice whether the child is honest about their own use of AI - top schools value self-awareness."
   },
   {
     "id": "CA-B3",
@@ -33,7 +33,7 @@
     "tags": [],
     "question": "Do you think a computer could ever be truly creative - like write a poem that genuinely means something, or paint a picture that moves people? Or is creativity something only humans can do?",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "What to listen for: This question connects to the definition challenge in the verbal reasoning section. Does the child try to define \"creativity\" before answering, or do they answer as if the meaning is obvious? A child who says \"it depends what you mean by creative\" is doing exactly the right thing. ---"
+    "modelReasoningPath": "What to listen for: This question connects to the definition challenge in the verbal reasoning section. Does the child try to define \"creativity\" before answering, or do they answer as if the meaning is obvious? A child who says \"it depends what you mean by creative\" is doing exactly the right thing."
   },
   {
     "id": "CA-B4",
@@ -45,6 +45,6 @@
     "tags": [],
     "question": "Is there a job you think a robot or AI could never do - not just 'couldn't do yet', but genuinely could never do, no matter how advanced technology gets? Why?",
     "answer": "Discussion question — there is no single correct answer. Assess the reasoning, honesty and perspective-taking, not a 'right' response.",
-    "modelReasoningPath": "What to listen for: Can the child distinguish between \"currently difficult\" and \"theoretically impossible\"? A child who identifies that the issue isn't capability but accountability or relationship is thinking philosophically rather than practically, which is impressive. --- ## SECTION C - Climate & The Environment ---"
+    "modelReasoningPath": "What to listen for: Can the child distinguish between \"currently difficult\" and \"theoretically impossible\"? A child who identifies that the issue isn't capability but accountability or relationship is thinking philosophically rather than practically, which is impressive."
   }
 ]

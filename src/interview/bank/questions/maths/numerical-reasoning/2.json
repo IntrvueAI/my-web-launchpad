@@ -9,7 +9,7 @@
     "tags": [],
     "question": "I am a three-digit number. My hundreds digit is three times my units digit. My tens digit is one more than my units digit. The sum of all three of my digits is 16. What number am I?",
     "answer": "943",
-    "modelReasoningPath": "Let the units digit = u. Then hundreds = 3u, tens = u + 1. Sum: 3u + (u + 1) + u = 5u + 1 = 16, so 5u = 15, u = 3. Units = 3, tens = 4, hundreds = 9. The number is 943.\n\nWhat to listen for: Does the child name a variable (or call it \"something\") and build equations from the clues? Or do they work by trial? Either is valid - the key is whether they set up all three constraints before testing values. ---"
+    "modelReasoningPath": "Let the units digit = u. Then hundreds = 3u, tens = u + 1. Sum: 3u + (u + 1) + u = 5u + 1 = 16, so 5u = 15, u = 3. Units = 3, tens = 4, hundreds = 9. The number is 943.\n\nWhat to listen for: Does the child name a variable (or call it \"something\") and build equations from the clues? Or do they work by trial? Either is valid - the key is whether they set up all three constraints before testing values."
   },
   {
     "id": "MA-A6",
@@ -21,6 +21,6 @@
     "tags": [],
     "question": "A farmer counts all the animals in his yard. He has only chickens and rabbits. He counts 20 heads and 56 legs. How many chickens and how many rabbits does he have?",
     "answer": "12 chickens, 8 rabbits.",
-    "modelReasoningPath": "What to listen for: The \"all chickens\" method is elegant and shows a child who creates a baseline and adjusts. Trial and improvement works but is slower. Some children set up two simultaneous equations (c + r = 20; 2c + 4r = 56) - this is impressive. Ask \"can you explain why your method works?\" regardless of approach. ---"
+    "modelReasoningPath": "What to listen for: The \"all chickens\" method is elegant and shows a child who creates a baseline and adjusts. Trial and improvement works but is slower. Some children set up two simultaneous equations (c + r = 20; 2c + 4r = 56) - this is impressive. Ask \"can you explain why your method works?\" regardless of approach."
   }
 ]

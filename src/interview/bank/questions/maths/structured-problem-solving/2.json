@@ -9,7 +9,7 @@
     "tags": [],
     "question": "A knockout tennis tournament has 64 players. Every match has one winner and one loser, and the loser is immediately eliminated. How many matches need to be played in total before there is one champion?",
     "answer": "63 matches.",
-    "modelReasoningPath": "What to listen for: The brute-force approach (64 → 32 → 16 → 8 → 4 → 2 → 1, counting 32 + 16 + 8 + 4 + 2 + 1 = 63) gives the right answer and is fine. But the elegant argument - \"each match eliminates exactly one person, so you need 63 matches to eliminate 63 people\" - shows a child who reasons from invariants. Ask \"can you think of a quicker way to see it?\" to prompt this. ---"
+    "modelReasoningPath": "What to listen for: The brute-force approach (64 → 32 → 16 → 8 → 4 → 2 → 1, counting 32 + 16 + 8 + 4 + 2 + 1 = 63) gives the right answer and is fine. But the elegant argument - \"each match eliminates exactly one person, so you need 63 matches to eliminate 63 people\" - shows a child who reasons from invariants. Ask \"can you think of a quicker way to see it?\" to prompt this."
   },
   {
     "id": "MA-C7",
@@ -21,6 +21,6 @@
     "tags": [],
     "question": "My calculator is broken. The only working buttons are: 1, +, −, and =. I can press them as many times as I like. What is the fewest number of button presses needed to display the number 13?",
     "answer": "7 presses: `1`, `1`, `+`, `1`, `1`, `+`, `1` `=`... actually let's be precise. The key is to use `11` as a building block. 11 + 1 + 1 = 13. Button presses: `[1]` `[1]` `[+]` `[1]` `[+]` `[1]` `[=]` = 7 presses. Can we do fewer? With 6 presses (5 entries + `=`): the maximum reachable would be something like `1 1 + 1 1 [=]` = 22, but we need 13. `1 + 1 1 + 1 [=]` = 14. `1 1 + 1 - 1 [=]` = wait that needs a `-`, giving 11 + 1 − 1 = 11, not 13. 6 presses cannot reach 13.",
-    "modelReasoningPath": "What to listen for: Does the child realise they can form the number 11 (by pressing 1 twice)? This \"building two-digit numbers\" insight is the crux. Do they consider subtraction as a route? A child who systematically eliminates 6-press options before settling on 7 is showing rigorous thinking. ---"
+    "modelReasoningPath": "What to listen for: Does the child realise they can form the number 11 (by pressing 1 twice)? This \"building two-digit numbers\" insight is the crux. Do they consider subtraction as a route? A child who systematically eliminates 6-press options before settling on 7 is showing rigorous thinking."
   }
 ]

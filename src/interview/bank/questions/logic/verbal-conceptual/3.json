@@ -9,7 +9,7 @@
     "tags": [],
     "question": "Can you define the word 'chair' for me? Try to be precise enough that your definition would include every chair - and exclude everything that isn't a chair.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child notice that their first definition is too broad or too narrow when challenged? Do they iterate - refining their definition each time a counterexample is offered? A child who accepts every counterexample gracefully and adjusts their definition is showing wonderful intellectual flexibility. A child who gets frustrated when their definition is challenged is showing something less useful. After a few rounds, you can say: \"Philosophers have been trying to do this for centuries and haven't agreed. Why do you think it's so difficult?\" ---"
+    "modelReasoningPath": "What to listen for: Does the child notice that their first definition is too broad or too narrow when challenged? Do they iterate - refining their definition each time a counterexample is offered? A child who accepts every counterexample gracefully and adjusts their definition is showing wonderful intellectual flexibility. A child who gets frustrated when their definition is challenged is showing something less useful. After a few rounds, you can say: \"Philosophers have been trying to do this for centuries and haven't agreed. Why do you think it's so difficult?\""
   },
   {
     "id": "LG-C3",
@@ -21,7 +21,7 @@
     "tags": [],
     "question": "Which is the odd one out: painting, sculpture, symphony, novel, poem? Give me as many different answers as you can, each with a completely different reason.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: This question is deliberately open. A child who offers only one answer and stops is not engaging with the full possibility space. Ask: \"If that were the odd one out, which would you choose next, and why?\" The most impressive children will find angles no one expected - and defend them. ---"
+    "modelReasoningPath": "What to listen for: This question is deliberately open. A child who offers only one answer and stops is not engaging with the full possibility space. Ask: \"If that were the odd one out, which would you choose next, and why?\" The most impressive children will find angles no one expected - and defend them."
   },
   {
     "id": "LG-C6",
@@ -33,6 +33,6 @@
     "tags": [],
     "question": "Here is a sequence of words: Monday, March, Morning. What could come next? Give me more than one possible answer, and explain the rule behind each.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child find one rule and stop, or do they keep looking? The most impressive response is finding a rule, then a second different rule, then being surprised by a third. This tests creative hypothesis generation - a core intellectual skill. --- ## SECTION D - Language Logic & Word Puzzles Questions that combine precise reasoning with language. Each has a definite answer or a clearly bounded set of valid answers. ---"
+    "modelReasoningPath": "What to listen for: Does the child find one rule and stop, or do they keep looking? The most impressive response is finding a rule, then a second different rule, then being surprised by a third. This tests creative hypothesis generation - a core intellectual skill."
   }
 ]

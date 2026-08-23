@@ -9,7 +9,7 @@
     "tags": [],
     "question": "A man lives on the 10th floor of a tall apartment block. Every morning, he takes the lift from the 10th floor all the way down to the ground floor and goes to work. When he returns in the evening, on rainy days he takes the lift all the way back up to the 10th floor. But on dry days, he takes the lift only as far as the 7th floor and then walks up the remaining three flights of stairs. He is not taking exercise. He is not meeting a friend. Why does he do this?",
     "answer": "He is too short to reach the button for the 10th floor. On rainy days, he uses his umbrella to press it.",
-    "modelReasoningPath": "What to listen for: Listen for whether the child questions physical circumstances (height, disability, buttons), rather than assuming the puzzle is about human behaviour or preference. If they're stuck, ask: \"What would be different about him on a rainy day compared to a dry day?\" The imaginative leap to the umbrella is delightful when it comes. A child who says \"what if he can't reach the button?\" and follows that thread is reasoning exactly right. ---"
+    "modelReasoningPath": "What to listen for: Listen for whether the child questions physical circumstances (height, disability, buttons), rather than assuming the puzzle is about human behaviour or preference. If they're stuck, ask: \"What would be different about him on a rainy day compared to a dry day?\" The imaginative leap to the umbrella is delightful when it comes. A child who says \"what if he can't reach the button?\" and follows that thread is reasoning exactly right."
   },
   {
     "id": "LG-B3",
@@ -21,7 +21,7 @@
     "tags": [],
     "question": "Two men sit down at a café and order the same drink: iced coffee. The drinks arrive at the same time. The first man gulps his down quickly. The second man sips his slowly. Shortly after, the second man is taken to hospital - he had been poisoned. The poison was definitely in both drinks. Why did the first man survive?",
     "answer": "The poison was in the ice. The man who drank quickly finished his coffee before the ice had melted and the poison had dissolved into the drink. The man who sipped slowly gave the ice time to melt.",
-    "modelReasoningPath": "What to listen for: Does the child consider the physical properties of the drink, or do they focus only on human behaviour? The key leap is separating \"the drink\" from \"the ice.\" A child who asks \"were the drinks identical in every way?\" is thinking well. If they get stuck, prompt: \"Think about how the drink might change over time.\" ---"
+    "modelReasoningPath": "What to listen for: Does the child consider the physical properties of the drink, or do they focus only on human behaviour? The key leap is separating \"the drink\" from \"the ice.\" A child who asks \"were the drinks identical in every way?\" is thinking well. If they get stuck, prompt: \"Think about how the drink might change over time.\""
   },
   {
     "id": "LG-B4",
@@ -33,7 +33,7 @@
     "tags": [],
     "question": "A man is found dead in the centre of a large, open field. He is wearing a backpack. There are no footprints in the field and no one else nearby. How did he die?",
     "answer": "His parachute failed to open. The backpack is the parachute.",
-    "modelReasoningPath": "What to listen for: Does the child consider vertical movement as well as horizontal movement? Most children imagine the man walked into the field - the absence of footprints should dislodge this assumption. Ask: \"What does the absence of footprints tell you?\" A child who asks \"does the backpack contain anything?\" is probing cleverly. The eureka moment of connecting \"backpack + fell from above + no footprints\" is satisfying to watch. ---"
+    "modelReasoningPath": "What to listen for: Does the child consider vertical movement as well as horizontal movement? Most children imagine the man walked into the field - the absence of footprints should dislodge this assumption. Ask: \"What does the absence of footprints tell you?\" A child who asks \"does the backpack contain anything?\" is probing cleverly. The eureka moment of connecting \"backpack + fell from above + no footprints\" is satisfying to watch."
   },
   {
     "id": "LG-B6",
@@ -45,6 +45,6 @@
     "tags": [],
     "question": "A woman walks into a hospital room and sees a man lying in a bed connected to various machines. She walks over, switches off one of the machines, and walks out. Soon afterwards, the man in the bed dies. The woman is not arrested, charged, or even questioned by the police. Why not?",
     "answer": "She is a nurse or doctor switching off a machine that is no longer needed - for instance, switching off a ventilator after the patient has already died, or (in a legitimate clinical context) turning off a life-support machine as part of authorised end-of-life care. Alternatively: she switched off a machine that was irrelevant to his survival - for instance, a TV or a lamp - and his death was from natural causes.",
-    "modelReasoningPath": "What to listen for: Does the child assume guilt and look for an escape route (\"maybe she had permission\")? Or do they question whether switching off the machine was the cause of death at all? The broader the child's questioning - covering both legal authority and causal connection - the better. If they only consider \"she had permission,\" probe: \"Is there any other reason she might not be questioned?\" --- ## SECTION C - Verbal & Conceptual Reasoning Questions about language, analogy, and ideas. These test how precisely and flexibly a child can think with words. ---"
+    "modelReasoningPath": "What to listen for: Does the child assume guilt and look for an escape route (\"maybe she had permission\")? Or do they question whether switching off the machine was the cause of death at all? The broader the child's questioning - covering both legal authority and causal connection - the better. If they only consider \"she had permission,\" probe: \"Is there any other reason she might not be questioned?\""
   }
 ]

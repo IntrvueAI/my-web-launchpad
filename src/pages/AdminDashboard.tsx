@@ -180,6 +180,11 @@ export default function AdminDashboard() {
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/interview-question-review" target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3.5 w-3.5" /> Interview question review (thought-provoking batch)
+            </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/?replayOnboarding=true" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3.5 w-3.5" /> Replay onboarding flow
             </Link>

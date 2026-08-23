@@ -9,7 +9,7 @@
     "tags": [],
     "question": "Which is the odd one out: dog, cat, whale, bat, snake? I want you to give me as many different answers as you can, each with a different reason.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child generate multiple answers without being asked twice? Can they articulate a principle rather than just an observation (\"whale is different because... it lives in water\")? A strong child will offer several unprompted and find creative distinctions. If a child gets stuck after one answer, ask: \"Can you think of a reason a completely different animal could be the odd one out?\" Adaptability here means shifting the lens, not just the answer. --- ## SECTION B - Lateral Thinking Scenarios Puzzles where the most obvious interpretation is wrong. The child must question their assumptions. Interviewer note: For all scenarios in this section, the child should ask yes/no questions if they wish, or reason aloud. The goal is to watch them dismantle their initial assumption. ---"
+    "modelReasoningPath": "What to listen for: Does the child generate multiple answers without being asked twice? Can they articulate a principle rather than just an observation (\"whale is different because... it lives in water\")? A strong child will offer several unprompted and find creative distinctions. If a child gets stuck after one answer, ask: \"Can you think of a reason a completely different animal could be the odd one out?\" Adaptability here means shifting the lens, not just the answer."
   },
   {
     "id": "LG-A1",
@@ -21,7 +21,7 @@
     "tags": [],
     "question": "On an island, every inhabitant is either a knight, who always tells the truth, or a knave, who always lies. You meet two people: Alex and Beth. Alex says: 'At least one of us is a knave.' What can you work out about each of them?",
     "answer": "Alex is a knight; Beth is a knave.",
-    "modelReasoningPath": "Suppose Alex is a knave. Then his statement - \"at least one of us is a knave\" - would be false, meaning neither of them is a knave. But that contradicts Alex being a knave. So Alex cannot be a knave; he must be a knight. Since Alex (a knight) truthfully says at least one of them is a knave, and Alex is not the knave, Beth must be the knave.\n\nWhat to listen for: Does the child try both possibilities (\"suppose he's a knight... suppose he's a knave\") and check which leads to a contradiction? This is a core logical technique - proof by contradiction. A child who instinctively tests both cases is showing genuine deductive skill. ---"
+    "modelReasoningPath": "Suppose Alex is a knave. Then his statement - \"at least one of us is a knave\" - would be false, meaning neither of them is a knave. But that contradicts Alex being a knave. So Alex cannot be a knave; he must be a knight. Since Alex (a knight) truthfully says at least one of them is a knave, and Alex is not the knave, Beth must be the knave.\n\nWhat to listen for: Does the child try both possibilities (\"suppose he's a knight... suppose he's a knave\") and check which leads to a contradiction? This is a core logical technique - proof by contradiction. A child who instinctively tests both cases is showing genuine deductive skill."
   },
   {
     "id": "LG-A3",
@@ -33,7 +33,7 @@
     "tags": [],
     "question": "Here are three facts: One - all members of the science club enjoy experiments. Two - some members of the science club also play in the school orchestra. Three - Priya plays in the school orchestra but is not a member of the science club. From these facts alone, can you tell me whether Priya enjoys experiments? Explain your answer carefully.",
     "answer": "No - we cannot tell.",
-    "modelReasoningPath": "We only know that science club members enjoy experiments. Priya is not in the science club, so the first fact tells us nothing about her. She might enjoy experiments for some other reason, or she might not - we simply have no information either way.\n\nWhat to listen for: Does the child distinguish between \"we know she does\" and \"we know she doesn't\" and \"we can't tell\"? The third option is often overlooked. A child who says \"we can't say either way\" and explains why has excellent logical precision. Ask: \"What extra fact would you need to be certain?\" ---"
+    "modelReasoningPath": "We only know that science club members enjoy experiments. Priya is not in the science club, so the first fact tells us nothing about her. She might enjoy experiments for some other reason, or she might not - we simply have no information either way.\n\nWhat to listen for: Does the child distinguish between \"we know she does\" and \"we know she doesn't\" and \"we can't tell\"? The third option is often overlooked. A child who says \"we can't say either way\" and explains why has excellent logical precision. Ask: \"What extra fact would you need to be certain?\""
   },
   {
     "id": "LG-A2",
@@ -45,7 +45,7 @@
     "tags": [],
     "question": "There are four cards on a table. Each card has a letter on one side and a number on the other. The cards show: E, K, 4, 7. A rule says: 'If a card has a vowel on one side, then it has an even number on the other side.' Which cards must you turn over - and no others - to check whether the rule is being followed?",
     "answer": "E and 7.",
-    "modelReasoningPath": "- E - must check. If there's an odd number on the back, the rule is broken. - K - no need. The rule only applies to vowels; consonants are irrelevant. - 4 - no need. The rule says \"vowel → even,\" not \"even → vowel.\" Even numbers can have anything on the back and the rule still holds. - 7 - must check. If there's a vowel on the back, the rule is broken. An odd number on the front with a vowel on the back would be a direct violation.\n\nWhat to listen for: Nearly everyone identifies E and 4. The correct pair is E and 7. The 4 card is the great trap: it feels relevant but isn't, because the rule doesn't say \"even numbers must have vowels.\" The 7 card is the one children miss - ask \"what would happen if 7 had a vowel on the back?\" to prompt the insight. A child who identifies the 7 card without help is reasoning at a high level. ---"
+    "modelReasoningPath": "- E - must check. If there's an odd number on the back, the rule is broken. - K - no need. The rule only applies to vowels; consonants are irrelevant. - 4 - no need. The rule says \"vowel → even,\" not \"even → vowel.\" Even numbers can have anything on the back and the rule still holds. - 7 - must check. If there's a vowel on the back, the rule is broken. An odd number on the front with a vowel on the back would be a direct violation.\n\nWhat to listen for: Nearly everyone identifies E and 4. The correct pair is E and 7. The 4 card is the great trap: it feels relevant but isn't, because the rule doesn't say \"even numbers must have vowels.\" The 7 card is the one children miss - ask \"what would happen if 7 had a vowel on the back?\" to prompt the insight. A child who identifies the 7 card without help is reasoning at a high level."
   },
   {
     "id": "LG-A4",
@@ -57,7 +57,7 @@
     "tags": [],
     "question": "Three children - Alice, Ben, and Clara - sit in a row facing the front. A teacher places a hat on each of their heads. They are told that the hats were chosen from a box containing three red hats and two blue hats. The child at the back can see the two hats in front of them. The child in the middle can see only the hat on the child at the front. The child at the front can see no hats at all. The teacher asks the child at the back: 'Do you know what colour your own hat is?' The child at the back says: 'No.' The teacher then asks the child in the middle: 'Do you now know what colour your own hat is?' The middle child says: 'Yes.' What colour is the middle child's hat?",
     "answer": "Red.",
-    "modelReasoningPath": "What to listen for: This is hard. Don't expect a full solution. Award credit for: understanding what the back child's \"no\" tells us, or grasping that the middle child uses the back child's response as a clue. A child who says \"the back child's answer gives the middle child information\" is thinking at the right level. Guide with: \"What would the back child need to see in order to say yes?\" ---"
+    "modelReasoningPath": "What to listen for: This is hard. Don't expect a full solution. Award credit for: understanding what the back child's \"no\" tells us, or grasping that the middle child uses the back child's response as a clue. A child who says \"the back child's answer gives the middle child information\" is thinking at the right level. Guide with: \"What would the back child need to see in order to say yes?\""
   },
   {
     "id": "LG-A5",
@@ -69,7 +69,7 @@
     "tags": [],
     "question": "Imagine someone says to you: 'I always tell lies.' Can this statement be true? Can it be false? What's going on?",
     "answer": "The statement creates a paradox - it cannot consistently be either true or false. - If it's true: the person always lies, so this statement is a lie - meaning it's false. Contradiction. - If it's false: the person doesn't always lie, so at least sometimes tells the truth - which means this statement could be the one truth. But then it's true again. Contradiction. This is the classic Liar's Paradox (related to \"this sentence is false\"). No consistent truth value can be assigned.",
-    "modelReasoningPath": "What to listen for: Many children say \"it must be false - liars can't tell the truth.\" Push them: \"But if it's false, the person doesn't always lie - could this be the one time they're telling the truth?\" A child who notices the self-referential loop - the statement undermines itself - is reasoning at a sophisticated level. You are not looking for a resolution; you are looking for whether the child can sit with an unresolvable problem and articulate why it can't be resolved. ---"
+    "modelReasoningPath": "What to listen for: Many children say \"it must be false - liars can't tell the truth.\" Push them: \"But if it's false, the person doesn't always lie - could this be the one time they're telling the truth?\" A child who notices the self-referential loop - the statement undermines itself - is reasoning at a sophisticated level. You are not looking for a resolution; you are looking for whether the child can sit with an unresolvable problem and articulate why it can't be resolved."
   },
   {
     "id": "LG-D5",
@@ -81,7 +81,7 @@
     "tags": [],
     "question": "I'm going to give you three short analogies. For each one, fill in the missing word - then explain the relationship as clearly as you can. One: puppy is to dog as foal is to ___. Two: author is to novel as composer is to ___. Three: map is to country as recipe is to ___.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: The first two analogies are warm-up. The third is where the real thinking happens - the relationship is more abstract (representation vs. reality) and requires the child to go beyond simply \"completing a pattern.\" A child who articulates \"a recipe tells you how to make a meal but isn't the meal\" has understood something genuinely interesting about the nature of language and symbols. ---"
+    "modelReasoningPath": "What to listen for: The first two analogies are warm-up. The third is where the real thinking happens - the relationship is more abstract (representation vs. reality) and requires the child to go beyond simply \"completing a pattern.\" A child who articulates \"a recipe tells you how to make a meal but isn't the meal\" has understood something genuinely interesting about the nature of language and symbols."
   },
   {
     "id": "LG-D1",
@@ -93,7 +93,7 @@
     "tags": [],
     "question": "Three friends - Alice, Ben, and Clara - each have a favourite animal and a favourite sport. The animals are cat, dog, and rabbit. The sports are swimming, tennis, and cycling. Here are your clues: One: Alice does not like cats. Two: The child who likes dogs also likes swimming. Three: Ben likes tennis. Four: Clara does not like rabbits. Five: Alice does not like cycling. Work out which animal and which sport each child prefers.",
     "answer": "- Alice: dog, swimming - Ben: rabbit, tennis - Clara: cat, cycling",
-    "modelReasoningPath": "- Ben likes tennis (clue 3) → Ben does not swim → Ben does not like dogs (clue 2) - Alice does not like cycling (clue 5) and Ben has tennis, so Alice swims or plays tennis. Since Ben has tennis, Alice swims. - Alice swims → Alice likes dogs (clue 2, the dog-lover swims) - Alice does not like cats (clue 1) ✓ - she likes dogs, consistent - Clara does not like rabbits (clue 4) and Alice has dogs → Clara likes cats - Ben gets the remaining animal: rabbit - Alice has swimming, Ben has tennis → Clara gets cycling\n\nWhat to listen for: Does the child work through clues systematically, or jump between them randomly? The disciplined approach is to find the clue with the most constraint first (clue 3 is the most direct) and build from there. A child who keeps a running table - even mentally - shows organised thinking. When they get stuck, ask: \"Which clue gives you the most definite information?\" ---"
+    "modelReasoningPath": "- Ben likes tennis (clue 3) → Ben does not swim → Ben does not like dogs (clue 2) - Alice does not like cycling (clue 5) and Ben has tennis, so Alice swims or plays tennis. Since Ben has tennis, Alice swims. - Alice swims → Alice likes dogs (clue 2, the dog-lover swims) - Alice does not like cats (clue 1) ✓ - she likes dogs, consistent - Clara does not like rabbits (clue 4) and Alice has dogs → Clara likes cats - Ben gets the remaining animal: rabbit - Alice has swimming, Ben has tennis → Clara gets cycling\n\nWhat to listen for: Does the child work through clues systematically, or jump between them randomly? The disciplined approach is to find the clue with the most constraint first (clue 3 is the most direct) and build from there. A child who keeps a running table - even mentally - shows organised thinking. When they get stuck, ask: \"Which clue gives you the most definite information?\""
   },
   {
     "id": "LG-D2",
@@ -105,7 +105,7 @@
     "tags": [],
     "question": "Four children are asked who broke a classroom window. Each one makes a statement: Alice says: 'It was Ben.' Ben says: 'It was not me.' Clara says: 'It was not Alice.' Dan says: 'It was Ben.' Exactly one of them is lying. Who broke the window?",
     "answer": "Ben broke the window, and Ben is the one lying.",
-    "modelReasoningPath": "Test each possibility: - If Ben did it: Alice (true), Ben - \"it was not me\" (lie), Clara (true), Dan (true). Exactly one liar. ✓ - If Alice did it: Alice (lie), Ben (true), Clara - \"it was not Alice\" (lie), Dan (lie). Three liars. ✗ - If Clara did it: Alice (lie), Ben (true), Clara (true), Dan (lie). Two liars. ✗ - If Dan did it: Alice (lie), Ben (true), Clara (true), Dan (lie). Two liars. ✗ Only the first scenario satisfies the condition of exactly one liar.\n\nWhat to listen for: Does the child instinctively test each suspect, or guess? The systematic approach - \"let me assume it was Alice and see how many liars that creates\" - is the right one. A child who tries all four possibilities methodically, even if slowly, is showing excellent logical structure. Note that Alice and Dan say the same thing, which is a useful shortcut: if they're both lying, that's already two liars. ---"
+    "modelReasoningPath": "Test each possibility: - If Ben did it: Alice (true), Ben - \"it was not me\" (lie), Clara (true), Dan (true). Exactly one liar. ✓ - If Alice did it: Alice (lie), Ben (true), Clara - \"it was not Alice\" (lie), Dan (lie). Three liars. ✗ - If Clara did it: Alice (lie), Ben (true), Clara (true), Dan (lie). Two liars. ✗ - If Dan did it: Alice (lie), Ben (true), Clara (true), Dan (lie). Two liars. ✗ Only the first scenario satisfies the condition of exactly one liar.\n\nWhat to listen for: Does the child instinctively test each suspect, or guess? The systematic approach - \"let me assume it was Alice and see how many liars that creates\" - is the right one. A child who tries all four possibilities methodically, even if slowly, is showing excellent logical structure. Note that Alice and Dan say the same thing, which is a useful shortcut: if they're both lying, that's already two liars."
   },
   {
     "id": "LG-D4",
@@ -117,7 +117,7 @@
     "tags": [],
     "question": "There are three boxes in front of you. One box contains only apples, one contains only oranges, and one contains a mixture of both. All three boxes are labelled - but every single label is wrong. The labels say: 'Apples', 'Oranges', and 'Mixed'. You are allowed to reach into exactly one box and take out one piece of fruit, without looking inside first. Which box should you choose, and what can you work out from the result?",
     "answer": "Pick from the box labelled \"Mixed\".",
-    "modelReasoningPath": "Since all labels are wrong, the box labelled \"Mixed\" cannot contain a mixture. It must contain either only apples or only oranges. Suppose you pull out an apple - then this box contains only apples. Now: the box labelled \"Apples\" cannot contain apples (its label is wrong), and it cannot be the mixed box (you just found that). So the \"Apples\" box must contain only oranges. That leaves the \"Oranges\" box to contain the mixture. You have identified all three boxes from a single piece of fruit.\n\nWhat to listen for: The key insight is that the \"Mixed\" label is the most constrained - it can only be one of two things, not three. Does the child articulate why this box is the right choice, or do they arrive at it by instinct? After they answer, always ask: \"Why couldn't you have picked one of the other boxes?\" This tests depth of understanding. ---"
+    "modelReasoningPath": "Since all labels are wrong, the box labelled \"Mixed\" cannot contain a mixture. It must contain either only apples or only oranges. Suppose you pull out an apple - then this box contains only apples. Now: the box labelled \"Apples\" cannot contain apples (its label is wrong), and it cannot be the mixed box (you just found that). So the \"Apples\" box must contain only oranges. That leaves the \"Oranges\" box to contain the mixture. You have identified all three boxes from a single piece of fruit.\n\nWhat to listen for: The key insight is that the \"Mixed\" label is the most constrained - it can only be one of two things, not three. Does the child articulate why this box is the right choice, or do they arrive at it by instinct? After they answer, always ask: \"Why couldn't you have picked one of the other boxes?\" This tests depth of understanding."
   },
   {
     "id": "LG-D6",
@@ -129,7 +129,7 @@
     "tags": [],
     "question": "I'm going to tell you which words belong to a special group and which don't. Your job is to figure out the rule. IN the group: KNIFE, WRITE, PNEUMONIA, GNOME, WRAP NOT in the group: KING, RIGHT, PLANET, GARDEN, ROPE What is the rule?",
     "answer": "Every word in the group begins with a silent letter - a letter that is written but not pronounced when you say the word aloud. - KNIFE → the K is silent (you say nife) - WRITE → the W is silent (you say rite) - PNEUMONIA → the P is silent (you say new-monia) - GNOME → the G is silent (you say nome) - WRAP → the W is silent (you say rap) The \"NOT in the group\" words all begin with letters that are fully pronounced.",
-    "modelReasoningPath": "What to listen for: Does the child say the words aloud to test them? This is the key move - a child who reads silently may miss the pattern entirely. A child who starts sounding out each word and then says \"oh, they all start with a letter you don't say!\" has found it through exactly the right method. If they identify the rule but can't explain it clearly, ask: \"How would you describe it to someone who hadn't noticed?\" ---"
+    "modelReasoningPath": "What to listen for: Does the child say the words aloud to test them? This is the key move - a child who reads silently may miss the pattern entirely. A child who starts sounding out each word and then says \"oh, they all start with a letter you don't say!\" has found it through exactly the right method. If they identify the rule but can't explain it clearly, ask: \"How would you describe it to someone who hadn't noticed?\""
   },
   {
     "id": "LG-D7",
@@ -141,7 +141,7 @@
     "tags": [],
     "question": "I am going to give you a sequence of words. Listen carefully: once, twice, thrice. What comes next?",
     "answer": "There is no standard English word for \"four times.\" The sequence breaks.",
-    "modelReasoningPath": "What to listen for: The first test is whether the child confidently says \"four-ce\" or \"frice\" - some will invent a word, which is a lovely creative response. Then the real interest is in the follow-up: does the child find other examples of pattern-breaking in English? Does the question make them genuinely curious about language? This tests both verbal reasoning and intellectual adaptability. --- ## Quick Reference | # | Question | Section | Difficulty | Primary Skill | |---|----------|---------|------------|---------------| | A1 | Knights and Knaves | Deductive Logic | ★★★ | Proof by contradiction | | A2 | The Four Cards | Deductive Logic | ★★★★ | Logical implication | | A3 | The Logic Chain | Deductive Logic | ★★★ | Valid inference | | A4 | The Three Hats | Deductive Logic | ★★★★ | Iterative deduction | | A5 | The Liar's Paradox | Deductive Logic | ★★★★ | Self-reference, paradox | | A6 | Odd One Out (animals) | Deductive Logic | ★★ | Multiple-lens thinking | | B1 | The Surgeon | Lateral Thinking | ★★ | Challenging assumptions | | B2 | The Man in the Lift | Lateral Thinking | ★★★ | Physical reasoning | | B3 | The Poisoned Coffee | Lateral Thinking | ★★★ | Material properties | | B4 | The Parachute | Lateral Thinking | ★★★ | Spatial/directional thinking | | B5 | The Rope Bridge | Lateral Thinking | ★★★★ | Optimisation, adaptability | | B6 | The Hospital Room | Lateral Thinking | ★★★ | Causation vs. correlation | | C1 | Define \"Chair\" | Verbal Reasoning | ★★★ | Precise definition | | C2 | Word Analogies | Verbal Reasoning | ★★-★★★★ | Relational reasoning | | C3 | Odd One Out (arts) | Verbal Reasoning | ★★★ | Conceptual categorisation | | C4 | The Rule About Rules | Verbal Reasoning | ★★★★ | Self-reference, paradox | | C5 | Multiple Meanings | Verbal Reasoning | ★★ | Lexical range | | C6 | What Comes Next? | Verbal Reasoning | ★★★ | Pattern generation | | D1 | Logic Grid | Language Logic | ★★★ | Systematic deduction | | D2 | Who Broke the Window? | Language Logic | ★★★ | Case-testing, truth values | | D3 | One Statement is True | Language Logic | ★★★★ | Self-referential logic | | D4 | Mislabelled Boxes | Language Logic | ★★★ | Constraint reasoning | | D5 | What's the Connection? | Language Logic | ★ | Analogy and relationship | | D6 | The Hidden Rule | Language Logic | ★★★ | Pattern discovery, phonics | | D7 | The Broken Sequence | Language Logic | ★★★ | Linguistic pattern, adaptability | --- Version 2.0 - Logic & Reasoning"
+    "modelReasoningPath": "What to listen for: The first test is whether the child confidently says \"four-ce\" or \"frice\" - some will invent a word, which is a lovely creative response. Then the real interest is in the follow-up: does the child find other examples of pattern-breaking in English? Does the question make them genuinely curious about language? This tests both verbal reasoning and intellectual adaptability."
   },
   {
     "id": "LG-D3",
@@ -153,7 +153,7 @@
     "tags": [],
     "question": "Here are four statements. Exactly one of them is true. Which one? A: Exactly one of these statements is false. B: Exactly two of these statements are false. C: Exactly three of these statements are false. D: Exactly four of these statements are false.",
     "answer": "C - \"Exactly three of these statements are false.\"",
-    "modelReasoningPath": "If exactly one statement is true, then exactly three are false. - Check C: \"Exactly three of these statements are false\" - yes, that is what we've assumed. C is true. ✓ - Check A: \"Exactly one is false\" - we have three false statements, so A is false. ✓ - Check B: \"Exactly two are false\" - false. ✓ - Check D: \"Exactly four are false\" - false (one is true). ✓ So C being the one true statement is self-consistent. No other choice works: - If A were the one true statement, then exactly one statement would be false - meaning three are true. But that contradicts A being the only true statement. - Similarly, B and D each contradict themselves when assumed to be the sole true statement.\n\nWhat to listen for: The child should test whether each statement is consistent with being \"the one true statement.\" A child who immediately says \"C, because if exactly one is true then exactly three are false, and C says exactly that\" has understood the self-referential structure instantly. More commonly, a child will need to be walked through testing A first - show them how the assumption collapses, then they can apply the same method to B, C, D. ---"
+    "modelReasoningPath": "If exactly one statement is true, then exactly three are false. - Check C: \"Exactly three of these statements are false\" - yes, that is what we've assumed. C is true. ✓ - Check A: \"Exactly one is false\" - we have three false statements, so A is false. ✓ - Check B: \"Exactly two are false\" - false. ✓ - Check D: \"Exactly four are false\" - false (one is true). ✓ So C being the one true statement is self-consistent. No other choice works: - If A were the one true statement, then exactly one statement would be false - meaning three are true. But that contradicts A being the only true statement. - Similarly, B and D each contradict themselves when assumed to be the sole true statement.\n\nWhat to listen for: The child should test whether each statement is consistent with being \"the one true statement.\" A child who immediately says \"C, because if exactly one is true then exactly three are false, and C says exactly that\" has understood the self-referential structure instantly. More commonly, a child will need to be walked through testing A first - show them how the assumption collapses, then they can apply the same method to B, C, D."
   },
   {
     "id": "LG-B1",
@@ -165,7 +165,7 @@
     "tags": [],
     "question": "A boy is badly injured in a road accident and is rushed to hospital. The surgeon looks at him on the operating table and says: 'I cannot operate on this child - he is my son.' But the boy's father died in the accident. How is this possible?",
     "answer": "The surgeon is the boy's mother.",
-    "modelReasoningPath": "What to listen for: This puzzle reveals assumed gender roles. A child who gets it immediately deserves credit but miss the real lesson - ask them: \"Why did you find that hard at first?\" or \"What assumption were you making?\" A child who cannot get it should be nudged: \"What assumptions are you making about the surgeon?\" The inability to see past the assumption is not a failing - it's the point of the puzzle. Reward self-awareness about the assumption, not just the answer. ---"
+    "modelReasoningPath": "What to listen for: This puzzle reveals assumed gender roles. A child who gets it immediately deserves credit but miss the real lesson - ask them: \"Why did you find that hard at first?\" or \"What assumption were you making?\" A child who cannot get it should be nudged: \"What assumptions are you making about the surgeon?\" The inability to see past the assumption is not a failing - it's the point of the puzzle. Reward self-awareness about the assumption, not just the answer."
   },
   {
     "id": "LG-B2",
@@ -177,7 +177,7 @@
     "tags": [],
     "question": "A man lives on the 10th floor of a tall apartment block. Every morning, he takes the lift from the 10th floor all the way down to the ground floor and goes to work. When he returns in the evening, on rainy days he takes the lift all the way back up to the 10th floor. But on dry days, he takes the lift only as far as the 7th floor and then walks up the remaining three flights of stairs. He is not taking exercise. He is not meeting a friend. Why does he do this?",
     "answer": "He is too short to reach the button for the 10th floor. On rainy days, he uses his umbrella to press it.",
-    "modelReasoningPath": "What to listen for: Listen for whether the child questions physical circumstances (height, disability, buttons), rather than assuming the puzzle is about human behaviour or preference. If they're stuck, ask: \"What would be different about him on a rainy day compared to a dry day?\" The imaginative leap to the umbrella is delightful when it comes. A child who says \"what if he can't reach the button?\" and follows that thread is reasoning exactly right. ---"
+    "modelReasoningPath": "What to listen for: Listen for whether the child questions physical circumstances (height, disability, buttons), rather than assuming the puzzle is about human behaviour or preference. If they're stuck, ask: \"What would be different about him on a rainy day compared to a dry day?\" The imaginative leap to the umbrella is delightful when it comes. A child who says \"what if he can't reach the button?\" and follows that thread is reasoning exactly right."
   },
   {
     "id": "LG-B3",
@@ -189,7 +189,7 @@
     "tags": [],
     "question": "Two men sit down at a café and order the same drink: iced coffee. The drinks arrive at the same time. The first man gulps his down quickly. The second man sips his slowly. Shortly after, the second man is taken to hospital - he had been poisoned. The poison was definitely in both drinks. Why did the first man survive?",
     "answer": "The poison was in the ice. The man who drank quickly finished his coffee before the ice had melted and the poison had dissolved into the drink. The man who sipped slowly gave the ice time to melt.",
-    "modelReasoningPath": "What to listen for: Does the child consider the physical properties of the drink, or do they focus only on human behaviour? The key leap is separating \"the drink\" from \"the ice.\" A child who asks \"were the drinks identical in every way?\" is thinking well. If they get stuck, prompt: \"Think about how the drink might change over time.\" ---"
+    "modelReasoningPath": "What to listen for: Does the child consider the physical properties of the drink, or do they focus only on human behaviour? The key leap is separating \"the drink\" from \"the ice.\" A child who asks \"were the drinks identical in every way?\" is thinking well. If they get stuck, prompt: \"Think about how the drink might change over time.\""
   },
   {
     "id": "LG-B4",
@@ -201,7 +201,7 @@
     "tags": [],
     "question": "A man is found dead in the centre of a large, open field. He is wearing a backpack. There are no footprints in the field and no one else nearby. How did he die?",
     "answer": "His parachute failed to open. The backpack is the parachute.",
-    "modelReasoningPath": "What to listen for: Does the child consider vertical movement as well as horizontal movement? Most children imagine the man walked into the field - the absence of footprints should dislodge this assumption. Ask: \"What does the absence of footprints tell you?\" A child who asks \"does the backpack contain anything?\" is probing cleverly. The eureka moment of connecting \"backpack + fell from above + no footprints\" is satisfying to watch. ---"
+    "modelReasoningPath": "What to listen for: Does the child consider vertical movement as well as horizontal movement? Most children imagine the man walked into the field - the absence of footprints should dislodge this assumption. Ask: \"What does the absence of footprints tell you?\" A child who asks \"does the backpack contain anything?\" is probing cleverly. The eureka moment of connecting \"backpack + fell from above + no footprints\" is satisfying to watch."
   },
   {
     "id": "LG-B6",
@@ -213,7 +213,7 @@
     "tags": [],
     "question": "A woman walks into a hospital room and sees a man lying in a bed connected to various machines. She walks over, switches off one of the machines, and walks out. Soon afterwards, the man in the bed dies. The woman is not arrested, charged, or even questioned by the police. Why not?",
     "answer": "She is a nurse or doctor switching off a machine that is no longer needed - for instance, switching off a ventilator after the patient has already died, or (in a legitimate clinical context) turning off a life-support machine as part of authorised end-of-life care. Alternatively: she switched off a machine that was irrelevant to his survival - for instance, a TV or a lamp - and his death was from natural causes.",
-    "modelReasoningPath": "What to listen for: Does the child assume guilt and look for an escape route (\"maybe she had permission\")? Or do they question whether switching off the machine was the cause of death at all? The broader the child's questioning - covering both legal authority and causal connection - the better. If they only consider \"she had permission,\" probe: \"Is there any other reason she might not be questioned?\" --- ## SECTION C - Verbal & Conceptual Reasoning Questions about language, analogy, and ideas. These test how precisely and flexibly a child can think with words. ---"
+    "modelReasoningPath": "What to listen for: Does the child assume guilt and look for an escape route (\"maybe she had permission\")? Or do they question whether switching off the machine was the cause of death at all? The broader the child's questioning - covering both legal authority and causal connection - the better. If they only consider \"she had permission,\" probe: \"Is there any other reason she might not be questioned?\""
   },
   {
     "id": "LG-B5",
@@ -225,7 +225,7 @@
     "tags": [],
     "question": "Four people need to cross a narrow rope bridge at night. The bridge can only hold two people at a time, and the group has only one torch - they cannot cross without it. Each person takes a different amount of time to cross: one takes 1 minute, one takes 2 minutes, one takes 5 minutes, and one takes 10 minutes. When two people cross together, they move at the speed of the slower person. What is the fastest time in which all four people can get across?",
     "answer": "17 minutes.",
-    "modelReasoningPath": "What to listen for: Does the child recognise that the 10-minute person is the \"expensive\" one and think about how to minimise how often that cost is paid? Do they realise the fastest person must make return trips? This question rewards systematic experimentation - a child who tries the obvious approach, gets 19, then asks \"can I do better?\" is showing excellent adaptability. ---"
+    "modelReasoningPath": "What to listen for: Does the child recognise that the 10-minute person is the \"expensive\" one and think about how to minimise how often that cost is paid? Do they realise the fastest person must make return trips? This question rewards systematic experimentation - a child who tries the obvious approach, gets 19, then asks \"can I do better?\" is showing excellent adaptability."
   },
   {
     "id": "LG-C2",
@@ -237,7 +237,7 @@
     "tags": [],
     "question": "Complete this analogy: pen is to author as scalpel is to ___. Now tell me the relationship you used.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Can the child name the relationship, not just fill the blank? The best answers always come with an explanation. Ask \"why?\" after every answer. A child who says \"I just felt it was right\" should be encouraged to articulate the underlying logic. ---"
+    "modelReasoningPath": "What to listen for: Can the child name the relationship, not just fill the blank? The best answers always come with an explanation. Ask \"why?\" after every answer. A child who says \"I just felt it was right\" should be encouraged to articulate the underlying logic."
   },
   {
     "id": "LG-C5",
@@ -249,7 +249,7 @@
     "tags": [],
     "question": "Give me three completely different meanings of the word sharp. They must be genuinely different - not just different contexts for the same basic meaning.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child confuse \"different contexts\" with \"genuinely different meanings\"? (e.g. \"a sharp edge\" and \"a sharp point\" are the same meaning in two contexts.) Breadth of vocabulary and ability to think across domains - music, weather, intellect - is what this tests. A child who spontaneously reaches for the musical meaning or the sartorial meaning is linguistically wide-ranging. ---"
+    "modelReasoningPath": "What to listen for: Does the child confuse \"different contexts\" with \"genuinely different meanings\"? (e.g. \"a sharp edge\" and \"a sharp point\" are the same meaning in two contexts.) Breadth of vocabulary and ability to think across domains - music, weather, intellect - is what this tests. A child who spontaneously reaches for the musical meaning or the sartorial meaning is linguistically wide-ranging."
   },
   {
     "id": "LG-C1",
@@ -261,7 +261,7 @@
     "tags": [],
     "question": "Can you define the word 'chair' for me? Try to be precise enough that your definition would include every chair - and exclude everything that isn't a chair.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child notice that their first definition is too broad or too narrow when challenged? Do they iterate - refining their definition each time a counterexample is offered? A child who accepts every counterexample gracefully and adjusts their definition is showing wonderful intellectual flexibility. A child who gets frustrated when their definition is challenged is showing something less useful. After a few rounds, you can say: \"Philosophers have been trying to do this for centuries and haven't agreed. Why do you think it's so difficult?\" ---"
+    "modelReasoningPath": "What to listen for: Does the child notice that their first definition is too broad or too narrow when challenged? Do they iterate - refining their definition each time a counterexample is offered? A child who accepts every counterexample gracefully and adjusts their definition is showing wonderful intellectual flexibility. A child who gets frustrated when their definition is challenged is showing something less useful. After a few rounds, you can say: \"Philosophers have been trying to do this for centuries and haven't agreed. Why do you think it's so difficult?\""
   },
   {
     "id": "LG-C3",
@@ -273,7 +273,7 @@
     "tags": [],
     "question": "Which is the odd one out: painting, sculpture, symphony, novel, poem? Give me as many different answers as you can, each with a completely different reason.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: This question is deliberately open. A child who offers only one answer and stops is not engaging with the full possibility space. Ask: \"If that were the odd one out, which would you choose next, and why?\" The most impressive children will find angles no one expected - and defend them. ---"
+    "modelReasoningPath": "What to listen for: This question is deliberately open. A child who offers only one answer and stops is not engaging with the full possibility space. Ask: \"If that were the odd one out, which would you choose next, and why?\" The most impressive children will find angles no one expected - and defend them."
   },
   {
     "id": "LG-C6",
@@ -285,7 +285,7 @@
     "tags": [],
     "question": "Here is a sequence of words: Monday, March, Morning. What could come next? Give me more than one possible answer, and explain the rule behind each.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child find one rule and stop, or do they keep looking? The most impressive response is finding a rule, then a second different rule, then being surprised by a third. This tests creative hypothesis generation - a core intellectual skill. --- ## SECTION D - Language Logic & Word Puzzles Questions that combine precise reasoning with language. Each has a definite answer or a clearly bounded set of valid answers. ---"
+    "modelReasoningPath": "What to listen for: Does the child find one rule and stop, or do they keep looking? The most impressive response is finding a rule, then a second different rule, then being surprised by a third. This tests creative hypothesis generation - a core intellectual skill."
   },
   {
     "id": "LG-C4",
@@ -297,6 +297,6 @@
     "tags": [],
     "question": "Here is a claim: 'Every rule has an exception.' Is this claim itself a rule? And if so, does it have an exception? Think out loud.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child notice the self-referential trap? Do they enjoy it or find it frustrating? Ask: \"Can you think of any rules that definitely have no exceptions?\" (e.g. mathematical rules: \"2 + 2 = 4\" always - does that count as a rule? Is there an exception?). This question has no resolution - it is testing whether the child can reason carefully about something genuinely unresolvable. Show enthusiasm for the struggle, not the solution. ---"
+    "modelReasoningPath": "What to listen for: Does the child notice the self-referential trap? Do they enjoy it or find it frustrating? Ask: \"Can you think of any rules that definitely have no exceptions?\" (e.g. mathematical rules: \"2 + 2 = 4\" always - does that count as a rule? Is there an exception?). This question has no resolution - it is testing whether the child can reason carefully about something genuinely unresolvable. Show enthusiasm for the struggle, not the solution."
   }
 ]

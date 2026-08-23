@@ -9,7 +9,7 @@
     "tags": [],
     "question": "A staircase has 10 steps. I can climb it by taking either one step or two steps at a time, in any combination I like. For example, I could take 10 single steps, or 5 double steps, or some mixture. How many different ways are there to climb the staircase?",
     "answer": "89 ways.",
-    "modelReasoningPath": "What to listen for: Expect most children to start listing combinations. The insight is to notice that the number of ways to reach step n depends only on steps n−1 and n−2 - once seen, this builds the sequence quickly. A child who discovers this structure and says \"each answer is the sum of the two before\" is showing exceptional mathematical maturity. Don't expect this - reward it highly if it appears. ---"
+    "modelReasoningPath": "What to listen for: Expect most children to start listing combinations. The insight is to notice that the number of ways to reach step n depends only on steps n−1 and n−2 - once seen, this builds the sequence quickly. A child who discovers this structure and says \"each answer is the sum of the two before\" is showing exceptional mathematical maturity. Don't expect this - reward it highly if it appears."
   },
   {
     "id": "MA-D5",
@@ -21,6 +21,6 @@
     "tags": [],
     "question": "We noticed earlier that 1 = 1, 1 + 3 = 4, 1 + 3 + 5 = 9, 1 + 3 + 5 + 7 = 16. These are all perfect squares. Can you think of a picture or a reason why adding the first n odd numbers always gives you n squared?",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: This is an open-ended question. Some children will want to draw. Encourage it. The L-shape insight is beautiful and accessible - a child who discovers it is making a genuine mathematical observation. Even a child who says \"each time you're adding a border, and the border gets bigger each time\" is close to the right idea. ---"
+    "modelReasoningPath": "What to listen for: This is an open-ended question. Some children will want to draw. Encourage it. The L-shape insight is beautiful and accessible - a child who discovers it is making a genuine mathematical observation. Even a child who says \"each time you're adding a border, and the border gets bigger each time\" is close to the right idea."
   }
 ]

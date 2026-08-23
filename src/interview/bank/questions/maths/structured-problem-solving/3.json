@@ -9,7 +9,7 @@
     "tags": [],
     "question": "There are 20 lockers in a row, all starting closed. The first student walks past and opens every locker. The second student walks past and closes every second locker - locker 2, locker 4, locker 6, and so on. The third student changes the state of every third locker. This continues until the twentieth student has walked past. At the end, how many lockers are left open?",
     "answer": "4 lockers - numbers 1, 4, 9, and 16.",
-    "modelReasoningPath": "A locker ends up open if it is toggled an odd number of times. A locker is toggled once for each of its factors. Only perfect squares have an odd number of factors (because one factor pairs with itself - e.g. 9 has factors 1, 3, 9, and 3 × 3 = 9 means 3 is its own pair). So only lockers in perfect-square positions stay open.\n\nWhat to listen for: A child who says \"let me try locker 1, then locker 2, then locker 3 and see what happens\" is taking exactly the right approach. The leap to \"perfect squares\" may not come immediately - what matters is whether they can find the pattern from cases. ---"
+    "modelReasoningPath": "A locker ends up open if it is toggled an odd number of times. A locker is toggled once for each of its factors. Only perfect squares have an odd number of factors (because one factor pairs with itself - e.g. 9 has factors 1, 3, 9, and 3 × 3 = 9 means 3 is its own pair). So only lockers in perfect-square positions stay open.\n\nWhat to listen for: A child who says \"let me try locker 1, then locker 2, then locker 3 and see what happens\" is taking exactly the right approach. The leap to \"perfect squares\" may not come immediately - what matters is whether they can find the pattern from cases."
   },
   {
     "id": "MA-C2",
@@ -21,7 +21,7 @@
     "tags": [],
     "question": "I make a large cube out of 27 smaller cubes - it is three cubes wide, three cubes tall, and three cubes deep. I dip the whole thing in red paint, so the entire outside is covered. Then I break it apart into all 27 small cubes. How many of the small cubes have paint on exactly two faces?",
     "answer": "12",
-    "modelReasoningPath": "Imagine the positions: 8 corner cubes have 3 painted faces. 12 edge cubes (along each of the 12 edges of the large cube, each edge contributes 1 non-corner cube) have exactly 2 painted faces. 6 face-centre cubes have 1 painted face. 1 centre cube has 0 painted faces. Total: 8 + 12 + 6 + 1 = 27 ✓.\n\nWhat to listen for: Does the child visualise the cube systematically by thinking about where each small cube sits? Using hands to point to corners, edges, and faces is a very good sign. A child who jumps to 12 without checking the other cases should be asked to verify the total adds to 27. ---"
+    "modelReasoningPath": "Imagine the positions: 8 corner cubes have 3 painted faces. 12 edge cubes (along each of the 12 edges of the large cube, each edge contributes 1 non-corner cube) have exactly 2 painted faces. 6 face-centre cubes have 1 painted face. 1 centre cube has 0 painted faces. Total: 8 + 12 + 6 + 1 = 27 ✓.\n\nWhat to listen for: Does the child visualise the cube systematically by thinking about where each small cube sits? Using hands to point to corners, edges, and faces is a very good sign. A child who jumps to 12 without checking the other cases should be asked to verify the total adds to 27."
   },
   {
     "id": "MA-C3",
@@ -33,7 +33,7 @@
     "tags": [],
     "question": "A standard running track has two straight sections and two semicircular ends, making a complete loop. Each straight section is 80 metres long. The total length of one lap around the outside is 400 metres. What is the distance from one straight edge to the other - the width of the track?",
     "answer": "Approximately 76.4 m (exactly 240/π metres).",
-    "modelReasoningPath": "The two straights contribute 2 × 80 = 160 m. The remaining 400 − 160 = 240 m comes from the two semicircular ends, which together form one complete circle. So the circumference of that circle is 240 m. Since C = πd, the diameter = 240/π ≈ 76.4 m.\n\nWhat to listen for: The key decomposition step - realising the two semicircles together make one circle - is the crux. Does the child set up the problem by subtracting the straight sections first? Do they know the circumference formula? If they don't know π ≈ 3.14, that's fine - they can leave the answer as 240/π and explain what they've done. ---"
+    "modelReasoningPath": "The two straights contribute 2 × 80 = 160 m. The remaining 400 − 160 = 240 m comes from the two semicircular ends, which together form one complete circle. So the circumference of that circle is 240 m. Since C = πd, the diameter = 240/π ≈ 76.4 m.\n\nWhat to listen for: The key decomposition step - realising the two semicircles together make one circle - is the crux. Does the child set up the problem by subtracting the straight sections first? Do they know the circumference formula? If they don't know π ≈ 3.14, that's fine - they can leave the answer as 240/π and explain what they've done."
   },
   {
     "id": "MA-C4",
@@ -45,6 +45,6 @@
     "tags": [],
     "question": "At a party, every person shakes hands with every other person exactly once. There are 45 handshakes in total. How many people are at the party?",
     "answer": "10 people.",
-    "modelReasoningPath": "With n people, the number of handshakes = n(n − 1) ÷ 2. Setting this equal to 45: n(n − 1) = 90. Testing n = 10: 10 × 9 = 90 ✓.\n\nWhat to listen for: Does the child recognise that each handshake involves two people, so you can't just multiply? Do they approach it systematically - either by formula or by the \"each new person shakes with all previous\" method? Both are excellent. ---"
+    "modelReasoningPath": "With n people, the number of handshakes = n(n − 1) ÷ 2. Setting this equal to 45: n(n − 1) = 90. Testing n = 10: 10 × 9 = 90 ✓.\n\nWhat to listen for: Does the child recognise that each handshake involves two people, so you can't just multiply? Do they approach it systematically - either by formula or by the \"each new person shakes with all previous\" method? Both are excellent."
   }
 ]

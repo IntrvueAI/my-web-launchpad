@@ -9,7 +9,7 @@
     "tags": [],
     "question": "I am thinking of a two-digit number. If you reverse its digits, you get a number that is 27 more than my original number. Also, the two digits add up to 11. What is my number?",
     "answer": "47",
-    "modelReasoningPath": "The tens digit and units digit add to 11. Reversing the number increases it by 27. If the digits are a and b, then 10b + a − (10a + b) = 27, so 9b − 9a = 27, meaning b − a = 3. Combined with a + b = 11: b = 7, a = 4. The number is 47 (reversed: 74, difference: 27 ✓).\n\nWhat to listen for: A child using algebra is impressive but not required. More interesting is whether they reason: \"the digits differ by 3 and add to 11 - so they must be 4 and 7.\" Trial and improvement is fine, but look for systematic checking rather than random guessing. ---"
+    "modelReasoningPath": "The tens digit and units digit add to 11. Reversing the number increases it by 27. If the digits are a and b, then 10b + a − (10a + b) = 27, so 9b − 9a = 27, meaning b − a = 3. Combined with a + b = 11: b = 7, a = 4. The number is 47 (reversed: 74, difference: 27 ✓).\n\nWhat to listen for: A child using algebra is impressive but not required. More interesting is whether they reason: \"the digits differ by 3 and add to 11 - so they must be 4 and 7.\" Trial and improvement is fine, but look for systematic checking rather than random guessing."
   },
   {
     "id": "MA-A3",
@@ -21,7 +21,7 @@
     "tags": [],
     "question": "Four friends are dividing a pile of sweets equally, but there are 2 left over. A fifth friend then arrives, and when they share equally between five people, there are 3 left over. What is the smallest number of sweets the pile could contain?",
     "answer": "18",
-    "modelReasoningPath": "Find the smallest number that leaves remainder 2 when divided by 4, and remainder 3 when divided by 5. Numbers leaving remainder 2 ÷ 4: 2, 6, 10, 14, 18, 22… Numbers leaving remainder 3 ÷ 5: 3, 8, 13, 18, 23… First number in both lists: 18.\n\nWhat to listen for: A child who writes out both lists and looks for overlap is thinking well. Watch whether they understand what a remainder is - some children confuse it with the quotient. Asking \"can you check your answer?\" is useful here. ---"
+    "modelReasoningPath": "Find the smallest number that leaves remainder 2 when divided by 4, and remainder 3 when divided by 5. Numbers leaving remainder 2 ÷ 4: 2, 6, 10, 14, 18, 22… Numbers leaving remainder 3 ÷ 5: 3, 8, 13, 18, 23… First number in both lists: 18.\n\nWhat to listen for: A child who writes out both lists and looks for overlap is thinking well. Watch whether they understand what a remainder is - some children confuse it with the quotient. Asking \"can you check your answer?\" is useful here."
   },
   {
     "id": "MA-A4",
@@ -33,7 +33,7 @@
     "tags": [],
     "question": "Starting from 1, I keep adding the next odd number each time. So I have: 1, then 1 + 3 = 4, then 4 + 5 = 9, then 9 + 7 = 16, and so on. After I have added the 20th odd number, what is my total?",
     "answer": "400",
-    "modelReasoningPath": "The sum of the first n odd numbers always equals n². The sequence 1, 4, 9, 16… are perfect squares. After 20 odd numbers: 20² = 400. (The 20th odd number is 2 × 20 − 1 = 39.)\n\nWhat to listen for: Does the child spot the pattern (1, 4, 9, 16 are perfect squares) from the examples given in the question? Can they generalise? A strong candidate notices the pattern immediately; a good candidate spots it after writing out a few more terms. Credit anyone who sees it, even if they can't explain why it works. ---"
+    "modelReasoningPath": "The sum of the first n odd numbers always equals n². The sequence 1, 4, 9, 16… are perfect squares. After 20 odd numbers: 20² = 400. (The 20th odd number is 2 × 20 − 1 = 39.)\n\nWhat to listen for: Does the child spot the pattern (1, 4, 9, 16 are perfect squares) from the examples given in the question? Can they generalise? A strong candidate notices the pattern immediately; a good candidate spots it after writing out a few more terms. Credit anyone who sees it, even if they can't explain why it works."
   },
   {
     "id": "MA-A5",
@@ -45,7 +45,7 @@
     "tags": [],
     "question": "A coat normally costs £80. In a sale, the price is reduced by 20%. After the sale ends, the shop puts the price back up by 25%. What is the new price? Is it more than, less than, or the same as the original £80?",
     "answer": "Exactly £80 - the same as the original.",
-    "modelReasoningPath": "20% off: £80 × 0.8 = £64. Then 25% on: £64 × 1.25 = £80.\n\nWhat to listen for: Almost every child says \"they should cancel but I'm not sure which way.\" Very many say the final price is more (because 25 > 20). The insight is that the 25% is applied to a smaller number. A child who says \"you can't just add percentages because they're of different amounts\" is thinking at an excellent level. ---"
+    "modelReasoningPath": "20% off: £80 × 0.8 = £64. Then 25% on: £64 × 1.25 = £80.\n\nWhat to listen for: Almost every child says \"they should cancel but I'm not sure which way.\" Very many say the final price is more (because 25 > 20). The insight is that the 25% is applied to a smaller number. A child who says \"you can't just add percentages because they're of different amounts\" is thinking at an excellent level."
   },
   {
     "id": "MA-A7",
@@ -57,6 +57,6 @@
     "tags": [],
     "question": "My car's fuel tank is three-quarters full. During a long drive, I use two-thirds of the fuel that was in the tank at the start of the journey. What fraction of a full tank do I have left?",
     "answer": "1/4",
-    "modelReasoningPath": "Start with 3/4 of a tank. Use 2/3 of that: 2/3 × 3/4 = 6/12 = 1/2. Remaining: 3/4 − 1/2 = 3/4 − 2/4 = 1/4.\n\nWhat to listen for: The key distinction is \"two-thirds of what is in the tank\" versus \"two-thirds of the full tank.\" A child who computes 2/3 of the full tank (giving 2/3 used, leaving 1/4... wait, that gives 1/3 − something, which doesn't parse) has misread the question. Ask them to re-read it slowly. A child who multiplies fractions correctly and then subtracts is handling this well. --- ## SECTION B - Estimation & Order of Magnitude Questions that test whether a child can reason sensibly about size and scale, making and justifying approximations. ---"
+    "modelReasoningPath": "Start with 3/4 of a tank. Use 2/3 of that: 2/3 × 3/4 = 6/12 = 1/2. Remaining: 3/4 − 1/2 = 3/4 − 2/4 = 1/4.\n\nWhat to listen for: The key distinction is \"two-thirds of what is in the tank\" versus \"two-thirds of the full tank.\" A child who computes 2/3 of the full tank (giving 2/3 used, leaving 1/4... wait, that gives 1/3 − something, which doesn't parse) has misread the question. Ask them to re-read it slowly. A child who multiplies fractions correctly and then subtracts is handling this well."
   }
 ]

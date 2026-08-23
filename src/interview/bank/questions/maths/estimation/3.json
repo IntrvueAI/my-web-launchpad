@@ -9,7 +9,7 @@
     "tags": [],
     "question": "I drive from London to Edinburgh, a journey of 400 miles. On the way there I average 50 miles per hour. On the way back the roads are busier and I only average 40 miles per hour. What is my average speed for the whole round trip? Have a think before you answer.",
     "answer": "44.4 mph - not 45 mph.",
-    "modelReasoningPath": "Total distance = 800 miles. Time there = 400 ÷ 50 = 8 hours. Time back = 400 ÷ 40 = 10 hours. Total time = 18 hours. Average speed = 800 ÷ 18 ≈ 44.4 mph.\n\nWhat to listen for: Nearly everyone says 45 mph. The child who pauses and thinks \"but I spend longer driving slowly, so shouldn't it be below 45?\" has excellent instincts. The formula insight - total distance ÷ total time - is the key. ---"
+    "modelReasoningPath": "Total distance = 800 miles. Time there = 400 ÷ 50 = 8 hours. Time back = 400 ÷ 40 = 10 hours. Total time = 18 hours. Average speed = 800 ÷ 18 ≈ 44.4 mph.\n\nWhat to listen for: Nearly everyone says 45 mph. The child who pauses and thinks \"but I spend longer driving slowly, so shouldn't it be below 45?\" has excellent instincts. The formula insight - total distance ÷ total time - is the key."
   },
   {
     "id": "MA-B2",
@@ -21,7 +21,7 @@
     "tags": [],
     "question": "Roughly how many times does your heart beat in a year? I don't want an exact answer - just a sensible estimate. Talk me through how you'd work it out.",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: This is entirely about process. Does the child break it into stages? Do they choose sensible approximations and say why? Do they sanity-check (\"that seems plausible\")? A child who says \"I don't know how fast hearts beat\" can be told - what matters is whether they then use that information structurally. ---"
+    "modelReasoningPath": "What to listen for: This is entirely about process. Does the child break it into stages? Do they choose sensible approximations and say why? Do they sanity-check (\"that seems plausible\")? A child who says \"I don't know how fast hearts beat\" can be told - what matters is whether they then use that information structurally."
   },
   {
     "id": "MA-B3",
@@ -33,7 +33,7 @@
     "tags": [],
     "question": "If you stacked one million £1 coins in a single pile, roughly how tall would it be? Would it be about as tall as a house, a skyscraper, or a mountain?",
     "answer": "(see working)",
-    "modelReasoningPath": "What to listen for: Does the child know a £1 coin is a few millimetres thick? (If not, say \"assume it's about 3 mm.\") The key skill is unit conversion: mm → m → km. A child who gets confused going from mm to km is showing a gap in numerical fluency worth noting. ---"
+    "modelReasoningPath": "What to listen for: Does the child know a £1 coin is a few millimetres thick? (If not, say \"assume it's about 3 mm.\") The key skill is unit conversion: mm → m → km. A child who gets confused going from mm to km is showing a gap in numerical fluency worth noting."
   },
   {
     "id": "MA-B4",
@@ -45,7 +45,7 @@
     "tags": [],
     "question": "If you counted out loud at one number per second - one, two, three... - how long would it take to count from 1 to 1,000,000? Give your answer in a sensible unit.",
     "answer": "About 11.5 days of non-stop counting.",
-    "modelReasoningPath": "1,000,000 seconds ÷ 60 = 16,667 minutes ÷ 60 = 278 hours ÷ 24 ≈ 11.6 days.\n\nWhat to listen for: Most children guess \"a few hours\" or \"a few days.\" The interest is whether they correctly convert seconds into a meaningful unit. Does the child realise there are 86,400 seconds in a day? (60 × 60 × 24 - they may need prompting to derive this.) A child who works through the unit conversion systematically is demonstrating excellent structured thinking. ---"
+    "modelReasoningPath": "1,000,000 seconds ÷ 60 = 16,667 minutes ÷ 60 = 278 hours ÷ 24 ≈ 11.6 days.\n\nWhat to listen for: Most children guess \"a few hours\" or \"a few days.\" The interest is whether they correctly convert seconds into a meaningful unit. Does the child realise there are 86,400 seconds in a day? (60 × 60 × 24 - they may need prompting to derive this.) A child who works through the unit conversion systematically is demonstrating excellent structured thinking."
   },
   {
     "id": "MA-B5",
@@ -57,6 +57,6 @@
     "tags": [],
     "question": "In a class of 30 children, what do you think is the probability that at least two of them share the same birthday? Would you say it is more likely than not, or less likely than not? Why do you think so?",
     "answer": "More likely than not - the probability is approximately 70%.",
-    "modelReasoningPath": "This is the famous Birthday Problem and is deeply counterintuitive. With 30 people, the probability that all birthdays are different is roughly 29% - so the chance of at least one shared birthday is about 71%. The reason is that with 30 people there are 30 × 29 ÷ 2 = 435 different pairs of people who could share a birthday. That's a lot of chances.\n\nWhat to listen for: This question is not about calculation - it's about probabilistic intuition and argumentation. A child who says \"there are loads of pairs, so it's probably more likely than you'd think\" is reasoning beautifully. A child who says \"there are 365 days and only 30 people, so it's unlikely\" - a very common and understandable mistake - should be asked: \"how many pairs of people are there?\" --- ## SECTION C - Structured Problem Solving Multi-step problems where the path to the answer requires systematic organisation. ---"
+    "modelReasoningPath": "This is the famous Birthday Problem and is deeply counterintuitive. With 30 people, the probability that all birthdays are different is roughly 29% - so the chance of at least one shared birthday is about 71%. The reason is that with 30 people there are 30 × 29 ÷ 2 = 435 different pairs of people who could share a birthday. That's a lot of chances.\n\nWhat to listen for: This question is not about calculation - it's about probabilistic intuition and argumentation. A child who says \"there are loads of pairs, so it's probably more likely than you'd think\" is reasoning beautifully. A child who says \"there are 365 days and only 30 people, so it's unlikely\" - a very common and understandable mistake - should be asked: \"how many pairs of people are there?\""
   }
 ]
