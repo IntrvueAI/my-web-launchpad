@@ -40,6 +40,10 @@ interface UseInterviewSessionV2Return {
   startInterview: (userId: string, opts?: StartOptions) => Promise<void>;
   stopInterview: () => Promise<string | null>;
   setMicMuted: (muted: boolean) => void;
+  /** While true, Deepgram's own turn-end (VAD) is ignored — only flushPushToTalkTurn() submits. */
+  setPushToTalkMode: (active: boolean) => void;
+  /** Called on push-to-talk release: submits whatever's been said as ONE turn. */
+  flushPushToTalkTurn: () => void;
   sendTypedMessage: (text: string) => void;
   skipQuestion: () => Promise<void>;
   switchTopic: (topic: string) => Promise<void>;
@@ -81,6 +85,11 @@ export const useInterviewSessionV2 = (
   const flushRef = useRef<() => void>(() => {});
   // Accumulates finalized Deepgram segments for the CURRENT (not-yet-ended) turn.
   const utteranceBufferRef = useRef<string>('');
+  // While held, Deepgram's own turn-end (VAD-based, tuned for continuous listening) is ignored —
+  // a mid-answer thinking pause was getting mistaken for the end of the turn, splitting one held
+  // answer into two separate messages to Clara. The button itself is the turn boundary instead;
+  // see flushPushToTalkTurn, called only on release.
+  const pushToTalkModeRef = useRef(false);
   const peerAudioRef = useRef<{ ctx: AudioContext; raf: number } | null>(null);
 
   const sessionLogger = useInterviewSessionLogger();
@@ -298,6 +307,9 @@ export const useInterviewSessionV2 = (
           setLiveCaption('');
         },
         onTurnEnd: () => {
+          // In push-to-talk mode the button is the turn boundary, not Deepgram's VAD — keep
+          // accumulating through the pause and wait for flushPushToTalkTurn() on release.
+          if (pushToTalkModeRef.current) return;
           const text = utteranceBufferRef.current.trim();
           utteranceBufferRef.current = '';
           setLiveCaption('');
@@ -434,6 +446,17 @@ export const useInterviewSessionV2 = (
     deepgramMic.setMuted(muted);
   }, [deepgramMic]);
 
+  const setPushToTalkMode = useCallback((active: boolean) => {
+    pushToTalkModeRef.current = active;
+  }, []);
+
+  const flushPushToTalkTurn = useCallback(() => {
+    const text = utteranceBufferRef.current.trim();
+    utteranceBufferRef.current = '';
+    setLiveCaption('');
+    if (text) handleStudentTurn(text);
+  }, [handleStudentTurn]);
+
   return {
     isConnected,
     isStreaming,
@@ -446,6 +469,8 @@ export const useInterviewSessionV2 = (
     startInterview,
     stopInterview,
     setMicMuted,
+    setPushToTalkMode,
+    flushPushToTalkTurn,
     sendTypedMessage,
     skipQuestion,
     switchTopic,

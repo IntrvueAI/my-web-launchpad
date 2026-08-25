@@ -96,6 +96,8 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
     stopInterview,
     sessionStatus,
     setMicMuted,
+    setPushToTalkMode,
+    flushPushToTalkTurn,
     sendTypedMessage,
     skipQuestion,
     switchTopic,
@@ -336,10 +338,11 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
 
   useEffect(() => {
     if (!isStreaming) return;
+    setPushToTalkMode(pushToTalk && !typeMode);
     if (typeMode) { setPttHeld(false); setMicMuted(true); return; }
     if (pushToTalk) { setPttHeld(false); setMicMuted(true); }
     else setMicMuted(!isAudioEnabled);
-  }, [typeMode, pushToTalk, isStreaming, isAudioEnabled, setMicMuted]);
+  }, [typeMode, pushToTalk, isStreaming, isAudioEnabled, setMicMuted, setPushToTalkMode]);
 
   const pttStart = useCallback(() => {
     if (!pushToTalk || !isStreaming) return;
@@ -352,8 +355,13 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
     if (!pushToTalk) return;
     setPttHeld(false);
     if (pttMuteTimerRef.current) clearTimeout(pttMuteTimerRef.current);
-    pttMuteTimerRef.current = setTimeout(() => setMicMuted(true), 350);
-  }, [pushToTalk, setMicMuted]);
+    // Same 350ms grace period as the mute delay below — gives Deepgram time to finalize whatever
+    // was said right up to release before we treat the held turn as complete.
+    pttMuteTimerRef.current = setTimeout(() => {
+      setMicMuted(true);
+      flushPushToTalkTurn();
+    }, 350);
+  }, [pushToTalk, setMicMuted, flushPushToTalkTurn]);
 
   useEffect(() => {
     if (!pushToTalk || !isStreaming || typeMode) return;
