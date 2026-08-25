@@ -173,7 +173,7 @@ const Index = () => {
       refetchCredits();
       setSelectedInterviewType(interviewType);
       setCurrentView('interview');
-    } catch (e: any) {
+    } catch (e) {
       console.error('start interview error', e);
       toast({
         title: "Something went wrong",

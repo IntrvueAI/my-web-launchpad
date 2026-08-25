@@ -70,7 +70,8 @@ const ResetPassword = () => {
       setTimeout(() => {
         navigate('/auth');
       }, 2000);
-    } catch (error: any) {
+    } catch (caught) {
+      const error = caught instanceof Error ? caught : new Error(String(caught));
       setError(error.message || 'Failed to reset password');
       toast({
         title: "Password reset failed",

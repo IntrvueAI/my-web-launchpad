@@ -30,9 +30,10 @@ export const useEmail = () => {
       });
 
       return { data, error: null };
-    } catch (error: any) {
+    } catch (caught) {
+      const error = caught instanceof Error ? caught : new Error(String(caught));
       console.error('Email sending failed:', error);
-      
+
       toast({
         title: "Failed to send email",
         description: error.message || "An error occurred while sending the email",

@@ -52,11 +52,12 @@ export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ onGoToPractice, 
           title: "Payment successful",
           description: `Your credits have been updated.`,
         });
-      } catch (e: any) {
+      } catch (caught) {
+        const e = caught instanceof Error ? caught : new Error(String(caught));
         console.error("verify-payment error", e);
         toast({
           title: "Verification failed",
-          description: e?.message || "Please contact support.",
+          description: e.message || "Please contact support.",
           variant: "destructive",
         });
       } finally {

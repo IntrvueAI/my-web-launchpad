@@ -1,7 +1,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { createClient } from '@anam-ai/js-sdk';
-import { AnamEvent } from "@anam-ai/js-sdk/dist/module/types";
+import { createClient, type AnamClient } from '@anam-ai/js-sdk';
+import { AnamEvent, type Message as AnamMessage } from "@anam-ai/js-sdk/dist/module/types";
 import { supabase } from '@/integrations/supabase/client';
 import { loadSystemPrompt } from '@/utils/promptLoader';
 import { InterviewType } from '@/config/interviewTypes';
@@ -77,8 +77,8 @@ export const useInterviewSession = (
   const [interviewComplete, setInterviewComplete] = useState(false);
 
   // Ref to store the anam client instance and messages
-  const clientRef = useRef<any>(null);
-  const messagesRef = useRef<any[]>([]);
+  const clientRef = useRef<AnamClient | null>(null);
+  const messagesRef = useRef<AnamMessage[]>([]);
   const lastMessageTimeRef = useRef<number>(Date.now());
 
   // Engine-driven turn loop refs
@@ -273,11 +273,11 @@ export const useInterviewSession = (
 
       // Anam fires MESSAGE_HISTORY_UPDATED when the student finishes speaking, with the full history
       // including the new user message (the documented signal for "bring your own LLM" mode).
-      client.addListener(AnamEvent.MESSAGE_HISTORY_UPDATED, (messages: any[]) => {
+      client.addListener(AnamEvent.MESSAGE_HISTORY_UPDATED, (messages: AnamMessage[]) => {
         messagesRef.current = messages;
         lastMessageTimeRef.current = Date.now();
         if (!engineDriven) {
-          const formatted: ChatMessage[] = messages.map((msg: any) => ({
+          const formatted: ChatMessage[] = messages.map((msg) => ({
             role: msg.role === 'user' ? 'user' : 'assistant',
             content: msg.content,
             timestamp: new Date(),
@@ -377,18 +377,30 @@ export const useInterviewSession = (
       const r = (role || '').toLowerCase();
       return ['user', 'human', 'student'].includes(r) ? 'Student' : 'Interviewer';
     };
-    const extractText = (msg: any): string => {
+    // Pulls a named string field off an unknown-shaped part (Anam's declared Message.content is a
+    // plain string, but defensively handles the richer part shapes some payloads actually send).
+    const pickString = (part: unknown, key: string): string => {
+      if (part && typeof part === 'object' && key in part) {
+        const value = (part as Record<string, unknown>)[key];
+        return typeof value === 'string' ? value : '';
+      }
+      return '';
+    };
+    const extractText = (msg: { content?: unknown }): string => {
       const c = msg?.content;
       if (!c) return '';
       if (typeof c === 'string') return c;
       if (Array.isArray(c)) {
-        return c.map((item: any) => (typeof item === 'string' ? item : item?.text || item?.content || item?.value || '')).filter(Boolean).join(' ');
+        return c
+          .map((item) => (typeof item === 'string' ? item : pickString(item, 'text') || pickString(item, 'content') || pickString(item, 'value')))
+          .filter(Boolean)
+          .join(' ');
       }
-      if (typeof c === 'object') return c.text || c.content || c.value || '';
+      if (typeof c === 'object') return pickString(c, 'text') || pickString(c, 'content') || pickString(c, 'value');
       return '';
     };
     const lines = messagesRef.current
-      .map((msg: any) => {
+      .map((msg) => {
         const text = extractText(msg).trim();
         return text ? `${normalizeRole(msg.role)}: ${text}` : null;
       })

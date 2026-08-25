@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { createClient } from '@anam-ai/js-sdk';
+import { createClient, type AnamClient } from '@anam-ai/js-sdk';
 import { AnamEvent } from "@anam-ai/js-sdk/dist/module/types";
 import { supabase } from '@/integrations/supabase/client';
 import { InterviewType } from '@/config/interviewTypes';
@@ -68,7 +68,7 @@ export const useInterviewSessionV2 = (
   const [brainUiState, setBrainUiState] = useState<BrainResponse['uiState'] | null>(null);
   const [interviewComplete, setInterviewComplete] = useState(false);
 
-  const clientRef = useRef<any>(null);
+  const clientRef = useRef<AnamClient | null>(null);
   const lastMessageTimeRef = useRef<number>(Date.now());
 
   const sessionRefRef = useRef<string | null>(null);

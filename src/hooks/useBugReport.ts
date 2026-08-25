@@ -54,13 +54,14 @@ export const useBugReport = () => {
         description: "Thank you for helping us improve! We'll investigate this issue.",
       });
       return true;
-    } catch (error: any) {
+    } catch (caught) {
+      const error = caught instanceof Error ? caught : new Error(String(caught));
       console.error('🐛 [BugReport] Submission failed:', {
         message: error.message,
         stack: error.stack,
         fullError: error
       });
-      
+
       toast({
         title: "Failed to submit bug report",
         description: error.message || "An error occurred while submitting your bug report. Please try again.",
