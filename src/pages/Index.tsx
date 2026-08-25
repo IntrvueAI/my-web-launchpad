@@ -139,8 +139,9 @@ const Index = () => {
         return;
       }
 
-      // If we know balance and it's 0, shortcut to credits
-      if ((credits ?? 0) <= 0) {
+      // If we know balance and it's short of this interview's actual cost, shortcut to credits
+      // (was `<= 0` — only caught a fully empty balance, not "have 2, need 5").
+      if ((credits ?? 0) < cost) {
         toast({
           title: "You're out of credits",
           description: "Buy credits to start a new interview.",
@@ -149,24 +150,31 @@ const Index = () => {
         return;
       }
 
-      const { data, error } = await supabase.rpc('consume_credit');
-      if (error) {
-        console.error('consume_credit error', error);
-        toast({
-          title: "Unable to start interview",
-          description: "There was a problem consuming a credit. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (data !== true) {
-        toast({
-          title: "No credits available",
-          description: "Please purchase more credits to continue.",
-        });
-        setCurrentView('credits');
-        return;
+      // consume_credit() takes exactly one credit per call — call it `cost` times so interviews
+      // priced above 1 credit are actually charged their real price (this used to always deduct
+      // just 1 regardless of the interview's cost). Balance was already confirmed sufficient
+      // above, so these should all succeed; stop immediately if one doesn't.
+      for (let i = 0; i < cost; i++) {
+        const { data, error } = await supabase.rpc('consume_credit');
+        if (error) {
+          console.error('consume_credit error', error);
+          toast({
+            title: "Unable to start interview",
+            description: "There was a problem consuming your credits. Please try again.",
+            variant: "destructive",
+          });
+          refetchCredits();
+          return;
+        }
+        if (data !== true) {
+          toast({
+            title: "No credits available",
+            description: "Please purchase more credits to continue.",
+          });
+          setCurrentView('credits');
+          refetchCredits();
+          return;
+        }
       }
 
       // Locally refresh credits and proceed
