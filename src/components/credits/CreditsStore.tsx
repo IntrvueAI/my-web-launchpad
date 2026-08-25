@@ -73,6 +73,13 @@ export const CreditsStore: React.FC = () => {
           </Card>
         ))}
       </div>
+      <p className="mt-6 text-center text-sm text-muted-foreground">
+        Cost a barrier? We offer a pay-what-you-can option — just{" "}
+        <a href="mailto:founders@intrvue.ai" className="underline underline-offset-2 hover:text-foreground">
+          email us
+        </a>{" "}
+        and we'll sort something out, no forms needed.
+      </p>
     </>
   );
 };
