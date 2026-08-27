@@ -2,7 +2,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Order } from '@/models/Order';
 
 export const OrderService = {
-  async createOrder(pack: 3 | 5 | 10): Promise<{ checkoutUrl: string; sessionId: string }> {
+  async createOrder(pack: 2 | 3 | 5): Promise<{ checkoutUrl: string; sessionId: string }> {
     const { data, error } = await supabase.functions.invoke('create-payment', { body: { pack } });
     if (error) throw error;
     return { checkoutUrl: data.url, sessionId: data.session_id };

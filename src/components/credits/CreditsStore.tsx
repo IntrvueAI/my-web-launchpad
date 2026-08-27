@@ -6,14 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { OrderService } from "@/services/OrderService";
 
-type Pack = 3 | 5 | 10;
+type Pack = 2 | 3 | 5;
 
-// £5/credit baseline (3 credits = one Maths/Logic/Current Affairs mock at £15, 5 credits = one
-// full 11+ interview at £25) with a 10% discount on the 10-credit pack.
+// 2 credits = one Maths/Logic/Current Affairs mock (£19.99), 3 credits = one full 11+ interview
+// (£29.99), 5 credits = one of each bundled with a small discount (£19.99 + £29.99 = £49.98 apart).
 const PACKS: { credits: Pack; priceCents: number; label: string; note?: string }[] = [
-  { credits: 3, priceCents: 1500, label: "3 Credits", note: "One mock interview" },
-  { credits: 5, priceCents: 2500, label: "5 Credits", note: "Most popular" },
-  { credits: 10, priceCents: 4500, label: "10 Credits", note: "Best value" },
+  { credits: 2, priceCents: 1999, label: "2 Credits", note: "One topic mock" },
+  { credits: 3, priceCents: 2999, label: "3 Credits", note: "One full 11+ interview" },
+  { credits: 5, priceCents: 4499, label: "5 Credits", note: "Best value — one of each" },
 ];
 
 export const CreditsStore: React.FC = () => {
@@ -50,7 +50,7 @@ export const CreditsStore: React.FC = () => {
                   </Badge>
                 )}
               </div>
-              <CardDescription>£5 per credit — cost varies by interview</CardDescription>
+              <CardDescription>Cost varies by interview</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="text-3xl font-bold">

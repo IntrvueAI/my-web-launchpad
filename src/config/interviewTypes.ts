@@ -77,7 +77,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school'],
     icon: 'GraduationCap',
-    costCredits: 5, // £25 at the £5/credit rate the credit packs are priced on (see CreditsStore)
+    costCredits: 3, // £29.99 — see the 3-credit pack in CreditsStore
     engineDriven: true,
     engineSubject: 'elevenplus',
     topicPracticeEnabled: false, // whole-child interview built around its two-phase mixedBank structure — no single-topic drill mode
@@ -104,7 +104,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['school admission', 'academic', 'UK education', 'grammar school', 'independent school', 'beta'],
     icon: 'GraduationCap',
-    costCredits: 5, // same interview as 11-plus, just an alternate STT engine — same price
+    costCredits: 3, // same interview as 11-plus, just an alternate STT engine — same price
     engineDriven: true,
     engineSubject: 'elevenplus',
     provider: 'anam-deepgram',
@@ -133,7 +133,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 3,
     tags: ['11+', 'logic puzzles', 'reasoning', 'mathematics', 'patterns'],
     icon: 'Brain',
-    costCredits: 3, // £15 at the £5/credit rate the credit packs are priced on (see CreditsStore)
+    costCredits: 2, // £19.99 — see the 2-credit pack in CreditsStore
     engineDriven: true,
     engineSubject: 'logic',
     preStartNote:
@@ -158,7 +158,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning'],
     icon: 'Calculator',
-    costCredits: 3, // £15 at the £5/credit rate the credit packs are priced on (see CreditsStore)
+    costCredits: 2, // £19.99 — see the 2-credit pack in CreditsStore
     engineDriven: true,
     engineSubject: 'maths'
   },
@@ -179,7 +179,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 2,
     tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning', 'beta'],
     icon: 'Calculator',
-    costCredits: 3, // same interview as maths-interview, just an alternate video platform — same price
+    costCredits: 2, // same interview as maths-interview, just an alternate video platform — same price
     provider: 'tavus',
     adminOnly: true, // was publicly visible + credit-gated despite being tagged 'beta' — 11-plus-v2 already gets this treatment, this didn't; now consistent
     preStartNote:
@@ -204,7 +204,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     difficultyLevel: 3,
     tags: ['11+', 'current affairs', 'moral reasoning', 'ethics', 'discussion'],
     icon: 'Globe',
-    costCredits: 3, // £15 at the £5/credit rate the credit packs are priced on (see CreditsStore)
+    costCredits: 2, // £19.99 — see the 2-credit pack in CreditsStore
     engineDriven: true,
     engineSubject: 'currentaffairs',
     topicPracticeEnabled: false, // pushback-driven discussion format — drilling one topic (e.g. just 'moral-dilemmas') forever doesn't reflect the real thing

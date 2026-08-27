@@ -37,8 +37,8 @@ if (req.method !== "POST") {
 
     const { pack } = await req.json().catch(() => ({}));
 
-    if (![3, 5, 10].includes(pack)) {
-      return cors(new Response(JSON.stringify({ error: "Invalid pack. Use 3, 5, or 10." }), { status: 400 }));
+    if (![2, 3, 5].includes(pack)) {
+      return cors(new Response(JSON.stringify({ error: "Invalid pack. Use 2, 3, or 5." }), { status: 400 }));
     }
 
     const anon = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -48,7 +48,7 @@ if (userErr || !userData?.user) {
 }
 
     const userId = userData.user.id;
-    const amount = pack === 3 ? 1500 : pack === 5 ? 2500 : 4500;
+    const amount = pack === 2 ? 1999 : pack === 3 ? 2999 : 4499;
     const credits = pack;
 
 const usedOrigin =
@@ -76,7 +76,7 @@ if (!usedOrigin) {
             currency: "gbp",
             product_data: {
               name: `Interview Credits x${credits}`,
-              description: "£5 per credit — cost varies by interview.",
+              description: "Cost varies by interview.",
             },
             unit_amount: amount,
           },
