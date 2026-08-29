@@ -110,6 +110,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     stopInterview,
     sessionStatus,
     setMicMuted,
+    setPushToTalkMode,
+    flushPushToTalkTurn,
     sendTypedMessage,
     skipQuestion,
     switchTopic,
@@ -364,10 +366,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   // PTT on => muted until held; otherwise => whatever the normal mic button says.
   useEffect(() => {
     if (!isStreaming) return;
+    setPushToTalkMode(pushToTalk && !typeMode);
     if (typeMode) { setPttHeld(false); setMicMuted(true); return; }
     if (pushToTalk) { setPttHeld(false); setMicMuted(true); }
     else setMicMuted(!isAudioEnabled);
-  }, [typeMode, pushToTalk, isStreaming, isAudioEnabled, setMicMuted]);
+  }, [typeMode, pushToTalk, isStreaming, isAudioEnabled, setMicMuted, setPushToTalkMode]);
 
   const pttStart = useCallback(() => {
     if (!pushToTalk || !isStreaming) return;
@@ -379,10 +382,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const pttEnd = useCallback(() => {
     if (!pushToTalk) return;
     setPttHeld(false);
-    // Small grace period so the tail of the last word isn't clipped before it reaches the mic.
+    // Small grace period so the tail of the last word isn't clipped before it reaches the mic —
+    // then flush whatever was buffered during the hold as ONE turn.
     if (pttMuteTimerRef.current) clearTimeout(pttMuteTimerRef.current);
-    pttMuteTimerRef.current = setTimeout(() => setMicMuted(true), 350);
-  }, [pushToTalk, setMicMuted]);
+    pttMuteTimerRef.current = setTimeout(() => {
+      setMicMuted(true);
+      flushPushToTalkTurn();
+    }, 350);
+  }, [pushToTalk, setMicMuted, flushPushToTalkTurn]);
 
   // Hold T = talk (desktop). T rather than Space — Space is page-scroll, so holding it jumped the
   // page around. Ignores typing fields; releases on window blur so the mic can never get stuck open.

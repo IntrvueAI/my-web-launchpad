@@ -41,6 +41,10 @@ interface UseInterviewSessionReturn {
   startInterview: (userId: string, opts?: StartOptions) => Promise<void>;
   stopInterview: () => Promise<string | null>;
   setMicMuted: (muted: boolean) => void;
+  /** While true, Deepgram's own turn-end (VAD) is ignored — only flushPushToTalkTurn() submits. */
+  setPushToTalkMode: (active: boolean) => void;
+  /** Called on push-to-talk release: submits whatever's been said as ONE turn. */
+  flushPushToTalkTurn: () => void;
   /** Type-mode: submit a typed answer instead of speech (testing / accessibility). */
   sendTypedMessage: (text: string) => void;
   /** Engine-driven only: skip the current question (recorded in the evidence log). */
@@ -94,6 +98,10 @@ export const useInterviewSession = (
   const pendingStudentRef = useRef<string[]>([]);
   const flushTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const flushRef = useRef<() => void>(() => {});
+  // While push-to-talk is the active input mode, the button is the turn boundary — a mid-answer
+  // pause must NOT auto-flush to the brain (that's Clara "cutting in" before they're done). See
+  // setPushToTalkMode / flushPushToTalkTurn, called from the component on hold-start/release.
+  const pushToTalkModeRef = useRef(false);
 
   // Session logging and health monitoring
   const sessionLogger = useInterviewSessionLogger();
@@ -149,8 +157,9 @@ export const useInterviewSession = (
       });
     } finally {
       brainBusyRef.current = false;
-      // Anything the student said while we were busy is queued — handle it now (coalesced).
-      if (pendingStudentRef.current.length > 0) {
+      // Anything the student said while we were busy is queued — handle it now (coalesced), unless
+      // push-to-talk is being held, in which case it waits for the explicit release flush too.
+      if (pendingStudentRef.current.length > 0 && !pushToTalkModeRef.current) {
         if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
         flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
       }
@@ -225,6 +234,8 @@ export const useInterviewSession = (
     // she finishes (never dropped); otherwise we wait a beat to coalesce any follow-on burst.
     pendingStudentRef.current.push(text.trim());
     if (brainBusyRef.current) return;
+    // In push-to-talk mode, don't auto-flush on a pause — wait for the explicit release flush.
+    if (pushToTalkModeRef.current) return;
     if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
     flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
   }, [pushTranscript]);
@@ -501,6 +512,14 @@ export const useInterviewSession = (
     }
   }, []);
 
+  const setPushToTalkMode = useCallback((active: boolean) => {
+    pushToTalkModeRef.current = active;
+  }, []);
+
+  const flushPushToTalkTurn = useCallback(() => {
+    flushStudentBuffer();
+  }, [flushStudentBuffer]);
+
   return {
     isConnected,
     isStreaming,
@@ -512,6 +531,8 @@ export const useInterviewSession = (
     startInterview,
     stopInterview,
     setMicMuted,
+    setPushToTalkMode,
+    flushPushToTalkTurn,
     sendTypedMessage,
     skipQuestion,
     switchTopic,
