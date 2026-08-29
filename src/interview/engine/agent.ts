@@ -17,6 +17,8 @@ import { selectQuestion } from '../bank/select';
 import { nextDifficulty } from './adapt';
 import { makeEvidence } from './evidence';
 import { corePrinciples, CORE_SPEAKING_STYLE } from './core';
+import type { FlowGraph } from './flow';
+import { findFlowNode, pickNextFlowNode } from './flow';
 
 // ---- Chat LLM interface (a small slice of OpenAI's chat+tools API) ----
 
@@ -64,12 +66,19 @@ export interface AgentState {
   targetQuestions: number;
   seed: number;
   done: boolean;
+  /** Present only for flow-driven (admin-built) interviews — see engine/flow.ts. */
+  flow?: { flowId: string; currentNodeId: string | null };
+  /** Admin-authored guidance for the CURRENT flow node, if any — folded into the system prompt
+   *  alongside the question's own guidance. Cleared whenever a question with no note is served. */
+  currentNodeNote?: string;
 }
 
 export interface AgentDeps {
   bank: BankQuestion[];
   pack: SubjectPack;
   chat: ChatComplete;
+  /** Present only when state.flow is set — the admin-authored graph driving question order. */
+  flowGraph?: FlowGraph;
 }
 
 export interface AgentRequest {
@@ -91,6 +100,8 @@ export function initAgentState(args: {
   topic?: string;
   pack: SubjectPack;
   seed?: number;
+  /** Set for a flow-driven (admin-built) interview — see engine/flow.ts. */
+  flowId?: string;
 }): AgentState {
   const seed = args.seed ?? Math.floor(Math.random() * 2 ** 31);
   // Jitter the opening difficulty a touch (seed-based) so a new interview doesn't always open on the
@@ -112,6 +123,7 @@ export function initAgentState(args: {
     targetQuestions: args.pack.mockTargetQuestions,
     seed,
     done: false,
+    ...(args.flowId ? { flow: { flowId: args.flowId, currentNodeId: null } } : {}),
   };
 }
 
@@ -287,6 +299,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     phaseLine(pack, state),
     `Progress so far: ${state.questionIndex} problem(s) done${mock ? ` of about ${state.targetQuestions}` : ''}. Current difficulty: star level ${state.difficulty} of 5 (higher = harder). The bank handles which problem to serve — just ask what next_problem gives you.`,
     renderCurrentProblem(state.current),
+    state.currentNodeNote ? `Extra guidance for this specific question, from whoever authored this interview: ${state.currentNodeNote}` : '',
   ];
   return lines.filter((l) => l !== '').join('\n');
 }
@@ -330,6 +343,62 @@ function logEvidence(state: AgentState, args: { outcome?: string; method_quality
   }
   state.current = null;
   state.currentStudentTurns = [];
+  state.currentNodeNote = undefined;
+}
+
+/**
+ * Put a question on the table and build the tool-result the model sees this turn. Shared by the
+ * adaptive path and the flow-driven path so both formats identically. `customNote` (flow-driven
+ * only) also gets persisted onto state so it survives into next turn's system prompt — see
+ * buildSystemPrompt's use of `state.currentNodeNote`.
+ */
+function respondWithQuestion(state: AgentState, q: BankQuestion, customNote?: string): Record<string, any> {
+  state.current = q;
+  state.askedIds.push(q.id);
+  state.currentStudentTurns = [];
+  state.currentNodeNote = customNote;
+  return {
+    number: state.evidence.length + 1,
+    topic: q.topic,
+    question_type: q.questionType,
+    difficulty: q.difficulty,
+    question: q.question,
+    answer: q.answer,
+    model_reasoning_path: q.modelReasoningPath,
+    rubric: q.rubric,
+    common_mistakes: q.commonMistakes,
+    live_probes: q.liveProbes,
+    hints: q.hints,
+  };
+}
+
+/**
+ * Flow-driven question sequencing (admin-built "Intrvue A/B/C" interviews) — walks deps.flowGraph
+ * instead of the adaptive selectQuestion()/nextDifficulty() path below. Skips forward past any
+ * node whose question was retired/missing after the flow was published rather than crashing a
+ * live session; the `guard` bound is defensive in case a bad (non-DAG) graph ever slips past the
+ * builder's publish-time validation.
+ */
+function advanceFlow(state: AgentState, deps: AgentDeps): Record<string, any> {
+  const graph = deps.flowGraph;
+  if (!graph || !state.flow) {
+    return { no_more_problems: true, message: 'This custom interview is not configured correctly. Give a warm closing, then call finish_interview.' };
+  }
+  const lastEvidence = state.evidence[state.evidence.length - 1];
+  let cursor = state.flow.currentNodeId;
+  let nextNode = pickNextFlowNode(graph, cursor, lastEvidence);
+  let guard = 0;
+  while (nextNode && nextNode.type === 'question' && !deps.bank.find((b) => b.id === nextNode!.questionId) && guard++ < graph.nodes.length) {
+    cursor = nextNode.id;
+    nextNode = pickNextFlowNode(graph, cursor, undefined);
+  }
+  if (!nextNode || nextNode.type === 'end') {
+    state.flow.currentNodeId = nextNode?.id ?? cursor;
+    return { no_more_problems: true, message: nextNode?.closingNote || 'That was the last planned problem. Give a warm closing, then call finish_interview.' };
+  }
+  const q = deps.bank.find((b) => b.id === nextNode!.questionId)!;
+  state.flow.currentNodeId = nextNode.id;
+  return respondWithQuestion(state, q, nextNode.customNote);
 }
 
 function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): Record<string, any> {
@@ -349,6 +418,9 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
     };
   }
   if (call.args.outcome && state.current) logEvidence(state, call.args);
+
+  // Flow-driven (admin-built) interviews bypass the adaptive path entirely.
+  if (state.flow) return advanceFlow(state, deps);
 
   if (state.mode === 'mock' && state.questionIndex >= state.targetQuestions) {
     return { no_more_problems: true, message: 'That was the last planned problem. Give a warm closing, then call finish_interview.' };
@@ -399,24 +471,9 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
   if (!q) {
     return { no_more_problems: true, message: 'No more problems are available. Give a warm closing, then call finish_interview.' };
   }
-  state.current = q;
-  state.askedIds.push(q.id);
-  state.currentStudentTurns = [];
-  // Full guidance also lives in the system prompt next turn; we return it here so the model can
-  // ask + handle the question well on this same turn.
-  return {
-    number: state.evidence.length + 1,
-    topic: q.topic,
-    question_type: q.questionType,
-    difficulty: q.difficulty,
-    question: q.question,
-    answer: q.answer,
-    model_reasoning_path: q.modelReasoningPath,
-    rubric: q.rubric,
-    common_mistakes: q.commonMistakes,
-    live_probes: q.liveProbes,
-    hints: q.hints,
-  };
+  // Full guidance also lives in the system prompt next turn; respondWithQuestion returns it here
+  // too so the model can ask + handle the question well on this same turn.
+  return respondWithQuestion(state, q);
 }
 
 /** The note we inject as a "user" turn so the model knows about non-spoken events (skip, start, etc.). */
@@ -490,10 +547,14 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     console.error('agent chat loop failed:', (err as Error)?.message || err);
   }
 
+  // A flow-driven interview (see engine/flow.ts) is "exhausted" once its current node is an End
+  // node, the same role questionIndex >= targetQuestions plays for the adaptive path below.
+  const atFlowEnd = !!(state.flow && deps.flowGraph && findFlowNode(deps.flowGraph, state.flow.currentNodeId)?.type === 'end');
+
   // Guarantee we leave the warm-up. If we're mid-interview with no question on the table (the model
   // kept chatting instead of calling next_problem after the opener), pull the next one and ask it.
   if (!state.done && req.action === 'answer' && !state.current &&
-      !(state.mode === 'mock' && state.questionIndex >= state.targetQuestions)) {
+      !(state.mode === 'mock' && state.questionIndex >= state.targetQuestions) && !atFlowEnd) {
     const forced = executeTool({ id: 'forced-next', name: 'next_problem', args: {} }, state, deps) as any;
     if (forced?.question) say = say ? `${say} ${forced.question}` : forced.question;
   }
@@ -502,8 +563,8 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // (questionIndex has reached the target and nothing is on the table), so there is nothing left to
   // ask — do NOT fall through to the "take your time" nudge, which kept a finished interview alive
   // when the student spammed Skip. Close warmly and mark it done regardless of what the model did.
-  if (!state.done && state.mode === 'mock' && !state.current &&
-      state.questionIndex >= state.targetQuestions) {
+  if (!state.done && !state.current &&
+      ((state.mode === 'mock' && state.questionIndex >= state.targetQuestions) || atFlowEnd)) {
     state.done = true;
     if (!say.trim()) {
       say = "That's everything I had for you today — you did really well. Go ahead and end the interview to see your feedback.";

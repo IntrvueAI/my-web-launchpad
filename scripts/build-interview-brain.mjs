@@ -31,6 +31,7 @@ const FILES = [
   'engine/core.ts',
   'engine/adapt.ts',
   'engine/evidence.ts',
+  'engine/flow.ts',
   'engine/agent.ts',
   'bank/select.ts',
   'subjects/types.ts',
