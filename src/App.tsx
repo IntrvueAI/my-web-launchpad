@@ -24,6 +24,8 @@ const AdminSttBakeoff = lazy(() => import("./pages/AdminSttBakeoff"));
 const AdminSchoolFinder = lazy(() => import("./pages/AdminSchoolFinder"));
 const AdminQuestionReview = lazy(() => import("./pages/AdminQuestionReview"));
 const AdminInterviewQuestionReview = lazy(() => import("./pages/AdminInterviewQuestionReview"));
+const AdminInterviewFlowBuilder = lazy(() => import("./pages/AdminInterviewFlowBuilder"));
+const AdminInterviewFlowEditor = lazy(() => import("./pages/AdminInterviewFlowEditor"));
 const AdminUnreleasedInterviews = lazy(() => import("./pages/AdminUnreleasedInterviews"));
 const AdminMedicineInterviews = lazy(() => import("./pages/AdminMedicineInterviews"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -125,6 +127,8 @@ const AppContent = () => {
               <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />
               <Route path="/admin/question-review" element={<AdminQuestionReview />} />
               <Route path="/admin/interview-question-review" element={<AdminInterviewQuestionReview />} />
+              <Route path="/admin/interview-flow-builder" element={<AdminInterviewFlowBuilder />} />
+              <Route path="/admin/interview-flow-builder/:flowId" element={<AdminInterviewFlowEditor />} />
               <Route path="/admin/unreleased-interviews" element={<AdminUnreleasedInterviews />} />
               <Route path="/admin/medicine-interviews" element={<AdminMedicineInterviews />} />
               {/* Temporary standalone demo route for the practice minigames */}

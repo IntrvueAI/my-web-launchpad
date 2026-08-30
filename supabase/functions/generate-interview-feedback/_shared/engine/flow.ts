@@ -21,6 +21,9 @@ export interface FlowNode {
   customNote?: string;
   /** Optional bespoke closing line — type === 'end' only. */
   closingNote?: string;
+  /** Canvas position in the builder — irrelevant to execution, carried through so re-opening a
+   *  flow restores its layout instead of re-stacking every node at the origin. */
+  position?: { x: number; y: number };
 }
 
 export type EdgeCondition =
