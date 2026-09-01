@@ -8,6 +8,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { useInterviewFlow, type FlowDraftInput } from '@/hooks/useInterviewFlowsAdmin';
+import { useQuestionBank } from '@/hooks/useQuestionBank';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -25,7 +26,6 @@ import { validateFlowGraph, type EdgeCondition, type FlowGraph } from '@/types/i
 const nodeTypes: NodeTypes = { start: StartNode, question: QuestionNode, end: EndNode };
 const edgeTypes: EdgeTypes = { condition: ConditionEdge };
 
-const db = () => (supabase as any).from('questions');
 const flowsDb = () => (supabase as any).from('interview_flows');
 
 function graphToFlow(graph: FlowGraph): { nodes: Node[]; edges: Edge[] } {
@@ -75,8 +75,11 @@ function EditorInner({ flowId }: { flowId: string }) {
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [activeQuestionIds, setActiveQuestionIds] = useState<Set<string>>(new Set());
   const [loadedOnce, setLoadedOnce] = useState(false);
+  // One fetch, owned here and passed down to the sidebar — replaces what used to be 3 separate
+  // hits on the `questions` table (the picker's own list, an active-ids check, and a per-node
+  // display-data lookup); node resolution below is now an in-memory map lookup, not its own fetch.
+  const { activeQuestions, activeQuestionIds, questionsById, loading: questionsLoading } = useQuestionBank();
 
   // Hydrate the canvas once, when the flow first loads (don't re-hydrate on every save-refresh).
   useEffect(() => {
@@ -87,38 +90,27 @@ function EditorInner({ flowId }: { flowId: string }) {
     setLoadedOnce(true);
   }, [flow, loadedOnce, setNodes, setEdges]);
 
+  // Resolve question node display data (title/subject/etc.) from the already-cached bank list, and
+  // flag any question that's been retired/deleted since the flow was last saved.
   useEffect(() => {
-    (async () => {
-      const { data } = await db().select('id').eq('active', true);
-      setActiveQuestionIds(new Set((data ?? []).map((r: { id: string }) => r.id)));
-    })();
-  }, []);
-
-  // Resolve question node display data (title/subject/etc.) from the bank, and flag missing ones.
-  useEffect(() => {
-    if (activeQuestionIds.size === 0) return;
-    (async () => {
-      const ids = nodes.filter((n) => n.type === 'question').map((n) => (n.data as QuestionNodeData).questionId).filter(Boolean) as string[];
-      if (ids.length === 0) return;
-      const { data } = await db().select('id, subject, topic, title, question, difficulty').in('id', ids);
-      const byId = new Map((data ?? []).map((r: any) => [r.id, r]));
-      setNodes((prev) => prev.map((n) => {
-        if (n.type !== 'question') return n;
-        const qd = n.data as QuestionNodeData;
-        const row = qd.questionId ? byId.get(qd.questionId) : null;
-        return {
-          ...n,
-          data: {
-            ...qd,
-            subject: row?.subject, topic: row?.topic, title: row?.title, questionText: row?.question, difficulty: row?.difficulty,
-            missing: !!qd.questionId && !activeQuestionIds.has(qd.questionId),
-          },
-        };
-      }));
-    })();
-    // Only re-resolve when the SET of question ids on the canvas changes, not on every drag/position update.
+    if (questionsById.size === 0) return;
+    setNodes((prev) => prev.map((n) => {
+      if (n.type !== 'question') return n;
+      const qd = n.data as QuestionNodeData;
+      const row = qd.questionId ? questionsById.get(qd.questionId) : null;
+      return {
+        ...n,
+        data: {
+          ...qd,
+          subject: row?.subject, topic: row?.topic, title: row?.title, questionText: row?.question, difficulty: row?.difficulty,
+          missing: !!qd.questionId && !activeQuestionIds.has(qd.questionId),
+        },
+      };
+    }));
+    // Only re-resolve when the bank data itself arrives/changes or the SET of question ids on the
+    // canvas changes — not on every drag/position update.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeQuestionIds, nodes.map((n) => (n.data as QuestionNodeData)?.questionId).join(',')]);
+  }, [questionsById, activeQuestionIds, nodes.map((n) => (n.data as QuestionNodeData)?.questionId).join(',')]);
 
   const markDirty = useCallback(() => setDirty(true), []);
 
@@ -182,12 +174,28 @@ function EditorInner({ flowId }: { flowId: string }) {
     markDirty();
   }, [selectedNodeId, selectedEdgeId, setNodes, setEdges, markDirty]);
 
-  const handleSave = useCallback(async () => {
+  const saveNow = useCallback(async (opts?: { silent?: boolean }) => {
     setSaving(true);
     const ok = await saveGraph(flowToGraph(nodes, edges));
     setSaving(false);
-    if (ok) { setDirty(false); toast({ title: 'Flow saved' }); }
+    if (ok) {
+      setDirty(false);
+      if (!opts?.silent) toast({ title: 'Flow saved' });
+    }
+    return ok;
   }, [nodes, edges, saveGraph, toast]);
+
+  const handleSave = useCallback(() => { saveNow(); }, [saveNow]);
+
+  // Auto-save draft work 2.5s after the last change — no more losing an edit because you forgot to
+  // click Save. Silent (no toast) so it doesn't compete with an explicit Save click's confirmation.
+  // Safe to run this freely since it only ever touches the draft graph, never the "ready" status —
+  // that only changes via the explicit, validated handleMarkReady below.
+  useEffect(() => {
+    if (!dirty || !loadedOnce) return;
+    const timer = setTimeout(() => { saveNow({ silent: true }); }, 2500);
+    return () => clearTimeout(timer);
+  }, [dirty, nodes, edges, loadedOnce, saveNow]);
 
   const handleMarkReady = useCallback(async () => {
     const graph = flowToGraph(nodes, edges);
@@ -197,17 +205,27 @@ function EditorInner({ flowId }: { flowId: string }) {
       toast({ title: `Can't mark as ready — ${errors.length} issue(s)`, description: errors.map((i) => i.message).join(' '), variant: 'destructive' });
       return;
     }
+    // One atomic write (not save-then-separately-update-status) — a network blip between two
+    // separate calls used to be able to leave the graph saved but status stuck on "draft".
+    const { error: writeError } = await flowsDb().update({ graph, status: 'ready' }).eq('id', flowId);
+    if (writeError) {
+      toast({ title: "Couldn't mark as ready", description: writeError.message, variant: 'destructive' });
+      return;
+    }
     const warnings = issues.filter((i) => i.severity === 'warning');
     if (warnings.length > 0) {
       toast({ title: `Marked ready with ${warnings.length} warning(s)`, description: warnings.map((i) => i.message).join(' ') });
     } else {
       toast({ title: 'Marked as ready to launch' });
     }
-    await saveGraph(graph);
-    await flowsDb().update({ status: 'ready' }).eq('id', flowId);
     setDirty(false);
     reload();
-  }, [nodes, edges, activeQuestionIds, saveGraph, flowId, reload, toast]);
+  }, [nodes, edges, activeQuestionIds, flowId, reload, toast]);
+
+  // Live validation so problems surface as you build, not just when you click "Mark as ready".
+  const liveIssues = useMemo(() => validateFlowGraph(flowToGraph(nodes, edges), activeQuestionIds), [nodes, edges, activeQuestionIds]);
+  const liveErrorCount = liveIssues.filter((i) => i.severity === 'error').length;
+  const liveWarningCount = liveIssues.filter((i) => i.severity === 'warning').length;
 
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div>;
   if (error) return <div className="min-h-screen bg-background flex items-center justify-center px-4 text-center"><p className="text-destructive max-w-md">Failed to load this flow: {error}</p></div>;
@@ -222,7 +240,17 @@ function EditorInner({ flowId }: { flowId: string }) {
           </Button>
           <span className="font-semibold truncate">{flow.name}</span>
           <Badge variant={flow.status === 'ready' ? 'default' : 'outline'}>{flow.status === 'ready' ? 'Ready' : 'Draft'}</Badge>
-          {dirty && <span className="text-xs text-muted-foreground">Unsaved changes</span>}
+          {liveErrorCount > 0 && (
+            <Badge variant="destructive" title={liveIssues.filter((i) => i.severity === 'error').map((i) => i.message).join(' ')}>
+              {liveErrorCount} issue{liveErrorCount === 1 ? '' : 's'}
+            </Badge>
+          )}
+          {liveErrorCount === 0 && liveWarningCount > 0 && (
+            <Badge variant="outline" className="text-amber-600 dark:text-amber-400 border-amber-500/40" title={liveIssues.map((i) => i.message).join(' ')}>
+              {liveWarningCount} warning{liveWarningCount === 1 ? '' : 's'}
+            </Badge>
+          )}
+          {dirty && <span className="text-xs text-muted-foreground">{saving ? 'Saving…' : 'Unsaved changes'}</span>}
         </div>
         <div className="flex items-center gap-2 flex-none">
           <Button variant="outline" size="sm" className="gap-1.5" onClick={addEndNode}>Add End node</Button>
@@ -233,14 +261,24 @@ function EditorInner({ flowId }: { flowId: string }) {
       </div>
 
       <div className="flex-1 flex min-h-0">
-        <QuestionPickerSidebar onDragStartQuestion={onDragStartQuestion} />
+        <QuestionPickerSidebar onDragStartQuestion={onDragStartQuestion} questions={activeQuestions} loading={questionsLoading} />
 
         <div className="flex-1 relative" ref={wrapperRef}>
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            onNodesChange={(changes) => { onNodesChange(changes); markDirty(); }}
-            onEdgesChange={(changes) => { onEdgesChange(changes); markDirty(); }}
+            onNodesChange={(changes) => {
+              onNodesChange(changes);
+              // React Flow fires internal 'dimensions' (post-mount size measurement) and 'select'
+              // changes constantly — marking dirty for those meant every page load (and every
+              // click) looked like an edit, which with autosave above would mean writing to the
+              // DB on every load even with zero real changes. Only genuine edits count.
+              if (changes.some((c) => c.type === 'add' || c.type === 'remove' || c.type === 'position')) markDirty();
+            }}
+            onEdgesChange={(changes) => {
+              onEdgesChange(changes);
+              if (changes.some((c) => c.type === 'add' || c.type === 'remove')) markDirty();
+            }}
             onConnect={onConnect}
             onDrop={onDrop}
             onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }}

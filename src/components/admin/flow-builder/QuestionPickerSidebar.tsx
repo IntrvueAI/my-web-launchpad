@@ -1,43 +1,24 @@
-import { useEffect, useMemo, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { BankQuestionRow } from '@/hooks/useQuestionBank';
 
-const db = () => (supabase as any).from('questions');
-
-export interface PickerQuestion {
-  id: string;
-  subject: string;
-  topic: string;
-  title: string | null;
-  question: string;
-  difficulty: number;
-}
+export type PickerQuestion = Pick<BankQuestionRow, 'id' | 'subject' | 'topic' | 'title' | 'question' | 'difficulty'>;
 
 interface QuestionPickerSidebarProps {
   /** Fires when the admin starts dragging a question card — used to populate the drop payload. */
   onDragStartQuestion: (q: PickerQuestion, e: React.DragEvent) => void;
+  /** Owned by the parent editor (which already needs the same data) so there's exactly one
+   *  useQuestionBank() call site per page — no cross-component cache-dedup timing to rely on. */
+  questions: PickerQuestion[];
+  loading: boolean;
 }
 
-export function QuestionPickerSidebar({ onDragStartQuestion }: QuestionPickerSidebarProps) {
-  const [questions, setQuestions] = useState<PickerQuestion[]>([]);
-  const [loading, setLoading] = useState(true);
+export function QuestionPickerSidebar({ onDragStartQuestion, questions, loading }: QuestionPickerSidebarProps) {
   const [subject, setSubject] = useState('All');
   const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await db()
-        .select('id, subject, topic, title, question, difficulty')
-        .eq('active', true)
-        .order('subject')
-        .order('topic');
-      if (!error) setQuestions((data ?? []) as PickerQuestion[]);
-      setLoading(false);
-    })();
-  }, []);
 
   const subjects = useMemo(() => ['All', ...Array.from(new Set(questions.map((q) => q.subject)))], [questions]);
 
