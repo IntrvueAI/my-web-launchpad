@@ -15,7 +15,9 @@ const db = () => (supabase as any).from('questions');
 
 interface FullQuestion {
   id: string; subject: string; topic: string; title: string | null; question: string;
-  answer: string | null; rubric: any; difficulty: number;
+  answer: string | null;
+  rubric: { strong?: string; developing?: string; weak?: string; finalAnswerNote?: string } | null;
+  difficulty: number;
 }
 
 const CONDITION_OPTIONS: { value: string; label: string; condition: EdgeCondition }[] = [

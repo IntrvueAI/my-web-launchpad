@@ -37,7 +37,11 @@ export function useQuestionBank() {
     staleTime: 60_000, // the bank doesn't change moment-to-moment; avoid refetching on every remount
   });
 
-  const questions = query.data ?? [];
+  // `query.data ?? []` would build a new empty-array reference on every render until data
+  // arrives, defeating the useMemos below (their dependency would never look stable) — memoize
+  // the fallback too so `questions` has a truly stable identity in both the loading and empty states.
+  const emptyQuestions = useMemo<BankQuestionRow[]>(() => [], []);
+  const questions = query.data ?? emptyQuestions;
   const activeQuestions = useMemo(() => questions.filter((q) => q.active), [questions]);
   const activeQuestionIds = useMemo(() => new Set(activeQuestions.map((q) => q.id)), [activeQuestions]);
   const questionsById = useMemo(() => new Map(questions.map((q) => [q.id, q])), [questions]);
