@@ -174,6 +174,25 @@ function EditorInner({ flowId }: { flowId: string }) {
     markDirty();
   }, [selectedNodeId, selectedEdgeId, setNodes, setEdges, markDirty]);
 
+  const duplicateNode = useCallback((nodeId: string) => {
+    setNodes((nds) => {
+      const source = nds.find((n) => n.id === nodeId);
+      if (!source || source.type === 'start') return nds; // only one Start ever allowed
+      const prefix = source.type === 'end' ? 'end' : 'q';
+      const id = `${prefix}-${crypto.randomUUID().slice(0, 8)}`;
+      const clone: Node = {
+        ...source,
+        id,
+        position: { x: source.position.x + 40, y: source.position.y + 40 },
+        selected: false,
+        data: { ...source.data },
+      };
+      setSelectedNodeId(id);
+      return [...nds, clone];
+    });
+    markDirty();
+  }, [setNodes, markDirty]);
+
   const saveNow = useCallback(async (opts?: { silent?: boolean }) => {
     setSaving(true);
     const ok = await saveGraph(flowToGraph(nodes, edges));
@@ -302,6 +321,7 @@ function EditorInner({ flowId }: { flowId: string }) {
           onUpdateNodeData={onUpdateNodeData}
           onUpdateEdgeCondition={onUpdateEdgeCondition}
           onDeleteSelected={deleteSelected}
+          onDuplicateNode={duplicateNode}
         />
       </div>
 

@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Copy } from 'lucide-react';
 import type { EdgeCondition } from '@/types/interviewFlow';
 import type { QuestionNodeData } from './QuestionNode';
 import type { EndNodeData } from './EndNode';
@@ -41,9 +41,11 @@ interface NodeInspectorPanelProps {
   onUpdateNodeData: (nodeId: string, patch: Record<string, unknown>) => void;
   onUpdateEdgeCondition: (edgeId: string, condition: EdgeCondition) => void;
   onDeleteSelected: () => void;
+  /** Clones the selected node (question/end only) at a small offset, keeping its data. */
+  onDuplicateNode: (nodeId: string) => void;
 }
 
-export function NodeInspectorPanel({ selectedNode, selectedEdge, onUpdateNodeData, onUpdateEdgeCondition, onDeleteSelected }: NodeInspectorPanelProps) {
+export function NodeInspectorPanel({ selectedNode, selectedEdge, onUpdateNodeData, onUpdateEdgeCondition, onDeleteSelected, onDuplicateNode }: NodeInspectorPanelProps) {
   const [full, setFull] = useState<FullQuestion | null>(null);
 
   useEffect(() => {
@@ -90,9 +92,14 @@ export function NodeInspectorPanel({ selectedNode, selectedEdge, onUpdateNodeDat
       <div className="w-80 flex-none border-l bg-background p-4 space-y-4 overflow-y-auto">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold">Question</p>
-          <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-destructive hover:text-destructive" onClick={onDeleteSelected}>
-            <Trash2 className="h-3.5 w-3.5" /> Remove
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" className="h-7 gap-1.5" onClick={() => onDuplicateNode(selectedNode.id)}>
+              <Copy className="h-3.5 w-3.5" /> Duplicate
+            </Button>
+            <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-destructive hover:text-destructive" onClick={onDeleteSelected}>
+              <Trash2 className="h-3.5 w-3.5" /> Remove
+            </Button>
+          </div>
         </div>
         {full ? (
           <div className="space-y-2">
@@ -129,9 +136,14 @@ export function NodeInspectorPanel({ selectedNode, selectedEdge, onUpdateNodeDat
       <div className="w-80 flex-none border-l bg-background p-4 space-y-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold">End</p>
-          <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-destructive hover:text-destructive" onClick={onDeleteSelected}>
-            <Trash2 className="h-3.5 w-3.5" /> Remove
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" className="h-7 gap-1.5" onClick={() => onDuplicateNode(selectedNode.id)}>
+              <Copy className="h-3.5 w-3.5" /> Duplicate
+            </Button>
+            <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-destructive hover:text-destructive" onClick={onDeleteSelected}>
+              <Trash2 className="h-3.5 w-3.5" /> Remove
+            </Button>
+          </div>
         </div>
         <div className="space-y-1.5">
           <Label className="text-xs">Bespoke closing line (optional)</Label>
