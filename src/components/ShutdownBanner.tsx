@@ -3,13 +3,14 @@
  * Displays a dismissible banner notifying users of the service shutdown date.
  * Uses localStorage to remember if the user has dismissed the banner.
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Calendar } from "lucide-react";
 
 const STORAGE_KEY = "intrvue-shutdown-banner-dismissed";
 
 export const ShutdownBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Check if banner was previously dismissed
@@ -19,6 +20,24 @@ export const ShutdownBanner = () => {
     }
   }, []);
 
+  // The banner is `fixed`, so it doesn't push page content down on its own — it was covering
+  // the top of every page (nav bars, toolbars, back buttons) underneath it. Reserve the same
+  // space on <body> instead, kept in sync with a ResizeObserver since the banner's height
+  // changes as its text wraps differently across viewport widths.
+  useEffect(() => {
+    if (!isVisible) return;
+    const el = bannerRef.current;
+    if (!el) return;
+    const sync = () => { document.body.style.paddingTop = `${el.offsetHeight}px`; };
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      document.body.style.paddingTop = "";
+    };
+  }, [isVisible]);
+
   const handleDismiss = () => {
     setIsVisible(false);
     localStorage.setItem(STORAGE_KEY, "true");
@@ -27,7 +46,7 @@ export const ShutdownBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground shadow-lg">
+    <div ref={bannerRef} className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground shadow-lg">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Banner content */}
