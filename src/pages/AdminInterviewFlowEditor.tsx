@@ -310,8 +310,14 @@ function EditorInner({ flowId }: { flowId: string }) {
         onOpenChange={setSettingsOpen}
         flow={flow}
         onSave={async (input: FlowDraftInput) => {
-          await flowsDb().update(input).eq('id', flowId);
+          const { error: saveError } = await flowsDb().update(input).eq('id', flowId);
+          if (saveError) {
+            toast({ title: "Couldn't save settings", description: saveError.message, variant: 'destructive' });
+            return false;
+          }
+          toast({ title: 'Settings saved' });
           reload();
+          return true;
         }}
       />
     </div>

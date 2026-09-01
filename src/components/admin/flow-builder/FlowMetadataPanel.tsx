@@ -11,7 +11,9 @@ interface FlowMetadataPanelProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   flow: InterviewFlowRow;
-  onSave: (input: FlowDraftInput) => Promise<void>;
+  /** Return true on success, false on failure — the dialog only closes on success, so a failed
+   *  save doesn't silently discard whatever the admin just typed. */
+  onSave: (input: FlowDraftInput) => Promise<boolean>;
 }
 
 export function FlowMetadataPanel({ open, onOpenChange, flow, onSave }: FlowMetadataPanelProps) {
@@ -37,7 +39,7 @@ export function FlowMetadataPanel({ open, onOpenChange, flow, onSave }: FlowMeta
 
   const save = async () => {
     setSaving(true);
-    await onSave({
+    const ok = await onSave({
       name: name.trim(),
       description: description.trim() || undefined,
       domains: domains.map((d) => d.trim()).filter(Boolean),
@@ -47,7 +49,7 @@ export function FlowMetadataPanel({ open, onOpenChange, flow, onSave }: FlowMeta
       estimated_duration: Number(estimatedDuration) || 20,
     });
     setSaving(false);
-    onOpenChange(false);
+    if (ok) onOpenChange(false);
   };
 
   return (
