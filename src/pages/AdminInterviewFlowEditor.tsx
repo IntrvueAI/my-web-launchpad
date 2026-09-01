@@ -13,7 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Settings, Save, CheckCircle2, Trash2 } from 'lucide-react';
+import { ArrowLeft, Settings, Save, CheckCircle2, Trash2, LayoutGrid } from 'lucide-react';
 import { StartNode } from '@/components/admin/flow-builder/StartNode';
 import { QuestionNode, type QuestionNodeData } from '@/components/admin/flow-builder/QuestionNode';
 import { EndNode, type EndNodeData } from '@/components/admin/flow-builder/EndNode';
@@ -44,6 +44,48 @@ function graphToFlow(graph: FlowGraph): { nodes: Node[]; edges: Edge[] } {
     id: e.id, source: e.source, target: e.target, type: 'condition', data: { condition: e.condition },
   }));
   return { nodes, edges };
+}
+
+/**
+ * "Tidy up" layout: BFS from Start to find each node's depth (column), then stacks nodes within
+ * the same depth vertically. Deliberately simple (no new dependency like dagre/elkjs) — good
+ * enough for the small, hand-built graphs this editor produces (single digits to low tens of
+ * nodes), not meant to rival a real graph-layout library for large or heavily-branching graphs.
+ * A node unreachable from Start (already flagged separately by validateFlowGraph) gets placed in
+ * its own trailing column rather than lost.
+ */
+function autoLayout(nodes: Node[], edges: Edge[]): Node[] {
+  const adjacency = new Map<string, string[]>();
+  for (const e of edges) {
+    if (!adjacency.has(e.source)) adjacency.set(e.source, []);
+    adjacency.get(e.source)!.push(e.target);
+  }
+  const start = nodes.find((n) => n.type === 'start');
+  const depth = new Map<string, number>();
+  if (start) {
+    depth.set(start.id, 0);
+    const queue = [start.id];
+    while (queue.length) {
+      const id = queue.shift()!;
+      const d = depth.get(id)!;
+      for (const next of adjacency.get(id) ?? []) {
+        if (!depth.has(next) || depth.get(next)! > d + 1) {
+          depth.set(next, d + 1);
+          queue.push(next);
+        }
+      }
+    }
+  }
+  const unreachableDepth = (depth.size ? Math.max(...depth.values()) : 0) + 1;
+  const COL_WIDTH = 260;
+  const ROW_HEIGHT = 140;
+  const rowInColumn = new Map<number, number>();
+  return nodes.map((n) => {
+    const d = depth.get(n.id) ?? unreachableDepth;
+    const row = rowInColumn.get(d) ?? 0;
+    rowInColumn.set(d, row + 1);
+    return { ...n, position: { x: 80 + d * COL_WIDTH, y: 80 + row * ROW_HEIGHT } };
+  });
 }
 
 function flowToGraph(nodes: Node[], edges: Edge[]): FlowGraph {
@@ -147,6 +189,11 @@ function EditorInner({ flowId }: { flowId: string }) {
     setNodes((nds) => [...nds, { id, type: 'end', position: center, data: {} }]);
     markDirty();
   }, [screenToFlowPosition, setNodes, markDirty]);
+
+  const tidyUp = useCallback(() => {
+    setNodes((nds) => autoLayout(nds, edges));
+    markDirty();
+  }, [edges, setNodes, markDirty]);
 
   const selectedNode = useMemo(() => nodes.find((n) => n.id === selectedNodeId) ?? null, [nodes, selectedNodeId]);
   const selectedEdge = useMemo(() => edges.find((e) => e.id === selectedEdgeId) ?? null, [edges, selectedEdgeId]);
@@ -273,6 +320,9 @@ function EditorInner({ flowId }: { flowId: string }) {
         </div>
         <div className="flex items-center gap-2 flex-none">
           <Button variant="outline" size="sm" className="gap-1.5" onClick={addEndNode}>Add End node</Button>
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={tidyUp} title="Auto-arrange nodes left-to-right by distance from Start">
+            <LayoutGrid className="h-3.5 w-3.5" /> Tidy up
+          </Button>
           <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setSettingsOpen(true)}><Settings className="h-3.5 w-3.5" /> Settings</Button>
           <Button variant="outline" size="sm" className="gap-1.5" onClick={handleSave} disabled={saving}><Save className="h-3.5 w-3.5" /> {saving ? 'Saving…' : 'Save'}</Button>
           <Button size="sm" className="gap-1.5" onClick={handleMarkReady}><CheckCircle2 className="h-3.5 w-3.5" /> Mark as ready</Button>
