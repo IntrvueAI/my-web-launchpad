@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+/* Fredoka/Nunito are loaded via <link> in index.html, not @import here — a CSS @import can only
+   be discovered by the browser after this whole file is fetched and parsed, serially delaying
+   font (and therefore text) rendering on every page load. See index.html for why. */
 
 @tailwind base;
 @tailwind components;

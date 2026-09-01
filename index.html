@@ -9,10 +9,14 @@
     <meta name="description" content="AI-powered interview preparation for UK 11+ private and grammar school admissions. Practice with digital humans and get instant feedback." />
     <meta name="author" content="intrvue.ai" />
 
-    <!-- Professional Inter font for educational platform -->
+    <!-- Nunito (body) + Fredoka (headings) — the app's actual fonts (see src/index.css's
+         font-sans/font-display). Loaded here via <link>, not @import in the CSS: a <link> in the
+         initial HTML is discovered by the browser's preload scanner before any CSS is even
+         parsed, where an @import can only be discovered after index.css itself has been fetched
+         and parsed — a fully serial extra round-trip that delays text rendering on every page. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <meta property="og:title" content="intrvue.ai — 11+ Interview Preparation with AI" />
     <meta property="og:description" content="AI-powered interview preparation for UK 11+ private and grammar school admissions. Practice with digital humans and get instant feedback." />
