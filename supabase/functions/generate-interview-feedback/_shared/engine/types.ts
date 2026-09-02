@@ -54,6 +54,46 @@ export interface LiveProbe {
   goodResponse: string;
 }
 
+/** A fact the roleplay actor withholds until its disclosure_condition is met — see RoleplayRuntime. */
+export interface RoleplayHiddenFact {
+  fact: string;
+  disclosureCondition: string;
+}
+
+/** One possible way a roleplay station can conclude, and what candidate behaviour reaches it. */
+export interface RoleplayEnding {
+  id: string;
+  condition: string;
+  description: string;
+}
+
+/**
+ * Full persona spec for a live roleplay station (Medicine MMI actor stations) — a small state
+ * machine with a person on top, not a mood card. When a BankQuestion carries this, the interviewer
+ * drops the "Clara the examiner" persona for the station and speaks AS this character; see
+ * engine/agent.ts's renderCurrentProblem. Ported from the Medicine vertical research pack
+ * (src/interview/medicine-content/data/roleplays.json) — keep both in sync when editing a persona.
+ */
+export interface RoleplayRuntime {
+  name: string;
+  role: string;
+  applicantRole: string;       // what the CANDIDATE is, and what they do not have access to/authority over
+  openingStatement: string;    // verbatim first line, spoken in character
+  actorStateInitial: string;
+  actorStateTrajectory: string;
+  hiddenFacts: RoleplayHiddenFact[];
+  escalationTriggers: string[];
+  deEscalationTriggers: string[];
+  resistancePatterns: string[];
+  interruptionRule: string;
+  plantedMisunderstanding: string;
+  desiredOutcomes: string[];
+  endings: RoleplayEnding[];
+  redFlags: string[];
+  actorResponseToStrong: string;
+  actorResponseToWeak: string;
+}
+
 /**
  * A single bank question. The first six fields are the minimum; the rich fields below let you
  * author the full 6-part tutoring spec (model reasoning, rubric, mistakes, probes, hint ladder)
@@ -79,6 +119,16 @@ export interface BankQuestion {
   explanation?: string;
   /** Optional MCQ options (kept for the shared minigame bank; ignored in the spoken interview). */
   options?: string[];
+  /** Station format code (dimension_2 in the Medicine research pack's taxonomy) — informational/
+   *  filtering only, e.g. 'RP' roleplay, 'ES' ethical scenario, 'PD' policy discussion. Optional; only
+   *  Medicine content sets this today. */
+  format?: string;
+  /** Present only on a live roleplay station — see RoleplayRuntime. */
+  roleplay?: RoleplayRuntime;
+  /** ISO date. Past this date the question is withheld from selection, not merely flagged — see
+   *  bank/select.ts. Mirrors the Medicine current-affairs register's hard-expiry rule: stale dated
+   *  content becomes CONFIDENTLY WRONG, not just less useful, so it must stop being served. */
+  currentAffairsExpiry?: string;
 
   // ---- Rich 6-part tutoring spec (all optional) ----
   /** 2. Model reasoning path — a top candidate's thinking, narrated step by step (a process). */

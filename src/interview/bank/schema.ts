@@ -22,6 +22,29 @@ export const BankQuestionSchema = z.object({
   answer: z.string().min(1),
   explanation: z.string().optional(),
   options: z.array(z.string()).optional(),
+  format: z.string().optional(),
+  currentAffairsExpiry: z.string().optional(),
+  roleplay: z
+    .object({
+      name: z.string().min(1),
+      role: z.string().min(1),
+      applicantRole: z.string().min(1),
+      openingStatement: z.string().min(1),
+      actorStateInitial: z.string().min(1),
+      actorStateTrajectory: z.string().min(1),
+      hiddenFacts: z.array(z.object({ fact: z.string().min(1), disclosureCondition: z.string().min(1) })),
+      escalationTriggers: z.array(z.string()),
+      deEscalationTriggers: z.array(z.string()),
+      resistancePatterns: z.array(z.string()),
+      interruptionRule: z.string().min(1),
+      plantedMisunderstanding: z.string().min(1),
+      desiredOutcomes: z.array(z.string()),
+      endings: z.array(z.object({ id: z.string().min(1), condition: z.string().min(1), description: z.string().min(1) })),
+      redFlags: z.array(z.string()),
+      actorResponseToStrong: z.string().min(1),
+      actorResponseToWeak: z.string().min(1),
+    })
+    .optional(),
 
   // Rich 6-part tutoring spec (all optional).
   modelReasoningPath: z.string().optional(),

@@ -199,4 +199,41 @@ describe('LLM-driven agent', () => {
     const mathsResult = await advanceAgent(mathsState2, { action: 'start' }, mathsDeps);
     expect(mathsResult.say).toBe(stackedTurn); // untouched — no backstop applies to this pack/phase
   });
+
+  it('a roleplay-format question replaces the normal Q&A prompt with in-character instructions', () => {
+    const roleplayQuestion: BankQuestion = {
+      id: 'MED-RP-TEST', subject: 'medicine', topic: 'roleplay-stations', difficulty: 3,
+      format: 'RP', question: 'Opening line spoken in character.', answer: 'N/A — roleplay station.',
+      roleplay: {
+        name: 'Elaine Prosser', role: 'anxious patient',
+        applicantRole: 'You are a volunteer with no access to records.',
+        openingStatement: 'Opening line spoken in character.',
+        actorStateInitial: 'Anxious.', actorStateTrajectory: 'Settles if reassured honestly.',
+        hiddenFacts: [{ fact: 'Her sister had cancer.', disclosureCondition: 'Only if asked what worries her specifically.' }],
+        escalationTriggers: ['False reassurance'], deEscalationTriggers: ['Honest limits'],
+        resistancePatterns: ['Asks again in different words'],
+        interruptionRule: 'Do not interrupt; use silence.',
+        plantedMisunderstanding: 'Believes a recall always means bad news.',
+        desiredOutcomes: ['Declines to speculate clinically'],
+        endings: [{ id: 'A', condition: 'Limits held', description: 'She thanks them.' }],
+        redFlags: ['Speculating about her diagnosis'],
+        actorResponseToStrong: 'Opens up.', actorResponseToWeak: 'Withdraws.',
+      },
+    };
+    let state = initAgentState({ subject: 'medicine', mode: 'mock', pack: medicinePack, seed: 1 });
+    state = { ...state, current: roleplayQuestion };
+    const prompt = buildSystemPrompt(medicinePack, state);
+
+    expect(prompt).toContain('ROLEPLAY STATION');
+    expect(prompt).toContain('Elaine Prosser');
+    expect(prompt).toContain('Opening line spoken in character.');
+    // The hidden fact and its gating condition must both reach the model — it needs the fact to
+    // know what NOT to say, and the condition to know when it becomes sayable.
+    expect(prompt).toContain('Her sister had cancer.');
+    expect(prompt).toContain('Only if asked what worries her specifically.');
+    expect(prompt).toMatch(/NEVER volunteer/);
+    // The normal Q&A framing (which would leak the "answer" as a real fact to withhold from the
+    // student) must NOT appear for a roleplay station — the override replaces it entirely.
+    expect(prompt).not.toContain('Its final answer is PRIVATE');
+  });
 });

@@ -54,6 +54,19 @@ export interface SelectParams {
   seed: number;
   /** Categories already covered this run — mock prefers a fresh one for variety. */
   recentTopics?: string[];
+  /** Injectable clock for expiry checks below — defaults to the real time. Test-only in practice. */
+  now?: Date;
+}
+
+/**
+ * A dated-content question past its `currentAffairsExpiry` is WITHHELD from selection entirely,
+ * never merely flagged — stale current-affairs content doesn't become less useful, it becomes
+ * confidently wrong, and an interviewer scoring from it would tell a candidate their correct answer
+ * is incorrect. Enforced here (at the one place every subject's selection passes through) rather
+ * than per-subject, so any future dated content gets the same protection for free.
+ */
+function isExpired(q: BankQuestion, now: Date): boolean {
+  return !!q.currentAffairsExpiry && new Date(q.currentAffairsExpiry).getTime() < now.getTime();
 }
 
 /**
@@ -61,8 +74,9 @@ export interface SelectParams {
  * Returns `null` when the whole reachable bank is exhausted (caller should then wrap up).
  */
 export function selectQuestion(p: SelectParams): BankQuestion | null {
+  const now = p.now ?? new Date();
   const asked = new Set(p.askedIds);
-  const unused = p.bank.filter((q) => !asked.has(q.id));
+  const unused = p.bank.filter((q) => !asked.has(q.id) && !isExpired(q, now));
   if (unused.length === 0) return null;
 
   // Which categories are we allowed to draw from, in priority order?

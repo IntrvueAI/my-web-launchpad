@@ -79,6 +79,22 @@ describe('selectQuestion', () => {
   it('returns null on an empty bank', () => {
     expect(selectQuestion(base({ bank: [] }))).toBeNull();
   });
+
+  it('withholds a question past its currentAffairsExpiry instead of merely flagging it', () => {
+    const now = new Date('2026-09-15T00:00:00Z');
+    const expired: BankQuestion = { ...q('ca-old', 'current-affairs', 2), currentAffairsExpiry: '2026-09-12' };
+    const live: BankQuestion = { ...q('ca-fresh', 'current-affairs', 2), currentAffairsExpiry: '2026-11-30' };
+    const chosen = selectQuestion(base({ bank: [expired, live], now }));
+    expect(chosen!.id).toBe('ca-fresh');
+    // Once the only candidate is expired, selection returns null rather than serving stale content.
+    expect(selectQuestion(base({ bank: [expired], now }))).toBeNull();
+  });
+
+  it('serves a currentAffairsExpiry question normally before its expiry date', () => {
+    const now = new Date('2026-09-01T00:00:00Z');
+    const notYetExpired: BankQuestion = { ...q('ca-current', 'current-affairs', 2), currentAffairsExpiry: '2026-09-12' };
+    expect(selectQuestion(base({ bank: [notYetExpired], now }))!.id).toBe('ca-current');
+  });
 });
 
 describe('real maths bank', () => {

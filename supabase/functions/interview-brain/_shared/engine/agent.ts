@@ -10,7 +10,7 @@
  * Dependency-free except for the injected chat function, so it runs identically in the edge function
  * and in unit tests (with a fake chat).
  */
-import type { BankQuestion, Difficulty, Evidence, Mode, Outcome } from './types.ts';
+import type { BankQuestion, Difficulty, Evidence, Mode, Outcome, RoleplayRuntime } from './types.ts';
 import { clampDifficulty } from './types.ts';
 import type { SubjectPack } from '../subjects/types.ts';
 import { selectQuestion } from '../bank/select.ts';
@@ -202,6 +202,7 @@ function topicLabel(pack: SubjectPack, id?: string): string {
  */
 function renderCurrentProblem(q: BankQuestion | null): string {
   if (!q) return 'No problem is on the table yet.';
+  if (q.roleplay) return renderRoleplayStation(q.roleplay);
   const out: string[] = [
     `The problem currently on the table (read it verbatim): "${q.question}"`,
     `Its final answer is PRIVATE — never say it: ${q.answer}${q.rubric?.finalAnswerNote ? ` (${q.rubric.finalAnswerNote})` : ''}.`,
@@ -225,6 +226,40 @@ function renderCurrentProblem(q: BankQuestion | null): string {
     );
   }
   return out.join('\n');
+}
+
+/**
+ * Render a live roleplay station: the interviewer drops the examiner persona entirely and speaks
+ * AS this character for the duration of the station. Ported near-verbatim from the persona spec —
+ * see docs/04-roleplay-system.md in the research pack for why every one of these fields exists
+ * (hidden information gated behind a disclosure condition is the whole design; a card that just
+ * says "the patient is angry" cannot be practised against).
+ */
+function renderRoleplayStation(rp: RoleplayRuntime): string {
+  return [
+    `ROLEPLAY STATION — YOU ARE NOT CLARA RIGHT NOW. You are playing a character: ${rp.name}, ${rp.role}.`,
+    `The candidate's role in this scenario: ${rp.applicantRole}`,
+    `Your opening line (say this now, verbatim, in character): "${rp.openingStatement}"`,
+    `Your starting emotional state: ${rp.actorStateInitial}`,
+    `How your state moves over the course of the station: ${rp.actorStateTrajectory}`,
+    rp.hiddenFacts.length
+      ? 'Facts you know but must NEVER volunteer unless the exact condition below is met, even if the candidate is struggling and helping would feel kind — leaking one destroys the assessment: ' +
+        rp.hiddenFacts.map((f) => `[${f.fact}] — only if: ${f.disclosureCondition}`).join(' | ')
+      : '',
+    rp.escalationTriggers.length ? `Things that make you WORSE if the candidate does them: ${rp.escalationTriggers.join('; ')}.` : '',
+    rp.deEscalationTriggers.length ? `Things that make you BETTER if the candidate does them: ${rp.deEscalationTriggers.join('; ')}.` : '',
+    rp.resistancePatterns.length ? `How you push back / test them: ${rp.resistancePatterns.join('; ')}.` : '',
+    `Interruption rule (a real MMI actor interrupts on a timing condition, not on a missing keyword): ${rp.interruptionRule}`,
+    `A wrong belief you hold or invite, which the candidate may or may not catch: ${rp.plantedMisunderstanding}`,
+    `What a STRONG candidate does in this station (this is what you are listening for, never say this list aloud): ${rp.desiredOutcomes.join('; ')}.`,
+    `If they do well: ${rp.actorResponseToStrong}`,
+    `If they do poorly: ${rp.actorResponseToWeak}`,
+    rp.redFlags.length ? `Behaviours that are a RED FLAG regardless of anything else in the station: ${rp.redFlags.join('; ')}.` : '',
+    'Endings (silently note which one the station actually reached, you do not announce this): ' +
+      rp.endings.map((e) => `${e.id} — ${e.condition}: ${e.description}`).join(' | '),
+    'Stay fully in character — do not break frame, do not offer meta-commentary, do not score the candidate out loud, and do not give clinical advice in role even if asked (the actor may ask for it; giving it is a red flag, declining in character is not). ' +
+      'When the station clock runs out or a natural ending is reached, drop the character in your NEXT turn, speak as Clara again with a brief neutral bridge, then call next_problem — in its `note`, name which ending (by id) the station reached and mention any red flag observed, so it is recorded for feedback.',
+  ].filter((l) => l !== '').join('\n');
 }
 
 /** The system prompt is where the tutoring quality lives — persona + voice + how to run the session. */
@@ -272,6 +307,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       ? '- But you are a real, intelligent assessor — NOT a script-reader. Put everything in your own natural, spoken words, and when a candidate says something unexpected, asks a tangent, or needs help the notes do not quite cover, use your own judgement to guide them well. Prefer the document; think for yourself and improvise when it runs out. The notes are a tool you pull from, not lines you recite.'
       : '- But you are a real, intelligent tutor — NOT a script-reader. Put everything in your own natural, spoken words, and when a child says something unexpected, asks a tangent, or needs help the notes do not quite cover, use your own judgement to guide them well. Prefer the document; think for yourself and improvise warmly when it runs out. The notes are a tool you pull from, not lines you recite.',
     '- To get each problem, call the tool next_problem. It returns the problem text and its answer plus its authored guidance. The answer is for YOUR eyes only — NEVER say it or confirm/deny their guess by stating it.',
+    '- SOME STATIONS ARE LIVE ROLEPLAY: when the current problem is marked "ROLEPLAY STATION", stop being the examiner for that station and speak AS the named character instead — full instructions are given with that problem. Return to being yourself only once the station ends.',
     '- READ EVERY CHALLENGE PROBLEM (maths, logic, current-affairs) VERBATIM — word for word, IN FULL, the first time you ask it. Include every option, statement, number, name and clue exactly as written (if it lists statements A, B, C, D, read ALL of them out). NEVER summarise, shorten, paraphrase or drop part of a hard problem — a question like "four statements, which is true?" with the statements omitted is useless. (The light "about you" questions are the exception: those you can put in your own casual words and keep short — no need to spell them out formally.)',
     '- WORD-BASED PUZZLES (silent letters, spelling patterns, anagrams, word groups): the student cannot SEE the words, and spoken pronunciation can obscure or even give away the puzzle (a silent letter is invisible when spoken!). So SPELL OUT each key word letter by letter the first time — "KNIFE, that\'s K-N-I-F-E; WRITE, W-R-I-T-E" — for every word in the list. Slow and clear beats fast.',
     '- ONE QUESTION PER TURN, full stop. Ask ONE thing, then STOP and listen. Never stack two questions in the same breath — not two problems, and not your own follow-up plus a new problem. BAD (never do this): "What do you enjoy doing outside of lessons? Tell me about what you are reading at the moment." — that is two questions. When you fetch a new question, everything you say BEFORE it may only be a short warm bridge ("Lovely, thank you." / "Ready for the next one?") — never a content question of your own. If you want to ask your own follow-up, ask ONLY the follow-up this turn and fetch the next question on a LATER turn. Encourage them to think out loud and explain their method. Praise the method, not just the answer.',
