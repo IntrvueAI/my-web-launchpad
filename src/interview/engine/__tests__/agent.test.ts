@@ -5,6 +5,7 @@ import {
   initAgentState,
   type AgentDeps,
   type AgentState,
+  type ChatMessage,
   type ChatResult,
 } from '../agent';
 import { mathsPack } from '../../subjects/maths/pack';
@@ -235,5 +236,23 @@ describe('LLM-driven agent', () => {
     // The normal Q&A framing (which would leak the "answer" as a real fact to withhold from the
     // student) must NOT appear for a roleplay station — the override replaces it entirely.
     expect(prompt).not.toContain('Its final answer is PRIVATE');
+  });
+
+  it("a 'time_up' action injects a real-clock-ran-out note, exactly like a real MMI bell", async () => {
+    const capturedMessages: ChatMessage[][] = [];
+    const capturingChat: AgentDeps['chat'] = async ({ messages }) => {
+      capturedMessages.push(messages);
+      return say('Right — thank you, let\'s move on.');
+    };
+    const deps: AgentDeps = { bank: BANK, pack: mathsPack, chat: capturingChat };
+    let state = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    state = { ...state, current: BANK[0] }; // a question is already on the table
+
+    await advanceAgent(state, { action: 'time_up' }, deps);
+
+    const lastCall = capturedMessages[capturedMessages.length - 1];
+    const lastUserMessage = [...lastCall].reverse().find((m) => m.role === 'user');
+    expect(lastUserMessage?.content).toContain('station clock has just run out');
+    expect(lastUserMessage?.content).toContain('do not apologise');
   });
 });

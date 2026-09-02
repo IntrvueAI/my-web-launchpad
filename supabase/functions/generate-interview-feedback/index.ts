@@ -17,6 +17,9 @@ const ENGINE_PACKS: Record<string, any> = {
   'current-affairs-interview': currentaffairsPack,
   '11-plus': elevenplusPack,
   'medicine-mmi': medicinePack,
+  // Same subject/pack/bank as medicine-mmi — only station count and timing differ. See
+  // src/interview/subjects/medicine/schoolModes.ts.
+  'medicine-mmi-manchester': medicinePack,
   'chat-with-clara': chatPack,
 };
 
@@ -347,7 +350,19 @@ const INTERVIEW_TYPES: Record<string, any> = {
   },
   'medicine-mmi': {
     id: 'medicine-mmi',
-    name: 'Medicine MMI Interview',
+    name: 'Medicine MMI Interview — Leeds-style',
+    category: 'medicine',
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Ethical & Clinical Reasoning',
+      'Structured Judgement & Prioritisation',
+      'Communication & Clarity',
+      'Insight, Motivation & Professionalism'
+    ]
+  },
+  'medicine-mmi-manchester': {
+    id: 'medicine-mmi-manchester',
+    name: 'Medicine MMI Interview — Manchester-style',
     category: 'medicine',
     scoringSystem: '0-5',
     scoringCriteria: [
@@ -999,7 +1014,7 @@ try {
         }
         
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'chat-with-clara') {
+        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || interviewType === 'chat-with-clara') {
           // Logic / maths / verbal / current-affairs validation (shared score fields)
           const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
           for (const field of requiredFields) {
@@ -1045,7 +1060,7 @@ try {
       console.error('JSON parsing error:', e.message);
       
       // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'chat-with-clara') {
+      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || interviewType === 'chat-with-clara') {
         feedbackData = {
           pattern_recognition_score: 3,
           logical_deduction_score: 3,
@@ -1312,7 +1327,7 @@ STUDENT PERFORMANCE DATA:`;
     };
 
     // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'chat-with-clara') {
+    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || interviewType === 'chat-with-clara') {
       insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
       insertData.logical_deduction_score = feedbackData.logical_deduction_score;
       insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;

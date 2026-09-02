@@ -7,7 +7,7 @@
  */
 
 // Core interview system types
-export type InterviewType = '11-plus' | '11-plus-v2' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview' | 'verbal-interview' | 'current-affairs-interview' | 'medicine-mmi' | 'chat-with-clara';
+export type InterviewType = '11-plus' | '11-plus-v2' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview' | 'verbal-interview' | 'current-affairs-interview' | 'medicine-mmi' | 'medicine-mmi-manchester' | 'chat-with-clara';
 export type ScoringSystem = '0-5' | '0-9' | '0-20' | '0-7';
 export type AnnotationCategory = 'strength' | 'grammar' | 'fluency' | 'lexical';
 

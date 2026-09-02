@@ -55,6 +55,12 @@ interface UseInterviewSessionReturn {
   brainUiState: BrainResponse['uiState'] | null;
   /** True once the brain signals the run is complete (wrap-up spoken). */
   interviewComplete: boolean;
+  /**
+   * Real per-station countdown — only present for interview types that set `timingSeconds`
+   * (currently the two Medicine MMI school modes). Null for every other interview type, so
+   * existing UIs render nothing extra by default.
+   */
+  stationTimer: { phase: 'prep' | 'response'; secondsRemaining: number; totalSeconds: number } | null;
 }
 
 /**
@@ -79,6 +85,11 @@ export const useInterviewSession = (
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [brainUiState, setBrainUiState] = useState<BrainResponse['uiState'] | null>(null);
   const [interviewComplete, setInterviewComplete] = useState(false);
+  const [stationTimer, setStationTimer] = useState<UseInterviewSessionReturn['stationTimer']>(null);
+  // Which questionIndex the currently-running countdown belongs to, so a re-render / a non-question
+  // brain turn (e.g. a follow-up within the same station) doesn't restart the clock.
+  const timedQuestionIndexRef = useRef<number | null>(null);
+  const stationTimerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Ref to store the anam client instance and messages
   const clientRef = useRef<AnamClient | null>(null);
@@ -129,7 +140,7 @@ export const useInterviewSession = (
 
   /** Run one brain turn and speak the result. Serialised via brainBusyRef. */
   const runBrainTurn = useCallback(async (
-    action: 'start' | 'answer' | 'skip' | 'switch_topic',
+    action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up',
     payload: { studentText?: string; mode?: Mode; topic?: string } = {},
   ) => {
     const sessionId = sessionRefRef.current;
@@ -165,6 +176,56 @@ export const useInterviewSession = (
       }
     }
   }, [speak, sessionLogger, toast]);
+
+  /**
+   * Drive the per-station countdown from the brain's own `timingSeconds` (real, verified per-school
+   * numbers — see subjects/medicine/schoolModes.ts). Absent for every interview type except the two
+   * Medicine MMI school modes, so this effect is a no-op everywhere else. Starts a fresh clock only
+   * when `questionIndex` actually advances to a NEW station (not on every turn — a follow-up within
+   * the same station shouldn't reset it). Prep counts down first if the school mode has any (Leeds:
+   * 2 minutes; Manchester: none, straight to the response clock), then response; hitting zero on the
+   * response clock fires `time_up` exactly once, automatically, the same way a real MMI bell would.
+   */
+  useEffect(() => {
+    const timing = brainUiState?.timingSeconds;
+    const questionIndex = brainUiState?.questionIndex;
+    if (!timing || !brainUiState?.onQuestion || questionIndex === undefined) {
+      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
+      setStationTimer(null);
+      return;
+    }
+    if (timedQuestionIndexRef.current === questionIndex) return; // already timing this station
+    timedQuestionIndexRef.current = questionIndex;
+    if (stationTimerIntervalRef.current) clearInterval(stationTimerIntervalRef.current);
+
+    let phase: 'prep' | 'response' = timing.prep > 0 ? 'prep' : 'response';
+    let secondsRemaining = timing.prep > 0 ? timing.prep : timing.response;
+    setStationTimer({ phase, secondsRemaining, totalSeconds: phase === 'prep' ? timing.prep : timing.response });
+
+    stationTimerIntervalRef.current = setInterval(() => {
+      secondsRemaining -= 1;
+      if (secondsRemaining > 0) {
+        setStationTimer({ phase, secondsRemaining, totalSeconds: phase === 'prep' ? timing.prep : timing.response });
+        return;
+      }
+      if (phase === 'prep') {
+        phase = 'response';
+        secondsRemaining = timing.response;
+        setStationTimer({ phase, secondsRemaining, totalSeconds: timing.response });
+        return;
+      }
+      // Response clock hit zero — real MMI stations end mid-sentence; stop the clock and let the
+      // interviewer wrap up in character rather than freezing at 0:00.
+      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
+      setStationTimer({ phase, secondsRemaining: 0, totalSeconds: timing.response });
+      runBrainTurn('time_up');
+    }, 1000);
+
+    return () => {
+      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only questionIndex/timingSeconds/onQuestion should retrigger this; runBrainTurn is stable across the run.
+  }, [brainUiState?.questionIndex, brainUiState?.timingSeconds, brainUiState?.onQuestion]);
 
   /**
    * Send the buffered student utterance(s) to the brain as one answer. Coalescing means two quick
@@ -257,6 +318,9 @@ export const useInterviewSession = (
       processedUserIdsRef.current.clear();
       pendingStudentRef.current = [];
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
+      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
+      timedQuestionIndexRef.current = null;
+      setStationTimer(null);
       startedRef.current = false;
       startOptsRef.current = opts;
 
@@ -449,6 +513,9 @@ export const useInterviewSession = (
       }
 
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
+      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
+      timedQuestionIndexRef.current = null;
+      setStationTimer(null);
       pendingStudentRef.current = [];
 
       connectionHealth.stopMonitoring();
@@ -538,5 +605,6 @@ export const useInterviewSession = (
     switchTopic,
     brainUiState,
     interviewComplete,
+    stationTimer,
   };
 };

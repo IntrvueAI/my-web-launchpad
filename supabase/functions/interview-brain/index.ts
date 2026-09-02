@@ -13,6 +13,7 @@ import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
 import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
 import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
+import { getSchoolMode } from "./_shared/subjects/medicine/schoolModes.ts";
 import { chatPack } from "./_shared/subjects/chat/pack.ts";
 import type { BrainRequest, BrainResponse, Mode } from "./_shared/engine/types.ts";
 import mathsBank from "./_shared/maths-bank.json" with { type: "json" };
@@ -51,6 +52,7 @@ const SUBJECT_BY_TYPE: Record<string, string> = {
   "11-plus": "elevenplus",
   "11-plus-v2": "elevenplus",
   "medicine-mmi": "medicine",
+  "medicine-mmi-manchester": "medicine",
   "chat-with-clara": "chat",
 };
 
@@ -117,7 +119,7 @@ async function loadBank(admin: any, subject: string): Promise<any[]> {
   return subjects.flatMap((s) => BANKS[s] || []);
 }
 
-const uiStateOf = (s: AgentState, pack: SubjectPack): BrainResponse["uiState"] => {
+const uiStateOf = (s: AgentState, pack: SubjectPack, interviewType: string): BrainResponse["uiState"] => {
   const { phase, aboutYouCount } = phaseInfo(pack, s);
   return {
     mode: s.mode,
@@ -128,6 +130,7 @@ const uiStateOf = (s: AgentState, pack: SubjectPack): BrainResponse["uiState"] =
     onQuestion: !!s.current,
     phase: pack.mixedBank ? phase : undefined,
     aboutYouCount,
+    timingSeconds: getSchoolMode(interviewType)?.timingSeconds,
   };
 };
 
@@ -156,9 +159,14 @@ serve(async (req) => {
     if (sErr || !session) return json({ error: "Session not found" }, 404);
     if (session.user_id !== userId) return json({ error: "Forbidden" }, 403);
 
-    const subject = SUBJECT_BY_TYPE[session.interview_type as string];
-    const pack = subject ? PACKS[subject] : undefined;
-    if (!pack) return json({ error: "This interview type is not engine-driven" }, 400);
+    const interviewTypeId = session.interview_type as string;
+    const subject = SUBJECT_BY_TYPE[interviewTypeId];
+    const basePack = subject ? PACKS[subject] : undefined;
+    if (!basePack) return json({ error: "This interview type is not engine-driven" }, 400);
+    // Two Medicine interview TYPES share one subject/pack/bank but differ in station count and
+    // timing — see subjects/medicine/schoolModes.ts for why (verified per-school MMI data).
+    const schoolMode = getSchoolMode(interviewTypeId);
+    const pack = schoolMode ? { ...basePack, mockTargetQuestions: schoolMode.mockTargetQuestions } : basePack;
 
     const deps = { bank: await loadBank(admin, subject), pack, chat };
 
@@ -182,7 +190,7 @@ serve(async (req) => {
       })
       .eq("id", session.id);
 
-    const response: BrainResponse = { say: result.say, done: result.done, uiState: uiStateOf(result.state, pack) };
+    const response: BrainResponse = { say: result.say, done: result.done, uiState: uiStateOf(result.state, pack, interviewTypeId) };
     return json(response);
   } catch (err) {
     console.error("interview-brain error:", (err as Error)?.message || err);

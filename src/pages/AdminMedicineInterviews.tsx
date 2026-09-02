@@ -32,7 +32,7 @@ const TESTER_PASSCODE = (import.meta.env.VITE_MED_TESTER_PASSCODE as string) || 
  * the full scoring model, and src/interview/engine/agent.ts's renderRoleplayStation for how a
  * roleplay station hands the interviewer's own persona to the character being played.
  */
-const MEDICINE_TYPE: InterviewType | undefined = INTERVIEW_TYPES['medicine-mmi'];
+const MEDICINE_TYPE_IDS = ['medicine-mmi', 'medicine-mmi-manchester'] as const;
 
 const STATION_INFO = [
   { icon: Stethoscope, label: 'Roleplay stations', blurb: 'Speak to a live character — hidden information only surfaces if you ask the right way.' },
@@ -166,27 +166,50 @@ export default function AdminMedicineInterviews() {
           </p>
         </Card>
 
-        {!MEDICINE_TYPE ? (
-          <Card className="p-6 text-center text-muted-foreground">
-            medicine-mmi is not configured in INTERVIEW_TYPES — check src/config/interviewTypes.ts.
-          </Card>
-        ) : (
-          <Card className="p-5 flex items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="font-semibold">{MEDICINE_TYPE.name}</h2>
-                <Badge variant="secondary" className="text-[10px]">Beta</Badge>
-              </div>
-              <p className="text-sm text-muted-foreground mt-1">{MEDICINE_TYPE.description}</p>
-              <div className="flex gap-1.5 mt-2 flex-wrap">
-                {MEDICINE_TYPE.tags.map((t) => (
-                  <span key={t} className="text-[11px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{t}</span>
-                ))}
-              </div>
-            </div>
-            <Button onClick={() => setActive(MEDICINE_TYPE)}>Launch</Button>
-          </Card>
-        )}
+        <div className="space-y-3">
+          {MEDICINE_TYPE_IDS.map((id) => {
+            const type: InterviewType | undefined = INTERVIEW_TYPES[id];
+            if (!type) {
+              return (
+                <Card key={id} className="p-6 text-center text-muted-foreground">
+                  {id} is not configured in INTERVIEW_TYPES — check src/config/interviewTypes.ts.
+                </Card>
+              );
+            }
+            return (
+              <Card key={id} className="p-5 flex items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h2 className="font-semibold">{type.name}</h2>
+                    <Badge variant="secondary" className="text-[10px]">Beta</Badge>
+                    {type.timingSeconds && (
+                      <Badge variant="outline" className="text-[10px]">
+                        {type.timingSeconds.prep > 0 ? `${type.timingSeconds.prep / 60}min prep + ` : 'No reading time · '}
+                        {type.timingSeconds.response / 60}min per station
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{type.description}</p>
+                  {type.verifiedAgainst && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Verified against{' '}
+                      <a href={type.verifiedAgainst.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                        {type.verifiedAgainst.university}'s own page
+                      </a>{' '}
+                      ({type.verifiedAgainst.dateChecked})
+                    </p>
+                  )}
+                  <div className="flex gap-1.5 mt-2 flex-wrap">
+                    {type.tags.map((t) => (
+                      <span key={t} className="text-[11px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{t}</span>
+                    ))}
+                  </div>
+                </div>
+                <Button onClick={() => setActive(type)}>Launch</Button>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

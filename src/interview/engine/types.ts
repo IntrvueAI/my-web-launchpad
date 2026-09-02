@@ -210,7 +210,8 @@ export type BrainAction =
   | 'repeat'
   | 'switch_topic'
   | 'set_mode'
-  | 'end';
+  | 'end'
+  | 'time_up';
 
 /** Request body for the interview-brain edge function. */
 export interface BrainRequest {
@@ -238,5 +239,10 @@ export interface BrainResponse {
     phase?: 'about-you' | 'challenge';
     /** How many "about you" questions the run plans (0 when there's no about-you phase). */
     aboutYouCount?: number;
+    /** Present only for interview TYPES with real per-school timing (currently the two Medicine
+     *  MMI modes — see subjects/medicine/schoolModes.ts). Absent everywhere else, so every other
+     *  interview type's client UI is completely unaffected — no timer renders without this. Reset
+     *  by the client whenever `questionIndex` advances or `onQuestion` newly becomes true. */
+    timingSeconds?: { prep: number; response: number };
   };
 }

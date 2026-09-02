@@ -57,6 +57,16 @@ export interface InterviewType {
    * the 'family' topic forever" or "practice just 'moral-dilemmas' forever".
    */
   topicPracticeEnabled?: boolean;
+  /**
+   * Real per-station timing, verified against the named university's own admissions page (not a
+   * coaching site) — see src/interview/subjects/medicine/schoolModes.ts for the verbatim source
+   * quotes. When set, the setup/session UI shows a genuine countdown per station instead of an
+   * untimed conversation. Absent for every interview type except the Medicine MMI school modes.
+   */
+  timingSeconds?: { prep: number; response: number };
+  /** The university this mode's format/timing is verified against, and the source page — shown in
+   *  the UI as provenance (a differentiator, not internal metadata; see the Medicine research pack). */
+  verifiedAgainst?: { university: string; sourceUrl: string; dateChecked: string };
 }
 
 export const INTERVIEW_TYPES: Record<string, InterviewType> = {
@@ -215,8 +225,8 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
   },
   'medicine-mmi': {
     id: 'medicine-mmi',
-    name: 'Medicine MMI Interview',
-    description: 'Practice UK medicine/healthcare MMI-style stations with Clara — ethical scenarios, data interpretation and prioritisation, and motivation & reflection',
+    name: 'Medicine MMI — Leeds-style',
+    description: 'An 8-station MMI circuit with reading time before each station, matching the University of Leeds\'s own published format — ethics, roleplay, current affairs, data and motivation stations.',
     category: 'medicine',
     promptFile: 'medicine/medicine-mmi.md', // vestigial, ignored when engineDriven
     duration: 25,
@@ -228,16 +238,64 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
       'Insight, Motivation & Professionalism'
     ],
     difficultyLevel: 3,
-    tags: ['medicine', 'MMI', 'university admissions', 'ethics', 'beta'],
+    tags: ['medicine', 'MMI', 'university admissions', 'ethics', 'roleplay', 'beta'],
     icon: 'Stethoscope',
     costCredits: 0, // beta/pilot content — admins and invited testers shouldn't spend real credits on it
     engineDriven: true,
     engineSubject: 'medicine',
     adminOnly: true,
+    timingSeconds: { prep: 120, response: 360 },
+    verifiedAgainst: {
+      university: 'University of Leeds',
+      sourceUrl: 'https://medicinehealth.leeds.ac.uk/medicine/doc/preparing-mmi',
+      dateChecked: '2026-09-02',
+    },
     preStartNote:
-      "This is a practice MMI (Multiple Mini Interview) circuit for UK medicine and healthcare admissions.\n\n" +
-      "Clara will move between short stations — ethical scenarios with no right answer, data interpretation and prioritisation questions, and questions about your own motivation and experience. She'll push back on whatever you say, just like a real MMI assessor.\n\n" +
-      "This is a text/voice-only practice tool — it assesses what you SAY, not your tone or expression, so make your reasoning explicit rather than assuming it comes across.\n\n" +
+      "This is an 8-station MMI circuit modelled on the University of Leeds's own published format: " +
+      "6 minutes per station, with 2 minutes' reading time beforehand so you can prepare your answer.\n\n" +
+      "Clara will move between short stations — live roleplay, ethical scenarios with no right answer, " +
+      "current affairs, data interpretation, and questions about your own motivation and experience. " +
+      "She'll push back on whatever you say, just like a real MMI assessor.\n\n" +
+      "This is a voice practice tool — it assesses what you SAY, not your tone or expression, so make " +
+      "your reasoning explicit rather than assuming it comes across.\n\n" +
+      "Ready when you are."
+  },
+  'medicine-mmi-manchester': {
+    id: 'medicine-mmi-manchester',
+    name: 'Medicine MMI — Manchester-style',
+    description: 'A 5-station MMI circuit with zero reading time — the same question bank as our Leeds-style mock, run at the University of Manchester\'s own published pace: cold-start, 8 minutes per station.',
+    category: 'medicine',
+    promptFile: 'medicine/medicine-mmi.md', // vestigial, ignored when engineDriven
+    duration: 25,
+    scoringSystem: '0-5',
+    scoringCriteria: [
+      'Ethical & Clinical Reasoning',
+      'Structured Judgement & Prioritisation',
+      'Communication & Clarity',
+      'Insight, Motivation & Professionalism'
+    ],
+    difficultyLevel: 3,
+    tags: ['medicine', 'MMI', 'university admissions', 'ethics', 'roleplay', 'no-prep', 'beta'],
+    icon: 'Stethoscope',
+    costCredits: 0,
+    engineDriven: true,
+    engineSubject: 'medicine',
+    adminOnly: true,
+    timingSeconds: { prep: 0, response: 480 },
+    verifiedAgainst: {
+      university: 'University of Manchester',
+      sourceUrl: 'https://www.bmh.manchester.ac.uk/study/medicine/interviews/interview/',
+      dateChecked: '2026-09-02',
+    },
+    preStartNote:
+      "This is a 5-station MMI circuit modelled on the University of Manchester's own published " +
+      "format: 8 minutes per station, with NO reading or writing time at all — you respond cold, the " +
+      "moment the station starts. Same question bank as our Leeds-style mock; the pace is what's " +
+      "different, and for Manchester the pace is the point.\n\n" +
+      "Clara will move between short stations — live roleplay, ethical scenarios, current affairs, " +
+      "data interpretation, and questions about your own motivation and experience.\n\n" +
+      "This is a voice practice tool — it assesses what you SAY, not your tone or expression, so make " +
+      "your reasoning explicit rather than assuming it comes across.\n\n" +
       "Ready when you are."
   },
   'chat-with-clara': {
@@ -645,8 +703,8 @@ const CURRENT_AFFAIRS_INTERVIEW_CONFIG: InterviewTypeConfig = {
 // Reuses the logic-puzzles score fields so no new DB columns are needed,
 // but presents MMI-appropriate section titles.
 const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
-  name: 'Medicine MMI Interview',
-  description: 'Spoken MMI-style practice for medicine and healthcare admissions with Clara',
+  name: 'Medicine MMI Interview — Leeds-style',
+  description: 'Spoken MMI-style practice for medicine and healthcare admissions with Clara — 8 stations, reading time before each, matching the University of Leeds\'s own published format',
   scoringSystem: '0-5',
   maxTotalScore: 20,
   maxSectionScore: 5,
@@ -691,6 +749,14 @@ const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
     { minScore: 8, label: 'Developing', colorClass: 'bg-yellow-500', description: 'Developing reasoning, needs practice' },
     { minScore: 0, label: 'Needs Support', colorClass: 'bg-red-500', description: 'Requires significant development' }
   ]
+};
+
+// Same domains and score fields as MEDICINE_MMI_CONFIG — the two Medicine interview TYPES share one
+// subject/pack/bank and differ only in station count and timing (see schoolModes.ts).
+const MEDICINE_MMI_MANCHESTER_CONFIG: InterviewTypeConfig = {
+  ...MEDICINE_MMI_CONFIG,
+  name: 'Medicine MMI Interview — Manchester-style',
+  description: 'Spoken MMI-style practice for medicine and healthcare admissions with Clara — 5 stations, zero reading time, matching the University of Manchester\'s own published format',
 };
 
 // Chat with Clara Configuration (20 points total: 5+5+5+5)
@@ -756,6 +822,7 @@ export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeCo
   'verbal-interview': VERBAL_INTERVIEW_CONFIG,
   'current-affairs-interview': CURRENT_AFFAIRS_INTERVIEW_CONFIG,
   'medicine-mmi': MEDICINE_MMI_CONFIG,
+  'medicine-mmi-manchester': MEDICINE_MMI_MANCHESTER_CONFIG,
   'chat-with-clara': CHAT_WITH_CLARA_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types

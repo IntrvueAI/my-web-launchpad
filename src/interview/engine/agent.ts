@@ -82,7 +82,7 @@ export interface AgentDeps {
 }
 
 export interface AgentRequest {
-  action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'repeat' | 'end';
+  action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'repeat' | 'end' | 'time_up';
   studentText?: string;
   mode?: Mode;
   topic?: string;
@@ -525,6 +525,8 @@ function controlNote(req: AgentRequest, deps: AgentDeps): string | null {
       return '[Could you say the problem again, please?]';
     case 'end':
       return '[I need to stop now. Please give a short, warm closing and finish the interview.]';
+    case 'time_up':
+      return "[The station clock has just run out. This is a REAL MMI station ending mid-sentence — do not apologise for it or explain the timer. Wrap up in one short sentence (offer a close if I'm mid-thought), then move straight to the next station.]";
     default:
       return null;
   }

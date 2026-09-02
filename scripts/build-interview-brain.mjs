@@ -40,6 +40,7 @@ const FILES = [
   'subjects/currentaffairs/pack.ts',
   'subjects/elevenplus/pack.ts',
   'subjects/medicine/pack.ts',
+  'subjects/medicine/schoolModes.ts',
   'subjects/chat/pack.ts',
 ];
 

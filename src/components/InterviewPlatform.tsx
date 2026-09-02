@@ -43,6 +43,13 @@ function progressLabel(ui: NonNullable<BrainUiState>): string {
   return `Question ${Math.min(idx + 1, total)} of ${total}`;
 }
 
+/** m:ss for the per-station countdown badge — real per-school timing, see schoolModes.ts. */
+function formatStationClock(totalSeconds: number): string {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 /** Progress dots scoped to the CURRENT phase (so "getting to know you" doesn't appear to keep
  *  filling while the hard questions are underway). */
 function phaseDots(ui: NonNullable<BrainUiState>): { count: number; idx: number } {
@@ -116,7 +123,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     skipQuestion,
     switchTopic,
     brainUiState,
-    interviewComplete
+    interviewComplete,
+    stationTimer
   } = useInterviewSession(videoRef, interviewType);
 
   // Engine-driven runs emit an explicit completion signal — trust it directly.
@@ -458,6 +466,20 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 {progressLabel(brainUiState)}
               </div>
             )}
+            {isStreaming && stationTimer && (
+              <div
+                className={
+                  stationTimer.phase === 'prep'
+                    ? "flex items-center gap-1.5 rounded-full border border-sky/50 bg-sky/10 px-3 py-1 text-[12.5px] font-extrabold text-sky tabular-nums"
+                    : stationTimer.secondsRemaining <= 20
+                      ? "flex items-center gap-1.5 rounded-full border border-destructive/60 bg-destructive/15 px-3 py-1 text-[12.5px] font-extrabold text-destructive tabular-nums animate-pulsering"
+                      : "flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 text-[12.5px] font-extrabold text-[#C7D2E4] tabular-nums"
+                }
+                title={stationTimer.phase === 'prep' ? 'Reading time for this station' : 'Time remaining in this station'}
+              >
+                {stationTimer.phase === 'prep' ? 'Reading' : 'Station'} · {formatStationClock(stationTimer.secondsRemaining)}
+              </div>
+            )}
             {isStreaming && (
               <button
                 onClick={() => setTypeMode((v) => !v)}
@@ -700,6 +722,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   {progressLabel(brainUiState)}
                   {brainUiState.phase !== 'about-you' && brainUiState.topic ? ` · ${brainUiState.topic.replace(/-/g, ' ')}` : ''}
                 </div>
+                {stationTimer && (
+                  <div className={`mt-2 text-[13px] font-extrabold tabular-nums ${stationTimer.phase === 'response' && stationTimer.secondsRemaining <= 20 ? 'text-destructive' : 'text-[#93A0B8]'}`}>
+                    {stationTimer.phase === 'prep' ? 'Reading time' : 'Time remaining'}: {formatStationClock(stationTimer.secondsRemaining)}
+                  </div>
+                )}
                 <div className="mt-4 flex gap-1.5 flex-wrap">
                   {(() => {
                     const { count, idx } = phaseDots(brainUiState);
