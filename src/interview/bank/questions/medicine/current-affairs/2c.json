@@ -1,0 +1,353 @@
+[
+  {
+    "id": "MED-CA-09",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 1,
+    "questionType": "Policy Discussion",
+    "title": "What does 'free at the point of use' actually mean?",
+    "tags": ["current-affairs", "nhs-structure", "foundation"],
+    "format": "PD",
+    "question": "The NHS is often described as 'free at the point of use'. What does that actually mean, and does it mean the NHS itself is free?",
+    "answer": "Discussion question — no single verdict. A strong foundation-level answer distinguishes 'free when you use it' from 'free to run' (it's funded from general taxation, so it isn't costless — the cost is just not charged directly to the patient at that moment), and can name at least one consequence of that funding model (a finite budget means choices have to be made).",
+    "modelReasoningPath": "A good accessible answer separates two things that get conflated: the NHS is funded collectively through taxation, and the funding principle is that care is given based on clinical need rather than ability to pay — not that the service costs nothing to run. A slightly stronger answer notices that a finite, taxation-funded budget means rationing decisions are made somewhere in the system, even if the patient never sees a bill.",
+    "rubric": {
+      "strong": "Clearly distinguishes 'not charged at the point of use' from 'costs nothing', and names at least one real consequence of the funding model (finite budget, need for prioritisation).",
+      "developing": "States 'the NHS is free' without unpacking what that means, or names the taxation funding but doesn't connect it to any consequence.",
+      "weak": "Treats the NHS as literally costless, with no engagement with how it's actually funded."
+    },
+    "commonMistakes": [
+      { "mistake": "Says 'the NHS is free' with no further unpacking", "reveals": "Hasn't distinguished the point-of-use principle from the funding reality" }
+    ],
+    "liveProbes": [
+      { "probe": "If it's funded by taxation, does that change how you think about who's 'entitled' to use it?", "goodResponse": "Engages honestly rather than repeating the free-at-use line" }
+    ],
+    "hints": [
+      "Who actually pays for the NHS, even if not the patient directly?",
+      "Does a taxation-funded, finite budget have consequences?"
+    ]
+  },
+  {
+    "id": "MED-CA-10",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should GPs be freer to prescribe antibiotics on request?",
+    "tags": ["current-affairs", "antimicrobial-resistance"],
+    "format": "PD",
+    "question": "Some patients ask for antibiotics they don't clinically need. Should GPs be more willing to prescribe them if that's what the patient wants?",
+    "answer": "Discussion question — no single verdict. A strong answer names the individual-versus-population tension explicitly: restraint protects future effectiveness of antibiotics for everyone, while a prescriber under diagnostic uncertainty faces a real, immediate cost in withholding.",
+    "modelReasoningPath": "A strong candidate resists a simple 'no, resistance is bad' answer and engages with why prescribers actually face pressure to prescribe: genuine diagnostic uncertainty (a viral versus bacterial infection isn't always obvious quickly), patient expectation, and time pressure in a short appointment. They weigh this against the population-level cost of resistance building up over time, which is invisible in any single consultation. A strong answer also recognises this isn't only a prescriber behaviour problem — it's partly a systemic and agricultural one too.",
+    "rubric": {
+      "strong": "States the individual-versus-population tension explicitly, engages with the genuine diagnostic pressure a prescriber faces, and recognises this is a systemic problem, not purely a matter of prescriber willpower.",
+      "developing": "States that overprescribing is bad but doesn't engage with why it happens or the pressure prescribers are actually under.",
+      "weak": "Says GPs should simply refuse, with no engagement with diagnostic uncertainty or patient expectation."
+    },
+    "commonMistakes": [
+      { "mistake": "Blames patients or GPs entirely with no systemic view", "reveals": "Misses that this is a collective-action problem, not an individual failing" }
+    ],
+    "liveProbes": [
+      { "probe": "What if the GP genuinely isn't sure whether it's bacterial or viral?", "goodResponse": "Engages honestly with real diagnostic uncertainty rather than assuming it's always obvious" }
+    ],
+    "hints": [
+      "Who bears the cost of resistance, and when?",
+      "Why might a GP feel pressure to prescribe even when unsure?"
+    ]
+  },
+  {
+    "id": "MED-CA-11",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should the government be allowed to tell people what to eat?",
+    "tags": ["current-affairs", "public-health", "regulation", "autonomy"],
+    "format": "PD",
+    "question": "Should the government restrict how unhealthy food is advertised and sold, or is that overreach into personal choice?",
+    "answer": "Discussion question — no single verdict. A strong answer engages seriously with the autonomy objection (this is a real argument, not just an obstacle) while also noting that regulation consistently outperforms information campaigns, and that 'personal choice' is not equally available to everyone.",
+    "modelReasoningPath": "A strong candidate doesn't dismiss the 'nanny state' objection as obviously wrong — it's a genuine argument about autonomy that deserves real engagement. But they also note that choice is unevenly available: someone with less money, time or access to healthy food faces a materially different 'choice' than someone who doesn't, which weakens a pure individual-responsibility framing. A strong candidate can also explain, rather than just assert, why regulation tends to outperform public information campaigns.",
+    "rubric": {
+      "strong": "Engages genuinely with the autonomy objection, explains why regulation tends to outperform information campaigns, and notes that choice is unequally available across the population.",
+      "developing": "Takes a position but dismisses the opposing side too quickly, or doesn't explain why regulation works better than campaigns.",
+      "weak": "Says the government obviously should or shouldn't regulate, with no engagement with the strongest version of the other side."
+    },
+    "commonMistakes": [
+      { "mistake": "Dismisses the autonomy objection without engaging it", "reveals": "Misses a genuine, serious argument rather than a strawman" },
+      { "mistake": "Assumes information campaigns are as effective as regulation", "reveals": "Ignores the evidence that regulation consistently outperforms information-only approaches" }
+    ],
+    "liveProbes": [
+      { "probe": "Is 'personal choice' equally available to everyone?", "goodResponse": "Engages with unequal access to healthy food, time and money as a real complication" }
+    ],
+    "hints": [
+      "What's the strongest version of the argument against regulation?",
+      "Is 'just choose differently' equally realistic for everyone?"
+    ]
+  },
+  {
+    "id": "MED-CA-12",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "What is a physician associate, and is the role good for the NHS?",
+    "tags": ["current-affairs", "workforce", "physician-associates"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "What is a physician associate, and do you think the role is good for the NHS?",
+    "answer": "Discussion question — no single verdict, but a strong answer starts from an accurate description of the role (a distinct profession with its own training, not a junior doctor) and engages both the capacity argument and the patient-safety/role-clarity argument fairly.",
+    "modelReasoningPath": "A strong candidate can describe accurately what a physician associate actually is — a distinct role with its own training, working under supervision, not a substitute for a doctor's training — before offering a view. They engage with the genuine capacity benefit (more clinical staff available) against genuine concerns about scope, supervision and whether patients understand who is treating them. A strong candidate is also aware this is a live, recently-reviewed area of policy rather than a settled one, and avoids disparaging the individuals in the role while discussing it.",
+    "rubric": {
+      "strong": "Accurately describes the role, engages both the capacity and safety/clarity arguments fairly, and is aware the policy position has recently shifted rather than being static.",
+      "developing": "Has a view but the description of the role is vague, or only one side of the debate is engaged.",
+      "weak": "Doesn't know what a physician associate is, or takes a partisan position with no engagement with the other side."
+    },
+    "commonMistakes": [
+      { "mistake": "Cannot describe what the role actually involves", "reveals": "A basic awareness gap about the healthcare team the candidate will be joining" },
+      { "mistake": "Disparages the role or the people in it", "reveals": "A real professionalism concern, separate from having a substantive view on the policy question" }
+    ],
+    "liveProbes": [
+      { "probe": "Does it matter whether a patient knows they're being seen by a physician associate rather than a doctor?", "goodResponse": "Engages with the patient-understanding dimension as distinct from competence" }
+    ],
+    "hints": [
+      "What do you actually know about the role's training and scope?",
+      "Does patient understanding of who is treating them matter, separately from competence?"
+    ]
+  },
+  {
+    "id": "MED-CA-13",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Is it fair to have a price on a year of life?",
+    "tags": ["current-affairs", "resource-allocation", "nice"],
+    "format": "PD",
+    "question": "The NHS uses cost-effectiveness thresholds to decide which treatments to fund. Is it fair to put a price on a year of someone's life?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that explicit rationing via a stated threshold is more transparent and arguably fairer than the alternative — implicit rationing with no stated criterion at all — even though a stated threshold feels uncomfortable.",
+    "modelReasoningPath": "A strong candidate resists the instinctive recoil from putting any number on a life and instead compares the REAL alternatives: an explicit, consistent threshold that can be scrutinised and debated, versus implicit rationing (waiting lists, postcode variation, clinician discretion) with no stated criterion, which is arguably less fair because it isn't consistent or transparent. They can name at least one genuine objection to the mechanism (it may undervalue disability, or handle rare conditions poorly) without concluding the whole approach should be abandoned with nothing to replace it.",
+    "rubric": {
+      "strong": "Compares explicit thresholds against the realistic alternative of implicit rationing, engages with a genuine objection to the mechanism, and reaches a considered rather than reflexive position.",
+      "developing": "States discomfort with the mechanism but doesn't engage with what the realistic alternative actually is.",
+      "weak": "Rejects the idea of any threshold outright with no alternative offered, or accepts it with no engagement with its real limitations."
+    },
+    "commonMistakes": [
+      { "mistake": "Rejects cost-effectiveness thresholds with no alternative in mind", "reveals": "Doesn't engage with the fact that rationing happens either way — implicitly or explicitly" }
+    ],
+    "liveProbes": [
+      { "probe": "If there were no stated threshold at all, would that actually be fairer?", "goodResponse": "Engages with implicit rationing as the real alternative, not a neutral default" }
+    ],
+    "hints": [
+      "What actually happens if there's no explicit threshold at all?",
+      "Is a stated, consistent rule fairer than case-by-case discretion?"
+    ]
+  },
+  {
+    "id": "MED-CA-14",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Why are NHS waiting lists so long?",
+    "tags": ["current-affairs", "waiting-lists"],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-12-31",
+    "question": "Why do you think NHS waiting lists are as long as they are, and is progress being made?",
+    "answer": "Discussion question — no single verdict. A strong answer names more than one structural cause (workforce, patient flow, social care capacity affecting discharge — not just 'funding'), and, if citing any improvement or figure, is careful to date it and note where performance still lags.",
+    "modelReasoningPath": "A strong candidate resists a single-cause explanation ('just funding') and names at least one further structural driver — workforce shortages, patients unable to be discharged because social care capacity is unavailable, or flow problems through the system. If they cite any recent improvement, they date it and are honest that headline improvement in one area (elective waits) doesn't necessarily mean every area (cancer, emergency care) has improved at the same pace — over-generalising from one figure to 'the NHS is fixed' or 'nothing has changed' are both weak.",
+    "rubric": {
+      "strong": "Names more than one structural cause beyond funding, and if citing any figure, dates it and notes where performance may still lag elsewhere.",
+      "developing": "Names funding as the main cause with limited further structural explanation.",
+      "weak": "Cites an undated figure with total confidence, or offers 'more funding' as the entire explanation and solution."
+    },
+    "commonMistakes": [
+      { "mistake": "Treats funding as the only relevant factor", "reveals": "Misses workforce, discharge/social-care and flow explanations that are at least as significant" },
+      { "mistake": "States a headline figure with no date", "reveals": "This is one of the fastest-moving numbers in health policy — undated figures age badly" }
+    ],
+    "liveProbes": [
+      { "probe": "Does an improvement in one type of waiting time mean everything has improved?", "goodResponse": "Distinguishes between different measures (elective, cancer, emergency) rather than generalising from one" }
+    ],
+    "hints": [
+      "Is funding the only structural cause worth naming?",
+      "Does an improving headline figure mean every part of the system has improved equally?"
+    ]
+  },
+  {
+    "id": "MED-CA-15",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Is it a good idea to abolish NHS England?",
+    "tags": ["current-affairs", "nhs-structure", "reform"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-01-31",
+    "question": "There have been recent moves to restructure how the NHS is run centrally, including abolishing NHS England as a separate body. Is that a good idea?",
+    "answer": "Discussion question — no single verdict. A strong answer engages with the argument for removing a layer (simpler, more directly accountable to ministers) and the concern it raises (concentrating power in ministers, and that reorganisation itself consumes leadership attention needed for delivery).",
+    "modelReasoningPath": "A strong candidate names the case for structural simplification — one fewer layer, clearer ministerial accountability — and the case against — removing an arm's-length body concentrates power more directly in political hands, and reorganisations of this scale absorb enormous leadership time and capacity at exactly the moment that capacity is needed for actual delivery. A strong candidate is honest that they may not know the fine detail of the current state of this reform, while still reasoning soundly about the general trade-off.",
+    "rubric": {
+      "strong": "States the simplification/accountability case and the centralisation/distraction-cost concern fairly, and is appropriately careful about claiming precise knowledge of the current implementation stage.",
+      "developing": "Has a view but engages only one side, or asserts implementation detail with more confidence than is likely warranted.",
+      "weak": "Treats the reorganisation as obviously good or bad with no engagement with the trade-off."
+    },
+    "commonMistakes": [
+      { "mistake": "Assumes fewer organisational layers is automatically better", "reveals": "Misses the centralisation-of-power concern that comes with removing an arm's-length body" }
+    ],
+    "liveProbes": [
+      { "probe": "What does the NHS lose, structurally, by having one fewer layer between ministers and delivery?", "goodResponse": "Engages with the accountability/centralisation trade-off specifically" }
+    ],
+    "hints": [
+      "What's gained by simplifying the structure — and what's lost?",
+      "Does reorganising itself have a cost, separate from whether the new structure is better?"
+    ]
+  },
+  {
+    "id": "MED-CA-16",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should vaccination ever be mandatory?",
+    "tags": ["current-affairs", "vaccination", "autonomy"],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-12-31",
+    "question": "Childhood vaccination rates have been falling in parts of the country. Should vaccination be made mandatory?",
+    "answer": "Discussion question — no single verdict. A strong answer engages the autonomy objection to mandates honestly, while distinguishing access-driven non-vaccination (deprivation, difficulty reaching appointments) from attitude-driven refusal — since a mandate addresses only the second, not the first.",
+    "modelReasoningPath": "A strong candidate doesn't treat all non-vaccination as ideological refusal — evidence points to access and deprivation being major drivers, which a mandate does nothing to fix and could even worsen if it comes with penalties. They engage honestly with the autonomy objection to compulsion, and can articulate the collective-protection argument (herd immunity protects those who cannot be vaccinated) as a real argument rather than an assumption. A strong candidate reaches a nuanced position — perhaps favouring access improvements over compulsion — rather than a simple yes/no.",
+    "rubric": {
+      "strong": "Distinguishes access-driven from attitude-driven non-vaccination, engages the autonomy objection genuinely, and states the collective-protection argument as an argument rather than an assumption.",
+      "developing": "Has a position but treats all non-vaccination as the same underlying cause.",
+      "weak": "Assumes all non-vaccination is ideological refusal, or dismisses the autonomy objection without engaging it."
+    },
+    "commonMistakes": [
+      { "mistake": "Treats falling vaccination rates as purely attitudinal", "reveals": "Ignores that access and deprivation are major documented drivers, which a mandate wouldn't fix" }
+    ],
+    "liveProbes": [
+      { "probe": "Would a mandate actually fix vaccination rates driven by access, not attitude?", "goodResponse": "Recognises a mandate targets only one of the real causes" }
+    ],
+    "hints": [
+      "Is falling vaccination rate always about people refusing on principle?",
+      "What does a mandate actually fix, and what does it not fix?"
+    ]
+  },
+  {
+    "id": "MED-CA-17",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should social care be free like the NHS?",
+    "tags": ["current-affairs", "social-care"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-01-31",
+    "question": "The NHS is free at the point of use; social care is means-tested. Should social care be made free in the same way?",
+    "answer": "Discussion question — no single verdict. A strong answer names the funding-boundary explanation for why delayed hospital discharge happens (a social care capacity problem, not an NHS one), and engages honestly with the cost implications of extending free-at-use principles to social care.",
+    "modelReasoningPath": "A strong candidate explains WHY the NHS/social-care boundary causes real problems — a patient medically fit for discharge can be stuck in hospital because social care isn't available or funded, which is a genuinely different funding system creating a visible NHS problem. They engage honestly with the scale of cost involved in making social care free at the point of use, rather than assuming it's a simple, costless fix, and can note that reform in this area has been repeatedly deferred for exactly that reason.",
+    "rubric": {
+      "strong": "Explains the funding-boundary mechanism behind delayed discharge clearly, and engages honestly with the real cost implications of extending free provision.",
+      "developing": "Recognises social care and the NHS are funded differently but doesn't explain the discharge mechanism or the cost trade-off.",
+      "weak": "Assumes social care is already part of the NHS, or treats making it free as a costless fix."
+    },
+    "commonMistakes": [
+      { "mistake": "Assumes social care is already NHS-funded", "reveals": "Misses the core funding-boundary distinction the question is testing" },
+      { "mistake": "Treats extending free provision as a costless improvement", "reveals": "Ignores the genuine scale of funding this would require" }
+    ],
+    "liveProbes": [
+      { "probe": "Why does a hospital patient sometimes stay long after they're medically fit to leave?", "goodResponse": "Names the social care funding/capacity mechanism specifically" }
+    ],
+    "hints": [
+      "Is social care funded in the same way as the NHS?",
+      "What causes a patient to stay in hospital after they no longer need to be there?"
+    ]
+  },
+  {
+    "id": "MED-CA-18",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should mental health have parity with physical health?",
+    "tags": ["current-affairs", "mental-health"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "People often say mental health should have 'parity of esteem' with physical health. What would that actually require, beyond the phrase itself?",
+    "answer": "Discussion question — no single verdict. A strong answer goes beyond the slogan to name what parity would actually require in practice — comparable funding, comparable waiting times, and workforce capacity that currently doesn't exist at the scale needed — and is honest that legislative change alone doesn't create that capacity.",
+    "modelReasoningPath": "A strong candidate treats 'parity of esteem' as a slogan that needs unpacking rather than an answer in itself. They name concrete requirements — funding parity, waiting-time standards comparable to physical health, and enough trained staff to deliver care at the scale needed — and recognise that even where legislation changes the RULES, the workforce and capacity to deliver on them takes years to build, which is why reforms in this space are commonly phased in slowly. They avoid treating 'parity' as already achieved just because it's a stated goal.",
+    "rubric": {
+      "strong": "Unpacks what parity would require concretely rather than repeating the phrase, and recognises the gap between legislative intent and delivered capacity.",
+      "developing": "States support for parity but doesn't specify what it would actually require.",
+      "weak": "Treats 'parity of esteem' as self-explanatory or already achieved, with no engagement with what's actually required."
+    },
+    "commonMistakes": [
+      { "mistake": "Repeats the phrase 'parity of esteem' without unpacking it", "reveals": "Uses a slogan as if it were an analysis" },
+      { "mistake": "Assumes a change in law immediately produces a change in delivered care", "reveals": "Misses that workforce and capacity take years to build, regardless of the legal framework" }
+    ],
+    "liveProbes": [
+      { "probe": "What would actually have to be true for mental health waiting times to match physical health ones?", "goodResponse": "Names concrete capacity and funding requirements rather than a general aspiration" }
+    ],
+    "hints": [
+      "What does the phrase actually require, in practical terms?",
+      "Does changing the law automatically change what's delivered?"
+    ]
+  },
+  {
+    "id": "MED-CA-19",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should the NHS use private hospitals?",
+    "tags": ["current-affairs", "private-sector"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-06-30",
+    "question": "The NHS increasingly funds treatment at independent (private) hospitals for NHS patients. Is that a good thing?",
+    "answer": "Discussion question — no single verdict. A strong answer distinguishes NHS-FUNDED care delivered privately from patients paying privately themselves, and engages both the capacity argument (more throughput) and the concern that independent providers draw on the same limited clinical workforce and tend to take less complex cases.",
+    "modelReasoningPath": "A strong candidate is careful about a common confusion: using independent providers for NHS-funded treatment is not the same as patients paying privately out of pocket — patients still don't pay directly either way. They engage with the genuine capacity benefit (extra throughput to reduce waiting lists) against real concerns: independent providers draw on much of the SAME clinical workforce as the NHS, so it may not be truly additional capacity, and they tend to take on lower-complexity cases, potentially leaving NHS trusts with a harder, less remunerative caseload.",
+    "rubric": {
+      "strong": "Distinguishes NHS-funded independent-sector care from private-pay care, and engages both the capacity benefit and the shared-workforce/casemix concerns.",
+      "developing": "Has a view but conflates NHS-funded independent care with patients paying privately, or engages only one side.",
+      "weak": "Assumes independent-sector involvement is straightforwardly extra capacity with no workforce or casemix complication."
+    },
+    "commonMistakes": [
+      { "mistake": "Confuses NHS-funded independent-sector care with patients paying privately", "reveals": "Misses a distinction that changes the whole shape of the debate" },
+      { "mistake": "Assumes independent capacity is simply additional to NHS capacity", "reveals": "Ignores that providers often draw on the same clinical workforce" }
+    ],
+    "liveProbes": [
+      { "probe": "Where do independent providers get their clinical staff from?", "goodResponse": "Recognises the shared-workforce point rather than assuming independent capacity is free-standing" }
+    ],
+    "hints": [
+      "Is this the same as patients paying for their own care?",
+      "Where does the staff working in independent providers actually come from?"
+    ]
+  },
+  {
+    "id": "MED-CA-20",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Why do the same NHS safety failures keep happening?",
+    "tags": ["current-affairs", "patient-safety", "learning-culture"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-06-30",
+    "question": "Serious safety failures in NHS care, particularly in maternity services, have recurred across different hospitals over many years. Why do you think the same kinds of failure keep happening?",
+    "answer": "Discussion question — no single verdict. A strong answer holds both individual and systemic accountability together (not using 'it's a systems issue' as a way to avoid any accountability, and not blaming individuals as if the pattern were coincidence), and names 'not being listened to' as a theme that recurs across multiple, separate inquiries.",
+    "modelReasoningPath": "A strong candidate resists two easy exits: blaming individual clinicians as if each failure were an isolated bad actor, or saying 'it's a systems issue' in a way that avoids any accountability at all. They hold both together — individual decisions matter, and they happen inside systems that can make good decisions harder or bad ones more likely. A genuinely strong candidate notices the theme that recurs across separate, independent inquiries into different failures: families and staff not being listened to, and concerns raised early not being acted on — which suggests the problem is at least partly about organisational culture and candour, not only clinical skill.",
+    "rubric": {
+      "strong": "Holds individual and systemic accountability together rather than picking one, and names a recurring cross-inquiry theme (such as not being listened to) rather than treating each failure as unrelated.",
+      "developing": "Leans toward one explanation (individual or systemic) without holding both, or doesn't identify any recurring pattern across inquiries.",
+      "weak": "Blames individuals entirely, or uses systemic language to avoid any accountability at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Uses 'systems issue' language to avoid engaging with any accountability", "reveals": "Turns a genuine insight into a way of saying nothing" },
+      { "mistake": "Treats each safety failure as an unrelated, isolated incident", "reveals": "Misses that multiple independent inquiries have converged on the same themes" }
+    ],
+    "liveProbes": [
+      { "probe": "What's the difference between reporting an error for learning and reporting it for blame?", "goodResponse": "Distinguishes candour-driven reporting from a purely punitive process" }
+    ],
+    "hints": [
+      "Is this only about individual clinical skill, or is something structural also going on?",
+      "What theme keeps appearing across different, separate inquiries?"
+    ]
+  }
+]

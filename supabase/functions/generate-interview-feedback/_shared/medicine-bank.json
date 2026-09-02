@@ -127,6 +127,127 @@
     ]
   },
   {
+    "id": "MED-CT-04",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Posting online as a future doctor",
+    "tags": [
+      "communication",
+      "professionalism",
+      "social-media",
+      "digital"
+    ],
+    "format": "ES",
+    "question": "A friend of yours posts something online that's rude about a group of patients they'd worked with on a placement — no names, just a general complaint. What do you think about that, as something a future doctor might do?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that professional standards for a medical student apply outside the classroom and online, at all times — not just in a clinical building — and focuses on respect and confidentiality rather than reciting an outdated rule.",
+    "modelReasoningPath": "This is a live correction opportunity: a widely-circulated older rule required doctors identifying themselves online to also use their real name, which is no longer current professional guidance. A strong candidate doesn't need to know the fine detail of current guidance to reason well here — they focus on the substance: professional standards for a medical student apply 'at all times', including outside the medical school and online, and a general complaint about patients (even without names) risks patients feeling talked about and undermines public trust. A strong candidate would raise it with the friend directly, focusing on respect and confidentiality rather than treating it as a technical rule violation.",
+    "rubric": {
+      "strong": "Recognises professional standards apply online and outside formal settings 'at all times', focuses on the substance (respect, patient trust) rather than a specific rule, and would raise it with the friend directly.",
+      "developing": "Recognises this is a problem but focuses only on 'it could get them in trouble' rather than the substance of respect and trust.",
+      "weak": "Says it's fine because no names were used, or states an outdated specific rule (such as a duty to use one's real name) as if it were still current."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says it's fine because no patients were named",
+        "reveals": "Misses that a general complaint about patients still undermines trust and respect, regardless of anonymity"
+      },
+      {
+        "mistake": "States an outdated specific social-media rule confidently",
+        "reveals": "Circulating older guidance in this area has been superseded — reason from the underlying principle (respect, trust, 'at all times') rather than a specific remembered rule"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does it matter that no patients were named?",
+        "goodResponse": "Explains why anonymity doesn't remove the underlying harm to trust and respect"
+      }
+    ],
+    "hints": [
+      "Do professional standards apply only inside a clinical building?",
+      "What's actually harmed here, even without anyone being named?"
+    ]
+  },
+  {
+    "id": "MED-CT-05",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Explanation Task",
+    "title": "Closing a conversation and checking it landed",
+    "tags": [
+      "communication",
+      "structure"
+    ],
+    "format": "EX",
+    "question": "Explain to me, in under a minute, how a train timetable works — and then close by checking I've actually understood, in a way that isn't just 'does that make sense?'.",
+    "answer": "No single 'correct' script. A strong answer structures the explanation clearly, keeps to time, and closes with a genuinely open check — asking the listener to summarise or apply what they've heard — rather than a closed yes/no question.",
+    "modelReasoningPath": "This station isolates the CLOSING skill specifically. A strong candidate signposts the structure of their explanation (a beginning, a middle, an end), keeps within the time limit, and — critically — closes with an open check: asking the listener to explain a specific case back, or to say what they'd do next, rather than 'does that make sense?', which invites a reflexive 'yes' regardless of actual understanding.",
+    "rubric": {
+      "strong": "Structures the explanation clearly, stays within time, and closes with a genuinely open comprehension check.",
+      "developing": "Gives a reasonable explanation but the close is a closed question ('does that make sense?').",
+      "weak": "Rambles with no clear structure, runs over time, or doesn't check understanding at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Closes with 'does that make sense?'",
+        "reveals": "A closed check that will be answered 'yes' regardless of real understanding"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "[playing along] Yes, that makes sense.",
+        "goodResponse": "Doesn't accept this at face value if the check was meant to be more substantive — asks a specific follow-up to verify"
+      }
+    ],
+    "hints": [
+      "Try closing by asking a specific question that tests understanding, not a yes/no one.",
+      "Keep an eye on time — signposting where you are helps both of you."
+    ]
+  },
+  {
+    "id": "MED-CT-06",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Explaining a decision you disagree with",
+    "tags": [
+      "communication",
+      "difficult-conversations"
+    ],
+    "format": "DQ",
+    "question": "You have to tell someone about a decision you personally disagree with, made by someone above you. How do you explain it without either undermining the decision or pretending you fully agree?",
+    "answer": "Discussion question — no single verdict. A strong answer avoids both extremes — openly criticising the decision to the person being told, or dishonestly pretending full personal agreement — and describes explaining the reasoning behind the decision accurately and professionally while leaving room to raise disagreement through the right channel separately.",
+    "modelReasoningPath": "A strong candidate recognises the two failure modes on either side: undermining the decision to the person being told (which damages trust in the team and the decision itself, and puts the listener in an awkward position), or dishonestly performing full agreement they don't feel. The middle path is explaining the actual reasoning behind the decision accurately and professionally, without editorialising — and separately, through the appropriate channel, raising their own disagreement with whoever made the decision, rather than doing it in front of the person being told.",
+    "rubric": {
+      "strong": "Avoids both undermining the decision and dishonestly performing agreement, explains the reasoning accurately and professionally, and raises disagreement separately through the right channel.",
+      "developing": "Avoids one failure mode but not the other — e.g. stays professional in the moment but has no plan to raise the disagreement at all.",
+      "weak": "Openly criticises the decision to the person being told, or claims full agreement they don't actually hold."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Criticises the decision to the person being told",
+        "reveals": "Undermines trust in the team and puts the listener in an unfair position"
+      },
+      {
+        "mistake": "Never raises the disagreement with anyone",
+        "reveals": "Professional disagreement handled through the right channel is legitimate — suppressing it entirely isn't the same as being professional"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Where and to whom would you actually raise your disagreement?",
+        "goodResponse": "Names a specific, appropriate route rather than 'I'd just let it go'"
+      }
+    ],
+    "hints": [
+      "What's the difference between explaining a decision and endorsing it?",
+      "Is there a legitimate way to raise your own disagreement, separately?"
+    ]
+  },
+  {
     "id": "MED-CA-01",
     "subject": "medicine",
     "topic": "current-affairs",
@@ -272,6 +393,494 @@
       "Who might not have a smartphone, reliable internet, or confidence using an app?",
       "Are the people excluded from digital services the same people already underserved in other ways?",
       "Does moving online have to mean losing another route entirely?"
+    ]
+  },
+  {
+    "id": "MED-CA-09",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 1,
+    "questionType": "Policy Discussion",
+    "title": "What does 'free at the point of use' actually mean?",
+    "tags": [
+      "current-affairs",
+      "nhs-structure",
+      "foundation"
+    ],
+    "format": "PD",
+    "question": "The NHS is often described as 'free at the point of use'. What does that actually mean, and does it mean the NHS itself is free?",
+    "answer": "Discussion question — no single verdict. A strong foundation-level answer distinguishes 'free when you use it' from 'free to run' (it's funded from general taxation, so it isn't costless — the cost is just not charged directly to the patient at that moment), and can name at least one consequence of that funding model (a finite budget means choices have to be made).",
+    "modelReasoningPath": "A good accessible answer separates two things that get conflated: the NHS is funded collectively through taxation, and the funding principle is that care is given based on clinical need rather than ability to pay — not that the service costs nothing to run. A slightly stronger answer notices that a finite, taxation-funded budget means rationing decisions are made somewhere in the system, even if the patient never sees a bill.",
+    "rubric": {
+      "strong": "Clearly distinguishes 'not charged at the point of use' from 'costs nothing', and names at least one real consequence of the funding model (finite budget, need for prioritisation).",
+      "developing": "States 'the NHS is free' without unpacking what that means, or names the taxation funding but doesn't connect it to any consequence.",
+      "weak": "Treats the NHS as literally costless, with no engagement with how it's actually funded."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says 'the NHS is free' with no further unpacking",
+        "reveals": "Hasn't distinguished the point-of-use principle from the funding reality"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If it's funded by taxation, does that change how you think about who's 'entitled' to use it?",
+        "goodResponse": "Engages honestly rather than repeating the free-at-use line"
+      }
+    ],
+    "hints": [
+      "Who actually pays for the NHS, even if not the patient directly?",
+      "Does a taxation-funded, finite budget have consequences?"
+    ]
+  },
+  {
+    "id": "MED-CA-10",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should GPs be freer to prescribe antibiotics on request?",
+    "tags": [
+      "current-affairs",
+      "antimicrobial-resistance"
+    ],
+    "format": "PD",
+    "question": "Some patients ask for antibiotics they don't clinically need. Should GPs be more willing to prescribe them if that's what the patient wants?",
+    "answer": "Discussion question — no single verdict. A strong answer names the individual-versus-population tension explicitly: restraint protects future effectiveness of antibiotics for everyone, while a prescriber under diagnostic uncertainty faces a real, immediate cost in withholding.",
+    "modelReasoningPath": "A strong candidate resists a simple 'no, resistance is bad' answer and engages with why prescribers actually face pressure to prescribe: genuine diagnostic uncertainty (a viral versus bacterial infection isn't always obvious quickly), patient expectation, and time pressure in a short appointment. They weigh this against the population-level cost of resistance building up over time, which is invisible in any single consultation. A strong answer also recognises this isn't only a prescriber behaviour problem — it's partly a systemic and agricultural one too.",
+    "rubric": {
+      "strong": "States the individual-versus-population tension explicitly, engages with the genuine diagnostic pressure a prescriber faces, and recognises this is a systemic problem, not purely a matter of prescriber willpower.",
+      "developing": "States that overprescribing is bad but doesn't engage with why it happens or the pressure prescribers are actually under.",
+      "weak": "Says GPs should simply refuse, with no engagement with diagnostic uncertainty or patient expectation."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Blames patients or GPs entirely with no systemic view",
+        "reveals": "Misses that this is a collective-action problem, not an individual failing"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the GP genuinely isn't sure whether it's bacterial or viral?",
+        "goodResponse": "Engages honestly with real diagnostic uncertainty rather than assuming it's always obvious"
+      }
+    ],
+    "hints": [
+      "Who bears the cost of resistance, and when?",
+      "Why might a GP feel pressure to prescribe even when unsure?"
+    ]
+  },
+  {
+    "id": "MED-CA-11",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should the government be allowed to tell people what to eat?",
+    "tags": [
+      "current-affairs",
+      "public-health",
+      "regulation",
+      "autonomy"
+    ],
+    "format": "PD",
+    "question": "Should the government restrict how unhealthy food is advertised and sold, or is that overreach into personal choice?",
+    "answer": "Discussion question — no single verdict. A strong answer engages seriously with the autonomy objection (this is a real argument, not just an obstacle) while also noting that regulation consistently outperforms information campaigns, and that 'personal choice' is not equally available to everyone.",
+    "modelReasoningPath": "A strong candidate doesn't dismiss the 'nanny state' objection as obviously wrong — it's a genuine argument about autonomy that deserves real engagement. But they also note that choice is unevenly available: someone with less money, time or access to healthy food faces a materially different 'choice' than someone who doesn't, which weakens a pure individual-responsibility framing. A strong candidate can also explain, rather than just assert, why regulation tends to outperform public information campaigns.",
+    "rubric": {
+      "strong": "Engages genuinely with the autonomy objection, explains why regulation tends to outperform information campaigns, and notes that choice is unequally available across the population.",
+      "developing": "Takes a position but dismisses the opposing side too quickly, or doesn't explain why regulation works better than campaigns.",
+      "weak": "Says the government obviously should or shouldn't regulate, with no engagement with the strongest version of the other side."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Dismisses the autonomy objection without engaging it",
+        "reveals": "Misses a genuine, serious argument rather than a strawman"
+      },
+      {
+        "mistake": "Assumes information campaigns are as effective as regulation",
+        "reveals": "Ignores the evidence that regulation consistently outperforms information-only approaches"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is 'personal choice' equally available to everyone?",
+        "goodResponse": "Engages with unequal access to healthy food, time and money as a real complication"
+      }
+    ],
+    "hints": [
+      "What's the strongest version of the argument against regulation?",
+      "Is 'just choose differently' equally realistic for everyone?"
+    ]
+  },
+  {
+    "id": "MED-CA-12",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "What is a physician associate, and is the role good for the NHS?",
+    "tags": [
+      "current-affairs",
+      "workforce",
+      "physician-associates"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "What is a physician associate, and do you think the role is good for the NHS?",
+    "answer": "Discussion question — no single verdict, but a strong answer starts from an accurate description of the role (a distinct profession with its own training, not a junior doctor) and engages both the capacity argument and the patient-safety/role-clarity argument fairly.",
+    "modelReasoningPath": "A strong candidate can describe accurately what a physician associate actually is — a distinct role with its own training, working under supervision, not a substitute for a doctor's training — before offering a view. They engage with the genuine capacity benefit (more clinical staff available) against genuine concerns about scope, supervision and whether patients understand who is treating them. A strong candidate is also aware this is a live, recently-reviewed area of policy rather than a settled one, and avoids disparaging the individuals in the role while discussing it.",
+    "rubric": {
+      "strong": "Accurately describes the role, engages both the capacity and safety/clarity arguments fairly, and is aware the policy position has recently shifted rather than being static.",
+      "developing": "Has a view but the description of the role is vague, or only one side of the debate is engaged.",
+      "weak": "Doesn't know what a physician associate is, or takes a partisan position with no engagement with the other side."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Cannot describe what the role actually involves",
+        "reveals": "A basic awareness gap about the healthcare team the candidate will be joining"
+      },
+      {
+        "mistake": "Disparages the role or the people in it",
+        "reveals": "A real professionalism concern, separate from having a substantive view on the policy question"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does it matter whether a patient knows they're being seen by a physician associate rather than a doctor?",
+        "goodResponse": "Engages with the patient-understanding dimension as distinct from competence"
+      }
+    ],
+    "hints": [
+      "What do you actually know about the role's training and scope?",
+      "Does patient understanding of who is treating them matter, separately from competence?"
+    ]
+  },
+  {
+    "id": "MED-CA-13",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Is it fair to have a price on a year of life?",
+    "tags": [
+      "current-affairs",
+      "resource-allocation",
+      "nice"
+    ],
+    "format": "PD",
+    "question": "The NHS uses cost-effectiveness thresholds to decide which treatments to fund. Is it fair to put a price on a year of someone's life?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that explicit rationing via a stated threshold is more transparent and arguably fairer than the alternative — implicit rationing with no stated criterion at all — even though a stated threshold feels uncomfortable.",
+    "modelReasoningPath": "A strong candidate resists the instinctive recoil from putting any number on a life and instead compares the REAL alternatives: an explicit, consistent threshold that can be scrutinised and debated, versus implicit rationing (waiting lists, postcode variation, clinician discretion) with no stated criterion, which is arguably less fair because it isn't consistent or transparent. They can name at least one genuine objection to the mechanism (it may undervalue disability, or handle rare conditions poorly) without concluding the whole approach should be abandoned with nothing to replace it.",
+    "rubric": {
+      "strong": "Compares explicit thresholds against the realistic alternative of implicit rationing, engages with a genuine objection to the mechanism, and reaches a considered rather than reflexive position.",
+      "developing": "States discomfort with the mechanism but doesn't engage with what the realistic alternative actually is.",
+      "weak": "Rejects the idea of any threshold outright with no alternative offered, or accepts it with no engagement with its real limitations."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Rejects cost-effectiveness thresholds with no alternative in mind",
+        "reveals": "Doesn't engage with the fact that rationing happens either way — implicitly or explicitly"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If there were no stated threshold at all, would that actually be fairer?",
+        "goodResponse": "Engages with implicit rationing as the real alternative, not a neutral default"
+      }
+    ],
+    "hints": [
+      "What actually happens if there's no explicit threshold at all?",
+      "Is a stated, consistent rule fairer than case-by-case discretion?"
+    ]
+  },
+  {
+    "id": "MED-CA-14",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Why are NHS waiting lists so long?",
+    "tags": [
+      "current-affairs",
+      "waiting-lists"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-12-31",
+    "question": "Why do you think NHS waiting lists are as long as they are, and is progress being made?",
+    "answer": "Discussion question — no single verdict. A strong answer names more than one structural cause (workforce, patient flow, social care capacity affecting discharge — not just 'funding'), and, if citing any improvement or figure, is careful to date it and note where performance still lags.",
+    "modelReasoningPath": "A strong candidate resists a single-cause explanation ('just funding') and names at least one further structural driver — workforce shortages, patients unable to be discharged because social care capacity is unavailable, or flow problems through the system. If they cite any recent improvement, they date it and are honest that headline improvement in one area (elective waits) doesn't necessarily mean every area (cancer, emergency care) has improved at the same pace — over-generalising from one figure to 'the NHS is fixed' or 'nothing has changed' are both weak.",
+    "rubric": {
+      "strong": "Names more than one structural cause beyond funding, and if citing any figure, dates it and notes where performance may still lag elsewhere.",
+      "developing": "Names funding as the main cause with limited further structural explanation.",
+      "weak": "Cites an undated figure with total confidence, or offers 'more funding' as the entire explanation and solution."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treats funding as the only relevant factor",
+        "reveals": "Misses workforce, discharge/social-care and flow explanations that are at least as significant"
+      },
+      {
+        "mistake": "States a headline figure with no date",
+        "reveals": "This is one of the fastest-moving numbers in health policy — undated figures age badly"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does an improvement in one type of waiting time mean everything has improved?",
+        "goodResponse": "Distinguishes between different measures (elective, cancer, emergency) rather than generalising from one"
+      }
+    ],
+    "hints": [
+      "Is funding the only structural cause worth naming?",
+      "Does an improving headline figure mean every part of the system has improved equally?"
+    ]
+  },
+  {
+    "id": "MED-CA-15",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Is it a good idea to abolish NHS England?",
+    "tags": [
+      "current-affairs",
+      "nhs-structure",
+      "reform"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-01-31",
+    "question": "There have been recent moves to restructure how the NHS is run centrally, including abolishing NHS England as a separate body. Is that a good idea?",
+    "answer": "Discussion question — no single verdict. A strong answer engages with the argument for removing a layer (simpler, more directly accountable to ministers) and the concern it raises (concentrating power in ministers, and that reorganisation itself consumes leadership attention needed for delivery).",
+    "modelReasoningPath": "A strong candidate names the case for structural simplification — one fewer layer, clearer ministerial accountability — and the case against — removing an arm's-length body concentrates power more directly in political hands, and reorganisations of this scale absorb enormous leadership time and capacity at exactly the moment that capacity is needed for actual delivery. A strong candidate is honest that they may not know the fine detail of the current state of this reform, while still reasoning soundly about the general trade-off.",
+    "rubric": {
+      "strong": "States the simplification/accountability case and the centralisation/distraction-cost concern fairly, and is appropriately careful about claiming precise knowledge of the current implementation stage.",
+      "developing": "Has a view but engages only one side, or asserts implementation detail with more confidence than is likely warranted.",
+      "weak": "Treats the reorganisation as obviously good or bad with no engagement with the trade-off."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Assumes fewer organisational layers is automatically better",
+        "reveals": "Misses the centralisation-of-power concern that comes with removing an arm's-length body"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What does the NHS lose, structurally, by having one fewer layer between ministers and delivery?",
+        "goodResponse": "Engages with the accountability/centralisation trade-off specifically"
+      }
+    ],
+    "hints": [
+      "What's gained by simplifying the structure — and what's lost?",
+      "Does reorganising itself have a cost, separate from whether the new structure is better?"
+    ]
+  },
+  {
+    "id": "MED-CA-16",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should vaccination ever be mandatory?",
+    "tags": [
+      "current-affairs",
+      "vaccination",
+      "autonomy"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-12-31",
+    "question": "Childhood vaccination rates have been falling in parts of the country. Should vaccination be made mandatory?",
+    "answer": "Discussion question — no single verdict. A strong answer engages the autonomy objection to mandates honestly, while distinguishing access-driven non-vaccination (deprivation, difficulty reaching appointments) from attitude-driven refusal — since a mandate addresses only the second, not the first.",
+    "modelReasoningPath": "A strong candidate doesn't treat all non-vaccination as ideological refusal — evidence points to access and deprivation being major drivers, which a mandate does nothing to fix and could even worsen if it comes with penalties. They engage honestly with the autonomy objection to compulsion, and can articulate the collective-protection argument (herd immunity protects those who cannot be vaccinated) as a real argument rather than an assumption. A strong candidate reaches a nuanced position — perhaps favouring access improvements over compulsion — rather than a simple yes/no.",
+    "rubric": {
+      "strong": "Distinguishes access-driven from attitude-driven non-vaccination, engages the autonomy objection genuinely, and states the collective-protection argument as an argument rather than an assumption.",
+      "developing": "Has a position but treats all non-vaccination as the same underlying cause.",
+      "weak": "Assumes all non-vaccination is ideological refusal, or dismisses the autonomy objection without engaging it."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treats falling vaccination rates as purely attitudinal",
+        "reveals": "Ignores that access and deprivation are major documented drivers, which a mandate wouldn't fix"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Would a mandate actually fix vaccination rates driven by access, not attitude?",
+        "goodResponse": "Recognises a mandate targets only one of the real causes"
+      }
+    ],
+    "hints": [
+      "Is falling vaccination rate always about people refusing on principle?",
+      "What does a mandate actually fix, and what does it not fix?"
+    ]
+  },
+  {
+    "id": "MED-CA-17",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should social care be free like the NHS?",
+    "tags": [
+      "current-affairs",
+      "social-care"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-01-31",
+    "question": "The NHS is free at the point of use; social care is means-tested. Should social care be made free in the same way?",
+    "answer": "Discussion question — no single verdict. A strong answer names the funding-boundary explanation for why delayed hospital discharge happens (a social care capacity problem, not an NHS one), and engages honestly with the cost implications of extending free-at-use principles to social care.",
+    "modelReasoningPath": "A strong candidate explains WHY the NHS/social-care boundary causes real problems — a patient medically fit for discharge can be stuck in hospital because social care isn't available or funded, which is a genuinely different funding system creating a visible NHS problem. They engage honestly with the scale of cost involved in making social care free at the point of use, rather than assuming it's a simple, costless fix, and can note that reform in this area has been repeatedly deferred for exactly that reason.",
+    "rubric": {
+      "strong": "Explains the funding-boundary mechanism behind delayed discharge clearly, and engages honestly with the real cost implications of extending free provision.",
+      "developing": "Recognises social care and the NHS are funded differently but doesn't explain the discharge mechanism or the cost trade-off.",
+      "weak": "Assumes social care is already part of the NHS, or treats making it free as a costless fix."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Assumes social care is already NHS-funded",
+        "reveals": "Misses the core funding-boundary distinction the question is testing"
+      },
+      {
+        "mistake": "Treats extending free provision as a costless improvement",
+        "reveals": "Ignores the genuine scale of funding this would require"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Why does a hospital patient sometimes stay long after they're medically fit to leave?",
+        "goodResponse": "Names the social care funding/capacity mechanism specifically"
+      }
+    ],
+    "hints": [
+      "Is social care funded in the same way as the NHS?",
+      "What causes a patient to stay in hospital after they no longer need to be there?"
+    ]
+  },
+  {
+    "id": "MED-CA-18",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should mental health have parity with physical health?",
+    "tags": [
+      "current-affairs",
+      "mental-health"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "People often say mental health should have 'parity of esteem' with physical health. What would that actually require, beyond the phrase itself?",
+    "answer": "Discussion question — no single verdict. A strong answer goes beyond the slogan to name what parity would actually require in practice — comparable funding, comparable waiting times, and workforce capacity that currently doesn't exist at the scale needed — and is honest that legislative change alone doesn't create that capacity.",
+    "modelReasoningPath": "A strong candidate treats 'parity of esteem' as a slogan that needs unpacking rather than an answer in itself. They name concrete requirements — funding parity, waiting-time standards comparable to physical health, and enough trained staff to deliver care at the scale needed — and recognise that even where legislation changes the RULES, the workforce and capacity to deliver on them takes years to build, which is why reforms in this space are commonly phased in slowly. They avoid treating 'parity' as already achieved just because it's a stated goal.",
+    "rubric": {
+      "strong": "Unpacks what parity would require concretely rather than repeating the phrase, and recognises the gap between legislative intent and delivered capacity.",
+      "developing": "States support for parity but doesn't specify what it would actually require.",
+      "weak": "Treats 'parity of esteem' as self-explanatory or already achieved, with no engagement with what's actually required."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Repeats the phrase 'parity of esteem' without unpacking it",
+        "reveals": "Uses a slogan as if it were an analysis"
+      },
+      {
+        "mistake": "Assumes a change in law immediately produces a change in delivered care",
+        "reveals": "Misses that workforce and capacity take years to build, regardless of the legal framework"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would actually have to be true for mental health waiting times to match physical health ones?",
+        "goodResponse": "Names concrete capacity and funding requirements rather than a general aspiration"
+      }
+    ],
+    "hints": [
+      "What does the phrase actually require, in practical terms?",
+      "Does changing the law automatically change what's delivered?"
+    ]
+  },
+  {
+    "id": "MED-CA-19",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should the NHS use private hospitals?",
+    "tags": [
+      "current-affairs",
+      "private-sector"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-06-30",
+    "question": "The NHS increasingly funds treatment at independent (private) hospitals for NHS patients. Is that a good thing?",
+    "answer": "Discussion question — no single verdict. A strong answer distinguishes NHS-FUNDED care delivered privately from patients paying privately themselves, and engages both the capacity argument (more throughput) and the concern that independent providers draw on the same limited clinical workforce and tend to take less complex cases.",
+    "modelReasoningPath": "A strong candidate is careful about a common confusion: using independent providers for NHS-funded treatment is not the same as patients paying privately out of pocket — patients still don't pay directly either way. They engage with the genuine capacity benefit (extra throughput to reduce waiting lists) against real concerns: independent providers draw on much of the SAME clinical workforce as the NHS, so it may not be truly additional capacity, and they tend to take on lower-complexity cases, potentially leaving NHS trusts with a harder, less remunerative caseload.",
+    "rubric": {
+      "strong": "Distinguishes NHS-funded independent-sector care from private-pay care, and engages both the capacity benefit and the shared-workforce/casemix concerns.",
+      "developing": "Has a view but conflates NHS-funded independent care with patients paying privately, or engages only one side.",
+      "weak": "Assumes independent-sector involvement is straightforwardly extra capacity with no workforce or casemix complication."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Confuses NHS-funded independent-sector care with patients paying privately",
+        "reveals": "Misses a distinction that changes the whole shape of the debate"
+      },
+      {
+        "mistake": "Assumes independent capacity is simply additional to NHS capacity",
+        "reveals": "Ignores that providers often draw on the same clinical workforce"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Where do independent providers get their clinical staff from?",
+        "goodResponse": "Recognises the shared-workforce point rather than assuming independent capacity is free-standing"
+      }
+    ],
+    "hints": [
+      "Is this the same as patients paying for their own care?",
+      "Where does the staff working in independent providers actually come from?"
+    ]
+  },
+  {
+    "id": "MED-CA-20",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Why do the same NHS safety failures keep happening?",
+    "tags": [
+      "current-affairs",
+      "patient-safety",
+      "learning-culture"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-06-30",
+    "question": "Serious safety failures in NHS care, particularly in maternity services, have recurred across different hospitals over many years. Why do you think the same kinds of failure keep happening?",
+    "answer": "Discussion question — no single verdict. A strong answer holds both individual and systemic accountability together (not using 'it's a systems issue' as a way to avoid any accountability, and not blaming individuals as if the pattern were coincidence), and names 'not being listened to' as a theme that recurs across multiple, separate inquiries.",
+    "modelReasoningPath": "A strong candidate resists two easy exits: blaming individual clinicians as if each failure were an isolated bad actor, or saying 'it's a systems issue' in a way that avoids any accountability at all. They hold both together — individual decisions matter, and they happen inside systems that can make good decisions harder or bad ones more likely. A genuinely strong candidate notices the theme that recurs across separate, independent inquiries into different failures: families and staff not being listened to, and concerns raised early not being acted on — which suggests the problem is at least partly about organisational culture and candour, not only clinical skill.",
+    "rubric": {
+      "strong": "Holds individual and systemic accountability together rather than picking one, and names a recurring cross-inquiry theme (such as not being listened to) rather than treating each failure as unrelated.",
+      "developing": "Leans toward one explanation (individual or systemic) without holding both, or doesn't identify any recurring pattern across inquiries.",
+      "weak": "Blames individuals entirely, or uses systemic language to avoid any accountability at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Uses 'systems issue' language to avoid engaging with any accountability",
+        "reveals": "Turns a genuine insight into a way of saying nothing"
+      },
+      {
+        "mistake": "Treats each safety failure as an unrelated, isolated incident",
+        "reveals": "Misses that multiple independent inquiries have converged on the same themes"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's the difference between reporting an error for learning and reporting it for blame?",
+        "goodResponse": "Distinguishes candour-driven reporting from a purely punitive process"
+      }
+    ],
+    "hints": [
+      "Is this only about individual clinical skill, or is something structural also going on?",
+      "What theme keeps appearing across different, separate inquiries?"
     ]
   },
   {
@@ -421,7 +1030,8 @@
       "Try to state the strongest argument on the side you don't currently favour.",
       "Is the legal position the same everywhere in the UK and Ireland's neighbouring jurisdictions?",
       "What safeguards, if any, might address the biggest risks of a change like this?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-CA-07",
@@ -1084,7 +1694,8 @@
       "What's the risk of promising secrecy before you know what's coming?",
       "Could you say something honest without shutting the conversation down?",
       "Does refusing to promise unconditionally mean you'll definitely tell someone?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-10",
@@ -1278,7 +1889,8 @@
       "Whose legal duty is it to tell the DVLA — the doctor's, or the patient's?",
       "What would the doctor try before ever considering breaking confidentiality?",
       "What threshold would justify overriding the patient's confidentiality here?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-02",
@@ -1374,7 +1986,8 @@
       "Does making an unwise decision mean someone lacks the capacity to make it?",
       "What is actually being asked for here — is it about the risk, or about someone else's distress at the risk?",
       "What could still be offered without overriding his own choice?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-04",
@@ -1423,7 +2036,8 @@
       "Is there a difference between asking 'can she understand this decision' and 'should contraceptive advice specifically be given without her parents knowing'?",
       "What would make you more concerned about this situation, beyond her age alone?",
       "Does her being able to consent mean there's nothing else to think about here?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-05",
@@ -1617,6 +2231,249 @@
     ]
   },
   {
+    "id": "MED-EP-13",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "An adult at risk who says nothing is wrong",
+    "tags": [
+      "ethics",
+      "safeguarding",
+      "adult-at-risk"
+    ],
+    "format": "ES",
+    "clinicalReviewRequired": true,
+    "question": "You volunteer at a day centre for adults with learning disabilities. You notice one regular attendee seems frightened of the person who brings them each week, but when you ask if everything is okay, they say yes. What do you think about, and what would you do?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises this is a genuine adult-safeguarding concern even without a disclosure, that saying 'yes, I'm fine' does not close the matter, and that the correct step is passing the observation on to the centre's safeguarding lead rather than either dropping it or investigating personally.",
+    "modelReasoningPath": "A strong candidate recognises that safeguarding concerns for adults at risk don't require a verbal disclosure — an observed pattern of fear is itself a reportable concern. They resist two failure modes: dropping it because the person said they're fine (fear of a a carer is exactly the situation where a person might not feel able to say otherwise), and personally investigating or confronting the person who brings them (not their role, and could increase risk). The correct move is passing the specific, factual observation to the centre's own safeguarding lead, in the person's own words as far as possible, and trusting the proper process to take it from there.",
+    "rubric": {
+      "strong": "Recognises an observation alone can be a genuine safeguarding concern, does not accept 'I'm fine' as closing the matter, and passes it to the correct role rather than investigating personally.",
+      "developing": "Is uneasy about the situation but is vague about what to actually do with the observation.",
+      "weak": "Accepts 'I'm fine' as resolving the concern, or decides to confront the carer directly."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Accepts the verbal reassurance as closing the matter",
+        "reveals": "Doesn't recognise that fear itself can prevent someone from disclosing, especially about a person they depend on"
+      },
+      {
+        "mistake": "Confronts the carer directly",
+        "reveals": "Not the volunteer's role, and could increase risk to the person at risk"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does it matter that they explicitly said nothing was wrong?",
+        "goodResponse": "Explains why a verbal reassurance doesn't settle a safeguarding concern in a dependency relationship"
+      }
+    ],
+    "hints": [
+      "Does someone need to disclose something for a safeguarding concern to be real?",
+      "Who is the right person to pass this observation to?"
+    ]
+  },
+  {
+    "id": "MED-EP-14",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "Capacity that comes and goes",
+    "tags": [
+      "ethics",
+      "capacity",
+      "mental-capacity-act"
+    ],
+    "format": "ES",
+    "clinicalReviewRequired": true,
+    "question": "Someone's ability to understand and make decisions seems to vary from day to day — clear-headed on some days, confused on others. What does that mean for whether they have capacity to make a decision?",
+    "answer": "Discussion question — no single verdict, but a strong answer applies the real principle: capacity is decision-specific and time-specific, not a fixed global status, so the right question is whether THIS PERSON can make THIS DECISION at THIS TIME — including waiting for a clearer moment where that's possible.",
+    "modelReasoningPath": "This is the single most commonly abandoned capacity principle under pressure: capacity is assessed for a specific decision at a specific time, not as a permanent global label ('they have capacity' or 'they don't'). A strong candidate applies this directly to fluctuating capacity — the answer isn't a single fixed verdict, it's 'assess again, at the time the decision actually needs to be made, and where possible on a clearer day'. They also recognise that an unwise-seeming choice made on a lucid day still stands, and that fluctuating capacity is not the same as lacking capacity.",
+    "rubric": {
+      "strong": "States clearly that capacity is decision- and time-specific rather than a fixed global status, and applies this directly to the fluctuating case — reassess at the relevant time, and prefer a clearer moment where possible.",
+      "developing": "Recognises capacity can vary but treats it as needing a single overall verdict rather than a time-specific one.",
+      "weak": "Treats the person as globally 'not having capacity' because of the confused days, with no engagement with decision-specificity."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Concludes the person globally lacks capacity because of the bad days",
+        "reveals": "Misses that capacity is decision-specific and time-specific, not a permanent label"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If they made an unwise decision on a clear day, would that decision still stand?",
+        "goodResponse": "Confirms yes — an unwise decision made with capacity still stands"
+      }
+    ],
+    "hints": [
+      "Is capacity a single, permanent status, or something assessed per decision and per moment?",
+      "What would you do differently if you could choose when to have this conversation?"
+    ]
+  },
+  {
+    "id": "MED-EP-15",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "A DNACPR conversation, from the outside",
+    "tags": [
+      "ethics",
+      "end-of-life",
+      "dnacpr"
+    ],
+    "format": "ES",
+    "clinicalReviewRequired": true,
+    "question": "A family tells you they feel a 'do not attempt resuscitation' decision was made about their relative without them being properly involved, and they're distressed and angry about it. As someone who isn't part of the clinical team, how would you think about their concern?",
+    "answer": "Discussion question — no single verdict, and the applicant is not expected to know the clinical detail. A strong answer recognises the family's distress as legitimate regardless of whether the clinical decision itself was correct, and separates the QUESTION of whether the decision was clinically right from the SEPARATE question of whether the process of involving the family was handled well.",
+    "modelReasoningPath": "A strong candidate does not attempt to judge whether the DNACPR decision itself was clinically correct — that's outside their competence and not what's actually being asked. They separate two different questions: whether the decision was clinically appropriate (not theirs to judge), and whether the family was properly involved and communicated with about it (a process and communication question, which is a legitimate and important concern regardless of the clinical merits). They take the family's distress seriously as real and valid, rather than assuming it will resolve once the clinical reasoning is explained, and recognise that good communication in these conversations is itself part of good care.",
+    "rubric": {
+      "strong": "Separates the clinical-correctness question (not theirs to judge) from the involvement/communication question (a legitimate concern in its own right), and takes the family's distress seriously.",
+      "developing": "Sympathises with the family but doesn't separate the two different questions clearly.",
+      "weak": "Attempts to judge the clinical correctness of the decision, or dismisses the family's distress as something that will resolve once things are explained."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Attempts to judge whether the DNACPR decision itself was medically correct",
+        "reveals": "Not within a pre-medical applicant's competence, and not what the question is actually asking"
+      },
+      {
+        "mistake": "Assumes the family's distress will simply resolve once explained",
+        "reveals": "Underestimates that poor communication is itself a real and valid grievance, separate from clinical correctness"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is it possible for a clinically correct decision to still have been handled badly?",
+        "goodResponse": "Recognises these are genuinely separate questions"
+      }
+    ],
+    "hints": [
+      "Is it your place to judge whether the clinical decision was right?",
+      "Could the decision be correct and the way it was communicated still be a real problem?"
+    ]
+  },
+  {
+    "id": "MED-EP-16",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Recognising a conflict of interest",
+    "tags": [
+      "ethics",
+      "conflicts-of-interest",
+      "professionalism"
+    ],
+    "format": "ES",
+    "question": "You're helping organise a school event, and one of the two suppliers you're choosing between is run by a family friend. What do you do?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises the situation as a genuine conflict of interest worth naming out loud to whoever else is involved in the decision, even if the friend's supplier is genuinely the better option — the point is transparency, not necessarily recusal.",
+    "modelReasoningPath": "A strong candidate recognises this as a real conflict of interest the moment it arises, rather than only if the friend turns out to be the worse option. They name it explicitly to others involved in the decision, rather than quietly deciding they can be objective and saying nothing. A strong candidate distinguishes DECLARING a conflict (always required) from RECUSING from the decision (which may or may not be necessary depending on the situation) — declaring it transparently, and then letting others weigh in on how to proceed, is usually the right first step.",
+    "rubric": {
+      "strong": "Recognises and names the conflict of interest explicitly to others involved, and distinguishes declaring it from necessarily having to recuse.",
+      "developing": "Would consider it if directly asked, but wouldn't have proactively named it without prompting.",
+      "weak": "Sees no issue as long as they believe they can remain objective, and says nothing to anyone."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Decides silently that they can remain objective and says nothing",
+        "reveals": "Confidence in one's own objectivity is not a substitute for transparency — this is exactly the pattern conflict-of-interest rules exist to prevent"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does it matter if the friend's supplier is genuinely the better choice?",
+        "goodResponse": "Recognises the conflict should be declared regardless of the eventual decision"
+      }
+    ],
+    "hints": [
+      "Does believing you can be objective remove the need to declare the connection?",
+      "What's the difference between declaring a conflict and having to step back from the decision entirely?"
+    ]
+  },
+  {
+    "id": "MED-EP-17",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Consent outside a clinical setting",
+    "tags": [
+      "ethics",
+      "consent",
+      "autonomy"
+    ],
+    "format": "ES",
+    "question": "A coach wants to change a young athlete's training programme significantly, and the athlete goes along with it without really understanding what's being asked or why. Is that a problem, even though it's not a medical decision?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that meaningful consent — understanding what's being asked and why, and having a genuine choice — matters well beyond clinical settings, and applies the same underlying principle (dialogue and understanding, not just going along with an authority figure) to a non-medical example.",
+    "modelReasoningPath": "A strong candidate recognises the underlying principle at stake — genuine understanding and voluntary agreement, not just compliance with an authority figure — applies far beyond hospitals, and can transfer it to this sporting context. They note that 'going along with it' isn't the same as informed agreement, particularly where there's a power imbalance (coach and athlete). A strong candidate proposes something concrete: the coach explaining the reasoning and checking understanding, not just issuing an instruction.",
+    "rubric": {
+      "strong": "Recognises the consent/understanding principle applies well beyond clinical settings, identifies the power imbalance, and proposes a concrete way of achieving genuine understanding rather than mere compliance.",
+      "developing": "Senses something is off but doesn't articulate the underlying principle or the power imbalance clearly.",
+      "weak": "Concludes there's no issue because it isn't a medical decision, with no engagement with genuine understanding or power dynamics."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says there's no issue since it isn't a medical or clinical context",
+        "reveals": "Misses that the underlying principle of genuine, informed agreement generalises well beyond medicine"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What's actually different between this and a patient not understanding what's being proposed to them?",
+        "goodResponse": "Draws the parallel explicitly rather than treating the two as unrelated"
+      }
+    ],
+    "hints": [
+      "What's the underlying principle here, beneath the specific medical example you might be used to?",
+      "Is there a power imbalance that makes genuine agreement harder to achieve?"
+    ]
+  },
+  {
+    "id": "MED-EP-18",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Working within your competence — but still helping",
+    "tags": [
+      "ethics",
+      "competence",
+      "professionalism"
+    ],
+    "format": "ES",
+    "question": "A younger student asks you for help with a subject you're genuinely not confident in yourself. What do you do?",
+    "answer": "Discussion question — no single verdict. A strong answer is honest about the limits of their own knowledge rather than bluffing, and still finds a way to be genuinely useful — helping them find the right person, or working through it together honestly rather than pretending expertise.",
+    "modelReasoningPath": "A strong candidate is honest about the limit of their knowledge rather than bluffing to seem helpful or avoid disappointing the younger student. Aston publishes 'knowing your limitations and knowing when to ask for help' as an assessed attribute, and the discriminating move is doing BOTH halves: being honest about the limit, and still finding a genuinely useful way forward — pointing them to someone better placed to help, or being transparent that they'd be learning together rather than teaching from expertise they don't have.",
+    "rubric": {
+      "strong": "Is honest about the limit of their own knowledge, and still finds a genuinely useful way to help rather than simply declining.",
+      "developing": "Is honest about the limit but doesn't offer a further useful step.",
+      "weak": "Bluffs confidence they don't have, or declines to help at all with no attempt to find another way forward."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Bluffs confidence to avoid admitting a limit",
+        "reveals": "Prioritises appearing competent over being honest, which is the wrong instinct for a caring profession"
+      },
+      {
+        "mistake": "Declines to help at all",
+        "reveals": "Honesty about a limit and being useful are not mutually exclusive — declining alone is only half the answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would you actually say to them, in the moment?",
+        "goodResponse": "Gives real, honest words rather than an abstract description"
+      }
+    ],
+    "hints": [
+      "Is admitting a limit and still being useful a contradiction?",
+      "Who else might be better placed to help, and could you point them there?"
+    ]
+  },
+  {
     "id": "MED-E1",
     "subject": "medicine",
     "topic": "ethics-scenarios",
@@ -1709,7 +2566,8 @@
       "Is confidentiality ever something a doctor should break — and if so, when?",
       "Think about what would happen to her willingness to seek healthcare at all if you told her parents anyway."
     ],
-    "format": "ES"
+    "format": "ES",
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-E3",
@@ -1757,7 +2615,8 @@
       "Is there a difference between disagreeing with someone's reasons and saying they're not allowed to decide?",
       "What role is left for the doctors and family if her decision has to be respected?"
     ],
-    "format": "ES"
+    "format": "ES",
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-E4",
@@ -1983,7 +2842,8 @@
       "Are there treatment options that might respect both medical need and the patient's beliefs?",
       "What would make this different from, or the same as, any other capacity-based refusal?"
     ],
-    "format": "ES"
+    "format": "ES",
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-E9",
@@ -3089,7 +3949,8 @@
       ],
       "actorResponseToStrong": "Breathes out. Offers the hidden fact unprompted. Thanks them specifically rather than generally.",
       "actorResponseToWeak": "Repeats the question. Becomes quieter. Says 'I shouldn't have asked.'"
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-003",
@@ -3432,7 +4293,8 @@
       ],
       "actorResponseToStrong": "Sits. Talks about the daughter's name and job. Asks again but calmly, and accepts a redirection.",
       "actorResponseToWeak": "Repeats more insistently. Becomes tearful. Moves toward the door."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-009",
@@ -3549,7 +4411,8 @@
       ],
       "actorResponseToStrong": "Accepts immediately and warmly. Reveals both hidden facts. Leaves with a plan.",
       "actorResponseToWeak": "Presses harder. Escalates informality. Rewards any hedge with more detail."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-015",
@@ -3987,7 +4850,8 @@
       ],
       "actorResponseToStrong": "Volume drops. Sits. Offers information voluntarily. Says something self-aware like 'Sorry. I'm not angry at you.'",
       "actorResponseToWeak": "Repeats the original question verbatim, more slowly. Does not offer the hidden facts. Asks for someone else."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-005",
@@ -4219,7 +5083,8 @@
       ],
       "actorResponseToStrong": "Unfolds arms. Tells the real story. Says 'nobody's asked me that before.'",
       "actorResponseToWeak": "Repeats 'I've read things'. Becomes more clipped. Leaves early."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-008",
@@ -4449,7 +5314,8 @@
       ],
       "actorResponseToStrong": "Stops minimising. Admits the red light. Engages with the practical problem.",
       "actorResponseToWeak": "Repeats 'it was fine'. Becomes cold. Ends the conversation."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-011",
@@ -4573,7 +5439,8 @@
       ],
       "actorResponseToStrong": "Relaxes. Shows the bruise voluntarily. Mentions weekends. Stays.",
       "actorResponseToWeak": "'It doesn't matter.' Leaves. Does not raise it again."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-012",
@@ -5032,7 +5899,8 @@
       ],
       "actorResponseToStrong": "Puts the phone down. Admits the nights. Asks what to do.",
       "actorResponseToWeak": "'I'm fine, seriously.' Goes back to the phone."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-017",
@@ -5274,6 +6142,330 @@
       ],
       "actorResponseToStrong": "Cries. Talks about the sleep. Accepts the offer to go to the manager together.",
       "actorResponseToWeak": "Retracts. 'It's not that bad really. Ignore me.'"
-    }
+    },
+    "clinicalReviewRequired": true
+  },
+  {
+    "id": "MED-TRJ-01",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Delegating under time pressure",
+    "tags": [
+      "teamwork",
+      "leadership",
+      "delegation"
+    ],
+    "format": "DQ",
+    "question": "You're coordinating a small group task and time is running out. How do you decide what to delegate, and to whom?",
+    "answer": "Discussion question — no single verdict. A strong answer names a real criterion (matching tasks to people's strengths or availability, not just handing off the least appealing task), and describes checking in rather than delegating and disappearing.",
+    "modelReasoningPath": "A strong candidate names a genuine basis for delegation — who has capacity, who has relevant strength for the specific task — rather than delegating arbitrarily or offloading only the unpleasant parts. They describe a real handover (making sure the person has what they need to actually do the task) and checking in before the deadline, rather than delegating and assuming it will be fine. A weak answer either refuses to delegate at all (trying to do everything themselves) or delegates without any clear criterion or follow-up.",
+    "rubric": {
+      "strong": "Names a genuine delegation criterion, describes a real handover, and checks in before the deadline rather than disappearing.",
+      "developing": "Says they would delegate but the criterion or handover is vague.",
+      "weak": "Says they would try to do everything themselves, or delegates with no criterion and no follow-up."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Tries to keep control of everything rather than delegating",
+        "reveals": "May struggle to trust a team under pressure, which doesn't scale in a clinical team"
+      },
+      {
+        "mistake": "Delegates with no clear handover",
+        "reveals": "Sets the task up to fail even though the delegation itself was reasonable"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if the person you delegated to comes back and says they can't do it?",
+        "goodResponse": "Has a real contingency rather than being caught out"
+      }
+    ],
+    "hints": [
+      "What's your actual basis for who gets what task?",
+      "What happens after you delegate — do you check in?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-02",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "A time you were under real pressure",
+    "tags": [
+      "resilience",
+      "wellbeing",
+      "coping"
+    ],
+    "format": "PE",
+    "question": "Tell me about a time you were under real pressure. What did you actually do — not what you think you should have done?",
+    "answer": "Discussion question — no single verdict. A strong answer names a genuine, specific strategy that was actually used (not a listed virtue like 'I stayed calm'), and is honest about what didn't fully work, not just a tidy success story.",
+    "modelReasoningPath": "A strong candidate resists a sanitised answer ('I just stayed calm and focused') in favour of something specific and real — what did they actually do, in what order, and how well did it work? A genuinely strong answer includes something that didn't go perfectly, showing honest reflection rather than a rehearsed success narrative. Suggesting coping strategies involving self-punishment or denial of the difficulty is a weak sign, not a strong one.",
+    "rubric": {
+      "strong": "Names a specific, real strategy actually used under pressure, and is honest about what didn't fully work.",
+      "developing": "Gives a real example but the strategy described is generic ('I stayed calm') rather than specific.",
+      "weak": "Gives an idealised, tidy account with no honest acknowledgement of difficulty, or cannot recall a real example."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Gives a sanitised, idealised account with nothing that went wrong",
+        "reveals": "May be presenting a rehearsed answer rather than genuine reflection"
+      },
+      {
+        "mistake": "Names a coping strategy as a virtue with no concrete detail",
+        "reveals": "'I stayed calm' describes an outcome, not a strategy"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What didn't work as well as you'd have liked?",
+        "goodResponse": "Gives an honest, specific answer rather than deflecting"
+      }
+    ],
+    "hints": [
+      "What specifically did you do, step by step?",
+      "Was there a part that didn't go as well as you'd like to admit?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-03",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Would you ever ask for help?",
+    "tags": [
+      "resilience",
+      "help-seeking",
+      "self-awareness"
+    ],
+    "format": "DQ",
+    "question": "When was the last time you asked someone for help with something you couldn't manage alone? What made you ask?",
+    "answer": "Discussion question — no single verdict. A strong answer gives a genuine, specific example of proactively asking for help before things went wrong, rather than only being helped after visibly struggling.",
+    "modelReasoningPath": "A strong candidate can point to a real, specific moment where THEY chose to ask for help, rather than only describing being rescued after struggling visibly. The distinction matters: proactively seeking help is a stronger and more relevant signal for a career built on recognising the limits of one's own competence than passively accepting help once offered. A weak answer either claims to never need help (a red flag for a caring profession) or can only describe being helped rather than asking.",
+    "rubric": {
+      "strong": "Gives a specific example of proactively asking for help, and explains what specifically prompted them to ask rather than continue alone.",
+      "developing": "Gives an example of receiving help but it's unclear whether they proactively asked or were simply offered it.",
+      "weak": "Claims to rarely or never need help, or cannot recall a specific example."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Claims to rarely need help from anyone",
+        "reveals": "A red flag for a profession built on recognising the limits of one's own competence"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would have happened if you hadn't asked?",
+        "goodResponse": "Gives a genuine, specific account of the real stakes, not a hypothetical shrug"
+      }
+    ],
+    "hints": [
+      "Did you ask, or were you offered help without asking?",
+      "What specifically made you decide to ask at that moment?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-04",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "A genuine weakness — without evasion",
+    "tags": [
+      "self-awareness",
+      "resilience"
+    ],
+    "format": "DQ",
+    "question": "What's a genuine weakness of yours — not a strength dressed up as one — and what have you actually done about it?",
+    "answer": "Discussion question — no single verdict. A strong answer names a real limitation (not 'I work too hard' or 'I'm a perfectionist') and describes a specific, ongoing effort to manage it, calibrated honestly rather than either dismissed or catastrophised.",
+    "modelReasoningPath": "A strong candidate avoids the classic dodge of naming a disguised strength. They name something genuinely limiting, at a scale that's calibrated honestly — neither trivial to the point of meaninglessness nor so severe it raises concern without context — and describe a specific, ongoing effort to manage it, with some evidence of change rather than just an intention. The 'what have you done about it' half is where most candidates go generic; specificity here is the discriminator.",
+    "rubric": {
+      "strong": "Names a genuine, appropriately calibrated weakness (not a disguised strength) and describes a specific, ongoing effort to manage it with some evidence of change.",
+      "developing": "Names a real weakness but the 'what have you done about it' is vague or purely intentional.",
+      "weak": "Names a disguised strength ('I work too hard', 'I'm a perfectionist'), or names something so severe it raises concern with no evidence of management."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Names a strength dressed up as a weakness",
+        "reveals": "Avoids genuine self-reflection, which is exactly what the question is testing"
+      },
+      {
+        "mistake": "Gives no evidence of actually managing the weakness",
+        "reveals": "Awareness without action is only half the answer"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Give me a specific, recent example where that weakness actually showed up.",
+        "goodResponse": "Provides a real, recent instance rather than a vague generalisation"
+      }
+    ],
+    "hints": [
+      "Is this a genuine limitation, or a strength dressed up as one?",
+      "What have you actually done about it, specifically?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-05",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "Changing your mind on something you were sure about",
+    "tags": [
+      "judgement",
+      "uncertainty",
+      "intellectual-honesty"
+    ],
+    "format": "PE",
+    "question": "Tell me about a time you were confident about something — and then found out you were wrong. What changed your mind?",
+    "answer": "Discussion question — no single verdict. A strong answer names the SPECIFIC piece of new information or reasoning that changed their mind, not just that they 'realised' they were wrong, and is honest about how it felt to be wrong.",
+    "modelReasoningPath": "A strong candidate can point to exactly what changed their mind — a specific fact, a conversation, a piece of evidence — rather than a vague 'I realised I was wrong'. This tests whether revising a position happens for a real reason or is just a comfortable story told afterwards. A genuinely strong answer is also honest that being shown wrong is uncomfortable, rather than presenting the change of mind as effortless.",
+    "rubric": {
+      "strong": "Names the specific trigger that changed their mind, and is honest about the discomfort of being wrong rather than presenting it as effortless.",
+      "developing": "Describes changing their mind but the trigger is vague, or the account feels overly tidy.",
+      "weak": "Cannot recall a genuine example, or describes a change of mind with no real trigger at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Cannot name a specific trigger for the change of mind",
+        "reveals": "May be describing a story rather than a genuine instance of revising a position"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "How did it actually feel to realise you were wrong?",
+        "goodResponse": "Gives an honest, specific answer rather than a dismissive 'fine, no big deal'"
+      }
+    ],
+    "hints": [
+      "What SPECIFICALLY changed your mind — a fact, a conversation, what?",
+      "Was it comfortable to be shown wrong?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-06",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "A question that assumes something false",
+    "tags": [
+      "judgement",
+      "uncertainty",
+      "critical-thinking"
+    ],
+    "format": "ES",
+    "question": "'Since younger doctors are less committed to the profession than previous generations, how would you convince a training programme you're different?' What do you make of that question?",
+    "answer": "Discussion question — no single verdict. A strong answer notices and names the false or contested premise embedded in the question, rather than simply answering as if the premise were true.",
+    "modelReasoningPath": "This station tests whether a candidate notices a misleading frame rather than accepting it and answering the surface question. A strong candidate names the embedded assumption explicitly — that younger doctors are less committed, which is a contested and largely unevidenced generational claim — before engaging with anything else. A weaker candidate answers the surface question ('here's why I'm committed') without ever noticing or challenging the premise it rests on, which is itself informative about how they handle a leading or loaded question.",
+    "rubric": {
+      "strong": "Explicitly names and questions the embedded premise before engaging further, rather than accepting it implicitly.",
+      "developing": "Seems slightly uneasy with the premise but doesn't name it explicitly, and mostly answers the surface question.",
+      "weak": "Answers the surface question entirely at face value with no recognition that the premise is contested."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Answers the surface question without noticing the embedded assumption",
+        "reveals": "May accept a leading frame uncritically rather than examining it"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Is that premise actually true, as far as you know?",
+        "goodResponse": "Engages critically with whether the generational claim has real evidential support"
+      }
+    ],
+    "hints": [
+      "Is there an assumption built into that question worth questioning first?",
+      "Does accepting the premise before answering change what a good answer looks like?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-07",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Helping in an emergency, realistically",
+    "tags": [
+      "judgement",
+      "emergency",
+      "competence"
+    ],
+    "format": "ES",
+    "question": "You're out in public and someone collapses nearby. A small crowd gathers. What do you actually do?",
+    "answer": "Discussion question — no single verdict. A strong answer describes a realistic, competence-appropriate sequence (check the person is responsive and breathing, call emergency services, ask if anyone present has more relevant training, help with what's genuinely within their ability) rather than either freezing or overstating their own competence.",
+    "modelReasoningPath": "A strong candidate describes something a member of the public could genuinely and safely do — checking responsiveness, calling emergency services, asking the crowd if anyone has more relevant training or equipment, and helping with what's actually within their competence (basic first aid if trained, keeping the area clear, relaying information to responders). They don't overstate their own ability just because they're a medicine applicant, and they don't freeze and do nothing either. A weak answer either claims more clinical competence than a lay applicant would have, or does nothing at all out of uncertainty.",
+    "rubric": {
+      "strong": "Describes a realistic, competence-appropriate action sequence, checks for more relevant expertise in the crowd, and neither overstates their own ability nor freezes.",
+      "developing": "Describes calling for help but the sequence is vague or skips checking for more relevant expertise nearby.",
+      "weak": "Overstates their own clinical competence, or describes doing nothing due to uncertainty."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Claims to know exactly what's medically wrong and what to do about it",
+        "reveals": "Overstates competence a pre-medical applicant would not actually have"
+      },
+      {
+        "mistake": "Describes freezing and doing nothing",
+        "reveals": "Even without clinical training, there are genuinely useful, safe actions available"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What if someone in the crowd says they're a doctor?",
+        "goodResponse": "Defers appropriately while still offering to help with what's needed (calling for help, clearing space)"
+      }
+    ],
+    "hints": [
+      "What can a member of the public safely and usefully do, without clinical training?",
+      "Is there anyone else nearby who might have more relevant expertise?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-08",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "Dismissing a junior colleague's input",
+    "tags": [
+      "teamwork",
+      "respect",
+      "hierarchy"
+    ],
+    "format": "ES",
+    "question": "In a team meeting, a more junior member of staff raises a good point, and a senior colleague talks over them and moves on without acknowledging it. What do you think about that, and would you do anything?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises the harm goes beyond politeness — a team that doesn't hear junior voices misses information and discourages people from speaking up in future, including about safety — and names something concrete and proportionate a colleague could do without publicly humiliating the senior person.",
+    "modelReasoningPath": "A strong candidate connects this to something bigger than manners: teams that routinely talk over junior members lose real information, and — more seriously — teach people not to speak up, which is exactly the behaviour patient-safety systems depend on. They propose something concrete and proportionate — bringing the point back into the conversation themselves ('I think what X was saying is worth coming back to'), or raising it with the senior person privately afterwards — rather than either saying nothing or publicly confronting the senior colleague in the moment, which could make things worse for the junior colleague.",
+    "rubric": {
+      "strong": "Connects the behaviour to a genuine team and safety cost (not just politeness), and proposes a concrete, proportionate response.",
+      "developing": "Recognises the behaviour is unhelpful but the proposed response is vague or purely disapproving.",
+      "weak": "Treats it as unimportant, or proposes a response that risks embarrassing the junior colleague further."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treats it as a minor politeness issue",
+        "reveals": "Misses the deeper cost — lost information and a chilling effect on speaking up"
+      },
+      {
+        "mistake": "Proposes publicly confronting the senior person in the moment",
+        "reveals": "Could make the situation worse for the junior colleague rather than better"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does it matter if this keeps happening, not just once?",
+        "goodResponse": "Recognises a pattern is a more serious, structural problem than a one-off"
+      }
+    ],
+    "hints": [
+      "Is this only about manners, or does it cost the team something real?",
+      "What could you do that helps without embarrassing the junior colleague further?"
+    ]
   }
 ]

@@ -1,0 +1,231 @@
+[
+  {
+    "id": "MED-TRJ-01",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Delegating under time pressure",
+    "tags": ["teamwork", "leadership", "delegation"],
+    "format": "DQ",
+    "question": "You're coordinating a small group task and time is running out. How do you decide what to delegate, and to whom?",
+    "answer": "Discussion question — no single verdict. A strong answer names a real criterion (matching tasks to people's strengths or availability, not just handing off the least appealing task), and describes checking in rather than delegating and disappearing.",
+    "modelReasoningPath": "A strong candidate names a genuine basis for delegation — who has capacity, who has relevant strength for the specific task — rather than delegating arbitrarily or offloading only the unpleasant parts. They describe a real handover (making sure the person has what they need to actually do the task) and checking in before the deadline, rather than delegating and assuming it will be fine. A weak answer either refuses to delegate at all (trying to do everything themselves) or delegates without any clear criterion or follow-up.",
+    "rubric": {
+      "strong": "Names a genuine delegation criterion, describes a real handover, and checks in before the deadline rather than disappearing.",
+      "developing": "Says they would delegate but the criterion or handover is vague.",
+      "weak": "Says they would try to do everything themselves, or delegates with no criterion and no follow-up."
+    },
+    "commonMistakes": [
+      { "mistake": "Tries to keep control of everything rather than delegating", "reveals": "May struggle to trust a team under pressure, which doesn't scale in a clinical team" },
+      { "mistake": "Delegates with no clear handover", "reveals": "Sets the task up to fail even though the delegation itself was reasonable" }
+    ],
+    "liveProbes": [
+      { "probe": "What if the person you delegated to comes back and says they can't do it?", "goodResponse": "Has a real contingency rather than being caught out" }
+    ],
+    "hints": [
+      "What's your actual basis for who gets what task?",
+      "What happens after you delegate — do you check in?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-02",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "A time you were under real pressure",
+    "tags": ["resilience", "wellbeing", "coping"],
+    "format": "PE",
+    "question": "Tell me about a time you were under real pressure. What did you actually do — not what you think you should have done?",
+    "answer": "Discussion question — no single verdict. A strong answer names a genuine, specific strategy that was actually used (not a listed virtue like 'I stayed calm'), and is honest about what didn't fully work, not just a tidy success story.",
+    "modelReasoningPath": "A strong candidate resists a sanitised answer ('I just stayed calm and focused') in favour of something specific and real — what did they actually do, in what order, and how well did it work? A genuinely strong answer includes something that didn't go perfectly, showing honest reflection rather than a rehearsed success narrative. Suggesting coping strategies involving self-punishment or denial of the difficulty is a weak sign, not a strong one.",
+    "rubric": {
+      "strong": "Names a specific, real strategy actually used under pressure, and is honest about what didn't fully work.",
+      "developing": "Gives a real example but the strategy described is generic ('I stayed calm') rather than specific.",
+      "weak": "Gives an idealised, tidy account with no honest acknowledgement of difficulty, or cannot recall a real example."
+    },
+    "commonMistakes": [
+      { "mistake": "Gives a sanitised, idealised account with nothing that went wrong", "reveals": "May be presenting a rehearsed answer rather than genuine reflection" },
+      { "mistake": "Names a coping strategy as a virtue with no concrete detail", "reveals": "'I stayed calm' describes an outcome, not a strategy" }
+    ],
+    "liveProbes": [
+      { "probe": "What didn't work as well as you'd have liked?", "goodResponse": "Gives an honest, specific answer rather than deflecting" }
+    ],
+    "hints": [
+      "What specifically did you do, step by step?",
+      "Was there a part that didn't go as well as you'd like to admit?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-03",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Would you ever ask for help?",
+    "tags": ["resilience", "help-seeking", "self-awareness"],
+    "format": "DQ",
+    "question": "When was the last time you asked someone for help with something you couldn't manage alone? What made you ask?",
+    "answer": "Discussion question — no single verdict. A strong answer gives a genuine, specific example of proactively asking for help before things went wrong, rather than only being helped after visibly struggling.",
+    "modelReasoningPath": "A strong candidate can point to a real, specific moment where THEY chose to ask for help, rather than only describing being rescued after struggling visibly. The distinction matters: proactively seeking help is a stronger and more relevant signal for a career built on recognising the limits of one's own competence than passively accepting help once offered. A weak answer either claims to never need help (a red flag for a caring profession) or can only describe being helped rather than asking.",
+    "rubric": {
+      "strong": "Gives a specific example of proactively asking for help, and explains what specifically prompted them to ask rather than continue alone.",
+      "developing": "Gives an example of receiving help but it's unclear whether they proactively asked or were simply offered it.",
+      "weak": "Claims to rarely or never need help, or cannot recall a specific example."
+    },
+    "commonMistakes": [
+      { "mistake": "Claims to rarely need help from anyone", "reveals": "A red flag for a profession built on recognising the limits of one's own competence" }
+    ],
+    "liveProbes": [
+      { "probe": "What would have happened if you hadn't asked?", "goodResponse": "Gives a genuine, specific account of the real stakes, not a hypothetical shrug" }
+    ],
+    "hints": [
+      "Did you ask, or were you offered help without asking?",
+      "What specifically made you decide to ask at that moment?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-04",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "A genuine weakness — without evasion",
+    "tags": ["self-awareness", "resilience"],
+    "format": "DQ",
+    "question": "What's a genuine weakness of yours — not a strength dressed up as one — and what have you actually done about it?",
+    "answer": "Discussion question — no single verdict. A strong answer names a real limitation (not 'I work too hard' or 'I'm a perfectionist') and describes a specific, ongoing effort to manage it, calibrated honestly rather than either dismissed or catastrophised.",
+    "modelReasoningPath": "A strong candidate avoids the classic dodge of naming a disguised strength. They name something genuinely limiting, at a scale that's calibrated honestly — neither trivial to the point of meaninglessness nor so severe it raises concern without context — and describe a specific, ongoing effort to manage it, with some evidence of change rather than just an intention. The 'what have you done about it' half is where most candidates go generic; specificity here is the discriminator.",
+    "rubric": {
+      "strong": "Names a genuine, appropriately calibrated weakness (not a disguised strength) and describes a specific, ongoing effort to manage it with some evidence of change.",
+      "developing": "Names a real weakness but the 'what have you done about it' is vague or purely intentional.",
+      "weak": "Names a disguised strength ('I work too hard', 'I'm a perfectionist'), or names something so severe it raises concern with no evidence of management."
+    },
+    "commonMistakes": [
+      { "mistake": "Names a strength dressed up as a weakness", "reveals": "Avoids genuine self-reflection, which is exactly what the question is testing" },
+      { "mistake": "Gives no evidence of actually managing the weakness", "reveals": "Awareness without action is only half the answer" }
+    ],
+    "liveProbes": [
+      { "probe": "Give me a specific, recent example where that weakness actually showed up.", "goodResponse": "Provides a real, recent instance rather than a vague generalisation" }
+    ],
+    "hints": [
+      "Is this a genuine limitation, or a strength dressed up as one?",
+      "What have you actually done about it, specifically?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-05",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "Changing your mind on something you were sure about",
+    "tags": ["judgement", "uncertainty", "intellectual-honesty"],
+    "format": "PE",
+    "question": "Tell me about a time you were confident about something — and then found out you were wrong. What changed your mind?",
+    "answer": "Discussion question — no single verdict. A strong answer names the SPECIFIC piece of new information or reasoning that changed their mind, not just that they 'realised' they were wrong, and is honest about how it felt to be wrong.",
+    "modelReasoningPath": "A strong candidate can point to exactly what changed their mind — a specific fact, a conversation, a piece of evidence — rather than a vague 'I realised I was wrong'. This tests whether revising a position happens for a real reason or is just a comfortable story told afterwards. A genuinely strong answer is also honest that being shown wrong is uncomfortable, rather than presenting the change of mind as effortless.",
+    "rubric": {
+      "strong": "Names the specific trigger that changed their mind, and is honest about the discomfort of being wrong rather than presenting it as effortless.",
+      "developing": "Describes changing their mind but the trigger is vague, or the account feels overly tidy.",
+      "weak": "Cannot recall a genuine example, or describes a change of mind with no real trigger at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Cannot name a specific trigger for the change of mind", "reveals": "May be describing a story rather than a genuine instance of revising a position" }
+    ],
+    "liveProbes": [
+      { "probe": "How did it actually feel to realise you were wrong?", "goodResponse": "Gives an honest, specific answer rather than a dismissive 'fine, no big deal'" }
+    ],
+    "hints": [
+      "What SPECIFICALLY changed your mind — a fact, a conversation, what?",
+      "Was it comfortable to be shown wrong?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-06",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "A question that assumes something false",
+    "tags": ["judgement", "uncertainty", "critical-thinking"],
+    "format": "ES",
+    "question": "'Since younger doctors are less committed to the profession than previous generations, how would you convince a training programme you're different?' What do you make of that question?",
+    "answer": "Discussion question — no single verdict. A strong answer notices and names the false or contested premise embedded in the question, rather than simply answering as if the premise were true.",
+    "modelReasoningPath": "This station tests whether a candidate notices a misleading frame rather than accepting it and answering the surface question. A strong candidate names the embedded assumption explicitly — that younger doctors are less committed, which is a contested and largely unevidenced generational claim — before engaging with anything else. A weaker candidate answers the surface question ('here's why I'm committed') without ever noticing or challenging the premise it rests on, which is itself informative about how they handle a leading or loaded question.",
+    "rubric": {
+      "strong": "Explicitly names and questions the embedded premise before engaging further, rather than accepting it implicitly.",
+      "developing": "Seems slightly uneasy with the premise but doesn't name it explicitly, and mostly answers the surface question.",
+      "weak": "Answers the surface question entirely at face value with no recognition that the premise is contested."
+    },
+    "commonMistakes": [
+      { "mistake": "Answers the surface question without noticing the embedded assumption", "reveals": "May accept a leading frame uncritically rather than examining it" }
+    ],
+    "liveProbes": [
+      { "probe": "Is that premise actually true, as far as you know?", "goodResponse": "Engages critically with whether the generational claim has real evidential support" }
+    ],
+    "hints": [
+      "Is there an assumption built into that question worth questioning first?",
+      "Does accepting the premise before answering change what a good answer looks like?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-07",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Helping in an emergency, realistically",
+    "tags": ["judgement", "emergency", "competence"],
+    "format": "ES",
+    "question": "You're out in public and someone collapses nearby. A small crowd gathers. What do you actually do?",
+    "answer": "Discussion question — no single verdict. A strong answer describes a realistic, competence-appropriate sequence (check the person is responsive and breathing, call emergency services, ask if anyone present has more relevant training, help with what's genuinely within their ability) rather than either freezing or overstating their own competence.",
+    "modelReasoningPath": "A strong candidate describes something a member of the public could genuinely and safely do — checking responsiveness, calling emergency services, asking the crowd if anyone has more relevant training or equipment, and helping with what's actually within their competence (basic first aid if trained, keeping the area clear, relaying information to responders). They don't overstate their own ability just because they're a medicine applicant, and they don't freeze and do nothing either. A weak answer either claims more clinical competence than a lay applicant would have, or does nothing at all out of uncertainty.",
+    "rubric": {
+      "strong": "Describes a realistic, competence-appropriate action sequence, checks for more relevant expertise in the crowd, and neither overstates their own ability nor freezes.",
+      "developing": "Describes calling for help but the sequence is vague or skips checking for more relevant expertise nearby.",
+      "weak": "Overstates their own clinical competence, or describes doing nothing due to uncertainty."
+    },
+    "commonMistakes": [
+      { "mistake": "Claims to know exactly what's medically wrong and what to do about it", "reveals": "Overstates competence a pre-medical applicant would not actually have" },
+      { "mistake": "Describes freezing and doing nothing", "reveals": "Even without clinical training, there are genuinely useful, safe actions available" }
+    ],
+    "liveProbes": [
+      { "probe": "What if someone in the crowd says they're a doctor?", "goodResponse": "Defers appropriately while still offering to help with what's needed (calling for help, clearing space)" }
+    ],
+    "hints": [
+      "What can a member of the public safely and usefully do, without clinical training?",
+      "Is there anyone else nearby who might have more relevant expertise?"
+    ]
+  },
+  {
+    "id": "MED-TRJ-08",
+    "subject": "medicine",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "Dismissing a junior colleague's input",
+    "tags": ["teamwork", "respect", "hierarchy"],
+    "format": "ES",
+    "question": "In a team meeting, a more junior member of staff raises a good point, and a senior colleague talks over them and moves on without acknowledging it. What do you think about that, and would you do anything?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises the harm goes beyond politeness — a team that doesn't hear junior voices misses information and discourages people from speaking up in future, including about safety — and names something concrete and proportionate a colleague could do without publicly humiliating the senior person.",
+    "modelReasoningPath": "A strong candidate connects this to something bigger than manners: teams that routinely talk over junior members lose real information, and — more seriously — teach people not to speak up, which is exactly the behaviour patient-safety systems depend on. They propose something concrete and proportionate — bringing the point back into the conversation themselves ('I think what X was saying is worth coming back to'), or raising it with the senior person privately afterwards — rather than either saying nothing or publicly confronting the senior colleague in the moment, which could make things worse for the junior colleague.",
+    "rubric": {
+      "strong": "Connects the behaviour to a genuine team and safety cost (not just politeness), and proposes a concrete, proportionate response.",
+      "developing": "Recognises the behaviour is unhelpful but the proposed response is vague or purely disapproving.",
+      "weak": "Treats it as unimportant, or proposes a response that risks embarrassing the junior colleague further."
+    },
+    "commonMistakes": [
+      { "mistake": "Treats it as a minor politeness issue", "reveals": "Misses the deeper cost — lost information and a chilling effect on speaking up" },
+      { "mistake": "Proposes publicly confronting the senior person in the moment", "reveals": "Could make the situation worse for the junior colleague rather than better" }
+    ],
+    "liveProbes": [
+      { "probe": "Does it matter if this keeps happening, not just once?", "goodResponse": "Recognises a pattern is a more serious, structural problem than a one-off" }
+    ],
+    "hints": [
+      "Is this only about manners, or does it cost the team something real?",
+      "What could you do that helps without embarrassing the junior colleague further?"
+    ]
+  }
+]

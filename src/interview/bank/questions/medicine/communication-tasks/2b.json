@@ -1,0 +1,88 @@
+[
+  {
+    "id": "MED-CT-04",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Posting online as a future doctor",
+    "tags": ["communication", "professionalism", "social-media", "digital"],
+    "format": "ES",
+    "question": "A friend of yours posts something online that's rude about a group of patients they'd worked with on a placement — no names, just a general complaint. What do you think about that, as something a future doctor might do?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that professional standards for a medical student apply outside the classroom and online, at all times — not just in a clinical building — and focuses on respect and confidentiality rather than reciting an outdated rule.",
+    "modelReasoningPath": "This is a live correction opportunity: a widely-circulated older rule required doctors identifying themselves online to also use their real name, which is no longer current professional guidance. A strong candidate doesn't need to know the fine detail of current guidance to reason well here — they focus on the substance: professional standards for a medical student apply 'at all times', including outside the medical school and online, and a general complaint about patients (even without names) risks patients feeling talked about and undermines public trust. A strong candidate would raise it with the friend directly, focusing on respect and confidentiality rather than treating it as a technical rule violation.",
+    "rubric": {
+      "strong": "Recognises professional standards apply online and outside formal settings 'at all times', focuses on the substance (respect, patient trust) rather than a specific rule, and would raise it with the friend directly.",
+      "developing": "Recognises this is a problem but focuses only on 'it could get them in trouble' rather than the substance of respect and trust.",
+      "weak": "Says it's fine because no names were used, or states an outdated specific rule (such as a duty to use one's real name) as if it were still current."
+    },
+    "commonMistakes": [
+      { "mistake": "Says it's fine because no patients were named", "reveals": "Misses that a general complaint about patients still undermines trust and respect, regardless of anonymity" },
+      { "mistake": "States an outdated specific social-media rule confidently", "reveals": "Circulating older guidance in this area has been superseded — reason from the underlying principle (respect, trust, 'at all times') rather than a specific remembered rule" }
+    ],
+    "liveProbes": [
+      { "probe": "Does it matter that no patients were named?", "goodResponse": "Explains why anonymity doesn't remove the underlying harm to trust and respect" }
+    ],
+    "hints": [
+      "Do professional standards apply only inside a clinical building?",
+      "What's actually harmed here, even without anyone being named?"
+    ]
+  },
+  {
+    "id": "MED-CT-05",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Explanation Task",
+    "title": "Closing a conversation and checking it landed",
+    "tags": ["communication", "structure"],
+    "format": "EX",
+    "question": "Explain to me, in under a minute, how a train timetable works — and then close by checking I've actually understood, in a way that isn't just 'does that make sense?'.",
+    "answer": "No single 'correct' script. A strong answer structures the explanation clearly, keeps to time, and closes with a genuinely open check — asking the listener to summarise or apply what they've heard — rather than a closed yes/no question.",
+    "modelReasoningPath": "This station isolates the CLOSING skill specifically. A strong candidate signposts the structure of their explanation (a beginning, a middle, an end), keeps within the time limit, and — critically — closes with an open check: asking the listener to explain a specific case back, or to say what they'd do next, rather than 'does that make sense?', which invites a reflexive 'yes' regardless of actual understanding.",
+    "rubric": {
+      "strong": "Structures the explanation clearly, stays within time, and closes with a genuinely open comprehension check.",
+      "developing": "Gives a reasonable explanation but the close is a closed question ('does that make sense?').",
+      "weak": "Rambles with no clear structure, runs over time, or doesn't check understanding at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Closes with 'does that make sense?'", "reveals": "A closed check that will be answered 'yes' regardless of real understanding" }
+    ],
+    "liveProbes": [
+      { "probe": "[playing along] Yes, that makes sense.", "goodResponse": "Doesn't accept this at face value if the check was meant to be more substantive — asks a specific follow-up to verify" }
+    ],
+    "hints": [
+      "Try closing by asking a specific question that tests understanding, not a yes/no one.",
+      "Keep an eye on time — signposting where you are helps both of you."
+    ]
+  },
+  {
+    "id": "MED-CT-06",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Explaining a decision you disagree with",
+    "tags": ["communication", "difficult-conversations"],
+    "format": "DQ",
+    "question": "You have to tell someone about a decision you personally disagree with, made by someone above you. How do you explain it without either undermining the decision or pretending you fully agree?",
+    "answer": "Discussion question — no single verdict. A strong answer avoids both extremes — openly criticising the decision to the person being told, or dishonestly pretending full personal agreement — and describes explaining the reasoning behind the decision accurately and professionally while leaving room to raise disagreement through the right channel separately.",
+    "modelReasoningPath": "A strong candidate recognises the two failure modes on either side: undermining the decision to the person being told (which damages trust in the team and the decision itself, and puts the listener in an awkward position), or dishonestly performing full agreement they don't feel. The middle path is explaining the actual reasoning behind the decision accurately and professionally, without editorialising — and separately, through the appropriate channel, raising their own disagreement with whoever made the decision, rather than doing it in front of the person being told.",
+    "rubric": {
+      "strong": "Avoids both undermining the decision and dishonestly performing agreement, explains the reasoning accurately and professionally, and raises disagreement separately through the right channel.",
+      "developing": "Avoids one failure mode but not the other — e.g. stays professional in the moment but has no plan to raise the disagreement at all.",
+      "weak": "Openly criticises the decision to the person being told, or claims full agreement they don't actually hold."
+    },
+    "commonMistakes": [
+      { "mistake": "Criticises the decision to the person being told", "reveals": "Undermines trust in the team and puts the listener in an unfair position" },
+      { "mistake": "Never raises the disagreement with anyone", "reveals": "Professional disagreement handled through the right channel is legitimate — suppressing it entirely isn't the same as being professional" }
+    ],
+    "liveProbes": [
+      { "probe": "Where and to whom would you actually raise your disagreement?", "goodResponse": "Names a specific, appropriate route rather than 'I'd just let it go'" }
+    ],
+    "hints": [
+      "What's the difference between explaining a decision and endorsing it?",
+      "Is there a legitimate way to raise your own disagreement, separately?"
+    ]
+  }
+]

@@ -92,7 +92,8 @@
       "Is confidentiality ever something a doctor should break — and if so, when?",
       "Think about what would happen to her willingness to seek healthcare at all if you told her parents anyway."
     ],
-    "format": "ES"
+    "format": "ES",
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-E3",
@@ -140,7 +141,8 @@
       "Is there a difference between disagreeing with someone's reasons and saying they're not allowed to decide?",
       "What role is left for the doctors and family if her decision has to be respected?"
     ],
-    "format": "ES"
+    "format": "ES",
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-E4",
@@ -366,7 +368,8 @@
       "Are there treatment options that might respect both medical need and the patient's beliefs?",
       "What would make this different from, or the same as, any other capacity-based refusal?"
     ],
-    "format": "ES"
+    "format": "ES",
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-E9",

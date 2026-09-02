@@ -112,7 +112,8 @@
       ],
       "actorResponseToStrong": "Breathes out. Offers the hidden fact unprompted. Thanks them specifically rather than generally.",
       "actorResponseToWeak": "Repeats the question. Becomes quieter. Says 'I shouldn't have asked.'"
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-003",
@@ -455,7 +456,8 @@
       ],
       "actorResponseToStrong": "Sits. Talks about the daughter's name and job. Asks again but calmly, and accepts a redirection.",
       "actorResponseToWeak": "Repeats more insistently. Becomes tearful. Moves toward the door."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-009",
@@ -572,7 +574,8 @@
       ],
       "actorResponseToStrong": "Accepts immediately and warmly. Reveals both hidden facts. Leaves with a plan.",
       "actorResponseToWeak": "Presses harder. Escalates informality. Rewards any hedge with more detail."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-015",

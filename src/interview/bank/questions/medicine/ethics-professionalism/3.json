@@ -6,7 +6,12 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "DVLA — the patient who won't stop driving",
-    "tags": ["ethics", "confidentiality", "dvla", "professionalism"],
+    "tags": [
+      "ethics",
+      "confidentiality",
+      "dvla",
+      "professionalism"
+    ],
     "format": "ES",
     "question": "A doctor has told a patient that a recent diagnosis means they must inform the DVLA and stop driving. At the next appointment the patient says they have not told the DVLA and are still driving to work. What should the doctor be thinking about?",
     "answer": "Discussion question — no single verdict, but the sequence is real and published: explain the duty (which sits with the DRIVER, not the doctor), make every reasonable effort to persuade them to stop, assess whether continued driving risks death or serious harm to OTHERS, and only then — as a last resort — disclose to the DVLA, telling the patient beforehand where practicable and confirming in writing afterwards.",
@@ -17,19 +22,35 @@
       "weak": "Says the doctor must report the patient to the DVLA as the doctor's own legal duty, or says confidentiality is absolute and nothing can be done, with no risk reasoning either way."
     },
     "commonMistakes": [
-      { "mistake": "States the doctor has a legal duty to report the patient", "reveals": "This is the single most widely-taught error in this area — the DRIVER carries the legal duty; the doctor's duty is to explain it and try to persuade" },
-      { "mistake": "Jumps straight to disclosure with no persuasion or risk assessment", "reveals": "Skips the professional sequence — persuade first, assess risk to others, warn, then disclose" },
-      { "mistake": "Says confidentiality is absolute and nothing can be done", "reveals": "Confidentiality is a strong default, not an absolute rule — GMC guidance permits disclosure where others face risk of death or serious harm" }
+      {
+        "mistake": "States the doctor has a legal duty to report the patient",
+        "reveals": "This is the single most widely-taught error in this area — the DRIVER carries the legal duty; the doctor's duty is to explain it and try to persuade"
+      },
+      {
+        "mistake": "Jumps straight to disclosure with no persuasion or risk assessment",
+        "reveals": "Skips the professional sequence — persuade first, assess risk to others, warn, then disclose"
+      },
+      {
+        "mistake": "Says confidentiality is absolute and nothing can be done",
+        "reveals": "Confidentiality is a strong default, not an absolute rule — GMC guidance permits disclosure where others face risk of death or serious harm"
+      }
     ],
     "liveProbes": [
-      { "probe": "What would you want to understand about why they're still driving before doing anything else?", "goodResponse": "Names a plausible reason (work, caring responsibilities, independence) rather than assuming obstinacy" },
-      { "probe": "Does it matter whether they drive alone to work, or drive a school minibus?", "goodResponse": "Recognises the risk-to-others threshold scales with who else is exposed" }
+      {
+        "probe": "What would you want to understand about why they're still driving before doing anything else?",
+        "goodResponse": "Names a plausible reason (work, caring responsibilities, independence) rather than assuming obstinacy"
+      },
+      {
+        "probe": "Does it matter whether they drive alone to work, or drive a school minibus?",
+        "goodResponse": "Recognises the risk-to-others threshold scales with who else is exposed"
+      }
     ],
     "hints": [
       "Whose legal duty is it to tell the DVLA — the doctor's, or the patient's?",
       "What would the doctor try before ever considering breaking confidentiality?",
       "What threshold would justify overriding the patient's confidentiality here?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-02",
@@ -38,7 +59,12 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "Two weeks later, nothing has happened",
-    "tags": ["ethics", "escalation", "professionalism", "raising-concerns"],
+    "tags": [
+      "ethics",
+      "escalation",
+      "professionalism",
+      "raising-concerns"
+    ],
     "format": "ES",
     "question": "You raised a concern with your supervisor two weeks ago about something you thought was unsafe. As far as you can tell, nothing has changed. What do you do now?",
     "answer": "Discussion question — no single verdict. A strong answer treats silence as information, not resolution: names a specific next step (check what happened to the concern, ask directly, escalate to whoever is above the original person if there's still no answer), and does not simply let it drop because the first attempt was made in good faith.",
@@ -49,12 +75,24 @@
       "weak": "Assumes it must have been dealt with because nothing more has been said, or does nothing further because they already raised it once."
     },
     "commonMistakes": [
-      { "mistake": "Assumes silence means the concern was resolved", "reveals": "Confuses the absence of news with good news — a candidate needs to check, not assume" },
-      { "mistake": "Says 'I'd leave it, I already did my bit'", "reveals": "Treats raising a concern once as discharging responsibility for it, rather than following it through" }
+      {
+        "mistake": "Assumes silence means the concern was resolved",
+        "reveals": "Confuses the absence of news with good news — a candidate needs to check, not assume"
+      },
+      {
+        "mistake": "Says 'I'd leave it, I already did my bit'",
+        "reveals": "Treats raising a concern once as discharging responsibility for it, rather than following it through"
+      }
     ],
     "liveProbes": [
-      { "probe": "Who, specifically, would you go to next?", "goodResponse": "Names an actual role or route (someone above the original person, a different channel), not just 'someone else'" },
-      { "probe": "What if that person is also unresponsive?", "goodResponse": "Has a further step in mind rather than running out of options after the second attempt" }
+      {
+        "probe": "Who, specifically, would you go to next?",
+        "goodResponse": "Names an actual role or route (someone above the original person, a different channel), not just 'someone else'"
+      },
+      {
+        "probe": "What if that person is also unresponsive?",
+        "goodResponse": "Has a further step in mind rather than running out of options after the second attempt"
+      }
     ],
     "hints": [
       "Does silence tell you the concern was addressed, or just that nothing visible has changed?",
@@ -69,7 +107,12 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "A capacitous adult refuses help",
-    "tags": ["ethics", "autonomy", "capacity", "unwise-decisions"],
+    "tags": [
+      "ethics",
+      "autonomy",
+      "capacity",
+      "unwise-decisions"
+    ],
     "format": "ES",
     "question": "An older man living alone refuses all offers of help, even though his home is in a poor state and he has had a couple of falls. He understands the risks and is clear he wants to be left to make his own choices. His daughter is desperate for someone to intervene. What do you think should happen?",
     "answer": "Discussion question — no single verdict. A strong answer holds the line that a person able to understand, weigh and communicate a decision has the right to make an unwise one, and does not let genuine distress from a third party (the daughter) override that — while still taking her concern seriously and looking for what CAN legitimately be offered.",
@@ -80,18 +123,31 @@
       "weak": "Concludes he should be made to accept help because it's for his own good, or because his daughter is so worried, with no engagement with what capacity actually means."
     },
     "commonMistakes": [
-      { "mistake": "Assumes he must lack capacity because the decision seems irrational", "reveals": "The most common capacity error — capacity is about the ability to understand and weigh a decision, not about agreeing with the outcome" },
-      { "mistake": "Concludes his daughter's distress should tip the balance toward intervening anyway", "reveals": "Confuses a third party's discomfort with a reason to override the person's own autonomous choice" }
+      {
+        "mistake": "Assumes he must lack capacity because the decision seems irrational",
+        "reveals": "The most common capacity error — capacity is about the ability to understand and weigh a decision, not about agreeing with the outcome"
+      },
+      {
+        "mistake": "Concludes his daughter's distress should tip the balance toward intervening anyway",
+        "reveals": "Confuses a third party's discomfort with a reason to override the person's own autonomous choice"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if his falls get worse — does that change your answer?", "goodResponse": "Distinguishes between reassessing capacity if something genuinely changes and simply escalating pressure because the outcome is feared" },
-      { "probe": "Is there anything that could legitimately be done here without overriding him?", "goodResponse": "Names something concrete — checking in regularly, addressing one specific hazard he doesn't object to — rather than 'nothing' or 'force help on him'" }
+      {
+        "probe": "What if his falls get worse — does that change your answer?",
+        "goodResponse": "Distinguishes between reassessing capacity if something genuinely changes and simply escalating pressure because the outcome is feared"
+      },
+      {
+        "probe": "Is there anything that could legitimately be done here without overriding him?",
+        "goodResponse": "Names something concrete — checking in regularly, addressing one specific hazard he doesn't object to — rather than 'nothing' or 'force help on him'"
+      }
     ],
     "hints": [
       "Does making an unwise decision mean someone lacks the capacity to make it?",
       "What is actually being asked for here — is it about the risk, or about someone else's distress at the risk?",
       "What could still be offered without overriding his own choice?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-04",
@@ -100,7 +156,13 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "The under-16 who doesn't want her parents told",
-    "tags": ["ethics", "confidentiality", "gillick", "fraser", "adolescent-health"],
+    "tags": [
+      "ethics",
+      "confidentiality",
+      "gillick",
+      "fraser",
+      "adolescent-health"
+    ],
     "format": "ES",
     "question": "A 15-year-old comes to see a doctor alone and asks about contraception. She says she doesn't want her parents to know. What is the doctor thinking about here?",
     "answer": "Discussion question — no single verdict, though this draws on a real UK framework: Gillick competence (is this specific young person able to understand and weigh THIS decision?) and, distinct from it, the Fraser criteria (the narrower test specific to contraception and sexual health advice). A strong answer keeps these two separate rather than treating them as interchangeable, and weighs her right to confidential healthcare against any signs that would raise a safeguarding concern (a much older partner, signs of coercion).",
@@ -111,18 +173,31 @@
       "weak": "States a flat rule ('under 16s can't consent without parents' or 'it's entirely her choice, no exceptions') with no engagement with competence or safeguarding."
     },
     "commonMistakes": [
-      { "mistake": "Uses 'Fraser guidelines' as the general test of whether she can make decisions", "reveals": "The most common error in this space — Fraser is specific to contraception/sexual health; Gillick is the general competence test" },
-      { "mistake": "Treats her stated confidentiality wish as settling the matter with no safeguarding check", "reveals": "Confidentiality and safeguarding are separate questions — competence to consent doesn't remove the need to check for coercion" }
+      {
+        "mistake": "Uses 'Fraser guidelines' as the general test of whether she can make decisions",
+        "reveals": "The most common error in this space — Fraser is specific to contraception/sexual health; Gillick is the general competence test"
+      },
+      {
+        "mistake": "Treats her stated confidentiality wish as settling the matter with no safeguarding check",
+        "reveals": "Confidentiality and safeguarding are separate questions — competence to consent doesn't remove the need to check for coercion"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if she mentioned her partner was significantly older?", "goodResponse": "Recognises this shifts the situation toward a safeguarding concern regardless of her stated competence" },
-      { "probe": "Is Gillick competence the same thing as meeting the Fraser criteria?", "goodResponse": "States clearly that they are not the same test and explains the difference" }
+      {
+        "probe": "What if she mentioned her partner was significantly older?",
+        "goodResponse": "Recognises this shifts the situation toward a safeguarding concern regardless of her stated competence"
+      },
+      {
+        "probe": "Is Gillick competence the same thing as meeting the Fraser criteria?",
+        "goodResponse": "States clearly that they are not the same test and explains the difference"
+      }
     ],
     "hints": [
       "Is there a difference between asking 'can she understand this decision' and 'should contraceptive advice specifically be given without her parents knowing'?",
       "What would make you more concerned about this situation, beyond her age alone?",
       "Does her being able to consent mean there's nothing else to think about here?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-EP-05",
@@ -131,7 +206,12 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "Your supervisor asks you to do something you think is wrong",
-    "tags": ["ethics", "challenging-upward", "professionalism", "teamwork"],
+    "tags": [
+      "ethics",
+      "challenging-upward",
+      "professionalism",
+      "teamwork"
+    ],
     "format": "ES",
     "question": "Someone senior to you asks you to do something as part of a task you're helping with, and you think it's the wrong thing to do. What do you consider?",
     "answer": "Discussion question — no single verdict. A strong answer neither simply complies nor simply refuses: it names a way to raise the concern respectfully in the moment (a question rather than an accusation), proposes an alternative where possible, and is honest about what they'd do if the concern isn't resolved — without assuming bad faith on the senior person's part.",
@@ -142,12 +222,24 @@
       "weak": "Complies without comment because the person is senior, or refuses and escalates immediately with no attempt to understand or resolve it directly first."
     },
     "commonMistakes": [
-      { "mistake": "Complies because the person is senior, with no further thought", "reveals": "Prioritises deference over judgement — a real professionalism red flag" },
-      { "mistake": "Refuses and immediately threatens to report it", "reveals": "Skips the respectful, direct conversation that should come first in most cases" }
+      {
+        "mistake": "Complies because the person is senior, with no further thought",
+        "reveals": "Prioritises deference over judgement — a real professionalism red flag"
+      },
+      {
+        "mistake": "Refuses and immediately threatens to report it",
+        "reveals": "Skips the respectful, direct conversation that should come first in most cases"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if they brushed off your question and told you to just get on with it?", "goodResponse": "Names a further step (raising it with someone else, or declining that specific part) rather than complying anyway" },
-      { "probe": "Does it matter if you might be missing some context they have?", "goodResponse": "Acknowledges this is genuinely possible and frames the challenge as a question, not an accusation" }
+      {
+        "probe": "What if they brushed off your question and told you to just get on with it?",
+        "goodResponse": "Names a further step (raising it with someone else, or declining that specific part) rather than complying anyway"
+      },
+      {
+        "probe": "Does it matter if you might be missing some context they have?",
+        "goodResponse": "Acknowledges this is genuinely possible and frames the challenge as a question, not an accusation"
+      }
     ],
     "hints": [
       "Is the choice really just between doing what you're told and refusing outright?",
@@ -162,7 +254,12 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "A colleague makes a remark about a resident's family",
-    "tags": ["ethics", "discrimination", "professionalism", "teamwork"],
+    "tags": [
+      "ethics",
+      "discrimination",
+      "professionalism",
+      "teamwork"
+    ],
     "format": "ES",
     "question": "A colleague you respect and who has worked somewhere for years makes a dismissive, generalising remark about a resident's family while you're both on a break. What do you do?",
     "answer": "Discussion question — no single verdict. A strong answer says something in the moment rather than only reporting it afterwards, addresses the specific phrase rather than labelling the person's character, and doesn't let the seniority or likeability of the colleague stop them from responding.",
@@ -173,12 +270,24 @@
       "weak": "Says nothing because the person is respected or senior, or laughs along to avoid an awkward moment."
     },
     "commonMistakes": [
-      { "mistake": "Says nothing in the moment, planning to 'mention it later' vaguely", "reveals": "Avoiding the immediate, harder conversation in favour of a safer, deferred one that may never happen" },
-      { "mistake": "Accuses the colleague of being a bad person rather than naming the remark", "reveals": "Makes the conversation about character rather than behaviour, which usually shuts it down rather than opening it" }
+      {
+        "mistake": "Says nothing in the moment, planning to 'mention it later' vaguely",
+        "reveals": "Avoiding the immediate, harder conversation in favour of a safer, deferred one that may never happen"
+      },
+      {
+        "mistake": "Accuses the colleague of being a bad person rather than naming the remark",
+        "reveals": "Makes the conversation about character rather than behaviour, which usually shuts it down rather than opening it"
+      }
     ],
     "liveProbes": [
-      { "probe": "What would you actually say, in the moment, without it turning into a confrontation?", "goodResponse": "Offers a specific, low-heat form of words that names the phrase rather than the person" },
-      { "probe": "Does it matter that you get on well with this person?", "goodResponse": "Recognises the temptation to let it go because of the relationship, and says why that shouldn't change the response" }
+      {
+        "probe": "What would you actually say, in the moment, without it turning into a confrontation?",
+        "goodResponse": "Offers a specific, low-heat form of words that names the phrase rather than the person"
+      },
+      {
+        "probe": "Does it matter that you get on well with this person?",
+        "goodResponse": "Recognises the temptation to let it go because of the relationship, and says why that shouldn't change the response"
+      }
     ],
     "hints": [
       "Is it easier, but worse, to say nothing and mention it 'later'?",
@@ -193,7 +302,12 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "Should a smoker wait longer for surgery?",
-    "tags": ["ethics", "resource-allocation", "justice", "desert"],
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "justice",
+      "desert"
+    ],
     "format": "ES",
     "question": "Someone suggests that patients who smoke should wait longer for planned surgery than patients who don't, since smoking increases their own surgical risk and worsens outcomes. What do you think of that argument?",
     "answer": "Discussion question — no single verdict. A strong answer engages seriously with both the clinical-risk argument (smoking genuinely affects surgical outcomes) and the desert-based objection (using a lifestyle factor to ration care risks penalising ill health rather than treating it, and could apply inconsistently to many other lifestyle factors), without dismissing either side.",
@@ -204,12 +318,24 @@
       "weak": "States smokers 'brought it on themselves' with no engagement with clinical justification or the fairness objection, or insists lifestyle should never be relevant with no engagement with genuine clinical risk."
     },
     "commonMistakes": [
-      { "mistake": "Treats a genuine clinical-optimisation reason and a moral-blame reason as the same argument", "reveals": "Hasn't separated 'this affects the medical outcome' from 'this person deserves to wait' — very different justifications that happen to point the same way" },
-      { "mistake": "Says lifestyle should never be considered at all", "reveals": "Ignores that clinical optimisation before surgery (e.g. supported cessation) is a genuinely different, more defensible idea than punishment" }
+      {
+        "mistake": "Treats a genuine clinical-optimisation reason and a moral-blame reason as the same argument",
+        "reveals": "Hasn't separated 'this affects the medical outcome' from 'this person deserves to wait' — very different justifications that happen to point the same way"
+      },
+      {
+        "mistake": "Says lifestyle should never be considered at all",
+        "reveals": "Ignores that clinical optimisation before surgery (e.g. supported cessation) is a genuinely different, more defensible idea than punishment"
+      }
     ],
     "liveProbes": [
-      { "probe": "Would the same logic apply to someone needing surgery after a diet-related condition, or a sports injury?", "goodResponse": "Recognises the logic would need to generalise, and engages with how uncomfortable that generalisation is" },
-      { "probe": "Is there a version of 'wait longer' that's actually about improving the outcome rather than punishing the patient?", "goodResponse": "Names supported smoking cessation or pre-surgical optimisation as a distinct, defensible idea" }
+      {
+        "probe": "Would the same logic apply to someone needing surgery after a diet-related condition, or a sports injury?",
+        "goodResponse": "Recognises the logic would need to generalise, and engages with how uncomfortable that generalisation is"
+      },
+      {
+        "probe": "Is there a version of 'wait longer' that's actually about improving the outcome rather than punishing the patient?",
+        "goodResponse": "Names supported smoking cessation or pre-surgical optimisation as a distinct, defensible idea"
+      }
     ],
     "hints": [
       "Is 'this affects your surgical outcome' the same argument as 'you deserve to wait'?",
@@ -224,7 +350,11 @@
     "difficulty": 3,
     "questionType": "Ethical Scenario",
     "title": "Which two principles are actually in conflict here?",
-    "tags": ["ethics", "four-principles", "anti-buzzword"],
+    "tags": [
+      "ethics",
+      "four-principles",
+      "anti-buzzword"
+    ],
     "format": "ES",
     "question": "A patient with capacity refuses a treatment her family believes she needs, and the family is asking the team to override her. Talk me through the ethical tension here — and be specific about what's actually in conflict.",
     "answer": "Discussion question — no single verdict. This station is purpose-built to score ZERO for simply naming the four principles of biomedical ethics (autonomy, beneficence, non-maleficence, justice) and full marks for identifying WHICH TWO are actually in tension here (autonomy versus beneficence, most directly) and what would make one give way.",
@@ -235,12 +365,24 @@
       "weak": "Recites the four principles as if naming them answers the question, with no application to this specific scenario — this scores ZERO on the reasoning dimension regardless of how fluently they're listed."
     },
     "commonMistakes": [
-      { "mistake": "Names all four principles and stops there", "reveals": "This is the exact behaviour the station is built to catch — naming the framework is not the same as using it, and scores nothing on its own" },
-      { "mistake": "Says all four principles are equally in conflict", "reveals": "Hasn't actually identified which two are doing the real work in this specific scenario" }
+      {
+        "mistake": "Names all four principles and stops there",
+        "reveals": "This is the exact behaviour the station is built to catch — naming the framework is not the same as using it, and scores nothing on its own"
+      },
+      {
+        "mistake": "Says all four principles are equally in conflict",
+        "reveals": "Hasn't actually identified which two are doing the real work in this specific scenario"
+      }
     ],
     "liveProbes": [
-      { "probe": "You named the four principles — which two are actually pulling against each other HERE?", "goodResponse": "Names autonomy and beneficence specifically, not a restated list" },
-      { "probe": "What would have to be true for the family's view to win instead?", "goodResponse": "Engages with a concrete condition — e.g. doubt about her capacity — rather than refusing to imagine it" }
+      {
+        "probe": "You named the four principles — which two are actually pulling against each other HERE?",
+        "goodResponse": "Names autonomy and beneficence specifically, not a restated list"
+      },
+      {
+        "probe": "What would have to be true for the family's view to win instead?",
+        "goodResponse": "Engages with a concrete condition — e.g. doubt about her capacity — rather than refusing to imagine it"
+      }
     ],
     "hints": [
       "Naming a list of principles isn't the same as identifying a conflict — which two are actually pulling against each other here?",

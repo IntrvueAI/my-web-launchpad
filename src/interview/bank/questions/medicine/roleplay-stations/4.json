@@ -126,6 +126,7 @@
       ],
       "actorResponseToStrong": "Cries. Talks about the sleep. Accepts the offer to go to the manager together.",
       "actorResponseToWeak": "Retracts. 'It's not that bad really. Ignore me.'"
-    }
+    },
+    "clinicalReviewRequired": true
   }
 ]

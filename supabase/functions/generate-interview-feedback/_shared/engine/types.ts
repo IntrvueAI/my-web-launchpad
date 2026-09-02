@@ -129,6 +129,13 @@ export interface BankQuestion {
    *  bank/select.ts. Mirrors the Medicine current-affairs register's hard-expiry rule: stale dated
    *  content becomes CONFIDENTLY WRONG, not just less useful, so it must stop being served. */
   currentAffairsExpiry?: string;
+  /** Governance only — never enforced by the engine (this app has no real clinician on staff to do
+   *  the review). Set true on any station touching safeguarding, capacity, confidentiality, end of
+   *  life, or carrying clinical bait, per the Medicine research pack's own requirement that these be
+   *  reviewed by a clinician or medical educator before being treated as launch-ready. Makes the gap
+   *  visible and trackable (see the admin Medicine Portal's "needs clinical review" filter) instead
+   *  of silently absent. */
+  clinicalReviewRequired?: boolean;
 
   // ---- Rich 6-part tutoring spec (all optional) ----
   /** 2. Model reasoning path — a top candidate's thinking, narrated step by step (a process). */

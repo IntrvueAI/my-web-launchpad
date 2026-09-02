@@ -106,6 +106,7 @@ export const medicinePack: SubjectPack = {
     { id: 'motivation-reflection', label: 'Motivation & reflection', blurb: 'Why medicine, teamwork, failure and work experience — specific, honest, and reflective beats rehearsed.' },
     { id: 'communication-tasks', label: 'Communication tasks', blurb: 'Explain something to a lay audience, or give instructions with no shared view — scored on whether the listener understood.' },
     { id: 'data-interpretation', label: 'Data, numeracy & prioritisation', blurb: 'Triage a queue, read a statistic, reason about risk — justify your method, not just state a number.' },
+    { id: 'teamwork-resilience-judgement', label: 'Teamwork, resilience & judgement', blurb: 'Delegation, coping under pressure, resisting a misleading frame — the domains a generic bank rarely tests directly.' },
   ],
   watchlist: [
     'On roleplay: tries to solve the situation with information/clinical advice rather than the interpersonal behaviour the station actually tests',

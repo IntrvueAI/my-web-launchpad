@@ -114,7 +114,8 @@
       ],
       "actorResponseToStrong": "Volume drops. Sits. Offers information voluntarily. Says something self-aware like 'Sorry. I'm not angry at you.'",
       "actorResponseToWeak": "Repeats the original question verbatim, more slowly. Does not offer the hidden facts. Asks for someone else."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-005",
@@ -346,7 +347,8 @@
       ],
       "actorResponseToStrong": "Unfolds arms. Tells the real story. Says 'nobody's asked me that before.'",
       "actorResponseToWeak": "Repeats 'I've read things'. Becomes more clipped. Leaves early."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-008",
@@ -576,7 +578,8 @@
       ],
       "actorResponseToStrong": "Stops minimising. Admits the red light. Engages with the practical problem.",
       "actorResponseToWeak": "Repeats 'it was fine'. Becomes cold. Ends the conversation."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-011",
@@ -700,7 +703,8 @@
       ],
       "actorResponseToStrong": "Relaxes. Shows the bruise voluntarily. Mentions weekends. Stays.",
       "actorResponseToWeak": "'It doesn't matter.' Leaves. Does not raise it again."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-012",
@@ -1159,7 +1163,8 @@
       ],
       "actorResponseToStrong": "Puts the phone down. Admits the nights. Asks what to do.",
       "actorResponseToWeak": "'I'm fine, seriously.' Goes back to the phone."
-    }
+    },
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-RP-017",

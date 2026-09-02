@@ -90,6 +90,7 @@ function OverviewTab() {
     for (const q of bank) m.set(q.topic, (m.get(q.topic) ?? 0) + 1);
     return [...m.entries()].sort((a, b) => b[1] - a[1]);
   }, [bank]);
+  const needsReview = useMemo(() => bank.filter((q) => q.clinicalReviewRequired), [bank]);
 
   return (
     <div className="space-y-6">
@@ -99,6 +100,16 @@ function OverviewTab() {
         <StatCard label="Current-affairs topics" value={caTopics.length} sub={`${withheld.length} withheld today · ${soon.length} expiring within 30 days`} />
         <StatCard label="Course-routes mapped" value={TOTAL_SCHOOLS} sub="68 UK medicine course-routes, 50 institutions" />
       </div>
+
+      <Card className="p-4 border-amber-500/40 bg-amber-500/5">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2 text-sm font-semibold">
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            {needsReview.length} of {bank.length} stations need a real clinician or medical educator review
+          </div>
+          <span className="text-xs text-muted-foreground">safeguarding · capacity · confidentiality · end of life · clinical bait — see the Stations tab</span>
+        </div>
+      </Card>
 
       {withheld.length > 0 && (
         <Card className="p-4 border-destructive/40 bg-destructive/5">
@@ -142,12 +153,13 @@ function OverviewTab() {
         <p className="text-xs text-muted-foreground leading-relaxed">
           Scope, honestly stated: this is a real, live subset of the research pack's roadmap — the full 20-persona roleplay engine,
           all {caTopics.length} current-affairs topics with live hard-expiry enforcement, and {bank.length} authored stations spanning every format the
-          research found in use (roleplay, ethics, policy, motivation, communication, data/numeracy) — past the pack's own 120-station
-          MVP threshold for non-roleplay content is still ahead. Not yet built: the remaining ontology coverage toward the pack's own
-          "Strong launch" target (~110 of {TOTAL_TOPICS} topics), per-school interview-mode configuration (station count/timing/roleplay-inclusion
-          per course-route), group-task and Oxbridge-tutorial formats (Phase 3 in the research roadmap), and — critically — a real
-          clinician review pass, which the research pack itself flags as required before any safeguarding, capacity, confidentiality or
-          end-of-life station should be treated as launch-ready.
+          research found in use (roleplay, ethics, policy, motivation, communication, teamwork/resilience, data/numeracy), closing in on
+          the pack's own 120-station MVP threshold. Clinical-review NEED is tracked (the banner above, and the filter on the Stations
+          tab) — {needsReview.length} stations are flagged — but the review itself hasn't happened, because there is no clinician on staff to do it; treat every
+          flagged station as draft, not launch-ready. Not yet built: the remaining ontology coverage toward the pack's own "Strong launch"
+          target (~110 of {TOTAL_TOPICS} topics), a real per-school interview-mode picker (station count/timing/roleplay-inclusion — the School map
+          tab's "relevant stations" count is only a rough format match, not a working picker), and group-task/Oxbridge-tutorial formats
+          (Phase 3 in the research roadmap, needing multi-participant simulation and a separate science-reasoning bank respectively).
         </p>
       </Card>
     </div>
@@ -158,14 +170,17 @@ function StationsTab() {
   const bank = useMemo(() => getBank('medicine'), []);
   const [q, setQ] = useState('');
   const [topic, setTopic] = useState<string | null>(null);
+  const [reviewOnly, setReviewOnly] = useState(false);
   const topics = useMemo(() => [...new Set(bank.map((x) => x.topic))].sort(), [bank]);
+  const needsReviewCount = useMemo(() => bank.filter((x) => x.clinicalReviewRequired).length, [bank]);
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
     return bank.filter((x) =>
       (!topic || x.topic === topic) &&
+      (!reviewOnly || x.clinicalReviewRequired) &&
       (!query || x.title?.toLowerCase().includes(query) || x.question.toLowerCase().includes(query) || x.tags?.some((t) => t.toLowerCase().includes(query))),
     );
-  }, [bank, q, topic]);
+  }, [bank, q, topic, reviewOnly]);
 
   return (
     <div className="space-y-4">
@@ -180,6 +195,9 @@ function StationsTab() {
             {t} ({bank.filter((x) => x.topic === t).length})
           </button>
         ))}
+        <button className={`chip ${reviewOnly ? 'chip-on' : ''}`} onClick={() => setReviewOnly((v) => !v)}>
+          Needs clinical review ({needsReviewCount})
+        </button>
       </div>
       <div className="grid gap-3">
         {filtered.map((question) => <StationCard key={question.id} q={question} />)}
@@ -192,7 +210,7 @@ function StationsTab() {
 function StationCard({ q }: { q: BankQuestion }) {
   const [open, setOpen] = useState(false);
   return (
-    <Card className="p-4 cursor-pointer" onClick={() => setOpen((v) => !v)}>
+    <Card className={`p-4 cursor-pointer ${q.clinicalReviewRequired ? 'border-amber-500/40' : ''}`} onClick={() => setOpen((v) => !v)}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -201,6 +219,9 @@ function StationCard({ q }: { q: BankQuestion }) {
             <Badge variant="outline" className="text-[10px]">difficulty {q.difficulty}</Badge>
             {q.currentAffairsExpiry && (
               <Badge variant="outline" className="text-[10px] gap-1"><Clock className="h-3 w-3" /> expires {q.currentAffairsExpiry}</Badge>
+            )}
+            {q.clinicalReviewRequired && (
+              <Badge className="text-[10px] gap-1 bg-amber-500/15 text-amber-700 hover:bg-amber-500/15 border-amber-500/30"><AlertTriangle className="h-3 w-3" /> needs clinical review</Badge>
             )}
           </div>
           <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2">{q.question}</p>
@@ -349,8 +370,29 @@ function CurrentAffairsCard({ topic, now }: { topic: CurrentAffairsTopic; now: D
   );
 }
 
+/** Which station formats a given MMI engine can plausibly serve — see taxonomies.json dimension_2's
+ *  own "engines" field per format. Used only to give an admin a rough sense of how much of the bank
+ *  is relevant to a school's published format, never to filter what a real interview actually asks. */
+const ENGINE_FORMATS: Record<string, string[]> = {
+  E1: ['DQ', 'PE', 'WE', 'AC', 'ES', 'IT', 'EX', 'PR', 'PD', 'AD'],
+  E2: ['RP', 'IT', 'EX'],
+  E3: ['DQ', 'PE', 'WE', 'AC', 'ES', 'PR', 'PD', 'AD'],
+  E4: ['SP'],
+  E5: ['AR'],
+  E6: ['CA', 'DI'],
+  E7: ['GT'],
+  E8: ['AD'],
+  E9: [],
+};
+
+function relevantStationCount(bank: BankQuestion[], engines: string[]): number {
+  const formats = new Set(engines.flatMap((e) => ENGINE_FORMATS[e] ?? []));
+  return bank.filter((q) => q.format && formats.has(q.format)).length;
+}
+
 function SchoolsTab() {
   const schools = useMemo(() => listSchools(), []);
+  const bank = useMemo(() => getBank('medicine'), []);
   const [q, setQ] = useState('');
   const filtered = schools.filter((s) => !q.trim() || s.university.toLowerCase().includes(q.toLowerCase()) || s.code.toLowerCase().includes(q.toLowerCase()));
 
@@ -360,7 +402,7 @@ function SchoolsTab() {
         <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
         <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search schools…" className="pl-8 h-9" />
       </div>
-      <div className="text-xs text-muted-foreground">{filtered.length} of {schools.length} course-routes · not published ≠ absent, see each source</div>
+      <div className="text-xs text-muted-foreground">{filtered.length} of {schools.length} course-routes · not published ≠ absent, see each source · "relevant stations" is a rough format match, not a real per-school picker (not yet built)</div>
       <div className="grid gap-2">
         {filtered.map((s) => (
           <Card key={s.id} className="p-3">
@@ -371,6 +413,7 @@ function SchoolsTab() {
                   {s.engines.map((e) => <Badge key={e} variant="outline" className="text-[10px]">{e}</Badge>)}
                   {s.roleplay === true && <Badge variant="secondary" className="text-[10px]">roleplay confirmed</Badge>}
                   <Badge variant="outline" className="text-[10px]">confidence: {s.confidence.split(' ')[0]}</Badge>
+                  <Badge variant="outline" className="text-[10px]">{relevantStationCount(bank, s.engines)} relevant stations</Badge>
                 </div>
               </div>
               <a href={s.source_url} target="_blank" rel="noopener noreferrer" className="text-xs text-primary underline whitespace-nowrap">source ↗</a>

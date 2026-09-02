@@ -24,6 +24,7 @@ export const BankQuestionSchema = z.object({
   options: z.array(z.string()).optional(),
   format: z.string().optional(),
   currentAffairsExpiry: z.string().optional(),
+  clinicalReviewRequired: z.boolean().optional(),
   roleplay: z
     .object({
       name: z.string().min(1),

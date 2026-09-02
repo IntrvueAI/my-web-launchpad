@@ -6,7 +6,11 @@
     "difficulty": 3,
     "questionType": "Policy Discussion",
     "title": "Will AI replace doctors?",
-    "tags": ["current-affairs", "ai-in-healthcare", "accountability"],
+    "tags": [
+      "current-affairs",
+      "ai-in-healthcare",
+      "accountability"
+    ],
     "format": "PD",
     "currentAffairsExpiry": "2027-02-28",
     "question": "Will AI replace doctors? And if an AI tool gets something wrong, who's responsible?",
@@ -18,13 +22,28 @@
       "weak": "Answers only 'AI will/won't replace doctors' with no use case, no accountability reasoning, and no engagement with risk."
     },
     "commonMistakes": [
-      { "mistake": "Answers only the 'will it replace doctors' framing with no specifics", "reveals": "Hasn't grounded the answer in a real use case, which is where the actual reasoning value is" },
-      { "mistake": "Says 'AI could be biased' with no explanation of how", "reveals": "Uses 'bias' as an unexplained buzzword rather than naming a concrete mechanism (e.g. underrepresentation in training data)" },
-      { "mistake": "Doesn't address who is responsible if the tool gets something wrong", "reveals": "Misses the single most-tested and most differentiating part of this topic" }
+      {
+        "mistake": "Answers only the 'will it replace doctors' framing with no specifics",
+        "reveals": "Hasn't grounded the answer in a real use case, which is where the actual reasoning value is"
+      },
+      {
+        "mistake": "Says 'AI could be biased' with no explanation of how",
+        "reveals": "Uses 'bias' as an unexplained buzzword rather than naming a concrete mechanism (e.g. underrepresentation in training data)"
+      },
+      {
+        "mistake": "Doesn't address who is responsible if the tool gets something wrong",
+        "reveals": "Misses the single most-tested and most differentiating part of this topic"
+      }
     ],
     "liveProbes": [
-      { "probe": "If an AI triage tool gets something wrong, who's responsible — the clinician, the hospital, or the company that built it?", "goodResponse": "States that the clinician using it remains accountable for the decision, while acknowledging other parties may share responsibility for the tool itself" },
-      { "probe": "Could a tool trained mostly on one population perform worse for another?", "goodResponse": "Names an underrepresentation-in-training-data mechanism rather than restating 'it could be biased'" }
+      {
+        "probe": "If an AI triage tool gets something wrong, who's responsible — the clinician, the hospital, or the company that built it?",
+        "goodResponse": "States that the clinician using it remains accountable for the decision, while acknowledging other parties may share responsibility for the tool itself"
+      },
+      {
+        "probe": "Could a tool trained mostly on one population perform worse for another?",
+        "goodResponse": "Names an underrepresentation-in-training-data mechanism rather than restating 'it could be biased'"
+      }
     ],
     "hints": [
       "Instead of AI 'in general', what's one specific way it's actually used in the NHS today?",
@@ -39,7 +58,11 @@
     "difficulty": 3,
     "questionType": "Policy Discussion",
     "title": "Should the NHS fund weight-loss drugs at scale?",
-    "tags": ["current-affairs", "obesity", "resource-allocation"],
+    "tags": [
+      "current-affairs",
+      "obesity",
+      "resource-allocation"
+    ],
     "format": "PD",
     "currentAffairsExpiry": "2027-04-30",
     "question": "New weight-loss medications could help a very large number of patients, but funding them for everyone eligible would be extremely expensive. How should the NHS think about rolling them out?",
@@ -51,12 +74,24 @@
       "weak": "Says the NHS should simply fund it for everyone with no engagement with cost or scale, or dismisses medication entirely in favour of 'people should just eat less', with no engagement with the clinical reality."
     },
     "commonMistakes": [
-      { "mistake": "Treats the drugs as either a magic fix or a moral cop-out", "reveals": "Both framings avoid the actual rationing question the station is testing" },
-      { "mistake": "Ignores that eligible demand is far larger than funded capacity", "reveals": "Misses that phased rollout by criteria is already the real-world response to an unavoidable scale problem" }
+      {
+        "mistake": "Treats the drugs as either a magic fix or a moral cop-out",
+        "reveals": "Both framings avoid the actual rationing question the station is testing"
+      },
+      {
+        "mistake": "Ignores that eligible demand is far larger than funded capacity",
+        "reveals": "Misses that phased rollout by criteria is already the real-world response to an unavoidable scale problem"
+      }
     ],
     "liveProbes": [
-      { "probe": "If demand vastly outstrips funded places, how should the NHS decide who goes first?", "goodResponse": "Proposes a criterion (severity, comorbidity) and defends it rather than avoiding the question" },
-      { "probe": "Does funding this mean less prevention work happens?", "goodResponse": "Engages with the opportunity-cost question honestly rather than assuming funding is unlimited" }
+      {
+        "probe": "If demand vastly outstrips funded places, how should the NHS decide who goes first?",
+        "goodResponse": "Proposes a criterion (severity, comorbidity) and defends it rather than avoiding the question"
+      },
+      {
+        "probe": "Does funding this mean less prevention work happens?",
+        "goodResponse": "Engages with the opportunity-cost question honestly rather than assuming funding is unlimited"
+      }
     ],
     "hints": [
       "Are treatment and prevention competing for the same money, or working together?",
@@ -71,7 +106,12 @@
     "difficulty": 3,
     "questionType": "Policy Discussion",
     "title": "Should assisted dying be legal — and where does the law stand?",
-    "tags": ["current-affairs", "assisted-dying", "end-of-life", "autonomy"],
+    "tags": [
+      "current-affairs",
+      "assisted-dying",
+      "end-of-life",
+      "autonomy"
+    ],
     "format": "PD",
     "currentAffairsExpiry": "2026-09-12",
     "question": "Should terminally ill patients have the legal right to choose an assisted death? Talk me through your thinking.",
@@ -83,18 +123,31 @@
       "weak": "Treats the question as having an obvious answer either way, or states a specific jurisdiction's legal status as settled fact with total confidence."
     },
     "commonMistakes": [
-      { "mistake": "States confidently that assisted dying is or isn't legal in the UK, full stop", "reveals": "The position differs by jurisdiction (England & Wales, Scotland, Isle of Man, Jersey are not the same) and was actively moving through Parliament at last verification — flat, undated claims are a real risk here" },
-      { "mistake": "Presents only one side's arguments and dismisses the other as obviously weaker", "reveals": "Hasn't demonstrated the genuine perspective-taking this question is specifically testing" }
+      {
+        "mistake": "States confidently that assisted dying is or isn't legal in the UK, full stop",
+        "reveals": "The position differs by jurisdiction (England & Wales, Scotland, Isle of Man, Jersey are not the same) and was actively moving through Parliament at last verification — flat, undated claims are a real risk here"
+      },
+      {
+        "mistake": "Presents only one side's arguments and dismisses the other as obviously weaker",
+        "reveals": "Hasn't demonstrated the genuine perspective-taking this question is specifically testing"
+      }
     ],
     "liveProbes": [
-      { "probe": "What's the strongest argument against the position you've just taken?", "goodResponse": "Genuinely articulates the opposing case with force, not a weakened version of it" },
-      { "probe": "How would you address the concern that vulnerable patients might feel pressured into this choice?", "goodResponse": "Engages seriously with the coercion concern rather than dismissing it" }
+      {
+        "probe": "What's the strongest argument against the position you've just taken?",
+        "goodResponse": "Genuinely articulates the opposing case with force, not a weakened version of it"
+      },
+      {
+        "probe": "How would you address the concern that vulnerable patients might feel pressured into this choice?",
+        "goodResponse": "Engages seriously with the coercion concern rather than dismissing it"
+      }
     ],
     "hints": [
       "Try to state the strongest argument on the side you don't currently favour.",
       "Is the legal position the same everywhere in the UK and Ireland's neighbouring jurisdictions?",
       "What safeguards, if any, might address the biggest risks of a change like this?"
-    ]
+    ],
+    "clinicalReviewRequired": true
   },
   {
     "id": "MED-CA-07",
@@ -103,7 +156,12 @@
     "difficulty": 3,
     "questionType": "Policy Discussion",
     "title": "Is it fair to prioritise UK graduates for training posts?",
-    "tags": ["current-affairs", "workforce", "fairness", "international-medical-graduates"],
+    "tags": [
+      "current-affairs",
+      "workforce",
+      "fairness",
+      "international-medical-graduates"
+    ],
     "format": "PD",
     "currentAffairsExpiry": "2027-03-31",
     "question": "Competition for medical training posts has been fierce, and recent policy has moved to prioritise UK medical graduates for these posts. Is that fair?",
@@ -115,12 +173,24 @@
       "weak": "States a one-sided position with no engagement with the other side, or avoids the question by refusing to have a view."
     },
     "commonMistakes": [
-      { "mistake": "Argues only that prioritisation is fair with no engagement with the cost to international graduates", "reveals": "A likely bias risk given the candidate's own stake in the outcome — worth probing explicitly" },
-      { "mistake": "Doesn't mention the effect on source countries that trained the graduates in question", "reveals": "Misses the global health equity dimension of the debate" }
+      {
+        "mistake": "Argues only that prioritisation is fair with no engagement with the cost to international graduates",
+        "reveals": "A likely bias risk given the candidate's own stake in the outcome — worth probing explicitly"
+      },
+      {
+        "mistake": "Doesn't mention the effect on source countries that trained the graduates in question",
+        "reveals": "Misses the global health equity dimension of the debate"
+      }
     ],
     "liveProbes": [
-      { "probe": "You'd personally benefit from this policy as a future UK graduate — does that affect how you should reason about it?", "goodResponse": "Acknowledges the stake honestly and shows they've tried to reason past it rather than denying any bias" },
-      { "probe": "What about doctors from countries that trained them, only for them to move here?", "goodResponse": "Engages with the global health equity question rather than treating it as irrelevant" }
+      {
+        "probe": "You'd personally benefit from this policy as a future UK graduate — does that affect how you should reason about it?",
+        "goodResponse": "Acknowledges the stake honestly and shows they've tried to reason past it rather than denying any bias"
+      },
+      {
+        "probe": "What about doctors from countries that trained them, only for them to move here?",
+        "goodResponse": "Engages with the global health equity question rather than treating it as irrelevant"
+      }
     ],
     "hints": [
       "Whose interests are in tension here, beyond just UK graduates?",
@@ -135,7 +205,11 @@
     "difficulty": 3,
     "questionType": "Policy Discussion",
     "title": "Should everyone be screened for prostate cancer?",
-    "tags": ["current-affairs", "screening", "evidence-appraisal"],
+    "tags": [
+      "current-affairs",
+      "screening",
+      "evidence-appraisal"
+    ],
     "format": "PD",
     "question": "Some campaigners argue for a national screening programme for prostate cancer for all men. Should there be one?",
     "answer": "Discussion question — no single verdict. A strong answer applies general screening principles rather than assuming 'more screening is always better': population screening needs an accurate-enough test and a favourable balance of benefit to harm, and a national committee has previously recommended a targeted (not universal) approach based on that evidence, against real campaigning pressure.",
@@ -146,12 +220,24 @@
       "weak": "Says everyone should obviously be screened because early detection saves lives, with no engagement with the harms of screening a low-risk population."
     },
     "commonMistakes": [
-      { "mistake": "Assumes more screening is automatically better", "reveals": "Ignores that an imperfect test applied to a low-prevalence population generates many false positives, which is itself a real harm" },
-      { "mistake": "Treats this as an all-or-nothing question", "reveals": "Misses that targeted screening of higher-risk groups is a real, different option from universal screening — not just a smaller version of the same idea" }
+      {
+        "mistake": "Assumes more screening is automatically better",
+        "reveals": "Ignores that an imperfect test applied to a low-prevalence population generates many false positives, which is itself a real harm"
+      },
+      {
+        "mistake": "Treats this as an all-or-nothing question",
+        "reveals": "Misses that targeted screening of higher-risk groups is a real, different option from universal screening — not just a smaller version of the same idea"
+      }
     ],
     "liveProbes": [
-      { "probe": "What actually happens to the men who get a false positive result?", "goodResponse": "Names concrete downstream harms — anxiety, further invasive testing, potential overtreatment" },
-      { "probe": "Is there a middle option between screening everyone and screening no one?", "goodResponse": "Names targeted screening of higher-risk groups as a genuine distinct option" }
+      {
+        "probe": "What actually happens to the men who get a false positive result?",
+        "goodResponse": "Names concrete downstream harms — anxiety, further invasive testing, potential overtreatment"
+      },
+      {
+        "probe": "Is there a middle option between screening everyone and screening no one?",
+        "goodResponse": "Names targeted screening of higher-risk groups as a genuine distinct option"
+      }
     ],
     "hints": [
       "Does an imperfect test behave the same way in a high-risk group as in the whole population?",

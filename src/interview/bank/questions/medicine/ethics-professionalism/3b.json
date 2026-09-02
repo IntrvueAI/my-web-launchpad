@@ -1,0 +1,176 @@
+[
+  {
+    "id": "MED-EP-13",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "An adult at risk who says nothing is wrong",
+    "tags": ["ethics", "safeguarding", "adult-at-risk"],
+    "format": "ES",
+    "clinicalReviewRequired": true,
+    "question": "You volunteer at a day centre for adults with learning disabilities. You notice one regular attendee seems frightened of the person who brings them each week, but when you ask if everything is okay, they say yes. What do you think about, and what would you do?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises this is a genuine adult-safeguarding concern even without a disclosure, that saying 'yes, I'm fine' does not close the matter, and that the correct step is passing the observation on to the centre's safeguarding lead rather than either dropping it or investigating personally.",
+    "modelReasoningPath": "A strong candidate recognises that safeguarding concerns for adults at risk don't require a verbal disclosure — an observed pattern of fear is itself a reportable concern. They resist two failure modes: dropping it because the person said they're fine (fear of a a carer is exactly the situation where a person might not feel able to say otherwise), and personally investigating or confronting the person who brings them (not their role, and could increase risk). The correct move is passing the specific, factual observation to the centre's own safeguarding lead, in the person's own words as far as possible, and trusting the proper process to take it from there.",
+    "rubric": {
+      "strong": "Recognises an observation alone can be a genuine safeguarding concern, does not accept 'I'm fine' as closing the matter, and passes it to the correct role rather than investigating personally.",
+      "developing": "Is uneasy about the situation but is vague about what to actually do with the observation.",
+      "weak": "Accepts 'I'm fine' as resolving the concern, or decides to confront the carer directly."
+    },
+    "commonMistakes": [
+      { "mistake": "Accepts the verbal reassurance as closing the matter", "reveals": "Doesn't recognise that fear itself can prevent someone from disclosing, especially about a person they depend on" },
+      { "mistake": "Confronts the carer directly", "reveals": "Not the volunteer's role, and could increase risk to the person at risk" }
+    ],
+    "liveProbes": [
+      { "probe": "Does it matter that they explicitly said nothing was wrong?", "goodResponse": "Explains why a verbal reassurance doesn't settle a safeguarding concern in a dependency relationship" }
+    ],
+    "hints": [
+      "Does someone need to disclose something for a safeguarding concern to be real?",
+      "Who is the right person to pass this observation to?"
+    ]
+  },
+  {
+    "id": "MED-EP-14",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "Capacity that comes and goes",
+    "tags": ["ethics", "capacity", "mental-capacity-act"],
+    "format": "ES",
+    "clinicalReviewRequired": true,
+    "question": "Someone's ability to understand and make decisions seems to vary from day to day — clear-headed on some days, confused on others. What does that mean for whether they have capacity to make a decision?",
+    "answer": "Discussion question — no single verdict, but a strong answer applies the real principle: capacity is decision-specific and time-specific, not a fixed global status, so the right question is whether THIS PERSON can make THIS DECISION at THIS TIME — including waiting for a clearer moment where that's possible.",
+    "modelReasoningPath": "This is the single most commonly abandoned capacity principle under pressure: capacity is assessed for a specific decision at a specific time, not as a permanent global label ('they have capacity' or 'they don't'). A strong candidate applies this directly to fluctuating capacity — the answer isn't a single fixed verdict, it's 'assess again, at the time the decision actually needs to be made, and where possible on a clearer day'. They also recognise that an unwise-seeming choice made on a lucid day still stands, and that fluctuating capacity is not the same as lacking capacity.",
+    "rubric": {
+      "strong": "States clearly that capacity is decision- and time-specific rather than a fixed global status, and applies this directly to the fluctuating case — reassess at the relevant time, and prefer a clearer moment where possible.",
+      "developing": "Recognises capacity can vary but treats it as needing a single overall verdict rather than a time-specific one.",
+      "weak": "Treats the person as globally 'not having capacity' because of the confused days, with no engagement with decision-specificity."
+    },
+    "commonMistakes": [
+      { "mistake": "Concludes the person globally lacks capacity because of the bad days", "reveals": "Misses that capacity is decision-specific and time-specific, not a permanent label" }
+    ],
+    "liveProbes": [
+      { "probe": "If they made an unwise decision on a clear day, would that decision still stand?", "goodResponse": "Confirms yes — an unwise decision made with capacity still stands" }
+    ],
+    "hints": [
+      "Is capacity a single, permanent status, or something assessed per decision and per moment?",
+      "What would you do differently if you could choose when to have this conversation?"
+    ]
+  },
+  {
+    "id": "MED-EP-15",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "A DNACPR conversation, from the outside",
+    "tags": ["ethics", "end-of-life", "dnacpr"],
+    "format": "ES",
+    "clinicalReviewRequired": true,
+    "question": "A family tells you they feel a 'do not attempt resuscitation' decision was made about their relative without them being properly involved, and they're distressed and angry about it. As someone who isn't part of the clinical team, how would you think about their concern?",
+    "answer": "Discussion question — no single verdict, and the applicant is not expected to know the clinical detail. A strong answer recognises the family's distress as legitimate regardless of whether the clinical decision itself was correct, and separates the QUESTION of whether the decision was clinically right from the SEPARATE question of whether the process of involving the family was handled well.",
+    "modelReasoningPath": "A strong candidate does not attempt to judge whether the DNACPR decision itself was clinically correct — that's outside their competence and not what's actually being asked. They separate two different questions: whether the decision was clinically appropriate (not theirs to judge), and whether the family was properly involved and communicated with about it (a process and communication question, which is a legitimate and important concern regardless of the clinical merits). They take the family's distress seriously as real and valid, rather than assuming it will resolve once the clinical reasoning is explained, and recognise that good communication in these conversations is itself part of good care.",
+    "rubric": {
+      "strong": "Separates the clinical-correctness question (not theirs to judge) from the involvement/communication question (a legitimate concern in its own right), and takes the family's distress seriously.",
+      "developing": "Sympathises with the family but doesn't separate the two different questions clearly.",
+      "weak": "Attempts to judge the clinical correctness of the decision, or dismisses the family's distress as something that will resolve once things are explained."
+    },
+    "commonMistakes": [
+      { "mistake": "Attempts to judge whether the DNACPR decision itself was medically correct", "reveals": "Not within a pre-medical applicant's competence, and not what the question is actually asking" },
+      { "mistake": "Assumes the family's distress will simply resolve once explained", "reveals": "Underestimates that poor communication is itself a real and valid grievance, separate from clinical correctness" }
+    ],
+    "liveProbes": [
+      { "probe": "Is it possible for a clinically correct decision to still have been handled badly?", "goodResponse": "Recognises these are genuinely separate questions" }
+    ],
+    "hints": [
+      "Is it your place to judge whether the clinical decision was right?",
+      "Could the decision be correct and the way it was communicated still be a real problem?"
+    ]
+  },
+  {
+    "id": "MED-EP-16",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Recognising a conflict of interest",
+    "tags": ["ethics", "conflicts-of-interest", "professionalism"],
+    "format": "ES",
+    "question": "You're helping organise a school event, and one of the two suppliers you're choosing between is run by a family friend. What do you do?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises the situation as a genuine conflict of interest worth naming out loud to whoever else is involved in the decision, even if the friend's supplier is genuinely the better option — the point is transparency, not necessarily recusal.",
+    "modelReasoningPath": "A strong candidate recognises this as a real conflict of interest the moment it arises, rather than only if the friend turns out to be the worse option. They name it explicitly to others involved in the decision, rather than quietly deciding they can be objective and saying nothing. A strong candidate distinguishes DECLARING a conflict (always required) from RECUSING from the decision (which may or may not be necessary depending on the situation) — declaring it transparently, and then letting others weigh in on how to proceed, is usually the right first step.",
+    "rubric": {
+      "strong": "Recognises and names the conflict of interest explicitly to others involved, and distinguishes declaring it from necessarily having to recuse.",
+      "developing": "Would consider it if directly asked, but wouldn't have proactively named it without prompting.",
+      "weak": "Sees no issue as long as they believe they can remain objective, and says nothing to anyone."
+    },
+    "commonMistakes": [
+      { "mistake": "Decides silently that they can remain objective and says nothing", "reveals": "Confidence in one's own objectivity is not a substitute for transparency — this is exactly the pattern conflict-of-interest rules exist to prevent" }
+    ],
+    "liveProbes": [
+      { "probe": "Does it matter if the friend's supplier is genuinely the better choice?", "goodResponse": "Recognises the conflict should be declared regardless of the eventual decision" }
+    ],
+    "hints": [
+      "Does believing you can be objective remove the need to declare the connection?",
+      "What's the difference between declaring a conflict and having to step back from the decision entirely?"
+    ]
+  },
+  {
+    "id": "MED-EP-17",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Consent outside a clinical setting",
+    "tags": ["ethics", "consent", "autonomy"],
+    "format": "ES",
+    "question": "A coach wants to change a young athlete's training programme significantly, and the athlete goes along with it without really understanding what's being asked or why. Is that a problem, even though it's not a medical decision?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that meaningful consent — understanding what's being asked and why, and having a genuine choice — matters well beyond clinical settings, and applies the same underlying principle (dialogue and understanding, not just going along with an authority figure) to a non-medical example.",
+    "modelReasoningPath": "A strong candidate recognises the underlying principle at stake — genuine understanding and voluntary agreement, not just compliance with an authority figure — applies far beyond hospitals, and can transfer it to this sporting context. They note that 'going along with it' isn't the same as informed agreement, particularly where there's a power imbalance (coach and athlete). A strong candidate proposes something concrete: the coach explaining the reasoning and checking understanding, not just issuing an instruction.",
+    "rubric": {
+      "strong": "Recognises the consent/understanding principle applies well beyond clinical settings, identifies the power imbalance, and proposes a concrete way of achieving genuine understanding rather than mere compliance.",
+      "developing": "Senses something is off but doesn't articulate the underlying principle or the power imbalance clearly.",
+      "weak": "Concludes there's no issue because it isn't a medical decision, with no engagement with genuine understanding or power dynamics."
+    },
+    "commonMistakes": [
+      { "mistake": "Says there's no issue since it isn't a medical or clinical context", "reveals": "Misses that the underlying principle of genuine, informed agreement generalises well beyond medicine" }
+    ],
+    "liveProbes": [
+      { "probe": "What's actually different between this and a patient not understanding what's being proposed to them?", "goodResponse": "Draws the parallel explicitly rather than treating the two as unrelated" }
+    ],
+    "hints": [
+      "What's the underlying principle here, beneath the specific medical example you might be used to?",
+      "Is there a power imbalance that makes genuine agreement harder to achieve?"
+    ]
+  },
+  {
+    "id": "MED-EP-18",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Working within your competence — but still helping",
+    "tags": ["ethics", "competence", "professionalism"],
+    "format": "ES",
+    "question": "A younger student asks you for help with a subject you're genuinely not confident in yourself. What do you do?",
+    "answer": "Discussion question — no single verdict. A strong answer is honest about the limits of their own knowledge rather than bluffing, and still finds a way to be genuinely useful — helping them find the right person, or working through it together honestly rather than pretending expertise.",
+    "modelReasoningPath": "A strong candidate is honest about the limit of their knowledge rather than bluffing to seem helpful or avoid disappointing the younger student. Aston publishes 'knowing your limitations and knowing when to ask for help' as an assessed attribute, and the discriminating move is doing BOTH halves: being honest about the limit, and still finding a genuinely useful way forward — pointing them to someone better placed to help, or being transparent that they'd be learning together rather than teaching from expertise they don't have.",
+    "rubric": {
+      "strong": "Is honest about the limit of their own knowledge, and still finds a genuinely useful way to help rather than simply declining.",
+      "developing": "Is honest about the limit but doesn't offer a further useful step.",
+      "weak": "Bluffs confidence they don't have, or declines to help at all with no attempt to find another way forward."
+    },
+    "commonMistakes": [
+      { "mistake": "Bluffs confidence to avoid admitting a limit", "reveals": "Prioritises appearing competent over being honest, which is the wrong instinct for a caring profession" },
+      { "mistake": "Declines to help at all", "reveals": "Honesty about a limit and being useful are not mutually exclusive — declining alone is only half the answer" }
+    ],
+    "liveProbes": [
+      { "probe": "What would you actually say to them, in the moment?", "goodResponse": "Gives real, honest words rather than an abstract description" }
+    ],
+    "hints": [
+      "Is admitting a limit and still being useful a contradiction?",
+      "Who else might be better placed to help, and could you point them there?"
+    ]
+  }
+]
