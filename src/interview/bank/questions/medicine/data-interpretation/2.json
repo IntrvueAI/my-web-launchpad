@@ -6,7 +6,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "The Morning Queue",
-    "tags": ["prioritisation", "triage", "judgement"],
+    "tags": [
+      "prioritisation",
+      "triage",
+      "judgement"
+    ],
     "question": "You're helping run a busy GP morning clinic with only three appointment slots left before lunch, but four patients waiting: a child with a mild fever and a rash that started this morning; a man in his 70s with sudden chest pain that started twenty minutes ago; a woman asking for a repeat prescription she's collected many times before; and a teenager who twisted their ankle playing sport yesterday and can now walk on it. How would you prioritise seeing them?",
     "answer": "The defensible strong ranking: the 70s man with sudden chest pain first (a genuine medical emergency needing immediate action, possibly redirected to emergency care rather than waiting at all), then the child with fever and new rash (rash plus fever in a child can indicate something serious and time-sensitive, worth same-day assessment), then either the repeat prescription or the ankle depending on how they're reasoned — both are lower urgency and could reasonably be the one deferred or handled administratively (e.g. the prescription may not need a full appointment at all). The KEY assessed skill is the justification and the criteria used (urgency/risk of harm from delay), not memorising this exact order.",
     "modelReasoningPath": "A strong candidate reasons explicitly about URGENCY and RISK OF HARM FROM DELAY, not just how unwell someone currently seems. Sudden chest pain in an older adult is flagged immediately as a potential cardiac emergency — every candidate should recognise this needs urgent attention, arguably before or instead of a routine slot at all. Fever plus a new rash in a child is flagged as something that COULD be serious (some serious infections present exactly this way) even though it might turn out to be nothing, so waiting is riskier than it looks. The repeat prescription and the day-old ankle are both lower risk from a short delay, and a strong candidate notices the prescription might not need a face-to-face slot at all. What's being tested is whether they reason about urgency/risk systematically, not whether they land on the exact 'expected' order.",
@@ -16,18 +20,31 @@
       "weak": "Ranks based on unrelated factors (e.g. who arrived first, who seems most upset) with no clinical-urgency reasoning, or fails to flag the chest pain as urgent."
     },
     "commonMistakes": [
-      { "mistake": "Puts the ankle injury or prescription ahead of the fever/rash child", "reveals": "Hasn't recognised that a new rash with fever in a child is a genuine red-flag combination worth taking seriously, even without a firm diagnosis" },
-      { "mistake": "Treats all four as roughly equal and just goes in arrival order", "reveals": "Is avoiding the actual task of the question, which is to demonstrate prioritisation reasoning, not fairness by turn order" }
+      {
+        "mistake": "Puts the ankle injury or prescription ahead of the fever/rash child",
+        "reveals": "Hasn't recognised that a new rash with fever in a child is a genuine red-flag combination worth taking seriously, even without a firm diagnosis"
+      },
+      {
+        "mistake": "Treats all four as roughly equal and just goes in arrival order",
+        "reveals": "Is avoiding the actual task of the question, which is to demonstrate prioritisation reasoning, not fairness by turn order"
+      }
     ],
     "liveProbes": [
-      { "probe": "Why is sudden chest pain more urgent than a fever that's been building for hours?", "goodResponse": "Explains that suddenness and the specific combination of symptoms (chest pain, older adult) suggests a time-critical emergency versus a more gradual, lower-immediate-risk presentation" },
-      { "probe": "Could the repeat prescription actually be dealt with without using one of the three slots at all?", "goodResponse": "Considers that routine repeat prescriptions are often handled administratively rather than needing a GP appointment" }
+      {
+        "probe": "Why is sudden chest pain more urgent than a fever that's been building for hours?",
+        "goodResponse": "Explains that suddenness and the specific combination of symptoms (chest pain, older adult) suggests a time-critical emergency versus a more gradual, lower-immediate-risk presentation"
+      },
+      {
+        "probe": "Could the repeat prescription actually be dealt with without using one of the three slots at all?",
+        "goodResponse": "Considers that routine repeat prescriptions are often handled administratively rather than needing a GP appointment"
+      }
     ],
     "hints": [
       "Which of these four could deteriorate seriously if made to wait?",
       "What does 'new' or 'sudden' tell you that 'ongoing' or 'routine' doesn't?",
       "Does every one of these four actually need a full appointment slot at all?"
-    ]
+    ],
+    "format": "PR"
   },
   {
     "id": "MED-D2",
@@ -36,7 +53,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "Reading a Waiting-List Claim",
-    "tags": ["statistics", "critical-thinking", "healthcare-policy"],
+    "tags": [
+      "statistics",
+      "critical-thinking",
+      "healthcare-policy"
+    ],
     "question": "A news headline says: \"Hospital waiting lists have grown by 40% this year — proof the NHS is getting worse.\" Before you accept that conclusion, what questions would you want to ask about this statistic?",
     "answer": "Not a single fixed answer, but a strong response interrogates the claim rather than accepting it: what's the baseline number (40% of a small number can be a small absolute change); is this list length or wait TIME (a longer list isn't the same as longer waits, e.g. if more people are being referred in a growing population); has demand or population size changed; has the definition or measurement of the list changed; is this one hospital, one region, or national; and does 'the NHS getting worse' actually follow from a waiting list number, or are there other explanations (more people seeking care, more conditions now treatable, etc.)?",
     "modelReasoningPath": "A strong candidate doesn't accept or reject the headline outright — they interrogate the STATISTIC itself. They ask about the baseline (a 40% rise from 10 to 14 is very different from 100,000 to 140,000), what exactly is being measured (list length vs. actual wait times vs. one hospital vs. national), whether the population or demand has changed (more referrals could mean more people seeking help, not necessarily worse care), and whether there are alternative explanations for the same number. This shows genuine statistical/critical literacy rather than either naive acceptance or reflexive scepticism.",
@@ -46,18 +67,31 @@
       "weak": "Either accepts the headline's conclusion at face value, or simply says 'statistics can be misleading' with no specific, substantive question raised."
     },
     "commonMistakes": [
-      { "mistake": "Says 'the news always exaggerates' with no specific reasoning about THIS number", "reveals": "Is expressing generic scepticism rather than doing the actual analytical work of interrogating a statistic" },
-      { "mistake": "Immediately accepts the 40% figure as proof of decline with no further questions", "reveals": "Hasn't recognised that a percentage without context (baseline, what's measured) can be highly misleading" }
+      {
+        "mistake": "Says 'the news always exaggerates' with no specific reasoning about THIS number",
+        "reveals": "Is expressing generic scepticism rather than doing the actual analytical work of interrogating a statistic"
+      },
+      {
+        "mistake": "Immediately accepts the 40% figure as proof of decline with no further questions",
+        "reveals": "Hasn't recognised that a percentage without context (baseline, what's measured) can be highly misleading"
+      }
     ],
     "liveProbes": [
-      { "probe": "If the waiting list grew because more people are coming forward for care they'd previously avoided, would that still mean the NHS is 'getting worse'?", "goodResponse": "Considers that a rising list could reflect increased access or demand rather than declining quality of care" },
-      { "probe": "Does a longer waiting LIST necessarily mean longer waiting TIMES for any individual patient?", "goodResponse": "Distinguishes between the size of a list and the actual experience of individual patients on it" }
+      {
+        "probe": "If the waiting list grew because more people are coming forward for care they'd previously avoided, would that still mean the NHS is 'getting worse'?",
+        "goodResponse": "Considers that a rising list could reflect increased access or demand rather than declining quality of care"
+      },
+      {
+        "probe": "Does a longer waiting LIST necessarily mean longer waiting TIMES for any individual patient?",
+        "goodResponse": "Distinguishes between the size of a list and the actual experience of individual patients on it"
+      }
     ],
     "hints": [
       "What's missing from '40%' on its own — what would you want to know that number as a percentage OF?",
       "Is a longer list the same thing as a longer wait for any one person?",
       "Could there be a reason for this number that ISN'T 'the NHS getting worse'?"
-    ]
+    ],
+    "format": "AD"
   },
   {
     "id": "MED-D3",
@@ -66,7 +100,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "The Screening Test Result",
-    "tags": ["risk", "statistics", "probability"],
+    "tags": [
+      "risk",
+      "statistics",
+      "probability"
+    ],
     "question": "A screening test for a certain condition is 95% accurate. A patient tests positive. They immediately assume they have a 95% chance of having the condition. Talk me through whether that's the right way to think about it.",
     "answer": "It is generally NOT correct without more information — this is testing awareness of base-rate/false-positive reasoning (related to the real-world 'base rate fallacy'). If the condition is rare in the population being screened, even a 95%-accurate test can mean MOST positive results are false positives, because the large pool of healthy people being tested produces more false positives in absolute terms than the small pool of genuinely affected people produces true positives. A strong candidate doesn't need to calculate exact numbers, but should recognise that accuracy alone, without knowing how common the condition is, is not enough to know the real chance they have it.",
     "modelReasoningPath": "A strong candidate recognises this is testing whether they blindly accept '95% accurate = 95% chance I have it', or think more carefully. The key insight (the candidate doesn't need the exact maths, just the concept): if very few people in the tested population actually HAVE the condition, then even a small false-positive rate applied to a huge number of healthy people can produce more false positives in absolute terms than true positives from the small group who are actually ill. So the real chance of having the condition given a positive result depends on how COMMON the condition is, not just on the test's accuracy alone. A candidate who can even gesture at 'it depends how rare the condition is' is showing strong reasoning here.",
@@ -76,17 +114,27 @@
       "weak": "Agrees the patient's 95% assumption is correct with no further probing, or cannot engage with the concept even after a hint."
     },
     "commonMistakes": [
-      { "mistake": "Confirms the patient's logic is correct ('yes, 95% accurate means 95% chance they have it')", "reveals": "Hasn't recognised the difference between test accuracy and the actual probability of having the condition given a positive result — a very common and important reasoning error to be aware of before medical school" }
+      {
+        "mistake": "Confirms the patient's logic is correct ('yes, 95% accurate means 95% chance they have it')",
+        "reveals": "Hasn't recognised the difference between test accuracy and the actual probability of having the condition given a positive result — a very common and important reasoning error to be aware of before medical school"
+      }
     ],
     "liveProbes": [
-      { "probe": "If this condition is extremely rare — say it affects 1 in 10,000 people — does that change how you'd think about a positive result?", "goodResponse": "Recognises that rarity of the condition dramatically affects how many positive results are actually false, even with a highly 'accurate' test" },
-      { "probe": "What would you want to tell the patient, given this uncertainty?", "goodResponse": "Suggests communicating that a positive result means further testing or investigation is needed, not a certain diagnosis, while being careful not to alarm the patient unnecessarily" }
+      {
+        "probe": "If this condition is extremely rare — say it affects 1 in 10,000 people — does that change how you'd think about a positive result?",
+        "goodResponse": "Recognises that rarity of the condition dramatically affects how many positive results are actually false, even with a highly 'accurate' test"
+      },
+      {
+        "probe": "What would you want to tell the patient, given this uncertainty?",
+        "goodResponse": "Suggests communicating that a positive result means further testing or investigation is needed, not a certain diagnosis, while being careful not to alarm the patient unnecessarily"
+      }
     ],
     "hints": [
       "Think about how many people without the condition might also test positive, just by chance.",
       "Does the answer depend at all on how common or rare this condition is?",
       "Try imagining testing 10,000 people, most of whom don't have the condition at all — what happens?"
-    ]
+    ],
+    "format": "DI"
   },
   {
     "id": "MED-D4",
@@ -95,7 +143,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "A&E Waiting Times Over Time",
-    "tags": ["statistics", "trends", "healthcare-policy"],
+    "tags": [
+      "statistics",
+      "trends",
+      "healthcare-policy"
+    ],
     "question": "Here's a simple trend: five years ago, the average wait in a hospital's A&E department was two hours. This year, it's four hours. The hospital's management says: \"Nothing has changed on our end — this is purely a national trend affecting every hospital equally.\" What would you want to know before accepting or rejecting that claim?",
     "answer": "Not a single fixed answer — the strong response interrogates the claim with specific, checkable questions: how does this hospital's increase compare numerically to the genuine national average increase over the same period (if the national trend rose by, say, 30% and this hospital rose by 100%, the claim doesn't hold); has anything local changed (funding, staffing levels, local population growth, ward closures); and is the comparison using consistent measurement (are 'wait times' measured the same way in both years)?",
     "modelReasoningPath": "A strong candidate treats the management's claim as something to be TESTED against evidence, not accepted because it was asserted confidently. They would want a genuine national comparison figure to check whether this hospital's rise (100%, from 2 to 4 hours) is actually in line with or worse than the national trend — if the national average only rose by, say, 20-30%, the claim that 'nothing has changed on our end' looks weak. They'd also want to know about local factors (staffing cuts, local demand changes, ward or bed closures) that could explain a hospital-specific effect, and whether the two figures were measured in a consistent, comparable way.",
@@ -105,17 +157,27 @@
       "weak": "Accepts the management's claim without question, or rejects it outright with no reasoning for why."
     },
     "commonMistakes": [
-      { "mistake": "Simply distrusts management's statement 'because management always spins things' with no substantive reasoning", "reveals": "Is expressing generic cynicism rather than identifying what specific evidence would actually confirm or disprove the claim" }
+      {
+        "mistake": "Simply distrusts management's statement 'because management always spins things' with no substantive reasoning",
+        "reveals": "Is expressing generic cynicism rather than identifying what specific evidence would actually confirm or disprove the claim"
+      }
     ],
     "liveProbes": [
-      { "probe": "If the national average also doubled over the same five years, would that change your view of the hospital's claim?", "goodResponse": "Recognises that if the numbers genuinely matched the national trend, the claim would become far more credible" },
-      { "probe": "What local information, beyond the national comparison, would you want to see?", "goodResponse": "Suggests concrete local factors — staffing levels, funding changes, local population growth, bed numbers" }
+      {
+        "probe": "If the national average also doubled over the same five years, would that change your view of the hospital's claim?",
+        "goodResponse": "Recognises that if the numbers genuinely matched the national trend, the claim would become far more credible"
+      },
+      {
+        "probe": "What local information, beyond the national comparison, would you want to see?",
+        "goodResponse": "Suggests concrete local factors — staffing levels, funding changes, local population growth, bed numbers"
+      }
     ],
     "hints": [
       "What's the one number you'd most want to compare this hospital's increase against?",
       "Could something have genuinely changed locally, even if the national trend is also true?",
       "Is 'wait time' definitely being measured the same way across both years?"
-    ]
+    ],
+    "format": "AD"
   },
   {
     "id": "MED-D5",
@@ -124,7 +186,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "Vaccine Uptake in Two Towns",
-    "tags": ["statistics", "correlation", "critical-thinking"],
+    "tags": [
+      "statistics",
+      "correlation",
+      "critical-thinking"
+    ],
     "question": "Town A has a 95% childhood vaccination rate and very few cases of a certain preventable disease. Town B has a 60% vaccination rate and a recent outbreak of the same disease. A local politician says: \"This proves vaccination rates alone caused the difference.\" How would you assess that claim?",
     "answer": "Not a single fixed answer — a strong candidate treats this as a plausible but NOT proven causal claim, since it's a correlation between two towns. They should raise: this is only two data points/towns, not a controlled comparison; other differences between the towns could matter (population density, healthcare access, prior outbreaks, age demographics); and while lower vaccination rates plausibly contribute to outbreak risk (this has strong general scientific backing), 'proves' is too strong a word for a single comparison like this.",
     "modelReasoningPath": "A strong candidate distinguishes between 'this is consistent with vaccination rates being an important factor' (very plausible, and well-supported generally) and 'this single comparison PROVES it was the cause' (too strong a claim from just two towns). They'd want to know about other differences between the towns — population density (denser areas can spread disease faster regardless of vaccination), general healthcare access, age structure of the population, or whether Town B had recent travel-related exposure. This isn't about being contrarian for its own sake — genuine scientific evidence does support vaccination reducing outbreak risk — it's about recognising that ONE comparison between two towns doesn't 'prove' causation on its own, however plausible the explanation is.",
@@ -134,18 +200,31 @@
       "weak": "Either accepts 'proves' at face value, or dismisses the entire vaccination link as coincidence despite it being a well-evidenced general effect."
     },
     "commonMistakes": [
-      { "mistake": "Rejects any link between vaccination rates and outbreak risk entirely", "reveals": "Has overcorrected into rejecting well-established general evidence, rather than specifically critiquing the overreach of 'proves' from one comparison" },
-      { "mistake": "Accepts 'proves' without qualification", "reveals": "Hasn't distinguished correlation in a single comparison from a scientifically proven causal claim" }
+      {
+        "mistake": "Rejects any link between vaccination rates and outbreak risk entirely",
+        "reveals": "Has overcorrected into rejecting well-established general evidence, rather than specifically critiquing the overreach of 'proves' from one comparison"
+      },
+      {
+        "mistake": "Accepts 'proves' without qualification",
+        "reveals": "Hasn't distinguished correlation in a single comparison from a scientifically proven causal claim"
+      }
     ],
     "liveProbes": [
-      { "probe": "Does questioning the word 'proves' mean you doubt that vaccination reduces outbreak risk in general?", "goodResponse": "Clarifies that they accept the wider evidence base for vaccination effectiveness, while specifically objecting to over-claiming proof from a single two-town comparison" },
-      { "probe": "What single extra piece of information would strengthen the politician's claim the most?", "goodResponse": "Suggests something like data from many more towns/regions showing the same pattern, or a controlled study, rather than just this one comparison" }
+      {
+        "probe": "Does questioning the word 'proves' mean you doubt that vaccination reduces outbreak risk in general?",
+        "goodResponse": "Clarifies that they accept the wider evidence base for vaccination effectiveness, while specifically objecting to over-claiming proof from a single two-town comparison"
+      },
+      {
+        "probe": "What single extra piece of information would strengthen the politician's claim the most?",
+        "goodResponse": "Suggests something like data from many more towns/regions showing the same pattern, or a controlled study, rather than just this one comparison"
+      }
     ],
     "hints": [
       "Is there a difference between 'this fits the theory' and 'this proves the theory'?",
       "What else about these two towns might be different, besides vaccination rates?",
       "Does the wider scientific evidence on vaccination effectiveness change how you'd phrase your answer?"
-    ]
+    ],
+    "format": "AD"
   },
   {
     "id": "MED-D6",
@@ -154,7 +233,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "The Relative Risk Headline",
-    "tags": ["statistics", "risk", "critical-thinking"],
+    "tags": [
+      "statistics",
+      "risk",
+      "critical-thinking"
+    ],
     "question": "A headline says: \"New drug cuts risk of a rare complication by 50%!\" It turns out the complication affects 2 in 1,000 people without the drug, and 1 in 1,000 people with it. Is the '50%' figure misleading? Talk me through it.",
     "answer": "The 50% figure is technically accurate as a RELATIVE risk reduction, but is a strong candidate for being called misleading in isolation because it sounds far more dramatic than the ABSOLUTE risk reduction, which is only 1 in 1,000 (0.1 percentage points). A strong answer explains the difference between relative and absolute risk, and notes that both figures are useful together — the relative figure alone, without the absolute baseline, can create a distorted impression of how much benefit an individual patient actually gets.",
     "modelReasoningPath": "A strong candidate recognises this is testing the classic relative-vs-absolute risk distinction. The 50% relative reduction is mathematically correct (1 is half of 2), but sounds far more significant than the absolute reduction of one case per thousand people. They explain that both numbers are 'true' but tell different stories: relative risk is useful for comparing effect sizes between studies, while absolute risk is what actually matters for an individual patient deciding whether a drug is worth taking (side effects, cost, effort). A genuinely strong answer notes that headlines often quote relative risk because it sounds more impressive, which is itself worth being alert to.",
@@ -164,16 +247,23 @@
       "weak": "Either accepts the 50% figure as fully representative with no further thought, or dismisses the drug's benefit entirely without engaging with the actual numbers."
     },
     "commonMistakes": [
-      { "mistake": "Says the 50% figure is simply 'wrong' or 'a lie'", "reveals": "Hasn't grasped that relative risk reduction is a real, valid statistic — the issue is using it alone without the absolute context, not that it's false" }
+      {
+        "mistake": "Says the 50% figure is simply 'wrong' or 'a lie'",
+        "reveals": "Hasn't grasped that relative risk reduction is a real, valid statistic — the issue is using it alone without the absolute context, not that it's false"
+      }
     ],
     "liveProbes": [
-      { "probe": "If the complication instead affected 200 in 1,000 without the drug and 100 in 1,000 with it, would the 50% figure feel as misleading?", "goodResponse": "Recognises that with a much larger absolute baseline, the same relative figure represents a much more meaningful absolute benefit — showing they understand the relationship between the two, not just a fixed rule" }
+      {
+        "probe": "If the complication instead affected 200 in 1,000 without the drug and 100 in 1,000 with it, would the 50% figure feel as misleading?",
+        "goodResponse": "Recognises that with a much larger absolute baseline, the same relative figure represents a much more meaningful absolute benefit — showing they understand the relationship between the two, not just a fixed rule"
+      }
     ],
     "hints": [
       "What's the actual absolute drop in cases per thousand people?",
       "Are both the 50% figure and the absolute figure 'true' at the same time?",
       "Why might a headline prefer to quote the relative figure?"
-    ]
+    ],
+    "format": "AD"
   },
   {
     "id": "MED-D7",
@@ -182,7 +272,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "A Small Study, A Big Claim",
-    "tags": ["statistics", "study-design", "critical-thinking"],
+    "tags": [
+      "statistics",
+      "study-design",
+      "critical-thinking"
+    ],
     "question": "A study of 24 people finds that a particular supplement improves memory, and it gets reported as \"Scientists confirm memory-boosting supplement.\" What would you want to know before accepting that conclusion?",
     "answer": "Not a single fixed answer — a strong response raises: the sample size (24 is very small, making the result less reliable and more likely due to chance); whether there was a control/placebo group and whether it was randomised; whether the effect was statistically significant or just a trend; whether the study has been replicated by others; and who funded the study (potential conflicts of interest). 'Confirm' is a strong word for one small study.",
     "modelReasoningPath": "A strong candidate treats a single small study as preliminary evidence, not proof, regardless of how it's reported. They'd want to know the sample size is a real limitation (24 people is small enough that random chance becomes a plausible explanation), whether there was a properly controlled comparison group, whether the result was statistically significant, and whether independent researchers have replicated it. They might also note that media reporting often overstates certainty ('confirm') beyond what a single study can support, and that funding source is worth knowing given potential conflicts of interest.",
@@ -192,16 +286,23 @@
       "weak": "Accepts the headline's claim at face value, or dismisses all small studies as worthless with no nuanced reasoning."
     },
     "commonMistakes": [
-      { "mistake": "Says 'small studies are always useless' with no further nuance", "reveals": "Hasn't recognised that small studies can be legitimate PRELIMINARY evidence — the issue is treating them as confirmed/proven fact, not that they have zero value" }
+      {
+        "mistake": "Says 'small studies are always useless' with no further nuance",
+        "reveals": "Hasn't recognised that small studies can be legitimate PRELIMINARY evidence — the issue is treating them as confirmed/proven fact, not that they have zero value"
+      }
     ],
     "liveProbes": [
-      { "probe": "If five more studies with much larger sample sizes all found the same result, would that change your view?", "goodResponse": "Recognises that replication with larger samples would substantially strengthen the claim — showing they understand accumulating evidence, not blanket scepticism" }
+      {
+        "probe": "If five more studies with much larger sample sizes all found the same result, would that change your view?",
+        "goodResponse": "Recognises that replication with larger samples would substantially strengthen the claim — showing they understand accumulating evidence, not blanket scepticism"
+      }
     ],
     "hints": [
       "Is 24 people a large or small sample for a scientific study?",
       "What would you want to know about how the study was designed?",
       "Does one study 'confirm' something, scientifically speaking?"
-    ]
+    ],
+    "format": "AD"
   },
   {
     "id": "MED-D8",
@@ -210,7 +311,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "Splitting a Fixed Budget",
-    "tags": ["prioritisation", "resource-allocation", "healthcare-policy"],
+    "tags": [
+      "prioritisation",
+      "resource-allocation",
+      "healthcare-policy"
+    ],
     "question": "A hospital has a small amount of unexpected extra funding this year and can only spend it in ONE of three ways: hiring two more nurses for an understaffed general ward, buying a piece of diagnostic equipment that would speed up cancer diagnosis for a moderate number of patients, or funding a mental health support programme for staff, who are reporting high burnout. How would you think through this decision?",
     "answer": "Not a single fixed answer — the strong response is in the REASONING process, not which option is chosen. A strong answer identifies relevant criteria (scale of impact, urgency/severity of the problem being addressed, reversibility of harm from NOT acting, and knock-on effects — e.g. staff burnout can itself harm patient care indirectly) and applies them explicitly, rather than picking an option on instinct.",
     "modelReasoningPath": "A strong candidate resists picking an option purely on gut feeling and instead names the criteria they're using to compare genuinely different types of benefit: how many people are affected and how severely, how urgent or time-sensitive the problem is, and importantly, indirect effects — for example, staff burnout isn't just a staff welfare issue, it can also degrade patient care and increase staff turnover, so it may have a bigger knock-on impact than it first appears. A strong answer might not reach a firm final decision but shows a clear, structured way of weighing genuinely different kinds of good against each other.",
@@ -220,17 +325,27 @@
       "weak": "Picks an option with no stated reasoning, or treats the three options as obviously equivalent/impossible to compare with no attempt to structure the decision."
     },
     "commonMistakes": [
-      { "mistake": "Dismisses the staff mental health option as 'less important than patient care'", "reveals": "Hasn't considered that staff wellbeing has real knock-on effects on the quality and safety of patient care" }
+      {
+        "mistake": "Dismisses the staff mental health option as 'less important than patient care'",
+        "reveals": "Hasn't considered that staff wellbeing has real knock-on effects on the quality and safety of patient care"
+      }
     ],
     "liveProbes": [
-      { "probe": "How would you actually find out which of these three options would help the most people?", "goodResponse": "Suggests gathering more specific data (numbers of patients affected, severity of the staffing shortage, burnout survey data) rather than guessing" },
-      { "probe": "Does staff burnout really affect patients, or is that just a staff welfare issue?", "goodResponse": "Explains the indirect link between staff wellbeing and patient care quality/safety, showing systemic thinking" }
+      {
+        "probe": "How would you actually find out which of these three options would help the most people?",
+        "goodResponse": "Suggests gathering more specific data (numbers of patients affected, severity of the staffing shortage, burnout survey data) rather than guessing"
+      },
+      {
+        "probe": "Does staff burnout really affect patients, or is that just a staff welfare issue?",
+        "goodResponse": "Explains the indirect link between staff wellbeing and patient care quality/safety, showing systemic thinking"
+      }
     ],
     "hints": [
       "What criteria could you use to compare three very different kinds of benefit?",
       "Does helping staff ever indirectly help patients?",
       "What extra information would actually help you decide here?"
-    ]
+    ],
+    "format": "PR"
   },
   {
     "id": "MED-D9",
@@ -239,7 +354,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "The Five-Year Survival Statistic",
-    "tags": ["statistics", "risk", "critical-thinking"],
+    "tags": [
+      "statistics",
+      "risk",
+      "critical-thinking"
+    ],
     "question": "You're told a cancer's \"five-year survival rate\" has risen from 40% to 70% since a new screening programme began, and this is presented as proof the screening is saving lives. What would you want to check before accepting that?",
     "answer": "Not a single fixed answer — a strong candidate should raise the concept of 'lead-time bias': earlier screening detects cancer sooner, which mechanically increases the time from diagnosis to death (and therefore the 5-year survival figure) even if the person doesn't actually live any longer overall. Other useful questions: has actual mortality (death rate) from the cancer changed, not just the survival-from-diagnosis figure; and has screening led to detecting cases that would never have caused harm (overdiagnosis)?",
     "modelReasoningPath": "A strong candidate recognises that a rising five-year-survival statistic doesn't automatically mean people are living longer — it could be an artefact of DETECTING the disease earlier (lead-time bias), which starts the five-year clock sooner without changing the actual date of death. They'd want to see the actual mortality/death rate over time as the more meaningful measure, since that isn't affected by when diagnosis happens. A very strong candidate might also raise overdiagnosis — screening sometimes finds slow-growing cases that would never have caused problems, which would also inflate survival statistics without reflecting a real benefit. This doesn't need precise technical vocabulary — the concept, reasoned out loud, is what matters.",
@@ -249,16 +368,23 @@
       "weak": "Accepts the statistic as clear proof of the screening programme's success with no further questions."
     },
     "commonMistakes": [
-      { "mistake": "Accepts the five-year survival rise as straightforward proof screening saves lives", "reveals": "Hasn't considered that earlier detection mechanically changes this statistic even without any real change in survival time" }
+      {
+        "mistake": "Accepts the five-year survival rise as straightforward proof screening saves lives",
+        "reveals": "Hasn't considered that earlier detection mechanically changes this statistic even without any real change in survival time"
+      }
     ],
     "liveProbes": [
-      { "probe": "If someone is diagnosed 2 years earlier than they otherwise would have been, but dies at exactly the same age either way, what happens to their 'five-year survival' classification?", "goodResponse": "Works through the logic that earlier diagnosis alone can flip someone from 'died within 5 years' to 'survived 5 years' with no real change in outcome" }
+      {
+        "probe": "If someone is diagnosed 2 years earlier than they otherwise would have been, but dies at exactly the same age either way, what happens to their 'five-year survival' classification?",
+        "goodResponse": "Works through the logic that earlier diagnosis alone can flip someone from 'died within 5 years' to 'survived 5 years' with no real change in outcome"
+      }
     ],
     "hints": [
       "What actually changes if a disease is just detected EARLIER, even if the outcome is the same?",
       "What other statistic, besides five-year survival, might tell you more about whether screening is really helping?",
       "Could screening ever find something that was never going to cause harm?"
-    ]
+    ],
+    "format": "DI"
   },
   {
     "id": "MED-D10",
@@ -267,7 +393,11 @@
     "difficulty": 2,
     "questionType": "Data Interpretation & Prioritisation",
     "title": "Ranking a Call-Handler's Queue",
-    "tags": ["prioritisation", "triage", "judgement"],
+    "tags": [
+      "prioritisation",
+      "triage",
+      "judgement"
+    ],
     "question": "You're helping triage calls to a non-emergency health advice line, and three calls come in at once: a parent worried about a baby who has been unusually sleepy and hard to wake for the last hour; an adult with a headache that's been present, unchanged, for two days; and someone asking whether it's safe to take a common painkiller alongside their regular medication. How would you prioritise these three calls, and why?",
     "answer": "The defensible strong ranking: the sleepy, hard-to-wake baby first — this combination in an infant is a recognised red flag that can indicate a serious underlying problem and needs urgent same-time assessment, not a queued callback. The medication-interaction question is likely next, since it's a genuine safety question but not acutely dangerous in the time it takes to answer (and may be answerable quickly via a reference check). The two-day unchanged headache in an adult, while it should still be addressed, is the least time-critical of the three, since 'unchanged for two days' suggests it isn't rapidly worsening.",
     "modelReasoningPath": "A strong candidate again reasons on URGENCY and RISK OF HARM FROM DELAY, not on how worried or urgent each caller sounds. A baby who is unusually sleepy and hard to wake is a recognised paediatric red flag that can indicate serious illness and deteriorate quickly — this needs to jump the queue. The medication question is a genuine safety check but is typically quick to resolve and low immediate risk if the caller simply waits a short time for a call back before taking anything. A headache that has been stable/unchanged for two days, while worth addressing, carries a lower immediate risk of rapid deterioration than the other two. The exact ordering of the second and third matters less than clearly explaining why the baby is the clear priority.",
@@ -277,16 +407,26 @@
       "weak": "Fails to prioritise the baby call appropriately, or ranks based on factors unrelated to urgency (e.g. who sounded most anxious)."
     },
     "commonMistakes": [
-      { "mistake": "Puts the two-day headache first because 'it's been going on longest'", "reveals": "Confuses duration with urgency — a long-standing, stable symptom is generally less acutely dangerous than a new, concerning change" },
-      { "mistake": "Doesn't specifically flag WHY the baby call is different, just says 'babies come first'", "reveals": "Hasn't engaged with the actual clinical reasoning being tested, just applied a generic rule" }
+      {
+        "mistake": "Puts the two-day headache first because 'it's been going on longest'",
+        "reveals": "Confuses duration with urgency — a long-standing, stable symptom is generally less acutely dangerous than a new, concerning change"
+      },
+      {
+        "mistake": "Doesn't specifically flag WHY the baby call is different, just says 'babies come first'",
+        "reveals": "Hasn't engaged with the actual clinical reasoning being tested, just applied a generic rule"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if the headache patient mentioned it was the worst headache of their life and started suddenly?", "goodResponse": "Recognises this would be a major red-flag change requiring the ranking to shift substantially, showing they're reasoning from the specific details, not fixed categories" }
+      {
+        "probe": "What if the headache patient mentioned it was the worst headache of their life and started suddenly?",
+        "goodResponse": "Recognises this would be a major red-flag change requiring the ranking to shift substantially, showing they're reasoning from the specific details, not fixed categories"
+      }
     ],
     "hints": [
       "Which of these three symptoms is most associated with a baby being seriously unwell?",
       "Does 'unchanged for two days' suggest something rapidly dangerous, or something more stable?",
       "How urgent is a medication-safety question, typically, compared to a new symptom?"
-    ]
+    ],
+    "format": "PR"
   }
 ]

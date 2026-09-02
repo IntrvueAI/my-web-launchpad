@@ -1,0 +1,99 @@
+[
+  {
+    "id": "MED-CA-01",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Should doctors go on strike?",
+    "tags": ["current-affairs", "industrial-action", "nhs-workforce"],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-11-30",
+    "question": "Doctors in England have taken industrial action over pay in recent years. Is it ever right for doctors to strike?",
+    "answer": "Discussion question — no single verdict, and this is scored on balance, never on which side is taken. As at the register's last verification: the resident doctors' dispute in England ended on 29 June 2026 when residents voted to accept a pay and jobs offer; consultants hold a separate, live 12-month strike mandate from 6 July 2026 with no strike dates announced. This entry expires 30 November 2026 — the underlying position may have moved since.",
+    "modelReasoningPath": "A strong candidate states the case FOR industrial action at its strongest (real-terms pay erosion, retention, and the argument that a sustainable workforce is itself a patient-safety issue) and the case AGAINST at its strongest (direct harm to patients during action, and that patients did not choose the dispute) — genuinely, not as a strawman either way. They recognise the profession itself is divided rather than presenting one view as 'the' medical view, and are honest that their sense of the CURRENT position (who's in dispute, whether action is live) might be out of date, rather than stating a stale fact confidently. A very strong answer names a mitigating mechanism — emergency cover, derogations, notice periods — and says explicitly what would change their own view.",
+    "rubric": {
+      "strong": "States both the strongest pro- and anti-strike case fairly, is appropriately careful/tentative about the exact current state of any dispute, recognises the profession is divided, and can say what would change their mind.",
+      "developing": "Has a position but only seriously engages one side, or states the current situation as settled fact with unwarranted confidence.",
+      "weak": "Argues only one side, refuses to engage because 'it's political', or confidently states a current dispute status without any hedging."
+    },
+    "commonMistakes": [
+      { "mistake": "States confidently that doctors are 'currently striking' without qualification", "reveals": "The industrial-action picture in the NHS moves fast — confident, unhedged claims about exactly who is or isn't striking right now are a real risk of being wrong" },
+      { "mistake": "Argues only the patient-harm side or only the pay-erosion side", "reveals": "Hasn't engaged with the strongest version of the opposing case" },
+      { "mistake": "Refuses to engage because the topic is political", "reveals": "This is itself a weak answer to the question asked, not a neutral non-answer" }
+    ],
+    "liveProbes": [
+      { "probe": "A patient whose surgery was cancelled during a strike had no part in the dispute — what would you say to them?", "goodResponse": "Engages seriously with the patient-harm argument rather than dismissing it" },
+      { "probe": "If pay erosion drives people out of the profession over ten years, is that not also patient harm?", "goodResponse": "Weighs long-term workforce harm against short-term harm from action, rather than treating only one as real harm" }
+    ],
+    "hints": [
+      "What's the strongest argument FOR the right to strike here, and the strongest argument against?",
+      "Is the medical profession united or divided on this question?",
+      "What would actually change your mind on this?"
+    ]
+  },
+  {
+    "id": "MED-CA-02",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Why do people in poorer areas die younger?",
+    "tags": ["current-affairs", "health-inequalities", "social-determinants"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-04-30",
+    "question": "People in the most deprived parts of the country live shorter, less healthy lives than people in the least deprived areas. Why do you think that is, and whose job is it to fix?",
+    "answer": "Discussion question — no single verdict. A strong answer names the social determinants of health (housing, income, education, work, environment) as doing more of the work than healthcare access itself, engages with the 'inverse care law' (good care tends to be least available where need is greatest), and is honest that this is only partly the NHS's problem to solve.",
+    "modelReasoningPath": "A strong candidate resists the instinct to frame this purely as an NHS-access problem — as at the register's last check, the healthy-life-expectancy gap between the most and least deprived areas in England was around two decades and had been widening, not narrowing, which shows this isn't solved by healthcare alone. They name concrete social determinants and can give at least one mechanism by which inequality shows up not just in provision but in UPTAKE too (people in more deprived areas being less likely to take up an available service, not only having less available). They recognise the NHS is largely downstream of causes it doesn't control, without using that as an excuse to say nothing can be done from within health services.",
+    "rubric": {
+      "strong": "Names determinants beyond healthcare specifically, engages with unequal uptake as well as unequal provision, and is honest about the limits of what the NHS alone can fix — without dated statistics being required, though a hedged approximate figure is credited.",
+      "developing": "Names general 'poverty causes ill health' without a specific mechanism, or discusses only access to GPs.",
+      "weak": "Treats it purely as an access-to-healthcare problem, or attributes the gap mainly to individual lifestyle choices with no structural account."
+    },
+    "commonMistakes": [
+      { "mistake": "Frames the whole gap as a GP-access problem", "reveals": "Underestimates how much of the effect is social and economic rather than about the availability of care itself" },
+      { "mistake": "Attributes the gap mainly to individual choices", "reveals": "Ignores that choice is unevenly available — the same 'choice' is materially different for someone with money, time and safe housing" }
+    ],
+    "liveProbes": [
+      { "probe": "Is this the NHS's problem to fix?", "goodResponse": "Recognises the NHS can mitigate but not resolve a largely social and economic problem, without using that as an excuse to do nothing" },
+      { "probe": "You said access is unequal — is uptake also unequal, even where access exists?", "goodResponse": "Names the 'inverse care law' idea or an equivalent mechanism without needing the term itself" }
+    ],
+    "hints": [
+      "What determines health beyond hospitals and GPs?",
+      "Is care equally taken up even where it's equally available?",
+      "Whose responsibility is this, really — and is it only one body's job?"
+    ]
+  },
+  {
+    "id": "MED-CA-03",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Who loses when the NHS goes digital?",
+    "tags": ["current-affairs", "digital-exclusion", "health-data"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-02-28",
+    "question": "The NHS is increasingly moving services onto apps and digital platforms. Who might lose out from that, and does it matter?",
+    "answer": "Discussion question — no single verdict. A strong answer connects digital exclusion to the same population already disadvantaged by the inverse care law — those without a smartphone, reliable connectivity, digital skills, or English as a first language are disproportionately older, poorer, disabled, or otherwise high users of care.",
+    "modelReasoningPath": "A strong candidate makes the connection most candidates miss: digital transformation and health inequality aren't separate topics — a digital 'front door' to services structurally disadvantages the same groups who already face the inverse care law (older people, people in poverty, some disabled people, people with limited English), and these are often the people who use health and care services MOST. They engage with both sides fairly: digital services genuinely improve access and convenience for a large majority, while carrying a real risk of leaving a vulnerable minority further behind if non-digital routes aren't maintained properly alongside them.",
+    "rubric": {
+      "strong": "Names specific groups at risk of digital exclusion, explicitly connects this to the same pattern as the inverse care law, and engages with the genuine benefits of digital services as well as the risk — not dismissing either side.",
+      "developing": "Names 'older people' as excluded but doesn't connect it to the broader pattern or engage with the benefits side.",
+      "weak": "Treats digital transformation as either obviously good or obviously bad, with no engagement with who specifically is affected."
+    },
+    "commonMistakes": [
+      { "mistake": "Discusses digital transformation with no equity dimension at all", "reveals": "Misses the central tension the question is testing" },
+      { "mistake": "Treats digital exclusion and the inverse care law as unrelated topics", "reveals": "Misses the connecting insight — the same population is often affected by both" }
+    ],
+    "liveProbes": [
+      { "probe": "Should the NHS keep a non-digital route for everything it digitises?", "goodResponse": "Weighs the cost of maintaining parallel routes against the risk of excluding people if it doesn't" },
+      { "probe": "Is digital exclusion mainly about age?", "goodResponse": "Names other factors — poverty, disability, language, connectivity — not only age" }
+    ],
+    "hints": [
+      "Who might not have a smartphone, reliable internet, or confidence using an app?",
+      "Are the people excluded from digital services the same people already underserved in other ways?",
+      "Does moving online have to mean losing another route entirely?"
+    ]
+  }
+]

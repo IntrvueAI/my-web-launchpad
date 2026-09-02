@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://intrvue.ai/schemas/medicine/station.schema.json",
+  "title": "Intrvue.ai Medicine — station",
+  "description": "One practice unit. A station is a point in six-dimensional space (domain x format x context x actor x difficulty x scoring), not a question with metadata attached. Vocabularies: data/taxonomies.json. Domain ontology: data/ontology.json.",
+  "type": "object",
+  "required": ["station_id", "version", "title", "status", "domain", "format", "scenario", "delivery", "assessment", "provenance", "governance"],
+  "additionalProperties": false,
+  "properties": {
+
+    "station_id": {"type": "string", "pattern": "^ST-[0-9]{5}$", "description": "Immutable. Never reused, even after retirement."},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$", "description": "Semver. Minor = wording; major = anything that changes what is assessed, which invalidates historical score comparability."},
+    "title": {"type": "string", "maxLength": 120, "description": "Internal name. Never shown to the user before the station runs — a title can leak the answer."},
+    "status": {"enum": ["draft", "in_review", "clinically_reviewed", "live", "flagged", "expired", "retired"]},
+    "supersedes": {"type": "string", "description": "station_id this replaces, if any."},
+
+    "domain": {
+      "type": "object", "required": ["primary_topic", "assessment_domains"], "additionalProperties": false,
+      "properties": {
+        "primary_topic": {"type": "string", "pattern": "^D[0-9]+\\.[0-9]+\\.[0-9]+$", "description": "Exactly one leaf topic from ontology.json. Forces authoring discipline."},
+        "secondary_topics": {"type": "array", "items": {"type": "string", "pattern": "^D[0-9]+\\.[0-9]+\\.[0-9]+$"}, "maxItems": 4},
+        "assessment_domains": {"type": "array", "minItems": 1, "maxItems": 3, "items": {"type": "string", "pattern": "^D[0-9]+$"}, "description": "Top-level domains. More than three means the station is unfocused."}
+      }
+    },
+
+    "format": {
+      "type": "object", "required": ["primary"], "additionalProperties": false,
+      "properties": {
+        "primary": {"enum": ["DQ", "PE", "WE", "AC", "ES", "RP", "IT", "EX", "PR", "CA", "DI", "AD", "PD", "SP", "GT", "AR"]},
+        "secondary": {"type": "array", "items": {"enum": ["DQ", "PE", "WE", "AC", "ES", "RP", "IT", "EX", "PR", "CA", "DI", "AD", "PD", "SP", "FU", "GT", "AR"]}},
+        "engines": {"type": "array", "items": {"enum": ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9"]}, "description": "Derived from format + delivery; stored for query performance."}
+      }
+    },
+
+    "scenario": {
+      "type": "object", "required": ["context", "applicant_role", "opening_prompt"], "additionalProperties": false,
+      "properties": {
+        "context": {"enum": ["SCHOOL", "VOL", "CARE", "WORK", "HOSP", "GP", "COMM", "FAM", "UNI", "RES", "PH", "SPORT", "ONLINE", "NONE"]},
+        "applicant_role": {"type": "string", "description": "REQUIRED and must state what the candidate does NOT have access to or authority over. This field is the primary defence against stations that position an applicant as a clinician."},
+        "opening_prompt": {"type": "string", "description": "Exact words shown or spoken to the candidate at t=0."},
+        "candidate_brief": {"type": "string", "description": "Text shown during preparation time, if any. Absent for zero-prep stations (Aberdeen, Manchester)."},
+        "stimulus": {"type": "object", "additionalProperties": false, "description": "Supplied material for DI, AD, CA, SP and E8 pre-read stations.", "properties": {
+          "type": {"enum": ["chart", "table", "dataset", "passage", "image", "none"]},
+          "content_ref": {"type": "string"},
+          "supplied_in_advance": {"type": "boolean", "description": "True only for Keele-style pre-read stations."},
+          "source": {"type": "string"}, "source_date": {"type": "string", "format": "date"}
+        }},
+        "actor": {"type": "object", "additionalProperties": false, "description": "Required when format is RP, IT, EX or GT.", "properties": {
+          "type": {"enum": ["PT_ANX", "PT_ANG", "PT_DIS", "PT_CONF", "PT_WITH", "PT_DEM", "REL", "PAR", "CARER", "YP", "FRIEND", "PEER_APP", "COLL", "SENIOR", "HCP", "COORD", "MOP", "SCEPTIC", "INT"]},
+          "roleplay_ref": {"type": "string", "pattern": "^RP-[0-9]{3}$", "description": "Pointer to the full persona in roleplays.json. Personas are shared assets, not duplicated per station."}
+        }}
+      }
+    },
+
+    "delivery": {
+      "type": "object", "required": ["response_time_seconds"], "additionalProperties": false,
+      "properties": {
+        "preparation_time_seconds": {"type": "integer", "minimum": 0, "maximum": 300, "description": "0 for Aberdeen/Manchester/BSMS-style zero-prep. 60 for UCL. 120 for Leeds and Brunel. 300 for HYMS thinking time."},
+        "response_time_seconds": {"type": "integer", "minimum": 60, "maximum": 1800},
+        "mode": {"enum": ["live_voice", "asynchronous_recorded", "text"], "default": "live_voice"},
+        "interruption_permitted": {"type": "boolean", "default": true},
+        "notes_permitted": {"type": "boolean", "default": false, "description": "False by default. Bristol, Sheffield and QMUL Malta explicitly ban notes; Bristol also bans AI tools."},
+        "adjustments_available": {"type": "array", "items": {"type": "string"}, "description": "Extended time, rephrasing on request (Leeds permits this explicitly), transcript-first delivery. Accessibility is a product requirement, not an afterthought."}
+      }
+    },
+
+    "assessment": {
+      "type": "object", "required": ["scoring_dimensions", "expected_content", "red_flags"], "additionalProperties": false,
+      "properties": {
+        "scoring_dimensions": {"type": "array", "minItems": 2, "items": {"type": "object", "required": ["dimension", "weight"], "additionalProperties": false, "properties": {
+          "dimension": {"enum": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]},
+          "weight": {"type": "number", "minimum": 0.05, "maximum": 0.6},
+          "interactive_only": {"type": "boolean", "default": false, "description": "True if this dimension cannot be scored from a transcript. Suppressed and disclosed in asynchronous or text mode rather than scored silently."}
+        }}, "description": "Weights must sum to 1.0. S1 and S2 are mandatory on every station (Imperial: 6 content / 4 communication; Aberdeen scores communication at every station regardless of domain)."},
+        "expected_content": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["point", "necessity"], "additionalProperties": false, "properties": {
+          "point": {"type": "string", "description": "A SUBSTANTIVE consideration, never a phrase. 'Names who they would escalate to' is valid; 'says the word escalate' is not."},
+          "necessity": {"enum": ["required", "expected", "optional_strong"], "description": "required = absence caps the band; expected = absence costs marks; optional_strong = presence lifts, absence costs nothing."},
+          "evidence_cues": {"type": "array", "items": {"type": "string"}, "description": "Transcript patterns indicating the point was made. Semantic, not literal string matching."},
+          "counts_only_if_applied": {"type": "boolean", "default": false, "description": "ANTI-BUZZWORD FLAG. When true, naming the concept scores zero; only application to this scenario scores. Set true for the four principles, the Mental Capacity Act, NHS values, duty of candour, the inverse care law, 'correlation is not causation'."}
+        }}},
+        "optional_strong_points": {"type": "array", "items": {"type": "string"}, "description": "Discriminators that lift a strong answer. Never penalised by absence."},
+        "red_flags": {"type": "array", "items": {"type": "object", "required": ["flag", "severity"], "additionalProperties": false, "properties": {
+          "flag": {"type": "string"},
+          "severity": {"enum": ["note", "concern", "serious"]},
+          "detection_cues": {"type": "array", "items": {"type": "string"}}
+        }}, "description": "Reported separately and never averaged away by a strong total (Plymouth scores a binary red-flag section alongside its numeric scale)."},
+        "model_answer_principles": {"type": "array", "items": {"type": "string"}, "description": "DELIBERATELY NOT model_answer. Principles a good answer embodies, never a script. City St George's publishes: 'Often there is no right or wrong answer.'"},
+        "band_descriptors": {"type": "object", "additionalProperties": false, "properties": {
+          "poor": {"type": "string"}, "borderline": {"type": "string"}, "competent": {"type": "string"}, "excellent": {"type": "string"}
+        }, "description": "Station-specific overrides. Defaults come from the dimension rubrics in scoring-rubrics.json."}
+      }
+    },
+
+    "adaptive": {
+      "type": "object", "additionalProperties": false, "description": "Follow-up behaviour. Governed by docs/07-adaptive-interviewer-logic.md.",
+      "properties": {
+        "planned_followups": {"type": "array", "items": {"type": "object", "required": ["prompt", "purpose"], "additionalProperties": false, "properties": {
+          "prompt": {"type": "string"}, "purpose": {"enum": ["deepen", "evidence", "challenge", "balance", "specify", "escalate", "safety_check"]},
+          "max_uses": {"type": "integer", "default": 1}
+        }}},
+        "conditional_followups": {"type": "array", "items": {"type": "object", "required": ["trigger", "prompt", "purpose"], "additionalProperties": false, "properties": {
+          "trigger": {"type": "object", "additionalProperties": false, "properties": {
+            "type": {"enum": ["content_gap", "unsupported_claim", "generic_answer", "off_question", "unsafe_reasoning", "overconfident_clinical", "shallow_reflection", "one_sided", "emotion_missed", "no_escalation", "strong_answer"]},
+            "detail": {"type": "string"}, "min_confidence": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.7}
+          }},
+          "prompt": {"type": "string"}, "purpose": {"enum": ["deepen", "evidence", "challenge", "balance", "specify", "escalate", "safety_check", "correct"]},
+          "priority": {"type": "integer", "minimum": 1, "maximum": 5, "description": "1 = highest. Safety-critical corrections outrank depth probes."}
+        }}},
+        "max_followups": {"type": "integer", "default": 3, "description": "Hard cap. Real interviewers do not interrogate indefinitely."},
+        "interrupt_policy": {"enum": ["never", "on_time_only", "on_time_or_serious_drift"], "default": "on_time_only", "description": "Interrupting on a missing keyword is forbidden — see Output 7."},
+        "do_not_lead": {"type": "array", "items": {"type": "string"}, "description": "Content the follow-up must never supply. If the station tests whether the candidate reaches safeguarding, the follow-up may not mention safeguarding."}
+      }
+    },
+
+    "hidden_information": {
+      "type": "array", "description": "Facts withheld until a disclosure condition is met. The model must NEVER volunteer these, including when the candidate is struggling.",
+      "items": {"type": "object", "required": ["fact", "disclosure_condition"], "additionalProperties": false, "properties": {
+        "fact": {"type": "string"},
+        "disclosure_condition": {"type": "string"},
+        "condition_type": {"enum": ["open_question", "behaviour_plus_restraint", "sequenced_unlock", "explicit_request"]},
+        "essential_to_pass": {"type": "boolean", "default": false}
+      }}
+    },
+
+    "difficulty": {
+      "type": "object", "required": ["band", "variables"], "additionalProperties": false,
+      "properties": {
+        "band": {"enum": ["1_foundation", "2_standard", "3_stretch", "4_adversarial"], "description": "DERIVED from the variable vector, not set by hand. 4_adversarial must be labelled in the UI as harder than a real station."},
+        "variables": {"type": "object", "additionalProperties": false, "description": "Each 0-3. See taxonomies.json dimension_5.", "properties": {
+          "AMBIG": {"$ref": "#/$defs/intensity"}, "EMO": {"$ref": "#/$defs/intensity"}, "CONFL": {"$ref": "#/$defs/intensity"},
+          "HIDDEN": {"$ref": "#/$defs/intensity"}, "SAFEG": {"$ref": "#/$defs/intensity"}, "TIME": {"$ref": "#/$defs/intensity"},
+          "MISLEAD": {"$ref": "#/$defs/intensity"}, "HOSTILE": {"$ref": "#/$defs/intensity"}, "INCOMP": {"$ref": "#/$defs/intensity"},
+          "ETHUNC": {"$ref": "#/$defs/intensity"}, "OVERC": {"$ref": "#/$defs/intensity"}, "CHALL": {"$ref": "#/$defs/intensity"},
+          "LIMITS": {"$ref": "#/$defs/intensity"}
+        }}
+      }
+    },
+
+    "university_compatibility": {
+      "type": "object", "required": ["mode"], "additionalProperties": false,
+      "properties": {
+        "mode": {"enum": ["universal", "include", "exclude"], "description": "'universal' is the default and should be the majority. Per-school inclusion lists are a maintenance burden and are only justified where a school's published format demands it."},
+        "school_ids": {"type": "array", "items": {"type": "string"}, "description": "Refs to uk-medical-school-interview-map.json ids."},
+        "requires_application_questioning": {"type": "boolean", "default": false, "description": "TRUE for AC-format stations. These must NEVER be served to schools whose application_questioning is false — Imperial, Sheffield, Newcastle, BSMS, Plymouth, Bristol, Glasgow, Nottingham, UEA."},
+        "excluded_reason": {"type": "string"}
+      }
+    },
+
+    "provenance": {
+      "type": "object", "required": ["author", "created", "source_basis"], "additionalProperties": false,
+      "properties": {
+        "author": {"type": "string"},
+        "created": {"type": "string", "format": "date"},
+        "source_basis": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["type", "reference"], "additionalProperties": false, "properties": {
+          "type": {"enum": ["university_page", "gmc_guidance", "msc_guidance", "ucas", "legislation", "nhs_source", "ons_or_statistics", "ontology_only", "internal"]},
+          "reference": {"type": "string"}, "date_checked": {"type": "string", "format": "date"}, "quote": {"type": "string"}
+        }}, "description": "Surfaced to the user. Provenance is a differentiator, not internal metadata."},
+        "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"], "description": "Confidence that this station represents a real UK interview demand."}
+      }
+    },
+
+    "governance": {
+      "type": "object", "required": ["clinical_knowledge_boundary", "premed_appropriate", "temporality", "review_date"], "additionalProperties": false,
+      "properties": {
+        "clinical_knowledge_boundary": {"enum": ["NONE", "LAY", "CONTEXT", "CLINICAL"], "description": "CLINICAL is invalid for a live station. If a clinical element appears it must be bait, with declining as the scored behaviour — set clinical_bait true instead."},
+        "clinical_bait": {"type": "boolean", "default": false, "description": "True where the scenario invites clinical advice and declining is the top-band behaviour."},
+        "premed_appropriate": {"enum": ["yes", "reward_only", "no"], "description": "reward_only = credit if offered, never required, never penalised by absence. Set for the seven conditional ontology topics."},
+        "temporality": {"enum": ["EVERGREEN", "SLOW", "FAST"]},
+        "current_affairs_ref": {"type": "string", "pattern": "^CA-[0-9]{3}$"},
+        "current_affairs_expiry": {"type": "string", "format": "date", "description": "Inherited from the referenced CA topic. Past this date the station is WITHHELD, not flagged."},
+        "review_date": {"type": "string", "format": "date"},
+        "clinical_review": {"type": "object", "additionalProperties": false, "properties": {
+          "required": {"type": "boolean"}, "completed_by": {"type": "string"}, "completed_date": {"type": "string", "format": "date"}
+        }, "description": "Required for every station touching safeguarding, capacity, confidentiality, end of life, or any clinical bait."},
+        "sensitivity_flags": {"type": "array", "items": {"enum": ["bereavement", "safeguarding", "discrimination", "family_illness", "financial_hardship", "carer_strain", "none"]}, "description": "Drives a content warning and an opt-out. A candidate should never be ambushed by a bereavement station."},
+        "wellbeing_rules": {"type": "array", "items": {"type": "string"}, "description": "Station-level guards, e.g. 'never prompt for the candidate's own health', 'never require disclosure of a family member's condition'."}
+      }
+    },
+
+    "analytics": {
+      "type": "object", "additionalProperties": false, "description": "Written by the system, not the author. Used to retire bad stations.",
+      "properties": {
+        "times_served": {"type": "integer"}, "mean_score": {"type": "number"}, "score_variance": {"type": "number"},
+        "discrimination_index": {"type": "number", "description": "Correlation with overall performance. Low discrimination = the station is not distinguishing anyone and should be retired."},
+        "red_flag_rate": {"type": "number"}, "abandon_rate": {"type": "number"},
+        "hidden_fact_leak_rate": {"type": "number", "description": "Roleplay only. Proportion of sessions where a gated fact was revealed without its condition being met. Target < 0.02."},
+        "user_dispute_rate": {"type": "number", "description": "Proportion of sessions where the user challenged the feedback. The single best early-warning signal for a wrong rubric."}
+      }
+    }
+  },
+
+  "$defs": {
+    "intensity": {"type": "integer", "minimum": 0, "maximum": 3}
+  }
+}

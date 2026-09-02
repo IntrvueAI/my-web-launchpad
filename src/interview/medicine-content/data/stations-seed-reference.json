@@ -1,0 +1,315 @@
+[
+  {
+    "station_id": "ST-00001",
+    "version": "1.0.0",
+    "title": "DVLA — the patient who won't stop driving",
+    "status": "draft",
+    "domain": {
+      "primary_topic": "D5.4.4",
+      "secondary_topics": ["D5.4.2", "D5.1.2", "D5.7.4"],
+      "assessment_domains": ["D5", "D8"]
+    },
+    "format": {"primary": "ES", "secondary": ["FU"], "engines": ["E1", "E3"]},
+    "scenario": {
+      "context": "GP",
+      "applicant_role": "You are not in this scenario. You are being asked to reason about a situation a doctor faces. You are not expected to know the law.",
+      "opening_prompt": "A doctor has told a patient that a recent diagnosis means they must inform the DVLA and stop driving. At the next appointment the patient says they have not told the DVLA and are still driving to work. What should the doctor be thinking about?",
+      "candidate_brief": "You have one minute to read this before the station begins."
+    },
+    "delivery": {
+      "preparation_time_seconds": 60,
+      "response_time_seconds": 300,
+      "mode": "live_voice",
+      "interruption_permitted": true,
+      "notes_permitted": false,
+      "adjustments_available": ["extended time", "rephrasing on request"]
+    },
+    "assessment": {
+      "scoring_dimensions": [
+        {"dimension": "S1", "weight": 0.25},
+        {"dimension": "S2", "weight": 0.15},
+        {"dimension": "S3", "weight": 0.35},
+        {"dimension": "S6", "weight": 0.25}
+      ],
+      "expected_content": [
+        {"point": "Recognises the legal duty to notify sits with the DRIVER, not the doctor", "necessity": "expected", "evidence_cues": ["it's their responsibility to tell the DVLA", "the patient has to notify"], "counts_only_if_applied": false},
+        {"point": "The doctor's first move is to explain the duty and make every reasonable effort to persuade the patient to stop", "necessity": "required", "evidence_cues": ["explain why", "try to persuade", "understand why they won't stop"]},
+        {"point": "Identifies WHY the patient might be refusing — work, independence, caring responsibilities — rather than treating refusal as obstinacy", "necessity": "expected", "evidence_cues": ["they might need it for work", "what's driving losing their licence mean for them"]},
+        {"point": "Applies a risk threshold: does continued driving expose OTHERS to a risk of death or serious harm", "necessity": "required", "evidence_cues": ["risk to other people", "could seriously harm someone else"]},
+        {"point": "Treats disclosure as a balance, not an automatic consequence of refusal", "necessity": "expected", "evidence_cues": ["weigh", "on the other hand", "it depends on"]},
+        {"point": "Tells the patient before disclosing, where practicable, and confirms in writing afterwards", "necessity": "optional_strong", "evidence_cues": ["tell them I was going to", "let them know afterwards", "in writing"]},
+        {"point": "Names confidentiality as the default that is being departed from, and why that default exists", "necessity": "expected", "evidence_cues": ["confidentiality matters because", "people need to be able to tell their doctor"], "counts_only_if_applied": true}
+      ],
+      "optional_strong_points": [
+        "Distinguishes this public-interest discretion from a statutory duty such as notifiable disease reporting, where no balancing is required",
+        "Notes that the doctor should document the decision either way",
+        "Recognises the doctor may seek advice from a defence body or a senior colleague first"
+      ],
+      "red_flags": [
+        {"flag": "States that the doctor must report the patient to the DVLA, as a legal duty on the doctor", "severity": "note", "detection_cues": ["the doctor has to report them", "it's the doctor's legal duty to inform"]},
+        {"flag": "Would disclose immediately with no attempt to persuade and no risk assessment", "severity": "concern", "detection_cues": ["I'd just call the DVLA", "straight away"]},
+        {"flag": "Would take no action at all because confidentiality is absolute", "severity": "serious", "detection_cues": ["confidentiality is absolute", "nothing they can do"]},
+        {"flag": "Offers a clinical judgement about whether the condition actually affects driving", "severity": "concern", "detection_cues": ["that condition wouldn't really affect", "they're probably fine to drive"]}
+      ],
+      "model_answer_principles": [
+        "The sequence matters more than the conclusion: explain, persuade, assess risk to others, warn, disclose, confirm in writing.",
+        "Confidentiality is departed from on a balance, not overridden by a rule.",
+        "Understanding the refusal is part of managing it, not a preliminary courtesy."
+      ],
+      "band_descriptors": {
+        "poor": "Jumps straight to reporting, or refuses to consider disclosure at all. No risk reasoning.",
+        "borderline": "Reaches the right end point but skips persuasion or the risk-to-others test. May assert the doctor has a legal duty to report.",
+        "competent": "Works through the sequence, names risk to others as the threshold, treats disclosure as a balance.",
+        "excellent": "All of the above plus the patient's perspective explored, the doctor's onward communication addressed, and confidentiality's purpose articulated rather than named."
+      }
+    },
+    "adaptive": {
+      "planned_followups": [
+        {"prompt": "What would you want to know about why they're still driving?", "purpose": "deepen"},
+        {"prompt": "Does it make a difference if they drive a school minibus rather than commuting alone?", "purpose": "challenge"}
+      ],
+      "conditional_followups": [
+        {"trigger": {"type": "content_gap", "detail": "no risk-to-others threshold stated"}, "prompt": "You've said the doctor might have to break confidentiality. What would have to be true for that to be justified?", "purpose": "specify", "priority": 1},
+        {"trigger": {"type": "unsafe_reasoning", "detail": "confidentiality treated as absolute"}, "prompt": "Is there any circumstance in which a doctor could share information without consent?", "purpose": "safety_check", "priority": 1},
+        {"trigger": {"type": "generic_answer", "detail": "four principles recited without application"}, "prompt": "Which two of those are actually pulling against each other here, and what would make one give way?", "purpose": "challenge", "priority": 2},
+        {"trigger": {"type": "strong_answer"}, "prompt": "Suppose the doctor tells the DVLA and it turns out the patient had already notified them. Was the doctor wrong to act?", "purpose": "challenge", "priority": 3}
+      ],
+      "max_followups": 3,
+      "interrupt_policy": "on_time_only",
+      "do_not_lead": ["risk of death or serious harm", "the driver has the legal duty", "public interest"]
+    },
+    "difficulty": {
+      "band": "3_stretch",
+      "variables": {"AMBIG": 2, "EMO": 0, "CONFL": 3, "HIDDEN": 0, "SAFEG": 1, "TIME": 1, "MISLEAD": 2, "HOSTILE": 2, "INCOMP": 1, "ETHUNC": 3, "OVERC": 1, "CHALL": 0, "LIMITS": 1}
+    },
+    "university_compatibility": {"mode": "universal", "requires_application_questioning": false},
+    "provenance": {
+      "author": "content-team",
+      "created": "2026-08-29",
+      "source_basis": [
+        {"type": "gmc_guidance", "reference": "GMC — Patients' fitness to drive and reporting concerns to the DVLA or DVA, paras 3, 4, 6, 9, 10", "date_checked": "2026-08-29", "quote": "The driver is legally responsible for telling the DVLA or DVA about any such condition or treatment."},
+        {"type": "gmc_guidance", "reference": "GMC Confidentiality, paras 63-68 (public interest) and para 87 (required by law)", "date_checked": "2026-08-29"}
+      ],
+      "confidence": "HIGH"
+    },
+    "governance": {
+      "clinical_knowledge_boundary": "CONTEXT",
+      "clinical_bait": true,
+      "premed_appropriate": "yes",
+      "temporality": "SLOW",
+      "review_date": "2027-08-29",
+      "clinical_review": {"required": true},
+      "sensitivity_flags": ["none"],
+      "wellbeing_rules": ["Do not ask the candidate about their own or a family member's driving or health"]
+    }
+  },
+
+  {
+    "station_id": "ST-00002",
+    "version": "1.0.0",
+    "title": "The relative who has been waiting (roleplay)",
+    "status": "draft",
+    "domain": {
+      "primary_topic": "D2.4.2",
+      "secondary_topics": ["D3.1.1", "D4.5.1", "D2.5.1"],
+      "assessment_domains": ["D2", "D3", "D4"]
+    },
+    "format": {"primary": "RP", "engines": ["E2"]},
+    "scenario": {
+      "context": "HOSP",
+      "applicant_role": "You are a hospital volunteer on the day-surgery reception desk. You have no access to clinical information, no access to the patient list, and no authority over theatre scheduling. You may speak to the nurse in charge.",
+      "opening_prompt": "Marcus Adeyemi is at the desk. His mother came in at seven this morning for day surgery. It is now half past two and he has had no update. Please speak to him.",
+      "candidate_brief": "You have one minute to read this. The station lasts seven minutes.",
+      "actor": {"type": "REL", "roleplay_ref": "RP-001"}
+    },
+    "delivery": {
+      "preparation_time_seconds": 60,
+      "response_time_seconds": 420,
+      "mode": "live_voice",
+      "interruption_permitted": true,
+      "notes_permitted": false,
+      "adjustments_available": ["extended time", "transcript-first delivery"]
+    },
+    "assessment": {
+      "scoring_dimensions": [
+        {"dimension": "S1", "weight": 0.2},
+        {"dimension": "S2", "weight": 0.25},
+        {"dimension": "S5", "weight": 0.3, "interactive_only": true},
+        {"dimension": "S6", "weight": 0.25}
+      ],
+      "expected_content": [
+        {"point": "States their role accurately and early — volunteer, no access to clinical information", "necessity": "required", "evidence_cues": ["I'm a volunteer here", "I don't have access to"]},
+        {"point": "Acknowledges the length of the wait and its effect before offering any explanation", "necessity": "required", "evidence_cues": ["seven and a half hours", "that's a long time with no news"]},
+        {"point": "Asks what he has already been told", "necessity": "expected", "evidence_cues": ["has anyone spoken to you", "what have you been told"]},
+        {"point": "Offers a specific, deliverable action — find the nurse in charge, ask for an estimate, take a number", "necessity": "required", "evidence_cues": ["I'll go and find", "let me ask the nurse in charge", "can I take your number"]},
+        {"point": "Notices and addresses the belief that no news means something has gone wrong, without making any clinical claim", "necessity": "optional_strong", "evidence_cues": ["a long wait doesn't necessarily mean", "I can't tell you why, but"]},
+        {"point": "Establishes his own constraints — that he has somewhere to be", "necessity": "optional_strong", "evidence_cues": ["do you need to be somewhere", "how long can you stay"]}
+      ],
+      "optional_strong_points": [
+        "Closes with a named next step and a name",
+        "Checks whether he has eaten or needs anything, without being obsequious",
+        "Does not over-apologise for something outside their control"
+      ],
+      "red_flags": [
+        {"flag": "Speculates about the mother's clinical condition or the reason for the delay", "severity": "serious", "detection_cues": ["it's probably because", "they might have found something", "surgery often overruns when"]},
+        {"flag": "Promises a time or an outcome outside their control", "severity": "concern", "detection_cues": ["she'll be out by", "I promise", "it won't be long now"]},
+        {"flag": "Claims or fails to correct a clinical role", "severity": "serious", "detection_cues": ["as a member of the team I can tell you", "does not correct 'are you a nurse'"]},
+        {"flag": "Tells him to calm down or to sit down before he has been heard", "severity": "concern", "detection_cues": ["calm down", "if you could just take a seat"]}
+      ],
+      "model_answer_principles": [
+        "Acknowledgement precedes explanation. Explanation before acknowledgement escalates.",
+        "'I'm a volunteer' is honest information, not an exit from the conversation.",
+        "A small deliverable action outperforms a large sympathetic statement."
+      ]
+    },
+    "adaptive": {
+      "conditional_followups": [
+        {"trigger": {"type": "emotion_missed", "detail": "no acknowledgement of the wait in the first 60 seconds"}, "prompt": "[in role] You haven't actually said anything about the fact we've been here since seven.", "purpose": "escalate", "priority": 1},
+        {"trigger": {"type": "overconfident_clinical", "detail": "any clinical speculation"}, "prompt": "[in role] So you think something HAS gone wrong?", "purpose": "safety_check", "priority": 1}
+      ],
+      "max_followups": 2,
+      "interrupt_policy": "on_time_or_serious_drift",
+      "do_not_lead": ["the son's childcare constraint", "the mother's instruction not to make a fuss"]
+    },
+    "hidden_information": [
+      {"fact": "He took unpaid leave and must collect his daughter at 3:15.", "disclosure_condition": "An open question about his situation or time pressure, not about the list.", "condition_type": "open_question", "essential_to_pass": false},
+      {"fact": "His mother told him not to make a fuss, which is part of the anger.", "disclosure_condition": "Only after the anger has already de-escalated.", "condition_type": "sequenced_unlock", "essential_to_pass": false}
+    ],
+    "difficulty": {
+      "band": "3_stretch",
+      "variables": {"AMBIG": 1, "EMO": 3, "CONFL": 2, "HIDDEN": 2, "SAFEG": 0, "TIME": 2, "MISLEAD": 1, "HOSTILE": 0, "INCOMP": 1, "ETHUNC": 0, "OVERC": 2, "CHALL": 0, "LIMITS": 3}
+    },
+    "university_compatibility": {
+      "mode": "include",
+      "school_ids": ["qub-a100-home", "qub-a100-intl", "standrews-a100", "nottingham-a100", "nottingham-a101", "birmingham-a100", "manchester-a100", "aru-a100", "kmms-a100", "csgul-a100", "swansea-a101"],
+      "requires_application_questioning": false,
+      "excluded_reason": "Roleplay confirmed on the institution's own pages only at these schools; served universally in general practice mode but surfaced in university-specific modes only here."
+    },
+    "provenance": {
+      "author": "content-team",
+      "created": "2026-08-29",
+      "source_basis": [
+        {"type": "university_page", "reference": "QUB MMI candidate information — four of nine assessed stations involve role players", "date_checked": "2026-08-29"},
+        {"type": "university_page", "reference": "Birmingham — 'Interaction in Healthcare Setting' station with professional role-players", "date_checked": "2026-08-29"},
+        {"type": "msc_guidance", "reference": "MSC interviews page — MMIs include 'practical scenarios that involve candidates interacting with an actor'", "date_checked": "2026-08-29"}
+      ],
+      "confidence": "HIGH"
+    },
+    "governance": {
+      "clinical_knowledge_boundary": "NONE",
+      "clinical_bait": true,
+      "premed_appropriate": "yes",
+      "temporality": "EVERGREEN",
+      "review_date": "2028-08-29",
+      "clinical_review": {"required": false},
+      "sensitivity_flags": ["none"],
+      "wellbeing_rules": ["Do not ask the candidate about a relative's surgery or hospital experience"]
+    }
+  },
+
+  {
+    "station_id": "ST-00003",
+    "version": "1.0.0",
+    "title": "Should doctors go on strike?",
+    "status": "draft",
+    "domain": {
+      "primary_topic": "D9.2.2",
+      "secondary_topics": ["D5.7.4", "D1.2.4"],
+      "assessment_domains": ["D9", "D5"]
+    },
+    "format": {"primary": "PD", "secondary": ["FU"], "engines": ["E1", "E3"]},
+    "scenario": {
+      "context": "PH",
+      "applicant_role": "You are being asked for your reasoning about a contested public question. You are not expected to have a settled view, and you will not be marked on which side you take.",
+      "opening_prompt": "Doctors in England have taken industrial action over pay in recent years. Is it ever right for doctors to strike?"
+    },
+    "delivery": {
+      "preparation_time_seconds": 0,
+      "response_time_seconds": 300,
+      "mode": "live_voice",
+      "interruption_permitted": true,
+      "notes_permitted": false
+    },
+    "assessment": {
+      "scoring_dimensions": [
+        {"dimension": "S1", "weight": 0.2},
+        {"dimension": "S2", "weight": 0.15},
+        {"dimension": "S3", "weight": 0.45},
+        {"dimension": "S6", "weight": 0.2}
+      ],
+      "expected_content": [
+        {"point": "States the case FOR industrial action at its strongest — real-terms pay erosion, retention, and the argument that a sustainable workforce is itself a patient-safety issue", "necessity": "required", "evidence_cues": ["pay has fallen in real terms", "people are leaving", "long-term workforce"]},
+        {"point": "States the case AGAINST at its strongest — direct harm to patients during action, and the asymmetry that patients did not cause the dispute", "necessity": "required", "evidence_cues": ["patients are harmed", "cancelled operations", "patients aren't party to it"]},
+        {"point": "Recognises that the profession itself is divided, rather than presenting one view as the medical view", "necessity": "expected", "evidence_cues": ["doctors disagree", "not all doctors", "the ballot was close"]},
+        {"point": "Names a mechanism that mitigates the tension — derogations, emergency cover, notice periods", "necessity": "optional_strong", "evidence_cues": ["emergency cover", "derogation", "notice"]},
+        {"point": "Gets the current position broadly right, or is appropriately tentative about it", "necessity": "expected", "evidence_cues": ["I think the resident doctors' dispute has been resolved", "I'm not sure of the current position but"]},
+        {"point": "Distinguishes the right to withdraw labour from the question of whether exercising it is wise in a given case", "necessity": "optional_strong"}
+      ],
+      "optional_strong_points": [
+        "Notes that consultants and resident doctors are in different positions",
+        "Observes that 'patient harm during action' and 'patient harm from an understaffed service' are the same currency and can be compared",
+        "Says explicitly what would change their view"
+      ],
+      "red_flags": [
+        {"flag": "Refuses to engage on the grounds that the topic is political", "severity": "note", "detection_cues": ["I'd rather not comment", "that's political"]},
+        {"flag": "Argues only one side and does not engage the opposing case when directly invited to", "severity": "note"},
+        {"flag": "Disparages doctors who took a different position", "severity": "concern", "detection_cues": ["greedy", "they don't care about patients", "should be struck off"]}
+      ],
+      "model_answer_principles": [
+        "There is no correct side. The assessment is whether both cases are stated at their strongest and whether the candidate can say what would change their mind.",
+        "Accuracy about the current position is expected; precision about figures is not.",
+        "Declining to engage is a weak answer, not a neutral one."
+      ],
+      "band_descriptors": {
+        "poor": "One side only, or refuses to engage. May misstate the current position confidently.",
+        "borderline": "Both sides named but one is a strawman. Current position vague or wrong.",
+        "competent": "Both cases stated fairly, current position broadly right or appropriately hedged, some mechanism named.",
+        "excellent": "As competent, plus the profession's own division acknowledged, a mitigating mechanism engaged with, and an explicit statement of what would change their view."
+      }
+    },
+    "adaptive": {
+      "conditional_followups": [
+        {"trigger": {"type": "one_sided", "detail": "argued for action only"}, "prompt": "A patient whose cancer surgery was cancelled during a strike would say they had no part in this dispute. What would you say to them?", "purpose": "balance", "priority": 1},
+        {"trigger": {"type": "one_sided", "detail": "argued against action only"}, "prompt": "If pay erosion drives people out of the profession over ten years, is that not also patient harm? How would you weigh the two?", "purpose": "balance", "priority": 1},
+        {"trigger": {"type": "off_question", "detail": "discussed NHS funding generally without addressing striking"}, "prompt": "That's the context — but is the act of striking itself defensible?", "purpose": "specify", "priority": 2},
+        {"trigger": {"type": "strong_answer"}, "prompt": "You've held both sides well. Push yourself: what would have to be true for you to change your position?", "purpose": "challenge", "priority": 3}
+      ],
+      "max_followups": 3,
+      "interrupt_policy": "on_time_only",
+      "do_not_lead": ["the specific ballot result", "the acceptance vote", "any figure the candidate has not raised"]
+    },
+    "difficulty": {
+      "band": "2_standard",
+      "variables": {"AMBIG": 2, "EMO": 1, "CONFL": 3, "HIDDEN": 0, "SAFEG": 0, "TIME": 1, "MISLEAD": 0, "HOSTILE": 2, "INCOMP": 1, "ETHUNC": 2, "OVERC": 0, "CHALL": 0, "LIMITS": 0}
+    },
+    "university_compatibility": {
+      "mode": "include",
+      "school_ids": ["manchester-a100", "hyms-a100", "leeds-a100", "leeds-a101", "sheffield-a100", "imperial-a100", "glasgow-a100", "cardiff-a100", "edgehill-a100", "csgul-a100", "ucl-a100"],
+      "requires_application_questioning": false,
+      "excluded_reason": "Served in university-specific mode only where the school publishes current affairs or contemporary awareness as an assessed area."
+    },
+    "provenance": {
+      "author": "content-team",
+      "created": "2026-08-29",
+      "source_basis": [
+        {"type": "university_page", "reference": "Manchester — 'contemporary medical knowledge' is a published assessed criterion", "date_checked": "2026-08-29"},
+        {"type": "university_page", "reference": "Sheffield — 'Medicine in a wider context' is a named MMI section; candidates advised to follow 'NHS politics'", "date_checked": "2026-08-29"},
+        {"type": "nhs_source", "reference": "BMA — resident doctors in England vote to accept pay and jobs offer, 29 June 2026", "date_checked": "2026-08-29"},
+        {"type": "nhs_source", "reference": "NHS Employers — consultants and SAS doctor ballot outcome, 6 July 2026", "date_checked": "2026-08-29"}
+      ],
+      "confidence": "HIGH"
+    },
+    "governance": {
+      "clinical_knowledge_boundary": "CONTEXT",
+      "clinical_bait": false,
+      "premed_appropriate": "yes",
+      "temporality": "FAST",
+      "current_affairs_ref": "CA-010",
+      "current_affairs_expiry": "2026-11-30",
+      "review_date": "2026-10-31",
+      "clinical_review": {"required": false},
+      "sensitivity_flags": ["none"],
+      "wellbeing_rules": ["The interviewer must never signal a position on this topic", "Challenge must be applied symmetrically regardless of which side the candidate takes"]
+    }
+  }
+]

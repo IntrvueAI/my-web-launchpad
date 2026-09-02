@@ -6,7 +6,11 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Resource Allocation",
-    "tags": ["ethics", "resource-allocation", "justice"],
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "justice"
+    ],
     "question": "A small rural hospital has five ICU beds and, tonight, six patients who each need one to survive. You are on the admissions panel. How would you decide who gets a bed — and who doesn't?",
     "answer": "Discussion question — there is no single correct verdict. Assess the reasoning, not which criteria they land on. A strong answer names an explicit, defensible criterion (e.g. likelihood of benefit / prognosis, not simply age or perceived social worth), acknowledges this is a genuine tragedy either way, and recognises that a hospital would normally use an agreed clinical framework rather than one person deciding alone.",
     "modelReasoningPath": "A strong candidate resists the urge to give an instant, comfortable answer. They name the tension explicitly: fairness (equal claim to care) versus utility (maximising lives/years saved) versus first-come-first-served. They pick a defensible criterion — most commonly, clinical likelihood of benefit — and explain WHY that criterion is more defensible than alternatives like age, lifestyle, or perceived social value, which risk being discriminatory. They note this shouldn't be one person's unilateral call in reality — hospitals use triage protocols and multidisciplinary input. They stay honest that whatever is decided, it is a tragic outcome for someone.",
@@ -16,18 +20,31 @@
       "weak": "Gives an instant, unreflective answer with no stated reasoning, or refuses to commit to any position at all."
     },
     "commonMistakes": [
-      { "mistake": "Uses age, 'who has more to live for', or perceived social worth as the primary criterion without acknowledging this is ethically contested", "reveals": "Hasn't recognised that some intuitive criteria are actually discriminatory and would need much stronger justification" },
-      { "mistake": "Says 'I'd just let the doctors decide' with no further reasoning", "reveals": "Is dodging the question rather than engaging with the dilemma they were actually asked" }
+      {
+        "mistake": "Uses age, 'who has more to live for', or perceived social worth as the primary criterion without acknowledging this is ethically contested",
+        "reveals": "Hasn't recognised that some intuitive criteria are actually discriminatory and would need much stronger justification"
+      },
+      {
+        "mistake": "Says 'I'd just let the doctors decide' with no further reasoning",
+        "reveals": "Is dodging the question rather than engaging with the dilemma they were actually asked"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if the sixth patient was the youngest of the six — does that change your answer?", "goodResponse": "Engages honestly with whether age should matter, rather than simply agreeing to avoid conflict" },
-      { "probe": "Is it fair that one person's medical need can outweigh another's just because a bed became free five minutes earlier?", "goodResponse": "Considers first-come-first-served as one competing principle among several, rather than dismissing it outright" }
+      {
+        "probe": "What if the sixth patient was the youngest of the six — does that change your answer?",
+        "goodResponse": "Engages honestly with whether age should matter, rather than simply agreeing to avoid conflict"
+      },
+      {
+        "probe": "Is it fair that one person's medical need can outweigh another's just because a bed became free five minutes earlier?",
+        "goodResponse": "Considers first-come-first-served as one competing principle among several, rather than dismissing it outright"
+      }
     ],
     "hints": [
       "Think about what makes one criterion for choosing fairer than another.",
       "Is there a difference between 'who deserves it most' and 'who is most likely to survive'?",
       "Real hospitals don't leave this to one person's gut feeling — what do you think they use instead?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E2",
@@ -36,7 +53,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Confidentiality and a Young Patient",
-    "tags": ["ethics", "confidentiality", "consent", "gillick-competence"],
+    "tags": [
+      "ethics",
+      "confidentiality",
+      "consent",
+      "gillick-competence"
+    ],
     "question": "A 15-year-old comes to see you alone and asks about getting tested for a sexually transmitted infection. She says she doesn't want her parents to know. As a doctor, what would you do?",
     "answer": "Discussion question — there is no single correct verdict, though UK practice (Gillick competence / Fraser guidelines) is a relevant real-world framework a strong candidate may reach for. A strong answer weighs the patient's right to confidential healthcare and the risk that refusing it could stop her seeking care at all, against safeguarding duties if there are signs of coercion, abuse, or a much older partner — and recognises confidentiality is not absolute.",
     "modelReasoningPath": "A strong candidate recognises the central tension: respecting a young patient's autonomy and right to confidential healthcare (and the practical risk that breaking confidence could simply stop her seeking care at all) versus a safeguarding duty if the situation suggests coercion, abuse, or a significant power imbalance (e.g. a much older partner). They might reach for the idea that competence to consent isn't purely about age — a doctor would assess whether she understands what's involved — while being honest that they don't have full clinical/legal knowledge and are reasoning from principle. Confidentiality is presented as a strong default, not an absolute one.",
@@ -46,18 +68,31 @@
       "weak": "Doesn't recognise any tension at all — treats it as an obviously easy call in either direction with no reasoning given."
     },
     "commonMistakes": [
-      { "mistake": "States confidently that 'doctors legally must tell parents if under 16' as a flat rule", "reveals": "Is bluffing a specific legal rule rather than reasoning from principle — a good moment to probe whether they're guessing" },
-      { "mistake": "Says confidentiality is absolute with no exceptions at all", "reveals": "Hasn't considered safeguarding scenarios where a duty to protect could override confidentiality" }
+      {
+        "mistake": "States confidently that 'doctors legally must tell parents if under 16' as a flat rule",
+        "reveals": "Is bluffing a specific legal rule rather than reasoning from principle — a good moment to probe whether they're guessing"
+      },
+      {
+        "mistake": "Says confidentiality is absolute with no exceptions at all",
+        "reveals": "Hasn't considered safeguarding scenarios where a duty to protect could override confidentiality"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if she told you her partner was 30 years old? Does that change anything?", "goodResponse": "Recognises this shifts the situation toward a safeguarding concern and explains why" },
-      { "probe": "If you did decide to keep this confidential, is there anyone else you might involve, even without her parents?", "goodResponse": "Considers involving other clinical safeguards (e.g. a senior colleague, safeguarding lead) without necessarily breaking confidentiality to the parents specifically" }
+      {
+        "probe": "What if she told you her partner was 30 years old? Does that change anything?",
+        "goodResponse": "Recognises this shifts the situation toward a safeguarding concern and explains why"
+      },
+      {
+        "probe": "If you did decide to keep this confidential, is there anyone else you might involve, even without her parents?",
+        "goodResponse": "Considers involving other clinical safeguards (e.g. a senior colleague, safeguarding lead) without necessarily breaking confidentiality to the parents specifically"
+      }
     ],
     "hints": [
       "What would make you MORE worried about this situation, beyond just her age?",
       "Is confidentiality ever something a doctor should break — and if so, when?",
       "Think about what would happen to her willingness to seek healthcare at all if you told her parents anyway."
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E3",
@@ -66,7 +101,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Refusing Treatment",
-    "tags": ["ethics", "autonomy", "capacity", "consent"],
+    "tags": [
+      "ethics",
+      "autonomy",
+      "capacity",
+      "consent"
+    ],
     "question": "An elderly patient with full mental capacity refuses a blood transfusion that doctors believe she needs to survive, for personal reasons she won't fully explain. Her family is begging the medical team to give it to her anyway. What should happen?",
     "answer": "Discussion question — there is no single correct verdict. A strong answer centres patient autonomy: a patient with full mental capacity has the right to refuse treatment, even a life-saving one, even if others disagree with the reason. It should also acknowledge the family's distress is real and worth taking seriously, without letting it override the patient's own decision.",
     "modelReasoningPath": "A strong candidate recognises that respect for autonomy is a core medical ethics principle, and that having capacity means the patient has the right to make choices doctors and family may disagree with — she doesn't have to justify her reasons to anyone. They also show empathy for the family's position without concluding the family should get to override the decision. A genuinely strong answer might note the medical team's role is to make sure her decision is properly informed (she understands the consequences), not to talk her out of it once it's clear she does.",
@@ -76,18 +116,31 @@
       "weak": "Concludes the family or doctors should give the transfusion anyway 'because they know best' or 'because she'll die otherwise', without addressing what mental capacity means for the right to refuse."
     },
     "commonMistakes": [
-      { "mistake": "Says doctors should 'do whatever it takes' to save her life regardless of her wishes", "reveals": "Hasn't grasped that respecting capacity is a foundational ethical (and legal) principle in medicine, not just a nice-to-have" },
-      { "mistake": "Assumes she must not really have capacity because the decision seems irrational", "reveals": "A common misconception — capacity is about the ABILITY to understand and weigh the decision, not about agreeing with the outcome" }
+      {
+        "mistake": "Says doctors should 'do whatever it takes' to save her life regardless of her wishes",
+        "reveals": "Hasn't grasped that respecting capacity is a foundational ethical (and legal) principle in medicine, not just a nice-to-have"
+      },
+      {
+        "mistake": "Assumes she must not really have capacity because the decision seems irrational",
+        "reveals": "A common misconception — capacity is about the ABILITY to understand and weigh the decision, not about agreeing with the outcome"
+      }
     ],
     "liveProbes": [
-      { "probe": "Her family says she must be confused or depressed to make this choice — should that change anything?", "goodResponse": "Distinguishes between 'I disagree with her reasoning' and 'she lacks capacity' — the two are not the same, though real confusion or depression WOULD be worth properly assessing" },
-      { "probe": "Is there anything the medical team should still do, even if they respect her decision?", "goodResponse": "Suggests making sure she is fully informed, offering support, and continuing to care for her within her wishes rather than simply walking away" }
+      {
+        "probe": "Her family says she must be confused or depressed to make this choice — should that change anything?",
+        "goodResponse": "Distinguishes between 'I disagree with her reasoning' and 'she lacks capacity' — the two are not the same, though real confusion or depression WOULD be worth properly assessing"
+      },
+      {
+        "probe": "Is there anything the medical team should still do, even if they respect her decision?",
+        "goodResponse": "Suggests making sure she is fully informed, offering support, and continuing to care for her within her wishes rather than simply walking away"
+      }
     ],
     "hints": [
       "What does having 'full mental capacity' actually mean for her right to decide?",
       "Is there a difference between disagreeing with someone's reasons and saying they're not allowed to decide?",
       "What role is left for the doctors and family if her decision has to be respected?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E4",
@@ -96,7 +149,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Spotting a Colleague's Mistake",
-    "tags": ["ethics", "whistleblowing", "professionalism", "honesty"],
+    "tags": [
+      "ethics",
+      "whistleblowing",
+      "professionalism",
+      "honesty"
+    ],
     "question": "You're shadowing a senior doctor you respect enormously. You notice they've made a genuine error in a patient's medication dose — one that could cause harm. What do you do?",
     "answer": "Discussion question — there is no single correct verdict, but UK medical professional guidance (e.g. GMC 'duty of candour') is a relevant real-world anchor: patient safety comes first, and doctors have a professional duty to raise safety concerns even about senior colleagues. A strong answer prioritises the patient's safety, raises the concern promptly and appropriately (rather than staying silent out of deference or fear), and does so in a way that's professional rather than accusatory.",
     "modelReasoningPath": "A strong candidate resolves the tension quickly in favour of patient safety — that has to come first, regardless of hierarchy or how much they respect the senior doctor. But HOW they raise it matters: a thoughtful answer describes raising it directly and promptly with the doctor first (assuming good faith — it could be a genuine slip), rather than immediately going over their head, while being clear they WOULD escalate further if the concern wasn't addressed. This shows they understand professional escalation isn't about being disloyal, it's about the patient.",
@@ -106,18 +164,31 @@
       "weak": "Says they would stay quiet because the doctor is senior/respected, or because it's 'not their place' as a student/junior."
     },
     "commonMistakes": [
-      { "mistake": "Says they'd say nothing because they don't want to embarrass or contradict a senior doctor", "reveals": "Prioritises hierarchy and social comfort over patient safety — a significant red flag for a doctor" },
-      { "mistake": "Jumps straight to 'I'd report them to the GMC' with no attempt to raise it directly first", "reveals": "Hasn't thought about proportionate, professional escalation — going straight to the most severe option isn't necessarily the most thoughtful" }
+      {
+        "mistake": "Says they'd say nothing because they don't want to embarrass or contradict a senior doctor",
+        "reveals": "Prioritises hierarchy and social comfort over patient safety — a significant red flag for a doctor"
+      },
+      {
+        "mistake": "Jumps straight to 'I'd report them to the GMC' with no attempt to raise it directly first",
+        "reveals": "Hasn't thought about proportionate, professional escalation — going straight to the most severe option isn't necessarily the most thoughtful"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if the doctor brushed off your concern when you raised it?", "goodResponse": "Describes escalating further (e.g. to a supervisor or safety lead) rather than dropping it" },
-      { "probe": "Does it matter that you're just a student shadowing, not a qualified doctor yet?", "goodResponse": "Recognises that raising a safety concern is still appropriate regardless of seniority, even if HOW they do it (e.g. tone, going through a supervisor) might differ" }
+      {
+        "probe": "What if the doctor brushed off your concern when you raised it?",
+        "goodResponse": "Describes escalating further (e.g. to a supervisor or safety lead) rather than dropping it"
+      },
+      {
+        "probe": "Does it matter that you're just a student shadowing, not a qualified doctor yet?",
+        "goodResponse": "Recognises that raising a safety concern is still appropriate regardless of seniority, even if HOW they do it (e.g. tone, going through a supervisor) might differ"
+      }
     ],
     "hints": [
       "What should come first here — the hierarchy, or the patient?",
       "Is there a difference between raising a concern and publicly accusing someone?",
       "What would you do next if raising it quietly didn't work?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E5",
@@ -126,7 +197,11 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "The Exam Hall Favour",
-    "tags": ["ethics", "honesty", "everyday-ethics"],
+    "tags": [
+      "ethics",
+      "honesty",
+      "everyday-ethics"
+    ],
     "question": "A close friend asks you to sign the attendance register for them at a lecture they skipped, so they don't get marked absent. It seems harmless. Would you do it?",
     "answer": "Discussion question — there is no single correct verdict. A strong answer recognises this is a small dishonesty, not a harmless favour, and reasons about WHY that matters (trust, precedent, what it says about their own integrity) rather than dismissing the question as trivial.",
     "modelReasoningPath": "A strong candidate resists treating this as too trivial to think about seriously — the interviewer is testing whether they can see that small dishonesty has the same STRUCTURE as bigger dishonesty, even if the stakes are lower. They might note the honest thing is to say no, kindly, and explain why. A genuinely strong answer also considers the friendship dimension — how do you say no to a friend without damaging the relationship — showing they can hold more than one consideration at once.",
@@ -136,18 +211,31 @@
       "weak": "Says they'd do it because it's harmless and helping a friend matters more, with no engagement with the dishonesty at all."
     },
     "commonMistakes": [
-      { "mistake": "Treats the question as too small to reason about seriously ('it's just a lecture register, who cares')", "reveals": "Misses that the interviewer is testing pattern-recognition for integrity, not literally how serious lecture attendance is" },
-      { "mistake": "Justifies it purely on 'no one gets hurt'", "reveals": "Hasn't considered that trust and honesty have value even without a directly identifiable victim" }
+      {
+        "mistake": "Treats the question as too small to reason about seriously ('it's just a lecture register, who cares')",
+        "reveals": "Misses that the interviewer is testing pattern-recognition for integrity, not literally how serious lecture attendance is"
+      },
+      {
+        "mistake": "Justifies it purely on 'no one gets hurt'",
+        "reveals": "Hasn't considered that trust and honesty have value even without a directly identifiable victim"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if the same friend asked you to do this every week?", "goodResponse": "Notices that repetition changes the picture — a one-off lapse in judgement versus an established pattern of dishonesty" },
-      { "probe": "Does it make a difference that it's your friend asking, not a stranger?", "goodResponse": "Honestly grapples with how personal relationships create pressure to compromise principles, rather than pretending the friendship makes no difference" }
+      {
+        "probe": "What if the same friend asked you to do this every week?",
+        "goodResponse": "Notices that repetition changes the picture — a one-off lapse in judgement versus an established pattern of dishonesty"
+      },
+      {
+        "probe": "Does it make a difference that it's your friend asking, not a stranger?",
+        "goodResponse": "Honestly grapples with how personal relationships create pressure to compromise principles, rather than pretending the friendship makes no difference"
+      }
     ],
     "hints": [
       "Is this really about lecture attendance, or about something bigger?",
       "What would you actually say to your friend, in the moment, to turn them down kindly?",
       "Does doing it once make it easier to do again?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E6",
@@ -156,7 +244,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Telling the Truth About a Prognosis",
-    "tags": ["ethics", "honesty", "communication", "end-of-life"],
+    "tags": [
+      "ethics",
+      "honesty",
+      "communication",
+      "end-of-life"
+    ],
     "question": "A patient looks at you and asks whether they are going to die from this. You believe the honest answer is that their condition is very likely terminal. What do you say?",
     "answer": "Discussion question — there is no single correct verdict. A strong answer values honesty as a foundation of trust and respects the patient's right to know about their own health, while showing this can be done with genuine compassion, checking what and how much the patient wants to know, and not being needlessly blunt or cold.",
     "modelReasoningPath": "A strong candidate resists both extremes: neither lying/deflecting to avoid a hard conversation, nor delivering the truth in a cold, clinical way. They recognise patients generally have a right to know about their own condition, and that trust depends on honesty. A genuinely thoughtful answer notes that HOW you tell someone matters as much as WHAT you tell them — checking what the patient already understands or wants to know, giving them space, not overwhelming them with detail in one go, and making clear they won't be abandoned. They might also note that avoiding the truth to protect yourself from a hard conversation (rather than to protect the patient) would be dishonest for the wrong reasons.",
@@ -166,18 +259,31 @@
       "weak": "Says they would avoid the question, lie, or defer entirely to a superior with no engagement with the patient's right to know."
     },
     "commonMistakes": [
-      { "mistake": "Says they would deflect or lie to spare the patient's feelings", "reveals": "Prioritises short-term emotional comfort over the patient's autonomy and right to make informed decisions about their remaining time" },
-      { "mistake": "Describes delivering the news bluntly with no thought for how it's said", "reveals": "Confuses honesty with tactlessness — the two are not the same" }
+      {
+        "mistake": "Says they would deflect or lie to spare the patient's feelings",
+        "reveals": "Prioritises short-term emotional comfort over the patient's autonomy and right to make informed decisions about their remaining time"
+      },
+      {
+        "mistake": "Describes delivering the news bluntly with no thought for how it's said",
+        "reveals": "Confuses honesty with tactlessness — the two are not the same"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if the patient's family had asked you beforehand not to tell them?", "goodResponse": "Recognises the patient's own wishes generally take priority over the family's, while being thoughtful about how to navigate the family's concern too" },
-      { "probe": "Is there a version of honesty that's actually unkind?", "goodResponse": "Distinguishes between being truthful and being needlessly blunt or dismissive of the patient's emotional state" }
+      {
+        "probe": "What if the patient's family had asked you beforehand not to tell them?",
+        "goodResponse": "Recognises the patient's own wishes generally take priority over the family's, while being thoughtful about how to navigate the family's concern too"
+      },
+      {
+        "probe": "Is there a version of honesty that's actually unkind?",
+        "goodResponse": "Distinguishes between being truthful and being needlessly blunt or dismissive of the patient's emotional state"
+      }
     ],
     "hints": [
       "Think about the difference between WHAT you say and HOW you say it.",
       "Why might a patient want to know the truth, even if it's painful?",
       "What would you check with the patient before launching into the full answer?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E7",
@@ -186,7 +292,11 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Organ Donation Priority",
-    "tags": ["ethics", "resource-allocation", "justice"],
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "justice"
+    ],
     "question": "Two patients need the same donor liver and only one can have it: a 45-year-old with no history of alcohol use, and a 50-year-old whose liver failure was caused by years of heavy drinking but who has been sober for two years. How would you think about who should be prioritised?",
     "answer": "Discussion question — there is no single correct verdict. A strong answer recognises the tension between 'medical utility' criteria (likelihood of a good outcome, which real transplant systems do use) and the temptation to factor in 'blame' for how someone became ill — and is wary of the latter, since it risks penalising addiction (increasingly understood as a health condition) rather than judging purely on clinical grounds.",
     "modelReasoningPath": "A strong candidate resists the instinctive pull to say the non-drinker 'deserves it more' and instead asks what criteria transplant medicine actually should use — primarily likelihood of a successful outcome and how long the organ is likely to last, which is a clinical judgement, not a moral one. They note two years of sobriety is itself real evidence of commitment to using the organ well. They're wary of a system that penalises illness caused partly by addiction, since addiction has real biological and social drivers, not just 'poor choices' in a simple sense — while still being honest that they don't know the exact clinical criteria used in practice.",
@@ -196,16 +306,23 @@
       "weak": "Rules out the second patient purely because their illness was self-caused, with no engagement with clinical criteria or the nature of addiction."
     },
     "commonMistakes": [
-      { "mistake": "States confidently that alcohol-related liver failure should be deprioritised because 'it's their own fault'", "reveals": "Hasn't engaged with why medical allocation is generally NOT meant to be a moral judgement on how someone became ill" }
+      {
+        "mistake": "States confidently that alcohol-related liver failure should be deprioritised because 'it's their own fault'",
+        "reveals": "Hasn't engaged with why medical allocation is generally NOT meant to be a moral judgement on how someone became ill"
+      }
     ],
     "liveProbes": [
-      { "probe": "Plenty of illness is partly linked to lifestyle — smoking, diet, stress. Should all of those affect priority too?", "goodResponse": "Recognises the logic would need to apply consistently, which reveals how fraught a pure 'fault' based system would be" }
+      {
+        "probe": "Plenty of illness is partly linked to lifestyle — smoking, diet, stress. Should all of those affect priority too?",
+        "goodResponse": "Recognises the logic would need to apply consistently, which reveals how fraught a pure 'fault' based system would be"
+      }
     ],
     "hints": [
       "What criteria do you think transplant decisions SHOULD be based on?",
       "Does two years of sobriety tell you anything relevant?",
       "Would the same logic apply to a smoker needing a lung transplant?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E8",
@@ -214,7 +331,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "A Patient's Religious Objection to Treatment",
-    "tags": ["ethics", "autonomy", "religion", "consent"],
+    "tags": [
+      "ethics",
+      "autonomy",
+      "religion",
+      "consent"
+    ],
     "question": "A patient who is a Jehovah's Witness is losing a lot of blood after an accident and, based on their religious beliefs, has clearly and repeatedly refused a blood transfusion, even knowing it could cost their life. The medical team believes a transfusion would very likely save them. What should happen?",
     "answer": "Discussion question — there is no single correct verdict, though this is a well-established real-world scenario in medical ethics, and a strong answer should land close to respecting the refusal given full capacity, mirroring the reasoning in the elderly-patient capacity scenario. The key extra layer here is recognising that a religious reason is not a 'lesser' reason than any other, and must not be treated with less respect just because the doctor may not share or understand the belief.",
     "modelReasoningPath": "A strong candidate applies the same core principle as any capacity-based refusal — a patient with capacity has the right to refuse treatment, even a life-saving one — but goes further to notice the specific temptation in THIS scenario: subtly treating a religious reason as less valid or less 'rational' than another patient's reason would be a form of bias. They might note the medical team's role becomes making sure the patient's decision is fully informed, exploring whether there are alternative treatments consistent with the patient's beliefs (e.g. certain blood products may be religiously acceptable while whole blood is not), and continuing to provide the best possible care within the patient's wishes.",
@@ -224,17 +346,27 @@
       "weak": "Suggests overriding the refusal because the reason is religious rather than 'medical', or because the team disagrees with the belief."
     },
     "commonMistakes": [
-      { "mistake": "Implies religious refusals should be treated with more scepticism than a 'rational' medical reason for refusal", "reveals": "Is applying an inconsistent standard based on discomfort with the specific belief, rather than the principle of capacity and autonomy" }
+      {
+        "mistake": "Implies religious refusals should be treated with more scepticism than a 'rational' medical reason for refusal",
+        "reveals": "Is applying an inconsistent standard based on discomfort with the specific belief, rather than the principle of capacity and autonomy"
+      }
     ],
     "liveProbes": [
-      { "probe": "Would your answer be any different if the patient refused for a non-religious personal reason instead?", "goodResponse": "Recognises it shouldn't be — capacity and autonomy apply regardless of WHY the patient is refusing" },
-      { "probe": "Is there anything the team could offer that respects both the patient's life and their beliefs?", "goodResponse": "Considers alternative treatments or products that might be compatible with the patient's specific beliefs" }
+      {
+        "probe": "Would your answer be any different if the patient refused for a non-religious personal reason instead?",
+        "goodResponse": "Recognises it shouldn't be — capacity and autonomy apply regardless of WHY the patient is refusing"
+      },
+      {
+        "probe": "Is there anything the team could offer that respects both the patient's life and their beliefs?",
+        "goodResponse": "Considers alternative treatments or products that might be compatible with the patient's specific beliefs"
+      }
     ],
     "hints": [
       "Does the REASON for a refusal change whether a patient with capacity has the right to make it?",
       "Are there treatment options that might respect both medical need and the patient's beliefs?",
       "What would make this different from, or the same as, any other capacity-based refusal?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E9",
@@ -243,7 +375,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "The Expensive New Drug",
-    "tags": ["ethics", "resource-allocation", "healthcare-policy", "justice"],
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "healthcare-policy",
+      "justice"
+    ],
     "question": "A new drug could meaningfully extend the life of patients with a rare condition, but it costs so much that funding it for the small number of patients who need it would mean cutting funding elsewhere in the health system. Should it be funded?",
     "answer": "Discussion question — there is no single correct verdict. A strong answer recognises this as a genuine resource-allocation tension between two real principles — the value of every individual life, and the reality that money spent here is money not available for treatments that could help larger numbers of other patients elsewhere — and engages honestly with trade-offs rather than treating either principle as obviously overriding.",
     "modelReasoningPath": "A strong candidate resists a simple 'of course we should save lives regardless of cost' answer, because healthcare budgets are genuinely finite and every funding decision has an opportunity cost elsewhere in the system. They engage with real considerations real health systems use: cost-effectiveness relative to the benefit gained (sometimes expressed as cost per year of life gained), how rare and severe the condition is, and whether there are truly no other options for these patients. A genuinely strong answer notes that a decision NOT to fund something is still a moral decision with real victims, just less visible ones (the patients who don't get this drug) versus more visible ones (patients denied elsewhere if it IS funded) — both matter.",
@@ -253,18 +390,31 @@
       "weak": "Says funding decisions should simply save the most lives with no engagement with the value of rare/individual cases, or insists cost should never be a factor at all with no engagement with the reality of finite budgets."
     },
     "commonMistakes": [
-      { "mistake": "Says 'every life is priceless so of course it should be funded' with no engagement with opportunity cost", "reveals": "Hasn't grappled with the reality that healthcare budgets are finite and that funding decisions are always comparative" },
-      { "mistake": "Says rare-disease treatment should never be funded because it doesn't help enough people", "reveals": "Hasn't considered that a pure numbers-maximising approach can feel unjust to individuals with rare conditions, and that most health systems weight rarity/severity too" }
+      {
+        "mistake": "Says 'every life is priceless so of course it should be funded' with no engagement with opportunity cost",
+        "reveals": "Hasn't grappled with the reality that healthcare budgets are finite and that funding decisions are always comparative"
+      },
+      {
+        "mistake": "Says rare-disease treatment should never be funded because it doesn't help enough people",
+        "reveals": "Hasn't considered that a pure numbers-maximising approach can feel unjust to individuals with rare conditions, and that most health systems weight rarity/severity too"
+      }
     ],
     "liveProbes": [
-      { "probe": "What would you say to a patient with this rare condition who is told the drug won't be funded?", "goodResponse": "Shows genuine empathy for the individual impact while still being able to explain the systemic reasoning, rather than dismissing their situation" },
-      { "probe": "Does it matter HOW much benefit the drug provides, not just that it provides some?", "goodResponse": "Recognises that the scale of benefit (a few extra weeks vs. years of good-quality life) is relevant to a cost-effectiveness judgement" }
+      {
+        "probe": "What would you say to a patient with this rare condition who is told the drug won't be funded?",
+        "goodResponse": "Shows genuine empathy for the individual impact while still being able to explain the systemic reasoning, rather than dismissing their situation"
+      },
+      {
+        "probe": "Does it matter HOW much benefit the drug provides, not just that it provides some?",
+        "goodResponse": "Recognises that the scale of benefit (a few extra weeks vs. years of good-quality life) is relevant to a cost-effectiveness judgement"
+      }
     ],
     "hints": [
       "What is the money NOT being spent on, if it goes to this drug?",
       "Is a decision not to fund something still a decision with real consequences?",
       "What information would you want about how much benefit the drug actually provides?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E10",
@@ -273,7 +423,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "A Colleague Who Seems Impaired",
-    "tags": ["ethics", "professionalism", "patient-safety", "whistleblowing"],
+    "tags": [
+      "ethics",
+      "professionalism",
+      "patient-safety",
+      "whistleblowing"
+    ],
     "question": "You notice a senior colleague seems to be smelling of alcohol before a shift, and their behaviour is slightly off. You have no proof, just a strong suspicion. What do you do?",
     "answer": "Discussion question — there is no single correct verdict, but patient safety should be the clear priority. A strong answer raises the concern appropriately and promptly, even without certainty, rather than waiting for definitive proof, while being fair and non-accusatory given the uncertainty involved.",
     "modelReasoningPath": "A strong candidate recognises the core tension: acting on suspicion without proof feels uncomfortable and risks being wrong or unfair to a colleague, but staying silent risks patient harm if the suspicion is correct. They resolve this in favour of raising the concern — patient safety cannot wait for certainty — but describe doing so appropriately: privately, factually (describing what was observed, not accusing), and through a proper channel (e.g. a supervisor or the colleague directly, depending on context) rather than public accusation or gossip. They might note that a genuine, good-faith concern raised professionally protects the colleague too, potentially catching a problem early.",
@@ -283,18 +438,31 @@
       "weak": "Says they'd wait for definitive proof before doing anything, or would say nothing to avoid an awkward situation."
     },
     "commonMistakes": [
-      { "mistake": "Says they'd need to be certain before raising it", "reveals": "Hasn't grasped that patient-safety concerns should be raised on reasonable suspicion, not only on proof — the appropriate channel exists precisely to investigate uncertain concerns" },
-      { "mistake": "Suggests confronting the colleague publicly or accusing them directly of being drunk", "reveals": "Hasn't thought through a fair, professional way to raise a serious but uncertain concern" }
+      {
+        "mistake": "Says they'd need to be certain before raising it",
+        "reveals": "Hasn't grasped that patient-safety concerns should be raised on reasonable suspicion, not only on proof — the appropriate channel exists precisely to investigate uncertain concerns"
+      },
+      {
+        "mistake": "Suggests confronting the colleague publicly or accusing them directly of being drunk",
+        "reveals": "Hasn't thought through a fair, professional way to raise a serious but uncertain concern"
+      }
     ],
     "liveProbes": [
-      { "probe": "What if you're wrong, and there's an innocent explanation?", "goodResponse": "Accepts this risk as a reasonable cost of prioritising patient safety, provided the concern is raised fairly and factually rather than as a public accusation" },
-      { "probe": "Does it matter that this is a senior, well-respected colleague?", "goodResponse": "Recognises seniority shouldn't change whether a safety concern gets raised, even if it makes it socially harder to do" }
+      {
+        "probe": "What if you're wrong, and there's an innocent explanation?",
+        "goodResponse": "Accepts this risk as a reasonable cost of prioritising patient safety, provided the concern is raised fairly and factually rather than as a public accusation"
+      },
+      {
+        "probe": "Does it matter that this is a senior, well-respected colleague?",
+        "goodResponse": "Recognises seniority shouldn't change whether a safety concern gets raised, even if it makes it socially harder to do"
+      }
     ],
     "hints": [
       "Does the concern need to be certain before it's worth raising?",
       "What's a fair, private way to raise something you're not 100% sure about?",
       "What's actually at stake if you say nothing and you turn out to be right?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E11",
@@ -303,7 +471,11 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "A Grateful Patient's Gift",
-    "tags": ["ethics", "professionalism", "boundaries"],
+    "tags": [
+      "ethics",
+      "professionalism",
+      "boundaries"
+    ],
     "question": "After a successful treatment, a patient you've cared for wants to give you an expensive gift as a thank-you, and seems genuinely hurt when you hesitate. How would you handle it?",
     "answer": "Discussion question — there is no single correct verdict, though most professional medical guidance discourages accepting expensive or ongoing gifts from patients, to preserve boundaries and avoid the appearance (even unintentional) of favouritism or influence. A strong answer balances this professional boundary with genuine warmth and tact, so the patient doesn't feel rejected or that their gratitude wasn't valued.",
     "modelReasoningPath": "A strong candidate recognises the professional reason for caution — accepting expensive gifts risks creating (or appearing to create) unequal treatment between patients, or blurring the professional relationship — while also recognising the patient's gesture comes from real gratitude and shouldn't be handled coldly or bluntly. They describe a warm, tactful way of declining or redirecting (e.g. suggesting a donation to the department or a charity instead), making clear the refusal is about professional principle, not about the patient or the relationship.",
@@ -313,18 +485,31 @@
       "weak": "Says they'd simply accept the gift with no engagement with why that might be professionally problematic, or declines bluntly with no thought for the patient's feelings."
     },
     "commonMistakes": [
-      { "mistake": "Accepts the gift because 'it would be rude not to' with no engagement with professional boundaries", "reveals": "Hasn't considered why an expensive gift specifically (versus a card or small token) could complicate the professional relationship" },
-      { "mistake": "Declines bluntly with no thought for the patient's feelings", "reveals": "Solves the professional problem but misses the interpersonal/communication half of the question" }
+      {
+        "mistake": "Accepts the gift because 'it would be rude not to' with no engagement with professional boundaries",
+        "reveals": "Hasn't considered why an expensive gift specifically (versus a card or small token) could complicate the professional relationship"
+      },
+      {
+        "mistake": "Declines bluntly with no thought for the patient's feelings",
+        "reveals": "Solves the professional problem but misses the interpersonal/communication half of the question"
+      }
     ],
     "liveProbes": [
-      { "probe": "Would your answer be different for a small, inexpensive token versus this expensive gift?", "goodResponse": "Recognises that scale/value plausibly matters to the professional concern, even if the underlying gratitude is the same" },
-      { "probe": "What would you actually say to the patient in the moment?", "goodResponse": "Offers a specific, warm form of words rather than just asserting they'd 'decline politely'" }
+      {
+        "probe": "Would your answer be different for a small, inexpensive token versus this expensive gift?",
+        "goodResponse": "Recognises that scale/value plausibly matters to the professional concern, even if the underlying gratitude is the same"
+      },
+      {
+        "probe": "What would you actually say to the patient in the moment?",
+        "goodResponse": "Offers a specific, warm form of words rather than just asserting they'd 'decline politely'"
+      }
     ],
     "hints": [
       "Why might an expensive gift specifically be different from a thank-you card?",
       "How could you decline without the patient feeling like their gratitude was rejected?",
       "Is there an alternative that lets you honour the gesture without accepting it personally?"
-    ]
+    ],
+    "format": "ES"
   },
   {
     "id": "MED-E12",
@@ -333,7 +518,12 @@
     "difficulty": 2,
     "questionType": "Ethical Scenario",
     "title": "Assisted Dying",
-    "tags": ["ethics", "end-of-life", "autonomy", "policy"],
+    "tags": [
+      "ethics",
+      "end-of-life",
+      "autonomy",
+      "policy"
+    ],
     "question": "Should terminally ill patients have the legal right to choose an assisted death? Talk me through your thinking.",
     "answer": "Discussion question — there is no single correct verdict; this is a genuinely and legitimately contested real-world policy debate. A strong answer engages seriously with strong arguments on BOTH sides — patient autonomy and relief of suffering on one hand, risks of coercion or pressure on vulnerable patients and the role of the doctor on the other — rather than treating it as an obviously easy call in either direction.",
     "modelReasoningPath": "A strong candidate treats this as a genuinely hard policy and ethical question, not a simple one. On one side: respecting a competent, terminally ill patient's autonomy over their own suffering and death, and the argument that prolonging suffering against someone's wishes can itself be a harm. On the other: real concerns about coercion (a patient feeling like a burden and choosing death for others' sake rather than their own), the difficulty of assessing capacity/depression at the end of life, and how such a change could affect the doctor-patient relationship and trust. A strong candidate can articulate BOTH sides with genuine force, even while holding their own view, and is honest that reasonable, thoughtful people land in different places.",
@@ -343,17 +533,30 @@
       "weak": "Treats the question as having an obvious answer either way, or refuses to engage with any substantive reasoning at all."
     },
     "commonMistakes": [
-      { "mistake": "Presents only one side's arguments and dismisses the other as obviously wrong", "reveals": "Hasn't demonstrated the perspective-taking this kind of question is specifically testing" },
-      { "mistake": "Refuses to take any position at all, even when pushed", "reveals": "Is avoiding engagement rather than genuinely weighing a hard question — a well-reasoned tentative position is stronger than pure fence-sitting" }
+      {
+        "mistake": "Presents only one side's arguments and dismisses the other as obviously wrong",
+        "reveals": "Hasn't demonstrated the perspective-taking this kind of question is specifically testing"
+      },
+      {
+        "mistake": "Refuses to take any position at all, even when pushed",
+        "reveals": "Is avoiding engagement rather than genuinely weighing a hard question — a well-reasoned tentative position is stronger than pure fence-sitting"
+      }
     ],
     "liveProbes": [
-      { "probe": "What's the strongest argument AGAINST the position you've just taken?", "goodResponse": "Can genuinely articulate the opposing case with force, not a weakened strawman of it" },
-      { "probe": "How would you address the concern that vulnerable patients might feel pressured into this choice?", "goodResponse": "Engages seriously with the coercion concern rather than dismissing it" }
+      {
+        "probe": "What's the strongest argument AGAINST the position you've just taken?",
+        "goodResponse": "Can genuinely articulate the opposing case with force, not a weakened strawman of it"
+      },
+      {
+        "probe": "How would you address the concern that vulnerable patients might feel pressured into this choice?",
+        "goodResponse": "Engages seriously with the coercion concern rather than dismissing it"
+      }
     ],
     "hints": [
       "Try to name the strongest argument on the side you DON'T currently favour.",
       "What safeguards, if any, might address the biggest risks of a policy like this?",
       "Is it possible for two thoughtful people to disagree on this?"
-    ]
+    ],
+    "format": "ES"
   }
 ]

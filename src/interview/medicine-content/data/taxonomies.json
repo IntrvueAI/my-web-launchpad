@@ -1,0 +1,165 @@
+{
+  "$comment": "Intrvue.ai Medicine — controlled vocabularies. Every station in the database references these by code. Dimension 1 (assessment domain) lives in ontology.json.",
+  "version": "1.0.0",
+  "compiled": "2026-08-29",
+
+  "dimension_2_station_format": {
+    "description": "HOW the ability is tested. A station has exactly one primary format and may have zero or more secondary formats.",
+    "values": [
+      {"code": "DQ", "label": "Direct question", "definition": "An open question inviting a reasoned answer. No scenario, no persona.", "example": "Why do you want to study medicine?", "engines": ["E1","E3"], "delivery_note": "Works in every engine. The lowest-cost format and the most over-used."},
+      {"code": "PE", "label": "Personal-example question", "definition": "Asks for a specific instance from the candidate's own life, then interrogates it.", "example": "Tell me about a time you worked in a team that was not functioning well.", "engines": ["E1","E3"], "delivery_note": "The value is entirely in the follow-up. Without interrogation this is a recitation slot."},
+      {"code": "WE", "label": "Work-experience reflection", "definition": "Anchored on the candidate's caring, volunteering or service experience; assesses what was learned, not what was seen.", "example": "You mentioned a care home placement. Describe something that changed how you think.", "engines": ["E1","E3"], "delivery_note": "MSC: 'What you did is only half the story: make sure you show us what attributes you demonstrated.'"},
+      {"code": "AC", "label": "Application challenge", "definition": "Questions drawn from the candidate's own UCAS answers, including respectful challenge to a claim made there.", "example": "You wrote that shadowing showed you the importance of communication. What did you actually see?", "engines": ["E1","E3"], "delivery_note": "ONLY serve to schools where application_questioning is true or not published. Never to Imperial, Sheffield, Newcastle, BSMS, Plymouth, Bristol, Glasgow, Nottingham, UEA."},
+      {"code": "ES", "label": "Ethical scenario", "definition": "A dilemma presented in text, discussed with an interviewer. No persona is played.", "example": "A friend tells you they cheated in a coursework assessment. What do you consider?", "engines": ["E1","E3"], "delivery_note": "Distinct from RP: the interviewer is an interviewer, not a character."},
+      {"code": "RP", "label": "Live roleplay", "definition": "The AI plays a named character with a state, hidden information and reactive behaviour. The candidate speaks to the character, not about the situation.", "example": "You are a volunteer. Speak to Mrs Bennett, whose son missed visiting hours.", "engines": ["E2"], "delivery_note": "The differentiating format. Full specification in Output 4."},
+      {"code": "IT", "label": "Instruction task", "definition": "The candidate must give precise verbal instructions to someone who cannot see what they can.", "example": "Describe this shape so the person opposite can draw it. You may not use the word 'square'.", "engines": ["E1","E2"], "delivery_note": "Highly discriminating for precision and checking. Needs a listener who follows instructions literally, including badly."},
+      {"code": "EX", "label": "Explanation task", "definition": "Explain a concept, process or piece of information to a specified lay audience.", "example": "Explain to a 10-year-old what a clinical trial is and why it matters.", "engines": ["E1","E2"], "delivery_note": "Score comprehension checking, not fluency."},
+      {"code": "PR", "label": "Prioritisation exercise", "definition": "Rank or sequence competing demands and justify the ordering, then defend it under challenge.", "example": "Five things need doing in your volunteer shift and you have twenty minutes.", "engines": ["E1","E3"], "delivery_note": "The justification and the willingness to revise are the assessment; the order is not."},
+      {"code": "CA", "label": "Calculation", "definition": "Arithmetic under time pressure, no calculator, no clinical knowledge required.", "example": "A ward of 24 beds is 75% occupied. Six patients are discharged and four admitted. What is the new occupancy?", "engines": ["E6"], "delivery_note": "Leicester runs this as a pass/fail hurdle. Birmingham runs it computer-based. Keep every item at or below GCSE level."},
+      {"code": "DI", "label": "Data interpretation", "definition": "Read a graph, table or short dataset and answer questions about what it does and does not show.", "example": "This chart shows waiting times by region. What can you conclude, and what can you not?", "engines": ["E6"], "delivery_note": "The high-value scoring behaviour is naming what the data cannot support."},
+      {"code": "AD", "label": "Article or source discussion", "definition": "A short passage is supplied; the candidate discusses it, including its weaknesses.", "example": "Read this 200-word news summary about an AI triage tool and discuss it.", "engines": ["E1","E3","E8"], "delivery_note": "Also the Keele pre-read format."},
+      {"code": "PD", "label": "Policy discussion", "definition": "A contested health-policy question requiring balanced argument and acknowledgement of the strongest opposing case.", "example": "Should the NHS fund weight-loss drugs at scale?", "engines": ["E1","E3"], "delivery_note": "Time-sensitive by definition. Every item carries an expiry date."},
+      {"code": "SP", "label": "Scientific problem", "definition": "Apply school-level science to an unfamiliar situation, reasoning aloud.", "example": "Why might a drug that works in a test tube fail in a person?", "engines": ["E4"], "delivery_note": "Oxbridge only. Assess the reasoning path, explicitly not the answer."},
+      {"code": "FU", "label": "Follow-up interrogation", "definition": "Not a standalone station — a probe attached to any other format, generated from what the candidate actually said.", "example": "You said you'd tell someone senior. Who, specifically, and what if nothing happened?", "engines": ["E1","E2","E3","E4"], "delivery_note": "Governed by Output 7. This is where most of the assessment value lives."},
+      {"code": "GT", "label": "Group or teamwork exercise", "definition": "Multiple participants work on a shared task while each is individually assessed.", "example": "Your group has £50,000 to allocate across four community health proposals.", "engines": ["E7"], "delivery_note": "Requires simulated co-participants with distinct behaviours. Phase 3."},
+      {"code": "AR", "label": "Asynchronous recorded response", "definition": "Timed recorded answer with no interlocutor, no follow-up and no feedback loop during the station.", "example": "Any question, delivered Brunel-style: 2 minutes to read, 5 minutes to record.", "engines": ["E5"], "delivery_note": "A delivery wrapper over other formats rather than a content type. Cheap to build, exact for Brunel."}
+    ]
+  },
+
+  "dimension_3_scenario_context": {
+    "description": "WHERE the scenario takes place. Governs what the candidate can plausibly know and do, and therefore what the scoring may expect.",
+    "values": [
+      {"code": "SCHOOL", "label": "School or sixth form", "candidate_role": "student, peer, prefect, mentor", "escalation_target": "teacher, head of year, Designated Safeguarding Lead", "note": "Highest realism for a 17-year-old applicant. Under-used in most banks."},
+      {"code": "VOL", "label": "Volunteering placement", "candidate_role": "volunteer", "escalation_target": "volunteer coordinator, shift lead", "note": "The single most defensible setting for ethical and safeguarding stations. The candidate has responsibility without clinical authority."},
+      {"code": "CARE", "label": "Care home or supported living", "candidate_role": "volunteer, care assistant, kitchen or activities helper", "escalation_target": "shift manager, care home manager, organisational safeguarding lead", "note": "Escalation runs to the local authority adult safeguarding team under the Care Act 2014, not to a doctor."},
+      {"code": "WORK", "label": "Non-healthcare workplace", "candidate_role": "employee (retail, hospitality, tutoring, lifeguarding)", "escalation_target": "supervisor, manager", "note": "MSC treats paid service work as legitimate relevant experience. Use it."},
+      {"code": "HOSP", "label": "Hospital", "candidate_role": "observer, volunteer, ward helper, visitor", "escalation_target": "nurse in charge, supervising clinician", "note": "DANGER ZONE. The candidate must never be positioned as having clinical responsibility. See clinical_knowledge_boundary rules."},
+      {"code": "GP", "label": "GP practice or community clinic", "candidate_role": "observer, reception volunteer", "escalation_target": "practice manager, supervising GP", "note": "Same constraint as HOSP."},
+      {"code": "COMM", "label": "Community and public space", "candidate_role": "member of the public, first-aider, bystander", "escalation_target": "emergency services, venue staff", "note": "Good for helping-in-emergencies stations at a realistic competence level."},
+      {"code": "FAM", "label": "Family or personal setting", "candidate_role": "family member, friend, young carer", "escalation_target": "trusted adult, GP, carers' support", "note": "Handle with care. Never require disclosure of the candidate's own family health circumstances; frame as a hypothetical friend where possible."},
+      {"code": "UNI", "label": "University or medical school (hypothetical future)", "candidate_role": "prospective or first-year student", "escalation_target": "personal tutor, welfare team, medical school", "note": "GMC 'Achieving good medical practice' applies to students at all times, including outside the medical school and online. Several schools issue this document to candidates."},
+      {"code": "RES", "label": "Research environment", "candidate_role": "student placement, participant", "escalation_target": "supervisor, ethics committee", "note": "Consent, data and integrity stations."},
+      {"code": "PH", "label": "Public health or policy context", "candidate_role": "citizen reasoning about a population question", "escalation_target": "n/a", "note": "No individual patient. Assesses population-level reasoning and the individual-versus-population tension."},
+      {"code": "SPORT", "label": "Sport, club or society", "candidate_role": "team member, captain, coach, committee", "escalation_target": "coach, club welfare officer", "note": "Underused source of genuine teamwork, leadership and conflict material."},
+      {"code": "ONLINE", "label": "Digital and social media", "candidate_role": "account holder, group member", "escalation_target": "platform, school, employer", "note": "GMC social media guidance was rewritten in January 2024; the archived version's real-name requirement no longer applies."}
+    ]
+  },
+
+  "dimension_4_actor_type": {
+    "description": "WHO the candidate is interacting with. Applies to RP, IT, EX and GT formats. Full persona specification in Output 4.",
+    "values": [
+      {"code": "PT_ANX", "label": "Anxious patient or service user", "dominant_need": "reassurance that is honest", "trap": "false reassurance"},
+      {"code": "PT_ANG", "label": "Angry patient or service user", "dominant_need": "to be heard before being explained to", "trap": "defending the organisation first"},
+      {"code": "PT_DIS", "label": "Distressed or tearful person", "dominant_need": "space and acknowledgement", "trap": "rushing to fix"},
+      {"code": "PT_CONF", "label": "Confused or disoriented person", "dominant_need": "orientation and patience", "trap": "assuming incapacity"},
+      {"code": "PT_WITH", "label": "Person withholding information", "dominant_need": "safety before disclosure", "trap": "interrogating rather than opening space"},
+      {"code": "PT_DEM", "label": "Person making an unrealistic demand", "dominant_need": "the underlying worry behind the demand", "trap": "agreeing to something outside competence"},
+      {"code": "REL", "label": "Relative or next of kin", "dominant_need": "information and inclusion", "trap": "disclosing without consent"},
+      {"code": "PAR", "label": "Parent of a child or young person", "dominant_need": "control and reassurance", "trap": "siding automatically with the parent over the young person"},
+      {"code": "CARER", "label": "Unpaid carer", "dominant_need": "recognition and practical support", "trap": "ignoring the carer's own state"},
+      {"code": "YP", "label": "Child or young person", "dominant_need": "to be taken seriously", "trap": "promising secrecy"},
+      {"code": "FRIEND", "label": "Friend or peer disclosing something", "dominant_need": "confidentiality they may not be able to have", "trap": "promising confidentiality before hearing the disclosure"},
+      {"code": "PEER_APP", "label": "Fellow applicant or candidate", "dominant_need": "fair share of the task", "trap": "competing rather than collaborating"},
+      {"code": "COLL", "label": "Colleague at the same level", "dominant_need": "to not be blamed", "trap": "escalating before speaking to them"},
+      {"code": "SENIOR", "label": "Senior person with authority", "dominant_need": "efficiency and deference", "trap": "not challenging when challenge is required"},
+      {"code": "HCP", "label": "Healthcare professional (nurse, pharmacist, PA, paramedic)", "dominant_need": "professional respect", "trap": "assuming a hierarchy of expertise"},
+      {"code": "COORD", "label": "Volunteer coordinator or supervisor", "dominant_need": "reliability and honesty", "trap": "concealing a mistake"},
+      {"code": "MOP", "label": "Member of the public", "dominant_need": "plain-language information", "trap": "jargon and over-claiming"},
+      {"code": "SCEPTIC", "label": "Someone holding a firmly opposed view", "dominant_need": "to be argued with respectfully", "trap": "capitulating or lecturing"},
+      {"code": "INT", "label": "Interviewer (not in role)", "dominant_need": "n/a", "trap": "n/a"}
+    ]
+  },
+
+  "dimension_5_difficulty_variables": {
+    "description": "What makes a station harder. Each variable is a 0-3 intensity. Station difficulty is derived from the vector, not set by hand. Two stations on the same topic can differ by two difficulty bands purely through these settings.",
+    "variables": [
+      {"code": "AMBIG", "label": "Ambiguity", "definition": "How underdetermined the right course of action is.", "0": "One clearly correct action", "3": "No action is clearly correct; the candidate must choose and justify"},
+      {"code": "EMO", "label": "Emotional intensity", "definition": "The affective load the candidate must absorb and manage.", "0": "Neutral", "3": "Acute grief, rage or panic sustained through the station"},
+      {"code": "CONFL", "label": "Conflicting priorities", "definition": "Number and severity of duties pulling in opposite directions.", "0": "Single duty", "3": "Three or more legitimate duties in direct conflict"},
+      {"code": "HIDDEN", "label": "Hidden information", "definition": "Material facts the actor will not volunteer.", "0": "Everything is stated", "3": "The station is unsolvable without eliciting two or more concealed facts"},
+      {"code": "SAFEG", "label": "Safeguarding implication", "definition": "Whether a person may be at risk of harm.", "0": "None", "3": "Immediate risk to a child or adult at risk"},
+      {"code": "TIME", "label": "Time pressure", "definition": "Task volume relative to the clock.", "0": "Ample time", "3": "Cannot be completed; the candidate must choose what to drop"},
+      {"code": "MISLEAD", "label": "Misleading information", "definition": "Plausible but wrong framing offered by the actor or the brief.", "0": "None", "3": "The obvious reading is wrong and the actor reinforces it"},
+      {"code": "HOSTILE", "label": "Hostile follow-up", "definition": "How adversarially the interviewer probes.", "0": "Supportive", "3": "Sustained challenge including challenge to a correct answer"},
+      {"code": "INCOMP", "label": "Incomplete data", "definition": "Whether the candidate must act without full information.", "0": "Complete", "3": "Key data absent and unobtainable within the station"},
+      {"code": "ETHUNC", "label": "Ethical uncertainty", "definition": "Whether principles genuinely conflict rather than one applying cleanly.", "0": "Single principle applies", "3": "Two principles in irreducible tension with no settled professional answer"},
+      {"code": "OVERC", "label": "Overconfidence bait", "definition": "How strongly the station tempts the candidate to exceed their competence.", "0": "No temptation", "3": "The actor actively requests clinical advice and rewards giving it"},
+      {"code": "CHALL", "label": "Need to challenge respectfully", "definition": "Whether the candidate must contradict someone with more authority.", "0": "No challenge needed", "3": "Must challenge a senior who is behaving plausibly and confidently"},
+      {"code": "LIMITS", "label": "Need to recognise limits of competence", "definition": "Whether saying 'this is beyond me, here is who I would involve' is required to pass.", "0": "Fully within competence", "3": "Any substantive action taken alone is a red flag"}
+    ],
+    "difficulty_bands": {
+      "1_foundation": "Sum 0-6, no variable above 1. First exposure; the candidate should succeed.",
+      "2_standard": "Sum 7-14. Representative of a real station at a typical school.",
+      "3_stretch": "Sum 15-24, at least one variable at 3. Discriminates strong candidates.",
+      "4_adversarial": "Sum 25+. Diagnostic only; not representative of a real interview. Label it as such in the UI so users do not conclude real MMIs are like this."
+    }
+  },
+
+  "dimension_6_scoring_dimensions": {
+    "description": "WHAT is scored. Derived from the convergent published models at ARU, Imperial, Aberdeen, Sheffield, BSMS and Plymouth. Every station scores S1 and S2. Domain dimensions S3-S8 are selected per station. S9 is binary and independent. Full rubrics in Output 8.",
+    "always_scored": [
+      {"code": "S1", "label": "Content and coverage", "scores": "Whether the substantive things a competent answer must address were addressed.", "evidence_source": "transcript", "precedent": "Imperial 6/10 for content; ARU 'quality of answer'"},
+      {"code": "S2", "label": "Communication and delivery", "scores": "Structure, clarity, pace, jargon, listening, turn-taking, checking.", "evidence_source": "transcript + audio", "precedent": "Imperial 4/10 for communication; Aberdeen scores communication at every station regardless of domain; Ulster found communication stations the most discriminating"}
+    ],
+    "domain_scored": [
+      {"code": "S3", "label": "Reasoning quality", "scores": "Whether conclusions follow from stated considerations; whether trade-offs are named; whether the strongest opposing case is engaged."},
+      {"code": "S4", "label": "Insight and reflection", "scores": "Whether the candidate draws a transferable lesson rather than narrating events, and whether they can name what they would do differently."},
+      {"code": "S5", "label": "Empathy and person-centredness", "scores": "Whether emotion was noticed, named and responded to before information was delivered."},
+      {"code": "S6", "label": "Professional judgement", "scores": "Whether the action chosen is proportionate, escalated to the right person, and within the candidate's role."},
+      {"code": "S7", "label": "Numeracy and data handling", "scores": "Accuracy, method transparency, and correct statement of what data cannot show."},
+      {"code": "S8", "label": "Scientific reasoning", "scores": "Whether school-level science is applied to novel material with an explicit reasoning path. Oxbridge routes only."}
+    ],
+    "binary": [
+      {"code": "S9", "label": "Red flag", "scores": "Present / absent. A statement or behaviour that would concern a selector regardless of the rest of the answer.", "precedent": "Plymouth scores a separate red-flag section Yes/No alongside the numeric scale.", "rule": "A red flag is reported separately and never averaged away by a strong total."}
+    ],
+    "interactive_only": {
+      "description": "Dimensions that CANNOT be judged from a transcript and are only available when the station is delivered live. Flag these in the UI as unavailable in asynchronous or text mode rather than scoring them silently.",
+      "values": [
+        "Responsiveness to the actor's changing state",
+        "Recovery after interruption",
+        "Whether silence was used or filled",
+        "Whether the candidate elicited hidden information or waited to be told",
+        "Turn-taking and interruption of the actor",
+        "Whether the candidate checked understanding and acted on the answer",
+        "Pace and hesitation under sustained challenge",
+        "Willingness to revise a position when given a genuine reason, versus capitulating to pressure alone"
+      ]
+    },
+    "explicitly_not_scored": {
+      "description": "Do not build these. Each is either unmeasurable from our signal or invites buzzword gaming.",
+      "values": [
+        "Warmth, eye contact, body language, facial expression — not measurable from audio; claiming otherwise is a reputational risk",
+        "'Empathy' as a personality trait rather than an observed behaviour in this station",
+        "Naming an ethical framework, principle or NHS value — see Output 8's anti-buzzword rules",
+        "Quantity of work experience",
+        "Confidence as a trait, as opposed to calibration of confidence to evidence",
+        "Accent, dialect, or non-native speech patterns"
+      ]
+    }
+  },
+
+  "clinical_knowledge_boundary": {
+    "description": "Applied to every station via the schema's clinical_knowledge_boundary field. Governs both content design and scoring.",
+    "levels": [
+      {"code": "NONE", "definition": "No health knowledge required at all. The scenario would work in any setting.", "premed_appropriate": true},
+      {"code": "LAY", "definition": "Requires only what an informed member of the public knows — that GPs refer to hospitals, that waiting lists exist, that vaccines prevent disease.", "premed_appropriate": true},
+      {"code": "CONTEXT", "definition": "Requires knowledge of how the NHS or medical training is organised, or of a current policy debate. Learnable from public sources; no clinical judgement involved.", "premed_appropriate": true},
+      {"code": "CLINICAL", "definition": "Requires diagnosis, treatment choice, prescribing, prognosis or clinical risk assessment.", "premed_appropriate": false, "rule": "DO NOT BUILD. If an existing station requires this, it is miscalibrated. The only legitimate use of a clinical element is as bait: the correct behaviour is to decline and escalate, and the rubric must score the declining, not the clinical content."}
+    ],
+    "scoring_rules": [
+      "Never award credit for a candidate offering a diagnosis, a treatment, a drug, a dose or a prognosis.",
+      "Never penalise a candidate for saying they do not know something clinical.",
+      "Award credit for naming the limit and naming who they would involve — Aston publishes 'Knowing your limitations and knowing when to ask for help' as an assessed attribute.",
+      "In a roleplay, an actor may request clinical advice. Giving it is a red flag (S9). Declining warmly and redirecting is the top-band behaviour."
+    ]
+  },
+
+  "temporality": {
+    "description": "Governs review cadence and the current_affairs_expiry field.",
+    "values": [
+      {"code": "EVERGREEN", "definition": "Stable for years. Ethics principles, communication skills, personal reflection.", "review_cadence_months": 24},
+      {"code": "SLOW", "definition": "Changes over one to three years. NHS structure, screening programmes, professional guidance.", "review_cadence_months": 12},
+      {"code": "FAST", "definition": "Changes within a cycle. Industrial action, legislation in progress, published statistics, named ministers.", "review_cadence_months": 3, "rule": "Must carry a hard expiry date. Content past expiry is withheld from users, not merely flagged."}
+    ]
+  }
+}

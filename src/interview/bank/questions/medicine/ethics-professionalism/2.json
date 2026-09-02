@@ -1,0 +1,126 @@
+[
+  {
+    "id": "MED-EP-09",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "A friend asks you to promise before they tell you",
+    "tags": ["ethics", "confidentiality", "promises"],
+    "format": "ES",
+    "question": "A close friend says 'promise you won't tell anyone' and then starts to tell you something serious before you've answered. What should you have thought about before responding?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that promising unconditional confidentiality BEFORE hearing what it is removes your own ability to act on what you're told, and that the honest move is to say something like 'I'll listen, but I can't promise that in advance' before the disclosure completes — not after.",
+    "modelReasoningPath": "This is the non-roleplay twin of a live station testing the same behaviour: promising confidentiality before hearing a disclosure is one of the most common and most avoidable errors in this whole domain. A strong candidate recognises the trap in the TIMING — once you've promised and then heard something serious, you're stuck choosing between breaking a promise and ignoring a real risk. The honest, kind response is to say, gently and before the disclosure finishes, that you can't promise total secrecy in advance, while making clear you're not going to broadcast it either. This protects both the friendship and the ability to act responsibly if the content turns out to require it.",
+    "rubric": {
+      "strong": "Recognises the problem is the TIMING of the promise, not just its content, and describes interrupting or qualifying before the full disclosure lands — while keeping the response warm rather than legalistic.",
+      "developing": "Recognises they shouldn't promise total secrecy but doesn't notice the timing issue — would only qualify the promise after already hearing everything.",
+      "weak": "Says they would simply promise, because that's what a friend does, with no engagement with what happens if the content turns out to be serious."
+    },
+    "commonMistakes": [
+      { "mistake": "Says they'd promise because refusing would feel like a betrayal of the friendship", "reveals": "Hasn't thought through what happens if the disclosure is something serious and the promise can't actually be kept" },
+      { "mistake": "Only thinks to qualify the promise after hearing everything", "reveals": "Misses that the highest-scoring move is catching this BEFORE the disclosure completes, not managing the fallout afterwards" }
+    ],
+    "liveProbes": [
+      { "probe": "What would you actually say, in the moment, before they finish telling you?", "goodResponse": "Offers real, warm words — not a cold, formal refusal" },
+      { "probe": "Does saying 'I can't promise that' have to damage the friendship?", "goodResponse": "Explains how honesty here is more likely to preserve trust long-term than a promise that can't be kept" }
+    ],
+    "hints": [
+      "What's the risk of promising secrecy before you know what's coming?",
+      "Could you say something honest without shutting the conversation down?",
+      "Does refusing to promise unconditionally mean you'll definitely tell someone?"
+    ]
+  },
+  {
+    "id": "MED-EP-10",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "You suspect something, but you can't be sure",
+    "tags": ["ethics", "raising-concerns", "professionalism"],
+    "format": "ES",
+    "question": "You think something isn't right about a situation you're involved in, but you don't have proof — just a strong feeling something is wrong. Should you say anything?",
+    "answer": "Discussion question — no single verdict, though this draws on a genuinely unlocking real-world principle: you can be justified in raising a concern honestly, based on reasonable belief and through the right channel, EVEN IF you turn out to be mistaken. Proof is not the bar.",
+    "modelReasoningPath": "Applicants systematically under-report concerns because they feel they need to be certain first — and this single principle unlocks a huge family of MMI stations once understood. A strong candidate recognises that waiting for proof before raising a genuine, reasonable concern gets the threshold backwards: the professional standard is reasonable belief, raised honestly, through an appropriate channel — not certainty. They also recognise this doesn't mean throwing around vague accusations; it means being honest about what they've observed and why it concerns them, factually rather than as a firm verdict.",
+    "rubric": {
+      "strong": "States clearly that certainty is not required to raise a concern in good faith, describes raising it factually and through an appropriate route, and distinguishes this from making an unfounded accusation.",
+      "developing": "Leans toward raising it but hedges on whether uncertainty is really enough reason to act, or doesn't specify how they'd raise it.",
+      "weak": "Says they'd wait until they were sure before doing anything."
+    },
+    "commonMistakes": [
+      { "mistake": "Says they'd wait until they had proof", "reveals": "The single most common and most consequential error in this domain — reasonable belief, not proof, is the standard for raising a concern in good faith" },
+      { "mistake": "Confuses raising a concern with making a public accusation", "reveals": "These are different acts — one is a private, factual flag; the other is a firm verdict stated publicly" }
+    ],
+    "liveProbes": [
+      { "probe": "What if you raised it and it turned out to be nothing?", "goodResponse": "Accepts this is an acceptable cost of acting on reasonable belief in good faith, rather than a reason not to have raised it" },
+      { "probe": "How would you actually raise something you're not certain about?", "goodResponse": "Describes a factual, non-accusatory way of flagging it rather than a firm verdict" }
+    ],
+    "hints": [
+      "Do you need to be certain before it's worth raising a concern?",
+      "What's the difference between raising a concern and making an accusation?",
+      "What's the cost of staying silent if you turn out to be right?"
+    ]
+  },
+  {
+    "id": "MED-EP-11",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Who gets the last funded place on the programme?",
+    "tags": ["ethics", "resource-allocation", "justice"],
+    "format": "ES",
+    "question": "A local health programme has funding for ten places this year and eleven equally eligible people have applied. How would you think about deciding who gets the last place?",
+    "answer": "Discussion question — no single verdict. A strong answer makes the opportunity cost concrete (someone genuinely misses out, not an abstraction), names a defensible, consistently-applicable criterion rather than an ad hoc one, and recognises the decision should ideally be made by a transparent process rather than one person's instinct.",
+    "modelReasoningPath": "This station makes opportunity cost concrete without requiring any specialist health-economics knowledge. A strong candidate resists an instant, comfortable answer ('first come first served' or 'whoever needs it most') and asks what makes a criterion defensible: is it consistent, is it applied the same way to everyone, and could you explain it to the person who misses out? They recognise a decision like this shouldn't rest on one person's gut feeling — a transparent, pre-agreed rule (however imperfect) is fairer than an ad hoc judgement made under pressure, even if the rule itself is debatable.",
+    "rubric": {
+      "strong": "Names a specific, defensible and consistently-applicable criterion, explains why it's fairer than the alternatives, and recognises the value of a transparent process over an individual ad hoc decision.",
+      "developing": "Reaches a criterion but doesn't defend why it's fairer than alternatives, or the reasoning is thin.",
+      "weak": "Picks a criterion with no reasoning for why it's fairer than any other, or refuses to commit to any approach at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Picks 'whoever needs it most' with no way of actually assessing that consistently", "reveals": "Sounds compassionate but isn't operable — needs a way of comparing need fairly across eleven different people" },
+      { "mistake": "Says 'I'd just decide based on the applications' with no stated criterion", "reveals": "Avoids committing to a defensible principle, which is what the station is actually testing" }
+    ],
+    "liveProbes": [
+      { "probe": "What if the eleventh applicant has a much stronger personal case than the others?", "goodResponse": "Engages honestly with whether the criterion should flex for genuinely different circumstances, rather than rigidly refusing" },
+      { "probe": "Should this decision be made by one person?", "goodResponse": "Recognises the value of a transparent, pre-agreed process over an individual judgement call" }
+    ],
+    "hints": [
+      "What would make one criterion for choosing fairer than another?",
+      "Could you explain your criterion to the person who misses out?",
+      "Should a decision like this be made by one person alone?"
+    ]
+  },
+  {
+    "id": "MED-EP-12",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "No harm came of it — do you still report it?",
+    "tags": ["ethics", "near-miss", "patient-safety", "learning-culture"],
+    "format": "ES",
+    "question": "Something nearly went wrong during a task you were involved in, but in the end nobody was harmed. Do you think it's still worth reporting?",
+    "answer": "Discussion question — no single verdict, but a strong answer clearly favours reporting near misses: the absence of harm this time doesn't mean the same thing won't cause harm next time, and reporting is how a system learns rather than just getting lucky repeatedly.",
+    "modelReasoningPath": "A strong candidate recognises that 'no harm done' is a fact about this particular instance, not a judgement on whether the underlying risk is real. If the same gap or mistake happens again under slightly different circumstances, it might not be harmless next time. They connect this to the idea of a learning culture — reporting isn't about blaming whoever was involved, it's about fixing the conditions that allowed the near miss, which protects everyone including the person who reported it. A genuinely strong answer notes that under-reporting near misses is itself a documented pattern behind larger safety failures, where warning signs were visible in hindsight but nobody had flagged them.",
+    "rubric": {
+      "strong": "States clearly that a near miss is still worth reporting, explains why (learning versus luck), and frames reporting as separate from blame.",
+      "developing": "Leans toward reporting but the reasoning is thin, or conflates reporting with getting someone in trouble.",
+      "weak": "Says it's not worth reporting because nothing actually went wrong, or because it would seem like overreacting to a non-event."
+    },
+    "commonMistakes": [
+      { "mistake": "Says there's nothing to report because no harm occurred", "reveals": "Treats a lucky outcome as evidence the underlying risk wasn't real" },
+      { "mistake": "Treats reporting as inherently about blaming someone", "reveals": "Confuses a learning-culture report with a disciplinary complaint — these serve different purposes" }
+    ],
+    "liveProbes": [
+      { "probe": "What if the same thing happens again next month, in slightly different circumstances?", "goodResponse": "Recognises that repeated near misses are exactly the pattern that precedes real harm" },
+      { "probe": "Does reporting something have to mean blaming someone?", "goodResponse": "Distinguishes a systems-focused safety report from a personal accusation" }
+    ],
+    "hints": [
+      "Does 'no harm done' mean there was no real risk?",
+      "What's the difference between reporting something and blaming someone for it?",
+      "What happens if the same near miss happens again, slightly differently, next time?"
+    ]
+  }
+]

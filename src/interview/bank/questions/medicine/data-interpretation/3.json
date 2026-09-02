@@ -1,0 +1,33 @@
+[
+  {
+    "id": "MED-D11",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 3,
+    "questionType": "Prioritisation",
+    "title": "You can't do all of it — what do you drop, and who do you tell?",
+    "tags": ["prioritisation", "judgement", "escalation"],
+    "format": "PR",
+    "question": "You're helping run a busy shift with several tasks that all genuinely need doing, and partway through it becomes clear there isn't enough time to finish everything. What do you drop, and what do you do about it?",
+    "answer": "Discussion question — the ORDER or choice of what's dropped is not scored in isolation. A strong answer states a clear criterion for what gets dropped, is honest and proactive about telling someone rather than quietly letting a task disappear, and would revise the plan if a new fact changed the picture.",
+    "modelReasoningPath": "This station is deliberately impossible — there isn't enough time, full stop — because most banks only make prioritisation merely hard, not genuinely impossible, and the impossible version is what tests judgement rather than time-management tricks. A strong candidate names an explicit criterion for what gets dropped (safety-critical first, time-sensitive next, easily-recoverable last) and is honest that SOMETHING has to give — refusing to admit that is itself a weak answer. Critically, they don't just quietly drop a task; they tell whoever needs to know, so the gap is visible and can be covered by someone else if needed. A very strong candidate explicitly says they'd revise the plan if a fact changed mid-shift, rather than sticking rigidly to the first decision.",
+    "rubric": {
+      "strong": "States an explicit, defensible criterion for what gets dropped, is proactive and honest about telling someone the gap exists, and says they'd revise if a fact changed.",
+      "developing": "Names something to drop but the criterion is unclear, or doesn't mention telling anyone about the gap.",
+      "weak": "Insists everything can be done anyway, or drops something silently with no plan to flag the gap to anyone."
+    },
+    "commonMistakes": [
+      { "mistake": "Insists everything can somehow be fitted in", "reveals": "Avoids the actual judgement the station is testing by denying the premise" },
+      { "mistake": "Drops a task without telling anyone", "reveals": "Creates an invisible gap that someone else might rely on being covered" }
+    ],
+    "liveProbes": [
+      { "probe": "Halfway through, a new task arrives that's more urgent than what you kept. What now?", "goodResponse": "Revises the plan based on the new fact rather than defending the original choice rigidly" },
+      { "probe": "Who specifically would you tell about the gap?", "goodResponse": "Names an actual role, not a vague 'someone'" }
+    ],
+    "hints": [
+      "What's your actual criterion for what gets dropped?",
+      "Who needs to know that something isn't getting done?",
+      "What would make you change your plan partway through?"
+    ]
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "id": "MED-CT-01",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Explanation Task",
+    "title": "Explain a clinical trial to a ten-year-old",
+    "tags": ["communication", "explanation", "lay-audience"],
+    "format": "EX",
+    "question": "Explain to me, as if I were a ten-year-old, what a clinical trial is and why it matters. I'll respond as that child would.",
+    "answer": "No single 'correct' script. A strong answer uses no jargon, checks comprehension with an OPEN question rather than 'does that make sense?', and adapts based on what the response actually reveals about understanding.",
+    "modelReasoningPath": "Scored on whether the LISTENER ends up understanding, not on the candidate's fluency. A strong candidate avoids jargon entirely (no 'randomised', no 'placebo' without explaining it in plain terms), uses a simple analogy a child could actually grasp, and checks understanding with an open question — 'tell me back what you think that means' — rather than the closed 'does that make sense?', which a child (like anyone) will answer 'yes' to regardless of whether they understood. If the response reveals a misunderstanding, a strong candidate adapts the explanation rather than repeating the same words louder or moving on regardless.",
+    "rubric": {
+      "strong": "No unexplained jargon, an accessible analogy, an OPEN comprehension check, and adapts based on what that check reveals.",
+      "developing": "Reasonably clear explanation but checks understanding only with a closed question, or doesn't adapt when understanding seems shaky.",
+      "weak": "Uses jargon without explaining it, or never checks understanding at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Asks 'does that make sense?' as the comprehension check", "reveals": "A closed question that will be answered 'yes' regardless of actual understanding — this scores nothing on its own" },
+      { "mistake": "Uses unexplained technical terms", "reveals": "Assumes vocabulary a ten-year-old (or any lay listener) would not have" }
+    ],
+    "liveProbes": [
+      { "probe": "[as the child] So... is it like an experiment on people?", "goodResponse": "Engages with the response constructively, correcting or refining gently rather than dismissing it" }
+    ],
+    "hints": [
+      "Try using a simple, everyday comparison rather than technical language.",
+      "Instead of 'does that make sense?', try asking them to explain it back to you."
+    ]
+  },
+  {
+    "id": "MED-CT-02",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Explanation Task",
+    "title": "Explain what a waiting list actually is",
+    "tags": ["communication", "explanation", "lay-audience", "nhs"],
+    "format": "EX",
+    "question": "A member of the public asks you what an NHS waiting list actually is and why it exists. Explain it to me as if I were that person.",
+    "answer": "No single 'correct' script. A strong answer explains the concept in plain terms (more people needing care than can be seen at once, so cases are ordered somehow) without pretending to state precise current figures, and checks the listener actually followed it.",
+    "modelReasoningPath": "This tests the boundary between a lay explanation and an over-claimed clinical or statistical one. A strong candidate explains the basic concept plainly — demand for care exceeds capacity to deliver it immediately, so people are ordered by some combination of clinical urgency and time waiting — without inventing or overstating a precise current number they don't actually know. They resist over-promising ('you'll definitely be seen within X weeks') and check the listener's understanding with an open question rather than a closed one.",
+    "rubric": {
+      "strong": "Explains the underlying concept clearly in plain terms, avoids inventing precise figures they don't know, and checks understanding with an open question.",
+      "developing": "Gives a reasonable explanation but slips into a closed comprehension check, or states a figure with more confidence than is warranted.",
+      "weak": "Uses jargon, invents a precise statistic with false confidence, or never checks understanding."
+    },
+    "commonMistakes": [
+      { "mistake": "States a precise waiting-list figure with total confidence", "reveals": "Overclaims certainty about a number that changes often and that they likely don't actually know precisely" },
+      { "mistake": "Promises a specific wait time", "reveals": "Makes a commitment that isn't theirs to make and may not be accurate" }
+    ],
+    "liveProbes": [
+      { "probe": "So does that mean I'll definitely be seen in a few weeks?", "goodResponse": "Avoids over-promising a specific timeframe and reframes honestly around how ordering actually works" }
+    ],
+    "hints": [
+      "Explain the underlying idea rather than quoting a specific number you're not sure of.",
+      "Check they've actually understood, rather than assuming they have."
+    ]
+  },
+  {
+    "id": "MED-CT-03",
+    "subject": "medicine",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "Apologising without 'but'",
+    "tags": ["communication", "candour", "apology"],
+    "format": "PE",
+    "question": "Tell me about a time you had to apologise to someone for genuinely getting something wrong. What did you actually say?",
+    "answer": "Discussion question — no single verdict. A strong answer gives a clean apology with no 'but' attached, names the specific harm caused rather than a generic 'sorry if', and describes what changed afterwards.",
+    "modelReasoningPath": "A strong candidate can recall the actual words of a real apology, not just the fact that one happened. The discriminator is whether the apology was CLEAN — no 'but', no immediate self-justifying explanation before or instead of the apology — and whether it named the specific harm caused rather than a vague 'sorry if that caused any trouble'. A strong candidate also describes a concrete change afterwards, showing the apology wasn't just a form of words.",
+    "rubric": {
+      "strong": "Recalls a genuine apology with no 'but', names the specific harm caused, and describes a concrete change afterwards.",
+      "developing": "Recalls an apology but it's qualified with a 'but' or justification, or the harm named is vague.",
+      "weak": "Cannot recall a real apology, or describes one that was mostly self-justification rather than genuine acknowledgement."
+    },
+    "commonMistakes": [
+      { "mistake": "Describes an apology that includes 'but' or an immediate justification", "reveals": "A qualified apology reads as less than a genuine one — the 'but' undoes much of the acknowledgement" },
+      { "mistake": "Apologises 'if' something caused a problem rather than for the specific thing done", "reveals": "A conditional apology avoids clearly owning what actually happened" }
+    ],
+    "liveProbes": [
+      { "probe": "What did you actually say, word for word, as closely as you can remember?", "goodResponse": "Attempts a real reconstruction rather than a general description of the gist" }
+    ],
+    "hints": [
+      "Did your apology include the word 'but'?",
+      "Did you name the specific thing that went wrong, or something vaguer?"
+    ]
+  }
+]

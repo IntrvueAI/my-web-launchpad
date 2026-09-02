@@ -6,7 +6,10 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "Why Medicine",
-    "tags": ["motivation", "reflection"],
+    "tags": [
+      "motivation",
+      "reflection"
+    ],
     "question": "Why do you want to study medicine? I'd like a specific, honest answer, not the version you think I want to hear.",
     "answer": "No single correct answer. Assess specificity, honesty, and genuine reflection — not the content of the reason itself. A strong answer is grounded in a concrete experience or realisation, acknowledges the difficult and unglamorous parts of the career (not just the noble parts), and doesn't rely on generic lines like 'I want to help people' as the whole answer.",
     "modelReasoningPath": "A strong candidate goes past the socially expected opening line ('I want to help people') to something specific and personally true — a particular experience, person, or moment that shaped the interest — and can explain WHY that experience mattered to them, not just describe it. They show awareness that medicine involves long hours, emotional difficulty, bureaucracy, and years of training, not just the rewarding moments, which signals they've thought realistically about the career rather than romanticised it.",
@@ -16,18 +19,31 @@
       "weak": "Relies entirely on a generic, rehearsed line ('I've always wanted to help people') with no specific example or personal reflection behind it."
     },
     "commonMistakes": [
-      { "mistake": "Answers only with 'I want to help people' and stops there", "reveals": "Hasn't done the reflective work to identify what's specifically true and personal about their own motivation" },
-      { "mistake": "Only mentions the appealing or noble parts of medicine (saving lives, being respected)", "reveals": "May not have engaged realistically with the demanding, unglamorous, and emotionally difficult sides of the career" }
+      {
+        "mistake": "Answers only with 'I want to help people' and stops there",
+        "reveals": "Hasn't done the reflective work to identify what's specifically true and personal about their own motivation"
+      },
+      {
+        "mistake": "Only mentions the appealing or noble parts of medicine (saving lives, being respected)",
+        "reveals": "May not have engaged realistically with the demanding, unglamorous, and emotionally difficult sides of the career"
+      }
     ],
     "liveProbes": [
-      { "probe": "Plenty of careers let you help people — why medicine specifically, and not nursing, social work, or something else?", "goodResponse": "Engages seriously with what's distinctive about being a doctor specifically, rather than repeating a generic 'helping people' framing" },
-      { "probe": "What's the least appealing part of a doctor's working life that you've thought about?", "goodResponse": "Names something genuine and specific (long hours, emotionally difficult conversations, bureaucracy, delayed gratification of training) rather than deflecting the question" }
+      {
+        "probe": "Plenty of careers let you help people — why medicine specifically, and not nursing, social work, or something else?",
+        "goodResponse": "Engages seriously with what's distinctive about being a doctor specifically, rather than repeating a generic 'helping people' framing"
+      },
+      {
+        "probe": "What's the least appealing part of a doctor's working life that you've thought about?",
+        "goodResponse": "Names something genuine and specific (long hours, emotionally difficult conversations, bureaucracy, delayed gratification of training) rather than deflecting the question"
+      }
     ],
     "hints": [
       "Try to think of one specific moment or experience, not a general feeling.",
       "What's different about medicine specifically, compared to other caring professions?",
       "Have you thought about the hard parts of the job, not just the rewarding ones?"
-    ]
+    ],
+    "format": "DQ"
   },
   {
     "id": "MED-M2",
@@ -36,7 +52,10 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "A Difficult Team Experience",
-    "tags": ["teamwork", "reflection"],
+    "tags": [
+      "teamwork",
+      "reflection"
+    ],
     "question": "Tell me about a time you worked in a team and it didn't go well. What happened, and what did you learn?",
     "answer": "No single correct answer. Assess whether they give a genuine example of difficulty (not a disguised humble-brag), take real ownership of their own part in it, and articulate a specific, credible lesson rather than a vague platitude.",
     "modelReasoningPath": "A strong candidate picks a genuine example where something actually went wrong — not a thinly disguised success story ('we disagreed but then we won the competition!'). They take real ownership of their own role in the difficulty, rather than placing all the blame elsewhere, and describe a specific, concrete change in how they now approach teamwork, not a vague statement like 'I learned communication is important'.",
@@ -46,18 +65,31 @@
       "weak": "Describes a disguised success story with no real difficulty, or blames the difficulty entirely on other people with no self-reflection."
     },
     "commonMistakes": [
-      { "mistake": "Picks an example that's actually a success story in disguise", "reveals": "Is avoiding genuine vulnerability or hasn't understood the question is looking for real difficulty" },
-      { "mistake": "Blames teammates entirely with no acknowledgment of their own part", "reveals": "May lack self-awareness or the capacity for honest self-reflection, both important for working in clinical teams" }
+      {
+        "mistake": "Picks an example that's actually a success story in disguise",
+        "reveals": "Is avoiding genuine vulnerability or hasn't understood the question is looking for real difficulty"
+      },
+      {
+        "mistake": "Blames teammates entirely with no acknowledgment of their own part",
+        "reveals": "May lack self-awareness or the capacity for honest self-reflection, both important for working in clinical teams"
+      }
     ],
     "liveProbes": [
-      { "probe": "What was YOUR part in why it went wrong — not what others did?", "goodResponse": "Takes genuine ownership rather than redirecting back to other people's behaviour" },
-      { "probe": "If the exact same situation happened again tomorrow, what would you specifically do differently?", "goodResponse": "Names a concrete, specific action rather than a vague intention" }
+      {
+        "probe": "What was YOUR part in why it went wrong — not what others did?",
+        "goodResponse": "Takes genuine ownership rather than redirecting back to other people's behaviour"
+      },
+      {
+        "probe": "If the exact same situation happened again tomorrow, what would you specifically do differently?",
+        "goodResponse": "Names a concrete, specific action rather than a vague intention"
+      }
     ],
     "hints": [
       "Try to think of a moment where something genuinely went wrong, not a near-miss success.",
       "What did YOU do, or not do, that contributed to the problem?",
       "Can you name one specific thing you'd do differently next time?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M3",
@@ -66,7 +98,11 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "A Mistake You Made",
-    "tags": ["failure", "reflection", "honesty"],
+    "tags": [
+      "failure",
+      "reflection",
+      "honesty"
+    ],
     "question": "Tell me about a time you made a genuine mistake — academic, personal, anything — and what it taught you.",
     "answer": "No single correct answer. Assess honesty (a real mistake, not a disguised strength), the depth of reflection, and whether the stated lesson is specific and credible rather than a rehearsed-sounding platitude.",
     "modelReasoningPath": "A strong candidate is willing to be genuinely vulnerable and name a real mistake, rather than the classic interview dodge of describing a 'flaw' that's secretly a strength ('I work too hard' or 'I care too much'). They take clear ownership without excessive self-flagellation, and describe a specific, believable change in behaviour or thinking since — something that sounds like it actually happened, not a lesson manufactured to sound good in an interview.",
@@ -76,18 +112,31 @@
       "weak": "Describes a disguised strength as a weakness ('I care too much about getting things right'), or gives no real ownership of the mistake."
     },
     "commonMistakes": [
-      { "mistake": "Answers with a classic disguised-strength dodge ('I'm a perfectionist' or 'I work too hard')", "reveals": "Is avoiding genuine vulnerability rather than engaging honestly with the question" },
-      { "mistake": "Describes the mistake but the stated lesson doesn't actually follow from it, or sounds generic", "reveals": "May not have genuinely reflected on the experience, just prepared an answer that sounds reflective" }
+      {
+        "mistake": "Answers with a classic disguised-strength dodge ('I'm a perfectionist' or 'I work too hard')",
+        "reveals": "Is avoiding genuine vulnerability rather than engaging honestly with the question"
+      },
+      {
+        "mistake": "Describes the mistake but the stated lesson doesn't actually follow from it, or sounds generic",
+        "reveals": "May not have genuinely reflected on the experience, just prepared an answer that sounds reflective"
+      }
     ],
     "liveProbes": [
-      { "probe": "That sounds like it worked out fine in the end — was there a real cost to this mistake?", "goodResponse": "Is honest about genuine consequences rather than minimising them to make the story more comfortable" },
-      { "probe": "How do you know you've actually changed, rather than just knowing you're supposed to say you have?", "goodResponse": "Points to a specific instance since where they behaved differently, rather than just asserting they've changed" }
+      {
+        "probe": "That sounds like it worked out fine in the end — was there a real cost to this mistake?",
+        "goodResponse": "Is honest about genuine consequences rather than minimising them to make the story more comfortable"
+      },
+      {
+        "probe": "How do you know you've actually changed, rather than just knowing you're supposed to say you have?",
+        "goodResponse": "Points to a specific instance since where they behaved differently, rather than just asserting they've changed"
+      }
     ],
     "hints": [
       "Try to think of something that had a real, uncomfortable consequence.",
       "Is the lesson you're describing something you can point to evidence of, since then?",
       "Avoid a 'weakness' that's secretly a strength — what's a genuine mistake?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M4",
@@ -96,7 +145,11 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "Work Experience Reality Check",
-    "tags": ["work-experience", "reflection", "realism"],
+    "tags": [
+      "work-experience",
+      "reflection",
+      "realism"
+    ],
     "question": "Tell me about a piece of work experience, volunteering, or shadowing you've done. What did it teach you about the REALITY of a medical career, as opposed to what you expected beforehand?",
     "answer": "No single correct answer. Assess whether they describe a genuine shift in understanding (something they didn't expect, learned, or found harder/different than imagined) rather than simply listing what they did or restating that it 'confirmed' their existing view with no new insight.",
     "modelReasoningPath": "A strong candidate identifies a genuine gap between what they expected beforehand and what they actually observed — this shows real engagement and reflection, not just box-ticking. It could be about the emotional weight of certain conversations, the amount of non-clinical admin work, the pace and unpredictability, or the teamwork involved. A weaker candidate simply narrates what they did ('I shadowed a GP for a week') without reflecting on what it changed in their understanding.",
@@ -106,18 +159,31 @@
       "weak": "Simply lists what they did with no reflection at all on what it taught them or changed in their thinking."
     },
     "commonMistakes": [
-      { "mistake": "Just narrates a timeline of what they did ('first I observed X, then I did Y')", "reveals": "Hasn't engaged with the reflective part of the question, only the descriptive part" },
-      { "mistake": "Says the experience 'confirmed everything I already thought' with no specific new insight", "reveals": "May not have engaged critically with the experience, or is giving a safe but unreflective answer" }
+      {
+        "mistake": "Just narrates a timeline of what they did ('first I observed X, then I did Y')",
+        "reveals": "Hasn't engaged with the reflective part of the question, only the descriptive part"
+      },
+      {
+        "mistake": "Says the experience 'confirmed everything I already thought' with no specific new insight",
+        "reveals": "May not have engaged critically with the experience, or is giving a safe but unreflective answer"
+      }
     ],
     "liveProbes": [
-      { "probe": "What's something that surprised you, even a small thing?", "goodResponse": "Names something specific and genuine, even if minor, rather than insisting nothing was surprising" },
-      { "probe": "Did anything make you question whether medicine is really right for you?", "goodResponse": "Engages honestly with this rather than reflexively denying any doubt at all" }
+      {
+        "probe": "What's something that surprised you, even a small thing?",
+        "goodResponse": "Names something specific and genuine, even if minor, rather than insisting nothing was surprising"
+      },
+      {
+        "probe": "Did anything make you question whether medicine is really right for you?",
+        "goodResponse": "Engages honestly with this rather than reflexively denying any doubt at all"
+      }
     ],
     "hints": [
       "Try to think of one moment that didn't match what you expected beforehand.",
       "What was harder, less glamorous, or more surprising than you imagined?",
       "Did you see anything that made you think differently about the job?"
-    ]
+    ],
+    "format": "WE"
   },
   {
     "id": "MED-M5",
@@ -126,7 +192,10 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "Handling Pressure",
-    "tags": ["resilience", "reflection"],
+    "tags": [
+      "resilience",
+      "reflection"
+    ],
     "question": "Medicine involves real pressure — long hours, high stakes, difficult news. Tell me about a genuinely stressful situation you've faced, and how you actually handled it.",
     "answer": "No single correct answer. Assess whether they give a specific, real example of stress (not a vague generalisation), describe honestly how they coped — including anything that DIDN'T work well — and show self-awareness about their own coping style rather than an idealised version of themselves.",
     "modelReasoningPath": "A strong candidate names a specific, genuinely stressful situation rather than a vague generalisation ('exams are stressful'). They describe their actual coping strategy with enough concrete detail to sound real, and — crucially — are willing to admit the coping wasn't perfect or that they're still working on it, rather than presenting an implausibly polished picture of themselves handling every pressure flawlessly.",
@@ -136,18 +205,31 @@
       "weak": "Gives a vague, generic example with no specific detail, or claims to have handled it perfectly with no honest reflection on difficulty."
     },
     "commonMistakes": [
-      { "mistake": "Says something vague like 'I just try to stay positive' with no concrete detail", "reveals": "Hasn't given a specific enough answer to demonstrate genuine self-awareness or a real coping strategy" },
-      { "mistake": "Presents themselves as having handled the stress perfectly with no difficulty at all", "reveals": "May be giving an idealised rather than honest account — real resilience usually includes some struggle" }
+      {
+        "mistake": "Says something vague like 'I just try to stay positive' with no concrete detail",
+        "reveals": "Hasn't given a specific enough answer to demonstrate genuine self-awareness or a real coping strategy"
+      },
+      {
+        "mistake": "Presents themselves as having handled the stress perfectly with no difficulty at all",
+        "reveals": "May be giving an idealised rather than honest account — real resilience usually includes some struggle"
+      }
     ],
     "liveProbes": [
-      { "probe": "Was there a moment during that situation where your coping strategy DIDN'T work?", "goodResponse": "Honestly acknowledges a moment of real struggle rather than insisting everything went smoothly throughout" },
-      { "probe": "What do you do now, differently, because of that experience?", "goodResponse": "Names something concrete and specific they've changed, rather than a vague statement about being 'more resilient now'" }
+      {
+        "probe": "Was there a moment during that situation where your coping strategy DIDN'T work?",
+        "goodResponse": "Honestly acknowledges a moment of real struggle rather than insisting everything went smoothly throughout"
+      },
+      {
+        "probe": "What do you do now, differently, because of that experience?",
+        "goodResponse": "Names something concrete and specific they've changed, rather than a vague statement about being 'more resilient now'"
+      }
     ],
     "hints": [
       "Try to think of one specific moment, not a general category of stress like 'exams'.",
       "What did you actually DO, step by step, to cope?",
       "Was there a part of it that didn't go well, or that you're still working on?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M6",
@@ -156,7 +238,10 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "A Time You Led Something",
-    "tags": ["leadership", "reflection"],
+    "tags": [
+      "leadership",
+      "reflection"
+    ],
     "question": "Tell me about a time you took the lead on something — formally or informally. What made it work, or not work?",
     "answer": "No single correct answer. Assess whether the example shows genuine initiative and specific detail about what leadership actually looked like in practice (not just a title held), and honest reflection on what did or didn't go well, rather than a purely self-congratulatory account.",
     "modelReasoningPath": "A strong candidate picks a concrete example where they can describe SPECIFIC actions they took to lead, not just a role or title they held ('I was team captain' says nothing on its own — what did they actually DO as captain?). They show awareness that leadership isn't just giving instructions — it might involve listening, delegating, resolving a disagreement, or motivating someone struggling. A genuinely strong answer includes honest reflection on something that didn't go perfectly, showing self-awareness rather than presenting an implausibly flawless account of their own leadership.",
@@ -166,18 +251,31 @@
       "weak": "Names a title or position with no concrete description of actions taken, or takes full credit for a group's success with no reflection."
     },
     "commonMistakes": [
-      { "mistake": "Describes holding a title (captain, prefect, project lead) with no detail on specific actions taken", "reveals": "Hasn't reflected on what leadership actually involved in practice, only that they held a position" },
-      { "mistake": "Presents the experience as a flawless success with no honest reflection on difficulty", "reveals": "May be less self-aware, or is giving a polished rather than genuine account" }
+      {
+        "mistake": "Describes holding a title (captain, prefect, project lead) with no detail on specific actions taken",
+        "reveals": "Hasn't reflected on what leadership actually involved in practice, only that they held a position"
+      },
+      {
+        "mistake": "Presents the experience as a flawless success with no honest reflection on difficulty",
+        "reveals": "May be less self-aware, or is giving a polished rather than genuine account"
+      }
     ],
     "liveProbes": [
-      { "probe": "Was there a moment someone disagreed with your approach — what did you do?", "goodResponse": "Describes a specific, real moment of friction and how they actually handled it, rather than claiming universal agreement" },
-      { "probe": "What would you do differently if you led the same thing again?", "goodResponse": "Names a specific, genuine change rather than a vague 'communicate better'" }
+      {
+        "probe": "Was there a moment someone disagreed with your approach — what did you do?",
+        "goodResponse": "Describes a specific, real moment of friction and how they actually handled it, rather than claiming universal agreement"
+      },
+      {
+        "probe": "What would you do differently if you led the same thing again?",
+        "goodResponse": "Names a specific, genuine change rather than a vague 'communicate better'"
+      }
     ],
     "hints": [
       "Try to describe specific actions you took, not just the role or title you held.",
       "Was there a moment of disagreement or difficulty you had to navigate?",
       "What's one thing you'd genuinely do differently next time?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M7",
@@ -186,7 +284,11 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "Communicating Across a Barrier",
-    "tags": ["communication", "empathy", "reflection"],
+    "tags": [
+      "communication",
+      "empathy",
+      "reflection"
+    ],
     "question": "Tell me about a time you had to communicate something important to someone when there was a real barrier — a language difference, an age gap, a difference in understanding, or something else. How did you handle it?",
     "answer": "No single correct answer. Assess whether the example is specific and genuine, whether they describe concrete adaptations they made to communicate effectively (not just 'I spoke slowly and clearly'), and whether they reflect on how they knew or checked that the communication had actually worked.",
     "modelReasoningPath": "A strong candidate picks a real, specific example — this could be with a grandparent, a young child, someone with a different first language, or someone with a different level of technical understanding. They describe concrete adaptations (using simpler language, checking understanding by asking the person to explain it back, using an analogy, being patient with repetition) rather than just asserting they communicated well. A genuinely strong answer reflects on how they actually KNEW the communication worked — did they check, or just assume — since checking understanding is a core clinical communication skill.",
@@ -196,18 +298,31 @@
       "weak": "Gives a generic or hypothetical answer with no specific real example, or shows no awareness of the need to check understanding."
     },
     "commonMistakes": [
-      { "mistake": "Describes only 'speaking slowly and clearly' with no other adaptation", "reveals": "Hasn't thought deeply about what genuinely effective cross-barrier communication requires beyond volume and pace" },
-      { "mistake": "Assumes the communication worked with no mention of checking understanding", "reveals": "Misses a core communication principle — that the speaker's intention isn't the same as the listener's actual understanding" }
+      {
+        "mistake": "Describes only 'speaking slowly and clearly' with no other adaptation",
+        "reveals": "Hasn't thought deeply about what genuinely effective cross-barrier communication requires beyond volume and pace"
+      },
+      {
+        "mistake": "Assumes the communication worked with no mention of checking understanding",
+        "reveals": "Misses a core communication principle — that the speaker's intention isn't the same as the listener's actual understanding"
+      }
     ],
     "liveProbes": [
-      { "probe": "How did you actually know they understood, rather than just nodding politely?", "goodResponse": "Describes a specific check — asking them to explain it back, asking a follow-up question, observing their subsequent actions" },
-      { "probe": "What would you do differently if it happened again?", "goodResponse": "Names something specific and genuine rather than a generic 'be more patient'" }
+      {
+        "probe": "How did you actually know they understood, rather than just nodding politely?",
+        "goodResponse": "Describes a specific check — asking them to explain it back, asking a follow-up question, observing their subsequent actions"
+      },
+      {
+        "probe": "What would you do differently if it happened again?",
+        "goodResponse": "Names something specific and genuine rather than a generic 'be more patient'"
+      }
     ],
     "hints": [
       "What specific adaptation did you make, beyond just speaking slower?",
       "How did you check whether the message had actually landed?",
       "Was there a moment it wasn't working, and what did you do then?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M8",
@@ -216,7 +331,11 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "Disagreeing With Someone in Authority",
-    "tags": ["professionalism", "reflection", "hierarchy"],
+    "tags": [
+      "professionalism",
+      "reflection",
+      "hierarchy"
+    ],
     "question": "Tell me about a time you disagreed with a decision made by someone in authority over you — a teacher, a coach, a boss. What did you do?",
     "answer": "No single correct answer. Assess whether the candidate describes handling the disagreement respectfully and constructively (not simply complying silently, and not being insubordinate), and whether they show genuine reflection on the outcome, including if they turned out to be wrong.",
     "modelReasoningPath": "A strong candidate describes a real instance of disagreement and how they navigated the tension between respecting the person's authority/experience and voicing a genuine concern. This could involve raising the disagreement privately and respectfully, providing reasoning rather than just objecting, and accepting the final decision professionally even if it didn't go their way. A genuinely strong answer is honest about the outcome — including if they were ultimately wrong, or if the authority figure had context they didn't — showing they can hold a view without needing to have been right to find the experience valuable.",
@@ -226,18 +345,31 @@
       "weak": "Describes either simply complying with no real engagement, or being confrontational/insubordinate with no awareness that this would be inappropriate in a clinical hierarchy."
     },
     "commonMistakes": [
-      { "mistake": "Describes the disagreement resolving because they 'won' or were proven completely right", "reveals": "May be selecting an example that avoids genuine reflection on complexity or being wrong" },
-      { "mistake": "Says they'd never disagree with someone in authority", "reveals": "May not understand that raising genuine, respectful concerns (including patient-safety-adjacent ones) is sometimes professionally necessary, not simply insubordinate" }
+      {
+        "mistake": "Describes the disagreement resolving because they 'won' or were proven completely right",
+        "reveals": "May be selecting an example that avoids genuine reflection on complexity or being wrong"
+      },
+      {
+        "mistake": "Says they'd never disagree with someone in authority",
+        "reveals": "May not understand that raising genuine, respectful concerns (including patient-safety-adjacent ones) is sometimes professionally necessary, not simply insubordinate"
+      }
     ],
     "liveProbes": [
-      { "probe": "Looking back, do you think you were right to disagree?", "goodResponse": "Gives an honest, nuanced answer rather than automatically defending their original position" },
-      { "probe": "How did you raise it, specifically — what did you actually say?", "goodResponse": "Describes a concrete, respectful approach rather than a vague description" }
+      {
+        "probe": "Looking back, do you think you were right to disagree?",
+        "goodResponse": "Gives an honest, nuanced answer rather than automatically defending their original position"
+      },
+      {
+        "probe": "How did you raise it, specifically — what did you actually say?",
+        "goodResponse": "Describes a concrete, respectful approach rather than a vague description"
+      }
     ],
     "hints": [
       "How did you actually raise the disagreement — what did you say, and to whom?",
       "Looking back honestly, were you right?",
       "How did you handle it if the final decision didn't go your way?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M9",
@@ -246,7 +378,11 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "Handling an Unsuccessful Outcome",
-    "tags": ["resilience", "reflection", "honesty"],
+    "tags": [
+      "resilience",
+      "reflection",
+      "honesty"
+    ],
     "question": "Tell me about a time you worked hard toward something and it didn't work out — you didn't get the grade, the place, the result you wanted. How did you respond?",
     "answer": "No single correct answer. Assess honesty about the disappointment (rather than pretending it didn't matter), and whether they describe a genuine, specific process of moving forward rather than a vague platitude like 'I just tried harder next time'.",
     "modelReasoningPath": "A strong candidate is honest that the setback was genuinely disappointing, rather than performing indifference to seem resilient. They describe a specific, credible process of processing the disappointment and moving forward — what they actually did differently, what they learned about themselves, or how they sought feedback or support. This is directly relevant to medicine, a career with high stakes and frequent setbacks (competitive training posts, difficult outcomes despite best efforts), so genuine evidence of resilience — not the performance of resilience — matters.",
@@ -256,18 +392,31 @@
       "weak": "Claims the setback didn't really bother them, or gives no specific detail about how they actually responded."
     },
     "commonMistakes": [
-      { "mistake": "Says the setback 'didn't really affect me' or similar", "reveals": "May be performing resilience rather than demonstrating genuine emotional honesty and self-reflection" },
-      { "mistake": "Gives only a generic response ('I worked harder next time') with no specific detail", "reveals": "Hasn't reflected deeply enough on what actually changed in their approach" }
+      {
+        "mistake": "Says the setback 'didn't really affect me' or similar",
+        "reveals": "May be performing resilience rather than demonstrating genuine emotional honesty and self-reflection"
+      },
+      {
+        "mistake": "Gives only a generic response ('I worked harder next time') with no specific detail",
+        "reveals": "Hasn't reflected deeply enough on what actually changed in their approach"
+      }
     ],
     "liveProbes": [
-      { "probe": "What did you actually change afterward, specifically?", "goodResponse": "Names a concrete, specific change rather than a vague intention" },
-      { "probe": "Did anyone help you process it, or did you do it alone?", "goodResponse": "Answers honestly, showing self-awareness about how they cope, including whether they sought support" }
+      {
+        "probe": "What did you actually change afterward, specifically?",
+        "goodResponse": "Names a concrete, specific change rather than a vague intention"
+      },
+      {
+        "probe": "Did anyone help you process it, or did you do it alone?",
+        "goodResponse": "Answers honestly, showing self-awareness about how they cope, including whether they sought support"
+      }
     ],
     "hints": [
       "Be honest about how it actually felt at the time.",
       "What specifically did you do differently afterward?",
       "Did you talk to anyone about it, or process it on your own?"
-    ]
+    ],
+    "format": "PE"
   },
   {
     "id": "MED-M10",
@@ -276,7 +425,11 @@
     "difficulty": 2,
     "questionType": "Motivation & Reflection",
     "title": "The Realities of Training",
-    "tags": ["motivation", "realism", "reflection"],
+    "tags": [
+      "motivation",
+      "realism",
+      "reflection"
+    ],
     "question": "Medical training takes at least five or six years at university, followed by many more years of postgraduate training before you're fully qualified in a specialty — often a decade or more in total. What have you actually done to understand whether that reality is right for you?",
     "answer": "No single correct answer. Assess whether the candidate has done genuine, specific research or reflection into the length and structure of training (not just a vague awareness that 'it takes a long time'), and whether they can speak honestly about the trade-offs involved rather than only the appeal of the eventual outcome.",
     "modelReasoningPath": "A strong candidate goes beyond a generic acknowledgement that training is long, and describes something SPECIFIC they've done to understand it — talking to a junior doctor or medical student about their actual experience, researching the structure of postgraduate training, or reflecting on a work experience placement that gave them a realistic view. They're able to speak honestly about the trade-offs (delayed independence, delayed earning potential relative to some other paths, the demands of exams throughout training) rather than only focusing on the appeal of eventually being a doctor.",
@@ -286,17 +439,322 @@
       "weak": "Gives a vague or dismissive answer ('I know it's long but I'm ready') with no specific evidence of having engaged with what that actually means."
     },
     "commonMistakes": [
-      { "mistake": "Says simply 'I know it will be hard but I'm committed' with no specific detail", "reveals": "Hasn't done the concrete research or reflection the question is actually asking about" },
-      { "mistake": "Only discusses the appeal of eventually qualifying, not the years of training itself", "reveals": "May be focused on the destination without having genuinely grappled with the long process required to get there" }
+      {
+        "mistake": "Says simply 'I know it will be hard but I'm committed' with no specific detail",
+        "reveals": "Hasn't done the concrete research or reflection the question is actually asking about"
+      },
+      {
+        "mistake": "Only discusses the appeal of eventually qualifying, not the years of training itself",
+        "reveals": "May be focused on the destination without having genuinely grappled with the long process required to get there"
+      }
     ],
     "liveProbes": [
-      { "probe": "What's the one part of the training pathway that concerns you the most, honestly?", "goodResponse": "Names something specific and genuine, showing they've actually thought about the realistic downsides, not just the positives" },
-      { "probe": "Have you spoken to anyone currently going through training?", "goodResponse": "Describes a specific conversation or source of insight, rather than a vague general awareness" }
+      {
+        "probe": "What's the one part of the training pathway that concerns you the most, honestly?",
+        "goodResponse": "Names something specific and genuine, showing they've actually thought about the realistic downsides, not just the positives"
+      },
+      {
+        "probe": "Have you spoken to anyone currently going through training?",
+        "goodResponse": "Describes a specific conversation or source of insight, rather than a vague general awareness"
+      }
     ],
     "hints": [
       "What SPECIFIC thing have you done to research the actual training pathway?",
       "What's a genuine downside or difficulty of the training process, not just the appeal of the end result?",
       "Have you spoken to anyone currently in training, or read about their real experience?"
+    ],
+    "format": "DQ"
+  },
+  {
+    "id": "MED-MR-11",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Why medicine — and what nearly changed your mind?",
+    "tags": [
+      "motivation",
+      "origin-story"
+    ],
+    "format": "DQ",
+    "question": "Why do you want to study medicine — and has anything ever nearly changed your mind?",
+    "answer": "Discussion question — no single verdict. A strong answer shows an interest that has developed and been genuinely tested, not just a single formative moment recited unchanged since childhood — the second clause of the question is where almost all of the value is.",
+    "modelReasoningPath": "A strong candidate treats the second half of the question as the real one. An interest that has survived a moment of doubt — a hard day of work experience, a setback, exposure to how genuinely difficult training is — is far more credible than an unbroken, untested certainty. They describe something SPECIFIC that tested their resolve and how they reasoned through it, rather than saying 'nothing has ever changed my mind' as if that's evidence of commitment. Believing a dramatic origin story scores better than a mundane, honestly-examined one is a real trap here.",
+    "rubric": {
+      "strong": "Gives a real, specific answer to 'what nearly changed your mind' with genuine reflection on how they reasoned through it, not just an origin story.",
+      "developing": "Gives a reasonable origin story but treats 'nearly changed your mind' as a formality, with a thin or generic answer to it.",
+      "weak": "Says nothing has ever tested their interest, or gives a purely dramatic, unexamined origin story with no development since."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Says 'I've always wanted to help people' with no development or testing of that interest since",
+        "reveals": "Treats sincerity as the whole answer, when realism and evidence of having tested the interest is what's actually being assessed"
+      },
+      {
+        "mistake": "Claims nothing has ever nearly changed their mind",
+        "reveals": "Reads as either unreflective or performing certainty rather than describing considered commitment"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What specifically did you do when that doubt came up?",
+        "goodResponse": "Describes an actual reasoning process, not just that the doubt passed"
+      }
+    ],
+    "hints": [
+      "Has your interest in medicine ever been genuinely tested by something difficult?",
+      "What did you actually do when you had that moment of doubt?"
+    ]
+  },
+  {
+    "id": "MED-MR-12",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "Why not nursing, or a physician associate?",
+    "tags": [
+      "motivation",
+      "adjacent-professions"
+    ],
+    "format": "DQ",
+    "question": "Why medicine specifically, rather than nursing or becoming a physician associate?",
+    "answer": "Discussion question — no single verdict. A strong answer shows real knowledge of what these adjacent roles actually involve, and is specific about what draws them to the doctor's role in particular (diagnostic responsibility, longitudinal decision-making, breadth) — never by diminishing the other professions.",
+    "modelReasoningPath": "A strong candidate can describe accurately what nursing and physician associates actually do, rather than a vague sense that a doctor 'does more'. They name something specific about the doctor's role that draws them — diagnostic responsibility, the breadth of training, longitudinal decision-making — without implying nurses or PAs have a lesser or easier job. This is a live topic: the physician associate role has recently been subject to a major review recommending renaming and scope changes, so a candidate who assumes the role is static, or who hasn't thought about it at all, is noticeably behind.",
+    "rubric": {
+      "strong": "Accurately describes what an adjacent role actually involves, names something specific about the doctor's distinct contribution, and does so without disparaging the other professions.",
+      "developing": "Gives a reasonable answer but the comparison is vague, or doesn't demonstrate real knowledge of what the adjacent role involves.",
+      "weak": "Elevates medicine by diminishing nursing or PAs, or cannot describe what a physician associate actually does at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Answers in a way that diminishes nursing or another profession",
+        "reveals": "This is a red flag, not just a weak answer — a real professionalism concern about how they'll work in a team"
+      },
+      {
+        "mistake": "Doesn't know what a physician associate actually does",
+        "reveals": "A gap in basic awareness of the healthcare team they'll be joining"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What does a physician associate actually do day-to-day?",
+        "goodResponse": "Gives a reasonably accurate description rather than a guess"
+      }
+    ],
+    "hints": [
+      "What do you actually know about what a physician associate does?",
+      "What specifically about the DOCTOR'S role draws you, rather than the idea of 'more responsibility' in the abstract?"
+    ]
+  },
+  {
+    "id": "MED-MR-13",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Work Experience Reflection",
+    "title": "Something from your work experience that changed how you think",
+    "tags": [
+      "motivation",
+      "work-experience",
+      "reflection"
+    ],
+    "format": "WE",
+    "question": "Tell me about something from your work experience or volunteering that changed how you think about medicine.",
+    "answer": "Discussion question — no single verdict. A strong answer names a specific incident and what it changed, not a chronological narration of duties — 'what you did is only half the story: show what attributes you demonstrated and what you actually learned.'",
+    "modelReasoningPath": "A strong candidate resists narrating their placement chronologically ('first I did X, then I did Y') and instead picks one specific moment that actually shifted their thinking, explaining what it changed and why. They avoid the generic closing line 'it confirmed my desire to do medicine', which says nothing specific. Quantity of experience (number of hours, number of placements) is never itself evidence of anything — one well-examined afternoon beats a poorly-reflected-on month.",
+    "rubric": {
+      "strong": "Names a specific incident, states clearly what it changed about their thinking, and shows genuine reflection rather than narration.",
+      "developing": "Describes a real experience but the 'what changed' part is generic or thin.",
+      "weak": "Narrates duties chronologically with no specific incident, or closes with 'it confirmed my desire to do medicine' and nothing more."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Narrates the placement chronologically with no reflective moment",
+        "reveals": "Treats work experience as an inventory to report rather than something to have learned from"
+      },
+      {
+        "mistake": "Says 'it confirmed my desire to do medicine' with nothing further",
+        "reveals": "The single most generic closing line in this domain — says nothing specific about what was learned"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What specifically changed in how you think, before and after that moment?",
+        "goodResponse": "Names a clear before/after in their own thinking, not just a description of the event"
+      }
+    ],
+    "hints": [
+      "Pick ONE moment, not the whole placement — what was it?",
+      "What did you actually think differently afterwards?"
+    ]
+  },
+  {
+    "id": "MED-MR-14",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "A real failure, and its cost",
+    "tags": [
+      "motivation",
+      "failure",
+      "reflection"
+    ],
+    "format": "PE",
+    "question": "Tell me about a real failure — one that actually cost you something — and what you'd do differently.",
+    "answer": "Discussion question — no single verdict. A strong answer names a genuine failure with a real cost, and is specific about what would be done differently — a real failure with a genuine cost is more credible than a near-miss success dressed up as a failure.",
+    "modelReasoningPath": "A strong candidate picks something that actually went wrong and cost them something real — a grade, a relationship, an opportunity — rather than a 'humblebrag' failure ('I work too hard' or 'I care too much'). They can say specifically what they would do differently, with some evidence the change has actually happened since, not just a stated intention. Blaming circumstances entirely, with no personal accountability at all, is the other common failure mode.",
+    "rubric": {
+      "strong": "Names a genuine failure with a real cost, is specific about what would be done differently, and shows some evidence the change has actually happened.",
+      "developing": "Names a real failure but the 'what would you do differently' is vague or generic.",
+      "weak": "Gives a humblebrag failure, blames circumstances entirely, or names a failure so trivial it shows no real self-awareness."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Gives a humblebrag failure ('I care too much', 'I work too hard')",
+        "reveals": "Isn't actually engaging with a real setback, which is what the question is testing"
+      },
+      {
+        "mistake": "Blames circumstances entirely with no personal accountability",
+        "reveals": "Avoids the self-reflection the question is designed to draw out"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What would you actually do differently, specifically, if it happened again?",
+        "goodResponse": "Names a concrete behaviour change, not a vague intention"
+      }
+    ],
+    "hints": [
+      "Did this failure actually cost you something real?",
+      "What specifically would you do differently next time?"
+    ]
+  },
+  {
+    "id": "MED-MR-15",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Direct Question",
+    "title": "What will you find hardest about training?",
+    "tags": [
+      "motivation",
+      "realism",
+      "training"
+    ],
+    "format": "DQ",
+    "question": "What do you think you'll find hardest about medical training?",
+    "answer": "Discussion question — no single verdict. A strong answer names a real, specific cost of training (relocation, shift patterns, exams alongside full-time work, the effect on relationships) and describes how they'd manage it, rather than denying any downside or vaguely citing 'long hours'.",
+    "modelReasoningPath": "A strong candidate treats this as an invitation to show realism, not a trap to be dodged. They name something specific and genuine — rotational placements meaning frequent moves, exams sat alongside full-time clinical work, the effect of shift patterns on relationships — rather than a generic 'long hours' with no further thought. A strong answer also describes HOW they'd manage the difficulty named, rather than just naming it and stopping, and avoids romanticising sacrifice as an automatic virtue.",
+    "rubric": {
+      "strong": "Names a specific, genuine difficulty and describes a real way of managing it, without denying the cost or romanticising sacrifice.",
+      "developing": "Names a real difficulty but gives no sense of how they'd actually manage it.",
+      "weak": "Denies any real downside, or names only vague 'long hours' with no specificity."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Denies any real downside to training",
+        "reveals": "Reads as performing certainty rather than considered, realistic commitment"
+      },
+      {
+        "mistake": "Names only 'long hours' with no further specificity",
+        "reveals": "Hasn't actually thought concretely about what training involves day to day"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "How would you actually manage that difficulty when it comes up?",
+        "goodResponse": "Gives a real, specific strategy rather than a vague intention to 'cope'"
+      }
+    ],
+    "hints": [
+      "What's a SPECIFIC, real cost of training, not just 'it's hard'?",
+      "How would you actually manage that difficulty when it comes up?"
+    ]
+  },
+  {
+    "id": "MED-MR-16",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "You said you're resilient — what's your evidence?",
+    "tags": [
+      "motivation",
+      "resilience",
+      "evidence"
+    ],
+    "format": "PE",
+    "question": "A lot of applicants say they're resilient. What's your evidence — a specific time that was genuinely tested?",
+    "answer": "Discussion question — no single verdict. A strong answer gives a specific example where resilience was genuinely tested and shows what in that example demonstrates resilience specifically, rather than a different trait like persistence or simple endurance.",
+    "modelReasoningPath": "This station is the unsupported-claim trigger built directly into the question. A strong candidate gives a genuinely specific example — a named time, place and outcome — not a general trait statement restated with more confidence. The harder, more discriminating part is showing what in that example demonstrates RESILIENCE specifically (recovering from a setback and adapting) rather than a related but different trait like persistence (continuing to push at the same thing) or simple endurance (just getting through it). Most candidates fail at this second, more specific level.",
+    "rubric": {
+      "strong": "Gives a specific, real example and explains precisely what in it demonstrates resilience rather than a related but different trait.",
+      "developing": "Gives a specific example but doesn't distinguish what makes it resilience specifically, rather than persistence or endurance.",
+      "weak": "Restates the trait claim with more confidence but no specific example, or the example given doesn't actually show resilience."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Restates 'I am resilient' with more emphasis instead of giving an example",
+        "reveals": "Doesn't understand that an unsupported trait claim needs evidence, not repetition"
+      },
+      {
+        "mistake": "Gives an example that actually shows persistence or endurance rather than resilience",
+        "reveals": "Hasn't distinguished between related but different personal qualities"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What in that example shows resilience specifically, rather than just persistence?",
+        "goodResponse": "Engages seriously with the distinction rather than repeating the same example description"
+      }
+    ],
+    "hints": [
+      "Give one specific, real time this was tested — not a general statement.",
+      "Is what you're describing resilience, or is it actually persistence or endurance?"
+    ]
+  },
+  {
+    "id": "MED-MR-17",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "questionType": "Personal Example",
+    "title": "Supporting a decision you disagreed with",
+    "tags": [
+      "motivation",
+      "followership",
+      "teamwork"
+    ],
+    "format": "PE",
+    "question": "Tell me about a time you supported someone else's decision, even though you disagreed with it.",
+    "answer": "Discussion question — no single verdict. A strong answer names a real example of good followership — genuinely supporting a decision made by someone else despite disagreeing — which is a deliberately under-asked question compared to the market's usual bias toward leadership stories.",
+    "modelReasoningPath": "Most candidates have a rehearsed leadership story ready and very few have thought about followership at all, even though most of a doctor's early career is spent as part of a team, not leading it. A strong candidate gives a genuine example where they disagreed with a decision but supported it anyway (rather than undermining it or complying resentfully), and can explain WHY they chose to support it — because it wasn't their call to make, because the team needed to move forward, because their disagreement wasn't strong enough to justify blocking things. This is different from simply complying with no thought at all.",
+    "rubric": {
+      "strong": "Gives a genuine example of disagreeing but supporting a decision constructively, and explains the reasoning behind choosing to support it rather than block it.",
+      "developing": "Gives an example but it's unclear whether they actually disagreed, or the reasoning for supporting it is thin.",
+      "weak": "Cannot think of an example of disagreeing and still supporting a decision, or describes undermining the decision rather than supporting it."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Gives a leadership example instead of a followership one",
+        "reveals": "Hasn't actually engaged with the specific question asked, which is deliberately testing the less-rehearsed skill"
+      },
+      {
+        "mistake": "Describes complying without genuinely supporting, or undermining quietly",
+        "reveals": "Doesn't demonstrate the constructive followership the question is testing"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Why did you choose to support it rather than push back further?",
+        "goodResponse": "Gives a genuine reason — the decision wasn't theirs to make, the team needed to move on — rather than a vague 'it seemed easier'"
+      }
+    ],
+    "hints": [
+      "This is about SUPPORTING someone else's call, not about your own leadership.",
+      "Why did you choose to support it rather than keep pushing back?"
     ]
   }
 ]

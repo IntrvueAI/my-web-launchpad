@@ -26,18 +26,19 @@ const TESTER_PASSCODE = (import.meta.env.VITE_MED_TESTER_PASSCODE as string) || 
  * 'medicine-mmi'), so it never appears in the normal InterviewSelection picker; this page is the
  * only way to launch it while it's under internal review.
  *
- * Deliberately scoped to three transcript-native MMI station types — ethics scenarios, data
- * interpretation/prioritisation, and motivation & reflection — and deliberately excludes role-play
- * / "breaking bad news" stations, which real MMIs grade on tone and delivery, a signal this
- * text-only engine has no access to. See src/interview/subjects/medicine/pack.ts for the full
- * rationale in the pack's own header comment.
+ * Rebuilt against the Medicine vertical research pack (see src/interview/medicine-content/ and
+ * /admin/medicine-portal): seven station strands including LIVE ROLEPLAY, spoken through the same
+ * voice pipeline every other interview type uses. See src/interview/subjects/medicine/pack.ts for
+ * the full scoring model, and src/interview/engine/agent.ts's renderRoleplayStation for how a
+ * roleplay station hands the interviewer's own persona to the character being played.
  */
 const MEDICINE_TYPE: InterviewType | undefined = INTERVIEW_TYPES['medicine-mmi'];
 
 const STATION_INFO = [
-  { icon: Stethoscope, label: 'Ethics scenarios', blurb: 'No right answer — reasoning is scored, not the verdict.' },
-  { icon: ListChecks, label: 'Data interpretation & prioritisation', blurb: 'Justify a ranking or a read of a statistic.' },
-  { icon: MessageCircleQuestion, label: 'Motivation & reflection', blurb: 'Specific, honest answers beat rehearsed ones.' },
+  { icon: Stethoscope, label: 'Roleplay stations', blurb: 'Speak to a live character — hidden information only surfaces if you ask the right way.' },
+  { icon: MessageCircleQuestion, label: 'Ethics & professionalism', blurb: 'No right answer — reasoning is scored, not the verdict.' },
+  { icon: ListChecks, label: 'Current affairs & data', blurb: 'Contested policy questions and numeracy — argued from both sides, justified not just stated.' },
+  { icon: MessageCircleQuestion, label: 'Motivation & communication', blurb: 'Specific, honest answers beat rehearsed ones.' },
 ];
 
 export default function AdminMedicineInterviews() {
@@ -144,7 +145,7 @@ export default function AdminMedicineInterviews() {
           <Link to="/admin" className="text-sm text-primary underline whitespace-nowrap">← Back to admin</Link>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3 mb-6">
+        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 mb-6">
           {STATION_INFO.map((s) => (
             <Card key={s.label} className="p-4">
               <s.icon className="h-5 w-5 text-primary mb-2" />
@@ -156,10 +157,12 @@ export default function AdminMedicineInterviews() {
 
         <Card className="p-4 mb-6 border-dashed">
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Scoped to what this engine can actually assess from a transcript: reasoning, judgement and
-            reflection in words. It deliberately does <strong>not</strong> include role-play/breaking-bad-news
-            stations (graded on tone and delivery in real MMIs) or any face/tone/emotion analysis —
-            see the founders&apos; notes for why that's out of scope for now.
+            Live roleplay is spoken, not scored on a camera — the interviewer plays a named character with a state,
+            hidden facts gated behind disclosure conditions, and reactive escalation, then drops the character to
+            score afterwards. No video or eye-contact scoring anywhere in this pack; see{' '}
+            <Link to="/admin/medicine-portal" className="text-primary underline">the Medicine Portal</Link>{' '}
+            for the full content pack — every station, persona, current-affairs topic (with live expiry status)
+            and the school-by-school map behind it.
           </p>
         </Card>
 

@@ -1,0 +1,51 @@
+rank,group,station,topic,format,context,actor,difficulty,roleplay_ref,why_this_one_now
+1,A Roleplay core,Just tell me what you'd do — advice at a health fair,D4.5.1,RP,COMM,MOP,2_standard,RP-009,The canonical competence-boundary station. Every school's version of Aston's published 'knowing your limitations'. Cheapest strong demo of the roleplay engine.
+2,A Roleplay core,The relative who has been waiting,D2.4.2,RP,HOSP,REL,3_stretch,RP-001,Anger plus clinical bait plus hidden information. The single best showcase station.
+3,A Roleplay core,The lift home — a friend drove after drinking,D5.4.7,RP,SCHOOL,FRIEND,3_stretch,RP-010,Most realistic confidentiality station for a 17-year-old. Tests the promise-before-disclosure error that no static bank catches.
+4,A Roleplay core,The bruise — a child at a youth club,D5.5.2,RP,VOL,YP,3_stretch,RP-011,Safeguarding done correctly: no investigation no promise named lead. High risk if built badly which is why it goes early with clinical review.
+5,A Roleplay core,The message I forgot to pass on,D4.2.1,RP,CARE,REL,2_standard,RP-015,Cleanest non-clinical duty-of-candour station. Discriminates on seconds-to-ownership.
+6,A Roleplay core,Results day,D2.4.3,RP,SCHOOL,FRIEND,2_standard,RP-003,Tests silence and refusal of comfort. Interactive-only behaviours that prove the engine is doing something a transcript cannot.
+7,A Roleplay core,The teammate who stopped turning up,D6.3.3,RP,SPORT,PEER_APP,3_stretch,RP-008,Hidden information gated behind an open question plus restraint. The hardest disclosure pattern and the most impressive when it works.
+8,A Roleplay core,Before the results,D3.1.2,RP,GP,PT_ANX,2_standard,RP-002,Anxiety plus a request for a guarantee. Tests validating without false reassurance.
+9,A Roleplay core,The fabricated placement,D4.1.3,RP,SCHOOL,PEER_APP,3_stretch,RP-012,Peer misconduct with the candidate implicated. Mirrors QUB Station 1 which uses an actor playing a fellow student.
+10,A Roleplay core,The consent form — a hesitant parent,D9.4.5,RP,SCHOOL,PAR,3_stretch,RP-007,Bridges roleplay and current affairs. Tests that the candidate does not argue the science.
+11,A Roleplay core,Cancelled again,D2.4.2,RP,COMM,PAR,2_standard,RP-018,Legitimate anger where the candidate's organisation is in the wrong. Different demand from RP-001.
+12,A Roleplay core,The spilled tea,D3.1.1,RP,CARE,PT_CONF,2_standard,RP-004,Dignity under embarrassment. Tests behaviour the candidate must get right without the resident admitting anything.
+13,B Ethics core,DVLA — the patient who won't stop driving,D5.4.4,ES,GP,INT,3_stretch,,The classic UK MMI confidentiality station AND a correction of a widely-taught error about who carries the legal duty.
+14,B Ethics core,A friend asks you to promise before they tell you,D5.4.7,ES,SCHOOL,INT,2_standard,,The non-roleplay twin of RP-010. Establishes the principle before the roleplay tests the behaviour.
+15,B Ethics core,You suspect something but cannot be sure,D4.4.1,ES,VOL,INT,2_standard,,Teaches the single most unlocking principle in the domain: reasonable belief even if mistaken.
+16,B Ethics core,Two weeks later nothing has happened,D4.4.4,ES,CARE,INT,3_stretch,,The escalation-ladder station. Built entirely around the follow-up most banks never ask.
+17,B Ethics core,A capacitous adult refuses help,D5.1.2,ES,CARE,INT,3_stretch,,Tests the unwise-decision principle under pressure — the one candidates abandon when challenged.
+18,B Ethics core,Who gets the last funded place on the programme,D5.7.1,ES,PH,INT,2_standard,,Opportunity cost made concrete without requiring NICE knowledge.
+19,B Ethics core,The under-16 who does not want her parents told,D5.3.3,ES,GP,INT,3_stretch,,Adolescent confidentiality plus the Gillick/Fraser correction. Requires clinical review.
+20,B Ethics core,Your supervisor asks you to do something you think is wrong,D6.3.2,ES,VOL,INT,3_stretch,,Challenging upwards. Pairs with RP-017 for the same topic in two formats.
+21,B Ethics core,A colleague makes a remark about a resident's family,D6.3.4,ES,CARE,INT,3_stretch,,Discriminatory comments. GMP 2024 Domain 3 content that pre-2024 banks miss entirely.
+22,B Ethics core,No harm came of it — do you still report it,D8.3.2,ES,WORK,INT,2_standard,,Near-miss reporting and learning culture. Connects to the 2026 maternity findings.
+23,B Ethics core,Should a smoker wait longer for surgery,D5.7.3,ES,PH,INT,3_stretch,,Desert-based rationing with hostile follow-up. Tests holding ground against an interviewer arguing the unfashionable side.
+24,B Ethics core,Which two principles are actually in conflict here,D5.8.1,ES,PH,INT,3_stretch,,Purpose-built to score zero for naming the four principles and everything for identifying the tension.
+25,C Motivation and reflection,Why medicine — and what nearly changed your mind,D1.1.1,DQ,NONE,INT,2_standard,,The most-asked question in UK medicine interviews. The value is entirely in the second clause and the follow-up chain.
+26,C Motivation and reflection,Why not nursing or a physician associate,D1.1.2,DQ,NONE,INT,2_standard,,Tests real knowledge of adjacent roles. Live topic post-Leng and a red flag if answered by diminishing another profession.
+27,C Motivation and reflection,Something from your work experience that changed how you think,D1.4.1,WE,VOL,INT,2_standard,,Built on the MSC line: what you did is only half the story.
+28,C Motivation and reflection,Tell me about a real failure and its cost,D1.4.4,PE,NONE,INT,2_standard,,Automatic evidence probe on any humblebrag. Tests S4 directly.
+29,C Motivation and reflection,What does a doctor actually spend the day doing,D1.3.4,DQ,NONE,INT,1_foundation,,Realism check. Foundation band — early confidence builder that still teaches something.
+30,C Motivation and reflection,What will you find hardest about training,D1.2.3,DQ,NONE,INT,2_standard,,Tests whether the candidate can name a real cost without performing sacrifice.
+31,C Motivation and reflection,You said you're resilient — what's your evidence,D7.2.1,PE,NONE,INT,2_standard,,The unsupported-claim trigger built as a station rather than only as a follow-up.
+32,C Motivation and reflection,A time you supported someone else's decision you disagreed with,D6.1.2,PE,NONE,INT,2_standard,,Deliberate followership prompt. Corrects the bank-wide bias toward leadership stories.
+33,D Current affairs,Should doctors go on strike,D9.2.2,PD,PH,INT,2_standard,,The tester named it. Symmetric challenge required. Hard expiry 2026-11-30.
+34,D Current affairs,Will AI replace doctors — and who is responsible when it's wrong,D10.5.2,PD,PH,INT,3_stretch,,The tester named it. The accountability half is the differentiator almost nobody teaches.
+35,D Current affairs,Why do people in poorer areas die younger,D9.3.1,PD,PH,INT,2_standard,,The tester named it. Evergreen concept with a dated statistics layer.
+36,D Current affairs,Should the NHS fund weight-loss drugs at scale,D9.4.3,PD,PH,INT,3_stretch,,Cleanest live rationing case with published cohort eligibility.
+37,D Current affairs,Should assisted dying be legal — and where is it now,D5.6.3,PD,PH,INT,3_stretch,,Highest-salience ethics topic of the cycle. Hard expiry 2026-09-12 pending the 11 September Second Reading.
+38,D Current affairs,Is it fair to prioritise UK graduates for training posts,D9.2.3,PD,PH,INT,3_stretch,,Directly affects the applicant. Handle with care — never signal a position.
+39,D Current affairs,Should we screen everyone for prostate cancer,D9.4.4,PD,PH,INT,3_stretch,,Live NSC decision with a clean evidence-versus-advocacy structure and a usable false-positive figure.
+40,D Current affairs,Who loses when the NHS goes digital,D10.5.5,PD,PH,INT,2_standard,,Rewards connecting digital exclusion to the inverse care law — a link most candidates never make.
+41,E Communication tasks,Explain a clinical trial to a ten-year-old,D2.2.1,EX,SCHOOL,YP,2_standard,,Comprehension checking with open questions. Low build cost high discrimination.
+42,E Communication tasks,Describe it to me — the drawing task,D2.3.1,IT,SCHOOL,PEER_APP,2_standard,RP-019,Punishes closed checking by design. The listener says yes to 'does that make sense' regardless.
+43,E Communication tasks,Tell someone their session is cancelled,D2.4.1,RP,COMM,PAR,2_standard,,Non-clinical bad news. The honest reframe of 'break bad news' for an applicant.
+44,E Communication tasks,Explain to a member of the public what a waiting list actually is,D2.2.2,EX,COMM,MOP,2_standard,,Tests the boundary between lay explanation and clinical claim.
+45,E Communication tasks,Apologise for something you got wrong,D2.4.5,RP,WORK,COLL,2_standard,,Apology without 'but'. Pairs with RP-015 in a different setting.
+46,F Judgement and data,Five things to do and twenty minutes,D8.1.1,PR,VOL,INT,2_standard,,Prioritisation where the criterion not the order is scored. Facts change mid-station.
+47,F Judgement and data,You cannot do all of it — what do you drop and who do you tell,D8.1.2,PR,WORK,INT,3_stretch,,Deliberately impossible. Most banks make prioritisation merely hard.
+48,F Judgement and data,Read this chart and tell me what it does not show,D10.4.2,DI,PH,INT,2_standard,,Limitations weighted above arithmetic. Directly serves Birmingham Imperial KMMS and Leicester.
+49,F Judgement and data,Occupancy and discharge arithmetic — no calculator,D10.3.1,CA,NONE,INT,2_standard,,Mirrors Leicester's published numeracy hurdle: GCSE level no medical knowledge no calculator.
+50,F Judgement and data,A headline says risk rose by 50 per cent,D10.2.3,AD,PH,INT,2_standard,,Absolute versus relative risk. Highest-yield critical appraisal skill needing zero medical knowledge.

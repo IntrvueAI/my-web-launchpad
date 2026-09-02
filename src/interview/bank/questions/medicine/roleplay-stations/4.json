@@ -1,0 +1,131 @@
+[
+  {
+    "id": "MED-RP-020",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 4,
+    "questionType": "Live Roleplay",
+    "title": "The thing about my dad",
+    "tags": [
+      "roleplay",
+      "reluctance to disclose",
+      "distress",
+      "situations beyond competence",
+      "care"
+    ],
+    "format": "RP",
+    "question": "[Quietly, mid-conversation about something else] Can I say something? And you'll think I'm awful. Some days I'm so tired I just — I shout at him. Really shout. And he doesn't understand why. [pause] I've never said that to anyone.",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Does not react with alarm or judgement",
+    "modelReasoningPath": "Persona: Ruth Callan, daughter and main carer for her father, a day-centre attendee (50s). Applicant role: Volunteer at a day centre for older people. Ruth brings her father every Tuesday and usually stays for coffee. Starting state: Ashamed, testing, braced for judgement. Trajectory: Extremely sensitive to the first response. Judgement or alarm closes her down permanently. Warmth and normalisation without dismissal opens her up. She is not disclosing abuse; she is disclosing carer breakdown — but the candidate cannot know that at the start, and must find out without interrogating.",
+    "rubric": {
+      "strong": "Does not react with alarm or judgement; Thanks her for telling them; Asks about her, not only about him; Does NOT investigate, does NOT ask whether she has hurt him as an opening move, and does NOT promise confidentiality; Recognises this is beyond a volunteer and says so honestly and warmly; Names the centre manager or the carers' support route specifically; Holds both readings: she needs support, and someone whose job it is needs to know.",
+      "developing": "Meets some but not all of: Does not react with alarm or judgement; Thanks her for telling them; Asks about her, not only about him; Does NOT investigate, does NOT ask whether she has hurt him as an opening move, and does NOT promise confidentiality; Recognises this is beyond a volunteer and says so honestly and warmly; Names the centre manager or the carers' support route specifically; Holds both readings: she needs support, and someone whose job it is needs to know. Actor response when this happens: Retracts. 'It's not that bad really. Ignore me.'",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation (Visible alarm; 'Have you ever hurt him?' asked bluntly early). Red flags for this station: Promising confidentiality; Investigating; Reacting with visible alarm or moral judgement; Deciding it is not serious and letting it go; Advising her clinically about her father's condition or her own state."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Promising confidentiality",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Investigating",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Reacting with visible alarm or moral judgement",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Deciding it is not serious and letting it go",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Advising her clinically about her father's condition or her own state",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Ruth Callan",
+      "role": "daughter and main carer for her father, a day-centre attendee (50s)",
+      "applicantRole": "Volunteer at a day centre for older people. Ruth brings her father every Tuesday and usually stays for coffee.",
+      "openingStatement": "[Quietly, mid-conversation about something else] Can I say something? And you'll think I'm awful. Some days I'm so tired I just — I shout at him. Really shout. And he doesn't understand why. [pause] I've never said that to anyone.",
+      "actorStateInitial": "Ashamed, testing, braced for judgement.",
+      "actorStateTrajectory": "Extremely sensitive to the first response. Judgement or alarm closes her down permanently. Warmth and normalisation without dismissal opens her up. She is not disclosing abuse; she is disclosing carer breakdown — but the candidate cannot know that at the start, and must find out without interrogating.",
+      "hiddenFacts": [
+        {
+          "fact": "She has not slept properly in months and has no respite support in place.",
+          "disclosureCondition": "If the candidate asks about her rather than about him."
+        },
+        {
+          "fact": "She has never been offered a carer's assessment and does not know one exists.",
+          "disclosureCondition": "If the candidate asks what support she has."
+        },
+        {
+          "fact": "Nothing physical has happened, and she is frightened of what she might become.",
+          "disclosureCondition": "Emerges only if the candidate stays calm and does not treat her as a risk to be managed."
+        }
+      ],
+      "escalationTriggers": [
+        "Visible alarm",
+        "'Have you ever hurt him?' asked bluntly early",
+        "Immediate reference to safeguarding procedures",
+        "Reassurance that it is 'completely normal' — she will hear that as not being taken seriously"
+      ],
+      "deEscalationTriggers": [
+        "Staying still and not reacting dramatically",
+        "Thanking her for saying it",
+        "Asking how she is, not how he is",
+        "Being honest, when the time comes, that she should not be carrying this alone"
+      ],
+      "resistancePatterns": [
+        "'Forget I said that' if the response is alarmed",
+        "'You must think I'm a monster'",
+        "Will not repeat the disclosure if it is met badly"
+      ],
+      "interruptionRule": "Do not interrupt. Two long silences. This station is largely won or lost in the first fifteen seconds of the candidate's first response.",
+      "plantedMisunderstanding": "The candidate may hear 'safeguarding' and respond procedurally to what is, at this point, a cry for help. Both readings are live and the candidate must hold both.",
+      "desiredOutcomes": [
+        "Does not react with alarm or judgement",
+        "Thanks her for telling them",
+        "Asks about her, not only about him",
+        "Does NOT investigate, does NOT ask whether she has hurt him as an opening move, and does NOT promise confidentiality",
+        "Recognises this is beyond a volunteer and says so honestly and warmly",
+        "Names the centre manager or the carers' support route specifically",
+        "Holds both readings: she needs support, and someone whose job it is needs to know"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Calm, non-judgemental, asks about her, honest about telling the manager, names a support route",
+          "description": "All three facts surface. She cries with relief. Agrees to speak to the manager with the candidate present."
+        },
+        {
+          "id": "B",
+          "condition": "Warm but promises to keep it between them",
+          "description": "She is relieved and nothing changes. Feedback focuses on the promise: she needed support the candidate cannot give."
+        },
+        {
+          "id": "C",
+          "condition": "Alarmed or procedural first response",
+          "description": "'Forget I said anything.' She does not stay for coffee again."
+        },
+        {
+          "id": "D",
+          "condition": "Investigates — asks whether she has hurt him, how often, when",
+          "description": "She shuts down and denies it. The concern is now unreachable by anyone."
+        }
+      ],
+      "redFlags": [
+        "Promising confidentiality",
+        "Investigating",
+        "Reacting with visible alarm or moral judgement",
+        "Deciding it is not serious and letting it go",
+        "Advising her clinically about her father's condition or her own state"
+      ],
+      "actorResponseToStrong": "Cries. Talks about the sleep. Accepts the offer to go to the manager together.",
+      "actorResponseToWeak": "Retracts. 'It's not that bad really. Ignore me.'"
+    }
+  }
+]

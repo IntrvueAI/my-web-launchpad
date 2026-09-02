@@ -1,0 +1,162 @@
+[
+  {
+    "id": "MED-CA-04",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Will AI replace doctors?",
+    "tags": ["current-affairs", "ai-in-healthcare", "accountability"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-02-28",
+    "question": "Will AI replace doctors? And if an AI tool gets something wrong, who's responsible?",
+    "answer": "Discussion question — no single verdict. A strong answer avoids the abstract 'will it/won't it' framing in favour of a named use case (triage, documentation, image analysis), and lands firmly on the accountability point most candidates miss: responsibility does not transfer to the tool — the clinician who used it remains accountable for the decision.",
+    "modelReasoningPath": "A strong candidate resists answering 'AI will/won't replace doctors' in the abstract — that framing is almost impossible to answer well. They instead pick a concrete use case (triage support, ambient documentation, image analysis) and reason about that specifically. The differentiator almost nobody teaches is the accountability question: when a clinician uses an AI-supported tool and something goes wrong, responsibility does not shift onto the software — the clinician remains responsible for the decision they made using it, similar to any other tool or piece of advice they might use. A strong candidate also names a concrete bias mechanism (a tool trained on unrepresentative data may perform worse for underrepresented groups) rather than saying 'bias' as an unexplained buzzword, and recognises deskilling as a real risk of increasing automation.",
+    "rubric": {
+      "strong": "Reasons about a specific, named use case rather than AI in the abstract, states clearly that accountability stays with the clinician, and names a concrete bias or deskilling mechanism rather than an unexplained buzzword.",
+      "developing": "Discusses AI in general terms with some structure but doesn't reach a clear position on accountability, or names 'bias' without a mechanism.",
+      "weak": "Answers only 'AI will/won't replace doctors' with no use case, no accountability reasoning, and no engagement with risk."
+    },
+    "commonMistakes": [
+      { "mistake": "Answers only the 'will it replace doctors' framing with no specifics", "reveals": "Hasn't grounded the answer in a real use case, which is where the actual reasoning value is" },
+      { "mistake": "Says 'AI could be biased' with no explanation of how", "reveals": "Uses 'bias' as an unexplained buzzword rather than naming a concrete mechanism (e.g. underrepresentation in training data)" },
+      { "mistake": "Doesn't address who is responsible if the tool gets something wrong", "reveals": "Misses the single most-tested and most differentiating part of this topic" }
+    ],
+    "liveProbes": [
+      { "probe": "If an AI triage tool gets something wrong, who's responsible — the clinician, the hospital, or the company that built it?", "goodResponse": "States that the clinician using it remains accountable for the decision, while acknowledging other parties may share responsibility for the tool itself" },
+      { "probe": "Could a tool trained mostly on one population perform worse for another?", "goodResponse": "Names an underrepresentation-in-training-data mechanism rather than restating 'it could be biased'" }
+    ],
+    "hints": [
+      "Instead of AI 'in general', what's one specific way it's actually used in the NHS today?",
+      "If a clinician uses an AI tool and it's wrong, does responsibility move to the tool?",
+      "What's a concrete way an AI tool could perform worse for one group of patients than another?"
+    ]
+  },
+  {
+    "id": "MED-CA-05",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Should the NHS fund weight-loss drugs at scale?",
+    "tags": ["current-affairs", "obesity", "resource-allocation"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-04-30",
+    "question": "New weight-loss medications could help a very large number of patients, but funding them for everyone eligible would be extremely expensive. How should the NHS think about rolling them out?",
+    "answer": "Discussion question — no single verdict. A strong answer recognises that treatment and prevention are not competing alternatives, engages honestly with the fact that eligible demand vastly exceeds what can currently be funded (so rationing by explicit cohort criteria is already the real-world approach), and doesn't moralise about individual responsibility for weight.",
+    "modelReasoningPath": "A strong candidate avoids treating this as either 'the NHS should just fund it for everyone' or 'this is a personal responsibility issue, not a medical one'. They recognise these medications sit alongside prevention rather than replacing it, and engage with the genuine scale problem: the number of people who could benefit vastly exceeds what any health system can fund immediately, which is why phased, criteria-based rollout (by BMI and comorbidity, for instance) is the realistic approach rather than a simple yes/no. A strong candidate also notices that thresholds can reasonably differ between population groups where the same measurement carries different health risk, without needing to know exact figures.",
+    "rubric": {
+      "strong": "States that treatment and prevention aren't alternatives, engages honestly with the scale mismatch between eligible need and funded capacity, and avoids moralising about individual responsibility for weight.",
+      "developing": "Takes a position but doesn't seriously engage with the scale/rationing problem, or partially moralises about lifestyle.",
+      "weak": "Says the NHS should simply fund it for everyone with no engagement with cost or scale, or dismisses medication entirely in favour of 'people should just eat less', with no engagement with the clinical reality."
+    },
+    "commonMistakes": [
+      { "mistake": "Treats the drugs as either a magic fix or a moral cop-out", "reveals": "Both framings avoid the actual rationing question the station is testing" },
+      { "mistake": "Ignores that eligible demand is far larger than funded capacity", "reveals": "Misses that phased rollout by criteria is already the real-world response to an unavoidable scale problem" }
+    ],
+    "liveProbes": [
+      { "probe": "If demand vastly outstrips funded places, how should the NHS decide who goes first?", "goodResponse": "Proposes a criterion (severity, comorbidity) and defends it rather than avoiding the question" },
+      { "probe": "Does funding this mean less prevention work happens?", "goodResponse": "Engages with the opportunity-cost question honestly rather than assuming funding is unlimited" }
+    ],
+    "hints": [
+      "Are treatment and prevention competing for the same money, or working together?",
+      "What happens when far more people are eligible than can be funded straight away?",
+      "Is there a fair way to decide who's treated first?"
+    ]
+  },
+  {
+    "id": "MED-CA-06",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Should assisted dying be legal — and where does the law stand?",
+    "tags": ["current-affairs", "assisted-dying", "end-of-life", "autonomy"],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-09-12",
+    "question": "Should terminally ill patients have the legal right to choose an assisted death? Talk me through your thinking.",
+    "answer": "Discussion question — no single verdict, and this is one of the fastest-moving topics in the whole bank. A strong answer engages seriously with both sides (autonomy and relief of suffering against coercion risk, capacity assessment difficulty, and the doctor's role) and is careful about jurisdiction — the legal position differs across England & Wales, Scotland, the Isle of Man and Jersey and was, at last verification, actively moving through Parliament.",
+    "modelReasoningPath": "A strong candidate treats this as a genuinely hard question with real arguments on both sides, not an obviously easy call either way. On one side: a competent, terminally ill patient's autonomy over their own suffering and death, and the argument that prolonging suffering against someone's wishes is itself a harm. On the other: real concerns about coercion (a patient choosing death to avoid feeling like a burden rather than for themselves), the genuine difficulty of assessing capacity and reversible depression near the end of life, and how a change could affect trust in the doctor-patient relationship. A strong candidate is also careful and appropriately tentative about the CURRENT legal position — this is explicitly one of the fastest-moving topics in UK health policy, and a confidently wrong claim about whether it's legal, and where, is a bigger failure than gentle uncertainty.",
+    "rubric": {
+      "strong": "Engages genuinely with strong arguments on both sides, is appropriately careful about the current and possibly differing legal position across UK jurisdictions rather than asserting one confidently, and can articulate the strongest case against their own view.",
+      "developing": "Has a position with real reasoning but engages seriously with only one side, or states the legal position with more confidence than is warranted for such a fast-moving topic.",
+      "weak": "Treats the question as having an obvious answer either way, or states a specific jurisdiction's legal status as settled fact with total confidence."
+    },
+    "commonMistakes": [
+      { "mistake": "States confidently that assisted dying is or isn't legal in the UK, full stop", "reveals": "The position differs by jurisdiction (England & Wales, Scotland, Isle of Man, Jersey are not the same) and was actively moving through Parliament at last verification — flat, undated claims are a real risk here" },
+      { "mistake": "Presents only one side's arguments and dismisses the other as obviously weaker", "reveals": "Hasn't demonstrated the genuine perspective-taking this question is specifically testing" }
+    ],
+    "liveProbes": [
+      { "probe": "What's the strongest argument against the position you've just taken?", "goodResponse": "Genuinely articulates the opposing case with force, not a weakened version of it" },
+      { "probe": "How would you address the concern that vulnerable patients might feel pressured into this choice?", "goodResponse": "Engages seriously with the coercion concern rather than dismissing it" }
+    ],
+    "hints": [
+      "Try to state the strongest argument on the side you don't currently favour.",
+      "Is the legal position the same everywhere in the UK and Ireland's neighbouring jurisdictions?",
+      "What safeguards, if any, might address the biggest risks of a change like this?"
+    ]
+  },
+  {
+    "id": "MED-CA-07",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Is it fair to prioritise UK graduates for training posts?",
+    "tags": ["current-affairs", "workforce", "fairness", "international-medical-graduates"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "Competition for medical training posts has been fierce, and recent policy has moved to prioritise UK medical graduates for these posts. Is that fair?",
+    "answer": "Discussion question — no single verdict, and this is a topic that directly affects the candidate's own future, so it must be handled without the interviewer signalling any position. A strong answer engages both the fairness argument for prioritising domestic graduates and the fairness and workforce-supply arguments against disadvantaging international medical graduates the NHS has long depended on.",
+    "modelReasoningPath": "A strong candidate recognises this cuts both ways and resists a one-sided answer just because it might personally benefit them as a future UK graduate. FOR prioritisation: UK students take on significant training costs and debt on the expectation of a plausible path to a training post, and a system where a UK-trained graduate cannot get a job at all is a real policy failure. AGAINST, or at least complicating it: the NHS has long relied on international medical graduates, some source countries lose trained doctors they invested in (a genuine global-health-equity question), and a system that shuts out non-UK graduates too sharply could damage long-term workforce supply and diversity. A strong candidate holds both of these seriously rather than defending only the side that benefits them.",
+    "rubric": {
+      "strong": "States the case for prioritisation and the case against fairly, notices the personal stake without either avoiding it or letting it bias the answer, and engages with the global health equity dimension for source countries.",
+      "developing": "Takes a position with some reasoning but only seriously engages one side, often defending prioritisation without examining the costs to international graduates.",
+      "weak": "States a one-sided position with no engagement with the other side, or avoids the question by refusing to have a view."
+    },
+    "commonMistakes": [
+      { "mistake": "Argues only that prioritisation is fair with no engagement with the cost to international graduates", "reveals": "A likely bias risk given the candidate's own stake in the outcome — worth probing explicitly" },
+      { "mistake": "Doesn't mention the effect on source countries that trained the graduates in question", "reveals": "Misses the global health equity dimension of the debate" }
+    ],
+    "liveProbes": [
+      { "probe": "You'd personally benefit from this policy as a future UK graduate — does that affect how you should reason about it?", "goodResponse": "Acknowledges the stake honestly and shows they've tried to reason past it rather than denying any bias" },
+      { "probe": "What about doctors from countries that trained them, only for them to move here?", "goodResponse": "Engages with the global health equity question rather than treating it as irrelevant" }
+    ],
+    "hints": [
+      "Whose interests are in tension here, beyond just UK graduates?",
+      "Does the fact this affects you personally change how carefully you should reason about it?",
+      "What happens to countries that trained doctors who then move elsewhere?"
+    ]
+  },
+  {
+    "id": "MED-CA-08",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "Should everyone be screened for prostate cancer?",
+    "tags": ["current-affairs", "screening", "evidence-appraisal"],
+    "format": "PD",
+    "question": "Some campaigners argue for a national screening programme for prostate cancer for all men. Should there be one?",
+    "answer": "Discussion question — no single verdict. A strong answer applies general screening principles rather than assuming 'more screening is always better': population screening needs an accurate-enough test and a favourable balance of benefit to harm, and a national committee has previously recommended a targeted (not universal) approach based on that evidence, against real campaigning pressure.",
+    "modelReasoningPath": "A strong candidate resists 'screen everyone, it can only help' and applies the general logic of screening: applied to a whole population, an imperfect test generates a large number of false positives relative to true positives when the underlying rate of disease is low, which itself causes real harm (unnecessary anxiety, further invasive tests, overtreatment of some cancers that would never have caused harm). They can name at least one concrete harm mechanism rather than gesturing at 'overdiagnosis' as a buzzword. A strong candidate is also comfortable holding that a committee can reasonably decline universal screening on evidence grounds while still supporting a MORE TARGETED programme for higher-risk groups — this isn't an all-or-nothing question, and recognising that is itself the discriminating move.",
+    "rubric": {
+      "strong": "Applies general screening principles (test accuracy, harms of overdiagnosis and false positives) rather than assuming more screening is automatically better, and engages with targeted versus universal screening as a genuine distinction rather than a binary.",
+      "developing": "States 'screening isn't automatically good' but doesn't explain a concrete harm mechanism, or doesn't distinguish targeted from universal approaches.",
+      "weak": "Says everyone should obviously be screened because early detection saves lives, with no engagement with the harms of screening a low-risk population."
+    },
+    "commonMistakes": [
+      { "mistake": "Assumes more screening is automatically better", "reveals": "Ignores that an imperfect test applied to a low-prevalence population generates many false positives, which is itself a real harm" },
+      { "mistake": "Treats this as an all-or-nothing question", "reveals": "Misses that targeted screening of higher-risk groups is a real, different option from universal screening — not just a smaller version of the same idea" }
+    ],
+    "liveProbes": [
+      { "probe": "What actually happens to the men who get a false positive result?", "goodResponse": "Names concrete downstream harms — anxiety, further invasive testing, potential overtreatment" },
+      { "probe": "Is there a middle option between screening everyone and screening no one?", "goodResponse": "Names targeted screening of higher-risk groups as a genuine distinct option" }
+    ],
+    "hints": [
+      "Does an imperfect test behave the same way in a high-risk group as in the whole population?",
+      "What actually happens to someone who gets a false positive?",
+      "Is 'screen everyone' the only alternative to 'screen no one'?"
+    ]
+  }
+]

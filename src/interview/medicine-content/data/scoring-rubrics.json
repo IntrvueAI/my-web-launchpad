@@ -1,0 +1,205 @@
+{
+  "$comment": "Intrvue.ai Medicine — scoring rubrics. Shared dimensions S1-S8 with universal band descriptors, plus format-specific overrides. S9 is binary and independent. Evidence rules and anti-buzzword rules are enforced here, not only documented.",
+  "version": "1.0.0",
+  "compiled": "2026-08-29",
+  "scale": {
+    "points": 5,
+    "labels": {"1": "Unsatisfactory", "2": "Borderline", "3": "Satisfactory", "4": "Good", "5": "Excellent"},
+    "precedent": "Sheffield publishes exactly this five-point scale (5 Excellent, 4 Good, 3 Satisfactory, 2 Borderline, 1 Unsatisfactory) with a rule that applicants scoring 3 or better in EVERY section are prioritised. BSMS uses five band descriptors then a numeric score out of 20. We adopt the five-point scale and the per-station floor.",
+    "floor_rule": "A station total does not compensate for a dimension scored 1. Report the floor separately: 'you scored well overall but fell below satisfactory on professional judgement in three of six stations' is the useful sentence."
+  },
+
+  "universal_rules": [
+    "S1 (content) and S2 (communication) are scored on EVERY station. Precedent: Imperial marks 6 for content and 4 for communication per station; Aberdeen scores communication and interpersonal skills at every station regardless of the station's own domain.",
+    "Naming a framework, principle, value or law scores ZERO. Only application to this scenario scores. Enforced by the schema's counts_only_if_applied flag.",
+    "A defensible conclusion is never penalised. Score the reasoning, the considerations named, and the engagement with the opposing case.",
+    "A genuine 'I don't know' followed by a method scores at least Satisfactory on S3. Bluffing under challenge scores 1.",
+    "Never score a personality trait. Score an observed behaviour in this station.",
+    "Never award credit for clinical content offered by the candidate. Never penalise its absence.",
+    "Dimensions marked interactive_only are SUPPRESSED and disclosed in asynchronous or text mode, never silently scored."
+  ],
+
+  "dimensions": {
+    "S1": {
+      "label": "Content and coverage",
+      "question": "Were the substantive considerations a competent answer must address actually addressed?",
+      "bands": {
+        "1": "Required considerations absent. The answer does not engage the substance of the question.",
+        "2": "One required consideration present; others absent. Coverage is thin or partly off-target.",
+        "3": "All required considerations addressed, at least briefly. Expected considerations partly covered.",
+        "4": "All required and most expected considerations addressed, each with some development.",
+        "5": "All required and expected considerations addressed with development, plus at least one optional_strong point, within the time available."
+      },
+      "evidence": "Semantic match against expected_content items, weighted by necessity. Never literal string matching.",
+      "cap_rule": "Absence of any necessity:required item caps S1 at 2 regardless of other coverage."
+    },
+    "S2": {
+      "label": "Communication and delivery",
+      "question": "Was it structured, clear, appropriately paced, jargon-free and responsive?",
+      "bands": {
+        "1": "Disorganised or inaudible; listener would not follow. Jargon unexplained. No response to what the other person said.",
+        "2": "Followable but unstructured; important information buried; noticeable filler or repetition; checking absent.",
+        "3": "Clear and ordered. Language appropriate. Some responsiveness to the other person.",
+        "4": "Clear, well-ordered, appropriately paced. Checks understanding at least once with an open question. Adapts to what is said back.",
+        "5": "As 4, plus the structure serves the content rather than announcing itself; silence used deliberately where appropriate; closes cleanly within time."
+      },
+      "evidence": "Transcript structure, jargon detection with a check for whether a definition followed within two sentences, filler density, turn-taking, presence and type of comprehension checks. Audio adds pace and hesitation.",
+      "explicitly_not_scored": ["accent", "dialect", "non-native speech patterns", "voice quality", "confidence as a trait"],
+      "anti_buzzword": "Signposting phrases score nothing on their own. 'There are two sides to this' scores only if the second side is then argued."
+    },
+    "S3": {
+      "label": "Reasoning quality",
+      "question": "Do the conclusions follow from the stated considerations, and are the trade-offs named?",
+      "bands": {
+        "1": "Assertion without reasoning, or reasoning that contradicts itself. No opposing case acknowledged when one exists.",
+        "2": "Some reasoning, but the conclusion does not follow, or the opposing case is a strawman.",
+        "3": "A clear reasoning path. The main tension is identified. The opposing case is acknowledged.",
+        "4": "The tension is named specifically and both sides are stated at strength. Conclusions are appropriately hedged where the evidence is contested.",
+        "5": "As 4, plus the candidate states what would change their view, or identifies which specific fact the answer turns on."
+      },
+      "evidence": "Presence of causal and concessive connectives with substantive content on both sides; identification of the specific tension rather than a generic 'it's complicated'; explicit conditionals.",
+      "anti_buzzword": "Naming the four principles scores zero. Identifying WHICH TWO conflict in this scenario and what would make one give way is the whole of the marks. Gillon's own defence of principlism had to rebut the charge that it is 'a useful checklist approach to bioethics for those new to the field' — a rubric that rewards the list rewards the thing its defenders apologise for."
+    },
+    "S4": {
+      "label": "Insight and reflection",
+      "question": "Is there a transferable lesson drawn from a specific experience, and can the candidate say what they would do differently?",
+      "bands": {
+        "1": "Narration only. No lesson, or a lesson that does not follow from the events described.",
+        "2": "A generic lesson attached to a specific event ('it showed me communication is important').",
+        "3": "A specific lesson from a specific event, with some sense of why it mattered.",
+        "4": "As 3, plus a named change in subsequent behaviour, with evidence that the change happened.",
+        "5": "As 4, plus recognition of what they got wrong or found difficult, and an accurate sense of the limits of what the experience taught them."
+      },
+      "evidence": "Ratio of specific detail (named events, times, consequences) to category-level language; presence of a stated change; presence of an acknowledged error.",
+      "note": "MSC: 'It is what you learn about yourself; about other people and about how effective care is delivered.' And: 'What you did is only half the story.' Quantity of experience is never scored."
+    },
+    "S5": {
+      "label": "Empathy and person-centredness",
+      "question": "Was the emotion noticed, named and responded to before information or task was delivered?",
+      "bands": {
+        "1": "Emotion not acknowledged at all, or dismissed. Task or explanation delivered over a distressed person.",
+        "2": "A formulaic acknowledgement ('that must be hard') with no evidence it was heard, then straight to task.",
+        "3": "Emotion acknowledged specifically before information is given. The other person's position is represented accurately.",
+        "4": "As 3, plus the acknowledgement changes what is said next; the person's own priority is elicited rather than assumed.",
+        "5": "As 4, plus the response is calibrated — no false reassurance, no over-promising, boundaries kept while remaining warm."
+      },
+      "evidence": "Order of acknowledgement versus information in the transcript; specificity of the acknowledgement; presence of false reassurance patterns; whether an open question about the person's own concern was asked.",
+      "interactive_only_components": ["whether the actor's state actually changed", "use of silence", "response to a cue"],
+      "banned_feedback": "Never output 'be more empathetic'. Output what was said, at what point, and what the alternative was."
+    },
+    "S6": {
+      "label": "Professional judgement",
+      "question": "Was the action proportionate, escalated to the right named person, and within the candidate's actual role?",
+      "bands": {
+        "1": "Acts outside their role, conceals, promises what cannot be promised, or does nothing where action is required.",
+        "2": "Broadly right instinct, but the action is vague ('I'd tell someone senior') with no named role and no contingency.",
+        "3": "A specific, proportionate action with a named role, appropriate to the setting.",
+        "4": "As 3, plus a contingency if the first step fails, and honesty about what they cannot promise.",
+        "5": "As 4, plus the limits of their own competence named explicitly and the person still supported rather than handed off."
+      },
+      "evidence": "Presence of a named role appropriate to the SETTING (Designated Safeguarding Lead in a school; shift manager in a care home; NOT a clinician for a volunteer); presence of a second step; absence of over-promising; correction of any misattributed role.",
+      "note": "Aston publishes 'Knowing your limitations and knowing when to ask for help' as an assessed attribute. The 'and' is doing the work: declining alone is band 3, declining plus supporting is band 5."
+    },
+    "S7": {
+      "label": "Numeracy and data handling",
+      "question": "Accurate, method visible, and correct about what the data cannot show?",
+      "bands": {
+        "1": "Incorrect with no method visible, or no attempt.",
+        "2": "Method partly visible but an error goes unnoticed; no sanity check.",
+        "3": "Correct answer with the method spoken aloud, or a minor arithmetic slip with sound method.",
+        "4": "As 3, plus a sanity check and correct reading of axes, units and scale.",
+        "5": "As 4, plus an explicit statement of what the data does NOT support — missing comparator, no denominator, truncated axis, aggregation hiding variation."
+      },
+      "evidence": "Spoken method; arithmetic accuracy; explicit limitation statements.",
+      "weighting_note": "Stating limitations is weighted ABOVE arithmetic accuracy. A candidate who miscalculates but correctly identifies that the chart has no denominator outscores one who calculates perfectly and draws an unsupported conclusion."
+    },
+    "S8": {
+      "label": "Scientific reasoning",
+      "question": "Is school-level science applied to novel material with a visible reasoning path?",
+      "bands": {
+        "1": "Silence, guessing, or recall of a memorised answer that does not fit the problem.",
+        "2": "Some relevant knowledge but no attempt to apply it to the novel element.",
+        "3": "Relevant knowledge applied with a visible reasoning path, even if the conclusion is wrong.",
+        "4": "As 3, plus more than one hypothesis considered and a reason for preferring one.",
+        "5": "As 4, plus a proposed test that would distinguish the hypotheses, and responsiveness to a hint without being handed the answer."
+      },
+      "evidence": "Thinking aloud; number of hypotheses; responsiveness to graded hints.",
+      "scope": "Oxbridge routes only (4 of 68). Cambridge publishes the expectation as sixth-form Chemistry, Biology, Maths and Physics applied to novel scenarios with 'lateral thinking and conceptual flexibility'.",
+      "critical_rule": "Score the reasoning path, explicitly NOT the answer. An incorrect conclusion reached by good reasoning outscores a correct one asserted."
+    },
+    "S9": {
+      "label": "Red flag",
+      "type": "binary_with_severity",
+      "severities": {
+        "note": "Worth mentioning; does not affect the outcome. E.g. repeating the widely-taught error that the doctor must report an unfit driver to the DVLA.",
+        "concern": "Would concern a selector. Reported prominently. E.g. promising confidentiality before hearing a disclosure.",
+        "serious": "Would concern a selector regardless of everything else. E.g. offering clinical advice, concealing an error, investigating a safeguarding disclosure, deciding not to report because certainty is absent."
+      },
+      "rules": [
+        "Reported separately and never averaged away by a strong total. Precedent: Plymouth scores a binary red-flag section Yes/No alongside its numeric scale.",
+        "A red flag that the candidate RECOGNISES AND CORRECTS within the station is downgraded one severity and the recovery is credited in feedback. Recognising an overreach is itself the assessed behaviour.",
+        "Never raise a red flag for a defensible position on a contested question."
+      ]
+    }
+  },
+
+  "format_rubrics": {
+    "DQ": {"dimensions": ["S1", "S2", "S3"], "typical_weights": {"S1": 0.4, "S2": 0.25, "S3": 0.35}, "note": "Most of the assessment lives in the follow-up, not the first answer."},
+    "PE": {"dimensions": ["S1", "S2", "S4"], "typical_weights": {"S1": 0.25, "S2": 0.25, "S4": 0.5}, "note": "S4 dominates. An unsupported trait claim triggers an automatic evidence probe."},
+    "WE": {"dimensions": ["S1", "S2", "S4"], "typical_weights": {"S1": 0.2, "S2": 0.2, "S4": 0.6}, "note": "Quantity of experience is never scored. Do not compare candidates on access."},
+    "AC": {"dimensions": ["S1", "S2", "S4", "S6"], "typical_weights": {"S1": 0.2, "S2": 0.2, "S4": 0.35, "S6": 0.25}, "note": "S6 covers probity — whether a claim survives specific questioning. Only served to schools that question on the application."},
+    "ES": {"dimensions": ["S1", "S2", "S3", "S6"], "typical_weights": {"S1": 0.25, "S2": 0.15, "S3": 0.35, "S6": 0.25}, "note": "S3 dominates. Never score the conclusion."},
+    "RP": {"dimensions": ["S1", "S2", "S5", "S6"], "typical_weights": {"S1": 0.15, "S2": 0.25, "S5": 0.35, "S6": 0.25}, "note": "S5 dominates and is partly interactive_only. Ending state reached is logged as a scored output."},
+    "IT": {"dimensions": ["S1", "S2", "S3"], "typical_weights": {"S2": 0.55, "S1": 0.25, "S3": 0.2}, "note": "S2 dominates. Score whether the LISTENER understood, not whether the candidate was fluent."},
+    "EX": {"dimensions": ["S1", "S2", "S5"], "typical_weights": {"S2": 0.5, "S1": 0.3, "S5": 0.2}, "note": "Comprehension checking is the discriminator, and it must be open checking — 'does that make sense' scores nothing."},
+    "PR": {"dimensions": ["S1", "S3", "S6"], "typical_weights": {"S3": 0.45, "S6": 0.3, "S1": 0.25}, "note": "THE ORDER IS NOT SCORED. Two defensible orders both score top band. Score the criterion, the defence, and willingness to revise when a fact changes."},
+    "CA": {"dimensions": ["S7", "S2"], "typical_weights": {"S7": 0.75, "S2": 0.25}, "note": "Method transparency allows partial credit and mirrors how these stations are marked. Leicester runs numeracy as a pass-mark hurdle, not a contribution to a total — support both models."},
+    "DI": {"dimensions": ["S7", "S3", "S2"], "typical_weights": {"S7": 0.45, "S3": 0.35, "S2": 0.2}, "note": "Stating what the data cannot show outweighs arithmetic accuracy."},
+    "AD": {"dimensions": ["S1", "S3", "S2"], "typical_weights": {"S3": 0.45, "S1": 0.3, "S2": 0.25}, "note": "Appraise the source, not only the topic."},
+    "PD": {"dimensions": ["S1", "S2", "S3", "S6"], "typical_weights": {"S3": 0.45, "S1": 0.2, "S2": 0.15, "S6": 0.2}, "note": "Balance is scored; the position is not. Factual precision is expected only at the level the CA topic's baseline_knowledge specifies."},
+    "SP": {"dimensions": ["S8", "S2"], "typical_weights": {"S8": 0.75, "S2": 0.25}, "note": "Oxbridge only. Reasoning path, not answer."},
+    "GT": {"dimensions": ["S2", "S5", "S6"], "typical_weights": {"S2": 0.35, "S5": 0.3, "S6": 0.35}, "note": "Individually assessed within the group, as KMMS and HYMS do. Airtime is not a proxy for contribution — score bringing others in, building on contributions, and tracking the task."},
+    "AR": {"dimensions": ["S1", "S2"], "typical_weights": {"S1": 0.5, "S2": 0.5}, "note": "Asynchronous. ALL interactive_only components are suppressed and the suppression is disclosed to the user. Add explicit scoring of self-timing and whether the answer concluded."}
+  },
+
+  "mock_interview_aggregation": {
+    "description": "A full mock is a circuit of stations. Aggregation must mirror how schools actually rank, not produce a single opaque number.",
+    "outputs": [
+      {"name": "per_station_scores", "description": "Each station's dimension scores and total. The primary output."},
+      {"name": "per_dimension_profile", "description": "Mean by dimension across the circuit. Answers 'what am I consistently weak at', which a single human mock cannot."},
+      {"name": "floor_report", "description": "Any dimension scoring below 3 in any station, named. Sheffield's published rule is that applicants scoring 3+ in EVERY section are prioritised — a candidate with one weak station needs to know which."},
+      {"name": "red_flag_report", "description": "All flags with severity and the transcript quote, separate from any total."},
+      {"name": "circuit_total", "description": "Sum, reported LAST and with a caveat. A total is the least useful output and the one users over-weight."},
+      {"name": "consistency_index", "description": "Variance across stations. High variance is a real finding — MMI is designed so one bad station does not sink you, but consistent mediocrity does."}
+    ],
+    "explicitly_not_produced": [
+      "A percentage likelihood of receiving an offer. There is no evidence base for such a claim and producing one is the single most damaging thing this product could do.",
+      "A comparison against 'successful applicants'. We have no such cohort and inventing one would be dishonest.",
+      "A single grade or letter that collapses the profile."
+    ]
+  },
+
+  "feedback_contract": {
+    "description": "Every piece of feedback answers six questions in order. A feedback item missing any of the six is rejected by the generator.",
+    "required_elements": [
+      {"element": "what_you_did", "rule": "Quote or closely paraphrase the candidate's actual words, with a timestamp. Never a generic description."},
+      {"element": "why_it_helped_or_harmed", "rule": "State the consequence in terms of the assessment or the other person, not in terms of a rule."},
+      {"element": "what_you_omitted", "rule": "Name the specific consideration, drawn from expected_content. Never 'you could have said more'."},
+      {"element": "what_to_do_differently", "rule": "A behaviour, not an adjective. 'Ask who else is involved before you finish' — not 'be more thorough'."},
+      {"element": "worked_example", "rule": "ONE example sentence showing the improved approach, explicitly labelled as an illustration and not a model answer to memorise."},
+      {"element": "issue_type", "rule": "One of: KNOWLEDGE (didn't know it) | REASONING (knew it, didn't use it) | COMMUNICATION (reasoned it, didn't convey it) | DELIVERY (conveyed it badly - pace, structure, time). This classification is what tells the user WHAT TO PRACTISE."}
+    ],
+    "banned_outputs": [
+      "be more empathetic",
+      "structure your answer better",
+      "try to be more confident",
+      "you should have mentioned the four principles",
+      "good answer (with nothing specific attached)",
+      "consider using a framework",
+      "the correct answer was X (for any ethical scenario)",
+      "you would/wouldn't get in",
+      "successful applicants usually say"
+    ],
+    "issue_type_rationale": "The same surface failure has four different remedies. A candidate who omitted escalation because they did not know who a Designated Safeguarding Lead is needs KNOWLEDGE. One who knew and did not apply it needs REASONING practice. One who thought it and ran out of time needs DELIVERY practice. Telling all three 'you omitted escalation' is the generic feedback the brief forbids."
+  }
+}

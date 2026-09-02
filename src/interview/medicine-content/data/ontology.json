@@ -1,0 +1,3440 @@
+{
+ "$comment": "Intrvue.ai Medicine — Dimension 1: assessment domain ontology. Three levels: domain > subdomain > topic. Every topic carries the eight required specification fields. Vocabularies for dimensions 2-6 are in taxonomies.json.",
+ "version": "1.0.0",
+ "compiled": "2026-08-29",
+ "field_key": {
+  "must_understand": "What the applicant must actually understand. Where a primary source exists it is quoted or cited.",
+  "assessment": "How this topic could be assessed.",
+  "formats": "Permitted station formats (dimension_2_station_format codes).",
+  "weak": "Common weak responses — used to generate specific feedback, not to penalise phrasing.",
+  "danger": "Dangerous misconceptions, product rules, and things our own scoring must not get wrong.",
+  "temporality": "EVERGREEN | SLOW | FAST — drives review cadence and expiry.",
+  "knowledge": "NONE | LAY | CONTEXT | CLINICAL — clinical knowledge boundary.",
+  "premed": "Whether the topic is appropriate to require of a pre-medical applicant. 'conditional' means reward if offered, never require, never penalise absence."
+ },
+ "domains": [
+  {
+   "id": "D1",
+   "label": "Motivation, insight and reflection",
+   "note": "The most over-represented domain in every question bank in the market, and the most under-interrogated. Volume here is not the problem; follow-up depth is.",
+   "subdomains": [
+    {
+     "id": "D1.1",
+     "label": "Motivation for medicine",
+     "topics": [
+      {
+       "id": "D1.1.1",
+       "label": "Origin and evolution of interest",
+       "must_understand": "That an interest that developed and was tested is more credible than a single formative moment, and that the interviewer is listening for what tested it.",
+       "assessment": "Direct question with follow-up asking what nearly changed their mind.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "A childhood anecdote with no development since",
+        "'I've always wanted to help people'",
+        "Naming a relative's illness as the whole answer"
+       ],
+       "danger": [
+        "Believing a dramatic origin story scores better than a mundane one",
+        "Treating the question as a test of sincerity rather than of realism"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D1.1.2",
+       "label": "Medicine versus adjacent professions",
+       "must_understand": "What nursing, physician associate, paramedic, physiotherapy, biomedical science and dentistry actually involve, and what specifically about the doctor's role is the draw — diagnostic responsibility, longitudinal decision-making, breadth.",
+       "assessment": "'Why not nursing?' and its variants, with follow-up on what the candidate knows about the alternative.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Answers that elevate medicine by diminishing nursing",
+        "'I want more responsibility' with no account of what that responsibility is",
+        "Not knowing what a physician associate does"
+       ],
+       "danger": [
+        "Disparaging another profession — this is a red flag, not a weak answer",
+        "Assuming the PA role is unchanged: the Leng Review (16 July 2025) recommended renaming to 'physician assistant', scope limits and named supervisors, and GMC registration becomes mandatory on 13 December 2026"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D1.1.3",
+       "label": "Course and school fit",
+       "must_understand": "The actual differences between course structures — problem-based, case-based, traditional, integrated, early clinical contact, intercalation, campus versus dispersed placements — and which suits how they learn, with a reason.",
+       "assessment": "'Why this school?' Sheffield scores this as a named section ('Knowledge of Sheffield'); ScotGEM and Pears Cumbria assess school- and region-specific commitment.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Reciting rankings or league tables",
+        "'The city seemed nice'",
+        "Course features that are true of almost every UK medical school"
+       ],
+       "danger": [
+        "Assuming this question is filler — at Sheffield it is a scored section, and at ScotGEM and Pears Cumbria it is central"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D1.1.4",
+       "label": "Realism about cost, length and commitment",
+       "must_understand": "Five to six years, substantial debt, foundation training, and specialty training beyond that; that the commitment is made at 17 or 18 and is hard to reverse.",
+       "assessment": "Direct question, or a challenge: 'What would make you regret this?'",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Denying any downside",
+        "Treating the question as a trap and refusing to name a real cost"
+       ],
+       "danger": [
+        "Performing certainty rather than considered commitment"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D1.2",
+     "label": "Insight into medical training",
+     "topics": [
+      {
+       "id": "D1.2.1",
+       "label": "Structure of UK medical training",
+       "must_understand": "Medical school, provisional registration, Foundation Years 1 and 2, then core or specialty training; that specialty choice is not made at application; that four UK nations run separate systems.",
+       "assessment": "Direct question or a follow-up probing whether a stated specialty ambition is informed.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Announcing a specialty at 17 with no awareness of when that choice is made",
+        "Confusing foundation training with specialty training"
+       ],
+       "danger": [
+        "Speaking about 'the NHS' as one organisation — England, Scotland, Wales and Northern Ireland differ materially"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D1.2.2",
+       "label": "Competition and the training bottleneck",
+       "must_understand": "That competition for specialty training posts intensified sharply, and that the Medical Training (Prioritisation) Act 2026 (Royal Assent 5 March 2026) prioritises UK graduates. NHS England reported in June 2026 that ratios fell from roughly 4:1 to 2:1 for prioritised candidates, who filled 98% of posts.",
+       "assessment": "Policy discussion, or a follow-up to a naive statement about guaranteed employment.",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "Assuming a medical degree guarantees a job",
+        "Citing pre-2026 competition ratios as current"
+       ],
+       "danger": [
+        "Not knowing the Act exists — this was the largest change to UK medical careers in the last two years",
+        "Arguing the ethics of prioritisation one-sidedly without acknowledging the IMG supply and fairness questions"
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D1.2.3",
+       "label": "Non-clinical realities of training",
+       "must_understand": "Rotational placements, relocation, night and weekend shifts, postgraduate exams paid for and sat alongside full-time work, and the effect on relationships and finances.",
+       "assessment": "Personal-example or direct question about what they expect to find hardest.",
+       "formats": [
+        "DQ",
+        "PE"
+       ],
+       "weak": [
+        "Naming only academic difficulty",
+        "'Long hours' with no specificity"
+       ],
+       "danger": [
+        "Romanticising sacrifice as a virtue rather than describing how they would manage it"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D1.2.4",
+       "label": "Attrition and why doctors leave",
+       "must_understand": "That people leave medicine, and that the reasons are usually systemic — workload, autonomy, moral distress, pay erosion — rather than individual weakness.",
+       "assessment": "Policy or direct question.",
+       "formats": [
+        "DQ",
+        "PD"
+       ],
+       "weak": [
+        "Attributing attrition to people 'not being cut out for it'"
+       ],
+       "danger": [
+        "Framing resilience as an individual duty and ignoring the system — this reads as naive to any practising interviewer"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D1.3",
+     "label": "Insight into medical practice",
+     "topics": [
+      {
+       "id": "D1.3.1",
+       "label": "The doctor within a multidisciplinary team",
+       "must_understand": "That most care is delivered by teams, that nurses, pharmacists, physiotherapists, physician associates and healthcare assistants hold expertise the doctor does not, and what the doctor specifically contributes.",
+       "assessment": "Direct question, roleplay with an HCP actor, or a station about disagreement across roles.",
+       "formats": [
+        "DQ",
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Describing the doctor as 'leading' without saying what that means in practice",
+        "Listing team members without describing interdependence"
+       ],
+       "danger": [
+        "Implicit hierarchy of worth — a common and heavily penalised failure"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D1.3.2",
+       "label": "Limits of medicine",
+       "must_understand": "That much of medicine is managing rather than curing; that chronic disease, frailty, uncertainty and death are the ordinary case, not the failure case.",
+       "assessment": "Direct question, or an ethical scenario where nothing can be fixed.",
+       "formats": [
+        "DQ",
+        "ES"
+       ],
+       "weak": [
+        "A cure-focused account of the job",
+        "Treating death as failure"
+       ],
+       "danger": [
+        "Believing the assessed answer is optimism — Plymouth explicitly assesses 'Impact of illness'"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D1.3.3",
+       "label": "Emotional cost and its management",
+       "must_understand": "That distress is a normal response to distressing work, and that the professional question is what you do with it — debriefing, supervision, peer support, occupational health.",
+       "assessment": "Direct question or reflective follow-up after a roleplay.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "'I'd keep it professional and not let it affect me'",
+        "Listing exercise and sleep as the whole answer"
+       ],
+       "danger": [
+        "Presenting emotional detachment as professionalism",
+        "Suggesting coping strategies involving physical discomfort or self-punishment"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D1.3.4",
+       "label": "The gap between depiction and reality",
+       "must_understand": "That medical drama and social media portray an unrepresentative slice — acuity, drama, decisiveness — and that most of the work is documentation, communication, coordination and uncertainty.",
+       "assessment": "Direct question, often as a challenge to a naive earlier answer.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Not being able to name anything mundane about the job"
+       ],
+       "danger": [
+        "Citing television as a source of insight"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D1.4",
+     "label": "Reflection on experience",
+     "topics": [
+      {
+       "id": "D1.4.1",
+       "label": "Reflection on caring or service experience",
+       "must_understand": "MSC: 'It is what you learn about yourself; about other people and about how effective care is delivered.' And: 'What you did is only half the story: make sure you show us what attributes you demonstrated.'",
+       "assessment": "Work-experience reflection with escalating follow-up.",
+       "formats": [
+        "WE",
+        "FU"
+       ],
+       "weak": [
+        "Narrating duties chronologically",
+        "Naming an attribute without the incident that evidences it",
+        "'It confirmed my desire to do medicine'"
+       ],
+       "danger": [
+        "Believing more hours score higher — MSC states most schools set no minimum, and that 'there is little benefit in repeating the same type of work experience'"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D1.4.2",
+       "label": "Reflection on clinical observation",
+       "must_understand": "That watching is the weakest form of experience and needs the most reflective work; MSC states repeated shadowing 'is unlikely to be of benefit'.",
+       "assessment": "Work-experience reflection, with follow-up asking what they saw that surprised them.",
+       "formats": [
+        "WE",
+        "FU"
+       ],
+       "weak": [
+        "Describing procedures rather than interactions",
+        "Claiming skills that were only observed in others"
+       ],
+       "danger": [
+        "Reporting identifiable patient detail — a confidentiality red flag in the interview itself",
+        "Assuming hospital shadowing outranks a care home or retail job in the school's eyes"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D1.4.3",
+       "label": "Reflection on non-healthcare work",
+       "must_understand": "That paid service work — retail, hospitality, coaching, tutoring, lifeguarding — evidences communication, reliability, dealing with difficult people and working under pressure, and that MSC treats it as legitimate.",
+       "assessment": "Work-experience reflection.",
+       "formats": [
+        "WE",
+        "PE"
+       ],
+       "weak": [
+        "Apologising for the experience or ranking it below clinical exposure"
+       ],
+       "danger": [
+        "A product that implicitly ranks hospital experience above service work reproduces an access inequity the schools have explicitly moved away from"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D1.4.4",
+       "label": "Reflection on failure",
+       "must_understand": "That the assessed content is the diagnosis and the change, not the setback; and that a real failure with a genuine cost is more credible than a near-miss success.",
+       "assessment": "Personal-example question with follow-up: 'What would you do differently, specifically?'",
+       "formats": [
+        "PE",
+        "FU"
+       ],
+       "weak": [
+        "A humblebrag failure",
+        "Blaming circumstances entirely",
+        "A change described in general terms with no evidence it happened"
+       ],
+       "danger": [
+        "Choosing a failure so trivial that it evidences no self-awareness"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D1.4.5",
+       "label": "Reflection on caring for family",
+       "must_understand": "That MSC states some schools may consider caring for unwell family, while noting that professional caring differs; and that this is legitimate experience.",
+       "assessment": "Work-experience reflection, handled carefully.",
+       "formats": [
+        "WE"
+       ],
+       "weak": [
+        "Presenting it as clinical training"
+       ],
+       "danger": [
+        "PRODUCT RULE: never prompt for detail about a family member's condition, and never score its disclosure. Frame prompts around what the candidate did and learned, not what the person had."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D1.4.6",
+       "label": "Learning from feedback",
+       "must_understand": "That the assessed behaviour is what changed, and that seeking feedback proactively is stronger evidence than receiving it well.",
+       "assessment": "Personal-example question, or delivering critical feedback within a roleplay and observing the response.",
+       "formats": [
+        "PE",
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "'I take all feedback on board'",
+        "No example of feedback that stung"
+       ],
+       "danger": [
+        "Defending the original position under a follow-up designed to test exactly this"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D2",
+   "label": "Communication",
+   "note": "Ulster's 2021 admissions data found communication stations discriminated most strongly and correlated maximally with overall outcome. Aberdeen scores communication at every station regardless of domain. Weight accordingly.",
+   "subdomains": [
+    {
+     "id": "D2.1",
+     "label": "Listening and responding",
+     "topics": [
+      {
+       "id": "D2.1.1",
+       "label": "Active listening and checking understanding",
+       "must_understand": "That summarising back and inviting correction is a behaviour that can be observed in a transcript, and that it changes what the other person says next.",
+       "assessment": "Roleplay; scored on whether a summary occurred and whether it was accurate.",
+       "formats": [
+        "RP",
+        "IT",
+        "EX"
+       ],
+       "weak": [
+        "Saying 'I hear you' without demonstrating what was heard",
+        "Summarising inaccurately and not noticing"
+       ],
+       "danger": [
+        "Treating listening as a pause rather than an action"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.1.2",
+       "label": "Picking up cues",
+       "must_understand": "That people signal concerns obliquely — 'my daughter usually comes with me' — and that following the cue rather than the agenda is what changes the outcome of a station.",
+       "assessment": "Roleplay with a planted cue and a hidden fact behind it.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Continuing the prepared agenda past an obvious cue",
+        "Noticing the cue but not acting on it"
+       ],
+       "danger": [
+        "This is the single highest-value roleplay behaviour and is invisible in a static question bank"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.1.3",
+       "label": "Silence and pacing",
+       "must_understand": "That silence after bad news is a tool, and that filling it is the commonest novice error.",
+       "assessment": "Roleplay in which the actor pauses; scored on whether the candidate waits.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Talking through the pause",
+        "Immediately offering solutions"
+       ],
+       "danger": [
+        "Not assessable from a transcript alone — this is an interactive-only dimension"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D2.2",
+     "label": "Explaining",
+     "topics": [
+      {
+       "id": "D2.2.1",
+       "label": "Explaining a non-medical process to a lay listener",
+       "must_understand": "Structure, chunking, plain language, and checking at intervals rather than only at the end.",
+       "assessment": "Explanation task with a listener who asks a clarifying question mid-way.",
+       "formats": [
+        "EX",
+        "IT"
+       ],
+       "weak": [
+        "Uninterrupted monologue",
+        "Checking only once, at the end",
+        "Analogies that are not explained"
+       ],
+       "danger": [
+        "Fluency is not comprehension. Score whether the listener understood."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.2.2",
+       "label": "Explaining a health concept within lay limits",
+       "must_understand": "That an applicant may explain what a clinical trial, a waiting list, a vaccine or a screening programme is, and must not explain a diagnosis, a treatment choice or a prognosis.",
+       "assessment": "Explanation task with an actor who pushes for more than the candidate should give.",
+       "formats": [
+        "EX",
+        "RP"
+       ],
+       "weak": [
+        "Over-simplifying to the point of inaccuracy",
+        "Refusing to explain anything at all"
+       ],
+       "danger": [
+        "Crossing into clinical advice under social pressure — a red flag, and the point of the station"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D2.2.3",
+       "label": "Avoiding and unpacking jargon",
+       "must_understand": "That jargon includes ordinary words used technically, and that saying the term and then defining it is usually better than avoiding it.",
+       "assessment": "Automated jargon detection in the transcript, checked against whether a definition followed within two sentences.",
+       "formats": [
+        "EX",
+        "IT"
+       ],
+       "weak": [
+        "Using a technical term and moving on",
+        "Substituting a vaguer word rather than explaining"
+       ],
+       "danger": [
+        "Our own scoring must not reward vocabulary — see the anti-buzzword rules"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D2.3",
+     "label": "Instruction and precision",
+     "topics": [
+      {
+       "id": "D2.3.1",
+       "label": "Giving instructions without shared visual reference",
+       "must_understand": "Establishing a starting point, sequencing, using unambiguous reference terms, and confirming after each step.",
+       "assessment": "Instruction task with a listener who follows instructions literally, including where they are ambiguous.",
+       "formats": [
+        "IT"
+       ],
+       "weak": [
+        "Assuming shared orientation",
+        "Deictic language ('here', 'like this')",
+        "No confirmation between steps"
+       ],
+       "danger": [
+        "The listener must genuinely execute badly-specified instructions badly, or the station tests nothing"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.3.2",
+       "label": "Sequencing and prioritising information",
+       "must_understand": "That people retain the first and last things said, and that the most important information should not be buried mid-answer.",
+       "assessment": "Any station; scored on transcript structure.",
+       "formats": [
+        "EX",
+        "DQ"
+       ],
+       "weak": [
+        "Chronological narration where importance ordering was needed"
+       ],
+       "danger": [
+        "Signposting phrases without an underlying structure — a buzzword risk in our own scoring"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D2.4",
+     "label": "Difficult conversations",
+     "topics": [
+      {
+       "id": "D2.4.1",
+       "label": "Delivering unwelcome news within competence",
+       "must_understand": "That an applicant delivers non-clinical bad news — a cancelled session, a lost item, a change of plan, a mistake they made — and never a diagnosis or prognosis. Warning shot, plain language, pause, respond.",
+       "assessment": "Roleplay in a volunteering or school setting.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Burying the news in preamble",
+        "Delivering it and immediately explaining process",
+        "Apologising so much the news is unclear"
+       ],
+       "danger": [
+        "Stations that ask an applicant to break a diagnosis are unrepresentative of UK MMIs and should not be built. Imperial lists 'empathy and breaking bad news' as a topic, but the assessable version for a 17-year-old is non-clinical."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.4.2",
+       "label": "Responding to anger",
+       "must_understand": "That anger usually protects something else — fear, powerlessness, guilt — and that acknowledgement precedes explanation; that defending the organisation first escalates.",
+       "assessment": "Roleplay with an angry actor whose intensity responds to the candidate's behaviour.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Explaining the policy first",
+        "Matching the register",
+        "Premature apology that does not name what is being apologised for"
+       ],
+       "danger": [
+        "Scoring de-escalation as compliance. A candidate should not agree to something they cannot deliver in order to calm someone down."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.4.3",
+       "label": "Responding to distress",
+       "must_understand": "That acknowledgement and space precede information, and that 'I don't know what to say, but I'm not going anywhere' outperforms a solution.",
+       "assessment": "Roleplay with a tearful actor.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Immediate problem-solving",
+        "False reassurance ('I'm sure it will be fine')",
+        "Redirecting to a professional before acknowledging anything"
+       ],
+       "danger": [
+        "Reflective listening that amplifies rather than steadies — our actor design must not reward spiralling"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.4.4",
+       "label": "Responding to grief",
+       "must_understand": "That grief is not a problem to be solved, that platitudes harm, and that the useful acts are presence, specificity and practical offers.",
+       "assessment": "Roleplay with a bereaved actor in a non-clinical setting.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "'They're in a better place'",
+        "'I know exactly how you feel'",
+        "Changing the subject"
+       ],
+       "danger": [
+        "Do not build stations where an applicant breaks news of a death. That is outside any plausible applicant role."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.4.5",
+       "label": "Apologising",
+       "must_understand": "That an apology names what happened, takes responsibility without excuse, and says what happens next; that the GMC's professional duty of candour requires telling, apologising, offering a remedy and explaining the effects.",
+       "assessment": "Roleplay in which the candidate has made a real error.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "'I'm sorry you feel that way'",
+        "An apology followed immediately by 'but'"
+       ],
+       "danger": [
+        "Do not attribute to the GMC the line that 'an apology is not an admission of liability'. That proposition is statutory (Compensation Act 2006 s.2), not GMC wording."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D2.5",
+     "label": "Structure and rapport",
+     "topics": [
+      {
+       "id": "D2.5.1",
+       "label": "Opening and orienting",
+       "must_understand": "Introducing yourself, saying your role accurately — 'I'm a volunteer here', not anything more — and stating the purpose.",
+       "assessment": "Roleplay; scored on whether the role was stated accurately.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "No introduction",
+        "Ambiguous role description that lets the actor assume clinical authority"
+       ],
+       "danger": [
+        "Failing to correct an actor who calls the candidate 'doctor' or 'nurse' is a red flag"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.5.2",
+       "label": "Signposting and answer structure",
+       "must_understand": "That a short structural frame helps under time pressure, and that the frame must be filled with content rather than announced.",
+       "assessment": "Transcript structure analysis on any station.",
+       "formats": [
+        "DQ",
+        "PD",
+        "ES"
+       ],
+       "weak": [
+        "Announcing three points and delivering one",
+        "Structure so heavy it consumes the station"
+       ],
+       "danger": [
+        "ANTI-BUZZWORD: do not award marks for the phrase 'there are two sides to this'. Award them for the second side actually being argued."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.5.3",
+       "label": "Closing and checking",
+       "must_understand": "Summarising what was agreed, checking the other person has what they need, and saying what happens next.",
+       "assessment": "Roleplay ending; scored on whether a close occurred before time.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Running out of time mid-sentence with no close",
+        "Closing without checking"
+       ],
+       "danger": [
+        "Time management is a scored behaviour at every station-based school. A perfect answer that does not finish is not a perfect answer."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D2.6",
+     "label": "Asynchronous and digital communication",
+     "topics": [
+      {
+       "id": "D2.6.1",
+       "label": "Recorded response with no interlocutor",
+       "must_understand": "That with no feedback loop, structure must be explicit, the answer must be self-contained, and the timer is the only cue.",
+       "assessment": "Asynchronous recorded station — Brunel's exact format: 2 minutes reading, 5 minutes recording.",
+       "formats": [
+        "AR"
+       ],
+       "weak": [
+        "Conversational hedging that works live and fails on camera",
+        "Running out of time with no conclusion",
+        "Waiting for a prompt that never comes"
+       ],
+       "danger": [
+        "Practising only live mocks actively mis-prepares Brunel applicants"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D2.6.2",
+       "label": "Professionalism online",
+       "must_understand": "GMC 'Using social media as a medical professional' (in force 30 January 2024): professional behaviour, boundaries, confidentiality, honesty, declaring interests, and considering the effect of shared content on health attitudes. GMC 'Achieving good medical practice' expects students to maintain standards outside the medical school and online.",
+       "assessment": "Ethical scenario about a post, a photo, or a group chat.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "'I'd just make my account private'",
+        "Treating the issue as reputational rather than about patients and colleagues"
+       ],
+       "danger": [
+        "The 2013 guidance requiring doctors to identify themselves by name online was ARCHIVED in January 2024. Any content asserting that duty is wrong."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D3",
+   "label": "Empathy and person-centredness",
+   "note": "Empathy must be scored as observed behaviour in this station, never as a trait. 'Be more empathetic' is banned feedback.",
+   "subdomains": [
+    {
+     "id": "D3.1",
+     "label": "Recognising and responding to emotion",
+     "topics": [
+      {
+       "id": "D3.1.1",
+       "label": "Naming the emotion",
+       "must_understand": "That naming what someone appears to feel, tentatively and checkably, does more than expressing sympathy.",
+       "assessment": "Roleplay; the actor's state changes measurably when the emotion is named.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "'That must be hard' as a reflex",
+        "Naming the wrong emotion and not checking"
+       ],
+       "danger": [
+        "Rewarding the phrase rather than the response it produced"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D3.1.2",
+       "label": "Validating without false reassurance",
+       "must_understand": "That 'I can't promise it'll be fine, but I can tell you what happens next' is stronger than either dismissal or a promise.",
+       "assessment": "Roleplay with an anxious actor who explicitly requests a guarantee.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "'Try not to worry'",
+        "Guaranteeing an outcome to end the discomfort"
+       ],
+       "danger": [
+        "A candidate who promises something outside their control has failed the station regardless of warmth"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D3.1.3",
+       "label": "Empathy under time pressure",
+       "must_understand": "That acknowledging emotion costs seconds, not minutes, and that skipping it to get through the task is the commonest failure in short stations.",
+       "assessment": "A roleplay with TIME set to 2 or 3 and an emotional cue early.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Task completion at the cost of any acknowledgement"
+       ],
+       "danger": [
+        "Do not design stations that are only passable by abandoning the task — the tension should be real but resolvable"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D3.2",
+     "label": "Perspective and difference",
+     "topics": [
+      {
+       "id": "D3.2.1",
+       "label": "Perspective-taking under disagreement",
+       "must_understand": "That articulating why a person holds a view you think is wrong — vaccine refusal, refusing help, discharging against advice — is the assessed skill, and it is not agreement.",
+       "assessment": "Roleplay with a sceptic, or an ethical scenario.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Restating the correct information louder",
+        "Assuming the person is ignorant rather than differently weighted"
+       ],
+       "danger": [
+        "Confusing respect for autonomy with abandoning the person"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D3.2.2",
+       "label": "Cultural humility and difference",
+       "must_understand": "That difference — language, religion, family structure, disability, sexuality — changes what good care looks like, and that asking is better than assuming.",
+       "assessment": "Roleplay or ethical scenario in a community setting.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Generalising from a group to an individual",
+        "Treating an interpreter as optional"
+       ],
+       "danger": [
+        "PRODUCT RULE: do not build stations that require a candidate to display knowledge of a specific culture's practices. Assess the asking, not the knowing."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D3.2.3",
+       "label": "The impact of illness on a life",
+       "must_understand": "Plymouth scores 'Impact of illness' by name. That illness affects work, income, relationships, identity and independence, and that the medical problem is usually not the biggest problem.",
+       "assessment": "Direct question or roleplay with a carer or a person with a long-term condition.",
+       "formats": [
+        "DQ",
+        "RP"
+       ],
+       "weak": [
+        "Answering in terms of symptoms",
+        "Treating the patient as the only person affected"
+       ],
+       "danger": [
+        "Requiring clinical knowledge of a condition. The station is about consequences, not pathology."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D3.2.4",
+       "label": "Boundaries of empathy",
+       "must_understand": "That over-identification impairs judgement, that promising to keep in touch or to personally fix something is a boundary error, and that sustainable compassion requires limits.",
+       "assessment": "Roleplay where the actor asks for a personal commitment.",
+       "formats": [
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "Agreeing to anything to be kind",
+        "Cold refusal with no warmth"
+       ],
+       "danger": [
+        "Scoring warmth without scoring boundaries produces candidates who overpromise"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D4",
+   "label": "Professionalism and integrity",
+   "note": "Anchor on GMC Good Medical Practice 2024 (four domains, in force 30 January 2024) and 'Achieving good medical practice: guidance for medical students' 2024. Keele sends the latter to candidates before interview.",
+   "subdomains": [
+    {
+     "id": "D4.1",
+     "label": "Honesty and probity",
+     "topics": [
+      {
+       "id": "D4.1.1",
+       "label": "Admitting your own error",
+       "must_understand": "That disclosure is required even when the error caused no harm and nobody would find out; that the cost of disclosure is the point.",
+       "assessment": "Roleplay in which the candidate has made a mistake and could conceal it.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Disclosing only because they might be found out",
+        "Framing the error as someone else's system failure"
+       ],
+       "danger": [
+        "A candidate who reasons that no harm means no disclosure has produced a red flag"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D4.1.2",
+       "label": "Academic integrity",
+       "must_understand": "GMC 'Achieving good medical practice' names plagiarism, cheating and fraud specifically, and applies from day one of medical school.",
+       "assessment": "Ethical scenario about a peer cheating, or about the candidate's own temptation.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Loyalty framed as the overriding value",
+        "Reporting immediately with no conversation with the peer first"
+       ],
+       "danger": [
+        "The station usually tests the sequence — speak to the person, then escalate — not the eventual outcome"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D4.1.3",
+       "label": "Honesty in the application itself",
+       "must_understand": "That exaggerating experience is a probity issue that surfaces under follow-up; that UCAS runs a Verification Team and that AI-generated statements may be treated as fraudulent.",
+       "assessment": "Application challenge with escalating specificity. ONLY for schools that question on the application.",
+       "formats": [
+        "AC",
+        "FU"
+       ],
+       "weak": [
+        "Vagueness under specific questioning",
+        "Retreating from a claim without acknowledging it"
+       ],
+       "danger": [
+        "UCAS publishes NO numerical similarity threshold. Do not repeat the '10% similarity' figure — it is not in UCAS guidance."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D4.2",
+     "label": "Candour when things go wrong",
+     "topics": [
+      {
+       "id": "D4.2.1",
+       "label": "The professional duty of candour",
+       "must_understand": "The four obligations: tell the person, apologise, offer an appropriate remedy or support, and explain fully the short and long term effects.",
+       "assessment": "Ethical scenario or roleplay after an error.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Naming 'duty of candour' without doing any of the four things"
+       ],
+       "danger": [
+        "ANTI-BUZZWORD: naming the duty scores nothing. Performing its four elements scores."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D4.2.2",
+       "label": "Professional versus statutory candour",
+       "must_understand": "The professional duty (GMC, owed to every patient, triggered by anything going wrong) is distinct from the statutory duty on organisations (CQC Regulation 20, triggered only by defined notifiable safety incidents).",
+       "assessment": "Follow-up probe after a candour answer.",
+       "formats": [
+        "FU",
+        "ES"
+       ],
+       "weak": [
+        "Conflating the two"
+       ],
+       "danger": [
+        "Coaching material routinely conflates them. Do not require this distinction from a 17-year-old, but reward it and never penalise its absence."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — reward, do not require"
+      }
+     ]
+    },
+    {
+     "id": "D4.3",
+     "label": "Professional boundaries",
+     "topics": [
+      {
+       "id": "D4.3.1",
+       "label": "Gifts and personal contact",
+       "must_understand": "That small tokens of thanks differ from gifts that create obligation, and that giving personal contact details to a service user is a boundary error whatever the motive.",
+       "assessment": "Roleplay in a care home or volunteering setting.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Refusing bluntly and causing offence",
+        "Accepting to avoid awkwardness"
+       ],
+       "danger": [
+        "Kindness as a justification for a boundary breach is the trap the station is built around"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D4.3.2",
+       "label": "Dual relationships",
+       "must_understand": "That knowing someone personally in a care setting changes what you can appropriately do, and that the answer is usually to declare it and hand over.",
+       "assessment": "Ethical scenario in a small-community setting.",
+       "formats": [
+        "ES"
+       ],
+       "weak": [
+        "Not recognising the conflict at all"
+       ],
+       "danger": [
+        "Assuming that declaring it is sufficient without changing behaviour"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D4.4",
+     "label": "Concerns about others",
+     "topics": [
+      {
+       "id": "D4.4.1",
+       "label": "Raising a concern without proof",
+       "must_understand": "GMC 'Raising and acting on concerns', para 10: you are justified in raising a concern honestly, on the basis of reasonable belief and through appropriate channels, EVEN IF YOU ARE MISTAKEN. You do not need proof.",
+       "assessment": "Ethical scenario where the candidate is uncertain.",
+       "formats": [
+        "ES",
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "'I'd wait until I was sure'",
+        "Gathering evidence themselves"
+       ],
+       "danger": [
+        "This single principle unlocks the largest family of MMI stations. Applicants systematically under-report because they feel uncertain. Make it a first-class teaching point."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D4.4.2",
+       "label": "Concern about a peer",
+       "must_understand": "That the usual first step is a direct, private, non-accusatory conversation, and that escalation follows if it does not resolve or if there is risk.",
+       "assessment": "Roleplay with a peer actor — QUB's Station 1 is exactly this.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Straight to authority with no conversation",
+        "Conversation and then no follow-through"
+       ],
+       "danger": [
+        "Where there is immediate risk, the direct-conversation-first rule does not apply. Build both variants."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D4.4.3",
+       "label": "Concern about someone more senior",
+       "must_understand": "That hierarchy does not remove the duty; that the mechanism is the same but the personal cost is higher; and that named routes exist above the individual.",
+       "assessment": "Ethical scenario or roleplay with a senior actor.",
+       "formats": [
+        "ES",
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "'I'm only a volunteer, it's not my place'",
+        "Assuming someone else will have noticed"
+       ],
+       "danger": [
+        "Applicants overweight hierarchy. Follow-up should test whether the answer survives 'they're much more experienced than you'."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D4.4.4",
+       "label": "The escalation ladder",
+       "must_understand": "Local first — the person, then the supervisor or an appropriate officer; regulator later, if the responsible person is part of the problem or local action was inadequate. Record what you did.",
+       "assessment": "Follow-up probe: 'You told your supervisor. Two weeks later nothing has changed. Now what?'",
+       "formats": [
+        "FU",
+        "ES"
+       ],
+       "weak": [
+        "A single step with no next step",
+        "Naming a regulator as the first action"
+       ],
+       "danger": [
+        "The commonest scoring error in AI feedback: accepting 'I'd tell someone senior' as complete. Ask WHO, and ask WHAT IF NOTHING HAPPENS."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D4.5",
+     "label": "Working within competence",
+     "topics": [
+      {
+       "id": "D4.5.1",
+       "label": "Recognising the limit",
+       "must_understand": "Aston publishes 'Knowing your limitations and knowing when to ask for help' as an assessed attribute. That an applicant's competence limit is very low, and that recognising it is the assessed behaviour.",
+       "assessment": "Roleplay with OVERC set high — an actor who requests clinical advice.",
+       "formats": [
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "Offering a general opinion 'just to be helpful'",
+        "Refusing so bluntly that the person is abandoned"
+       ],
+       "danger": [
+        "Any clinical advice from an applicant is a red flag. Declining warmly AND redirecting to a named person is the top-band behaviour."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D4.5.2",
+       "label": "Saying 'I don't know'",
+       "must_understand": "That 'I don't know, and here's how I'd find out' is a strong answer, and that inventing an answer under challenge is a serious failure.",
+       "assessment": "Hostile follow-up on a factual point the candidate cannot know.",
+       "formats": [
+        "FU"
+       ],
+       "weak": [
+        "Bluffing",
+        "Freezing"
+       ],
+       "danger": [
+        "Our interviewer must NEVER penalise a genuine 'I don't know' that is followed by a method. Score the method."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D4.5.3",
+       "label": "Seeking help appropriately",
+       "must_understand": "Who, when, how urgently, and what to do while waiting.",
+       "assessment": "Prioritisation or roleplay station.",
+       "formats": [
+        "PR",
+        "RP"
+       ],
+       "weak": [
+        "'I'd get help' with no named person and no interim action"
+       ],
+       "danger": [
+        "Reward specificity of the named role, not the word 'escalate'"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D5",
+   "label": "Ethical and legal reasoning",
+   "note": "The domain where wrong AI feedback is most likely and most damaging. Every leaf here has a verified primary source in docs/research-appendix.md. Rubrics must reward tension-mapping and penalise nothing more heavily than framework recitation.",
+   "subdomains": [
+    {
+     "id": "D5.1",
+     "label": "Autonomy and consent",
+     "topics": [
+      {
+       "id": "D5.1.1",
+       "label": "Consent as dialogue",
+       "must_understand": "GMC 'Decision making and consent' (2020, updated 3 August 2026) is a dialogue model: an ongoing exchange, finding out what matters to this patient, sharing benefits and harms of options AND reasonable alternatives INCLUDING TAKING NO ACTION.",
+       "assessment": "Ethical scenario or a follow-up to a consent answer.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "'Consent must be voluntary, informed, and the patient must have capacity' — this is the pre-2020 model",
+        "Treating consent as a signature or an event"
+       ],
+       "danger": [
+        "Principle 4 (what matters to the patient; reasonable alternatives including no action) is the element candidates most often miss and interviewers most reward. Build feedback around it."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.1.2",
+       "label": "Refusal of treatment",
+       "must_understand": "That a capacitous adult may refuse treatment for any reason or none, including where refusal will cause their death; and that the professional response is to understand why, not to overturn.",
+       "assessment": "Ethical scenario with ETHUNC high.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Looking for a way around the refusal",
+        "Assuming refusal implies incapacity"
+       ],
+       "danger": [
+        "Assuming a refusal triggers a capacity assessment is the classic error — the unwise-decision principle exists precisely to prevent it"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.1.3",
+       "label": "Consent outside clinical settings",
+       "must_understand": "That consent applies to photographs, social media, research participation and personal information in a volunteering setting, and that a 17-year-old will meet these before they meet clinical consent.",
+       "assessment": "Ethical scenario in a school, care home or club setting.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Assuming consent is only a hospital concept"
+       ],
+       "danger": [
+        "This is the most realistic consent station for a pre-medical applicant and is almost absent from commercial banks"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.2",
+     "label": "Capacity",
+     "topics": [
+      {
+       "id": "D5.2.1",
+       "label": "The five principles of the Mental Capacity Act 2005",
+       "must_understand": "s.1(2)-(6) verbatim: assume capacity; take all practicable steps to help; an unwise decision is not incapacity; act in best interests; choose the least restrictive option.",
+       "assessment": "Ethical scenario, with follow-up pressure on the unwise-decision principle.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "Listing the five and not applying any"
+       ],
+       "danger": [
+        "ANTI-BUZZWORD: naming the Act scores nothing. Applying the unwise-decision principle under pressure scores."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — reward, do not require"
+      },
+      {
+       "id": "D5.2.2",
+       "label": "The two-stage test",
+       "must_understand": "Stage 1 (s.2(1)): an impairment of, or disturbance in the functioning of, the mind or brain. Stage 2 (s.3(1)): unable to understand, retain, use or weigh, or communicate. The impairment must be the REASON the functional test fails.",
+       "assessment": "Follow-up interrogation of a capacity answer.",
+       "formats": [
+        "FU",
+        "ES"
+       ],
+       "weak": [
+        "Applying the functional test with no impairment identified",
+        "Reversing the order"
+       ],
+       "danger": [
+        "Do not require this of an applicant. Reward it where offered and never penalise its absence — a candidate reasoning well without the statutory vocabulary should score as highly."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — reward, do not require"
+      },
+      {
+       "id": "D5.2.3",
+       "label": "Capacity is decision- and time-specific",
+       "must_understand": "That 'he lacks capacity' is never a status; capacity is assessed for a specific decision at a specific time, and may fluctuate.",
+       "assessment": "Ethical scenario with a fluctuating presentation.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Global statements about a person's capacity"
+       ],
+       "danger": [
+        "The commonest ethics error in circulating coaching material after the Fraser/Gillick confusion"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.2.4",
+       "label": "Best interests versus overall benefit",
+       "must_understand": "That the MCA uses 'best interests' and the GMC's consent guidance uses 'overall benefit' — different vocabularies over overlapping ground.",
+       "assessment": "Follow-up only.",
+       "formats": [
+        "FU"
+       ],
+       "weak": [
+        "Mixing the terms mid-answer and sounding unsure"
+       ],
+       "danger": [
+        "Do not penalise. This is a stretch-band discriminator only."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — stretch only"
+      }
+     ]
+    },
+    {
+     "id": "D5.3",
+     "label": "Children and young people",
+     "topics": [
+      {
+       "id": "D5.3.1",
+       "label": "Gillick competence",
+       "must_understand": "The test of whether a child under 16 has sufficient understanding and maturity to consent for themselves. Lord Scarman: 'it is not enough that she should understand the nature of the advice which is being given: she must also have a sufficient maturity to understand what is involved.' It applies broadly, not only to contraception, and is decision-specific.",
+       "assessment": "Ethical scenario involving a young person.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Treating it as a permanent status",
+        "Assuming it applies only to contraception"
+       ],
+       "danger": [
+        "Gillick is a test of the CHILD. Confusing it with Fraser is the single most common ethics error in coaching material."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.3.2",
+       "label": "Fraser guidelines",
+       "must_understand": "The criteria for providing contraceptive and sexual-health advice or treatment to an under-16 without parental consent: cannot be persuaded to inform parents; understands the advice; health likely to suffer without it; in their best interests; likely to continue having sex either way.",
+       "assessment": "Ethical scenario, or a follow-up correcting a Gillick/Fraser conflation.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "Using 'Fraser' as the name for the competence test"
+       ],
+       "danger": [
+        "Fraser is a test of the DECISION, and applies narrowly to contraception, STI treatment and termination. Our feedback must correct this conflation explicitly, because it is the error applicants are most often taught."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — reward, do not require"
+      },
+      {
+       "id": "D5.3.3",
+       "label": "Adolescent confidentiality",
+       "must_understand": "That a young person is owed confidentiality, that this is not absolute, and that safeguarding overrides — a child protection assessment is required and concerns must be reported irrespective of the young person's wishes.",
+       "assessment": "Roleplay with a young person disclosing something, with SAFEG variable set.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Promising confidentiality before hearing the disclosure",
+        "Breaking confidence without explaining why or telling the person"
+       ],
+       "danger": [
+        "An applicant who reaches for Gillick without reaching for safeguarding has half-answered the station."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.3.4",
+       "label": "Parental disagreement",
+       "must_understand": "That parents may disagree with each other or with the young person, and that the young person's own view carries weight proportionate to their understanding.",
+       "assessment": "Roleplay with a parent actor.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Defaulting to the parent because they are the adult"
+       ],
+       "danger": [
+        "Do not build stations requiring the applicant to adjudicate a clinical treatment dispute. Frame as a school, club or activity decision."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "LAY",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.4",
+     "label": "Confidentiality",
+     "topics": [
+      {
+       "id": "D5.4.1",
+       "label": "The default and why it exists",
+       "must_understand": "That confidentiality exists so people seek help honestly; its justification is consequentialist and institutional, not merely a rule.",
+       "assessment": "Direct question or the opening of an ethical scenario.",
+       "formats": [
+        "DQ",
+        "ES"
+       ],
+       "weak": [
+        "Stating the rule without the reason"
+       ],
+       "danger": [
+        "A candidate who cannot say why confidentiality matters will apply the exceptions badly"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.4.2",
+       "label": "Disclosure to protect another person",
+       "must_understand": "GMC para 64: disclosure may be justified in the public interest if failure to disclose may expose others to a risk of death or serious harm, and the benefits must OUTWEIGH the patient's and the public interest in confidentiality. Para 68 sets six balancing factors. Seek consent first where practicable; tell the patient about the disclosure.",
+       "assessment": "Ethical scenario with ETHUNC and CONFL high.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "'Confidentiality can be broken if someone is at risk' with no balancing step",
+        "Treating 'public interest' as meaning 'the police asked'"
+       ],
+       "danger": [
+        "The threshold is death or serious harm to OTHERS, and the test is a balance, not a trump card. Feedback must probe the balancing step, not accept the conclusion."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.4.3",
+       "label": "Disclosure required by law",
+       "must_understand": "GMC para 87: you must disclose if required by law. Notifiable diseases are reported on SUSPICION — 'do not wait for laboratory confirmation' — urgent cases by phone within 24 hours, all cases online within 3 days.",
+       "assessment": "Follow-up distinguishing statutory duty from public-interest discretion.",
+       "formats": [
+        "FU",
+        "ES"
+       ],
+       "weak": [
+        "Treating a statutory duty as requiring a balancing exercise"
+       ],
+       "danger": [
+        "HIV IS NOT NOTIFIABLE — a frequent interview trap and a frequent coaching error. The notifiable list changed in April 2025 (adding MERS, zoonotic influenza, CHICKENPOX, congenital syphilis, neonatal herpes, acute flaccid paralysis/myelitis, disseminated gonococcal infection and CJD) and again in May 2026 (hantavirus). Any list predating April 2025 is wrong."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — reward, do not require"
+      },
+      {
+       "id": "D5.4.4",
+       "label": "Fitness to drive and the DVLA",
+       "must_understand": "The DVLA decides medical fitness to drive. THE DRIVER is legally responsible for telling them. The doctor explains that duty, makes every reasonable effort to persuade them to stop, assesses whether refusal exposes others to death or serious harm, and only then may disclose — telling the patient beforehand where possible and in writing afterwards, with a record.",
+       "assessment": "Ethical scenario; the classic UK MMI confidentiality station.",
+       "formats": [
+        "ES",
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "Jumping from 'they won't stop driving' straight to 'I'd call the DVLA'"
+       ],
+       "danger": [
+        "'The doctor must report the patient to the DVLA' is WRONG and is widely taught. The full ladder — explain, persuade, assess risk, warn, disclose, confirm in writing — is what scores."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.4.5",
+       "label": "Family requests for information",
+       "must_understand": "That relatives have no automatic entitlement; that the patient's wishes govern; and that you can listen to a relative without disclosing anything.",
+       "assessment": "Roleplay with a relative actor pressing for information.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Disclosing because the person is distressed and it feels kind",
+        "Refusing so bluntly that the relative is left with nothing"
+       ],
+       "danger": [
+        "The high-scoring move is offering what CAN be given — presence, general process information, a route to the right person — while withholding what cannot"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      },
+      {
+       "id": "D5.4.6",
+       "label": "Confidentiality in everyday and digital settings",
+       "must_understand": "That lifts, corridors, group chats, social media and anonymised-but-identifiable anecdotes are where confidentiality is actually breached; that a story with enough detail to identify someone is a breach even without a name.",
+       "assessment": "Ethical scenario, or observed directly in the candidate's own work-experience answers.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "Treating confidentiality as a records issue"
+       ],
+       "danger": [
+        "SCORING OPPORTUNITY: if a candidate gives identifiable patient detail while answering a work-experience question, that is itself a red flag and our transcript analysis can detect it."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D5.4.7",
+       "label": "A friend's disclosure",
+       "must_understand": "That the same reasoning applies outside professional settings, and that a promise of secrecy made before hearing a disclosure is the error.",
+       "assessment": "Roleplay with a peer actor in a school setting.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "'I promise I won't tell anyone'"
+       ],
+       "danger": [
+        "The most realistic confidentiality station for a 17-year-old, and the one most under-built in commercial banks"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.5",
+     "label": "Safeguarding",
+     "topics": [
+      {
+       "id": "D5.5.1",
+       "label": "Recognising a concern",
+       "must_understand": "That a concern is a threshold far below certainty, and that noticing is not diagnosing.",
+       "assessment": "Roleplay or ethical scenario with SAFEG set and HIDDEN information.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Waiting for certainty",
+        "Explaining the observation away"
+       ],
+       "danger": [
+        "Do not build stations requiring an applicant to recognise clinical signs of abuse. Build behavioural and disclosure-based cues."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D5.5.2",
+       "label": "Escalating from a non-clinical role",
+       "must_understand": "In a school: the Designated Safeguarding Lead or a deputy, immediately, following the setting's own procedures (Keeping Children Safe in Education; the 2026 edition came into force 1 September 2026 and governs this entire interview season). In a care home: the shift lead or manager and the organisational safeguarding lead, with escalation to the local authority adult safeguarding team under the Care Act 2014 and to the CQC.",
+       "assessment": "Roleplay or ethical scenario in VOL, SCHOOL or CARE context.",
+       "formats": [
+        "RP",
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "'I'd tell someone senior' with no named role",
+        "Assuming someone else has acted"
+       ],
+       "danger": [
+        "DO NOT teach a clinician's escalation path to an applicant in a volunteer role. An applicant reaching for GMC guidance to answer a question about their Saturday job has misread the station — and our feedback must not reward that."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.5.3",
+       "label": "What a volunteer must not do",
+       "must_understand": "Do not investigate. Do not question the child or the alleged perpetrator. Do not promise confidentiality. Do not contact a parent. Do record what was seen or heard, in the person's own words, promptly.",
+       "assessment": "Follow-up after a safeguarding answer.",
+       "formats": [
+        "FU",
+        "ES"
+       ],
+       "weak": [
+        "Gathering evidence to be sure before reporting"
+       ],
+       "danger": [
+        "Investigating is the commonest well-intentioned red flag in this domain"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D5.5.4",
+       "label": "Adults at risk",
+       "must_understand": "That safeguarding is not only about children; that adults at risk include people with care and support needs who cannot protect themselves; and that capacity does not remove the concern.",
+       "assessment": "Ethical scenario in a care home setting.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Assuming a capacitous adult's refusal ends the matter"
+       ],
+       "danger": [
+        "Balancing autonomy against protection is genuinely hard and should be scored as tension-mapping, not as reaching a fixed answer"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.6",
+     "label": "Beginning and end of life",
+     "topics": [
+      {
+       "id": "D5.6.1",
+       "label": "End-of-life decision-making",
+       "must_understand": "GMC: patients are 'approaching the end of life' when likely to die within the next 12 months. Decisions must not be motivated by a desire to bring about death and start from a presumption in favour of prolonging life, but there is no absolute obligation to prolong life irrespective of the consequences for the patient. Decisions turn on overall benefit, weighing benefits against burdens and risks.",
+       "assessment": "Ethical scenario, discussed abstractly.",
+       "formats": [
+        "ES",
+        "PD"
+       ],
+       "weak": [
+        "Framing withdrawal of treatment as 'giving up'"
+       ],
+       "danger": [
+        "Do not require clinical judgement about a specific case. Assess whether the candidate can hold prolonging life and avoiding burdensome treatment in tension."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.6.2",
+       "label": "DNACPR and its misconceptions",
+       "must_understand": "That a DNACPR decision concerns CPR only and not other treatment, and that the widespread belief it means 'withdrawing care' is wrong.",
+       "assessment": "Ethical scenario or a roleplay with a relative holding the misconception.",
+       "formats": [
+        "ES",
+        "RP"
+       ],
+       "weak": [
+        "Reproducing the misconception"
+       ],
+       "danger": [
+        "Do not require the applicant to explain the legal position on who decides. Assess the correction of the misconception and the handling of the relative's fear."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.6.3",
+       "label": "Assisted dying",
+       "must_understand": "The legal position, which is genuinely divergent across jurisdictions and moving during this cycle. As at 29 August 2026: the previous Terminally Ill Adults (End of Life) Bill ran out of time in the Lords before the session ended in May 2026 and did NOT become law. A new bill (Lauren Edwards MP) was introduced on 17 June 2026 with Second Reading scheduled for 11 September 2026. Scotland's bill FELL at Stage 3 on 17 March 2026 (69 against, 57 for). The Isle of Man passed its Assisted Dying Bill in March 2025; Jersey approved its law on 26 February 2026, expected in effect 2027.",
+       "assessment": "Policy discussion with a requirement to argue both sides.",
+       "formats": [
+        "PD",
+        "ES"
+       ],
+       "weak": [
+        "Asserting it is or is not legal without saying where",
+        "Arguing one side only",
+        "Citing the Leadbeater bill as current"
+       ],
+       "danger": [
+        "FASTEST-MOVING TOPIC IN THE BANK. A Second Reading falls on 11 September 2026, before the interview season. HARD EXPIRY: 2026-09-12. This topic must be re-verified within days of that vote or withheld."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.6.4",
+       "label": "Conscientious objection",
+       "must_understand": "That a doctor may object to providing certain treatments, must not obstruct access, and must ensure the patient can see someone else. GMC's 0-18 guidance includes a section on conscientious objection to sexual-health services for under-16s.",
+       "assessment": "Ethical scenario.",
+       "formats": [
+        "ES",
+        "PD"
+       ],
+       "weak": [
+        "Assuming objection permits refusal to refer",
+        "Assuming objection is never permissible"
+       ],
+       "danger": [
+        "Frame neutrally. Do not build stations that require the candidate to state a personal position on abortion."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.7",
+     "label": "Justice and resource allocation",
+     "topics": [
+      {
+       "id": "D5.7.1",
+       "label": "Opportunity cost",
+       "must_understand": "That funding one thing means not funding another, and that the unfunded alternative has a face too.",
+       "assessment": "Policy discussion or a prioritisation exercise.",
+       "formats": [
+        "PD",
+        "PR"
+       ],
+       "weak": [
+        "'The NHS should fund it because it saves lives' with no counterfactual"
+       ],
+       "danger": [
+        "A candidate who cannot name what is displaced has not engaged with the question"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.7.2",
+       "label": "QALYs, NICE and their critics",
+       "must_understand": "Roughly what a QALY is, that NICE uses cost-per-QALY thresholds, and the standard objections — that QALYs may undervalue life with disability, discount the very old, and struggle with rare conditions.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Explaining the mechanism with no critique",
+        "Rejecting the mechanism with no alternative"
+       ],
+       "danger": [
+        "Do not require a numerical threshold. Assess whether the candidate can state the strongest objection."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.7.3",
+       "label": "Lifestyle and desert-based arguments",
+       "must_understand": "The argument that patients whose conditions are behaviour-related should be deprioritised, and the strongest objections: the causal claim is weak, deprivation drives behaviour, the principle is not applied consistently, and it imports moral judgement into clinical decisions.",
+       "assessment": "Policy discussion with hostile follow-up.",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "Dismissing the argument as obviously wrong without engaging it",
+        "Accepting it without seeing the deprivation link"
+       ],
+       "danger": [
+        "Interviewers commonly argue the unfashionable side to test whether the candidate can hold their ground. Our interviewer should do the same — see Output 7."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.7.4",
+       "label": "The individual doctor versus the population",
+       "must_understand": "That a doctor owes a duty to the patient in front of them and, per GMP 2024 Domain 1, to manage resources effectively and sustainably — and that these conflict.",
+       "assessment": "Ethical scenario, or the follow-up to a resource question.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "Collapsing to one side without noticing the other"
+       ],
+       "danger": [
+        "'Managing resources effectively and sustainably' is NEW in GMP 2024. Content written against the 2013 domains will miss it."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.8",
+     "label": "Frameworks and their limits",
+     "topics": [
+      {
+       "id": "D5.8.1",
+       "label": "The four principles and their tensions",
+       "must_understand": "Autonomy, beneficence, non-maleficence, justice — and that the framework provides NO ranking and no method for resolving conflicts between them, which is exactly when ethical difficulty arises. Gillon's own defence quotes and answers the criticism that principlism is 'a useful checklist approach to bioethics for those new to the field'.",
+       "assessment": "Any ethical scenario. The discriminating move is naming WHICH TWO are in tension here and what would have to be true for one to give way.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "Naming all four and applying none",
+        "Concluding 'autonomy wins' with no argument"
+       ],
+       "danger": [
+        "SCORING RULE: naming the four principles scores ZERO. This is the single most important anti-buzzword decision in the product. See Output 8."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D5.8.2",
+       "label": "Scope and cultural criticisms",
+       "must_understand": "That the principles do not tell you TO WHOM they are owed — the scope question that actually decides debates about abortion, animal research and resource allocation; and the charge that respect for autonomy encodes a particular liberal individualism.",
+       "assessment": "Hostile follow-up in a stretch-band ethics station.",
+       "formats": [
+        "FU"
+       ],
+       "weak": [
+        "Not recognising that scope is a separate question"
+       ],
+       "danger": [
+        "Stretch-band only. Never required."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": "conditional — stretch only"
+      },
+      {
+       "id": "D5.8.3",
+       "label": "Consequences versus duties",
+       "must_understand": "That some arguments turn on outcomes and others on what is owed regardless of outcome, and that naming which kind of argument is being made clarifies a disagreement.",
+       "assessment": "Policy discussion follow-up.",
+       "formats": [
+        "FU",
+        "PD"
+       ],
+       "weak": [
+        "Switching between the two mid-argument without noticing"
+       ],
+       "danger": [
+        "Do not require philosophical vocabulary. Reward the move, not the label."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D5.8.4",
+       "label": "Why no scenario has one right answer",
+       "must_understand": "City St George's publishes: 'Often there is no right or wrong answer - the interviewers are assessing your ability to express your thinking.' That the assessment is the reasoning path, the considerations named, and the willingness to say what would change the answer.",
+       "assessment": "Meta — governs feedback design across the whole domain.",
+       "formats": [
+        "FU"
+       ],
+       "weak": [
+        "Searching for the answer the interviewer wants"
+       ],
+       "danger": [
+        "PRODUCT RULE: our feedback must never say 'the correct answer was X' for an ethical scenario. It may say which considerations went unaddressed."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D5.9",
+     "label": "Conflicts of interest",
+     "topics": [
+      {
+       "id": "D5.9.1",
+       "label": "Recognising and declaring a conflict",
+       "must_understand": "GMP 2024 Domain 4 includes managing conflicts of interest. That the test is whether a reasonable person would think judgement could be affected, not whether it actually was.",
+       "assessment": "Ethical scenario involving industry funding, a family connection, or a personal benefit.",
+       "formats": [
+        "ES"
+       ],
+       "weak": [
+        "'It wouldn't affect my judgement, so there's no conflict'"
+       ],
+       "danger": [
+        "Declaring is necessary but not always sufficient — probe what changes after the declaration"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D6",
+   "label": "Teamwork, leadership and conflict",
+   "note": "Named as an assessed attribute at almost every school in the dataset, but a scored GROUP ACTIVITY exists at only seven routes. Most schools assess teamwork through personal examples and roleplay, not group tasks.",
+   "subdomains": [
+    {
+     "id": "D6.1",
+     "label": "Contribution and followership",
+     "topics": [
+      {
+       "id": "D6.1.1",
+       "label": "Contributing without dominating",
+       "must_understand": "That the assessed behaviour in a group task is bringing others in, building on contributions and tracking the task — not talking most.",
+       "assessment": "Group task with a simulated dominator and a simulated silent participant.",
+       "formats": [
+        "GT",
+        "PE"
+       ],
+       "weak": [
+        "Volume as a proxy for contribution",
+        "Agreeing with everything to appear collaborative"
+       ],
+       "danger": [
+        "HYMS scores the group exercise at 22 of 90 points and it is facilitated by PBL tutors plus an observing medical student. Volume is visibly not the metric."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D6.1.2",
+       "label": "Good followership",
+       "must_understand": "That supporting a decision you argued against, and doing an unglamorous part well, is assessed leadership behaviour under a different name. Aston publishes 'Being able to lead as well as follow'.",
+       "assessment": "Personal-example question with follow-up.",
+       "formats": [
+        "PE",
+        "FU"
+       ],
+       "weak": [
+        "Every teamwork example being one where the candidate led"
+       ],
+       "danger": [
+        "A bank whose teamwork questions all invite leadership stories trains a distorted answer set. Build followership prompts deliberately."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D6.2",
+     "label": "Leadership",
+     "topics": [
+      {
+       "id": "D6.2.1",
+       "label": "Leadership behaviours",
+       "must_understand": "GMP 2024 Domain 3 includes 'Demonstrating leadership behaviours' and 'Contributing to a positive working and training environment' — both NEW in 2024. Leadership is a behaviour available to anyone, not a position.",
+       "assessment": "Personal example or group task.",
+       "formats": [
+        "PE",
+        "GT"
+       ],
+       "weak": [
+        "Equating leadership with a title",
+        "Describing directing rather than enabling"
+       ],
+       "danger": [
+        "Content mapped to the 2013 GMP domains misses these entirely"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D6.2.2",
+       "label": "Delegation and handover",
+       "must_understand": "That delegating means matching task to capability, being explicit, and retaining responsibility for the outcome; the applicant's version is a shift handover, a rota, or a group project split.",
+       "assessment": "Personal example or instruction task.",
+       "formats": [
+        "PE",
+        "IT"
+       ],
+       "weak": [
+        "Delegating and then not checking",
+        "Doing everything to be safe"
+       ],
+       "danger": [
+        "Do not build clinical delegation stations. Use non-clinical analogues."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D6.3",
+     "label": "Conflict",
+     "topics": [
+      {
+       "id": "D6.3.1",
+       "label": "Conflict with a peer",
+       "must_understand": "That the sequence is private, specific, behaviour-focused and curious about the cause before it is corrective; and that most peer conflict has a cause the candidate does not yet know.",
+       "assessment": "Roleplay with a peer actor holding hidden information. QUB's Station 1 is an actor playing a fellow student.",
+       "formats": [
+        "RP",
+        "PE"
+       ],
+       "weak": [
+        "Going to authority first",
+        "Confronting publicly",
+        "Assuming laziness where there is a hidden difficulty"
+       ],
+       "danger": [
+        "HIDDEN information is what makes this station discriminating. A static version tests nothing."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D6.3.2",
+       "label": "Challenging upwards",
+       "must_understand": "That challenge can be respectful and specific — asking rather than accusing, describing the observation, checking one's own understanding first — and that not challenging is a choice with consequences.",
+       "assessment": "Roleplay with a senior actor and CHALL set to 2 or 3.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Deferring entirely",
+        "Challenging so aggressively the relationship breaks"
+       ],
+       "danger": [
+        "Interviewers will push back with 'they're far more experienced than you'. Score whether the position survives."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D6.3.3",
+       "label": "The underperforming teammate",
+       "must_understand": "That the useful first question is what is going on for them, and that a group deadline does not remove that.",
+       "assessment": "Roleplay with hidden information — the teammate is a young carer, or is unwell, or has misunderstood the task.",
+       "formats": [
+        "RP",
+        "PE"
+       ],
+       "weak": [
+        "Redistributing the work silently and resenting it",
+        "Escalating without asking"
+       ],
+       "danger": [
+        "Never require the candidate to diagnose the hidden cause. Reward creating the conditions for disclosure."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D6.3.4",
+       "label": "Discriminatory or unprofessional remarks",
+       "must_understand": "GMP 2024 Domain 3 requires treating colleagues with kindness, courtesy and respect and contributing to a positive environment — the paragraphs behind its civility and anti-bullying provisions. That silence is a position, and that challenge can be proportionate and in the moment.",
+       "assessment": "Roleplay in which a peer or senior makes a remark.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Saying nothing and reporting later with no in-the-moment response",
+        "A response that is only about how it made the candidate feel"
+       ],
+       "danger": [
+        "Do not script the remark so extreme that only one response is possible. The discriminating version is mild, ambiguous, and from someone senior."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D6.3.5",
+       "label": "Respect across professional roles",
+       "must_understand": "That nurses, pharmacists, physiotherapists, paramedics and physician associates hold expertise doctors do not, and that disagreement across roles is resolved by evidence and patient interest, not seniority.",
+       "assessment": "Roleplay with an HCP actor who disagrees.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Assuming the doctor's view prevails",
+        "Deferring without engaging"
+       ],
+       "danger": [
+        "Live topic: the Leng Review (16 July 2025) recommended renaming physician associates to 'physician assistants', restricting them from seeing undifferentiated patients outside defined protocols, requiring 2+ years secondary care before primary care, and named doctor supervisors. GMC registration for PAs began 13 December 2024 with transition ending 13 December 2026. A candidate raising the PA debate should be met with balanced follow-up, not a position."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D7",
+   "label": "Resilience, self-management and wellbeing",
+   "note": "The domain most likely to produce harmful feedback. Never reward stoicism, self-criticism, or coping strategies involving discomfort or self-punishment. Never require disclosure of the candidate's own health.",
+   "subdomains": [
+    {
+     "id": "D7.1",
+     "label": "Pressure and coping",
+     "topics": [
+      {
+       "id": "D7.1.1",
+       "label": "Sources of pressure in medicine",
+       "must_understand": "Workload, uncertainty, moral distress, responsibility, exams alongside full-time work, and — currently — pay disputes, training bottlenecks and system reorganisation.",
+       "assessment": "Direct question.",
+       "formats": [
+        "DQ"
+       ],
+       "weak": [
+        "Naming only exams",
+        "Treating pressure as purely individual"
+       ],
+       "danger": [
+        "Content should not imply that pressure is a personal failing to be overcome"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D7.1.2",
+       "label": "Coping strategies that are actually healthy",
+       "must_understand": "That specific, evidenced, personally-used strategies beat a list; that social connection, sleep, boundaries, supervision and debriefing are the substantive ones.",
+       "assessment": "Personal example with follow-up asking when the strategy last failed.",
+       "formats": [
+        "PE",
+        "FU"
+       ],
+       "weak": [
+        "A generic list with no instance",
+        "'I go to the gym' as the entire answer"
+       ],
+       "danger": [
+        "PRODUCT RULE: never suggest or reward coping strategies involving physical discomfort, pain or sensory shock. Never reward highly negative self-talk framed as high standards."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D7.1.3",
+       "label": "Help-seeking and stigma",
+       "must_understand": "That doctors are poor at seeking help; that the MSC lists 'insight into your own health' as a core attribute; and that knowing where to go is part of professionalism.",
+       "assessment": "Direct question or roleplay with a struggling peer.",
+       "formats": [
+        "DQ",
+        "RP"
+       ],
+       "weak": [
+        "'I'd deal with it myself'",
+        "Advising a peer to seek help without offering to do anything"
+       ],
+       "danger": [
+        "Never ask a candidate to disclose their own mental or physical health. Frame every prompt around a hypothetical peer or a general practice."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D7.1.4",
+       "label": "Work-life boundaries",
+       "must_understand": "That sustainability is a professional obligation rather than a personal indulgence, and that a doctor who does not stop becomes unsafe.",
+       "assessment": "Direct question or follow-up.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Framing total availability as commitment"
+       ],
+       "danger": [
+        "A rubric that rewards sacrifice language produces exactly the wrong candidate"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D7.2",
+     "label": "Self-awareness",
+     "topics": [
+      {
+       "id": "D7.2.1",
+       "label": "Strengths with evidence",
+       "must_understand": "That a claimed strength needs an instance, and that the instance is what is scored.",
+       "assessment": "Direct question with an immediate 'give me an example' follow-up.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "Adjective lists",
+        "An example that does not evidence the claimed strength"
+       ],
+       "danger": [
+        "Our follow-up must be automatic: any unsupported trait claim triggers an evidence probe."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D7.2.2",
+       "label": "Weaknesses without evasion",
+       "must_understand": "That a real weakness, its consequence, and the specific thing being done about it is the structure; and that a disguised strength is transparent.",
+       "assessment": "Direct question with hostile follow-up.",
+       "formats": [
+        "DQ",
+        "FU"
+       ],
+       "weak": [
+        "'I'm a perfectionist'",
+        "'I care too much'",
+        "A weakness with no consequence named"
+       ],
+       "danger": [
+        "Do not reward disclosure of a weakness so serious it raises a fitness question. The band is honest and manageable."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D7.2.3",
+       "label": "Calibration of confidence",
+       "must_understand": "That being appropriately uncertain is a scored competence, and that overclaiming under challenge is worse than not knowing.",
+       "assessment": "Hostile follow-up on a claim.",
+       "formats": [
+        "FU"
+       ],
+       "weak": [
+        "Doubling down when challenged",
+        "Collapsing entirely at the first push"
+       ],
+       "danger": [
+        "Distinguish revising for a reason (good) from capitulating to pressure alone (bad). See Output 7."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D8",
+   "label": "Judgement under pressure",
+   "subdomains": [
+    {
+     "id": "D8.1",
+     "label": "Prioritisation",
+     "topics": [
+      {
+       "id": "D8.1.1",
+       "label": "Ordering competing demands",
+       "must_understand": "That the criterion — risk of harm, reversibility, dependency of other tasks, who else can do it — must be stated, and that the ordering follows from it.",
+       "assessment": "Prioritisation exercise in a non-clinical setting with TIME high.",
+       "formats": [
+        "PR",
+        "FU"
+       ],
+       "weak": [
+        "An order with no stated criterion",
+        "Refusing to commit to an order"
+       ],
+       "danger": [
+        "SCORING RULE: the order is not the assessment. Two defensible orders can both score top band. Score the criterion and the defence."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D8.1.2",
+       "label": "Deciding what to drop",
+       "must_understand": "That when everything cannot be done, saying so and saying who needs to know is the answer; and that pretending it all fits is the failure.",
+       "assessment": "Prioritisation with TIME set to 3 — genuinely impossible.",
+       "formats": [
+        "PR",
+        "FU"
+       ],
+       "weak": [
+        "Claiming to do everything faster",
+        "Not telling anyone that something will not happen"
+       ],
+       "danger": [
+        "Design at least some prioritisation stations to be genuinely impossible. Most banks make them merely hard."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D8.1.3",
+       "label": "Revising a plan when new information arrives",
+       "must_understand": "That changing the order when a fact changes is strength, not inconsistency.",
+       "assessment": "Prioritisation station where a fact is introduced mid-station.",
+       "formats": [
+        "PR",
+        "FU"
+       ],
+       "weak": [
+        "Defending the original order out of consistency"
+       ],
+       "danger": [
+        "This is an interactive-only behaviour and cannot be assessed from a static bank"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D8.2",
+     "label": "Uncertainty",
+     "topics": [
+      {
+       "id": "D8.2.1",
+       "label": "Deciding with incomplete information",
+       "must_understand": "That naming what you do not know, what you would do to find out, and what you would do in the meantime is the complete answer.",
+       "assessment": "Any scenario with INCOMP set high.",
+       "formats": [
+        "ES",
+        "PR",
+        "FU"
+       ],
+       "weak": [
+        "Assuming missing facts and proceeding",
+        "Refusing to act at all"
+       ],
+       "danger": [
+        "HYMS names 'tolerance of ambiguity' as an assessed personal quality; Cambridge names 'dealing with uncertainty' via the MSC attributes."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D8.2.2",
+       "label": "Resisting a misleading frame",
+       "must_understand": "That the way a question is put may embed a false assumption, and that saying so respectfully is a scored behaviour.",
+       "assessment": "Any station with MISLEAD set high.",
+       "formats": [
+        "ES",
+        "DI",
+        "FU"
+       ],
+       "weak": [
+        "Accepting the frame and answering within it"
+       ],
+       "danger": [
+        "Our interviewer must not penalise a candidate who correctly rejects a premise we planted"
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D8.3",
+     "label": "Risk and safety",
+     "topics": [
+      {
+       "id": "D8.3.1",
+       "label": "Speaking up about a hazard",
+       "must_understand": "That the threshold is low, the cost of a false alarm is small, and the mechanism is immediate and local.",
+       "assessment": "Roleplay or ethical scenario in a workplace or volunteering setting.",
+       "formats": [
+        "RP",
+        "ES"
+       ],
+       "weak": [
+        "Weighing social awkwardness against risk and choosing awkwardness"
+       ],
+       "danger": [
+        "GMP 2024 moved safety into Domain 3 alongside colleagues and culture — content mapped to 2013 domains will file this wrongly"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D8.3.2",
+       "label": "Near misses and error reporting",
+       "must_understand": "That reporting things that nearly went wrong is how systems improve, and that a culture which punishes reporting produces less safety, not more.",
+       "assessment": "Ethical scenario after a near miss with no harm.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "'No harm, no need to report'"
+       ],
+       "danger": [
+        "Directly relevant to the maternity investigations of 2026 — the National Maternity and Neonatal Investigation reported on 30 June 2026 that the system 'is no longer fit to consistently deliver high-quality, compassionate care', and the Ockenden report into Nottingham University Hospitals reported 24 June 2026. Treat as FAST-moving context."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D8.3.3",
+       "label": "Systems versus individual blame",
+       "must_understand": "That most errors have systemic contributors, that asking what allowed this is more useful than asking who did it, and that this does not remove individual accountability.",
+       "assessment": "Ethical scenario or follow-up.",
+       "formats": [
+        "ES",
+        "FU"
+       ],
+       "weak": [
+        "Blaming the individual entirely",
+        "Using 'it's a systems issue' to avoid any accountability"
+       ],
+       "danger": [
+        "Both collapses are failures. Score whether both are held."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D8.3.4",
+       "label": "Helping in an emergency within competence",
+       "must_understand": "That the applicant's realistic actions are calling for help, basic first aid if trained, keeping the person safe, and not attempting anything beyond training. GMP 2024 Domain 2 includes 'Helping in emergencies'.",
+       "assessment": "Roleplay in a community setting with OVERC high.",
+       "formats": [
+        "RP"
+       ],
+       "weak": [
+        "Attempting clinical intervention",
+        "Doing nothing because 'I'm not qualified'"
+       ],
+       "danger": [
+        "The station tests the middle path. Both extremes fail."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D9",
+   "label": "Health systems, policy and society",
+   "note": "The tester's stated gap. TIME-SENSITIVE throughout — every leaf here needs a review date, and the FAST leaves need hard expiry. See Output 5 for the topic template and the full current-affairs register.",
+   "subdomains": [
+    {
+     "id": "D9.1",
+     "label": "NHS structure and principles",
+     "topics": [
+      {
+       "id": "D9.1.1",
+       "label": "NHS Constitution values",
+       "must_understand": "The six values — working together for patients; respect and dignity; commitment to quality of care; compassion; improving lives; everyone counts. UCL, HYMS, Southampton and Imperial all reference them explicitly.",
+       "assessment": "Never as a recall question. Only as applied reasoning inside another station.",
+       "formats": [
+        "ES",
+        "RP",
+        "FU"
+       ],
+       "weak": [
+        "Listing the values",
+        "Attaching a value name to an action as a label"
+       ],
+       "danger": [
+        "ANTI-BUZZWORD: naming an NHS value scores ZERO. Demonstrating the behaviour scores. This is an explicit brief requirement and a scoring rule."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.1.2",
+       "label": "Funding and its consequences",
+       "must_understand": "General taxation, free at the point of use, finite budget; and that this makes rationing explicit rather than optional.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "'The NHS is free' with no acknowledgement of cost"
+       ],
+       "danger": [
+        "Avoid precise budget figures in evergreen content — put them in the current-affairs layer with dates"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.1.3",
+       "label": "Primary, secondary and community care",
+       "must_understand": "The gatekeeper role of general practice, what secondary and tertiary care are, and the current policy direction of moving care from hospital to community.",
+       "assessment": "Direct question or policy discussion.",
+       "formats": [
+        "DQ",
+        "PD"
+       ],
+       "weak": [
+        "Describing the NHS as hospitals"
+       ],
+       "danger": [
+        "The 10 Year Health Plan's three shifts — hospital to community, analogue to digital, treatment to prevention — are the current organising frame and are worth knowing by name"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.1.4",
+       "label": "Four nations, four systems",
+       "must_understand": "That health is devolved and that England, Scotland, Wales and Northern Ireland differ materially in structure, targets and policy — including on assisted dying, where the legal positions have diverged.",
+       "assessment": "Follow-up probe on any NHS answer.",
+       "formats": [
+        "FU",
+        "PD"
+       ],
+       "weak": [
+        "Treating English policy as UK policy"
+       ],
+       "danger": [
+        "Particularly important for applicants to Scottish, Welsh and Northern Irish schools. Cardiff, Bangor, Swansea, QUB, Ulster and the five Scottish schools are 14 of 68 routes."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.1.5",
+       "label": "Current structural reform",
+       "must_understand": "As at August 2026: the 10 Year Health Plan (July 2025); the NHS Modernisation Bill announced in the King's Speech on 13 May 2026, which would abolish NHS England and fold its functions into DHSC, abolish Healthwatch and merge HSSIB into the CQC; ICBs reducing from 42 to 26; a 'new DHSC' targeted for April 2027.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Describing NHS England as if unchanged"
+       ],
+       "danger": [
+        "FAST. Legislation in progress. Review quarterly; hard expiry 2027-01-31."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D9.2",
+     "label": "System pressures",
+     "topics": [
+      {
+       "id": "D9.2.1",
+       "label": "Waiting lists and elective recovery",
+       "must_understand": "The 18-week referral-to-treatment standard, that the 92% constitutional standard was last met in September 2015, and that the interim 65% target was met in March 2026 (65.3%, waiting list 7.11m pathways). Cancer and emergency standards have NOT improved comparably.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD",
+        "DI"
+       ],
+       "weak": [
+        "Citing a waiting-list figure with no date",
+        "Treating the headline improvement as the whole picture"
+       ],
+       "danger": [
+        "FAST. Monthly statistics. Any figure must carry its month. Review quarterly."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.2.2",
+       "label": "Industrial action",
+       "must_understand": "As at August 2026: the English resident doctors' dispute is OVER — they voted to accept on 29 June 2026 (52.9% yes on 57.3% turnout). Consultants balloted successfully on 6 July 2026 (76% for on 51.5% turnout) and hold a live 12-month mandate with no dates announced. SAS doctors missed the turnout threshold.",
+       "assessment": "Policy discussion requiring both sides to be argued.",
+       "formats": [
+        "PD",
+        "ES"
+       ],
+       "weak": [
+        "Describing resident doctors as currently striking",
+        "Arguing only the patient-harm side or only the pay-restoration side",
+        "Refusing to engage because it is political"
+       ],
+       "danger": [
+        "FASTEST-MOVING. Consultants could announce dates at any time. HARD EXPIRY: review monthly. Interviewers may be BMA members, consultants, or recently-struck-with residents — the balanced answer is the only safe one, and our feedback must never imply a correct position."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.2.3",
+       "label": "Workforce and the training bottleneck",
+       "must_understand": "That the 10 Year Workforce Plan remains unpublished (twice delayed); that the Medical Training (Prioritisation) Act 2026 changed specialty competition materially; and that the tension is three-way between graduate unemployment, a plan implying fewer staff by 2035, and reliance on international medical graduates.",
+       "assessment": "Policy discussion with hostile follow-up.",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "One-sided arguments about IMGs in either direction"
+       ],
+       "danger": [
+        "Ethically loaded. Our interviewer must probe both directions and must never signal a position."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.2.4",
+       "label": "Emergency care and flow",
+       "must_understand": "That emergency performance has not tracked elective improvement; that corridor care is a live issue; and that the causes are largely about flow out of hospital, i.e. social care.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Attributing A&E pressure to inappropriate attendance alone"
+       ],
+       "danger": [
+        "FAST. Figures dated monthly."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D9.3",
+     "label": "Health inequalities",
+     "topics": [
+      {
+       "id": "D9.3.1",
+       "label": "Social determinants",
+       "must_understand": "That housing, income, education, work and environment drive health outcomes more than healthcare does, and that this is the Marmot framing.",
+       "assessment": "Policy discussion or ethical scenario.",
+       "formats": [
+        "PD",
+        "ES"
+       ],
+       "weak": [
+        "Treating inequality as an access-to-GP problem"
+       ],
+       "danger": [
+        "The tester named this as a gap. It is EVERGREEN in concept and FAST in its statistics — split the leaf accordingly."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.3.2",
+       "label": "The healthy life expectancy gap",
+       "must_understand": "ONS (15 April 2026, 2022-2024 data): the healthy life expectancy gap between the most and least deprived deciles in England is 19.3 years for males and 20.1 years for females; the life expectancy gap is 10.4 and 8.0 years. In England's most deprived areas males and females expect only 49.8 and 48.2 years in good health.",
+       "assessment": "Data interpretation or policy discussion.",
+       "formats": [
+        "DI",
+        "PD"
+       ],
+       "weak": [
+        "Citing a figure with no source or year"
+       ],
+       "danger": [
+        "FAST. ONS updates annually. Every figure carries its publication date."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.3.3",
+       "label": "The inverse care law",
+       "must_understand": "Tudor Hart's observation that the availability of good medical care tends to vary inversely with the need of the population served; and that it is a live 2026 issue — the Health Foundation warned on 13 August 2026 that historic underinvestment in GP funding puts the neighbourhood health agenda at risk.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Naming the law without an example"
+       ],
+       "danger": [
+        "ANTI-BUZZWORD: naming it scores nothing without application"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.3.4",
+       "label": "Inequity in uptake, not only in provision",
+       "must_understand": "That gradients appear in uptake as well as access — RSV vaccination coverage in older adults at 30 June 2026 was 68.3% in the South West against 49.4% in London, 71.6% in the least deprived against 50.3% in the most deprived, and 67.0% among White British against 25.1% among Asian/Asian British-Pakistani groups.",
+       "assessment": "Data interpretation.",
+       "formats": [
+        "DI",
+        "PD"
+       ],
+       "weak": [
+        "Explaining differential uptake as 'hesitancy' alone"
+       ],
+       "danger": [
+        "FAST. This is the strongest available worked example of structural rather than attitudinal inequity."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D9.4",
+     "label": "Public health and prevention",
+     "topics": [
+      {
+       "id": "D9.4.1",
+       "label": "Prevention versus treatment",
+       "must_understand": "That prevention is cheaper and slower, that its benefits are diffuse and its costs immediate, and that this asymmetry explains why it is chronically underfunded.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "'We should focus on prevention' with no account of why we don't"
+       ],
+       "danger": [
+        "Note the Spending Review cuts non-NHS DHSC day-to-day spend by 4.5% per year, hitting the public health grant — the tension is concrete, not theoretical"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.4.2",
+       "label": "Regulation versus individual responsibility",
+       "must_understand": "The libertarian objection to state intervention, the evidence that regulation outperforms information campaigns, and the deprivation argument that 'choice' is unequally available. Live examples: the Tobacco and Vapes Act 2026 (Royal Assent 29 April 2026) creating a rolling generational sales ban for anyone born on or after 1 January 2009; the under-16 energy drink ban from April 2027; HFSS advertising restrictions.",
+       "assessment": "Policy discussion with hostile follow-up.",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "Dismissing 'nanny state' objections without engaging them"
+       ],
+       "danger": [
+        "Interviewers commonly argue the libertarian side. Our interviewer should too."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.4.3",
+       "label": "Obesity and weight-loss medication",
+       "must_understand": "That NHS England is rolling out tirzepatide in phased cohorts — 2026/27 is Cohort II (BMI 35-39.9 with 4+ comorbidities), with roughly 220,000 people in the first three years against about 3.4 million eligible, and BMI thresholds lowered by 2.5 kg/m² for several ethnic groups. The tensions: individual benefit versus population cost, medicalisation versus environment, and equity of access.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Treating the drugs as either a cure or a cop-out"
+       ],
+       "danger": [
+        "FAST. Cohort eligibility changes annually."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.4.4",
+       "label": "Screening principles and harms",
+       "must_understand": "That screening a healthy population is not the same as testing a symptomatic one; overdiagnosis, false positives, lead-time bias and the anxiety cost; and the Wilson-Jungner idea that a screening programme must meet criteria about the condition, the test and the treatment.",
+       "assessment": "Policy discussion or data interpretation. Live case: the UK NSC recommended targeted prostate screening on 28 May 2026 for men aged 45-61 with a confirmed BRCA2 variant and family history, EXCLUDING BRCA1 carriers and excluding family history alone — and around 8 in 10 PSA positives are false.",
+       "formats": [
+        "PD",
+        "DI"
+       ],
+       "weak": [
+        "'More screening is better'"
+       ],
+       "danger": [
+        "The prostate decision is the cleanest available exam case: the NSC declined population screening on evidence grounds against strong campaigning pressure."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.4.5",
+       "label": "Vaccination and uptake",
+       "must_understand": "That coverage is falling and measles is causing deaths — 736 confirmed cases in England from 1 January to 8 June 2026 with two child deaths confirmed in 2026, against 959 cases in 2025; that England is below the 95% WHO threshold for MMR; and that the driver is access and deprivation more than ideological refusal.",
+       "assessment": "Policy discussion or roleplay with a hesitant parent.",
+       "formats": [
+        "PD",
+        "RP"
+       ],
+       "weak": [
+        "Framing all non-vaccination as anti-vaccine belief",
+        "Arguing for mandates without engaging the autonomy objection"
+       ],
+       "danger": [
+        "FAST. Case counts rise weekly. In a roleplay with a hesitant parent, the correct behaviour is curiosity about the specific worry — never a lecture, and never clinical advice from an applicant."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.4.6",
+       "label": "Antimicrobial resistance",
+       "must_understand": "The UK national action plan 'Confronting antimicrobial resistance 2024 to 2029', with a target to reduce total human antibiotic use by 5% from a 2019 baseline by 2029, and the vision of AMR contained, controlled and mitigated by 2040. The tension: prescribing restraint against access and diagnostic uncertainty; and the 'subscription' payment model attempting to create a market for drugs we intend not to use.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Blaming patients for demanding antibiotics as the whole answer"
+       ],
+       "danger": [
+        "SLOW — the plan runs to 2029. Safe evergreen-adjacent content."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D9.5",
+     "label": "Social care, and the private sector",
+     "topics": [
+      {
+       "id": "D9.5.1",
+       "label": "The social care interface",
+       "must_understand": "That delayed discharge is a social care capacity problem presenting as a hospital problem; that the Casey Commission has not yet published its Phase 1 report; and that the first adult social care Fair Pay Agreement was confirmed on 16 July 2026 with a negotiating body by end 2026 and a first settlement in April 2028.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Discussing NHS pressure with no reference to social care"
+       ],
+       "danger": [
+        "FAST. Casey Phase 1 is the next major publication and could land mid-cycle."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.5.2",
+       "label": "Private sector involvement",
+       "must_understand": "That independent providers treated over a million NHS patients in 2024 under a partnership agreement, and now deliver a large share of NHS-funded diagnostics and over half of NHS-funded ADHD assessments; and the counter-arguments — the same workforce, lower-complexity casemix, uneven geography, and choice potentially widening inequality.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Ideological framing in either direction with no mechanism"
+       ],
+       "danger": [
+        "A politically charged topic. Our interviewer must probe both sides and never signal a position."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.5.3",
+       "label": "Mental health provision",
+       "must_understand": "That the Mental Health Act 2025 received Royal Assent on 18 December 2025 and is being commenced in stages over years; that over a million under-18s were in contact with secondary NHS mental health services in 2024-25; and that £343m was announced on 6 August 2026 for 159 new facilities including 100 walk-in community centres and 59 mental health emergency departments.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Discussing CAMHS waits with no structural explanation"
+       ],
+       "danger": [
+        "FAST. Commencement is staged; figures change."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D9.6",
+     "label": "Global and planetary health",
+     "topics": [
+      {
+       "id": "D9.6.1",
+       "label": "Sustainability as a professional duty",
+       "must_understand": "GMP 2024 Domain 1 includes 'Managing resources effectively and sustainably' — NEW in 2024. That healthcare has a material carbon footprint and that sustainable practice is now framed as a duty rather than an interest.",
+       "assessment": "Policy discussion or follow-up.",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "Treating sustainability as unrelated to clinical practice"
+       ],
+       "danger": [
+        "Absent from any content mapped to the 2013 GMP domains"
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D9.6.2",
+       "label": "Ethics of international recruitment",
+       "must_understand": "The tension between the NHS's historic dependence on international medical graduates, the 10 Year Health Plan target of under 10% international recruitment by 2035, the prioritisation legislation, and the effect on source countries' health systems.",
+       "assessment": "Policy discussion with hostile follow-up.",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "One-sided argument in either direction"
+       ],
+       "danger": [
+        "Handle with care. A candidate may be an IMG's child or an international applicant. Never signal a position; probe both directions equally."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "D10",
+   "label": "Science, evidence, numeracy and technology",
+   "subdomains": [
+    {
+     "id": "D10.1",
+     "label": "Scientific reasoning (Oxbridge routes)",
+     "topics": [
+      {
+       "id": "D10.1.1",
+       "label": "Applying school science to a novel problem",
+       "must_understand": "Cambridge's published expectation: sixth-form Chemistry, Biology, Maths and Physics applied to novel scenarios, with lateral thinking and conceptual flexibility, observation and hypothesis generation.",
+       "assessment": "Scientific problem with the interviewer prompting rather than correcting.",
+       "formats": [
+        "SP",
+        "FU"
+       ],
+       "weak": [
+        "Recalling a memorised answer",
+        "Silence rather than thinking aloud",
+        "Guessing without stating the reasoning"
+       ],
+       "danger": [
+        "SCORING RULE: score the reasoning path, explicitly not the answer. An incorrect conclusion reached by good reasoning outscores a correct one asserted."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.1.2",
+       "label": "Hypothesis generation from an observation",
+       "must_understand": "Generating several candidate explanations, then proposing what would distinguish them.",
+       "assessment": "Scientific problem.",
+       "formats": [
+        "SP"
+       ],
+       "weak": [
+        "One hypothesis, asserted",
+        "No test proposed"
+       ],
+       "danger": [
+        "Oxbridge routes only — 4 of 68. Do not spend Phase 1 budget here."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.1.3",
+       "label": "Thinking aloud under an interviewer's prompts",
+       "must_understand": "That the tutorial format expects an audible reasoning process and responsiveness to hints; Oxford lists 'compatibility with tutorial format' as a criterion.",
+       "assessment": "Scientific problem with graded hints.",
+       "formats": [
+        "SP",
+        "FU"
+       ],
+       "weak": [
+        "Long silences",
+        "Ignoring a hint",
+        "Abandoning a line of reasoning at the first difficulty"
+       ],
+       "danger": [
+        "Our interviewer must hint the way a tutor does — narrowing the space, not supplying the answer. See Output 7 on leading."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D10.2",
+     "label": "Evidence and critical appraisal",
+     "topics": [
+      {
+       "id": "D10.2.1",
+       "label": "Correlation and causation",
+       "must_understand": "That an association does not establish causation, and what would be needed — temporality, dose-response, plausibility, controlling for confounders, ideally randomisation.",
+       "assessment": "Article discussion or data interpretation.",
+       "formats": [
+        "AD",
+        "DI"
+       ],
+       "weak": [
+        "Naming the distinction without identifying the confounder in front of them"
+       ],
+       "danger": [
+        "ANTI-BUZZWORD: 'correlation does not imply causation' scores nothing on its own. Naming a specific plausible confounder scores."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D10.2.2",
+       "label": "Sample, bias and generalisability",
+       "must_understand": "Who was studied, who was left out, and whether the result transfers to the population in question.",
+       "assessment": "Article discussion.",
+       "formats": [
+        "AD",
+        "DI"
+       ],
+       "weak": [
+        "Accepting a headline claim at face value"
+       ],
+       "danger": [
+        "Do not require study-design vocabulary. Reward the question, not the term."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D10.2.3",
+       "label": "Absolute versus relative risk",
+       "must_understand": "That a 50% increase in a small risk is still a small risk, and that media reporting systematically prefers relative figures.",
+       "assessment": "Data interpretation with a deliberately misleading headline.",
+       "formats": [
+        "DI",
+        "AD"
+       ],
+       "weak": [
+        "Reacting to the relative figure without asking for the baseline"
+       ],
+       "danger": [
+        "The highest-yield single critical-appraisal skill for a 17-year-old, and it needs no medical knowledge."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D10.2.4",
+       "label": "Reading a claim in the media",
+       "must_understand": "Who made the claim, who funded it, what was actually measured, and what the headline omits.",
+       "assessment": "Article discussion — also the Keele pre-read format.",
+       "formats": [
+        "AD",
+        "PD"
+       ],
+       "weak": [
+        "Discussing the topic rather than appraising the source"
+       ],
+       "danger": [
+        "Keele issues a case study 1-2 days before interview and tells candidates they are not expected to memorise it. Our pre-read mode should mirror that instruction."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "LAY",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D10.3",
+     "label": "Numeracy",
+     "topics": [
+      {
+       "id": "D10.3.1",
+       "label": "Percentages, ratios and proportions under time pressure",
+       "must_understand": "Fluent mental arithmetic at or below GCSE level, with the method spoken aloud.",
+       "assessment": "Calculation station, no calculator. Leicester runs this with a pass-mark threshold; Birmingham runs it computer-based with clinically relevant but GCSE-level data.",
+       "formats": [
+        "CA"
+       ],
+       "weak": [
+        "Silent calculation with only an answer",
+        "Not sanity-checking an implausible result"
+       ],
+       "danger": [
+        "Score method transparency as well as accuracy — a spoken method allows partial credit and mirrors how these stations are marked."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D10.3.2",
+       "label": "Units, conversion and estimation",
+       "must_understand": "Converting between units without error, and producing a defensible order-of-magnitude estimate.",
+       "assessment": "Calculation station.",
+       "formats": [
+        "CA"
+       ],
+       "weak": [
+        "Unit errors going unnoticed"
+       ],
+       "danger": [
+        "Keep all framing non-clinical or clinically trivial. Never require drug-dosing knowledge."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D10.4",
+     "label": "Data interpretation",
+     "topics": [
+      {
+       "id": "D10.4.1",
+       "label": "Reading a chart or table accurately",
+       "must_understand": "Axes, units, scale, time period, and what is actually plotted.",
+       "assessment": "Data interpretation station.",
+       "formats": [
+        "DI"
+       ],
+       "weak": [
+        "Describing the shape without reading the axes",
+        "Extrapolating beyond the data"
+       ],
+       "danger": [
+        "QUB states explicitly there are no data or graph stations; Manchester has no reading at all. Serve data stations only where the school profile supports them."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      },
+      {
+       "id": "D10.4.2",
+       "label": "Stating what the data cannot show",
+       "must_understand": "That the highest-value response names the limits — no comparator, no denominator, truncated axis, aggregation hiding variation.",
+       "assessment": "Data interpretation with MISLEAD set high.",
+       "formats": [
+        "DI"
+       ],
+       "weak": [
+        "Answering only what was asked",
+        "Accepting the presentation uncritically"
+       ],
+       "danger": [
+        "This is the discriminating behaviour and should be weighted above arithmetic accuracy."
+       ],
+       "temporality": "EVERGREEN",
+       "knowledge": "NONE",
+       "premed": true
+      }
+     ]
+    },
+    {
+     "id": "D10.5",
+     "label": "Technology in healthcare",
+     "topics": [
+      {
+       "id": "D10.5.1",
+       "label": "AI in healthcare — what it does",
+       "must_understand": "That AI in the NHS is currently strongest in triage, documentation and image analysis rather than autonomous diagnosis. As at 2026: NHS England announced an AI acceleration on 4 July 2026 within a £10bn three-year technology programme — AI triage in the NHS App, ambient voice documentation in outpatients, Copilot for 500,000+ staff.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD",
+        "AD"
+       ],
+       "weak": [
+        "'AI will replace doctors' or 'AI will never replace doctors' with no mechanism",
+        "Discussing AI in general rather than in a named use case"
+       ],
+       "danger": [
+        "FAST. The tester named this as a gap. Review quarterly."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.5.2",
+       "label": "AI accountability and regulation",
+       "must_understand": "That the GMC's position is that accountability does NOT transfer — practitioners remain responsible for decisions taken using new technologies, must discuss their use with patients including uncertainties and limitations, must work within their competence, and must report adverse incidents involving software and digital tools. On 29 July 2026 the MHRA clarified that transcription, summarisation and letter drafting are not medical devices, while ambient voice technology that supports diagnosis or acts without clinician review IS a regulated medical device.",
+       "assessment": "Policy discussion with hostile follow-up: 'If the AI was wrong, who is responsible?'",
+       "formats": [
+        "PD",
+        "FU"
+       ],
+       "weak": [
+        "Not addressing accountability at all",
+        "Assuming the manufacturer bears clinical responsibility"
+       ],
+       "danger": [
+        "This is the single best-differentiated AI sub-question and almost nobody teaches it. The regulatory boundary is unstable — a functionality change can silently alter a product's regulatory status."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.5.3",
+       "label": "AI bias, deskilling and trust",
+       "must_understand": "That training-data bias can widen inequity, that automation bias makes clinicians over-trust outputs, and that deskilling is a live concern as documentation and triage become default.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Naming 'bias' with no mechanism or example"
+       ],
+       "danger": [
+        "A candidate who can name a mechanism — under-representation in training data leading to worse performance in a subgroup — substantially outperforms one who names the word."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.5.4",
+       "label": "Health data, consent and public trust",
+       "must_understand": "The tension between data-driven care and consent at scale; the Single Patient Record confirmed in the King's Speech on 13 May 2026 within the NHS Modernisation Bill; the Federated Data Platform controversy, including reporting in May 2026 that NHS England planned to grant Palantir and external consultancy staff admin-level access to identifiable patient data, with an internal briefing acknowledging risk of loss of public confidence.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD",
+        "ES"
+       ],
+       "weak": [
+        "Treating data sharing as either obviously good or obviously sinister"
+       ],
+       "danger": [
+        "FAST and contested. Present both the care-improvement case and the trust case; never signal a position."
+       ],
+       "temporality": "FAST",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.5.5",
+       "label": "Digital exclusion",
+       "must_understand": "That making the NHS App the front door disadvantages people without smartphones, connectivity, digital skills or English — disproportionately older, poorer and disabled people, who use care most. This is the inverse care law restated for the digital era.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Discussing digital transformation with no equity dimension"
+       ],
+       "danger": [
+        "A high-value link between two topics most candidates treat separately. Reward the connection."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      },
+      {
+       "id": "D10.5.6",
+       "label": "Genomics and its consequences",
+       "must_understand": "That genomic medicine is moving from diagnosis of rare disease toward population stratification — newborn genomic screening, targeted screening by genetic risk — and that this creates consent, incidental-finding, insurance and equity problems.",
+       "assessment": "Policy discussion.",
+       "formats": [
+        "PD"
+       ],
+       "weak": [
+        "Enthusiasm with no downside",
+        "Confusing genomic screening with genetic engineering"
+       ],
+       "danger": [
+        "Newborn genomic screening raises consent for someone who cannot consent, and a finding that cannot be un-known. That tension is the assessable content."
+       ],
+       "temporality": "SLOW",
+       "knowledge": "CONTEXT",
+       "premed": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

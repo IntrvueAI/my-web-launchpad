@@ -28,6 +28,7 @@ const AdminInterviewFlowBuilder = lazy(() => import("./pages/AdminInterviewFlowB
 const AdminInterviewFlowEditor = lazy(() => import("./pages/AdminInterviewFlowEditor"));
 const AdminUnreleasedInterviews = lazy(() => import("./pages/AdminUnreleasedInterviews"));
 const AdminMedicineInterviews = lazy(() => import("./pages/AdminMedicineInterviews"));
+const AdminMedicinePortal = lazy(() => import("./pages/AdminMedicinePortal"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
 
@@ -131,6 +132,7 @@ const AppContent = () => {
               <Route path="/admin/interview-flow-builder/:flowId" element={<AdminInterviewFlowEditor />} />
               <Route path="/admin/unreleased-interviews" element={<AdminUnreleasedInterviews />} />
               <Route path="/admin/medicine-interviews" element={<AdminMedicineInterviews />} />
+              <Route path="/admin/medicine-portal" element={<AdminMedicinePortal />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route
                 path="/minigames"

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "MED-MR-18",
+    "subject": "medicine",
+    "topic": "motivation-reflection",
+    "difficulty": 1,
+    "questionType": "Direct Question",
+    "title": "What does a doctor actually spend the day doing?",
+    "tags": ["motivation", "realism", "foundation"],
+    "format": "DQ",
+    "question": "What do you think a doctor actually spends most of their day doing?",
+    "answer": "Discussion question — no single verdict. A strong foundation-level answer names something mundane and realistic (documentation, communication, coordination with a team, managing uncertainty) rather than a cure-focused, TV-drama account of constant dramatic intervention.",
+    "modelReasoningPath": "A gentle realism check and a good early-confidence-builder — most of the day-to-day is management, communication and coordination rather than dramatic moments, and a candidate who can name even one concrete, mundane element (writing up notes, discussing a case with the team, explaining something to a worried patient) already shows more insight than a purely television-informed answer. This is not meant to be a hard station; it's an accessible way into realism about the job.",
+    "rubric": {
+      "strong": "Names at least one concrete, mundane element of the job realistically, and shows the doctor's contribution is about more than dramatic moments.",
+      "developing": "Gives a reasonable answer but stays fairly general, without a specific concrete example.",
+      "weak": "Gives a purely dramatic, cure-focused account with nothing mundane or realistic named at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Cannot name anything mundane about the job", "reveals": "Suggests their picture of medicine comes mainly from television or drama rather than real observation" },
+      { "mistake": "Cites television as their source", "reveals": "A weak basis for understanding what the job actually involves day to day" }
+    ],
+    "liveProbes": [
+      { "probe": "Where did that picture of the job come from?", "goodResponse": "Names real observation or work experience rather than television or assumption" }
+    ],
+    "hints": [
+      "Think beyond the dramatic moments — what fills most of the actual hours?",
+      "Have you seen or read about this from a real source, or is it mostly an impression?"
+    ]
+  }
+]

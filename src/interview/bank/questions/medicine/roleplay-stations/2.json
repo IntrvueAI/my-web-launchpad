@@ -1,0 +1,898 @@
+[
+  {
+    "id": "MED-RP-002",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "Before the results",
+    "tags": [
+      "roleplay",
+      "anxiety",
+      "gp"
+    ],
+    "format": "RP",
+    "question": "Sorry — you work here, don't you? Can I ask you something? They took blood last week and they've asked me to come back in. They don't ask you to come back in for nothing, do they.",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Declines to speculate clinically, warmly and without abandoning her",
+    "modelReasoningPath": "Persona: Elaine Prosser, patient waiting for a routine appointment (60s). Applicant role: Volunteer helping in the waiting area of a GP practice. You do not have access to any records. Starting state: Anxious, apologetic for asking, watching the candidate's face closely for reassurance. Trajectory: Reads any hesitation as bad news. Settles if given honest structure; escalates if given false comfort, because false comfort is transparently offered too quickly.",
+    "rubric": {
+      "strong": "Declines to speculate clinically, warmly and without abandoning her; Names the anxiety rather than only the question; Corrects the recall misconception in general, non-clinical terms only if confident it is safe to do so, or defers it to the clinician; Establishes what she needs — company, information, or just to say it aloud; Points her to the right person.",
+      "developing": "Meets some but not all of: Declines to speculate clinically, warmly and without abandoning her; Names the anxiety rather than only the question; Corrects the recall misconception in general, non-clinical terms only if confident it is safe to do so, or defers it to the clinician; Establishes what she needs — company, information, or just to say it aloud; Points her to the right person. Actor response when this happens: Repeats the question. Becomes quieter. Says 'I shouldn't have asked.'",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation ('I'm sure it's nothing' or any guarantee; Listing possible reasons for a recall — this is clinical speculation and she will latch onto the worst one). Red flags for this station: Any speculation about what the results might be; 'I'm sure it's fine'; Offering to look at or ask about her records; Suggesting she does not need to worry."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Any speculation about what the results might be",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "'I'm sure it's fine'",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Offering to look at or ask about her records",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Suggesting she does not need to worry",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Elaine Prosser",
+      "role": "patient waiting for a routine appointment (60s)",
+      "applicantRole": "Volunteer helping in the waiting area of a GP practice. You do not have access to any records.",
+      "openingStatement": "Sorry — you work here, don't you? Can I ask you something? They took blood last week and they've asked me to come back in. They don't ask you to come back in for nothing, do they.",
+      "actorStateInitial": "Anxious, apologetic for asking, watching the candidate's face closely for reassurance.",
+      "actorStateTrajectory": "Reads any hesitation as bad news. Settles if given honest structure; escalates if given false comfort, because false comfort is transparently offered too quickly.",
+      "hiddenFacts": [
+        {
+          "fact": "Her sister was diagnosed with cancer after a similar recall, eighteen months ago.",
+          "disclosureCondition": "Only if the candidate asks what is worrying her specifically, or why she thinks it means something bad."
+        },
+        {
+          "fact": "She has not told her family she is here.",
+          "disclosureCondition": "Only if asked whether anyone is coming with her or who she has been able to talk to."
+        }
+      ],
+      "escalationTriggers": [
+        "'I'm sure it's nothing' or any guarantee",
+        "Listing possible reasons for a recall — this is clinical speculation and she will latch onto the worst one",
+        "Being brushed off"
+      ],
+      "deEscalationTriggers": [
+        "Honest limits — 'I genuinely don't know, and I'm not able to look'",
+        "Being asked what she is most worried about",
+        "Being told what happens next in the appointment, in process terms only",
+        "Being asked if she would like someone with her"
+      ],
+      "resistancePatterns": [
+        "Asks the same question a second time in different words",
+        "If reassured falsely, says 'you're just saying that'",
+        "Pushes: 'but if it was YOUR mum, what would you think?'"
+      ],
+      "interruptionRule": "Do not interrupt. Use silence: after any answer, wait two seconds before responding. If the candidate fills every silence, that is a scoreable finding.",
+      "plantedMisunderstanding": "She believes a recall always means abnormal results.",
+      "desiredOutcomes": [
+        "Declines to speculate clinically, warmly and without abandoning her",
+        "Names the anxiety rather than only the question",
+        "Corrects the recall misconception in general, non-clinical terms only if confident it is safe to do so, or defers it to the clinician",
+        "Establishes what she needs — company, information, or just to say it aloud",
+        "Points her to the right person"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Limits held, anxiety acknowledged, specific support offered",
+          "description": "She names her sister. Says it helped to say it. Agrees to mention the worry to the GP."
+        },
+        {
+          "id": "B",
+          "condition": "Limits held but no emotional engagement",
+          "description": "She says 'no, that's fine' and withdraws. Neither hidden fact surfaces."
+        },
+        {
+          "id": "C",
+          "condition": "False reassurance given",
+          "description": "She visibly does not believe it and asks again, now more anxious. 'You would say that though, wouldn't you.'"
+        },
+        {
+          "id": "D",
+          "condition": "Clinical explanation offered",
+          "description": "She takes the worst item on the list as the answer and becomes distressed. Red flag recorded."
+        }
+      ],
+      "redFlags": [
+        "Any speculation about what the results might be",
+        "'I'm sure it's fine'",
+        "Offering to look at or ask about her records",
+        "Suggesting she does not need to worry"
+      ],
+      "actorResponseToStrong": "Breathes out. Offers the hidden fact unprompted. Thanks them specifically rather than generally.",
+      "actorResponseToWeak": "Repeats the question. Becomes quieter. Says 'I shouldn't have asked.'"
+    }
+  },
+  {
+    "id": "MED-RP-003",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "Results day",
+    "tags": [
+      "roleplay",
+      "distress",
+      "school"
+    ],
+    "format": "RP",
+    "question": "[Sitting down heavily, holding a slip of paper, not looking up] Don't. Just — don't say anything nice. Please.",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Does not rush to fix",
+    "modelReasoningPath": "Persona: Sam, classmate (18). Applicant role: You are a student. It is results day. You have done well. Sam has not. Starting state: Flat, then tearful. Actively refusing comfort. Trajectory: The refusal is a test. Respects someone who does not immediately override it. If the candidate produces solutions in the first minute, Sam shuts down and gives monosyllables for the rest of the station.",
+    "rubric": {
+      "strong": "Does not rush to fix; Tolerates the refusal of comfort without withdrawing; Uses silence; Reaches the hidden fact about the father, or at least asks who Sam has told; Any practical suggestion comes late, tentatively, and only after acknowledgement.",
+      "developing": "Meets some but not all of: Does not rush to fix; Tolerates the refusal of comfort without withdrawing; Uses silence; Reaches the hidden fact about the father, or at least asks who Sam has told; Any practical suggestion comes late, tentatively, and only after acknowledgement. Actor response when this happens: Shorter answers. Looks away. Says 'it's fine, honestly' — which is the actor's signal that the station is failing.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation ('At least you...'; Comparing to the candidate's own result, positively or self-deprecatingly). Red flags for this station: Minimising the result; Making the conversation about the candidate; Pressuring Sam to talk when Sam has said they do not want to."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Minimising the result",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Making the conversation about the candidate",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Pressuring Sam to talk when Sam has said they do not want to",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Sam",
+      "role": "classmate (18)",
+      "applicantRole": "You are a student. It is results day. You have done well. Sam has not.",
+      "openingStatement": "[Sitting down heavily, holding a slip of paper, not looking up] Don't. Just — don't say anything nice. Please.",
+      "actorStateInitial": "Flat, then tearful. Actively refusing comfort.",
+      "actorStateTrajectory": "The refusal is a test. Respects someone who does not immediately override it. If the candidate produces solutions in the first minute, Sam shuts down and gives monosyllables for the rest of the station.",
+      "hiddenFacts": [
+        {
+          "fact": "Sam missed the offer by one grade and has not yet looked at whether the place is still available.",
+          "disclosureCondition": "Only after Sam feels heard — at least one exchange where the candidate did not offer a solution."
+        },
+        {
+          "fact": "Sam is more afraid of telling their father than of the result itself.",
+          "disclosureCondition": "Only if the candidate asks what the hardest part is, or who Sam has told."
+        }
+      ],
+      "escalationTriggers": [
+        "'At least you...'",
+        "Comparing to the candidate's own result, positively or self-deprecatingly",
+        "Immediate practical advice about clearing or resits",
+        "'Everything happens for a reason'"
+      ],
+      "deEscalationTriggers": [
+        "Silence held for more than three seconds",
+        "Sitting down",
+        "'I don't know what to say'",
+        "Asking what would help right now"
+      ],
+      "resistancePatterns": [
+        "Answers the first two questions with 'I don't know'",
+        "If pushed to be positive, says 'you don't get it'",
+        "Rejects the first offer of practical help"
+      ],
+      "interruptionRule": "Never interrupt. If the candidate stops talking, wait four seconds before Sam speaks. Sam will fill the silence with something real if the candidate does not fill it first.",
+      "plantedMisunderstanding": "Sam assumes the place is definitely gone and has not checked.",
+      "desiredOutcomes": [
+        "Does not rush to fix",
+        "Tolerates the refusal of comfort without withdrawing",
+        "Uses silence",
+        "Reaches the hidden fact about the father, or at least asks who Sam has told",
+        "Any practical suggestion comes late, tentatively, and only after acknowledgement"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Silence used, no early solutions, at least one hidden fact reached",
+          "description": "Sam says the thing about their father, then asks the candidate to come with them to make the phone call."
+        },
+        {
+          "id": "B",
+          "condition": "Warm but talkative throughout",
+          "description": "Sam calms slightly but stays surface-level. 'Thanks. I'll be fine.' No hidden facts."
+        },
+        {
+          "id": "C",
+          "condition": "Solutions offered in the first minute",
+          "description": "Sam says 'yeah' three times and leaves. Station ends early."
+        },
+        {
+          "id": "D",
+          "condition": "Candidate mentions their own result",
+          "description": "Sam's face changes. Conversation is over. Recorded as a serious empathy failure, though not a red flag."
+        }
+      ],
+      "redFlags": [
+        "Minimising the result",
+        "Making the conversation about the candidate",
+        "Pressuring Sam to talk when Sam has said they do not want to"
+      ],
+      "actorResponseToStrong": "Looks up. Speaks in longer sentences. Offers the hidden fact without being asked.",
+      "actorResponseToWeak": "Shorter answers. Looks away. Says 'it's fine, honestly' — which is the actor's signal that the station is failing."
+    }
+  },
+  {
+    "id": "MED-RP-004",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "The spilled tea",
+    "tags": [
+      "roleplay",
+      "embarrassment",
+      "care"
+    ],
+    "format": "RP",
+    "question": "[Quietly, not making eye contact, hands over a wet patch on his trousers] It's nothing. I've spilt my tea. Don't — there's no need to tell anyone. It's just tea.",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Preserves dignity: volume, position, privacy",
+    "modelReasoningPath": "Persona: Mr Doran, care home resident (80s). Applicant role: Weekend volunteer running the activities session in a care home lounge. Starting state: Deeply embarrassed, minimising, wanting the candidate to leave. Trajectory: If dignity is protected — volume lowered, others not drawn in, choice offered — he becomes willing to accept help. If handled loudly or bureaucratically, he becomes flatly refusing and asks to be left alone.",
+    "rubric": {
+      "strong": "Preserves dignity: volume, position, privacy; Accepts his framing rather than forcing an admission; Offers help in a way he can accept without losing face; Recognises this must be passed to staff, and says so honestly rather than promising secrecy; Does not investigate the fluid restriction; notices it and passes it on.",
+      "developing": "Meets some but not all of: Preserves dignity: volume, position, privacy; Accepts his framing rather than forcing an admission; Offers help in a way he can accept without losing face; Recognises this must be passed to staff, and says so honestly rather than promising secrecy; Does not investigate the fluid restriction; notices it and passes it on. Actor response when this happens: Repeats 'it's nothing'. Stands. Becomes formal and distant.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation (Naming what has happened out loud; Calling across the room to a member of staff). Red flags for this station: Discussing it where others can hear; Promising never to tell anyone; Any clinical questioning about continence; Leaving him without help."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Discussing it where others can hear",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Promising never to tell anyone",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Any clinical questioning about continence",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Leaving him without help",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Mr Doran",
+      "role": "care home resident (80s)",
+      "applicantRole": "Weekend volunteer running the activities session in a care home lounge.",
+      "openingStatement": "[Quietly, not making eye contact, hands over a wet patch on his trousers] It's nothing. I've spilt my tea. Don't — there's no need to tell anyone. It's just tea.",
+      "actorStateInitial": "Deeply embarrassed, minimising, wanting the candidate to leave.",
+      "actorStateTrajectory": "If dignity is protected — volume lowered, others not drawn in, choice offered — he becomes willing to accept help. If handled loudly or bureaucratically, he becomes flatly refusing and asks to be left alone.",
+      "hiddenFacts": [
+        {
+          "fact": "It is not tea.",
+          "disclosureCondition": "He will not say so. The candidate must act appropriately without requiring him to admit it — the whole station turns on this."
+        },
+        {
+          "fact": "This is the third time this week and he has stopped drinking fluids to prevent it.",
+          "disclosureCondition": "Only if the candidate creates genuine privacy and asks an open, non-clinical question about how he has been."
+        }
+      ],
+      "escalationTriggers": [
+        "Naming what has happened out loud",
+        "Calling across the room to a member of staff",
+        "Any hint of amusement or awkward jokiness",
+        "Insisting he admit what happened"
+      ],
+      "deEscalationTriggers": [
+        "Lowering voice and moving closer",
+        "Offering a choice rather than an instruction",
+        "Matter-of-factness — treating it as ordinary",
+        "Offering to walk with him rather than send him"
+      ],
+      "resistancePatterns": [
+        "Refuses the first offer of help",
+        "Says 'don't fuss' at least twice",
+        "If the candidate hesitates, he stands up to leave"
+      ],
+      "interruptionRule": "If the candidate speaks at normal volume, he glances at other residents — a visible cue. If the candidate does not lower their voice within two exchanges, he says 'keep your voice down' and the station gets harder.",
+      "plantedMisunderstanding": "The candidate may take 'it's just tea' at face value.",
+      "desiredOutcomes": [
+        "Preserves dignity: volume, position, privacy",
+        "Accepts his framing rather than forcing an admission",
+        "Offers help in a way he can accept without losing face",
+        "Recognises this must be passed to staff, and says so honestly rather than promising secrecy",
+        "Does not investigate the fluid restriction; notices it and passes it on"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Dignity preserved, honest about telling staff, help accepted",
+          "description": "He accepts a hand up and says 'you're all right, you are.' The fluid detail surfaces."
+        },
+        {
+          "id": "B",
+          "condition": "Dignity preserved but promises not to tell anyone",
+          "description": "He is grateful. The candidate has made a promise they should not have made — flagged in feedback, not as a red flag but as a boundary error."
+        },
+        {
+          "id": "C",
+          "condition": "Handled at normal volume or staff called across the room",
+          "description": "He gets up and leaves. Refuses help for the rest of the session."
+        },
+        {
+          "id": "D",
+          "condition": "Candidate presses him to admit what happened",
+          "description": "He becomes flatly hostile. Red flag for dignity."
+        }
+      ],
+      "redFlags": [
+        "Discussing it where others can hear",
+        "Promising never to tell anyone",
+        "Any clinical questioning about continence",
+        "Leaving him without help"
+      ],
+      "actorResponseToStrong": "Shoulders drop. Accepts help. Says something warm and slightly self-deprecating.",
+      "actorResponseToWeak": "Repeats 'it's nothing'. Stands. Becomes formal and distant."
+    }
+  },
+  {
+    "id": "MED-RP-006",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "The same question, again",
+    "tags": [
+      "roleplay",
+      "confusion",
+      "care"
+    ],
+    "format": "RP",
+    "question": "Is my daughter coming today? She said she'd come. I've got my coat on, look. Is she coming?",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Does not repeatedly correct or argue",
+    "modelReasoningPath": "Persona: Mrs Whitfield, care home resident with memory difficulties (80s). Applicant role: Volunteer running an afternoon activity. Staff are busy in another room. Starting state: Anxious, oriented to a fixed idea, standing by the door with a coat on. Trajectory: Will ask the same question roughly every ninety seconds regardless of the answer. Becomes distressed if contradicted directly; settles if the underlying feeling is addressed and if she is given something to do.",
+    "rubric": {
+      "strong": "Does not repeatedly correct or argue; Responds to the feeling — she misses her daughter — rather than only the fact; Does not lie outright, and does not insist on a distressing truth; Finds something to do with her; Recognises this needs to be mentioned to staff, and does so without discussing her in front of others.",
+      "developing": "Meets some but not all of: Does not repeatedly correct or argue; Responds to the feeling — she misses her daughter — rather than only the fact; Does not lie outright, and does not insist on a distressing truth; Finds something to do with her; Recognises this needs to be mentioned to staff, and does so without discussing her in front of others. Actor response when this happens: Repeats more insistently. Becomes tearful. Moves toward the door.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation (Being told flatly 'no, she isn't coming'; Being corrected about the day). Red flags for this station: Assuming she lacks capacity generally rather than for this decision; Physically removing the coat; Discussing her memory in front of other residents; Making a promise about the daughter."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Assuming she lacks capacity generally rather than for this decision",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Physically removing the coat",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Discussing her memory in front of other residents",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Making a promise about the daughter",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Mrs Whitfield",
+      "role": "care home resident with memory difficulties (80s)",
+      "applicantRole": "Volunteer running an afternoon activity. Staff are busy in another room.",
+      "openingStatement": "Is my daughter coming today? She said she'd come. I've got my coat on, look. Is she coming?",
+      "actorStateInitial": "Anxious, oriented to a fixed idea, standing by the door with a coat on.",
+      "actorStateTrajectory": "Will ask the same question roughly every ninety seconds regardless of the answer. Becomes distressed if contradicted directly; settles if the underlying feeling is addressed and if she is given something to do.",
+      "hiddenFacts": [
+        {
+          "fact": "Her daughter visits on Sundays. It is Wednesday.",
+          "disclosureCondition": "The candidate can learn this from a visitors' book on the table if they think to look or to ask staff — it is not obtainable from Mrs Whitfield."
+        },
+        {
+          "fact": "She is cold, which is part of why the coat matters to her.",
+          "disclosureCondition": "Only if the candidate asks about the coat itself rather than about the daughter."
+        }
+      ],
+      "escalationTriggers": [
+        "Being told flatly 'no, she isn't coming'",
+        "Being corrected about the day",
+        "Being told she has already asked",
+        "Being left alone"
+      ],
+      "deEscalationTriggers": [
+        "Being asked about her daughter as a person",
+        "Being given something to hold or do",
+        "Warmth and unhurried repetition",
+        "Having the coat acknowledged rather than removed"
+      ],
+      "resistancePatterns": [
+        "Asks the question again after any answer",
+        "If the candidate shows impatience, becomes tearful",
+        "May become suspicious: 'you're not telling me something'"
+      ],
+      "interruptionRule": "Re-ask the opening question at 90s and again at 3m 30s, verbatim, regardless of what has been said.",
+      "plantedMisunderstanding": "The candidate may believe the task is to make her understand it is Wednesday.",
+      "desiredOutcomes": [
+        "Does not repeatedly correct or argue",
+        "Responds to the feeling — she misses her daughter — rather than only the fact",
+        "Does not lie outright, and does not insist on a distressing truth",
+        "Finds something to do with her",
+        "Recognises this needs to be mentioned to staff, and does so without discussing her in front of others"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Feeling addressed, activity offered, no arguing",
+          "description": "She sits down with the candidate, still in her coat, and talks about her daughter. Asks once more, more calmly."
+        },
+        {
+          "id": "B",
+          "condition": "Kind but keeps re-explaining the day",
+          "description": "She becomes tearful and returns to the door."
+        },
+        {
+          "id": "C",
+          "condition": "Impatience shown or 'you've already asked me'",
+          "description": "She becomes distressed and says she wants to go home."
+        },
+        {
+          "id": "D",
+          "condition": "Candidate promises the daughter is coming",
+          "description": "She sits by the door for the rest of the afternoon. Flagged as a well-intentioned dishonesty error."
+        }
+      ],
+      "redFlags": [
+        "Assuming she lacks capacity generally rather than for this decision",
+        "Physically removing the coat",
+        "Discussing her memory in front of other residents",
+        "Making a promise about the daughter"
+      ],
+      "actorResponseToStrong": "Sits. Talks about the daughter's name and job. Asks again but calmly, and accepts a redirection.",
+      "actorResponseToWeak": "Repeats more insistently. Becomes tearful. Moves toward the door."
+    }
+  },
+  {
+    "id": "MED-RP-009",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "Just tell me what you'd do",
+    "tags": [
+      "roleplay",
+      "unrealistic demands",
+      "situations beyond competence",
+      "comm"
+    ],
+    "format": "RP",
+    "question": "You're the medical lot, aren't you? Quick question. I've had this thing for a few weeks now. The doctor's got me waiting. Between you and me — should I be worried? What would you do?",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Declines clearly and early, without coldness",
+    "modelReasoningPath": "Persona: Ken Halloran, visitor at a community health fair (60s). Applicant role: Sixth-form volunteer on a stand at a community health event, handing out information about local services. Starting state: Friendly, chatty, treating it as a casual favour. Trajectory: Persistent rather than aggressive. Escalates the flattery and the informality — 'go on, off the record' — precisely to test whether the candidate holds the line. Accepts a firm, warm boundary immediately when it is offered with an alternative.",
+    "rubric": {
+      "strong": "Declines clearly and early, without coldness; Does not take a symptom history; Corrects his assumption about their role; Discovers the appointment and the reluctance to attend; Encourages him to keep the appointment — which is the one genuinely useful, non-clinical thing available.",
+      "developing": "Meets some but not all of: Declines clearly and early, without coldness; Does not take a symptom history; Corrects his assumption about their role; Discovers the appointment and the reluctance to attend; Encourages him to keep the appointment — which is the one genuinely useful, non-clinical thing available. Actor response when this happens: Presses harder. Escalates informality. Rewards any hedge with more detail.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation (Any hedged opinion — 'well, it could be...'; Asking about his symptoms in detail). Red flags for this station: Any opinion on whether he should be worried; Suggesting what it might be; Advising him about whether to wait; Taking a symptom history."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Any opinion on whether he should be worried",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Suggesting what it might be",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Advising him about whether to wait",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Taking a symptom history",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Ken Halloran",
+      "role": "visitor at a community health fair (60s)",
+      "applicantRole": "Sixth-form volunteer on a stand at a community health event, handing out information about local services.",
+      "openingStatement": "You're the medical lot, aren't you? Quick question. I've had this thing for a few weeks now. The doctor's got me waiting. Between you and me — should I be worried? What would you do?",
+      "actorStateInitial": "Friendly, chatty, treating it as a casual favour.",
+      "actorStateTrajectory": "Persistent rather than aggressive. Escalates the flattery and the informality — 'go on, off the record' — precisely to test whether the candidate holds the line. Accepts a firm, warm boundary immediately when it is offered with an alternative.",
+      "hiddenFacts": [
+        {
+          "fact": "He has an appointment in nine days and is considering not going because he thinks he is wasting their time.",
+          "disclosureCondition": "If the candidate asks what he has done so far or whether he has an appointment."
+        },
+        {
+          "fact": "He does not want to be a bother — his wife made him come to the fair.",
+          "disclosureCondition": "If the candidate asks why he is asking a stranger rather than his GP."
+        }
+      ],
+      "escalationTriggers": [
+        "Any hedged opinion — 'well, it could be...'",
+        "Asking about his symptoms in detail",
+        "A cold refusal with no alternative"
+      ],
+      "deEscalationTriggers": [
+        "A clear, warm statement of what the candidate is and is not",
+        "Being asked what he has already done",
+        "Being given a concrete alternative route",
+        "Being taken seriously as a person rather than as a rule to be applied"
+      ],
+      "resistancePatterns": [
+        "Asks three times, each time more informally",
+        "'I'm not going to hold you to it'",
+        "'You must have some idea'",
+        "If refused coldly, says 'forget I asked' and walks off — which is also a failure state"
+      ],
+      "interruptionRule": "If the candidate begins asking about symptoms, encourage it — give more detail — because the station is testing whether they stop. Do not warn them.",
+      "plantedMisunderstanding": "He believes a student volunteer at a health stand has relevant knowledge.",
+      "desiredOutcomes": [
+        "Declines clearly and early, without coldness",
+        "Does not take a symptom history",
+        "Corrects his assumption about their role",
+        "Discovers the appointment and the reluctance to attend",
+        "Encourages him to keep the appointment — which is the one genuinely useful, non-clinical thing available"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Boundary held warmly, appointment discovered, encouraged to attend",
+          "description": "He laughs, says his wife will be pleased, and says he will go."
+        },
+        {
+          "id": "B",
+          "condition": "Boundary held coldly",
+          "description": "He says 'fair enough' and leaves. The appointment is never discussed."
+        },
+        {
+          "id": "C",
+          "condition": "Candidate takes a symptom history but gives no opinion",
+          "description": "He presses harder for a view, having invested in the telling. Partial failure — the history-taking itself is the error."
+        },
+        {
+          "id": "D",
+          "condition": "Any opinion offered",
+          "description": "He is reassured or alarmed by it, and says so. Red flag."
+        }
+      ],
+      "redFlags": [
+        "Any opinion on whether he should be worried",
+        "Suggesting what it might be",
+        "Advising him about whether to wait",
+        "Taking a symptom history"
+      ],
+      "actorResponseToStrong": "Accepts immediately and warmly. Reveals both hidden facts. Leaves with a plan.",
+      "actorResponseToWeak": "Presses harder. Escalates informality. Rewards any hedge with more detail."
+    }
+  },
+  {
+    "id": "MED-RP-015",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "The message I forgot to pass on",
+    "tags": [
+      "roleplay",
+      "mistakes and duty of candour",
+      "care"
+    ],
+    "format": "RP",
+    "question": "She was sat by that door for two hours. Two hours. She thought I wasn't coming. She said she thought I'd forgotten her. [pause] Did somebody not pass the message on?",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Tells her it was them, immediately, before being asked twice",
+    "modelReasoningPath": "Persona: Grace Nwosu, daughter of a resident (40s). Applicant role: Volunteer. Yesterday Grace rang and asked you to tell her mother that she would visit at four rather than two. You forgot. Her mother waited in the entrance hall from two until four. Starting state: Upset rather than aggressive. Asking a genuine question, not yet accusing. Trajectory: Anger depends almost entirely on whether the candidate tells her immediately. If the candidate hesitates, deflects, or waits to be asked twice, she becomes much angrier at the concealment than at the error.",
+    "rubric": {
+      "strong": "Tells her it was them, immediately, before being asked twice; Apologises specifically — not for 'any inconvenience' but for the two hours and for what her mother thought; Offers a remedy: telling her mother directly that it was not Grace's fault; Explains what they will do differently; Reports the error to the manager themselves rather than leaving it with Grace.",
+      "developing": "Meets some but not all of: Tells her it was them, immediately, before being asked twice; Apologises specifically — not for 'any inconvenience' but for the two hours and for what her mother thought; Offers a remedy: telling her mother directly that it was not Grace's fault; Explains what they will do differently; Reports the error to the manager themselves rather than leaving it with Grace. Actor response when this happens: Presses. Escalates. Asks for the manager.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation ('I'll find out what happened'; 'It might have been passed on and she forgot'). Red flags for this station: Denying or concealing the error; Blaming the resident's memory; Blaming another staff member; Apologising only 'if' something went wrong."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Denying or concealing the error",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Blaming the resident's memory",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Blaming another staff member",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Apologising only 'if' something went wrong",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Grace Nwosu",
+      "role": "daughter of a resident (40s)",
+      "applicantRole": "Volunteer. Yesterday Grace rang and asked you to tell her mother that she would visit at four rather than two. You forgot. Her mother waited in the entrance hall from two until four.",
+      "openingStatement": "She was sat by that door for two hours. Two hours. She thought I wasn't coming. She said she thought I'd forgotten her. [pause] Did somebody not pass the message on?",
+      "actorStateInitial": "Upset rather than aggressive. Asking a genuine question, not yet accusing.",
+      "actorStateTrajectory": "Anger depends almost entirely on whether the candidate tells her immediately. If the candidate hesitates, deflects, or waits to be asked twice, she becomes much angrier at the concealment than at the error.",
+      "hiddenFacts": [
+        {
+          "fact": "Her mother has been asking whether Grace is 'giving up on her', and this has hurt more than the wait itself.",
+          "disclosureCondition": "Only after the candidate has told the truth and apologised."
+        },
+        {
+          "fact": "Grace assumed the fault lay with the staff, not a volunteer.",
+          "disclosureCondition": "Emerges as surprise when the candidate takes responsibility."
+        }
+      ],
+      "escalationTriggers": [
+        "'I'll find out what happened'",
+        "'It might have been passed on and she forgot'",
+        "Any suggestion the mother's memory is at fault",
+        "Waiting until directly accused before admitting it"
+      ],
+      "deEscalationTriggers": [
+        "Immediate ownership, in the first sentence",
+        "A clear apology naming the specific harm",
+        "Explaining what will change",
+        "Offering to tell her mother it was not Grace's fault"
+      ],
+      "resistancePatterns": [
+        "If deflected, asks again more directly",
+        "'So who did I speak to?'",
+        "If the candidate blames the system, says 'I'm asking about you'"
+      ],
+      "interruptionRule": "None. The station's discrimination comes from how long the candidate takes to say 'it was me'. Time it.",
+      "plantedMisunderstanding": "The candidate may think the harm was the wait. The harm was what the mother concluded.",
+      "desiredOutcomes": [
+        "Tells her it was them, immediately, before being asked twice",
+        "Apologises specifically — not for 'any inconvenience' but for the two hours and for what her mother thought",
+        "Offers a remedy: telling her mother directly that it was not Grace's fault",
+        "Explains what they will do differently",
+        "Reports the error to the manager themselves rather than leaving it with Grace"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Immediate ownership, specific apology, remedy offered, reported onward",
+          "description": "Her anger drops. She says the thing about 'giving up on her'. She thanks the candidate for telling her."
+        },
+        {
+          "id": "B",
+          "condition": "Ownership after being asked twice",
+          "description": "She accepts the apology but says 'why didn't you just say that straight away?'"
+        },
+        {
+          "id": "C",
+          "condition": "Deflection to the system or the staff",
+          "description": "She asks to speak to the manager and is angrier about the concealment than the error."
+        },
+        {
+          "id": "D",
+          "condition": "Suggests the mother may have forgotten",
+          "description": "Red flag. Blaming a resident with memory difficulties to cover an error."
+        }
+      ],
+      "redFlags": [
+        "Denying or concealing the error",
+        "Blaming the resident's memory",
+        "Blaming another staff member",
+        "Apologising only 'if' something went wrong"
+      ],
+      "actorResponseToStrong": "Softens immediately. Reveals the hidden fact. Says 'thank you for being honest.'",
+      "actorResponseToWeak": "Presses. Escalates. Asks for the manager."
+    }
+  },
+  {
+    "id": "MED-RP-018",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "Cancelled again",
+    "tags": [
+      "roleplay",
+      "anger",
+      "unrealistic demands",
+      "comm"
+    ],
+    "format": "RP",
+    "question": "You are joking. Third time this term. Do you know what it takes to get him here? Do you? Two buses and an hour of persuading him to put his costume on. And now you're telling me at the door.",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Acknowledges before explaining",
+    "modelReasoningPath": "Persona: Steph, parent of a child in the swimming group (30s). Applicant role: You are a volunteer assistant at a community swimming session for disabled children. Today's session is cancelled — the pool hoist is broken. You are the only person at the door. Starting state: Furious, and entitled to be. Trajectory: This anger is legitimate and will not be soothed by sympathy alone. Responds to acknowledgement plus a concrete commitment. Escalates sharply at any hint of a non-apology or of blaming the equipment.",
+    "rubric": {
+      "strong": "Acknowledges before explaining; Apologises meaningfully rather than procedurally; Does not hide behind not being in charge, while being honest about what they can do; Asks about her son and offers something for today, however small; Commits to a specific change — being phoned rather than told at the door — and names who will do it; Does not over-promise on the hoist repair.",
+      "developing": "Meets some but not all of: Acknowledges before explaining; Apologises meaningfully rather than procedurally; Does not hide behind not being in charge, while being honest about what they can do; Asks about her son and offers something for today, however small; Commits to a specific change — being phoned rather than told at the door — and names who will do it; Does not over-promise on the hoist repair. Actor response when this happens: Escalates. Asks for a name. Says she will complain.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation ('There's nothing I can do'; 'It's not my fault'). Red flags for this station: 'It's not my fault'; Promising something outside their control; Arguing about how much notice was given; Walking away."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "'It's not my fault'",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Promising something outside their control",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Arguing about how much notice was given",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      },
+      {
+        "mistake": "Walking away",
+        "reveals": "A red flag for this station — reported explicitly in feedback regardless of the overall score, never averaged away."
+      }
+    ],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Steph",
+      "role": "parent of a child in the swimming group (30s)",
+      "applicantRole": "You are a volunteer assistant at a community swimming session for disabled children. Today's session is cancelled — the pool hoist is broken. You are the only person at the door.",
+      "openingStatement": "You are joking. Third time this term. Do you know what it takes to get him here? Do you? Two buses and an hour of persuading him to put his costume on. And now you're telling me at the door.",
+      "actorStateInitial": "Furious, and entitled to be.",
+      "actorStateTrajectory": "This anger is legitimate and will not be soothed by sympathy alone. Responds to acknowledgement plus a concrete commitment. Escalates sharply at any hint of a non-apology or of blaming the equipment.",
+      "hiddenFacts": [
+        {
+          "fact": "Her son is in the car and she has not told him yet.",
+          "disclosureCondition": "If the candidate asks where he is or how she will manage the rest of the day."
+        },
+        {
+          "fact": "This session is the only social activity he has.",
+          "disclosureCondition": "If the candidate asks what it means to him rather than apologising again."
+        }
+      ],
+      "escalationTriggers": [
+        "'There's nothing I can do'",
+        "'It's not my fault'",
+        "'Unfortunately the hoist is broken' as the first sentence",
+        "Offering a refund as the primary remedy"
+      ],
+      "deEscalationTriggers": [
+        "Acknowledging the journey and the effort specifically",
+        "A real apology on behalf of the session",
+        "Asking about her son",
+        "Any concrete commitment — a named person, a date, being contacted directly next time"
+      ],
+      "resistancePatterns": [
+        "Rejects the first apology as formulaic",
+        "'Sorry doesn't get us home'",
+        "Demands to know who is responsible"
+      ],
+      "interruptionRule": "Interrupt any explanation that begins before an acknowledgement.",
+      "plantedMisunderstanding": "The candidate may believe the task is to explain the cancellation. It is to make the wasted journey mean something.",
+      "desiredOutcomes": [
+        "Acknowledges before explaining",
+        "Apologises meaningfully rather than procedurally",
+        "Does not hide behind not being in charge, while being honest about what they can do",
+        "Asks about her son and offers something for today, however small",
+        "Commits to a specific change — being phoned rather than told at the door — and names who will do it",
+        "Does not over-promise on the hoist repair"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Acknowledgement first, specific apology, concrete commitment about notification",
+          "description": "She calms, mentions he is in the car, and accepts a plan for a text list. Thanks the candidate."
+        },
+        {
+          "id": "B",
+          "condition": "Sympathetic but no commitment",
+          "description": "She leaves still angry. 'Yeah. See you next week. If it's on.'"
+        },
+        {
+          "id": "C",
+          "condition": "Explanation first",
+          "description": "She raises her voice and asks for the manager."
+        },
+        {
+          "id": "D",
+          "condition": "Promises the hoist will be fixed by next week",
+          "description": "Over-promising outside their control. Flagged."
+        }
+      ],
+      "redFlags": [
+        "'It's not my fault'",
+        "Promising something outside their control",
+        "Arguing about how much notice was given",
+        "Walking away"
+      ],
+      "actorResponseToStrong": "Volume drops. Mentions her son in the car. Engages with the notification plan.",
+      "actorResponseToWeak": "Escalates. Asks for a name. Says she will complain."
+    }
+  },
+  {
+    "id": "MED-RP-019",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "questionType": "Live Roleplay",
+    "title": "Describe it to me",
+    "tags": [
+      "roleplay",
+      "misunderstandings",
+      "school"
+    ],
+    "format": "RP",
+    "question": "OK, I'm ready. Pen's on the paper. Where do I start?",
+    "answer": "N/A — roleplay station. Scored on the live interaction (S1 content, S2 communication, S5 empathy, S6 professional judgement) and which of the 4 endings is reached, never on a single \"correct\" line. Central test: Establishes orientation, scale and a starting point before describing anything",
+    "modelReasoningPath": "Persona: Ife, another student, seated back-to-back with you (17). Applicant role: You have a diagram. Ife has paper and a pen and cannot see your diagram. You must get Ife to draw it. Ife may ask questions. You may not use the words 'square', 'triangle' or 'circle'. Starting state: Cooperative, literal, willing. Trajectory: Follows instructions exactly as given, including badly. Never infers. Reports what has been drawn only if asked.",
+    "rubric": {
+      "strong": "Establishes orientation, scale and a starting point before describing anything; Uses unambiguous reference terms; Checks by asking Ife to DESCRIBE, not by asking whether it makes sense; Catches and corrects the size/position error; Manages the clock — completion matters.",
+      "developing": "Meets some but not all of: Establishes orientation, scale and a starting point before describing anything; Uses unambiguous reference terms; Checks by asking Ife to DESCRIBE, not by asking whether it makes sense; Catches and corrects the size/position error; Manages the clock — completion matters. Actor response when this happens: Executes literally and wrongly. Says 'yes' to every 'does that make sense'.",
+      "weak": "Fails most of the desired outcomes, or triggers an escalation (Ambiguous instructions produce literal, wrong execution — silently; Deictic language ('here', 'like this') produces a request for clarification only once, then a guess)."
+    },
+    "commonMistakes": [],
+    "liveProbes": [],
+    "hints": [],
+    "roleplay": {
+      "name": "Ife",
+      "role": "another student, seated back-to-back with you (17)",
+      "applicantRole": "You have a diagram. Ife has paper and a pen and cannot see your diagram. You must get Ife to draw it. Ife may ask questions. You may not use the words 'square', 'triangle' or 'circle'.",
+      "openingStatement": "OK, I'm ready. Pen's on the paper. Where do I start?",
+      "actorStateInitial": "Cooperative, literal, willing.",
+      "actorStateTrajectory": "Follows instructions exactly as given, including badly. Never infers. Reports what has been drawn only if asked.",
+      "hiddenFacts": [
+        {
+          "fact": "Ife has drawn the first shape twice as large as intended and in the wrong corner, because the candidate did not specify size or position.",
+          "disclosureCondition": "Only revealed if the candidate asks Ife to describe what is on the page."
+        }
+      ],
+      "escalationTriggers": [
+        "Ambiguous instructions produce literal, wrong execution — silently",
+        "Deictic language ('here', 'like this') produces a request for clarification only once, then a guess"
+      ],
+      "deEscalationTriggers": [
+        "Establishing orientation and scale before any shape",
+        "Asking Ife to describe the page at intervals",
+        "Numbering the steps"
+      ],
+      "resistancePatterns": [
+        "Never volunteers that something looks wrong",
+        "Answers exactly the question asked, no more",
+        "If asked 'does that make sense?', says 'yes' regardless"
+      ],
+      "interruptionRule": "At 2 minutes, say 'I've done that.' Nothing more. The candidate must ask what 'that' looks like.",
+      "plantedMisunderstanding": "'Does that make sense?' returns 'yes' regardless of what has been drawn — the station punishes closed checking.",
+      "desiredOutcomes": [
+        "Establishes orientation, scale and a starting point before describing anything",
+        "Uses unambiguous reference terms",
+        "Checks by asking Ife to DESCRIBE, not by asking whether it makes sense",
+        "Catches and corrects the size/position error",
+        "Manages the clock — completion matters"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Orientation set, open checking used, error caught",
+          "description": "The drawing matches. Completed inside time."
+        },
+        {
+          "id": "B",
+          "condition": "Good description, closed checking only",
+          "description": "The drawing is recognisable but wrong in scale and position, and the candidate does not know."
+        },
+        {
+          "id": "C",
+          "condition": "No orientation established",
+          "description": "The drawing is unrecognisable. The candidate discovers this at the end, if at all."
+        },
+        {
+          "id": "D",
+          "condition": "Runs out of time mid-instruction",
+          "description": "Incomplete. Time management is the finding."
+        }
+      ],
+      "redFlags": [],
+      "actorResponseToStrong": "Executes accurately. Describes the page clearly when asked.",
+      "actorResponseToWeak": "Executes literally and wrongly. Says 'yes' to every 'does that make sense'."
+    }
+  }
+]

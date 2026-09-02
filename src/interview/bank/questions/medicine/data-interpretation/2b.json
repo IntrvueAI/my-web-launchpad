@@ -1,0 +1,32 @@
+[
+  {
+    "id": "MED-D12",
+    "subject": "medicine",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "questionType": "Calculation",
+    "title": "Occupancy and discharge, no calculator",
+    "tags": ["numeracy", "arithmetic", "no-calculator"],
+    "format": "CA",
+    "question": "A ward has 24 beds and is currently 75% occupied. Six patients are discharged and four new patients are admitted. What is the new occupancy, as a percentage? Talk me through your method as you go — no calculator.",
+    "answer": "75% of 24 is 18 occupied beds. After 6 discharges and 4 admissions, occupied beds = 18 − 6 + 4 = 16. New occupancy = 16/24 = 66.7% (two-thirds). The METHOD matters more than the final decimal precision.",
+    "modelReasoningPath": "This mirrors a real published numeracy-hurdle format: GCSE-level arithmetic, no calculator, no medical knowledge required — a pass-mark check, not a contribution to a total score. A strong candidate talks through the method aloud step by step (find 75% of 24, then apply the net change, then convert back to a percentage) rather than going silent and producing a number. A sanity check at the end (16 out of 24 is two-thirds, which is a bit less than three-quarters — that makes sense given more people left than arrived) is what separates a strong answer from a merely correct one.",
+    "rubric": {
+      "strong": "Talks through the method aloud clearly, reaches the correct or near-correct answer, and includes a sanity check on the result.",
+      "developing": "Reaches a broadly correct answer with the method spoken but no sanity check, or a minor arithmetic slip with otherwise sound method.",
+      "weak": "Guesses with no method shown, or makes no attempt at all."
+    },
+    "commonMistakes": [
+      { "mistake": "Forgets to net the admissions against the discharges", "reveals": "A slip in translating the words into the right arithmetic operation, not a numeracy failure as such — worth a gentle prompt to re-read the question" },
+      { "mistake": "Goes silent rather than talking through an attempt", "reveals": "Under time pressure, showing a partial method is worth far more than silence — this is worth saying explicitly if it happens" }
+    ],
+    "liveProbes": [
+      { "probe": "Does that final answer make sense given more people left than arrived?", "goodResponse": "Performs a genuine sanity check, not just a restatement of the number" }
+    ],
+    "hints": [
+      "Start by working out how many beds are occupied right now.",
+      "Then apply the discharges and admissions as a net change.",
+      "Convert back to a percentage of the total beds at the end."
+    ]
+  }
+]
