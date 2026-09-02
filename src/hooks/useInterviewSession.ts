@@ -10,6 +10,7 @@ import { useConnectionHealthCheck } from './useConnectionHealthCheck';
 import { useToast } from './use-toast';
 import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
+import { computeStationClock, type StationClockState } from '@/interview/engine/stationClock';
 
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
@@ -60,7 +61,7 @@ interface UseInterviewSessionReturn {
    * (currently the two Medicine MMI school modes). Null for every other interview type, so
    * existing UIs render nothing extra by default.
    */
-  stationTimer: { phase: 'prep' | 'response'; secondsRemaining: number; totalSeconds: number } | null;
+  stationTimer: StationClockState | null;
 }
 
 /**
@@ -198,28 +199,24 @@ export const useInterviewSession = (
     timedQuestionIndexRef.current = questionIndex;
     if (stationTimerIntervalRef.current) clearInterval(stationTimerIntervalRef.current);
 
-    let phase: 'prep' | 'response' = timing.prep > 0 ? 'prep' : 'response';
-    let secondsRemaining = timing.prep > 0 ? timing.prep : timing.response;
-    setStationTimer({ phase, secondsRemaining, totalSeconds: phase === 'prep' ? timing.prep : timing.response });
+    // Deadline-based, not tick-decrementing — see stationClock.ts for why. `startedAt` is the one
+    // source of truth; every tick recomputes from it, so a throttled/delayed tick (backgrounded tab)
+    // catches up to the correct value instead of drifting further behind.
+    const startedAt = Date.now();
+    let firedTimeUp = false;
+    setStationTimer(computeStationClock(0, timing));
 
     stationTimerIntervalRef.current = setInterval(() => {
-      secondsRemaining -= 1;
-      if (secondsRemaining > 0) {
-        setStationTimer({ phase, secondsRemaining, totalSeconds: phase === 'prep' ? timing.prep : timing.response });
-        return;
+      const clock = computeStationClock(Date.now() - startedAt, timing);
+      setStationTimer(clock);
+      if (clock.expired && !firedTimeUp) {
+        // Real MMI stations end mid-sentence — stop the clock and let the interviewer wrap up in
+        // character rather than freezing at 0:00 or firing time_up more than once.
+        firedTimeUp = true;
+        if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
+        runBrainTurn('time_up');
       }
-      if (phase === 'prep') {
-        phase = 'response';
-        secondsRemaining = timing.response;
-        setStationTimer({ phase, secondsRemaining, totalSeconds: timing.response });
-        return;
-      }
-      // Response clock hit zero — real MMI stations end mid-sentence; stop the clock and let the
-      // interviewer wrap up in character rather than freezing at 0:00.
-      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
-      setStationTimer({ phase, secondsRemaining: 0, totalSeconds: timing.response });
-      runBrainTurn('time_up');
-    }, 1000);
+    }, 500);
 
     return () => {
       if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
