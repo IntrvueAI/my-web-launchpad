@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Medicine interview practice — intrvue.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body{margin:0;background:#0A0F1C}
+  a{color:#FF8A66}
+  a:hover{color:#FF4D5E}
+  :root{--ink:#F3F6FB;--muted:#A6AFC1;--line:rgba(255,255,255,.09);--line-strong:rgba(255,255,255,.16);--grad:linear-gradient(135deg,#FF8A4B 0%,#FF5F4A 50%,#FF4D5E 100%)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;border:0;padding:14px 22px;border-radius:12px;transition:transform .18s,box-shadow .18s,background .18s;min-height:48px;text-decoration:none}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px -8px rgba(255,90,78,.5)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:rgba(255,255,255,.05);color:var(--ink);border:1px solid var(--line-strong)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09)}
+  header.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(10,15,28,.72);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;height:70px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand-logo{height:32px;width:auto;display:block}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-size:15.5px;color:var(--muted);font-weight:500;transition:color .2s;text-decoration:none}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex;align-items:center;gap:12px}
+  .nav-cta .btn{padding:10px 18px;min-height:42px;font-size:15px}
+  .hamburger{display:none;background:none;border:1px solid var(--line-strong);border-radius:10px;width:44px;height:44px;cursor:pointer;color:var(--ink)}
+  .mobile-menu{display:none;flex-direction:column;gap:6px;padding:14px 24px 22px;border-bottom:1px solid var(--line);background:rgba(10,15,28,.98)}
+  .mobile-menu a{padding:12px 8px;color:var(--muted);font-weight:500;border-radius:10px;text-decoration:none}
+  .mobile-menu a:hover{background:rgba(255,255,255,.05);color:var(--ink)}
+  .mobile-menu .btn{margin-top:8px;width:100%}
+  @media(max-width:960px){
+    .nav-links{display:none}
+    .nav-cta .btn-ghost{display:none}
+    .hamburger{display:grid;place-items:center}
+  }
+  .tag{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .tag-dot{width:9px;height:9px;border-radius:3px;background:var(--grad);display:inline-block}
+  .h2{font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(26px,3.6vw,38px);line-height:1.15;letter-spacing:-.02em;margin:14px 0 0}
+  .card{background:#151C2E;border:1px solid var(--line);border-radius:22px;padding:28px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div style="background:radial-gradient(1100px 640px at 84% -10%, rgba(255,107,69,.10), transparent 60%), radial-gradient(1000px 560px at -12% 10%, rgba(255,77,94,.06), transparent 55%), #0A0F1C; min-height:100vh; color:#F3F6FB; font-family:'Inter Tight',system-ui,-apple-system,sans-serif; font-size:17px; line-height:1.6;">
+
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="intrvue.ai home">
+        <img class="brand-logo" src="/lovable-uploads/logo.png" alt="intrvue.ai" />
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#how">How it works</a>
+        <a href="/medicine">Medicine</a>
+        <a href="/faq">FAQ</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="/auth" class="btn btn-ghost" style="display:inline-flex">Sign in</a>
+        <a href="/admin/medicine-interviews" class="btn btn-primary">Get early access</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/#how">How it works</a>
+      <a href="/medicine">Medicine</a>
+      <a href="/faq">FAQ</a>
+      <a href="/about">About</a>
+      <a href="/auth" class="btn btn-ghost">Sign in</a>
+      <a href="/admin/medicine-interviews" class="btn btn-primary">Get early access</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section style="max-width:900px;margin:0 auto;padding:84px 40px 20px;text-align:center;">
+    <span class="tag"><span class="tag-dot"></span>Early access · Medicine &amp; healthcare admissions</span>
+    <h1 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(32px,5.2vw,54px);line-height:1.08;letter-spacing:-.02em;margin:18px 0 0;">
+      Nobody tells you what an MMI<br />actually feels like.
+    </h1>
+    <p style="color:var(--muted);font-size:19px;line-height:1.7;margin:22px auto 0;max-width:640px;">
+      Not a script to memorise — a live circuit. A character who reacts to what you actually say. A clock that
+      doesn't wait for you to finish your sentence. Most preparation is a question bank. This is the interview.
+    </p>
+    <div style="display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
+      <a href="/admin/medicine-interviews" class="btn btn-primary">Try a station free</a>
+      <a href="#how-mmi-works" class="btn btn-ghost">What actually happens in an MMI →</a>
+    </div>
+    <p style="color:#6C7589;font-size:13.5px;margin-top:18px;">No card needed. Early access — built with real applicants, still finding rough edges.</p>
+  </section>
+
+  <!-- WHAT IS AN MMI -->
+  <section id="how-mmi-works" style="max-width:900px;margin:70px auto 0;padding:0 40px;">
+    <div style="text-align:center;margin-bottom:30px;">
+      <span class="tag"><span class="tag-dot"></span>For anyone who's never sat one</span>
+      <h2 class="h2">What actually happens in an MMI</h2>
+    </div>
+    <p style="color:var(--muted);font-size:17px;line-height:1.75;">
+      Most UK medical schools run a <strong style="color:var(--ink);">Multiple Mini Interview</strong> — not one
+      long conversation, but a circuit of short stations, each testing something different. You get a minute (or
+      nothing at all, depending on the school) to read what's coming, then the clock starts. One station might be
+      an ethical scenario with no right answer. The next might put an actual person in front of you — an anxious
+      patient, a friend who's just told you something they shouldn't have — and how they react depends entirely on
+      what you do. Then the bell goes, whether you've finished your sentence or not, and you move to the next room.
+    </p>
+    <p style="color:var(--muted);font-size:17px;line-height:1.75;margin-top:16px;">
+      The bit almost nobody tells you: <strong style="color:var(--ink);">the format is different at every school.</strong>
+      Manchester gives you zero reading time anywhere in the circuit. Leeds gives you two minutes before every
+      station. Some schools don't run stations at all — Glasgow is a single 30-minute panel. A question bank
+      doesn't prepare you for any of that. A timed, adaptive one does.
+    </p>
+  </section>
+
+  <!-- FEATURE GRID -->
+  <section style="max-width:1100px;margin:64px auto 0;padding:0 40px;">
+    <div class="grid3">
+      <div class="card">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,138,102,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF8A66" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:19px;margin:0 0 8px;">A character, not a question card</h3>
+        <p style="color:var(--muted);font-size:15px;line-height:1.65;margin:0;">
+          Roleplay stations put a real person opposite you — with a mood that changes based on what you say, and
+          information that only comes out if you ask the right way. Reassure them falsely and they get more
+          anxious, not less. Nothing about that can be memorised.
+        </p>
+      </div>
+      <div class="card">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(78,161,255,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4EA1FF" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:19px;margin:0 0 8px;">Timed the way your actual school times it</h3>
+        <p style="color:var(--muted);font-size:15px;line-height:1.65;margin:0;">
+          We checked Leeds's and Manchester's own admissions pages directly — not a coaching site's guess. Leeds:
+          8 stations, reading time before each. Manchester: 5 stations, zero prep, cold start. Practise against
+          the real clock, not an untimed chat.
+        </p>
+      </div>
+      <div class="card">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(52,211,153,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:19px;margin:0 0 8px;">Current affairs that expires on purpose</h3>
+        <p style="color:var(--muted);font-size:15px;line-height:1.65;margin:0;">
+          Health policy moves fast — a government changes, a bill passes, a strike ends. Most "hot topics" lists
+          are written once and go stale. Ours has real expiry dates: a station gets pulled from circulation the
+          moment its facts might mislead you, instead of quietly staying wrong.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHOOL MATCHER MOUNT POINT (real React component, not static HTML) -->
+  <section style="max-width:900px;margin:70px auto 0;padding:0 40px;">
+    <div style="text-align:center;margin-bottom:26px;">
+      <span class="tag"><span class="tag-dot"></span>68 UK course-routes, checked against each school's own page</span>
+      <h2 class="h2">Find out how your school actually runs it</h2>
+      <p style="color:var(--muted);font-size:16px;margin:12px auto 0;max-width:520px;">
+        Search your university below. We'll tell you what's actually published about its format — and which of
+        our practice modes is the closest real match.
+      </p>
+    </div>
+    <div id="medicine-school-matcher-root"></div>
+  </section>
+
+  <!-- HONESTY -->
+  <section style="max-width:760px;margin:70px auto 0;padding:0 40px;">
+    <div class="card" style="padding:36px 40px;">
+      <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:21px;margin:0 0 14px;">What this isn't</h3>
+      <ul style="color:var(--muted);font-size:15.5px;line-height:1.8;margin:0;padding-left:20px;">
+        <li>We don't score eye contact, warmth, or tone — only what's actually said. If a real interviewer would judge your body language, we're honest that we can't.</li>
+        <li>We won't tell you the "correct answer" to an ethics station — there isn't one, and any product that gives you one is teaching you to fail the actual interview.</li>
+        <li>We will never tell you your odds of getting an offer. Nobody has that data, and providers who claim to are making it up.</li>
+        <li>This is early access. Content is being added and reviewed continuously — some stations are still awaiting a clinician's sign-off before we'd call them finished.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="max-width:900px;margin:56px auto 100px;padding:0 40px;">
+    <div style="position:relative;overflow:hidden;border-radius:26px;padding:56px 44px;text-align:center;background:radial-gradient(120% 140% at 50% -20%, rgba(255,90,78,.30), transparent 60%), linear-gradient(180deg,#141d33,#0e1524);border:1px solid rgba(255,255,255,.16);">
+      <h2 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(26px,3.8vw,40px);margin:0;">Sit the interview before you sit the interview.</h2>
+      <p style="color:var(--muted);font-size:17px;margin:14px auto 0;max-width:460px;">
+        Free to start — sign in and try a station. No card needed.
+      </p>
+      <div style="display:flex;gap:14px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
+        <a href="/admin/medicine-interviews" class="btn btn-primary">Try it now</a>
+        <a href="mailto:founders@intrvue.ai" class="btn btn-ghost">Ask us a question</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.09);padding:32px 40px;text-align:center;color:#6C7589;font-size:13.5px;">
+    intrvue.ai · built by two students who've sat the interviews themselves
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var burger = document.getElementById('hamburger'), menu = document.getElementById('mobileMenu');
+    if (burger && menu) {
+      burger.addEventListener('click', function () {
+        var open = menu.style.display === 'flex';
+        menu.style.display = open ? 'none' : 'flex';
+        burger.setAttribute('aria-expanded', String(!open));
+      });
+      menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          menu.style.display = 'none';
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
