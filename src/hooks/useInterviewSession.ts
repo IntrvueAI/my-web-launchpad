@@ -11,6 +11,7 @@ import { useToast } from './use-toast';
 import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
 import { computeStationClock, type StationClockState } from '@/interview/engine/stationClock';
+import { logDebug } from '@/interview/debug/debugBus';
 
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
@@ -131,10 +132,12 @@ export const useInterviewSession = (
   const speak = useCallback(async (say: string) => {
     const client = clientRef.current;
     if (!client || !say?.trim()) return;
+    logDebug({ source: 'anam', kind: 'request', label: 'client.talk()', detail: say });
     try {
       await client.talk(say);
     } catch (err) {
       console.error('Failed to talk:', err);
+      logDebug({ source: 'anam', kind: 'error', label: 'client.talk() failed', detail: (err as Error)?.message || String(err) });
     }
     pushTranscript('assistant', say);
   }, [pushTranscript]);
@@ -147,14 +150,18 @@ export const useInterviewSession = (
     const sessionId = sessionRefRef.current;
     if (!sessionId || brainBusyRef.current) return;
     brainBusyRef.current = true;
+    const requestBody = { sessionId, action, ...payload };
+    logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
-      const res = await brainTurn({ sessionId, action, ...payload });
+      const res = await brainTurn(requestBody);
+      logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
       setBrainUiState(res.uiState);
       await speak(res.say);
       if (res.done) setInterviewComplete(true);
       lastMessageTimeRef.current = Date.now();
     } catch (err) {
       console.error('Brain turn failed:', err);
+      logDebug({ source: 'brain', kind: 'error', label: `interview-brain: ${action} failed`, detail: (err as Error)?.message || String(err) });
       sessionLogger.logError(`Brain turn (${action}) failed: ${(err as Error)?.message || err}`)
         .catch(() => {});
       // A failed 'answer' call must not silently drop what the student just said — put it back

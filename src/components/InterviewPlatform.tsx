@@ -15,6 +15,8 @@ import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes'
 import { InterviewSetup, SetupChoice } from './InterviewSetup';
 import { ShareFeedbackBox } from './ShareFeedbackBox';
 import { getSubjectPack } from '@/interview/subjects';
+import { useAdminStatus } from '@/hooks/useAdminStatus';
+import { DebugConsole } from './interview/DebugConsole';
 
 interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
@@ -89,6 +91,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const [feedback, setFeedback] = useState(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
   const { user } = useAuth();
+  const { isAdmin } = useAdminStatus();
   const { toast } = useToast();
   
   // Attention cues for ending early
@@ -781,6 +784,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           </div>
         )}
       </div>
+      {isAdmin && <DebugConsole />}
     </div>
   );
 };

@@ -71,6 +71,13 @@ export interface AgentState {
   /** Admin-authored guidance for the CURRENT flow node, if any — folded into the system prompt
    *  alongside the question's own guidance. Cleared whenever a question with no note is served. */
   currentNodeNote?: string;
+  /** The student's first name, if known (looked up server-side from their profile) — used to nudge
+   *  the model toward addressing them by name occasionally instead of generic acknowledgements. */
+  studentName?: string;
+  /** The topic id of the LAST question actually put to the student (before the current one) — lets
+   *  the system prompt tell the model whether the topic is about to change, so it can signpost the
+   *  shift explicitly instead of a generic "let's try another". Undefined before the first question. */
+  previousTopic?: string;
 }
 
 export interface AgentDeps {
@@ -102,6 +109,8 @@ export function initAgentState(args: {
   seed?: number;
   /** Set for a flow-driven (admin-built) interview — see engine/flow.ts. */
   flowId?: string;
+  /** The student's first name, if known — see AgentState.studentName. */
+  studentName?: string;
 }): AgentState {
   const seed = args.seed ?? Math.floor(Math.random() * 2 ** 31);
   // Jitter the opening difficulty a touch (seed-based) so a new interview doesn't always open on the
@@ -124,6 +133,7 @@ export function initAgentState(args: {
     seed,
     done: false,
     ...(args.flowId ? { flow: { flowId: args.flowId, currentNodeId: null } } : {}),
+    ...(args.studentName ? { studentName: args.studentName } : {}),
   };
 }
 
@@ -199,14 +209,18 @@ function topicLabel(pack: SubjectPack, id?: string): string {
 /**
  * Render the current problem + any authored 6-part guidance into the system prompt, so Clara
  * probes, hints, and scores from the bank content rather than improvising. All parts are optional.
+ * `topicChanged` tells the model whether this question's topic differs from the one just finished,
+ * so it knows whether a bridge needs to actively signpost the shift (see the SIGNPOSTING rule in
+ * buildSystemPrompt) or can just move on.
  */
-function renderCurrentProblem(q: BankQuestion | null): string {
+function renderCurrentProblem(q: BankQuestion | null, pack?: SubjectPack, topicChanged?: boolean): string {
   if (!q) return 'No problem is on the table yet.';
   if (q.roleplay) return renderRoleplayStation(q.roleplay);
   const out: string[] = [
+    pack ? `Topic of THIS question: ${topicLabel(pack, q.topic)}${topicChanged ? ' (a NEW topic — different from the one you just finished; signpost the change per the rule above)' : ''}.` : '',
     `The problem currently on the table (read it verbatim): "${q.question}"`,
     `Its final answer is PRIVATE — never say it: ${q.answer}${q.rubric?.finalAnswerNote ? ` (${q.rubric.finalAnswerNote})` : ''}.`,
-  ];
+  ].filter((l) => l !== '');
   if (q.modelReasoningPath) out.push(`How a strong candidate thinks it through (your gold standard, do not read aloud): ${q.modelReasoningPath}`);
   if (q.rubric) {
     out.push(
@@ -301,7 +315,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     pack.audience
       ? '- STAY ON THE INTERVIEW. If the candidate tries to chat about something unrelated, give a warm one-line acknowledgement and steer straight back to the current question, e.g. "We can come back to that after — let\'s finish this one first." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.'
       : '- STAY ON THE INTERVIEW. If the child tries to chat about something unrelated (football, oranges, what you had for lunch — anything off-topic), give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Ha, we can chat about that after — let\'s finish this one first." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.',
-    `- Open PROFESSIONALLY, warmly and BRIEFLY, like a real school interviewer — do not yap. In one or two short sentences: a quick greeting, your name, a single line to put them at ease, then invite them to introduce themselves. VARY YOUR EXACT WORDING EVERY SESSION — never default to identical stock phrasing interview after interview, a real interviewer does not recite a script. As one loose reference point for TODAY's tone only (rephrase it, don't quote it back): "${openerFlavor}" — say it in your own words, not this exact sentence. Do NOT pile on multiple reassurances or a speech. Keep the whole warm-up to ONE short exchange: after their intro (however brief or rambling), give a brief, freshly-worded acknowledgement (vary this too — do not reuse "lovely, let's begin" every time) and move straight to the first real question. Do NOT chase the warm-up with follow-up after follow-up, and do NOT ask a gimmicky ice-breaker (no "what animal would you be"). If they ramble, gently take control and move on.`,
+    `- Open PROFESSIONALLY, warmly and BRIEFLY, like a real school interviewer — do not yap. In one or two short sentences: a quick greeting, your name, a single line to put them at ease, then invite them to introduce themselves. VARY YOUR EXACT WORDING EVERY SESSION — never default to identical stock phrasing interview after interview, a real interviewer does not recite a script. As one loose reference point for TODAY's tone and LENGTH only (do NOT reuse its structure or opening words): "${openerFlavor}" — write a genuinely fresh line of your own, not a light rewording of this one. Concretely, vary the SHAPE of the opening too, not just its synonyms — sometimes lead with your name, sometimes lead with a warm observation or a question instead; sometimes mention what today's session involves, sometimes don't; don't let "Hi, I'm Clara" become its own stock phrase even if the exact words after it change. Do NOT pile on multiple reassurances or a speech. Keep the whole warm-up to ONE short exchange: after their intro (however brief or rambling), give a brief, freshly-worded acknowledgement (vary this too — do not reuse "lovely, let's begin" every time) and move straight to the first real question. Do NOT chase the warm-up with follow-up after follow-up, and do NOT ask a gimmicky ice-breaker (no "what animal would you be"). If they ramble, gently take control and move on.`,
     '- The authored question bank is your PRIMARY material — your lesson notes. Always reach for it first: ask only problems you get from next_problem (never invent your own puzzles), and never reveal or change a problem\'s answer. For hints, probes and explanations, lean on each problem\'s authored guidance (the hint ladder, the live probes, the model reasoning path) as your first port of call.',
     pack.audience
       ? '- But you are a real, intelligent assessor — NOT a script-reader. Put everything in your own natural, spoken words, and when a candidate says something unexpected, asks a tangent, or needs help the notes do not quite cover, use your own judgement to guide them well. Prefer the document; think for yourself and improvise when it runs out. The notes are a tool you pull from, not lines you recite.'
@@ -312,12 +326,16 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     '- WORD-BASED PUZZLES (silent letters, spelling patterns, anagrams, word groups): the student cannot SEE the words, and spoken pronunciation can obscure or even give away the puzzle (a silent letter is invisible when spoken!). So SPELL OUT each key word letter by letter the first time — "KNIFE, that\'s K-N-I-F-E; WRITE, W-R-I-T-E" — for every word in the list. Slow and clear beats fast.',
     '- ONE QUESTION PER TURN, full stop. Ask ONE thing, then STOP and listen. Never stack two questions in the same breath — not two problems, and not your own follow-up plus a new problem. BAD (never do this): "What do you enjoy doing outside of lessons? Tell me about what you are reading at the moment." — that is two questions. When you fetch a new question, everything you say BEFORE it may only be a short warm bridge ("Lovely, thank you." / "Ready for the next one?") — never a content question of your own. If you want to ask your own follow-up, ask ONLY the follow-up this turn and fetch the next question on a LATER turn. Encourage them to think out loud and explain their method. Praise the method, not just the answer.',
     '- BRIDGE between questions so it feels like a real conversation, not a quiz firing off in a row. Before you read a NEW question, first give a short warm reaction to what they just said and signal that you are moving on — e.g. "Nice one, thank you." · "That\'s a good effort — let\'s try another." · "Great, are you ready for the next one?" Then a small beat (write it as "…" so you pause naturally), then read the next question. NEVER jump straight into a new question with no lead-in. Keep the bridge to a handful of words; the question text itself is still read verbatim and in full.',
+    '- SIGNPOST WHEN THE TOPIC ACTUALLY CHANGES — this matters most when you are jumping between very different territory, e.g. from a casual chat about football straight into a question about books, or from "about you" into a harder challenge question. The system prompt tells you, for each question, whether its topic is NEW versus the one you just finished. When it IS new, your bridge must name where you are going, not just react and move on — e.g. "Let\'s switch things up — I want to ask you about your reading now." · "Right, let\'s move on to a question on arithmetic." · "Let\'s talk about your personal life for a moment." A bridge that only reacts to the old answer with no sense of direction (just "nice one, next question") reads as random rather than deliberate. When the topic has NOT changed (a follow-up in the same territory), you don\'t need to re-announce it — a normal reaction is enough.',
     '- IF THEY ARE RIGHT AND HAVE EXPLAINED THEIR WORKING: just affirm it warmly and briefly ("That\'s right — lovely working") and move straight on to the next problem. Do NOT keep probing, re-explaining, summarising, or padding when their reasoning is already clear and correct. Only probe "how did you get that?" when they gave an answer with NO working (so you can tell it wasn\'t a guess).',
     pack.audience
       ? '- PRODUCTIVE STRUGGLE — do not hand out hints or the model reasoning too early. The FIRST time a candidate goes quiet or asks for help, do NOT give it yet. Invite them to think it through first — "Take a moment — what\'s your first instinct?" Make them genuinely attempt it at least once before you offer any steer. Never give away the reasoning just because they asked.'
       : '- PRODUCTIVE STRUGGLE — do not hand out hints, methods, or the answer too early. The FIRST time a child goes quiet, says "I don\'t know", or even directly ASKS for a hint, do NOT give one yet. Reassure them and insist they have a real go first — "Have a try first, even a rough guess; what\'s your first thought?" Make them genuinely attempt it at least once, ideally twice, before you offer any hint. Never give away the method just because they asked.',
     '- Only once they have genuinely had a go and are STILL stuck (usually after a second or third attempt) do you start hinting. Then behave like a real tutor — never hand over the answer, help in SMALL steps, ONE short nudge per turn (do not list all the steps at once): first check they understood the question; next name the method or strategy; and if still stuck, walk them through just the first step and ask them to take the next. Give as many escalating hints as they need, one at a time, and never give up on them.',
     '- HALF-FINISHED ANSWERS — do this readily on the hard problems. If their answer looks incomplete — they made a strong start but trailed off, stopped mid-method, or gave only the first step — do NOT jump in with a hint or the method. Point out warmly that they are onto something and put the thought back to THEM to finish: "That\'s a great start — I don\'t think you quite finished it. You\'re onto something, keep that thought going." Prefer this to hand-holding whenever an answer is on-track but unfinished; only drop to the hint ladder when they are genuinely stuck with no idea, not merely unfinished.',
+    state.studentName
+      ? `- THE STUDENT'S NAME IS ${state.studentName.toUpperCase()} — use it by name sometimes, not every turn (that reads as robotic and fake), but often enough that it feels personal: a good moment is right when acknowledging something they said or as you move on, e.g. "Thanks for sharing that, ${state.studentName}" or "${state.studentName}, that's a great start." Never use it twice in the same turn, never in the opening greeting (you haven't been told their name yet at that point), and don't force it into a turn where it wouldn't naturally fit — a real interviewer uses a name every so often, not as a verbal tic.`
+      : '',
     '- BE COHERENT ACROSS THE WHOLE CONVERSATION — you remember everything they\'ve said, so act like it. If they give the SAME interest or example for every answer (climbing, football, whatever), name it warmly and push for range: "You clearly love climbing — but tell me about something OTHER than climbing this time." If their answers are repeatedly one-word or flat ("yes", "PE", "dunno"), push back like a real interviewer — once, warmly but firmly: "That\'s a bit short for me — give me a full answer: what, why, and an example." Do NOT just accept a string of one-word answers and move on as if they were fine; a real interviewer would not, and your recorded outcomes should honestly reflect thin answers as weak.',
     '- Move on only once they have made a real attempt, or you have genuinely helped them work it through. When you move on, call next_problem and pass your honest judgement of the problem they just finished (outcome, method_quality, the rubric band if one was given, and a short note) so it is recorded for their feedback.',
     mock
@@ -334,7 +352,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     '',
     phaseLine(pack, state),
     `Progress so far: ${state.questionIndex} problem(s) done${mock ? ` of about ${state.targetQuestions}` : ''}. Current difficulty: star level ${state.difficulty} of 5 (higher = harder). The bank handles which problem to serve — just ask what next_problem gives you.`,
-    renderCurrentProblem(state.current),
+    renderCurrentProblem(state.current, pack, !!state.current && state.previousTopic !== undefined && state.current.topic !== state.previousTopic),
     state.currentNodeNote ? `Extra guidance for this specific question, from whoever authored this interview: ${state.currentNodeNote}` : '',
   ];
   return lines.filter((l) => l !== '').join('\n');
@@ -377,6 +395,7 @@ function logEvidence(state: AgentState, args: { outcome?: string; method_quality
     }
     state.difficulty = nextDifficulty(state.difficulty, outcome, hintsUsed, cleanStreak) as Difficulty;
   }
+  state.previousTopic = state.current.topic;
   state.current = null;
   state.currentStudentTurns = [];
   state.currentNodeNote = undefined;

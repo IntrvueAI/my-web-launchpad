@@ -15,6 +15,8 @@ import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes'
 import { InterviewSetup, SetupChoice } from './InterviewSetup';
 import { ShareFeedbackBox } from './ShareFeedbackBox';
 import { getSubjectPack } from '@/interview/subjects';
+import { useAdminStatus } from '@/hooks/useAdminStatus';
+import { DebugConsole } from './interview/DebugConsole';
 
 interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
@@ -65,13 +67,13 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
     try { return localStorage.getItem('intrvue-ptt') === '1'; } catch { return false; }
   });
   const [pttHeld, setPttHeld] = useState(false);
-  const pttMuteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [typeMode, setTypeMode] = useState(false);
   const [typedText, setTypedText] = useState('');
   const [feedback, setFeedback] = useState(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
+  const { isAdmin } = useAdminStatus();
 
   const [highlightEnd, setHighlightEnd] = useState(false);
   const [attentionNudged, setAttentionNudged] = useState(false);
@@ -346,7 +348,6 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
 
   const pttStart = useCallback(() => {
     if (!pushToTalk || !isStreaming) return;
-    if (pttMuteTimerRef.current) { clearTimeout(pttMuteTimerRef.current); pttMuteTimerRef.current = null; }
     setPttHeld(true);
     setMicMuted(false);
   }, [pushToTalk, isStreaming, setMicMuted]);
@@ -354,13 +355,10 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
   const pttEnd = useCallback(() => {
     if (!pushToTalk) return;
     setPttHeld(false);
-    if (pttMuteTimerRef.current) clearTimeout(pttMuteTimerRef.current);
-    // Same 350ms grace period as the mute delay below — gives Deepgram time to finalize whatever
-    // was said right up to release before we treat the held turn as complete.
-    pttMuteTimerRef.current = setTimeout(() => {
-      setMicMuted(true);
-      flushPushToTalkTurn();
-    }, 350);
+    // Keep the mic live through the finalize round-trip so the last word(s) aren't cut off —
+    // flushPushToTalkTurn actively asks Deepgram to finalize and waits for it (bounded at 500ms),
+    // rather than us guessing a fixed delay was long enough. Only mute once that's actually settled.
+    flushPushToTalkTurn().finally(() => setMicMuted(true));
   }, [pushToTalk, setMicMuted, flushPushToTalkTurn]);
 
   useEffect(() => {
@@ -387,8 +385,6 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
       window.removeEventListener('blur', cancel);
     };
   }, [pushToTalk, isStreaming, typeMode, pttStart, pttEnd]);
-
-  useEffect(() => () => { if (pttMuteTimerRef.current) clearTimeout(pttMuteTimerRef.current); }, []);
 
   const toggleFocusMode = useCallback(async () => {
     const next = !hideTranscript;
@@ -711,6 +707,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
           </div>
         )}
       </div>
+      {isAdmin && <DebugConsole />}
     </div>
   );
 };

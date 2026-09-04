@@ -10,6 +10,10 @@ export interface DeepgramMicCallbacks {
    *  actually stopped talking — this is the real "their turn is over" signal. */
   onTurnEnd: () => void;
   onError: (message: string) => void;
+  /** Fires when Deepgram acknowledges a finalize() request by flushing buffered audio. NOT
+   *  guaranteed to fire — Deepgram only sends this "when there is a noticeable amount of audio
+   *  buffered", so callers must not block on it alone; treat it as a fast-path, not a promise. */
+  onFinalizeAck?: () => void;
 }
 
 const PAUSE_MS = 1200; // tuned via the STT bake-off's Test 2 — good balance for kids thinking mid-answer
@@ -59,6 +63,7 @@ export function useDeepgramMic() {
         const msg = JSON.parse(event.data);
         if (msg.error) { callbacks.onError(msg.error); return; }
         if (msg.type === 'UtteranceEnd') { callbacks.onTurnEnd(); return; }
+        if (msg.from_finalize) { callbacks.onFinalizeAck?.(); return; }
         const alt = msg?.channel?.alternatives?.[0];
         if (!alt?.transcript) return;
         if (msg.is_final) {
@@ -117,10 +122,21 @@ export function useDeepgramMic() {
     mutedRef.current = muted;
   }, []);
 
+  /** Ask Deepgram to immediately finalize whatever audio it's still holding, without closing the
+   *  connection — see https://developers.deepgram.com/docs/finalize. Used on push-to-talk release:
+   *  without this, the trailing word(s) of a held answer can be lost, because Deepgram's own
+   *  silence-based endpointing needs up to `pauseMs` of continued audio to decide a segment is
+   *  done — audio that never arrives once we stop sending on release. */
+  const finalize = useCallback(() => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ type: 'Finalize' }));
+    }
+  }, []);
+
   /** Called by the peer-audio watcher (useInterviewSessionV2) while Clara is audibly speaking. */
   const setPeerActive = useCallback((active: boolean) => {
     peerActiveRef.current = active;
   }, []);
 
-  return { start, stop, setMuted, setPeerActive };
+  return { start, stop, setMuted, setPeerActive, finalize };
 }

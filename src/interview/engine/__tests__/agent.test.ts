@@ -255,4 +255,28 @@ describe('LLM-driven agent', () => {
     expect(lastUserMessage?.content).toContain('station clock has just run out');
     expect(lastUserMessage?.content).toContain('do not apologise');
   });
+
+  it('tells the model the student\'s name when known, and says nothing about it when unknown', () => {
+    const named = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1, studentName: 'Dillon' });
+    expect(named.studentName).toBe('Dillon');
+    const namedPrompt = buildSystemPrompt(mathsPack, named);
+    expect(namedPrompt).toContain('DILLON');
+    expect(namedPrompt).toContain('Thanks for sharing that, Dillon');
+
+    const anon = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    expect(anon.studentName).toBeUndefined();
+    const anonPrompt = buildSystemPrompt(mathsPack, anon);
+    expect(anonPrompt).not.toContain("STUDENT'S NAME");
+  });
+
+  it('flags a genuine topic change so the model is told to signpost it, but not a same-topic follow-up', () => {
+    let state = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    state = { ...state, current: BANK[0], previousTopic: 'about-you' }; // BANK[0].topic = 'arithmetic'
+    const changedPrompt = buildSystemPrompt(mathsPack, state);
+    expect(changedPrompt).toContain('a NEW topic');
+
+    state = { ...state, previousTopic: 'arithmetic' }; // same topic as BANK[0]
+    const samePrompt = buildSystemPrompt(mathsPack, state);
+    expect(samePrompt).not.toContain('a NEW topic');
+  });
 });

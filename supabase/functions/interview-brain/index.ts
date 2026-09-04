@@ -64,6 +64,13 @@ function safeParseArgs(s: string): Record<string, any> {
   }
 }
 
+/** First name only (e.g. "Dillon Smith" -> "Dillon") — a full name read aloud mid-sentence sounds
+ *  stilted, and this is looked up server-side from the account's own profile, never client input. */
+function firstNameFrom(fullName: string | null | undefined): string | undefined {
+  const first = (fullName || "").trim().split(/\s+/)[0];
+  return first || undefined;
+}
+
 /** OpenAI chat-completions with tool calling. gpt-4.1 is used (confirmed available on this key). */
 const chat: ChatComplete = async ({ messages, tools }) => {
   const resp = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -172,7 +179,9 @@ serve(async (req) => {
 
     let state: AgentState;
     if (action === "start" || !session.engine_state) {
-      state = initAgentState({ subject, mode: (body.mode as Mode) ?? "mock", topic: body.topic, pack });
+      const { data: profile } = await admin.from("profiles").select("full_name").eq("id", userId).maybeSingle();
+      const studentName = firstNameFrom(profile?.full_name);
+      state = initAgentState({ subject, mode: (body.mode as Mode) ?? "mock", topic: body.topic, pack, studentName });
     } else {
       state = session.engine_state as AgentState;
     }

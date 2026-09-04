@@ -9,6 +9,7 @@ import { useDeepgramMic } from './useDeepgramMic';
 import { useToast } from './use-toast';
 import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
+import { logDebug } from '@/interview/debug/debugBus';
 
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
 
@@ -42,8 +43,10 @@ interface UseInterviewSessionV2Return {
   setMicMuted: (muted: boolean) => void;
   /** While true, Deepgram's own turn-end (VAD) is ignored — only flushPushToTalkTurn() submits. */
   setPushToTalkMode: (active: boolean) => void;
-  /** Called on push-to-talk release: submits whatever's been said as ONE turn. */
-  flushPushToTalkTurn: () => void;
+  /** Called on push-to-talk release: asks Deepgram to finalize any trailing audio, briefly waits
+   *  for it, then submits whatever's been said as ONE turn. Resolves once the turn has been read
+   *  out of the buffer, so callers can safely mute the mic only after this settles. */
+  flushPushToTalkTurn: () => Promise<void>;
   sendTypedMessage: (text: string) => void;
   skipQuestion: () => Promise<void>;
   switchTopic: (topic: string) => Promise<void>;
@@ -91,6 +94,8 @@ export const useInterviewSessionV2 = (
   // see flushPushToTalkTurn, called only on release.
   const pushToTalkModeRef = useRef(false);
   const peerAudioRef = useRef<{ ctx: AudioContext; raf: number } | null>(null);
+  // Resolves the in-flight flushPushToTalkTurn()'s wait for Deepgram's finalize ack — see onFinalizeAck below.
+  const finalizeAckRef = useRef<(() => void) | null>(null);
 
   const sessionLogger = useInterviewSessionLogger();
   const { toast } = useToast();
@@ -106,10 +111,12 @@ export const useInterviewSessionV2 = (
   const speak = useCallback(async (say: string) => {
     const client = clientRef.current;
     if (!client || !say?.trim()) return;
+    logDebug({ source: 'anam', kind: 'request', label: 'client.talk()', detail: say });
     try {
       await client.talk(say);
     } catch (err) {
       console.error('Failed to talk:', err);
+      logDebug({ source: 'anam', kind: 'error', label: 'client.talk() failed', detail: (err as Error)?.message || String(err) });
     }
     pushTranscript('assistant', say);
   }, [pushTranscript]);
@@ -121,14 +128,18 @@ export const useInterviewSessionV2 = (
     const sessionId = sessionRefRef.current;
     if (!sessionId || brainBusyRef.current) return;
     brainBusyRef.current = true;
+    const requestBody = { sessionId, action, ...payload };
+    logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
-      const res = await brainTurn({ sessionId, action, ...payload });
+      const res = await brainTurn(requestBody);
+      logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
       setBrainUiState(res.uiState);
       await speak(res.say);
       if (res.done) setInterviewComplete(true);
       lastMessageTimeRef.current = Date.now();
     } catch (err) {
       console.error('Brain turn failed:', err);
+      logDebug({ source: 'brain', kind: 'error', label: `interview-brain: ${action} failed`, detail: (err as Error)?.message || String(err) });
       sessionLogger.logError(`Brain turn (${action}) failed: ${(err as Error)?.message || err}`)
         .catch(() => {});
       // A failed 'answer' call must not silently drop what the student just said — put it back
@@ -305,6 +316,7 @@ export const useInterviewSessionV2 = (
         onSegmentFinal: (text) => {
           utteranceBufferRef.current = (utteranceBufferRef.current + ' ' + text).trim();
           setLiveCaption('');
+          logDebug({ source: 'deepgram', kind: 'info', label: 'segment finalized', detail: text });
         },
         onTurnEnd: () => {
           // In push-to-talk mode the button is the turn boundary, not Deepgram's VAD — keep
@@ -313,11 +325,17 @@ export const useInterviewSessionV2 = (
           const text = utteranceBufferRef.current.trim();
           utteranceBufferRef.current = '';
           setLiveCaption('');
+          logDebug({ source: 'deepgram', kind: 'info', label: 'turn end (VAD)', detail: text || '(empty)' });
           if (text) handleStudentTurn(text);
         },
         onError: (message) => {
           console.error('Deepgram mic error:', message);
+          logDebug({ source: 'deepgram', kind: 'error', label: 'mic error', detail: message });
           sessionLogger.logError(`Deepgram error: ${message}`).catch(() => {});
+        },
+        onFinalizeAck: () => {
+          logDebug({ source: 'deepgram', kind: 'info', label: 'finalize ack received' });
+          finalizeAckRef.current?.();
         },
       });
 
@@ -330,6 +348,7 @@ export const useInterviewSessionV2 = (
     } catch (err) {
       console.error('❌ Failed to start interview (v2):', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to start interview';
+      logDebug({ source: 'session', kind: 'error', label: 'startInterview failed', detail: errorMessage });
       sessionLogger.logError(`Failed to start interview: ${errorMessage}`).catch(() => {});
       setError(errorMessage);
       setSessionStatus('error');
@@ -450,12 +469,27 @@ export const useInterviewSessionV2 = (
     pushToTalkModeRef.current = active;
   }, []);
 
-  const flushPushToTalkTurn = useCallback(() => {
+  const flushPushToTalkTurn = useCallback(async () => {
+    // Actively ask Deepgram to finalize instead of just hoping enough time has passed — its own
+    // silence-based endpointing (utterance_end_ms) never fires here because we're about to mute the
+    // mic, so it would never see the further silence it needs to decide the trailing words are done.
+    logDebug({ source: 'deepgram', kind: 'request', label: 'push-to-talk release: finalize()' });
+    await new Promise<void>((resolve) => {
+      let settled = false;
+      const settle = () => { if (!settled) { settled = true; resolve(); } };
+      finalizeAckRef.current = settle;
+      deepgramMic.finalize();
+      // Ack isn't guaranteed (Deepgram only sends it when there was real buffered audio to flush),
+      // so this bounded fallback is what actually guarantees we never hang — 500ms comfortably
+      // covers normal finalize latency without making every push-to-talk release feel laggy.
+      setTimeout(settle, 500);
+    });
+    finalizeAckRef.current = null;
     const text = utteranceBufferRef.current.trim();
     utteranceBufferRef.current = '';
     setLiveCaption('');
     if (text) handleStudentTurn(text);
-  }, [handleStudentTurn]);
+  }, [handleStudentTurn, deepgramMic]);
 
   return {
     isConnected,
