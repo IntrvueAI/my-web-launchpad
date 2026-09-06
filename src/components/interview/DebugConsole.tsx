@@ -1,20 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Button } from '@/components/ui/button';
-import { Terminal, X, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
-import { useDebugLog } from '@/interview/debug/useDebugLog';
-import { clearDebugLog, type DebugEntry } from '@/interview/debug/debugBus';
+import {
+  Terminal, X, Trash2, ChevronDown, ChevronUp, Pause, Play, Download,
+  CircleAlert, TriangleAlert, Info, ArrowRight, ArrowLeft,
+} from 'lucide-react';
+import { useDebugLog, useDebugPaused } from '@/interview/debug/useDebugLog';
+import { clearDebugLog, setDebugPaused, type DebugEntry, type DebugSource } from '@/interview/debug/debugBus';
 
-const SOURCE_COLOR: Record<DebugEntry['source'], string> = {
-  brain: '#7DD3FC', // sky — the ChatGPT/edge-function call
-  anam: '#C4B5FD', // violet — the avatar (client.talk())
-  deepgram: '#86EFAC', // green — mic / transcription
-  session: '#FCD34D', // amber — connection/lifecycle
+const SOURCES: DebugSource[] = ['brain', 'anam', 'deepgram', 'session'];
+
+const SOURCE_COLOR: Record<DebugSource, string> = {
+  brain: '#7DD3FC',
+  anam: '#C4B5FD',
+  deepgram: '#86EFAC',
+  session: '#FCD34D',
 };
-const KIND_COLOR: Record<DebugEntry['kind'], string> = {
-  request: '#7DD3FC',
-  response: '#86EFAC',
-  error: '#FCA5A5',
-  info: '#94A3B8',
+const KIND_META: Record<DebugEntry['kind'], { color: string; icon: typeof CircleAlert }> = {
+  request: { color: '#7DD3FC', icon: ArrowRight },
+  response: { color: '#86EFAC', icon: ArrowLeft },
+  error: { color: '#FCA5A5', icon: CircleAlert },
+  info: { color: '#94A3B8', icon: Info },
 };
 
 function formatTime(ts: number): string {
@@ -22,11 +27,20 @@ function formatTime(ts: number): string {
   return d.toLocaleTimeString('en-GB', { hour12: false }) + '.' + String(d.getMilliseconds()).padStart(3, '0');
 }
 
+function durationOf(entry: DebugEntry): number | null {
+  const d = entry.detail as any;
+  return typeof d?.durationMs === 'number' ? d.durationMs : null;
+}
+
 function DetailLine({ entry }: { entry: DebugEntry }) {
   const [open, setOpen] = useState(false);
   const hasDetail = entry.detail !== undefined;
+  const kindMeta = KIND_META[entry.kind];
+  const KindIcon = kindMeta.icon;
+  const ms = durationOf(entry);
+
   return (
-    <div style={{ borderBottom: '1px solid rgba(255,255,255,.06)', padding: '4px 8px' }}>
+    <div style={{ borderBottom: '1px solid rgba(255,255,255,.06)', padding: '5px 8px' }}>
       <div
         style={{ display: 'flex', gap: 8, alignItems: 'baseline', cursor: hasDetail ? 'pointer' : 'default' }}
         onClick={() => hasDetail && setOpen((o) => !o)}
@@ -35,8 +49,15 @@ function DetailLine({ entry }: { entry: DebugEntry }) {
         <span style={{ color: SOURCE_COLOR[entry.source], flexShrink: 0, fontWeight: 700 }}>
           [{entry.source}]
         </span>
-        <span style={{ color: KIND_COLOR[entry.kind], flexShrink: 0 }}>{entry.kind}</span>
+        <span style={{ color: kindMeta.color, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <KindIcon size={11} /> {entry.kind}
+        </span>
         <span style={{ color: '#E2E8F0', overflowWrap: 'anywhere' }}>{entry.label}</span>
+        {ms !== null && (
+          <span style={{ color: ms > 2000 ? '#FCA5A5' : '#64748B', flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>
+            {ms}ms
+          </span>
+        )}
         {hasDetail && (
           <span style={{ color: '#475569', marginLeft: 'auto', flexShrink: 0 }}>{open ? '▲' : '▼'}</span>
         )}
@@ -62,6 +83,23 @@ function DetailLine({ entry }: { entry: DebugEntry }) {
   );
 }
 
+function chipStyle(active: boolean, color: string): CSSProperties {
+  return {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 5,
+    padding: '3px 9px',
+    borderRadius: 999,
+    fontSize: 11,
+    fontWeight: 600,
+    cursor: 'pointer',
+    border: `1px solid ${active ? color : 'rgba(255,255,255,.12)'}`,
+    color: active ? color : '#64748B',
+    background: active ? `${color}1A` : 'transparent',
+    whiteSpace: 'nowrap',
+  };
+}
+
 /**
  * Live debug terminal for interview testing — shows every request/response to the interview-brain
  * (the "ChatGPT" calls), every line handed to Anam via client.talk(), and Deepgram mic/turn-detection
@@ -70,10 +108,38 @@ function DetailLine({ entry }: { entry: DebugEntry }) {
  */
 export function DebugConsole() {
   const entries = useDebugLog();
+  const paused = useDebugPaused();
   const [open, setOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
+  const [activeSources, setActiveSources] = useState<Set<DebugSource>>(new Set(SOURCES));
+  const [errorsOnly, setErrorsOnly] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const errorCount = entries.filter((e) => e.kind === 'error').length;
+
+  const filtered = useMemo(
+    () => entries.filter((e) => activeSources.has(e.source) && (!errorsOnly || e.kind === 'error')),
+    [entries, activeSources, errorsOnly],
+  );
+
+  const toggleSource = (s: DebugSource) => {
+    setActiveSources((prev) => {
+      const next = new Set(prev);
+      if (next.has(s)) next.delete(s); else next.add(s);
+      return next.size === 0 ? new Set(SOURCES) : next; // never let it go fully empty
+    });
+  };
+
+  const handleExport = () => {
+    const blob = new Blob([JSON.stringify(filtered, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `interview-debug-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -89,7 +155,7 @@ export function DebugConsole() {
   useEffect(() => {
     if (!open || minimized) return;
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  }, [entries, open, minimized]);
+  }, [filtered, open, minimized]);
 
   if (!open) {
     return (
@@ -107,6 +173,7 @@ export function DebugConsole() {
             {errorCount}
           </span>
         )}
+        {paused && <Pause className="w-3 h-3" style={{ color: '#FCD34D' }} />}
       </Button>
     );
   }
@@ -115,8 +182,8 @@ export function DebugConsole() {
     <div
       className="fixed bottom-4 right-4 z-[60] flex flex-col shadow-2xl"
       style={{
-        width: 'min(560px, calc(100vw - 32px))',
-        height: minimized ? 'auto' : 'min(420px, 60vh)',
+        width: 'min(620px, calc(100vw - 32px))',
+        height: minimized ? 'auto' : 'min(480px, 65vh)',
         background: '#0B1120',
         border: '1px solid rgba(255,255,255,.12)',
         borderRadius: 10,
@@ -137,8 +204,23 @@ export function DebugConsole() {
       >
         <Terminal className="w-3.5 h-3.5" style={{ color: '#94A3B8' }} />
         <span style={{ color: '#E2E8F0', fontWeight: 600 }}>Interview debug console</span>
-        <span style={{ color: '#475569' }}>· {entries.length} events</span>
+        <span style={{ color: '#475569' }}>· {filtered.length}/{entries.length} events</span>
+        {paused && <span style={{ color: '#FCD34D', fontWeight: 600 }}>· PAUSED</span>}
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 4 }}>
+          <button
+            onClick={() => setDebugPaused(!paused)}
+            title={paused ? 'Resume capture' : 'Pause capture'}
+            style={{ background: 'none', border: 'none', color: paused ? '#FCD34D' : '#94A3B8', cursor: 'pointer', padding: 4 }}
+          >
+            {paused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
+          </button>
+          <button
+            onClick={handleExport}
+            title="Export filtered events as JSON"
+            style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', padding: 4 }}
+          >
+            <Download className="w-3.5 h-3.5" />
+          </button>
           <button
             onClick={() => clearDebugLog()}
             title="Clear"
@@ -163,13 +245,30 @@ export function DebugConsole() {
         </div>
       </div>
       {!minimized && (
-        <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto' }}>
-          {entries.length === 0 ? (
-            <div style={{ color: '#475569', padding: 12 }}>Waiting for interview activity…</div>
-          ) : (
-            entries.map((e) => <DetailLine key={e.id} entry={e} />)
-          )}
-        </div>
+        <>
+          <div style={{ display: 'flex', gap: 6, padding: '7px 10px', borderBottom: '1px solid rgba(255,255,255,.06)', flexWrap: 'wrap' }}>
+            {SOURCES.map((s) => (
+              <span key={s} style={chipStyle(activeSources.has(s), SOURCE_COLOR[s])} onClick={() => toggleSource(s)}>
+                {s}
+              </span>
+            ))}
+            <span
+              style={{ ...chipStyle(errorsOnly, '#FCA5A5'), marginLeft: 'auto' }}
+              onClick={() => setErrorsOnly((v) => !v)}
+            >
+              <TriangleAlert size={11} /> errors only
+            </span>
+          </div>
+          <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto' }}>
+            {filtered.length === 0 ? (
+              <div style={{ color: '#475569', padding: 12 }}>
+                {entries.length === 0 ? 'Waiting for interview activity…' : 'No events match these filters.'}
+              </div>
+            ) : (
+              filtered.map((e) => <DetailLine key={e.id} entry={e} />)
+            )}
+          </div>
+        </>
       )}
     </div>
   );
