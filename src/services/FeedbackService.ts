@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { FeedbackRecord } from '@/models/Feedback';
 
 export interface ProgressSummary {
@@ -66,7 +67,7 @@ export const FeedbackService = {
   },
 
   async submitBugReport(data: BugReportData): Promise<void> {
-    const { error } = await supabase.functions.invoke('send-bug-report', { body: data });
+    const { error } = await invokeEdgeFunction('send-bug-report', { body: data });
     if (error) throw error;
   },
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -99,7 +100,7 @@ export const AdminUserManagement = () => {
     }
 
     try {
-      const { data, error } = await supabase.functions.invoke('admin-credit-management', {
+      const { data, error } = await invokeEdgeFunction('admin-credit-management', {
         body: {
           userId: selectedUser.id,
           action: actionType,

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 /**
  * Receives everything Tavus sends us for a "maths-v2" conversation:
@@ -103,6 +104,12 @@ serve(async (req) => {
 
         if (convoErr || !convo) {
           console.error("No tavus_conversations match for", conversationId, convoErr?.message);
+          logAppEvent("edge:tavus-webhook", {
+            level: "warn",
+            eventType: "no_conversation_match",
+            message: convoErr?.message || `No tavus_conversations row for ${conversationId}`,
+            metadata: { conversationId },
+          }).catch(() => {});
         } else {
           const meta = QUESTION_META[payload.question_id];
           const hasAnswer = (payload.child_final_answer || "").trim().length > 0;
@@ -122,7 +129,16 @@ serve(async (req) => {
             hints_used: payload.hints_given ?? 0,
             student_answer: payload.child_final_answer,
           });
-          if (insertErr) console.error("Failed to insert question_attempts row:", insertErr.message);
+          if (insertErr) {
+            console.error("Failed to insert question_attempts row:", insertErr.message);
+            logAppEvent("edge:tavus-webhook", {
+              level: "error",
+              eventType: "question_attempt_insert_failed",
+              message: insertErr.message,
+              userId: convo.user_id,
+              metadata: { conversationId, questionId: payload.question_id },
+            }).catch(() => {});
+          }
         }
       }
 
@@ -151,6 +167,12 @@ serve(async (req) => {
     });
   } catch (err) {
     console.error("tavus-webhook error:", (err as Error)?.message || err);
+    logAppEvent("edge:tavus-webhook", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (err as Error)?.message || String(err),
+      metadata: { stack: (err as Error)?.stack },
+    }).catch(() => {});
     // Still 200 — we never want Tavus retry-storming us over a failure on our side.
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,

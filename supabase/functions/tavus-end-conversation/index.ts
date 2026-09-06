@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 // Ends a live Tavus conversation the caller owns, and marks it/its interview_sessions row
 // completed. tavus-webhook's system.shutdown handler does the same on Tavus's side-effect path,
@@ -18,6 +19,9 @@ const corsHeaders = {
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
+
   try {
     const tavusApiKey = Deno.env.get("TAVUS_API_KEY");
     if (!tavusApiKey || !supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
@@ -35,6 +39,7 @@ serve(async (req) => {
       });
     }
     const user = userData.user;
+    userId = user.id;
 
     const { conversation_id } = await req.json();
     if (!conversation_id || typeof conversation_id !== "string") {
@@ -79,6 +84,14 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("Error in tavus-end-conversation:", (error as Error)?.message || error);
+    logAppEvent("edge:tavus-end-conversation", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (error as Error)?.message || String(error),
+      userId,
+      requestId,
+      metadata: { stack: (error as Error)?.stack },
+    }).catch(() => {});
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },

@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -31,6 +32,9 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('🔧 [EdgeFunction] Handling OPTIONS request');
     return new Response(null, { headers: corsHeaders });
   }
+
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
 
   try {
     // Verify authentication
@@ -87,6 +91,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const user = userData.user;
+    userId = user.id;
 
     // Server-side rate limit: max 5 bug reports per hour per user
     const serviceClient = createClient(supabaseUrl!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
@@ -241,6 +246,14 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error("Error in send-bug-report function:", error);
+    logAppEvent("edge:send-bug-report", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: error?.message || String(error),
+      userId,
+      requestId,
+      metadata: { stack: error?.stack },
+    }).catch(() => {});
     return new Response(
       JSON.stringify({ 
         error: error.message || "An error occurred while processing your bug report"

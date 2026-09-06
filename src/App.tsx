@@ -9,6 +9,7 @@ import { PipCustomizationProvider } from "@/contexts/PipCustomizationContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
 import { ShutdownBanner } from "@/components/ShutdownBanner";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Mail, Calendar } from "lucide-react";
 // Index (the landing page) stays a direct import — it's the most-visited route and should render
 // with zero loading flash. Everything else is lazy: admin tooling, auth, and the minigame demo are
@@ -30,6 +31,7 @@ const AdminInterviewFlowEditor = lazy(() => import("./pages/AdminInterviewFlowEd
 const AdminUnreleasedInterviews = lazy(() => import("./pages/AdminUnreleasedInterviews"));
 const AdminMedicineInterviews = lazy(() => import("./pages/AdminMedicineInterviews"));
 const AdminMedicinePortal = lazy(() => import("./pages/AdminMedicinePortal"));
+const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
 
@@ -135,6 +137,7 @@ const AppContent = () => {
               <Route path="/admin/unreleased-interviews" element={<AdminUnreleasedInterviews />} />
               <Route path="/admin/medicine-interviews" element={<AdminMedicineInterviews />} />
               <Route path="/admin/medicine-portal" element={<AdminMedicinePortal />} />
+              <Route path="/admin/logs" element={<AdminLogs />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route
                 path="/minigames"
@@ -155,17 +158,19 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <AuthProvider>
-        <PipCustomizationProvider>
-          <SecurityProvider>
-            <AppContent />
-          </SecurityProvider>
-        </PipCustomizationProvider>
-      </AuthProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <AuthProvider>
+          <PipCustomizationProvider>
+            <SecurityProvider>
+              <AppContent />
+            </SecurityProvider>
+          </PipCustomizationProvider>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

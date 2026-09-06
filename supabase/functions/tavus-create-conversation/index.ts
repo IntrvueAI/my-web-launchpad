@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 // Creates a live Tavus conversation for the authenticated user and records the
 // conversation_id -> user_id mapping (tavus_conversations) plus a matching interview_sessions
@@ -26,6 +27,9 @@ const corsHeaders = {
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
+
   try {
     const tavusApiKey = Deno.env.get("TAVUS_API_KEY");
     if (!tavusApiKey || !supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
@@ -43,6 +47,7 @@ serve(async (req) => {
       });
     }
     const user = userData.user;
+    userId = user.id;
     const admin = createClient(supabaseUrl, supabaseServiceKey);
 
     // Same one-active-session rule as the Anam path, so a forgotten tab can't rack up parallel
@@ -123,6 +128,14 @@ serve(async (req) => {
     );
   } catch (error) {
     console.error("Error in tavus-create-conversation:", (error as Error)?.message || error);
+    logAppEvent("edge:tavus-create-conversation", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (error as Error)?.message || String(error),
+      userId,
+      requestId,
+      metadata: { stack: (error as Error)?.stack },
+    }).catch(() => {});
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },

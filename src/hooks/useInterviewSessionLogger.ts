@@ -4,6 +4,9 @@ import { SessionService } from '@/services/SessionService';
 
 export interface SessionLoggerReturn {
   sessionReference: string | null;
+  /** The real interview_sessions.id (UUID) — distinct from sessionReference (a short display
+   *  code). Needed for app_logs.interview_session_id, which is a real FK, not the display code. */
+  sessionId: string | null;
   startSession: (interviewType: InterviewType, userId: string) => Promise<string>;
   logEvent: (type: string, message: string, level?: 'info' | 'warn' | 'error', metadata?: Record<string, any>) => Promise<void>;
   logError: (error: string, metadata?: Record<string, any>) => Promise<void>;
@@ -69,6 +72,7 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
 
   return {
     sessionReference: sessionReferenceRef.current,
+    sessionId: sessionIdRef.current,
     startSession,
     logEvent,
     logError,

@@ -7,7 +7,7 @@ import { FeedbackVersions } from './FeedbackVersions';
 import { ChatHistory } from './ChatHistory';
 import { useInterviewSessionV2 } from '@/hooks/useInterviewSessionV2';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { useToast } from '@/hooks/use-toast';
 import { Play, Square, Mic, MicOff, RotateCcw, Eye, EyeOff, Keyboard, Send } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
@@ -93,6 +93,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
     chatHistory,
     liveCaption,
     sessionReference,
+    sessionId,
     connectionHealth,
     startInterview,
     stopInterview,
@@ -232,7 +233,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
       const transcription = await stopInterview();
 
       if (transcription && user) {
-        const { data, error } = await supabase.functions.invoke('generate-interview-feedback', {
+        const { data, error } = await invokeEdgeFunction('generate-interview-feedback', {
           body: {
             transcription: transcription,
             sessionId: sessionReference || Date.now().toString(),
@@ -242,6 +243,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
             scoringSystem: interviewType.scoringSystem,
             sessionReference: sessionReference,
           },
+          interviewSessionId: sessionId ?? undefined,
         });
 
         if (error) {
@@ -289,7 +291,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
         return;
       }
       setIsGeneratingFeedback(true);
-      const { data, error } = await supabase.functions.invoke('generate-interview-feedback', {
+      const { data, error } = await invokeEdgeFunction('generate-interview-feedback', {
         body: {
           transcription: t,
           sessionId: Date.now().toString(),
@@ -299,6 +301,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
           scoringSystem: interviewType.scoringSystem,
           sessionReference: sessionReference,
         },
+        interviewSessionId: sessionId ?? undefined,
       });
       if (error) {
         console.error('Failed to regenerate feedback:', error);

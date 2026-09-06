@@ -2,7 +2,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { createClient, type AnamClient } from '@anam-ai/js-sdk';
 import { AnamEvent, type Message as AnamMessage } from "@anam-ai/js-sdk/dist/module/types";
-import { supabase } from '@/integrations/supabase/client';
 import { loadSystemPrompt } from '@/utils/promptLoader';
 import { InterviewType } from '@/config/interviewTypes';
 import { useInterviewSessionLogger } from './useInterviewSessionLogger';
@@ -12,6 +11,7 @@ import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
 import { computeStationClock, type StationClockState } from '@/interview/engine/stationClock';
 import { logDebug } from '@/interview/debug/debugBus';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
@@ -39,6 +39,8 @@ interface UseInterviewSessionReturn {
   sessionStatus: SessionStatus;
   chatHistory: ChatMessage[];
   sessionReference: string | null;
+  /** The real interview_sessions.id (UUID) — for tagging app_logs rows from outside the hook. */
+  sessionId: string | null;
   connectionHealth: 'good' | 'poor' | 'offline';
   startInterview: (userId: string, opts?: StartOptions) => Promise<void>;
   stopInterview: () => Promise<string | null>;
@@ -150,7 +152,7 @@ export const useInterviewSession = (
     const sessionId = sessionRefRef.current;
     if (!sessionId || brainBusyRef.current) return;
     brainBusyRef.current = true;
-    const requestBody = { sessionId, action, ...payload };
+    const requestBody = { sessionId, action, ...payload, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);
@@ -274,8 +276,9 @@ export const useInterviewSession = (
         personaConfig.systemPrompt = await loadSystemPrompt(interviewType.id);
       }
 
-      const { data, error } = await supabase.functions.invoke('get-anam-session-token', {
+      const { data, error } = await invokeEdgeFunction<{ sessionToken: string }>('get-anam-session-token', {
         body: { personaConfig, engineDriven },
+        interviewSessionId: sessionLogger.sessionId ?? undefined,
       });
 
       if (error) throw new Error(`Edge function error: ${error.message}`);
@@ -598,6 +601,7 @@ export const useInterviewSession = (
     sessionStatus,
     chatHistory,
     sessionReference: sessionLogger.sessionReference,
+    sessionId: sessionLogger.sessionId,
     connectionHealth: connectionHealth.connectionQuality,
     startInterview,
     stopInterview,

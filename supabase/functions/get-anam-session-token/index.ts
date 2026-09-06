@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 // Read required environment variables from Supabase secrets
 const supabaseUrl = Deno.env.get('SUPABASE_URL');
@@ -41,6 +42,9 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+const requestId = req.headers.get('x-request-id');
+let userId: string | null = null;
+
 try {
   const anamApiKey = Deno.env.get('ANAM_API_KEY');
   const origin = req.headers.get('origin') || '*';
@@ -68,6 +72,7 @@ if (userErr || !userData?.user) {
     headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
   });
 }
+userId = userData.user.id;
 
 // Rate limit: reject only if the user has a *genuinely concurrent* live session, to
 // prevent Anam quota exhaustion. The client creates the active interview_sessions row
@@ -196,6 +201,14 @@ return new Response(JSON.stringify({ sessionToken: data.sessionToken }), {
 });
   } catch (error) {
 console.error('Error in get-anam-session-token function:', (error as any).message || error);
+logAppEvent('edge:get-anam-session-token', {
+  level: 'error',
+  eventType: 'unhandled_exception',
+  message: (error as any)?.message || String(error),
+  userId,
+  requestId,
+  metadata: { stack: (error as any)?.stack },
+}).catch(() => {});
 return new Response(JSON.stringify({ error: 'Internal server error' }), {
   status: 500,
   headers: { 

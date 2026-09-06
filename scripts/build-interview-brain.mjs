@@ -61,6 +61,16 @@ async function copyFiles(out) {
   }
 }
 
+// The shared app_logs writer (see supabase/functions/_shared-src/appLogger.ts) needs to land in
+// these two functions' _shared/ too, inside this script's own rm-rf/repopulate lifecycle — a
+// second, independent vendor script touching the same directories would risk one silently
+// deleting what the other just wrote. The other 14 (non-engine) functions are vendored separately
+// by scripts/vendor-app-logger.mjs, which has no pre-existing _shared/ dir here to collide with.
+async function copyLogger(out) {
+  const code = await fs.readFile(path.join(root, 'supabase/functions/_shared-src/appLogger.ts'), 'utf8');
+  await fs.writeFile(path.join(out, 'appLogger.ts'), addExtensions(code));
+}
+
 /** Build a combined `<subject>-bank.json` for every subject folder under questions/. */
 async function buildBanks(out) {
   const questionsDir = path.join(SRC, 'bank/questions');
@@ -89,6 +99,7 @@ for (const out of TARGETS) {
   await fs.rm(out, { recursive: true, force: true }); // drop stale vendored files
   await fs.mkdir(out, { recursive: true });
   await copyFiles(out);
+  await copyLogger(out);
   counts = await buildBanks(out);
 }
 const summary = Object.entries(counts).map(([s, n]) => `${s}:${n}`).join(', ');

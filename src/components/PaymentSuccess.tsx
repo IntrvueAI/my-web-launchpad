@@ -4,7 +4,7 @@ import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { invokeEdgeFunction } from "@/lib/invokeEdgeFunction";
 
 interface PaymentSuccessProps {
   onGoToPractice: () => void;
@@ -42,7 +42,7 @@ export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ onGoToPractice, 
 
     const verify = async () => {
       try {
-        const { data, error } = await supabase.functions.invoke("verify-payment", {
+        const { data, error } = await invokeEdgeFunction<{ balance: number; credits_added: number }>("verify-payment", {
           body: { session_id: sessionId },
         });
         if (error) throw error;

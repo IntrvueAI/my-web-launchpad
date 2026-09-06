@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,6 +12,9 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  const requestId = req.headers.get('x-request-id');
+  let adminUserId: string | null = null;
 
   try {
     const supabase = createClient(
@@ -39,6 +43,7 @@ serve(async (req) => {
     if (authError || !user) {
       throw new Error('Invalid authentication');
     }
+    adminUserId = user.id;
 
     // Enhanced admin verification with security logging
     const { data: isAdmin, error: adminError } = await supabaseUser.rpc('verify_admin_access_with_logging');
@@ -186,6 +191,14 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Admin credit management error:', error);
+    logAppEvent('edge:admin-credit-management', {
+      level: 'error',
+      eventType: 'unhandled_exception',
+      message: error?.message || String(error),
+      userId: adminUserId,
+      requestId,
+      metadata: { stack: error?.stack },
+    }).catch(() => {});
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

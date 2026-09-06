@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -34,7 +34,7 @@ export function WarmUp({ name = 'superstar' }: { name?: string }) {
 
   const start = async (subject: string) => {
     setLoading(true); setError(null);
-    const { data, error } = await supabase.functions.invoke('warmup-questions', { body: { subject, limit: 5 } });
+    const { data, error } = await invokeEdgeFunction<{ questions: WarmUpQuestion[] }>('warmup-questions', { body: { subject, limit: 5 } });
     setLoading(false);
     if (error || !data?.questions?.length) { setError('Could not load warm-up questions. Try again.'); return; }
     setQuestions(data.questions); setIndex(0); setRevealed(false);

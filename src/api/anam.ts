@@ -3,7 +3,7 @@
  * Handles server-side API calls to keep API keys secure
  */
 
-import { supabase } from "@/integrations/supabase/client";
+import { invokeEdgeFunction } from "@/lib/invokeEdgeFunction";
 
 interface PersonaConfig {
   name: string;
@@ -23,7 +23,7 @@ interface SessionTokenResponse {
  * This should be called from server-side only to keep API key secure
  */
 export const getAnamSessionToken = async (config: PersonaConfig): Promise<string> => {
-  const { data, error } = await supabase.functions.invoke<SessionTokenResponse>(
+  const { data, error } = await invokeEdgeFunction<SessionTokenResponse>(
     'get-anam-session-token',
     { body: { personaConfig: config } }
   );

@@ -6,6 +6,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import Stripe from "npm:stripe@13.11.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
@@ -25,6 +26,9 @@ serve(async (req) => {
 if (req.method === "OPTIONS") {
   return cors(new Response(null, { status: 204 }), req.headers.get("origin") || "*");
 }
+
+const requestId = req.headers.get("x-request-id");
+let userId: string | null = null;
 
 try {
   if (req.method !== "POST") {
@@ -49,6 +53,7 @@ if (userErr || !userData?.user) {
   return cors(new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 }), req.headers.get("origin") || "*");
 }
 
+userId = userData.user.id;
 console.log("Payment verification started for user:", userData.user.email);
 
 // Retrieve session from Stripe
@@ -169,13 +174,21 @@ if (session.client_reference_id && session.client_reference_id !== userData.user
       }
     } catch (creditsError) {
       console.error("Critical error updating credits:", creditsError);
-      
+      logAppEvent("edge:verify-payment", {
+        level: "error",
+        eventType: "credits_update_failed",
+        message: (creditsError as Error)?.message || String(creditsError),
+        userId,
+        requestId,
+        metadata: { stack: (creditsError as Error)?.stack, orderId: order.id },
+      }).catch(() => {});
+
       // Rollback order status to pending if credits update failed
       await service
         .from("orders")
         .update({ status: "pending" })
         .eq("id", order.id);
-      
+
       return cors(new Response(JSON.stringify({ error: "Failed to update credits" }), { status: 500 }), req.headers.get("origin") || "*");
     }
 
@@ -188,6 +201,14 @@ return cors(
 );
   } catch (e) {
     console.error("verify-payment error", e);
+    logAppEvent("edge:verify-payment", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (e as Error)?.message || String(e),
+      userId,
+      requestId,
+      metadata: { stack: (e as Error)?.stack },
+    }).catch(() => {});
     return cors(new Response(JSON.stringify({ error: "Internal server error" }), { status: 500 }), req.headers.get("origin") || "*");
   }
 });

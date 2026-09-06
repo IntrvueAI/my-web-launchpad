@@ -18,6 +18,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import Stripe from "npm:stripe@13.11.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
   apiVersion: "2024-06-20",
@@ -48,6 +49,11 @@ serve(async (req) => {
     );
   } catch (err) {
     console.error("Webhook signature verification failed:", (err as Error).message);
+    logAppEvent("edge:stripe-webhook", {
+      level: "error",
+      eventType: "signature_verification_failed",
+      message: (err as Error).message,
+    }).catch(() => {});
     return new Response(`Webhook error: ${(err as Error).message}`, { status: 400 });
   }
 
@@ -68,6 +74,12 @@ serve(async (req) => {
     });
   } catch (err) {
     console.error("Error processing webhook event:", event.type, err);
+    logAppEvent("edge:stripe-webhook", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (err as Error)?.message || String(err),
+      metadata: { stack: (err as Error)?.stack, stripeEventId: event.id, stripeEventType: event.type },
+    }).catch(() => {});
     return new Response("Webhook handler failed", { status: 500 });
   }
 });
@@ -123,6 +135,13 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   console.log(
     `Webhook: order ${order.id} paid — added ${order.credits_purchased} credits to user ${order.user_id}`
   );
+  logAppEvent("edge:stripe-webhook", {
+    level: "info",
+    eventType: "checkout_completed",
+    message: `Order ${order.id} paid — added ${order.credits_purchased} credits`,
+    userId: order.user_id,
+    metadata: { orderId: order.id, creditsAdded: order.credits_purchased },
+  }).catch(() => {});
 }
 
 async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
@@ -144,6 +163,15 @@ async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
     .eq("stripe_session_id", session.id)
     .eq("status", "pending");
 
-  if (error) console.error("Failed to mark order as failed:", error);
-  else console.log("Webhook: order marked failed for session:", session.id);
+  if (error) {
+    console.error("Failed to mark order as failed:", error);
+  } else {
+    console.log("Webhook: order marked failed for session:", session.id);
+    logAppEvent("edge:stripe-webhook", {
+      level: "warn",
+      eventType: "payment_failed",
+      message: `Payment failed for session ${session.id}`,
+      metadata: { stripeSessionId: session.id, paymentIntentId: paymentIntent.id },
+    }).catch(() => {});
+  }
 }

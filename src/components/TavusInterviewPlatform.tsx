@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { InterviewType } from '@/config/interviewTypes';
 import { Lightbulb, PhoneOff, CheckCircle2, XCircle, MinusCircle, Loader2, Video, Sparkles } from 'lucide-react';
 
@@ -107,7 +108,7 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
     cleanupCall();
     const conversationId = conversationIdRef.current;
     if (conversationId) {
-      const { error: endErr } = await supabase.functions.invoke('tavus-end-conversation', {
+      const { error: endErr } = await invokeEdgeFunction('tavus-end-conversation', {
         body: { conversation_id: conversationId },
       });
       if (endErr) console.error('tavus-end-conversation failed:', endErr.message);
@@ -159,7 +160,7 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
     endingRef.current = false;
     setView('connecting'); // renders the video container so the effect above can mount into it
     try {
-      const { data, error: createErr } = await supabase.functions.invoke('tavus-create-conversation', {
+      const { data, error: createErr } = await invokeEdgeFunction<PendingConversation>('tavus-create-conversation', {
         body: {},
       });
       if (createErr) throw new Error(createErr.message);

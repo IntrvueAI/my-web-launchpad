@@ -6,6 +6,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import Stripe from "npm:stripe@13.11.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
@@ -27,6 +28,9 @@ if (req.method === "OPTIONS") {
   return cors(new Response(null, { status: 204 }), req.headers.get("origin") || "*");
 }
 
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
+
   try {
 if (req.method !== "POST") {
   return cors(new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405 }), req.headers.get("origin") || "*");
@@ -47,7 +51,7 @@ if (userErr || !userData?.user) {
   return cors(new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 }), req.headers.get("origin") || "*");
 }
 
-    const userId = userData.user.id;
+    userId = userData.user.id;
     const amount = pack === 2 ? 1999 : pack === 3 ? 2999 : 4499;
     const credits = pack;
 
@@ -109,6 +113,14 @@ return cors(
 );
   } catch (e) {
     console.error("create-payment error", e);
+    logAppEvent("edge:create-payment", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (e as Error)?.message || String(e),
+      userId,
+      requestId,
+      metadata: { stack: (e as Error)?.stack },
+    }).catch(() => {});
 return cors(new Response(JSON.stringify({ error: "Internal server error" }), { status: 500 }), req.headers.get("origin") || "*");
   }
 });

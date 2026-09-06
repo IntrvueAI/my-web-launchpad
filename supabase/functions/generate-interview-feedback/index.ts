@@ -7,6 +7,7 @@ import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
 import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
 import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
 import { chatPack } from "./_shared/subjects/chat/pack.ts";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 // Engine-driven subjects score from their OWN subject pack — the same file that drives the
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
@@ -727,10 +728,15 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = req.headers.get('x-request-id');
+  let loggedUserId: string | null = null;
+  let sessionDbId: string | null = null;
+
 try {
   // Input validation and sanitization
   const inputBody = await req.json();
   const { transcription, sessionId, userId, interviewType, interviewCategory, scoringSystem, sessionReference } = inputBody;
+  loggedUserId = typeof userId === 'string' ? userId : null;
 
   // Validate required fields
   if (!transcription || typeof transcription !== 'string') {
@@ -827,10 +833,11 @@ try {
     if (sessionReference) {
       const { data: sessionRow } = await supabaseAdmin
         .from('interview_sessions')
-        .select('evidence, subject, engine_state')
+        .select('id, evidence, subject, engine_state')
         .eq('session_reference', sessionReference)
         .eq('user_id', userId)
         .maybeSingle();
+      sessionDbId = (sessionRow as any)?.id ?? null;
       if (sessionRow?.evidence && Array.isArray(sessionRow.evidence)) {
         evidence = sessionRow.evidence;
 
@@ -1358,6 +1365,15 @@ STUDENT PERFORMANCE DATA:`;
 
   } catch (error) {
     console.error('Error in generate-interview-feedback function:', error.message);
+    logAppEvent('edge:generate-interview-feedback', {
+      level: 'error',
+      eventType: 'unhandled_exception',
+      message: error?.message || String(error),
+      userId: loggedUserId,
+      interviewSessionId: sessionDbId,
+      requestId,
+      metadata: { stack: error?.stack },
+    }).catch(() => {});
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: {

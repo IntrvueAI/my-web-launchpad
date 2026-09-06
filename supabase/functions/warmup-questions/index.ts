@@ -5,6 +5,7 @@
 // eligible, so an admin can keep any question exclusive to live interviews.
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -23,11 +24,14 @@ const json = (body: unknown, status = 200) =>
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
   try {
     const token = (req.headers.get("Authorization") || "").replace("Bearer ", "");
     const authClient = createClient(supabaseUrl, supabaseAnonKey);
     const { data: userData, error: userErr } = await authClient.auth.getUser(token);
     if (userErr || !userData?.user) return json({ error: "Unauthorized" }, 401);
+    userId = userData.user.id;
 
     const body = await req.json().catch(() => ({}));
     const subject: string | undefined = body?.subject && body.subject !== "mixed" ? body.subject : undefined;
@@ -56,6 +60,14 @@ serve(async (req) => {
     return json({ questions });
   } catch (err) {
     console.error("warmup-questions error:", (err as Error)?.message || err);
+    logAppEvent("edge:warmup-questions", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (err as Error)?.message || String(err),
+      userId,
+      requestId,
+      metadata: { stack: (err as Error)?.stack },
+    }).catch(() => {});
     return json({ error: "Internal server error" }, 500);
   }
 });

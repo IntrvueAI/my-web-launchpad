@@ -15,6 +15,7 @@
 //  - Speechmatics: requires minting a short-lived JWT first via a plain REST call (mp.speechmatics.com),
 //    then connecting with that JWT as a `jwt` query parameter.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -49,12 +50,15 @@ Deno.serve(async (req) => {
 
   const url = new URL(req.url);
   const token = url.searchParams.get("token") || "";
+  let userId: string | null = null;
 
+  try {
   const admin = createClient(supabaseUrl, supabaseServiceKey);
   const { data: userData, error: userErr } = await admin.auth.getUser(token);
   if (userErr || !userData?.user) {
     return new Response("Unauthorized", { status: 401 });
   }
+  userId = userData.user.id;
   const asUser = createClient(supabaseUrl, supabaseAnonKey, {
     global: { headers: { Authorization: `Bearer ${token}` } },
   });
@@ -110,7 +114,10 @@ Deno.serve(async (req) => {
         }
       } catch { /* ignore malformed frame */ }
     };
-    ws.onerror = () => send({ vendor: "deepgram", error: "Deepgram connection error" });
+    ws.onerror = () => {
+      send({ vendor: "deepgram", error: "Deepgram connection error" });
+      logAppEvent("edge:stt-bakeoff-relay", { level: "error", eventType: "deepgram_ws_error", message: "Deepgram connection error", userId }).catch(() => {});
+    };
     deepgramWs = ws;
   }
 
@@ -136,7 +143,10 @@ Deno.serve(async (req) => {
         }
       } catch { /* ignore malformed frame */ }
     };
-    ws.onerror = () => send({ vendor: "assemblyai", error: "AssemblyAI connection error" });
+    ws.onerror = () => {
+      send({ vendor: "assemblyai", error: "AssemblyAI connection error" });
+      logAppEvent("edge:stt-bakeoff-relay", { level: "error", eventType: "assemblyai_ws_error", message: "AssemblyAI connection error", userId }).catch(() => {});
+    };
     assemblyaiWs = ws;
   }
 
@@ -175,7 +185,10 @@ Deno.serve(async (req) => {
         }
       } catch { /* ignore malformed frame */ }
     };
-    ws.onerror = () => send({ vendor: "speechmatics", error: "Speechmatics connection error" });
+    ws.onerror = () => {
+      send({ vendor: "speechmatics", error: "Speechmatics connection error" });
+      logAppEvent("edge:stt-bakeoff-relay", { level: "error", eventType: "speechmatics_ws_error", message: "Speechmatics connection error", userId }).catch(() => {});
+    };
     speechmaticsWs = ws;
   }
 
@@ -227,4 +240,15 @@ Deno.serve(async (req) => {
   clientWs.onerror = () => stopAll();
 
   return response;
+  } catch (err) {
+    console.error("stt-bakeoff-relay error:", (err as Error)?.message || err);
+    logAppEvent("edge:stt-bakeoff-relay", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (err as Error)?.message || String(err),
+      userId,
+      metadata: { stack: (err as Error)?.stack },
+    }).catch(() => {});
+    return new Response("Internal server error", { status: 500 });
+  }
 });

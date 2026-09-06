@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "brain:build": "node scripts/build-interview-brain.mjs",
-    "prebuild": "node scripts/build-interview-brain.mjs",
+    "logger:vendor": "node scripts/vendor-app-logger.mjs",
+    "logs:query": "node scripts/query-app-logs.mjs",
+    "prebuild": "node scripts/build-interview-brain.mjs && node scripts/vendor-app-logger.mjs",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",

@@ -7,6 +7,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 import { advanceAgent, initAgentState, phaseInfo, type AgentState, type ChatComplete } from "./_shared/engine/agent.ts";
+import { logAppEvent } from "./_shared/appLogger.ts";
 import type { SubjectPack } from "./_shared/subjects/types.ts";
 import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
@@ -144,6 +145,10 @@ const uiStateOf = (s: AgentState, pack: SubjectPack, interviewType: string): Bra
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
+  let sessionDbId: string | null = null;
+
   try {
     if (!openAIApiKey) return json({ error: "OPENAI_API_KEY not configured" }, 500);
 
@@ -155,7 +160,7 @@ serve(async (req) => {
     const authClient = createClient(supabaseUrl, supabaseAnonKey);
     const { data: userData, error: userErr } = await authClient.auth.getUser(token);
     if (userErr || !userData?.user) return json({ error: "Unauthorized" }, 401);
-    const userId = userData.user.id;
+    userId = userData.user.id;
 
     const admin = createClient(supabaseUrl, supabaseServiceKey);
     const { data: session, error: sErr } = await admin
@@ -165,6 +170,7 @@ serve(async (req) => {
       .maybeSingle();
     if (sErr || !session) return json({ error: "Session not found" }, 404);
     if (session.user_id !== userId) return json({ error: "Forbidden" }, 403);
+    sessionDbId = session.id;
 
     const interviewTypeId = session.interview_type as string;
     const subject = SUBJECT_BY_TYPE[interviewTypeId];
@@ -203,6 +209,15 @@ serve(async (req) => {
     return json(response);
   } catch (err) {
     console.error("interview-brain error:", (err as Error)?.message || err);
+    logAppEvent("edge:interview-brain", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: (err as Error)?.message || String(err),
+      userId,
+      interviewSessionId: sessionDbId,
+      requestId,
+      metadata: { stack: (err as Error)?.stack },
+    }).catch(() => {});
     return json({ error: "Internal server error" }, 500);
   }
 });

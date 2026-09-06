@@ -35,7 +35,7 @@ export function useDeepgramMic() {
   const mutedRef = useRef(false);
   const peerActiveRef = useRef(false);
 
-  const start = useCallback(async (callbacks: DeepgramMicCallbacks) => {
+  const start = useCallback(async (callbacks: DeepgramMicCallbacks, opts: { sessionId?: string } = {}) => {
     const { data: sessionData } = await supabase.auth.getSession();
     const accessToken = sessionData.session?.access_token;
     if (!accessToken) throw new Error('Not authenticated');
@@ -53,6 +53,10 @@ export function useDeepgramMic() {
     relayUrl.protocol = 'wss:';
     relayUrl.searchParams.set('token', accessToken);
     relayUrl.searchParams.set('pauseMs', String(PAUSE_MS));
+    // Query param, not a header — the browser WebSocket API can't set custom headers on the
+    // upgrade request (same reason `token` above is a query param). Lets the relay's own app_logs
+    // rows tie back to the interview session they happened in.
+    if (opts.sessionId) relayUrl.searchParams.set('sessionId', opts.sessionId);
 
     const ws = new WebSocket(relayUrl.toString());
     ws.binaryType = 'arraybuffer';

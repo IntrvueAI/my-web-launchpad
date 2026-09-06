@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { createClient, type AnamClient } from '@anam-ai/js-sdk';
 import { AnamEvent } from "@anam-ai/js-sdk/dist/module/types";
-import { supabase } from '@/integrations/supabase/client';
 import { InterviewType } from '@/config/interviewTypes';
 import { useInterviewSessionLogger } from './useInterviewSessionLogger';
 import { useConnectionHealthCheck } from './useConnectionHealthCheck';
@@ -10,6 +9,8 @@ import { useToast } from './use-toast';
 import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
 import { logDebug } from '@/interview/debug/debugBus';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
+import { logAppEvent } from '@/lib/appLogger';
 
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
 
@@ -37,6 +38,8 @@ interface UseInterviewSessionV2Return {
   chatHistory: ChatMessage[];
   liveCaption: string;
   sessionReference: string | null;
+  /** The real interview_sessions.id (UUID) — for tagging app_logs rows from outside the hook. */
+  sessionId: string | null;
   connectionHealth: 'good' | 'poor' | 'offline';
   startInterview: (userId: string, opts?: StartOptions) => Promise<void>;
   stopInterview: () => Promise<string | null>;
@@ -128,7 +131,7 @@ export const useInterviewSessionV2 = (
     const sessionId = sessionRefRef.current;
     if (!sessionId || brainBusyRef.current) return;
     brainBusyRef.current = true;
-    const requestBody = { sessionId, action, ...payload };
+    const requestBody = { sessionId, action, ...payload, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);
@@ -183,8 +186,9 @@ export const useInterviewSessionV2 = (
         llmId: 'CUSTOMER_CLIENT_V1',
       };
 
-      const { data, error } = await supabase.functions.invoke('get-anam-session-token', {
+      const { data, error } = await invokeEdgeFunction<{ sessionToken: string }>('get-anam-session-token', {
         body: { personaConfig, engineDriven: true },
+        interviewSessionId: sessionLogger.sessionId ?? undefined,
       });
 
       if (error) throw new Error(`Edge function error: ${error.message}`);
@@ -332,12 +336,18 @@ export const useInterviewSessionV2 = (
           console.error('Deepgram mic error:', message);
           logDebug({ source: 'deepgram', kind: 'error', label: 'mic error', detail: message });
           sessionLogger.logError(`Deepgram error: ${message}`).catch(() => {});
+          logAppEvent({
+            level: 'error',
+            eventType: 'deepgram_mic_error',
+            message,
+            interviewSessionId: sessionLogger.sessionId,
+          }).catch(() => {});
         },
         onFinalizeAck: () => {
           logDebug({ source: 'deepgram', kind: 'info', label: 'finalize ack received' });
           finalizeAckRef.current?.();
         },
-      });
+      }, { sessionId: sessionLogger.sessionId ?? undefined });
 
       setIsConnected(true);
       setIsStreaming(true);
@@ -499,6 +509,7 @@ export const useInterviewSessionV2 = (
     chatHistory,
     liveCaption,
     sessionReference: sessionLogger.sessionReference,
+    sessionId: sessionLogger.sessionId,
     connectionHealth: connectionHealth.connectionQuality,
     startInterview,
     stopInterview,

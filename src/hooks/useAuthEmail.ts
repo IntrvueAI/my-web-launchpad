@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { useToast } from '@/hooks/use-toast';
 
 interface AuthEmailOptions {
@@ -17,7 +17,7 @@ export const useAuthEmail = () => {
   const sendAuthEmail = async (options: AuthEmailOptions) => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('send-auth-email', {
+      const { data, error } = await invokeEdgeFunction('send-auth-email', {
         body: options,
       });
 

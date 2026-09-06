@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { logAppEvent } from "./_shared/appLogger.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -32,6 +33,9 @@ if (req.method !== "POST") {
   });
 }
 
+const requestId = req.headers.get("x-request-id");
+let userId: string | null = null;
+
 try {
   // Auth: require logged-in user and only allow sending to self
   const authHeader = req.headers.get("Authorization") || "";
@@ -44,6 +48,7 @@ try {
       headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
     });
   }
+  userId = userData.user.id;
 
   const { to, subject, html, from }: EmailRequest = await req.json();
 
@@ -87,6 +92,14 @@ return new Response(JSON.stringify(emailResponse), {
 });
   } catch (error: any) {
     console.error("Error sending email:", error);
+logAppEvent("edge:send-email", {
+  level: "error",
+  eventType: "unhandled_exception",
+  message: error?.message || String(error),
+  userId,
+  requestId,
+  metadata: { stack: error?.stack },
+}).catch(() => {});
 return new Response(
   JSON.stringify({ error: error.message }),
   {
