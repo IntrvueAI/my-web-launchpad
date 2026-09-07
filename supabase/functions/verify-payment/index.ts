@@ -17,7 +17,7 @@ const stripe = new Stripe(STRIPE_SECRET_KEY, { apiVersion: "2024-06-20" });
 function cors(res: Response, origin?: string) {
   const headers = new Headers(res.headers);
   headers.set("Access-Control-Allow-Origin", origin || "*");
-  headers.set("Access-Control-Allow-Headers", "authorization, x-client-info, apikey, content-type");
+  headers.set("Access-Control-Allow-Headers", "authorization, x-client-info, apikey, content-type, x-request-id");
   headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   return new Response(res.body, { status: res.status, headers });
 }
