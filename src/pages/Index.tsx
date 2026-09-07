@@ -3,14 +3,18 @@ import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
-import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
-import { Dashboard } from '@/components/dashboard/Dashboard';
 import { Button } from '@/components/ui/button';
-// Everything below only ever renders after a user navigates away from the dashboard (the one
-// view guaranteed to be the first thing an authenticated user sees) — lazy so the initial
-// authenticated load doesn't ship the Anam/WebRTC SDK, Stripe, and every other screen's JS up
-// front. This (plus Index/LandingV2 staying eager for the logged-out first paint) was the biggest
-// single contributor to a ~3.9MB single-chunk bundle.
+// Dashboard/OnboardingFlow are lazy too, even though Dashboard is the first thing a logged-in user
+// sees: the FAR more common first paint of "/" is an anonymous, logged-out visitor hitting the
+// marketing page, and they were downloading Dashboard's entire code (and everything it statically
+// imports) despite never rendering it. The one-time Suspense flash this adds for a freshly
+// authenticated user is a good trade against every anonymous/marketing visit shipping less JS.
+const Dashboard = lazy(() => import('@/components/dashboard/Dashboard').then((m) => ({ default: m.Dashboard })));
+const OnboardingFlow = lazy(() => import('@/components/onboarding/OnboardingFlow').then((m) => ({ default: m.OnboardingFlow })));
+// Everything below only ever renders after a user navigates away from the dashboard — lazy so the
+// initial authenticated load doesn't ship the Anam/WebRTC SDK, Stripe, and every other screen's JS
+// up front. This (plus Index/LandingV2 staying eager for the logged-out first paint) was the
+// biggest single contributor to a ~3.9MB single-chunk bundle.
 const InterviewPlatform = lazy(() => import('@/components/InterviewPlatform').then((m) => ({ default: m.InterviewPlatform })));
 const TavusInterviewPlatform = lazy(() => import('@/components/TavusInterviewPlatform').then((m) => ({ default: m.TavusInterviewPlatform })));
 const InterviewPlatformV2 = lazy(() => import('@/components/InterviewPlatformV2').then((m) => ({ default: m.InterviewPlatformV2 })));
@@ -235,7 +239,15 @@ const Index = () => {
   // Full-page takeover for onboarding (fresh sign-ups, or the admin "Replay onboarding flow" aid)
   // — its own header stands in for the real nav, then chains into the guided tour + founder video.
   if (showPostSignupForm) {
-    return <OnboardingFlow userId={user.id} onComplete={handleOnboardingComplete} />;
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      }>
+        <OnboardingFlow userId={user.id} onComplete={handleOnboardingComplete} />
+      </Suspense>
+    );
   }
 
   // Grown-up view is a full-page takeover, not another tab inside the kid-facing nav — it has its
