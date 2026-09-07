@@ -52,7 +52,7 @@ export const AdminWaitlist = () => {
   const { data: marketing, isLoading: marketingLoading } = useQuery({
     queryKey: ['admin-marketing-waitlist'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('marketing_waitlist')
         .select('id, email, source, created_at')
         .order('created_at', { ascending: false })
@@ -66,7 +66,7 @@ export const AdminWaitlist = () => {
   const { data: payment, isLoading: paymentLoading } = useQuery({
     queryKey: ['admin-payment-waitlist'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('payment_waitlist')
         .select('id, email, source, created_at')
         .order('created_at', { ascending: false })

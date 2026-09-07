@@ -5,7 +5,10 @@ import { Video, History, Wallet, Settings, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MobileBottomNavProps {
-  currentView: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions';
+  // Wider than the tabs this nav actually offers (below) — the current view can legitimately be
+  // something reached from elsewhere (e.g. achievements, via the desktop-only path); this nav just
+  // won't highlight any of its own tabs in that case, which is correct.
+  currentView: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements';
   credits: number;
   onViewChange: (view: 'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions') => void;
   onSignOut: () => void;

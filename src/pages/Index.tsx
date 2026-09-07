@@ -156,7 +156,7 @@ const Index = () => {
 
       // Atomic single-call charge for the interview's real cost (consume_credit now takes an
       // optional p_amount, defaulting to 1 for any other caller still using the bare form).
-      const { data, error } = await supabase.rpc('consume_credit', { p_amount: cost });
+      const { data, error } = await (supabase as any).rpc('consume_credit', { p_amount: cost });
       if (error) {
         console.error('consume_credit error', error);
         toast({

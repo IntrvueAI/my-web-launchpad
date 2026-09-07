@@ -79,7 +79,7 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
   useEffect(() => () => cleanupCall(), [cleanupCall]);
 
   const loadSummary = useCallback(async (sessionReference: string) => {
-    const { data, error: fetchErr } = await supabase
+    const { data, error: fetchErr } = await (supabase as any)
       .from('question_attempts')
       .select('id, question_id, question, outcome, student_answer, hints_used, created_at')
       .eq('session_reference', sessionReference)

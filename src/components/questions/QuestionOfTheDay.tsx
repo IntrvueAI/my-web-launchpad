@@ -21,7 +21,7 @@ export function QuestionOfTheDay({ name = 'superstar' }: { name?: string }) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('daily_questions')
         .select('*')
         .order('active_date', { ascending: false })

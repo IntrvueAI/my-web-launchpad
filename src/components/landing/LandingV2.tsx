@@ -67,7 +67,7 @@ export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
         const onSubmit = () => {
           const email = input.value.trim();
           if (!email || !/.+@.+\..+/.test(email)) return;
-          supabase.from('marketing_waitlist').insert({ email, source: 'landing_page' }).then(({ error }) => {
+          (supabase as any).from('marketing_waitlist').insert({ email, source: 'landing_page' }).then(({ error }) => {
             if (error && error.code !== '23505') {
               // Not a duplicate-email conflict — a genuine failure. The static page's own script still
               // shows its "you're on the list!" success state regardless (it isn't aware this insert
