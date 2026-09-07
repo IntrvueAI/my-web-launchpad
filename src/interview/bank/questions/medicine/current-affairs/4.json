@@ -1,0 +1,34 @@
+[
+  {
+    "id": "MED-CA-23",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "The Ethics of International Recruitment",
+    "tags": ["current-affairs", "workforce", "global-health", "sensitive"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-01-31",
+    "question": "The NHS has historically relied heavily on doctors trained overseas, but the government's 10 Year Health Plan sets a target of under 10% international recruitment by 2035. Is it right for the UK to reduce its reliance on internationally trained doctors?",
+    "answer": "Discussion question — must be argued from both directions, and should be handled neutrally and sensitively given some candidates may be international medical graduates or the children of them. The tension: reducing reliance could relieve pressure on source countries whose own health systems lose staff to wealthier countries (an ethical concern about global health equity), but the NHS has depended on international recruitment for decades and a rapid reduction risks workforce shortfalls if domestic training doesn't scale fast enough to replace it.",
+    "modelReasoningPath": "A strong candidate argues both directions genuinely rather than picking one side. FOR reducing reliance: the ethical concern that wealthy health systems recruiting heavily from lower-income countries can drain the very systems those countries need, and that domestic training builds long-term self-sufficiency. AGAINST, or at least complicating the picture: the NHS's dependence is deep and immediate, staff already here have built careers and lives in the UK, and a target-driven reduction only works if domestic medical school and training capacity genuinely scales to match — otherwise it just creates shortfalls. The best candidates hold both the source-country ethical concern and the UK workforce reality in view at once, rather than treating this as a simple immigration question.",
+    "rubric": {
+      "strong": "Argues genuinely from both directions (global health equity for source countries vs UK workforce dependency), avoids treating existing international staff as the problem, and reasons about whether domestic capacity can realistically scale to match any target.",
+      "developing": "Takes a position with real reasoning but only from one direction, or doesn't distinguish between the policy question and the people currently working in the NHS.",
+      "weak": "Gives a one-sided answer with no engagement of the other side, or frames international colleagues themselves as a problem rather than discussing the policy."
+    },
+    "commonMistakes": [
+      {"mistake": "Discusses only the UK's workforce needs with no mention of the effect on source countries", "reveals": "Missing the global health equity dimension that is the actual ethical core of this question"},
+      {"mistake": "Frames the question in a way that reads as criticism of individual international colleagues", "reveals": "Conflates a policy question about recruitment targets with an unwelcoming attitude toward people already working in the NHS — a red flag, not a nuance"}
+    ],
+    "liveProbes": [
+      {"probe": "What happens if domestic training places don't expand fast enough to hit the 2035 target?", "goodResponse": "Engages honestly with the practical risk of the policy rather than assuming the target will simply be met"},
+      {"probe": "Is there a difference between the POLICY question and how we treat international colleagues already here?", "goodResponse": "Clearly separates the two rather than letting one bleed into the other"}
+    ],
+    "hints": [
+      "What's the ethical concern for the COUNTRIES international doctors train in, not just for the UK?",
+      "Does reducing reliance on international recruitment only work if something else also happens? What?",
+      "How do you keep this a policy discussion rather than a comment on individual colleagues?"
+    ]
+  }
+]

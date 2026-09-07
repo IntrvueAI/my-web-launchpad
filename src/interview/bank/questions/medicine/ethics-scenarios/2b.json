@@ -1,0 +1,31 @@
+[
+  {
+    "id": "MED-E13",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Conflict of Interest",
+    "tags": ["ethics", "conflicts-of-interest", "professionalism"],
+    "question": "A pharmaceutical company sponsors your medical school's ball and offers free branded merchandise to students who attend a talk about their new drug. Is there anything wrong with going along?",
+    "answer": "Discussion question — no single verdict. GMP 2024 Domain 4 requires doctors to manage conflicts of interest. The key test is whether a reasonable person would think judgement COULD be affected, not whether it actually was. A strong answer recognises this as a genuine (if mild) conflict, distinguishes attending from being influenced, and notes that declaring an interest is necessary but not always sufficient — what matters is also what changes in practice after the declaration (e.g. not defaulting to that company's drug without good clinical reason).",
+    "modelReasoningPath": "A strong candidate resists both extremes — 'it's obviously fine, it's just merchandise' and 'it's obviously corrupt, refuse everything'. They name the actual test: would a reasonable observer think this could affect judgement, regardless of whether the student believes it would affect their own? They separate two questions that are often conflated — is attending itself wrong, and does anything need to change afterwards (e.g. transparency about the sponsorship, not favouring that company's product later without reason). The best answers note that a single free item is a low-stakes version of a real, larger problem in medicine (industry influence on prescribing), and that the habit of noticing and declaring starts now, not once it has financial consequences.",
+    "rubric": {
+      "strong": "Names conflict of interest as the real issue, states the 'reasonable person' test rather than relying on self-assessment of motive, and identifies what should follow a declaration (ongoing vigilance, not just disclosure once).",
+      "developing": "Recognises something is worth thinking about but frames it only in terms of the student's own intentions ('I wouldn't be influenced'), missing that the test isn't self-assessed.",
+      "weak": "Sees no issue at all, or the opposite over-correction: refuses to engage with any industry contact as automatically corrupt with no reasoning."
+    },
+    "commonMistakes": [
+      {"mistake": "\"It wouldn't affect my judgement, so it's not a conflict\"", "reveals": "Doesn't know the actual test is about reasonable perception, not self-certified immunity to influence"},
+      {"mistake": "Treats declaring the interest as the end of the matter", "reveals": "Hasn't considered that a declaration only works if something in behaviour is actually being watched afterwards"}
+    ],
+    "liveProbes": [
+      {"probe": "Does it matter whether the merchandise is a pen or a laptop?", "goodResponse": "Recognises scale matters to the SIZE of the risk, not to whether the underlying principle applies at all"},
+      {"probe": "What would you do differently five years from now, prescribing that company's drug?", "goodResponse": "Connects the small student-level example to the real clinical-practice version of the same problem"}
+    ],
+    "hints": [
+      "What's the actual test for whether something counts as a conflict of interest — is it about your intentions or something else?",
+      "Does declaring an interest solve the problem on its own, or does something else need to happen too?"
+    ]
+  }
+]

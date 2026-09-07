@@ -884,6 +884,102 @@
     ]
   },
   {
+    "id": "MED-CA-21",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Private Providers in the NHS",
+    "tags": [
+      "current-affairs",
+      "nhs-policy",
+      "private-sector"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "Independent (private) providers now deliver a significant share of NHS-funded diagnostics and treatment, under NHS-funded partnership arrangements. Is greater use of the private sector within the NHS a good thing?",
+    "answer": "Discussion question — no single verdict, scored on balance rather than which side is taken. As at the register's last verification: independent providers treated over a million NHS patients in 2024 under an NHS partnership agreement, and now deliver a large share of NHS-funded diagnostics and over half of NHS-funded ADHD assessments. The strongest counter-arguments: providers draw on much of the same clinical workforce as the NHS itself (so it isn't simply 'extra' capacity), tend to take on lower-complexity cases, coverage is geographically uneven, and patient choice can widen inequality if only some patients are able to exercise it effectively.",
+    "modelReasoningPath": "A strong candidate states the case for private-sector involvement at its strongest — faster access, reduced NHS waiting lists, patient choice — and the case against at its strongest: workforce overlap means it may not add real capacity system-wide, casemix is typically less complex (so headline efficiency isn't a fair comparison), provision is geographically uneven, and choice mechanisms can benefit better-informed or better-resourced patients disproportionately, widening inequality rather than narrowing it. The best answers avoid ideological framing in either direction and instead reason about mechanisms — where does the extra capacity actually come from, and who benefits from choice in practice.",
+    "rubric": {
+      "strong": "States both sides fairly with real mechanisms (not slogans), engages with the workforce-overlap and casemix objections specifically, and avoids declaring a fixed ideological position.",
+      "developing": "Has a view but argues it with only one mechanism, or uses generic language ('more choice is good' / 'privatisation is bad') without engaging the specific evidence.",
+      "weak": "Argues from ideology alone in either direction with no mechanism, or refuses to engage with the question."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Treats private-sector capacity as simply 'extra' capacity with no workforce cost",
+        "reveals": "Hasn't considered that the same doctors and nurses often work across both systems"
+      },
+      {
+        "mistake": "Assumes patient choice benefits everyone equally",
+        "reveals": "Hasn't considered that exercising choice well requires information, time and confidence not everyone has equally"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "If independent providers use the same staff as the NHS, where does the extra capacity actually come from?",
+        "goodResponse": "Engages with the workforce-overlap objection directly rather than restating that private providers 'add capacity'"
+      },
+      {
+        "probe": "Could patient choice make health inequality worse rather than better?",
+        "goodResponse": "Considers that choice mechanisms are not equally accessible to all patients"
+      }
+    ],
+    "hints": [
+      "What's the strongest argument FOR more private-sector involvement, and separately, the strongest argument against?",
+      "Where does the clinical workforce for private providers actually come from?",
+      "Does patient choice benefit everyone in the same way?"
+    ]
+  },
+  {
+    "id": "MED-CA-22",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Reforming Mental Health Care",
+    "tags": [
+      "current-affairs",
+      "mental-health",
+      "nhs-policy"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-12-31",
+    "question": "The Mental Health Act 2025 received Royal Assent and is being brought into force gradually, alongside new government funding for mental health facilities. Why might reforming mental health law and funding matter as much as reforming physical health services?",
+    "answer": "Discussion question — assess reasoning and awareness, not a single 'correct' policy verdict. As at the register's last verification: the Mental Health Act 2025 received Royal Assent on 18 December 2025 and is being commenced in stages; over a million under-18s were in contact with secondary NHS mental health services in 2024-25; and £343m was announced on 6 August 2026 for 159 new facilities including walk-in community centres and mental health emergency departments. A strong answer explains WHY structural reform matters — not just naming the figures — for example that demand has grown faster than capacity, especially in young people, and that emergency/community infrastructure changes where and how quickly people can get help.",
+    "modelReasoningPath": "A strong candidate doesn't just recite the funding figure or the Act's existence — they explain what the reform is actually trying to fix: rising demand, especially among under-18s, outpacing the system's capacity to respond, and gaps in the pathway between crisis (A&E) and ongoing community support that new walk-in and emergency facilities are meant to close. They're honest that details of implementation are staged and may have moved since they last checked, rather than stating exact figures with false confidence. The best answers connect mental and physical health as equally serious rather than treating the question as a box-ticking 'parity of esteem' reference.",
+    "rubric": {
+      "strong": "Explains the underlying problem (rising demand, especially in young people, and gaps in the crisis-to-community pathway) rather than just citing figures, and is appropriately tentative about exact current implementation status.",
+      "developing": "Cites the correct facts but doesn't explain why the reform matters structurally, or treats 'parity of esteem' as a sufficient answer on its own.",
+      "weak": "Has no awareness of any recent mental health policy change, or dismisses mental health provision as less important than physical health with no reasoning."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "States exact figures with total confidence and no hedge, on a fast-moving topic",
+        "reveals": "Doesn't recognise that staged implementation means specifics can move quickly"
+      },
+      {
+        "mistake": "Says 'mental health should be treated the same as physical health' with no explanation of a specific structural problem",
+        "reveals": "Reciting the value ('parity of esteem') is not the same as understanding what's actually broken"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Why might new walk-in centres and emergency departments specifically be needed, rather than just more funding for existing services?",
+        "goodResponse": "Reasons about the specific gap in the crisis-to-community pathway rather than giving a generic 'more funding helps' answer"
+      },
+      {
+        "probe": "Why do you think demand from under-18s has grown so much?",
+        "goodResponse": "Offers genuine, non-dismissive reasoning (e.g. social pressures, earlier identification, reduced stigma) rather than a single glib cause"
+      }
+    ],
+    "hints": [
+      "What specific problem is this reform trying to solve, beyond 'mental health needs more funding'?",
+      "Why might new walk-in and emergency facilities matter, specifically?",
+      "Are you confident the details you know are current, given how fast this is moving?"
+    ]
+  },
+  {
     "id": "MED-CA-04",
     "subject": "medicine",
     "topic": "current-affairs",
@@ -1127,6 +1223,55 @@
       "Does an imperfect test behave the same way in a high-risk group as in the whole population?",
       "What actually happens to someone who gets a false positive?",
       "Is 'screen everyone' the only alternative to 'screen no one'?"
+    ]
+  },
+  {
+    "id": "MED-CA-23",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 3,
+    "questionType": "Policy Discussion",
+    "title": "The Ethics of International Recruitment",
+    "tags": [
+      "current-affairs",
+      "workforce",
+      "global-health",
+      "sensitive"
+    ],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-01-31",
+    "question": "The NHS has historically relied heavily on doctors trained overseas, but the government's 10 Year Health Plan sets a target of under 10% international recruitment by 2035. Is it right for the UK to reduce its reliance on internationally trained doctors?",
+    "answer": "Discussion question — must be argued from both directions, and should be handled neutrally and sensitively given some candidates may be international medical graduates or the children of them. The tension: reducing reliance could relieve pressure on source countries whose own health systems lose staff to wealthier countries (an ethical concern about global health equity), but the NHS has depended on international recruitment for decades and a rapid reduction risks workforce shortfalls if domestic training doesn't scale fast enough to replace it.",
+    "modelReasoningPath": "A strong candidate argues both directions genuinely rather than picking one side. FOR reducing reliance: the ethical concern that wealthy health systems recruiting heavily from lower-income countries can drain the very systems those countries need, and that domestic training builds long-term self-sufficiency. AGAINST, or at least complicating the picture: the NHS's dependence is deep and immediate, staff already here have built careers and lives in the UK, and a target-driven reduction only works if domestic medical school and training capacity genuinely scales to match — otherwise it just creates shortfalls. The best candidates hold both the source-country ethical concern and the UK workforce reality in view at once, rather than treating this as a simple immigration question.",
+    "rubric": {
+      "strong": "Argues genuinely from both directions (global health equity for source countries vs UK workforce dependency), avoids treating existing international staff as the problem, and reasons about whether domestic capacity can realistically scale to match any target.",
+      "developing": "Takes a position with real reasoning but only from one direction, or doesn't distinguish between the policy question and the people currently working in the NHS.",
+      "weak": "Gives a one-sided answer with no engagement of the other side, or frames international colleagues themselves as a problem rather than discussing the policy."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Discusses only the UK's workforce needs with no mention of the effect on source countries",
+        "reveals": "Missing the global health equity dimension that is the actual ethical core of this question"
+      },
+      {
+        "mistake": "Frames the question in a way that reads as criticism of individual international colleagues",
+        "reveals": "Conflates a policy question about recruitment targets with an unwelcoming attitude toward people already working in the NHS — a red flag, not a nuance"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "What happens if domestic training places don't expand fast enough to hit the 2035 target?",
+        "goodResponse": "Engages honestly with the practical risk of the policy rather than assuming the target will simply be met"
+      },
+      {
+        "probe": "Is there a difference between the POLICY question and how we treat international colleagues already here?",
+        "goodResponse": "Clearly separates the two rather than letting one bleed into the other"
+      }
+    ],
+    "hints": [
+      "What's the ethical concern for the COUNTRIES international doctors train in, not just for the UK?",
+      "Does reducing reliance on international recruitment only work if something else also happens? What?",
+      "How do you keep this a policy discussion rather than a comment on individual colleagues?"
     ]
   },
   {
@@ -2474,6 +2619,51 @@
     ]
   },
   {
+    "id": "MED-EP-19",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "The Duty of Candour",
+    "tags": [
+      "professionalism",
+      "candour",
+      "honesty"
+    ],
+    "question": "You give a patient the wrong dose of a medication by mistake. It didn't cause them any harm, but it was still an error. What do you do?",
+    "answer": "The professional duty of candour has four parts: tell the person what happened, apologise, offer an appropriate remedy or support, and explain fully the short- and long-term effects. Naming 'duty of candour' as a phrase scores nothing on its own — what matters is actually doing the four things, even when (as here) no harm resulted. A strong answer walks through telling the patient promptly and honestly, apologising without minimising, and explaining clearly what happened and what it means for them going forward.",
+    "modelReasoningPath": "A strong candidate doesn't just say 'I'd be honest about it' — they demonstrate they know what honesty actually requires here: telling the patient specifically what happened (not a vague acknowledgement), a genuine apology, an explanation of any support or monitoring needed even though no harm occurred, and a clear account of what it means for them. The best answers note that the duty applies BECAUSE something went wrong, regardless of whether harm resulted — 'no harm, so no need to say anything' is exactly the failure mode being tested. They may also note that this differs from the organisation's own statutory reporting duties, which are triggered by defined incidents, but that distinction isn't required — only that the professional duty to the patient applies regardless.",
+    "rubric": {
+      "strong": "Names and performs all four elements of candour (tell, apologise, offer remedy/support, explain effects) applied specifically to this scenario, and is clear the duty applies even with no resulting harm.",
+      "developing": "Says they would 'be honest' or 'tell someone' but doesn't articulate the specific actions the duty actually requires, or only partially covers them.",
+      "weak": "Suggests not mentioning the error since no harm was caused, or only reports it to a senior without any commitment to telling the patient directly."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "\"Since no harm was caused, I wouldn't need to say anything\"",
+        "reveals": "Misunderstands that the duty of candour is triggered by the error itself, not by whether harm resulted"
+      },
+      {
+        "mistake": "Says \"I'd be open and honest\" without describing what that actually involves",
+        "reveals": "Naming the value without performing its actual content — this is exactly what the duty of candour rule is designed to catch"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "The patient seems upset and asks if this happens often. What do you say?",
+        "goodResponse": "Answers honestly without being evasive or over-alarming, staying within what they actually know"
+      },
+      {
+        "probe": "Does it matter that no harm was caused here?",
+        "goodResponse": "Recognises the duty applies regardless of outcome — the trigger is the error, not the consequence"
+      }
+    ],
+    "hints": [
+      "The duty of candour has four specific parts — can you name what actually needs to happen, not just that you'd 'be honest'?",
+      "Does whether harm was caused change whether you have a duty to say something?"
+    ]
+  },
+  {
     "id": "MED-E1",
     "subject": "medicine",
     "topic": "ethics-scenarios",
@@ -3035,6 +3225,144 @@
       "Is it possible for two thoughtful people to disagree on this?"
     ],
     "format": "ES"
+  },
+  {
+    "id": "MED-E13",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "Conflict of Interest",
+    "tags": [
+      "ethics",
+      "conflicts-of-interest",
+      "professionalism"
+    ],
+    "question": "A pharmaceutical company sponsors your medical school's ball and offers free branded merchandise to students who attend a talk about their new drug. Is there anything wrong with going along?",
+    "answer": "Discussion question — no single verdict. GMP 2024 Domain 4 requires doctors to manage conflicts of interest. The key test is whether a reasonable person would think judgement COULD be affected, not whether it actually was. A strong answer recognises this as a genuine (if mild) conflict, distinguishes attending from being influenced, and notes that declaring an interest is necessary but not always sufficient — what matters is also what changes in practice after the declaration (e.g. not defaulting to that company's drug without good clinical reason).",
+    "modelReasoningPath": "A strong candidate resists both extremes — 'it's obviously fine, it's just merchandise' and 'it's obviously corrupt, refuse everything'. They name the actual test: would a reasonable observer think this could affect judgement, regardless of whether the student believes it would affect their own? They separate two questions that are often conflated — is attending itself wrong, and does anything need to change afterwards (e.g. transparency about the sponsorship, not favouring that company's product later without reason). The best answers note that a single free item is a low-stakes version of a real, larger problem in medicine (industry influence on prescribing), and that the habit of noticing and declaring starts now, not once it has financial consequences.",
+    "rubric": {
+      "strong": "Names conflict of interest as the real issue, states the 'reasonable person' test rather than relying on self-assessment of motive, and identifies what should follow a declaration (ongoing vigilance, not just disclosure once).",
+      "developing": "Recognises something is worth thinking about but frames it only in terms of the student's own intentions ('I wouldn't be influenced'), missing that the test isn't self-assessed.",
+      "weak": "Sees no issue at all, or the opposite over-correction: refuses to engage with any industry contact as automatically corrupt with no reasoning."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "\"It wouldn't affect my judgement, so it's not a conflict\"",
+        "reveals": "Doesn't know the actual test is about reasonable perception, not self-certified immunity to influence"
+      },
+      {
+        "mistake": "Treats declaring the interest as the end of the matter",
+        "reveals": "Hasn't considered that a declaration only works if something in behaviour is actually being watched afterwards"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Does it matter whether the merchandise is a pen or a laptop?",
+        "goodResponse": "Recognises scale matters to the SIZE of the risk, not to whether the underlying principle applies at all"
+      },
+      {
+        "probe": "What would you do differently five years from now, prescribing that company's drug?",
+        "goodResponse": "Connects the small student-level example to the real clinical-practice version of the same problem"
+      }
+    ],
+    "hints": [
+      "What's the actual test for whether something counts as a conflict of interest — is it about your intentions or something else?",
+      "Does declaring an interest solve the problem on its own, or does something else need to happen too?"
+    ]
+  },
+  {
+    "id": "MED-E14",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "Lifestyle and Resource Allocation",
+    "tags": [
+      "ethics",
+      "resource-allocation",
+      "justice",
+      "lifestyle"
+    ],
+    "question": "\"Patients whose illness is partly caused by their own lifestyle choices — smoking, drinking, diet — should be lower priority for scarce NHS treatment than patients whose illness isn't.\" Do you agree?",
+    "answer": "Discussion question with no single correct verdict — assess whether the candidate can engage with BOTH the argument and its strongest objections, not which side they land on. The strongest objections: the causal claim linking behaviour to illness is often weaker than assumed (genetics, addiction, circumstance all play a role); deprivation itself drives much of the behaviour in question, so the policy risks punishing poverty; the principle is rarely applied consistently (no one proposes deprioritising rugby players with sports injuries); and it imports moral judgement of the patient into what should be a clinical decision.",
+    "modelReasoningPath": "A strong candidate does not simply agree or disagree — they show they've actually weighed the argument's real appeal (personal responsibility, fairness to those who didn't contribute to their own condition) against its strongest problems. The best answers notice that 'lifestyle-caused' is doing a lot of unexamined work: addiction has a biological and social component, not just a chosen one; deprivation strongly predicts smoking/poor diet, so penalising the behaviour can amount to penalising poverty; and the principle isn't applied evenly — a skier with a broken leg or a footballer with a torn ACL is never proposed for deprioritisation. A candidate who holds their ground under pushback, while still being willing to name what WOULD change their mind, is showing genuine ethical reasoning rather than a rehearsed position.",
+    "rubric": {
+      "strong": "Engages seriously with the argument's real appeal, then raises at least two of the standard objections (causal complexity, deprivation link, inconsistent application, importing moral judgement into clinical care) with genuine reasoning, and can say what would shift their view.",
+      "developing": "Takes a position but only engages one side seriously, or raises an objection without explaining why it actually undermines the argument.",
+      "weak": "Dismisses the question as obviously wrong (or obviously right) with no engagement, or refuses to take any position at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Dismisses the argument as obviously prejudiced without engaging why it's actually flawed",
+        "reveals": "Hasn't done the ethical work of explaining the objection, just asserted a conclusion"
+      },
+      {
+        "mistake": "Accepts the lifestyle-based argument without noticing the deprivation link",
+        "reveals": "Hasn't seen that 'personal choice' and 'social circumstance' can't always be cleanly separated"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "A rugby player has a knee injury from a sport they chose to play — should they be deprioritised the same way?",
+        "goodResponse": "Notices the inconsistency in how the principle actually gets applied in practice"
+      },
+      {
+        "probe": "Is addiction a choice in the same way that, say, not exercising is?",
+        "goodResponse": "Distinguishes between different kinds of 'lifestyle' factors rather than treating them as one uniform category"
+      }
+    ],
+    "hints": [
+      "What's the strongest version of the argument that lifestyle should matter — and separately, the strongest objection to it?",
+      "Is this principle ever actually applied consistently across different 'self-inflicted' conditions?",
+      "How much of 'lifestyle choice' is really just choice, versus shaped by circumstances someone didn't choose?"
+    ]
+  },
+  {
+    "id": "MED-E15",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "When Principles Conflict",
+    "tags": [
+      "ethics",
+      "four-principles",
+      "frameworks"
+    ],
+    "question": "A patient with full mental capacity refuses a blood transfusion that would very likely save their life, for reasons that don't relate to any religious belief — they say they've simply always been terrified of transfusions. Their adult children beg you to give it anyway. What do you do, and why?",
+    "answer": "Discussion question — no single correct verdict. This tests whether the candidate can name WHICH of the four principles (autonomy, beneficence, non-maleficence, justice) are in tension here, rather than just listing all four. The real tension is autonomy (a capacitous adult's right to refuse treatment, for ANY reason or none) versus beneficence (the clinician's instinct to save a life that could be saved). A strong answer holds that a capacitous refusal must be respected even when the reason seems irrational to others, while still genuinely engaging with how difficult that is in the moment, and how the children's distress should be handled with compassion, not by overriding the patient.",
+    "modelReasoningPath": "A strong candidate does NOT simply name all four principles — the ontology's own framework guidance is explicit that naming all four and applying none scores nothing. Instead they identify the SPECIFIC tension here: autonomy versus beneficence. They reason that capacity is the key gate — because this patient has full capacity and their reason, however seemingly irrational, doesn't need to meet a bar of 'good enough' to be respected, autonomy should generally prevail over the clinician's wish to act beneficently. The best candidates go further: they acknowledge this is genuinely hard to sit with as a doctor, that overriding a capacitous refusal would itself be a serious ethical and legal violation, and that the right response to the children's distress is honest, compassionate communication — not persuading or overriding the patient on their behalf.",
+    "rubric": {
+      "strong": "Names the SPECIFIC principles in tension (autonomy vs beneficence, not all four), reasons clearly about why capacity is decisive here, and addresses the children's distress with a compassionate but non-overriding approach.",
+      "developing": "Reaches a reasonable position (usually respecting the refusal) but names all four principles generically rather than identifying which two are actually in conflict, or doesn't address the family's distress at all.",
+      "weak": "Concludes the transfusion should be given anyway to save a life, without seriously engaging with the capacitous refusal, or gives an answer with no ethical reasoning at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Lists autonomy, beneficence, non-maleficence and justice with no application to this specific case",
+        "reveals": "Naming the four principles is not the same as reasoning with them — this scores as an anti-buzzword failure, not a strength"
+      },
+      {
+        "mistake": "Concludes the family's wishes should override the patient because they 'know them best'",
+        "reveals": "Doesn't understand that a capacitous adult's own refusal takes precedence over family wishes, even well-intentioned ones"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "Would your answer change if the patient's reason were religious rather than a fear?",
+        "goodResponse": "Recognises capacity and the right to refuse don't depend on the reason being one the doctor finds compelling or comprehensible"
+      },
+      {
+        "probe": "What would you actually say to the children in that corridor?",
+        "goodResponse": "Offers a genuinely compassionate, honest response rather than dismissing the family's distress or hinting the outcome might still change"
+      }
+    ],
+    "hints": [
+      "Of the four classic principles, which TWO are actually pulling against each other in this specific case?",
+      "Does a patient's reason for refusing treatment need to seem 'good' to you for it to be respected?",
+      "How would you handle the family in the room, without changing the clinical/ethical answer?"
+    ]
   },
   {
     "id": "MED-MR-18",
@@ -6014,6 +6342,121 @@
       "actorResponseToStrong": "Stops moving. Engages with the proposal. Reveals the trustees issue.",
       "actorResponseToWeak": "'Great, thanks' and moves on — or escalates the pressure."
     }
+  },
+  {
+    "id": "MED-RP-021",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 3,
+    "questionType": "Roleplay Station",
+    "title": "The DNACPR Misconception",
+    "tags": [
+      "roleplay",
+      "end-of-life",
+      "communication",
+      "sensitive"
+    ],
+    "format": "RP",
+    "clinicalReviewRequired": true,
+    "question": "Opening line spoken in character.",
+    "answer": "N/A — roleplay station. Assessed on communication and correcting the misconception, not on any clinical judgement.",
+    "roleplay": {
+      "name": "Marion Doyle",
+      "role": "adult daughter of a hospital patient",
+      "applicantRole": "You are a hospital volunteer/patient liaison with no clinical authority and no access to medical records — you cannot make or explain clinical decisions, only listen and help her understand in general terms.",
+      "openingStatement": "They just told me Dad's got a 'do not resuscitate' on his file now. Nobody asked us. So that's it, they're just going to let him die if anything happens? After everything he's fought through?",
+      "actorStateInitial": "Frightened and angry, talking quickly, close to tears.",
+      "actorStateTrajectory": "If met with genuine listening and a calm, honest, lay explanation, softens within a few exchanges into sadness and relief rather than anger. If dismissed, rushed, or given false reassurance, escalates further and becomes more entrenched in the belief that 'they're giving up on him'.",
+      "hiddenFacts": [
+        {
+          "fact": "Marion's father had a private conversation with his own doctor last week where he said he did not want CPR attempted if his heart stopped — the DNACPR reflects HIS wishes, not a decision made about him without consultation.",
+          "disclosureCondition": "Only if the candidate stays in their lane (a volunteer cannot confirm clinical details) — the honest answer is to gently suggest this is exactly the kind of question worth asking the clinical team directly, not to assert it as fact themselves."
+        },
+        {
+          "fact": "Marion is exhausted — she has barely slept in three days sitting with her father — which is part of why she reacted so strongly.",
+          "disclosureCondition": "Only if the candidate asks something genuinely curious about how SHE is doing, not just about her father."
+        }
+      ],
+      "escalationTriggers": [
+        "Being told to 'calm down'",
+        "Being given a rushed or dismissive answer",
+        "The candidate confirming clinical specifics they cannot actually know as a volunteer",
+        "Any hint that the decision means 'no more care at all'"
+      ],
+      "deEscalationTriggers": [
+        "Being genuinely listened to before being corrected",
+        "A calm, honest, lay explanation of what a DNACPR actually covers",
+        "Being asked how she herself is doing, not just about her father"
+      ],
+      "resistancePatterns": [
+        "Repeats 'so they're just giving up on him' in different words even after a first correction",
+        "Asks the candidate to confirm details about her father's specific medical situation they cannot know"
+      ],
+      "interruptionRule": "She does not interrupt mid-sentence, but if the candidate pauses for more than a few seconds without saying anything, she fills the silence with more anxious detail rather than waiting patiently.",
+      "plantedMisunderstanding": "That a DNACPR order means the whole care team will withhold ALL treatment, not just resuscitation attempts if her father's heart or breathing stops.",
+      "desiredOutcomes": [
+        "Lets her speak and names her fear before attempting any correction",
+        "Corrects the misconception in plain, warm language — that DNACPR concerns CPR specifically, not other treatment or care",
+        "Does not claim to know or confirm details of her father's specific case or the conversation that led to the order, since a volunteer has no access to that",
+        "Suggests she raise her question about consultation directly with the clinical team, rather than guessing on their behalf",
+        "Acknowledges how frightening and exhausting this has clearly been for her, not just for her father"
+      ],
+      "endings": [
+        {
+          "id": "A",
+          "condition": "Misconception corrected, referral to clinical team made, her distress acknowledged",
+          "description": "She thanks the candidate, visibly calmer, and says she'll ask the doctor directly."
+        },
+        {
+          "id": "B",
+          "condition": "Candidate overstepped and asserted clinical specifics they couldn't know",
+          "description": "She seizes on the claim and asks the candidate to repeat it to the doctor as if it were confirmed, creating a problem the candidate cannot actually resolve."
+        },
+        {
+          "id": "C",
+          "condition": "Candidate was dismissive or rushed",
+          "description": "She becomes more distressed and ends the conversation still believing her father is being abandoned."
+        }
+      ],
+      "redFlags": [
+        "Confirming or inventing clinical details about her father's case",
+        "Telling her to calm down or that she's overreacting",
+        "Promising a specific outcome or decision on behalf of the clinical team"
+      ],
+      "actorResponseToStrong": "Marion's shoulders drop, she exhales, and says quietly, 'Nobody explained it like that. I just heard \"do not resuscitate\" and panicked.' She thanks the candidate and says she'll speak to the doctor.",
+      "actorResponseToWeak": "Marion's voice rises: 'So you're telling me it's fine, they're just going to sit back? That's not good enough,' and she gets up to find someone else to talk to."
+    },
+    "modelReasoningPath": "A strong candidate does three things in order: lets Marion speak and finish naming her fear before jumping to correct her; corrects the specific misconception clearly and warmly (DNACPR concerns CPR only, not other treatment or care); and is honest about the limits of their own role — they are not the person who can confirm what was discussed with her father, and say so plainly rather than guessing or reassuring falsely. The weakest candidates either rush past her distress to deliver a correction, or — worse — invent or assume clinical details they have no way of knowing, which is exactly the escalation trap this station is built to catch.",
+    "rubric": {
+      "strong": "Listens first, corrects the specific misconception in plain language, stays honestly within the limits of a non-clinical role, and acknowledges Marion's own exhaustion and fear, not only her father's situation.",
+      "developing": "Corrects the misconception but rushes past her distress, or is warm but vague and doesn't actually explain what DNACPR does and doesn't cover.",
+      "weak": "Confirms or invents clinical specifics they cannot know, dismisses her distress, or fails to correct the core misconception at all."
+    },
+    "commonMistakes": [
+      {
+        "mistake": "Confidently explains what was decided in her father's specific case",
+        "reveals": "Doesn't recognise the boundary of a non-clinical role — a real volunteer or student would have no access to that information"
+      },
+      {
+        "mistake": "Jumps straight to correcting the misconception without acknowledging her fear first",
+        "reveals": "Treats this as an information problem rather than a person in genuine distress"
+      }
+    ],
+    "liveProbes": [
+      {
+        "probe": "So you're saying they WOULD still treat him if something else happened?",
+        "goodResponse": "Confirms the general principle (DNACPR covers CPR only) without asserting specifics of her father's case"
+      },
+      {
+        "probe": "Why wasn't I asked about this?",
+        "goodResponse": "Doesn't guess or invent an answer — acknowledges this is a fair and important question to put directly to the clinical team"
+      }
+    ],
+    "hints": [
+      "What does a DNACPR order actually cover, and what does it NOT cover?",
+      "What can you honestly say in this role, and what should you honestly say you don't know?",
+      "Whose distress is in the room right now, and have you acknowledged it?"
+    ]
   },
   {
     "id": "MED-RP-020",

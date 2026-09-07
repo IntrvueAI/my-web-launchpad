@@ -1,0 +1,88 @@
+[
+  {
+    "id": "MED-RP-021",
+    "subject": "medicine",
+    "topic": "roleplay-stations",
+    "difficulty": 3,
+    "questionType": "Roleplay Station",
+    "title": "The DNACPR Misconception",
+    "tags": ["roleplay", "end-of-life", "communication", "sensitive"],
+    "format": "RP",
+    "clinicalReviewRequired": true,
+    "question": "Opening line spoken in character.",
+    "answer": "N/A — roleplay station. Assessed on communication and correcting the misconception, not on any clinical judgement.",
+    "roleplay": {
+      "name": "Marion Doyle",
+      "role": "adult daughter of a hospital patient",
+      "applicantRole": "You are a hospital volunteer/patient liaison with no clinical authority and no access to medical records — you cannot make or explain clinical decisions, only listen and help her understand in general terms.",
+      "openingStatement": "They just told me Dad's got a 'do not resuscitate' on his file now. Nobody asked us. So that's it, they're just going to let him die if anything happens? After everything he's fought through?",
+      "actorStateInitial": "Frightened and angry, talking quickly, close to tears.",
+      "actorStateTrajectory": "If met with genuine listening and a calm, honest, lay explanation, softens within a few exchanges into sadness and relief rather than anger. If dismissed, rushed, or given false reassurance, escalates further and becomes more entrenched in the belief that 'they're giving up on him'.",
+      "hiddenFacts": [
+        {
+          "fact": "Marion's father had a private conversation with his own doctor last week where he said he did not want CPR attempted if his heart stopped — the DNACPR reflects HIS wishes, not a decision made about him without consultation.",
+          "disclosureCondition": "Only if the candidate stays in their lane (a volunteer cannot confirm clinical details) — the honest answer is to gently suggest this is exactly the kind of question worth asking the clinical team directly, not to assert it as fact themselves."
+        },
+        {
+          "fact": "Marion is exhausted — she has barely slept in three days sitting with her father — which is part of why she reacted so strongly.",
+          "disclosureCondition": "Only if the candidate asks something genuinely curious about how SHE is doing, not just about her father."
+        }
+      ],
+      "escalationTriggers": [
+        "Being told to 'calm down'",
+        "Being given a rushed or dismissive answer",
+        "The candidate confirming clinical specifics they cannot actually know as a volunteer",
+        "Any hint that the decision means 'no more care at all'"
+      ],
+      "deEscalationTriggers": [
+        "Being genuinely listened to before being corrected",
+        "A calm, honest, lay explanation of what a DNACPR actually covers",
+        "Being asked how she herself is doing, not just about her father"
+      ],
+      "resistancePatterns": [
+        "Repeats 'so they're just giving up on him' in different words even after a first correction",
+        "Asks the candidate to confirm details about her father's specific medical situation they cannot know"
+      ],
+      "interruptionRule": "She does not interrupt mid-sentence, but if the candidate pauses for more than a few seconds without saying anything, she fills the silence with more anxious detail rather than waiting patiently.",
+      "plantedMisunderstanding": "That a DNACPR order means the whole care team will withhold ALL treatment, not just resuscitation attempts if her father's heart or breathing stops.",
+      "desiredOutcomes": [
+        "Lets her speak and names her fear before attempting any correction",
+        "Corrects the misconception in plain, warm language — that DNACPR concerns CPR specifically, not other treatment or care",
+        "Does not claim to know or confirm details of her father's specific case or the conversation that led to the order, since a volunteer has no access to that",
+        "Suggests she raise her question about consultation directly with the clinical team, rather than guessing on their behalf",
+        "Acknowledges how frightening and exhausting this has clearly been for her, not just for her father"
+      ],
+      "endings": [
+        {"id": "A", "condition": "Misconception corrected, referral to clinical team made, her distress acknowledged", "description": "She thanks the candidate, visibly calmer, and says she'll ask the doctor directly."},
+        {"id": "B", "condition": "Candidate overstepped and asserted clinical specifics they couldn't know", "description": "She seizes on the claim and asks the candidate to repeat it to the doctor as if it were confirmed, creating a problem the candidate cannot actually resolve."},
+        {"id": "C", "condition": "Candidate was dismissive or rushed", "description": "She becomes more distressed and ends the conversation still believing her father is being abandoned."}
+      ],
+      "redFlags": [
+        "Confirming or inventing clinical details about her father's case",
+        "Telling her to calm down or that she's overreacting",
+        "Promising a specific outcome or decision on behalf of the clinical team"
+      ],
+      "actorResponseToStrong": "Marion's shoulders drop, she exhales, and says quietly, 'Nobody explained it like that. I just heard \"do not resuscitate\" and panicked.' She thanks the candidate and says she'll speak to the doctor.",
+      "actorResponseToWeak": "Marion's voice rises: 'So you're telling me it's fine, they're just going to sit back? That's not good enough,' and she gets up to find someone else to talk to."
+    },
+    "modelReasoningPath": "A strong candidate does three things in order: lets Marion speak and finish naming her fear before jumping to correct her; corrects the specific misconception clearly and warmly (DNACPR concerns CPR only, not other treatment or care); and is honest about the limits of their own role — they are not the person who can confirm what was discussed with her father, and say so plainly rather than guessing or reassuring falsely. The weakest candidates either rush past her distress to deliver a correction, or — worse — invent or assume clinical details they have no way of knowing, which is exactly the escalation trap this station is built to catch.",
+    "rubric": {
+      "strong": "Listens first, corrects the specific misconception in plain language, stays honestly within the limits of a non-clinical role, and acknowledges Marion's own exhaustion and fear, not only her father's situation.",
+      "developing": "Corrects the misconception but rushes past her distress, or is warm but vague and doesn't actually explain what DNACPR does and doesn't cover.",
+      "weak": "Confirms or invents clinical specifics they cannot know, dismisses her distress, or fails to correct the core misconception at all."
+    },
+    "commonMistakes": [
+      {"mistake": "Confidently explains what was decided in her father's specific case", "reveals": "Doesn't recognise the boundary of a non-clinical role — a real volunteer or student would have no access to that information"},
+      {"mistake": "Jumps straight to correcting the misconception without acknowledging her fear first", "reveals": "Treats this as an information problem rather than a person in genuine distress"}
+    ],
+    "liveProbes": [
+      {"probe": "So you're saying they WOULD still treat him if something else happened?", "goodResponse": "Confirms the general principle (DNACPR covers CPR only) without asserting specifics of her father's case"},
+      {"probe": "Why wasn't I asked about this?", "goodResponse": "Doesn't guess or invent an answer — acknowledges this is a fair and important question to put directly to the clinical team"}
+    ],
+    "hints": [
+      "What does a DNACPR order actually cover, and what does it NOT cover?",
+      "What can you honestly say in this role, and what should you honestly say you don't know?",
+      "Whose distress is in the room right now, and have you acknowledged it?"
+    ]
+  }
+]

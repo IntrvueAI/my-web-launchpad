@@ -166,7 +166,7 @@ function OverviewTab() {
         <p className="text-xs text-muted-foreground leading-relaxed">
           Scope, honestly stated: this is a real, live subset of the research pack's roadmap — the full 20-persona roleplay engine,
           all {caTopics.length} current-affairs topics with live hard-expiry enforcement, and {bank.length} authored stations spanning every format the
-          research found in use (roleplay, ethics, policy, motivation, communication, teamwork/resilience, data/numeracy), closing in on
+          research found in use (roleplay, ethics, policy, motivation, communication, teamwork/resilience, data/numeracy) — past
           the pack's own 120-station MVP threshold. Clinical-review NEED is tracked (the banner above, and the filter on the Stations
           tab) — {needsReview.length} stations are flagged — but the review itself hasn't happened, because there is no clinician on staff to do it; treat every
           flagged station as draft, not launch-ready. Not yet built: the remaining ontology coverage toward the pack's own "Strong launch"

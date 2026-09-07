@@ -1,0 +1,62 @@
+[
+  {
+    "id": "MED-E14",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "Lifestyle and Resource Allocation",
+    "tags": ["ethics", "resource-allocation", "justice", "lifestyle"],
+    "question": "\"Patients whose illness is partly caused by their own lifestyle choices — smoking, drinking, diet — should be lower priority for scarce NHS treatment than patients whose illness isn't.\" Do you agree?",
+    "answer": "Discussion question with no single correct verdict — assess whether the candidate can engage with BOTH the argument and its strongest objections, not which side they land on. The strongest objections: the causal claim linking behaviour to illness is often weaker than assumed (genetics, addiction, circumstance all play a role); deprivation itself drives much of the behaviour in question, so the policy risks punishing poverty; the principle is rarely applied consistently (no one proposes deprioritising rugby players with sports injuries); and it imports moral judgement of the patient into what should be a clinical decision.",
+    "modelReasoningPath": "A strong candidate does not simply agree or disagree — they show they've actually weighed the argument's real appeal (personal responsibility, fairness to those who didn't contribute to their own condition) against its strongest problems. The best answers notice that 'lifestyle-caused' is doing a lot of unexamined work: addiction has a biological and social component, not just a chosen one; deprivation strongly predicts smoking/poor diet, so penalising the behaviour can amount to penalising poverty; and the principle isn't applied evenly — a skier with a broken leg or a footballer with a torn ACL is never proposed for deprioritisation. A candidate who holds their ground under pushback, while still being willing to name what WOULD change their mind, is showing genuine ethical reasoning rather than a rehearsed position.",
+    "rubric": {
+      "strong": "Engages seriously with the argument's real appeal, then raises at least two of the standard objections (causal complexity, deprivation link, inconsistent application, importing moral judgement into clinical care) with genuine reasoning, and can say what would shift their view.",
+      "developing": "Takes a position but only engages one side seriously, or raises an objection without explaining why it actually undermines the argument.",
+      "weak": "Dismisses the question as obviously wrong (or obviously right) with no engagement, or refuses to take any position at all."
+    },
+    "commonMistakes": [
+      {"mistake": "Dismisses the argument as obviously prejudiced without engaging why it's actually flawed", "reveals": "Hasn't done the ethical work of explaining the objection, just asserted a conclusion"},
+      {"mistake": "Accepts the lifestyle-based argument without noticing the deprivation link", "reveals": "Hasn't seen that 'personal choice' and 'social circumstance' can't always be cleanly separated"}
+    ],
+    "liveProbes": [
+      {"probe": "A rugby player has a knee injury from a sport they chose to play — should they be deprioritised the same way?", "goodResponse": "Notices the inconsistency in how the principle actually gets applied in practice"},
+      {"probe": "Is addiction a choice in the same way that, say, not exercising is?", "goodResponse": "Distinguishes between different kinds of 'lifestyle' factors rather than treating them as one uniform category"}
+    ],
+    "hints": [
+      "What's the strongest version of the argument that lifestyle should matter — and separately, the strongest objection to it?",
+      "Is this principle ever actually applied consistently across different 'self-inflicted' conditions?",
+      "How much of 'lifestyle choice' is really just choice, versus shaped by circumstances someone didn't choose?"
+    ]
+  },
+  {
+    "id": "MED-E15",
+    "subject": "medicine",
+    "topic": "ethics-scenarios",
+    "difficulty": 3,
+    "questionType": "Ethical Scenario",
+    "title": "When Principles Conflict",
+    "tags": ["ethics", "four-principles", "frameworks"],
+    "question": "A patient with full mental capacity refuses a blood transfusion that would very likely save their life, for reasons that don't relate to any religious belief — they say they've simply always been terrified of transfusions. Their adult children beg you to give it anyway. What do you do, and why?",
+    "answer": "Discussion question — no single correct verdict. This tests whether the candidate can name WHICH of the four principles (autonomy, beneficence, non-maleficence, justice) are in tension here, rather than just listing all four. The real tension is autonomy (a capacitous adult's right to refuse treatment, for ANY reason or none) versus beneficence (the clinician's instinct to save a life that could be saved). A strong answer holds that a capacitous refusal must be respected even when the reason seems irrational to others, while still genuinely engaging with how difficult that is in the moment, and how the children's distress should be handled with compassion, not by overriding the patient.",
+    "modelReasoningPath": "A strong candidate does NOT simply name all four principles — the ontology's own framework guidance is explicit that naming all four and applying none scores nothing. Instead they identify the SPECIFIC tension here: autonomy versus beneficence. They reason that capacity is the key gate — because this patient has full capacity and their reason, however seemingly irrational, doesn't need to meet a bar of 'good enough' to be respected, autonomy should generally prevail over the clinician's wish to act beneficently. The best candidates go further: they acknowledge this is genuinely hard to sit with as a doctor, that overriding a capacitous refusal would itself be a serious ethical and legal violation, and that the right response to the children's distress is honest, compassionate communication — not persuading or overriding the patient on their behalf.",
+    "rubric": {
+      "strong": "Names the SPECIFIC principles in tension (autonomy vs beneficence, not all four), reasons clearly about why capacity is decisive here, and addresses the children's distress with a compassionate but non-overriding approach.",
+      "developing": "Reaches a reasonable position (usually respecting the refusal) but names all four principles generically rather than identifying which two are actually in conflict, or doesn't address the family's distress at all.",
+      "weak": "Concludes the transfusion should be given anyway to save a life, without seriously engaging with the capacitous refusal, or gives an answer with no ethical reasoning at all."
+    },
+    "commonMistakes": [
+      {"mistake": "Lists autonomy, beneficence, non-maleficence and justice with no application to this specific case", "reveals": "Naming the four principles is not the same as reasoning with them — this scores as an anti-buzzword failure, not a strength"},
+      {"mistake": "Concludes the family's wishes should override the patient because they 'know them best'", "reveals": "Doesn't understand that a capacitous adult's own refusal takes precedence over family wishes, even well-intentioned ones"}
+    ],
+    "liveProbes": [
+      {"probe": "Would your answer change if the patient's reason were religious rather than a fear?", "goodResponse": "Recognises capacity and the right to refuse don't depend on the reason being one the doctor finds compelling or comprehensible"},
+      {"probe": "What would you actually say to the children in that corridor?", "goodResponse": "Offers a genuinely compassionate, honest response rather than dismissing the family's distress or hinting the outcome might still change"}
+    ],
+    "hints": [
+      "Of the four classic principles, which TWO are actually pulling against each other in this specific case?",
+      "Does a patient's reason for refusing treatment need to seem 'good' to you for it to be respected?",
+      "How would you handle the family in the room, without changing the clinical/ethical answer?"
+    ]
+  }
+]

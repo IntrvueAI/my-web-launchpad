@@ -1,0 +1,31 @@
+[
+  {
+    "id": "MED-EP-19",
+    "subject": "medicine",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "questionType": "Ethical Scenario",
+    "title": "The Duty of Candour",
+    "tags": ["professionalism", "candour", "honesty"],
+    "question": "You give a patient the wrong dose of a medication by mistake. It didn't cause them any harm, but it was still an error. What do you do?",
+    "answer": "The professional duty of candour has four parts: tell the person what happened, apologise, offer an appropriate remedy or support, and explain fully the short- and long-term effects. Naming 'duty of candour' as a phrase scores nothing on its own — what matters is actually doing the four things, even when (as here) no harm resulted. A strong answer walks through telling the patient promptly and honestly, apologising without minimising, and explaining clearly what happened and what it means for them going forward.",
+    "modelReasoningPath": "A strong candidate doesn't just say 'I'd be honest about it' — they demonstrate they know what honesty actually requires here: telling the patient specifically what happened (not a vague acknowledgement), a genuine apology, an explanation of any support or monitoring needed even though no harm occurred, and a clear account of what it means for them. The best answers note that the duty applies BECAUSE something went wrong, regardless of whether harm resulted — 'no harm, so no need to say anything' is exactly the failure mode being tested. They may also note that this differs from the organisation's own statutory reporting duties, which are triggered by defined incidents, but that distinction isn't required — only that the professional duty to the patient applies regardless.",
+    "rubric": {
+      "strong": "Names and performs all four elements of candour (tell, apologise, offer remedy/support, explain effects) applied specifically to this scenario, and is clear the duty applies even with no resulting harm.",
+      "developing": "Says they would 'be honest' or 'tell someone' but doesn't articulate the specific actions the duty actually requires, or only partially covers them.",
+      "weak": "Suggests not mentioning the error since no harm was caused, or only reports it to a senior without any commitment to telling the patient directly."
+    },
+    "commonMistakes": [
+      {"mistake": "\"Since no harm was caused, I wouldn't need to say anything\"", "reveals": "Misunderstands that the duty of candour is triggered by the error itself, not by whether harm resulted"},
+      {"mistake": "Says \"I'd be open and honest\" without describing what that actually involves", "reveals": "Naming the value without performing its actual content — this is exactly what the duty of candour rule is designed to catch"}
+    ],
+    "liveProbes": [
+      {"probe": "The patient seems upset and asks if this happens often. What do you say?", "goodResponse": "Answers honestly without being evasive or over-alarming, staying within what they actually know"},
+      {"probe": "Does it matter that no harm was caused here?", "goodResponse": "Recognises the duty applies regardless of outcome — the trigger is the error, not the consequence"}
+    ],
+    "hints": [
+      "The duty of candour has four specific parts — can you name what actually needs to happen, not just that you'd 'be honest'?",
+      "Does whether harm was caused change whether you have a duty to say something?"
+    ]
+  }
+]

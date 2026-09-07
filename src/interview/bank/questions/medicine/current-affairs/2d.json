@@ -1,0 +1,66 @@
+[
+  {
+    "id": "MED-CA-21",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Private Providers in the NHS",
+    "tags": ["current-affairs", "nhs-policy", "private-sector"],
+    "format": "PD",
+    "currentAffairsExpiry": "2027-03-31",
+    "question": "Independent (private) providers now deliver a significant share of NHS-funded diagnostics and treatment, under NHS-funded partnership arrangements. Is greater use of the private sector within the NHS a good thing?",
+    "answer": "Discussion question — no single verdict, scored on balance rather than which side is taken. As at the register's last verification: independent providers treated over a million NHS patients in 2024 under an NHS partnership agreement, and now deliver a large share of NHS-funded diagnostics and over half of NHS-funded ADHD assessments. The strongest counter-arguments: providers draw on much of the same clinical workforce as the NHS itself (so it isn't simply 'extra' capacity), tend to take on lower-complexity cases, coverage is geographically uneven, and patient choice can widen inequality if only some patients are able to exercise it effectively.",
+    "modelReasoningPath": "A strong candidate states the case for private-sector involvement at its strongest — faster access, reduced NHS waiting lists, patient choice — and the case against at its strongest: workforce overlap means it may not add real capacity system-wide, casemix is typically less complex (so headline efficiency isn't a fair comparison), provision is geographically uneven, and choice mechanisms can benefit better-informed or better-resourced patients disproportionately, widening inequality rather than narrowing it. The best answers avoid ideological framing in either direction and instead reason about mechanisms — where does the extra capacity actually come from, and who benefits from choice in practice.",
+    "rubric": {
+      "strong": "States both sides fairly with real mechanisms (not slogans), engages with the workforce-overlap and casemix objections specifically, and avoids declaring a fixed ideological position.",
+      "developing": "Has a view but argues it with only one mechanism, or uses generic language ('more choice is good' / 'privatisation is bad') without engaging the specific evidence.",
+      "weak": "Argues from ideology alone in either direction with no mechanism, or refuses to engage with the question."
+    },
+    "commonMistakes": [
+      {"mistake": "Treats private-sector capacity as simply 'extra' capacity with no workforce cost", "reveals": "Hasn't considered that the same doctors and nurses often work across both systems"},
+      {"mistake": "Assumes patient choice benefits everyone equally", "reveals": "Hasn't considered that exercising choice well requires information, time and confidence not everyone has equally"}
+    ],
+    "liveProbes": [
+      {"probe": "If independent providers use the same staff as the NHS, where does the extra capacity actually come from?", "goodResponse": "Engages with the workforce-overlap objection directly rather than restating that private providers 'add capacity'"},
+      {"probe": "Could patient choice make health inequality worse rather than better?", "goodResponse": "Considers that choice mechanisms are not equally accessible to all patients"}
+    ],
+    "hints": [
+      "What's the strongest argument FOR more private-sector involvement, and separately, the strongest argument against?",
+      "Where does the clinical workforce for private providers actually come from?",
+      "Does patient choice benefit everyone in the same way?"
+    ]
+  },
+  {
+    "id": "MED-CA-22",
+    "subject": "medicine",
+    "topic": "current-affairs",
+    "difficulty": 2,
+    "questionType": "Policy Discussion",
+    "title": "Reforming Mental Health Care",
+    "tags": ["current-affairs", "mental-health", "nhs-policy"],
+    "format": "PD",
+    "currentAffairsExpiry": "2026-12-31",
+    "question": "The Mental Health Act 2025 received Royal Assent and is being brought into force gradually, alongside new government funding for mental health facilities. Why might reforming mental health law and funding matter as much as reforming physical health services?",
+    "answer": "Discussion question — assess reasoning and awareness, not a single 'correct' policy verdict. As at the register's last verification: the Mental Health Act 2025 received Royal Assent on 18 December 2025 and is being commenced in stages; over a million under-18s were in contact with secondary NHS mental health services in 2024-25; and £343m was announced on 6 August 2026 for 159 new facilities including walk-in community centres and mental health emergency departments. A strong answer explains WHY structural reform matters — not just naming the figures — for example that demand has grown faster than capacity, especially in young people, and that emergency/community infrastructure changes where and how quickly people can get help.",
+    "modelReasoningPath": "A strong candidate doesn't just recite the funding figure or the Act's existence — they explain what the reform is actually trying to fix: rising demand, especially among under-18s, outpacing the system's capacity to respond, and gaps in the pathway between crisis (A&E) and ongoing community support that new walk-in and emergency facilities are meant to close. They're honest that details of implementation are staged and may have moved since they last checked, rather than stating exact figures with false confidence. The best answers connect mental and physical health as equally serious rather than treating the question as a box-ticking 'parity of esteem' reference.",
+    "rubric": {
+      "strong": "Explains the underlying problem (rising demand, especially in young people, and gaps in the crisis-to-community pathway) rather than just citing figures, and is appropriately tentative about exact current implementation status.",
+      "developing": "Cites the correct facts but doesn't explain why the reform matters structurally, or treats 'parity of esteem' as a sufficient answer on its own.",
+      "weak": "Has no awareness of any recent mental health policy change, or dismisses mental health provision as less important than physical health with no reasoning."
+    },
+    "commonMistakes": [
+      {"mistake": "States exact figures with total confidence and no hedge, on a fast-moving topic", "reveals": "Doesn't recognise that staged implementation means specifics can move quickly"},
+      {"mistake": "Says 'mental health should be treated the same as physical health' with no explanation of a specific structural problem", "reveals": "Reciting the value ('parity of esteem') is not the same as understanding what's actually broken"}
+    ],
+    "liveProbes": [
+      {"probe": "Why might new walk-in centres and emergency departments specifically be needed, rather than just more funding for existing services?", "goodResponse": "Reasons about the specific gap in the crisis-to-community pathway rather than giving a generic 'more funding helps' answer"},
+      {"probe": "Why do you think demand from under-18s has grown so much?", "goodResponse": "Offers genuine, non-dismissive reasoning (e.g. social pressures, earlier identification, reduced stigma) rather than a single glib cause"}
+    ],
+    "hints": [
+      "What specific problem is this reform trying to solve, beyond 'mental health needs more funding'?",
+      "Why might new walk-in and emergency facilities matter, specifically?",
+      "Are you confident the details you know are current, given how fast this is moving?"
+    ]
+  }
+]
