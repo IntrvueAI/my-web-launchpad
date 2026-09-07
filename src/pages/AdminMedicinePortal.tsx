@@ -1,10 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { Bar, BarChart, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis, YAxis } from 'recharts';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
-import { supabase } from '@/integrations/supabase/client';
-import { INTERVIEW_TYPES } from '@/config/interviewTypes';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -16,13 +12,11 @@ import {
 } from '@/interview/medicine-content';
 import { getBank } from '@/interview/bank';
 import type { BankQuestion } from '@/interview/engine/types';
-import { ArrowLeft, Search, AlertTriangle, CheckCircle2, Clock, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Search, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
 
-/** Derived, not hardcoded — so a new medicine interview type (e.g. a third school) is automatically
- *  included here the moment it's added to interviewTypes.ts, with nothing else to remember to sync. */
-const MEDICINE_INTERVIEW_TYPE_IDS = Object.values(INTERVIEW_TYPES)
-  .filter((t) => t.category === 'medicine')
-  .map((t) => t.id);
+// Its own lazy chunk — recharts is a genuinely heavy dependency, and this way it only downloads
+// when an admin actually clicks the Analytics tab, not on every visit to the portal.
+const AnalyticsTab = lazy(() => import('@/components/admin/medicine/AnalyticsTab'));
 
 const TOTAL_TOPICS = 158;
 const TOTAL_ROLEPLAYS = 20;
@@ -62,7 +56,15 @@ export default function AdminMedicinePortal() {
           </TabsList>
 
           <TabsContent value="overview"><OverviewTab /></TabsContent>
-          <TabsContent value="analytics"><AnalyticsTab /></TabsContent>
+          <TabsContent value="analytics">
+            <Suspense fallback={
+              <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+                {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-lg" />)}
+              </div>
+            }>
+              <AnalyticsTab />
+            </Suspense>
+          </TabsContent>
           <TabsContent value="stations"><StationsTab /></TabsContent>
           <TabsContent value="roleplay"><RoleplayTab /></TabsContent>
           <TabsContent value="current-affairs"><CurrentAffairsTab /></TabsContent>
@@ -74,7 +76,7 @@ export default function AdminMedicinePortal() {
   );
 }
 
-function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
+export function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
     <Card className="p-4">
       <div className="text-2xl font-bold">{value}</div>
@@ -173,158 +175,6 @@ function OverviewTab() {
           target (~110 of {TOTAL_TOPICS} topics), a real per-school interview-mode picker (station count/timing/roleplay-inclusion — the School map
           tab's "relevant stations" count is only a rough format match, not a working picker), and group-task/Oxbridge-tutorial formats
           (Phase 3 in the research roadmap, needing multi-participant simulation and a separate science-reasoning bank respectively).
-        </p>
-      </Card>
-    </div>
-  );
-}
-
-interface MedicineSessionRow {
-  id: string;
-  interview_type: string;
-  status: string;
-  created_at: string;
-}
-interface MedicineFeedbackRow {
-  interview_type: string;
-  total_score: number | null;
-  created_at: string;
-}
-
-/** Real usage/outcome data — everything above this tab is the static content pack; this is the
- *  only thing in the portal backed by a live query, so it's the one place an admin can see whether
- *  the pack is actually being used, not just how big it is. */
-function AnalyticsTab() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['medicine-analytics', MEDICINE_INTERVIEW_TYPE_IDS],
-    queryFn: async () => {
-      const [sessionsRes, feedbackRes] = await Promise.all([
-        supabase
-          .from('interview_sessions')
-          .select('id, interview_type, status, created_at')
-          .in('interview_type', MEDICINE_INTERVIEW_TYPE_IDS)
-          .order('created_at', { ascending: true }),
-        supabase
-          .from('feedback')
-          .select('interview_type, total_score, created_at')
-          .in('interview_type', MEDICINE_INTERVIEW_TYPE_IDS),
-      ]);
-      if (sessionsRes.error) throw sessionsRes.error;
-      if (feedbackRes.error) throw feedbackRes.error;
-      return {
-        sessions: (sessionsRes.data ?? []) as MedicineSessionRow[],
-        feedback: (feedbackRes.data ?? []) as MedicineFeedbackRow[],
-      };
-    },
-  });
-
-  const stats = useMemo(() => {
-    if (!data) return null;
-    const { sessions, feedback } = data;
-    const completed = sessions.filter((s) => s.status === 'completed');
-    const scores = feedback.map((f) => f.total_score).filter((s): s is number => typeof s === 'number');
-    const avgScore = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
-
-    const byType = new Map<string, { total: number; completed: number; scores: number[] }>();
-    for (const id of MEDICINE_INTERVIEW_TYPE_IDS) byType.set(id, { total: 0, completed: 0, scores: [] });
-    for (const s of sessions) {
-      const row = byType.get(s.interview_type) ?? { total: 0, completed: 0, scores: [] };
-      row.total += 1;
-      if (s.status === 'completed') row.completed += 1;
-      byType.set(s.interview_type, row);
-    }
-    for (const f of feedback) {
-      if (typeof f.total_score !== 'number') continue;
-      const row = byType.get(f.interview_type);
-      row?.scores.push(f.total_score);
-    }
-
-    // Sessions per day, last 30 days — a simple, honest usage trend (no smoothing/projection).
-    const days: { date: string; sessions: number }[] = [];
-    const dayMs = 24 * 60 * 60 * 1000;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    for (let i = 29; i >= 0; i--) {
-      const d = new Date(today.getTime() - i * dayMs);
-      const key = d.toISOString().slice(0, 10);
-      const count = sessions.filter((s) => s.created_at.slice(0, 10) === key).length;
-      days.push({ date: key.slice(5), sessions: count });
-    }
-
-    return {
-      total: sessions.length,
-      completed: completed.length,
-      completionRate: sessions.length ? Math.round((completed.length / sessions.length) * 100) : 0,
-      avgScore,
-      byType,
-      days,
-    };
-  }, [data]);
-
-  if (isLoading) {
-    return (
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-lg" />)}
-      </div>
-    );
-  }
-  if (error || !stats) {
-    return <Card className="p-4 text-sm text-destructive">Failed to load analytics: {(error as Error)?.message ?? 'unknown error'}</Card>;
-  }
-
-  return (
-    <div className="space-y-6">
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
-        <StatCard label="Total sessions" value={stats.total} sub="all medicine interview types, all-time" />
-        <StatCard label="Completion rate" value={`${stats.completionRate}%`} sub={`${stats.completed} of ${stats.total} completed`} />
-        <StatCard label="Average score" value={stats.avgScore !== null ? stats.avgScore.toFixed(1) : '—'} sub={stats.avgScore !== null ? 'across all scored sessions' : 'no scored sessions yet'} />
-        <StatCard label="Interview types live" value={MEDICINE_INTERVIEW_TYPE_IDS.length} sub={MEDICINE_INTERVIEW_TYPE_IDS.join(', ')} />
-      </div>
-
-      <Card className="p-4">
-        <h3 className="font-semibold mb-3 text-sm flex items-center gap-1.5"><TrendingUp className="h-4 w-4" /> Sessions per day (last 30 days)</h3>
-        {stats.total === 0 ? (
-          <p className="text-sm text-muted-foreground py-8 text-center">No sessions yet — this fills in once real students start interviews.</p>
-        ) : (
-          <div style={{ width: '100%', height: 180 }}>
-            <ResponsiveContainer>
-              <BarChart data={stats.days}>
-                <XAxis dataKey="date" tick={{ fontSize: 10 }} interval={4} />
-                <YAxis allowDecimals={false} tick={{ fontSize: 10 }} width={24} />
-                <RechartsTooltip
-                  contentStyle={{ fontSize: 12, background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: 6 }}
-                  labelFormatter={(d) => `Date: ${d}`}
-                />
-                <Bar dataKey="sessions" fill="hsl(var(--primary))" radius={[3, 3, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </Card>
-
-      <Card className="p-4">
-        <h3 className="font-semibold mb-3 text-sm">By interview type</h3>
-        <div className="space-y-2">
-          {MEDICINE_INTERVIEW_TYPE_IDS.map((id) => {
-            const row = stats.byType.get(id);
-            if (!row) return null;
-            const avg = row.scores.length ? (row.scores.reduce((a, b) => a + b, 0) / row.scores.length).toFixed(1) : '—';
-            const rate = row.total ? Math.round((row.completed / row.total) * 100) : 0;
-            return (
-              <div key={id} className="flex items-center justify-between text-sm border-b last:border-0 pb-2 last:pb-0">
-                <span className="font-medium">{INTERVIEW_TYPES[id]?.name ?? id}</span>
-                <div className="flex items-center gap-4 text-muted-foreground">
-                  <span>{row.total} sessions</span>
-                  <span>{rate}% completed</span>
-                  <span>avg score {avg}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-xs text-muted-foreground mt-3">
-          "Pass rate" isn't shown as a single number — Medicine has no defined pass/fail threshold (scoring is four
-          domains out of 5, not a cutoff) — average score per type is the honest proxy until a threshold is agreed.
         </p>
       </Card>
     </div>
