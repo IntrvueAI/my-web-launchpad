@@ -44,7 +44,9 @@ import { cn } from '@/lib/utils';
 import { LandingV2 } from '@/components/landing/LandingV2';
 import { MobileBottomNav } from '@/components/mobile/MobileBottomNav';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { TourOverlay } from '@/components/tour/TourOverlay';
+// Lazy: a 500+-line overlay only a logged-in user ever sees (nothing to show until then), same
+// reasoning as Dashboard/OnboardingFlow above — no reason for a logged-out visitor to download it.
+const TourOverlay = lazy(() => import('@/components/tour/TourOverlay').then((m) => ({ default: m.TourOverlay })));
 import { SidebarNav, SidebarTopBar } from '@/components/dashboard/SidebarLayout';
 import { LayoutGrid, PanelLeft } from 'lucide-react';
 
@@ -547,7 +549,9 @@ const Index = () => {
       </div>
 
       {/* First-time guided tour — paused while another modal/form is already on top */}
-      <TourOverlay suspended={showPaymentSuccess} restartKey={tourRestartKey} />
+      <Suspense fallback={null}>
+        <TourOverlay suspended={showPaymentSuccess} restartKey={tourRestartKey} />
+      </Suspense>
 
       {/* Dashboard layout toggle — admin-only (regular users always get top-nav). Desktop-only
           (the sidebar itself doesn't apply on mobile, so there's nothing to toggle). */}
