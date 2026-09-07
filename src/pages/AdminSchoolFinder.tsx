@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ExternalLink } from 'lucide-react';
-import { useSchoolsData } from '@/hooks/useSchoolsData';
+import { useSchoolsData, type SchoolEntry } from '@/hooks/useSchoolsData';
 
 /**
  * Admin-only school finder: pick a UK independent school, see whatever admissions/interview timing

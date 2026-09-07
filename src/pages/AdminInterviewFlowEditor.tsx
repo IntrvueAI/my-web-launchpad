@@ -29,17 +29,28 @@ const edgeTypes: EdgeTypes = { condition: ConditionEdge };
 const flowsDb = () => (supabase as any).from('interview_flows');
 
 function graphToFlow(graph: FlowGraph): { nodes: Node[]; edges: Edge[] } {
-  const nodes: Node[] = graph.nodes.map((n, i) => ({
-    id: n.id,
-    type: n.type,
-    position: n.position ?? { x: 80 + (i % 4) * 260, y: 80 + Math.floor(i / 4) * 160 },
-    data: n.type === 'question'
-      ? { questionId: n.questionId, customNote: n.customNote }
-      : n.type === 'end'
-        ? { closingNote: n.closingNote }
-        : {},
-    deletable: n.type !== 'start',
-  }));
+  const nodes: Node[] = graph.nodes.map((n, i) => {
+    // Field-level narrowing, not `n.position ?? fallback` — zod 3.x infers the optional nested
+    // `position` object (inside an array, inside another object) as `{x?: number; y?: number}`
+    // rather than `{x: number; y: number} | undefined`, so a whole-object `??` doesn't satisfy
+    // XYPosition even though the runtime value is always fully-formed. Checking each field
+    // individually sidesteps the inference gap without touching the (correct) zod schema.
+    const position: { x: number; y: number } =
+      typeof n.position?.x === 'number' && typeof n.position?.y === 'number'
+        ? { x: n.position.x, y: n.position.y }
+        : { x: 80 + (i % 4) * 260, y: 80 + Math.floor(i / 4) * 160 };
+    return {
+      id: n.id,
+      type: n.type,
+      position,
+      data: n.type === 'question'
+        ? { questionId: n.questionId, customNote: n.customNote }
+        : n.type === 'end'
+          ? { closingNote: n.closingNote }
+          : {},
+      deletable: n.type !== 'start',
+    };
+  });
   const edges: Edge[] = graph.edges.map((e) => ({
     id: e.id, source: e.source, target: e.target, type: 'condition', data: { condition: e.condition },
   }));
