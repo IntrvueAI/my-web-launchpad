@@ -48,6 +48,44 @@
   .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:var(--shadow-soft)}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   @media(max-width:860px){.grid3{grid-template-columns:1fr}}
+
+  /* HERO interview mock — same live-call component as the 11+ landing page, recoloured for white/coral */
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;text-align:left}
+  @media(max-width:960px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+  .app-card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-medium);overflow:hidden}
+  .app-top{display:flex;align-items:center;gap:8px;padding:13px 15px;border-bottom:1px solid var(--line)}
+  .app-top .dots{display:flex;gap:6px}
+  .app-top .dots i{width:10px;height:10px;border-radius:50%;display:block}
+  .app-top .rec{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--coral-dark);background:var(--coral-soft);padding:5px 11px;border-radius:20px}
+  .app-top .rec i{width:7px;height:7px;border-radius:50%;background:var(--coral-dark);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .iv-status{display:flex;align-items:center;justify-content:space-between;padding:13px 15px 0}
+  .iv-active{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#fff;background:var(--grad);padding:6px 13px;border-radius:20px}
+  .iv-active svg{width:13px;height:13px}
+  .iv-conn{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+  .iv-conn .g{width:8px;height:8px;border-radius:50%;background:#22C55E}
+  .iv-session{text-align:center;font-size:11px;color:#9A9488;margin-top:8px}
+  .iv-session code{background:#F1F0EC;padding:2px 8px;border-radius:6px;color:var(--muted);font-family:ui-monospace,monospace}
+  .iv{display:grid;grid-template-columns:1.3fr 1fr;gap:0}
+  @media(max-width:640px){.iv{grid-template-columns:1fr}.iv-chat{border-left:0;border-top:1px solid var(--line)}}
+  .iv-main{padding:15px}
+  .iv-stage{position:relative;border-radius:13px;overflow:hidden;aspect-ratio:16/10;background:linear-gradient(160deg,#F3EDE6,#E9E1D6)}
+  .iv-stage .iv-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .iv-stage .live{position:absolute;top:10px;left:10px;z-index:2;font-size:11px;font-weight:600;color:#fff;background:rgba(232,98,47,.92);padding:4px 10px;border-radius:20px}
+  .iv-meta{display:flex;align-items:center;justify-content:space-between;margin-top:11px;font-size:12px;color:var(--muted)}
+  .iv-mic{display:inline-flex;align-items:center;gap:7px;background:#F6F5F2;border:1px solid var(--line);padding:6px 12px;border-radius:20px;color:var(--ink);font-weight:500;font-size:12px}
+  .iv-mic .g{width:8px;height:8px;border-radius:50%;background:#22C55E}
+  .iv-chat{border-left:1px solid var(--line);padding:15px;background:#FCFBF9}
+  .iv-chat h5{font-family:'Bricolage Grotesque',serif;font-size:12.5px;font-weight:600;color:var(--muted);margin:0 0 11px;letter-spacing:.02em}
+  .bubble{font-size:13px;line-height:1.5;padding:11px 13px;border-radius:13px;margin-bottom:10px}
+  .bubble.q{background:#fff;border:1px solid var(--line)}
+  .bubble .who{display:block;font-size:11px;color:#9A9488;margin-bottom:4px;font-weight:600;letter-spacing:.04em}
+  .bubble.you{background:var(--grad);color:#fff;margin-left:auto;max-width:88%}
+  .bubble.you .who{color:rgba(255,255,255,.82)}
+  .bubble.you .wave i{background:rgba(255,255,255,.9)}
+  .wave{display:flex;align-items:flex-end;gap:3px;height:24px;margin-top:6px}
+  .wave i{width:3px;background:rgba(255,255,255,.9);border-radius:2px;animation:wv 1.1s ease-in-out infinite}
+  @keyframes wv{0%,100%{height:20%}50%{height:100%}}
 </style>
 </head>
 <body>
@@ -84,20 +122,58 @@
   </header>
 
   <!-- HERO -->
-  <section style="max-width:900px;margin:0 auto;padding:84px 40px 20px;text-align:center;">
-    <span class="tag"><span class="tag-dot"></span>Early access · Medicine &amp; healthcare admissions</span>
-    <h1 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(32px,5.2vw,54px);line-height:1.08;letter-spacing:-.02em;margin:18px 0 0;color:var(--ink);">
-      Nobody tells you what an MMI<br />actually feels like.
-    </h1>
-    <p style="color:var(--muted);font-size:19px;line-height:1.7;margin:22px auto 0;max-width:640px;">
-      Not a script to memorise — a live circuit. A character who reacts to what you actually say. A clock that
-      doesn't wait for you to finish your sentence. Most preparation is a question bank. This is the interview.
-    </p>
-    <div style="display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
-      <a href="/admin/medicine-interviews" class="btn btn-primary">Try a station free</a>
-      <a href="#how-mmi-works" class="btn btn-ghost">What actually happens in an MMI →</a>
+  <section style="max-width:1200px;margin:0 auto;padding:76px 40px 20px;">
+    <div class="hero-grid">
+      <div>
+        <span class="tag"><span class="tag-dot"></span>Early access · Medicine &amp; healthcare admissions</span>
+        <h1 style="font-family:'Bricolage Grotesque',serif;font-weight:800;font-size:clamp(32px,4.6vw,54px);line-height:1.08;letter-spacing:-.02em;margin:18px 0 0;color:var(--ink);">
+          Nobody tells you what an MMI actually feels like.
+        </h1>
+        <p style="color:var(--muted);font-size:19px;line-height:1.7;margin:22px 0 0;max-width:520px;">
+          Not a script to memorise — a live circuit. A character who reacts to what you actually say. A clock that
+          doesn't wait for you to finish your sentence. Most preparation is a question bank. This is the interview.
+        </p>
+        <div style="display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;">
+          <a href="/admin/medicine-interviews" class="btn btn-primary">Try a station free</a>
+          <a href="#how-mmi-works" class="btn btn-ghost">What actually happens in an MMI →</a>
+        </div>
+        <p style="color:#9A9488;font-size:13.5px;margin-top:18px;">No card needed. Early access — built with real applicants, still finding rough edges.</p>
+      </div>
+
+      <!-- HERO MOCK: live interview with Clara (mirrors the real product screen) -->
+      <div class="app-card" aria-hidden="true">
+        <div class="app-top">
+          <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+          <span class="rec"><i></i>Recording · Medicine MMI Interview</span>
+        </div>
+        <div class="iv-status">
+          <span class="iv-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Interview Active</span>
+          <span class="iv-conn"><span class="g"></span>Connected</span>
+        </div>
+        <div class="iv-session">Session <code>MED482KX9</code> · Connection: good</div>
+        <div class="iv">
+          <div class="iv-main">
+            <div class="iv-stage">
+              <img src="%%MEDICINE_HERO_SHOT%%" alt="Clara, the AI MMI interviewer, live on a video call" class="iv-photo" />
+              <span class="live">● Live</span>
+            </div>
+            <div class="iv-meta">
+              <span class="iv-mic"><span class="g"></span>Microphone On</span>
+              <span>04:12</span>
+            </div>
+          </div>
+          <div class="iv-chat">
+            <h5>Interview conversation</h5>
+            <div class="bubble q"><span class="who">INTERVIEWER · CLARA</span>Hi, I'm Clara — I'll be running your MMI practice today. This is a circuit of short stations, just like the real thing. Ready to get started?</div>
+            <div class="bubble you"><span class="who">YOU</span>Ready — though I'll admit the ethics station has me a little nervous…
+              <div class="wave">
+                <i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.05s"></i><i style="animation-delay:.25s"></i><i style="animation-delay:.35s"></i><i style="animation-delay:.12s"></i><i style="animation-delay:.22s"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <p style="color:#9A9488;font-size:13.5px;margin-top:18px;">No card needed. Early access — built with real applicants, still finding rough edges.</p>
   </section>
 
   <!-- WHAT IS AN MMI -->
