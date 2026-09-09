@@ -39,6 +39,7 @@ export default function AdminMedicinePortal() {
             </p>
           </div>
           <div className="flex items-center gap-3 flex-none">
+            <Link to="/admin/medicine-landing-preview" className="text-sm text-primary underline whitespace-nowrap">Landing page preview (coral) →</Link>
             <Link to="/admin/medicine-interviews" className="text-sm text-primary underline whitespace-nowrap">Launch the interview →</Link>
             <Link to="/admin" className="text-sm text-primary underline whitespace-nowrap">← Back to admin</Link>
           </div>
