@@ -19,12 +19,23 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				'med-display': ['var(--med-display)'],
+				'med-body': ['var(--med-body)'],
+				'med-mono': ['var(--med-mono)'],
 				sans: ['Nunito', 'system-ui', 'sans-serif'],
 				display: ['Fredoka', 'system-ui', 'sans-serif'],
 				serif: ['Fredoka', 'system-ui', 'sans-serif'],
 				inter: ['Nunito', 'sans-serif'],
 			},
 			colors: {
+				med: {
+					primary: { DEFAULT: 'var(--med-primary)', dark: 'var(--med-primary-dark)', soft: 'var(--med-primary-soft)' },
+					tint: 'var(--med-primary-tint)', aqua: 'var(--med-aqua)', ink: 'var(--med-ink)', ink2: 'var(--med-ink-2)',
+					muted: 'var(--med-muted)', tertiary: 'var(--med-tertiary)', border: 'var(--med-border)', borderStrong: 'var(--med-border-strong)',
+					hairline: 'var(--med-hairline)', bg: 'var(--med-bg)', card: 'var(--med-card)', track: 'var(--med-track)',
+					success: 'var(--med-success)', successSoft: 'var(--med-success-soft)', attention: 'var(--med-attention)', attentionSoft: 'var(--med-attention-soft)',
+					dark: 'var(--med-surface-dark)', dark2: 'var(--med-surface-dark-2)',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

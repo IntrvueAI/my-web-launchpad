@@ -11,6 +11,7 @@ import elevenplusStaging from '@/data/interview-staging/elevenplus.json';
 import logicStaging from '@/data/interview-staging/logic.json';
 import mathsStaging from '@/data/interview-staging/maths.json';
 import currentaffairsStaging from '@/data/interview-staging/currentaffairs.json';
+import medicineStaging from '@/data/interview-staging/medicine-expansion.json';
 
 interface StagedInterviewQuestion {
   id: string;
@@ -32,14 +33,16 @@ const ALL: StagedInterviewQuestion[] = [
   ...(logicStaging as StagedInterviewQuestion[]),
   ...(mathsStaging as StagedInterviewQuestion[]),
   ...(currentaffairsStaging as StagedInterviewQuestion[]),
+  ...(medicineStaging as StagedInterviewQuestion[]),
 ];
 
-const SUBJECTS = ['All', 'elevenplus', 'logic', 'maths', 'currentaffairs'] as const;
+const SUBJECTS = ['All', 'elevenplus', 'logic', 'maths', 'currentaffairs', 'medicine'] as const;
 const SUBJECT_LABELS: Record<string, string> = {
   elevenplus: '11+',
   logic: 'Logic',
   maths: 'Maths',
   currentaffairs: 'Current affairs',
+  medicine: 'Medicine',
 };
 const PAGE_SIZE = 30;
 
@@ -51,8 +54,8 @@ const formatBatchDate = (iso: string) => {
 /**
  * Read-only review of a new thought-provoking / problem-solving interview question batch,
  * staged in src/data/interview-staging/ and NOT wired into the live interview bank
- * (src/interview/bank/questions/) or reachable by real users. Medicine was intentionally
- * excluded from this batch per the brief. Once reviewed, approved questions get merged into
+ * (src/interview/bank/questions/) or reachable by real users. Medicine expansion drafts use
+ * the same review surface, with richer previews in the Medicine Lab. Once reviewed, approved questions get merged into
  * the live bank under src/interview/bank/questions/<subject>/<topic>/<difficulty>.json.
  */
 export default function AdminInterviewQuestionReview() {
@@ -135,8 +138,8 @@ export default function AdminInterviewQuestionReview() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <h1 className="text-2xl font-bold mb-1">Interview question review — thought-provoking batch</h1>
         <p className="text-muted-foreground mb-4">
-          {ALL.length} new questions staged for the 11+, logic, maths and current-affairs interviews.
-          Medicine was excluded. Nothing below is live — approved questions get merged into the real
+          {ALL.length} questions staged for the 11+, logic, maths, current-affairs and medicine interviews.
+          New medicine drafts also have a rehearsal desk in the Medicine Lab. Approved questions get merged into the real
           interview bank by hand.
           {batchDates.length > 1 && dateFilter !== 'All' && (
             <> Showing only the {formatBatchDate(dateFilter)} batch — pick "All dates" above to see earlier ones too.</>

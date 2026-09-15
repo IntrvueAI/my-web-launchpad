@@ -1,0 +1,378 @@
+{
+  "updatedAt": "2026-09-15",
+  "edition": "02",
+  "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
+  "baseline": {
+    "stations": 122,
+    "routes": 68,
+    "institutions": 50,
+    "timedModes": 2,
+    "clinicalReviewFlagged": 21,
+    "expiredOnAuditDate": 1
+  },
+  "schools": [
+    {
+      "id": "oxford-a100",
+      "name": "Oxford",
+      "fullName": "University of Oxford",
+      "priority": 1,
+      "format": "Academic interviews",
+      "cycle": "2027 entry research",
+      "readiness": "Draft practice available",
+      "headline": "Reason aloud. Follow the evidence.",
+      "summary": "Medicine applicants are interviewed by two colleges. Preparation should cover scientific reasoning, intellectual curiosity, communication and personal suitability.",
+      "facts": [
+        {
+          "label": "Structure",
+          "value": "Two colleges",
+          "source": "ox-colleges"
+        },
+        {
+          "label": "Fixed circuit timing",
+          "value": "Not established",
+          "source": "ox-colleges"
+        }
+      ],
+      "unknowns": "Number and length of individual interviews need college-specific confirmation. No universal MMI circuit is inferred.",
+      "skills": [
+        "Scientific reasoning",
+        "Evidence evaluation",
+        "Motivation",
+        "Thinking aloud"
+      ],
+      "metric": {
+        "label": "Offers / applications",
+        "numerator": 175,
+        "denominator": 1156,
+        "unit": "%",
+        "display": "15.1%",
+        "cycle": "2025 application round → 2026 entry",
+        "population": "A100, all UCAS applications",
+        "source": "ox-stats",
+        "note": "Calculated from 158 quota + 1 deferred + 16 open offers. The eligible-applicant denominator is different (1,026)."
+      },
+      "sourceIds": [
+        "ox-colleges",
+        "ox-criteria",
+        "ox-stats"
+      ]
+    },
+    {
+      "id": "cambridge-a100",
+      "name": "Cambridge",
+      "fullName": "University of Cambridge",
+      "priority": 2,
+      "format": "College academic interviews",
+      "cycle": "2027 entry",
+      "readiness": "Draft practice available",
+      "headline": "Apply familiar science to unfamiliar problems.",
+      "summary": "Subject conversations explore understanding, critical thinking and learning potential. Delivery can be online or in person, depending on the college and applicant circumstances.",
+      "facts": [
+        {
+          "label": "Delivery",
+          "value": "College-specific",
+          "source": "cam-format"
+        },
+        {
+          "label": "Medicine-wide timing",
+          "value": "Not established",
+          "source": "cam-format"
+        }
+      ],
+      "unknowns": "The university-wide 35–60 minute guidance is not a guaranteed Medicine schedule. The invitation determines interview count, timings and any advance reading.",
+      "skills": [
+        "Applying science",
+        "Hypothesis testing",
+        "Data reasoning",
+        "Reflection"
+      ],
+      "metric": {
+        "label": "Offers / applications",
+        "numerator": 307,
+        "denominator": 1530,
+        "unit": "%",
+        "display": "20.1%",
+        "cycle": "2025 admissions cycle",
+        "population": "Standard Medicine, all domiciles",
+        "source": "cam-stats",
+        "note": "Calculated from Table 1.1, page 4. The report separately records 270 acceptances (17.6%); acceptances are not offers."
+      },
+      "sourceIds": [
+        "cam-format",
+        "cam-stats",
+        "cam-course"
+      ]
+    },
+    {
+      "id": "imperial-a100",
+      "name": "Imperial",
+      "fullName": "Imperial College London",
+      "priority": 3,
+      "format": "Multiple mini interviews",
+      "cycle": "Current undated format page; 2027 course page",
+      "readiness": "Draft practice available",
+      "headline": "Clear reasoning, delivered under time pressure.",
+      "summary": "Published themes include teamwork, motivation, the doctor's role, empathy, ethics and interpreting data. Answers receive separate marks for content and communication.",
+      "facts": [
+        {
+          "label": "Answer time",
+          "value": "5 minutes",
+          "source": "imp-format"
+        },
+        {
+          "label": "Marking split",
+          "value": "6 content / 4 communication",
+          "source": "imp-format"
+        }
+      ],
+      "unknowns": "Current station count, reading time and transition time are not established by the fetched admissions page. A six-topic practice set is an editorial choice, not a verified six-station circuit.",
+      "skills": [
+        "Communication",
+        "Ethics",
+        "Data interpretation",
+        "Teamwork"
+      ],
+      "metric": {
+        "label": "Applications / place",
+        "numerator": null,
+        "denominator": null,
+        "unit": "ratio",
+        "display": "6 : 1",
+        "cycle": "2025",
+        "population": "A100 course-page figure",
+        "source": "imp-course",
+        "note": "Published rounded ratio; cannot be converted into an offer rate. Do not rank beside offer percentages."
+      },
+      "sourceIds": [
+        "imp-format",
+        "imp-course"
+      ]
+    }
+  ],
+  "queue": [
+    {
+      "name": "UCL & King’s",
+      "status": "Evidence collected",
+      "reason": "Interview guidance and admissions tables are now in the evidence register. Current station logistics still need invitation-level confirmation.",
+      "sourceUrl": "https://www.ucl.ac.uk/medical-sciences/divisions/medical-school/study/undergraduate/mbbs-admissions/selection-interviews"
+    },
+    {
+      "name": "Edinburgh & St Andrews",
+      "status": "Cohorts separated",
+      "reason": "Scottish fee-status distinctions are explicit. Edinburgh’s conflicting offer totals are flagged; St Andrews’ three A100 cohorts stay separate.",
+      "sourceUrl": "https://www.st-andrews.ac.uk/medicine/prospective/admissions-data/"
+    }
+  ],
+  "comparisonNote": "Founder priority order, not a UK selectivity ranking. Offer rates, acceptance rates and applications per place answer different questions. Cycles, courses and fee-status cohorts must match before ranking schools. UK-wide comparison remains open.",
+  "sources": [
+    {
+      "id": "ox-colleges",
+      "title": "Oxford Medicine: Colleges",
+      "url": "https://www.medsci.ox.ac.uk/study/medicine/pre-clinical/applying/colleges",
+      "checked": "2026-09-15",
+      "access": "Official search-index extract; direct fetch blocked",
+      "supports": "Two-college interview structure."
+    },
+    {
+      "id": "ox-criteria",
+      "title": "Oxford Medicine: Selection criteria",
+      "url": "https://www.medsci.ox.ac.uk/study/medicine/pre-clinical/requirements/criteria",
+      "checked": "2026-09-15",
+      "access": "Existing research reference; direct re-fetch blocked; revalidation pending",
+      "supports": "Criteria reference; do not claim fresh full-page verification."
+    },
+    {
+      "id": "ox-stats",
+      "title": "Oxford Medicine: 2025 admissions round statistics",
+      "url": "https://www.medsci.ox.ac.uk/study/medicine/pre-clinical/faqs/statistics",
+      "checked": "2026-09-15",
+      "access": "Official indexed text retrieved; direct fetch blocked",
+      "supports": "1,156 applications; 158 quota, 1 deferred and 16 open offers."
+    },
+    {
+      "id": "cam-format",
+      "title": "Cambridge: What to expect at interview",
+      "url": "https://www.undergraduate.study.cam.ac.uk/apply/after/cambridge-interviews",
+      "checked": "2026-09-15",
+      "access": "Full official page retrieved",
+      "supports": "Academic interviews; 2027 college delivery table; invitation-specific arrangements."
+    },
+    {
+      "id": "cam-stats",
+      "title": "Cambridge undergraduate admissions 2025 — Table 1.1, p4",
+      "url": "https://www.undergraduate.study.cam.ac.uk/sites/default/files/2026-05/ug_admissions_statistics_2025_cycle.pdf",
+      "checked": "2026-09-15",
+      "access": "Official PDF downloaded and extracted",
+      "supports": "Standard Medicine: 1,530 applications, 307 offers, 270 acceptances; all domiciles."
+    },
+    {
+      "id": "cam-course",
+      "title": "Cambridge Medicine, 2027 entry",
+      "url": "https://www.undergraduate.study.cam.ac.uk/courses/medicine-mb-bchir",
+      "checked": "2026-09-15",
+      "access": "Full official page retrieved",
+      "supports": "Standard Medicine course scope and 2025 applicant figures."
+    },
+    {
+      "id": "imp-format",
+      "title": "Imperial Medicine: Admissions process",
+      "url": "https://www.imperial.ac.uk/medicine/study/undergraduate/medicine-mbbs-programmes/mmi/",
+      "checked": "2026-09-15",
+      "access": "Full official page retrieved",
+      "supports": "Five-minute answers, six published topic areas, 6/4 marking split."
+    },
+    {
+      "id": "imp-course",
+      "title": "Imperial Medicine MBBS/BSc, 2027 entry",
+      "url": "https://www.imperial.ac.uk/study/courses/undergraduate/medicine/",
+      "checked": "2026-09-15",
+      "access": "Full official page retrieved",
+      "supports": "2025 applications-to-places ratio of 6:1."
+    },
+    {
+      "id": "ucl-format",
+      "title": "UCL: Selection interviews",
+      "url": "https://www.ucl.ac.uk/medical-sciences/divisions/medical-school/study/undergraduate/mbbs-admissions/selection-interviews",
+      "access": "Official indexed text retrieved",
+      "supports": "MMI; home applicants on campus, overseas online; further instructions in invitation.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "ucl-stats",
+      "title": "UCL applications, offers and places 2025/26, Medical School row",
+      "url": "https://www.ucl.ac.uk/prospective-students/undergraduate/sites/prospective_students_undergraduate/files/undergraduate_application_data_2025-26.pdf",
+      "access": "Official PDF retrieved",
+      "supports": "Department row: 2,092 applications, 628 offers, 337 places; clearing excluded.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "kcl-format",
+      "title": "King’s Medicine MBBS: Requirements",
+      "url": "https://www.kcl.ac.uk/study/undergraduate/courses/medicine-mbbs/requirements",
+      "access": "Full official page retrieved",
+      "supports": "Interview assessment areas and invitation-specific details; no fresh exact timing established.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "kcl-stats",
+      "title": "King’s A100 admissions statistics, 2020–2024",
+      "url": "https://www.kcl.ac.uk/assets/about/pdf/strategy/admissions-statistics/admissions-statistics-for-undergraduate-medicine-ucas-code-a100.pdf",
+      "access": "Official PDF downloaded and extracted",
+      "supports": "2024 A100: 2,810 applications, 982 interviews, 762 offers, 332 acceptances, 328 enrolments.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "edi-format",
+      "title": "Edinburgh Medicine: Assessment days",
+      "url": "https://medicine-vet-medicine.ed.ac.uk/edinburgh-medical-school/medicine/assessment-days",
+      "access": "Full official page retrieved",
+      "supports": "Two individual stations and one group station; 2026–27 assessment dates.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "edi-stats",
+      "title": "Edinburgh MBChB admissions statistics, 2025",
+      "url": "https://medicine-vet-medicine.ed.ac.uk/sites/default/files/2025-10/MBChB%20Admissions%20Statistics%202025.pdf",
+      "access": "Official PDF downloaded and extracted",
+      "supports": "Fee-status data and an unresolved discrepancy between total offers and the sum of cohort rows.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "sta-format",
+      "title": "St Andrews Medicine: Selection",
+      "url": "https://www.st-andrews.ac.uk/subjects/medicine/selection/",
+      "access": "Full official page retrieved",
+      "supports": "Usually four interviews of around six minutes, including roleplay; delivery section refers to 2026 entry.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "sta-stats",
+      "title": "St Andrews Medicine: Admissions data",
+      "url": "https://www.st-andrews.ac.uk/medicine/prospective/admissions-data/",
+      "access": "Full official page retrieved",
+      "supports": "2025/6 A100 UCAS offer counts by home, RUK and overseas fee status; no blending of cohorts.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "man-format",
+      "title": "Manchester Medicine: Interviews",
+      "url": "https://www.bmh.manchester.ac.uk/study/medicine/apply/interviews/",
+      "access": "Full official page retrieved",
+      "supports": "Five eight-minute stations with two-minute gaps; no reading/writing component.",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "gla-format",
+      "title": "Glasgow MBChB interviews, 2027 entry",
+      "url": "https://www.gla.ac.uk/schools/medicine/mus/admissions/mbchbinterviews/",
+      "access": "Full official page retrieved",
+      "supports": "Online, thirty minutes, two conversational sections; ethical-scenario choice in panel B.",
+      "checked": "2026-09-15"
+    }
+  ],
+  "updates": [
+    {
+      "id": "batch-02",
+      "date": "2026-09-15 · 23:34 BST",
+      "category": "CONTENT & VERIFICATION",
+      "title": "60 original drafts; 21 regression tests passed.",
+      "body": "Added 34 individually authored exercises, bringing coverage to 35 academic and 38 MMI drafts with 13 shared. Circuit completion, reflection export, repeat avoidance and mobile layout passed browser checks. Type checking and the production build passed."
+    },
+    {
+      "id": "evidence-register",
+      "date": "2026-09-15 · 23:27 BST",
+      "category": "RESEARCH EXPANSION",
+      "title": "Nine priority course routes have refreshed evidence.",
+      "body": "Search all 68 inherited routes, with nine refreshed format records and admissions evidence for seven institutions. Each statistic keeps its course, cycle and population. Edinburgh’s inconsistent offer totals are flagged rather than ranked."
+    },
+    {
+      "id": "circuit-builder",
+      "date": "2026-09-15 · 23:27 BST",
+      "category": "FEATURE UPDATE",
+      "title": "Build and rehearse a complete practice circuit.",
+      "body": "Oxford, Cambridge, Imperial and mixed MMI plans assemble from shared drafts. Timers, local repeat history, self-reflection and plan export are available. Editorial timing choices are labelled separately from official facts."
+    },
+    {
+      "id": "theme",
+      "date": "2026-09-15",
+      "category": "DESIGN UPDATE",
+      "title": "Clinical teal and warm coral, one switch away.",
+      "body": "The supplied Medicine identity is now the default in the lab and dashboard. The persistent palette switch also controls the new landing page. Live interview timers stay aqua."
+    },
+    {
+      "id": "batch-01",
+      "date": "2026-09-15",
+      "category": "CONTENT BATCH 01",
+      "title": "26 original stations are ready for editorial review.",
+      "body": "18 academic-track and 13 MMI-track drafts, with 5 shared across both. Each has two follow-up probes, banded assessment notes and an explicit review requirement. Drafts also appear in the existing admin question-review screen."
+    },
+    {
+      "id": "browser-check",
+      "date": "2026-09-15",
+      "category": "VERIFICATION",
+      "title": "Desktop and mobile interaction checks passed.",
+      "body": "At 1440px and 390px: no horizontal overflow or browser exceptions. Theme persistence, school filters, timer controls and saved review notes were exercised. Twelve regression tests passed."
+    },
+    {
+      "id": "research",
+      "date": "2026-09-15",
+      "category": "RESEARCH",
+      "title": "Three priorities. Two different interview models.",
+      "body": "Oxford and Cambridge get an academic reasoning track. Imperial gets timed MMI practice. Unknown format fields stay explicit rather than inheriting Leeds timings."
+    },
+    {
+      "id": "review",
+      "date": "2026-09-15",
+      "category": "CONTENT OPERATIONS",
+      "title": "The review gate is a staged-file workflow.",
+      "body": "The current review screens preview staged JSON. Publication is a reviewed code merge into the runtime bank. New medicine drafts stay in staging and appear in this lab for review."
+    },
+    {
+      "id": "audit",
+      "date": "2026-09-15",
+      "category": "REPOSITORY AUDIT",
+      "title": "The starting point is larger than the handoff.",
+      "body": "Counted 122 medicine stations, 68 course routes and 50 institution labels in the local checkout. Two dedicated timed modes exist. Deployed database and production content were not queried."
+    }
+  ]
+}

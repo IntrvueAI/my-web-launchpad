@@ -6,12 +6,14 @@ interface InterviewTimerProps {
   isActive: boolean;
   duration: number; // duration in minutes
   onTimeUp?: () => void;
+  calm?: boolean;
 }
 
 export const InterviewTimer: React.FC<InterviewTimerProps> = ({ 
   isActive, 
   duration,
-  onTimeUp 
+  onTimeUp,
+  calm = false
 }) => {
   const [timeLeft, setTimeLeft] = useState(duration * 60); // duration in seconds
 
@@ -42,7 +44,7 @@ export const InterviewTimer: React.FC<InterviewTimerProps> = ({
   const isLowTime = timeLeft <= 300; // Last 5 minutes
 
   return (
-    <div className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-colors ${
+    <div className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-colors ${calm ? 'med-calm-timer' : ''} ${
       isLowTime ? 'border-destructive bg-destructive/5' : 'border-border bg-muted/50'
     }`}>
       <Clock className={`w-4 h-4 ${isLowTime ? 'text-destructive' : 'text-muted-foreground'}`} />

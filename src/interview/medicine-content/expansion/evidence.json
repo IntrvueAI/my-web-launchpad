@@ -1,0 +1,215 @@
+{
+  "checked": "2026-09-15",
+  "formats": [
+    {
+      "id": "oxford-a100",
+      "type": "Academic",
+      "structure": "Two-college interviews",
+      "timing": "Varies by college",
+      "delivery": "College invitation",
+      "cycle": "2027 logistics need confirmation",
+      "summary": "Reason through unfamiliar scientific problems and discuss ideas aloud. The two-college structure is supported by official indexed text.",
+      "unknowns": "Counts, timings and delivery need current college confirmation. Direct source access was blocked.",
+      "sourceId": "ox-colleges",
+      "access": "indexed",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "cambridge-a100",
+      "type": "Academic",
+      "structure": "College-specific interviews",
+      "timing": "Invitation-specific",
+      "delivery": "College-specific",
+      "cycle": "2027 college delivery table",
+      "summary": "Academic conversation exploring how an applicant applies knowledge and responds to new ideas. General university interview durations are not medicine-specific guarantees.",
+      "unknowns": "The invitation controls exact count, timings and any preparatory material.",
+      "sourceId": "cam-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "imperial-a100",
+      "type": "MMI",
+      "structure": "Station count not confirmed",
+      "timing": "5-minute answers",
+      "delivery": "Not verified",
+      "cycle": "Current page, exact cycle unstated",
+      "summary": "Published topic areas span motivation, teamwork, empathy, ethics and data. Each station has six content marks and four communication marks.",
+      "unknowns": "Reading time, circuit length and delivery remain unverified. Six topics do not establish six stations.",
+      "sourceId": "imp-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "ucl-a100",
+      "type": "MMI",
+      "structure": "Invitation-specific",
+      "timing": "Not verified",
+      "delivery": "Home campus / overseas online",
+      "cycle": "Current page, exact cycle unstated",
+      "summary": "The published selection page describes MMIs and different delivery arrangements by home/overseas applicant category.",
+      "unknowns": "No exact station count or duration established from this source. Invitation details take precedence.",
+      "sourceId": "ucl-format",
+      "access": "indexed",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "kcl-a100",
+      "type": "Interview",
+      "structure": "Not confirmed here",
+      "timing": "Not verified",
+      "delivery": "Invitation-specific",
+      "cycle": "2027 course page",
+      "summary": "The current course page names communication, social and ethical awareness, and suitability for medicine as interview considerations.",
+      "unknowns": "The inherited map describes MMI. The fresh source did not establish exact format logistics; do not promote inherited timings to verified facts.",
+      "sourceId": "kcl-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "edinburgh-a100",
+      "type": "Individual + group",
+      "structure": "2 individual + 1 group",
+      "timing": "Not verified",
+      "delivery": "Assessment-day invitation",
+      "cycle": "2026–27 assessment dates",
+      "summary": "The assessment-day guidance includes a collaborative group station as well as individual assessment.",
+      "unknowns": "A single-avatar conversation cannot reproduce a real group task. No exact station duration confirmed here.",
+      "sourceId": "edi-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "standrews-a100",
+      "type": "MMI",
+      "structure": "Usually 4 interviews",
+      "timing": "Around 6 minutes each",
+      "delivery": "Check current invitation",
+      "cycle": "Delivery section: 2026 entry",
+      "summary": "The selection page includes an actor roleplay and assesses communication, reflection and reasoning.",
+      "unknowns": "The source uses approximate wording. Recheck the 2027 invitation rather than carrying forward old delivery details.",
+      "sourceId": "sta-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "manchester-a100",
+      "type": "MMI",
+      "structure": "5 stations",
+      "timing": "8 minutes + 2-minute gaps",
+      "delivery": "Online or on campus",
+      "cycle": "Current page, exact cycle unstated",
+      "summary": "No reading or writing component. Stations are independently assessed; online and on-campus candidates follow the same format.",
+      "unknowns": "The existing live practice mode does not currently model the published gaps.",
+      "sourceId": "man-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    },
+    {
+      "id": "glasgow-a100",
+      "type": "Panel",
+      "structure": "2 conversational sections",
+      "timing": "30 minutes total",
+      "delivery": "Online",
+      "cycle": "2027 entry",
+      "summary": "Panel A covers motivation and teamwork. Panel B covers communication and a choice of two short ethical scenarios.",
+      "unknowns": "Two sections are not two separate MMI stations. Practice should preserve a conversational structure.",
+      "sourceId": "gla-format",
+      "access": "full",
+      "checked": "2026-09-15"
+    }
+  ],
+  "metrics": [
+    {
+      "school": "Oxford",
+      "course": "A100",
+      "cycle": "2025 round → 2026 entry",
+      "population": "All UCAS applications",
+      "applications": 1156,
+      "offers": 175,
+      "sourceId": "ox-stats",
+      "note": "Includes quota, deferred and open offers. Official indexed evidence; direct retrieval pending."
+    },
+    {
+      "school": "Cambridge",
+      "course": "Standard Medicine",
+      "cycle": "2025 admissions cycle",
+      "population": "All domiciles",
+      "applications": 1530,
+      "offers": 307,
+      "sourceId": "cam-stats",
+      "note": "Table 1.1. Graduate Medicine and the home-schools-only table are separate."
+    },
+    {
+      "school": "Imperial",
+      "course": "A100",
+      "cycle": "2025",
+      "population": "Course-page ratio",
+      "applications": null,
+      "offers": null,
+      "ratio": "6 : 1",
+      "sourceId": "imp-course",
+      "note": "Applications per place, not offers. No offer percentage can be derived."
+    },
+    {
+      "school": "UCL",
+      "course": "Medical School department row",
+      "cycle": "2025/26 report",
+      "population": "Published department scope",
+      "applications": 2092,
+      "offers": 628,
+      "sourceId": "ucl-stats",
+      "note": "Excludes clearing. Department-level scope should not be relabelled as a verified A100-only dataset."
+    },
+    {
+      "school": "King’s",
+      "course": "A100",
+      "cycle": "2024 entry",
+      "population": "All domiciles",
+      "applications": 2810,
+      "offers": 762,
+      "sourceId": "kcl-stats",
+      "note": "Latest retrieved A100 report ends in 2024. Not the same cycle as the other rows."
+    },
+    {
+      "school": "Edinburgh",
+      "course": "A100",
+      "cycle": "2025 entry",
+      "population": "Overall published row",
+      "applications": 1909,
+      "offers": null,
+      "sourceId": "edi-stats",
+      "note": "Rate withheld: overall offers 585, but cohort rows sum to 661. Source also flags an application-count difference."
+    },
+    {
+      "school": "St Andrews",
+      "course": "A100",
+      "cycle": "2025/6",
+      "population": "Home fee status, UCAS only",
+      "applications": 417,
+      "offers": 216,
+      "sourceId": "sta-stats",
+      "note": "Home means the source’s Scottish fee-status group, not all UK applicants."
+    },
+    {
+      "school": "St Andrews",
+      "course": "A100",
+      "cycle": "2025/6",
+      "population": "Rest of UK, UCAS only",
+      "applications": 335,
+      "offers": 90,
+      "sourceId": "sta-stats",
+      "note": "Keep separate from home and overseas cohorts."
+    },
+    {
+      "school": "St Andrews",
+      "course": "A100",
+      "cycle": "2025/6",
+      "population": "Overseas, UCAS only",
+      "applications": 303,
+      "offers": 105,
+      "sourceId": "sta-stats",
+      "note": "A990, A10C and graduate courses are not included in this row."
+    }
+  ]
+}

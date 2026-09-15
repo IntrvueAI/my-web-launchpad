@@ -43,8 +43,8 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
   if (accountView === 'grownup') {
     return (
       <Suspense fallback={
-        <div className="min-h-screen flex items-center justify-center" style={{ background: '#FAFAF8' }}>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#FF7F50' }} />
+        <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--med-bg)' }}>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: 'var(--med-primary)' }} />
         </div>
       }>
         <GrownupView onBack={() => setAccountView(null)} />
@@ -68,7 +68,7 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
         userInitial={userInitial}
       >
         <Suspense fallback={null}>
-          <button onClick={() => setAccountView(null)} style={{ background: 'none', border: 0, color: '#E8622F', fontWeight: 600, fontSize: 13.5, cursor: 'pointer', marginBottom: 16, padding: 0 }}>
+          <button onClick={() => setAccountView(null)} style={{ background: 'none', border: 0, color: 'var(--med-primary-dark)', fontWeight: 600, fontSize: 13.5, cursor: 'pointer', marginBottom: 16, padding: 0 }}>
             ← Back to dashboard
           </button>
           {accountView === 'credits' && <CreditsStore />}

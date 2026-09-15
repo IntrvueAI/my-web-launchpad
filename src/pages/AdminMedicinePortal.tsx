@@ -17,6 +17,7 @@ import { ArrowLeft, Search, AlertTriangle, CheckCircle2, Clock } from 'lucide-re
 // Its own lazy chunk — recharts is a genuinely heavy dependency, and this way it only downloads
 // when an admin actually clicks the Analytics tab, not on every visit to the portal.
 const AnalyticsTab = lazy(() => import('@/components/admin/medicine/AnalyticsTab'));
+const ExpansionLab = lazy(() => import('@/components/admin/medicine/ExpansionLab'));
 
 const TOTAL_TOPICS = 158;
 const TOTAL_ROLEPLAYS = 20;
@@ -39,14 +40,16 @@ export default function AdminMedicinePortal() {
             </p>
           </div>
           <div className="flex items-center gap-3 flex-none">
+            <Link to="/admin/medicine-lab" className="text-sm text-primary underline whitespace-nowrap">Expansion lab →</Link>
             <Link to="/admin/medicine-landing-preview" className="text-sm text-primary underline whitespace-nowrap">Landing page preview (coral) →</Link>
             <Link to="/admin/medicine-interviews" className="text-sm text-primary underline whitespace-nowrap">Launch the interview →</Link>
             <Link to="/admin" className="text-sm text-primary underline whitespace-nowrap">← Back to admin</Link>
           </div>
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-7">
+        <Tabs defaultValue="expansion" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 md:grid-cols-8">
+            <TabsTrigger value="expansion">Expansion lab</TabsTrigger>
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="stations">Stations</TabsTrigger>
@@ -55,6 +58,8 @@ export default function AdminMedicinePortal() {
             <TabsTrigger value="schools">School map</TabsTrigger>
             <TabsTrigger value="ontology">Ontology</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="expansion"><Suspense fallback={<Skeleton className="h-96" />}><ExpansionLab /></Suspense></TabsContent>
 
           <TabsContent value="overview"><OverviewTab /></TabsContent>
           <TabsContent value="analytics">

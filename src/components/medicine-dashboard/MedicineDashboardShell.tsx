@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import type { ProductLine } from '@/lib/productLine';
+import { MedicineTheme } from './MedicineTheme';
 
 export type MedicineTab = 'home' | 'practice' | 'progress' | 'schools' | 'feedback';
 
@@ -61,14 +62,14 @@ export function MedicineDashboardShell({
   onOpenCredits, onOpenSettings, onOpenGrownup, onSignOut, onSwitchToClassic, userInitial, children, hideChrome,
 }: Props) {
   return (
-    <div style={{ background: '#FAFAF8', minHeight: '100vh', fontFamily: "'Inter Tight',system-ui,-apple-system,sans-serif", color: '#1C2029' }}>
+    <MedicineTheme bottomNav={!hideChrome}><div className="med-dashboard-root" style={{ background: 'var(--med-bg)', minHeight: '100vh', fontFamily: 'var(--med-body)', color: 'var(--med-ink)' }}>
       <style dangerouslySetInnerHTML={{ __html: MEDICINE_GRID_CSS }} />
       {!hideChrome && (
-        <header style={{ height: 68, borderBottom: '1px solid rgba(28,32,41,.09)', background: '#FAFAF8', position: 'sticky', top: 0, zIndex: 40 }}>
+        <header style={{ height: 68, borderBottom: '1px solid var(--med-border)', background: 'var(--med-bg)', position: 'sticky', top: 0, zIndex: 40 }}>
           <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 28px', height: '100%', display: 'flex', alignItems: 'center', gap: 28 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexShrink: 0 }}>
-              <div style={{ width: 22, height: 22, borderRadius: 7, background: 'linear-gradient(135deg,#FF7F50 0%,#FF9F6B 100%)' }} />
-              <span style={{ fontFamily: "'Bricolage Grotesque',serif", fontWeight: 600, fontSize: 15, color: '#E8622F' }}>intrvue.ai</span>
+              <div style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--med-action)' }} />
+              <span style={{ fontFamily: "var(--med-display)", fontWeight: 600, fontSize: 15, color: 'var(--med-primary-dark)' }}>intrvue.ai</span>
             </div>
 
             <nav className="hidden md:flex" style={{ alignItems: 'center', gap: 4, flex: 1, overflowX: 'auto' }} aria-label="Dashboard">
@@ -81,8 +82,8 @@ export function MedicineDashboardShell({
                     style={{
                       display: 'flex', alignItems: 'center', gap: 6, padding: '9px 14px', borderRadius: 9,
                       border: 0, cursor: 'pointer', fontSize: 14.5, fontFamily: 'inherit', whiteSpace: 'nowrap',
-                      background: active ? '#FFE4D6' : 'transparent',
-                      color: active ? '#E8622F' : '#6B7280',
+                      background: active ? 'var(--med-primary-soft)' : 'transparent',
+                      color: active ? 'var(--med-primary-dark)' : 'var(--med-muted)',
                       fontWeight: active ? 600 : 500,
                     }}
                   >
@@ -94,16 +95,16 @@ export function MedicineDashboardShell({
             </nav>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-              <div style={{ display: 'flex', background: '#F1EFEA', borderRadius: 10, padding: 3 }}>
+              <div style={{ display: 'flex', background: 'var(--med-track)', borderRadius: 10, padding: 3 }}>
                 {(['medicine', '11plus'] as ProductLine[]).map((line) => (
                   <button
                     key={line}
                     onClick={() => onProductLineChange(line)}
                     style={{
                       padding: '6px 12px', borderRadius: 8, border: 0, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
-                      background: productLine === line ? '#fff' : 'transparent',
-                      color: productLine === line ? '#1C2029' : '#9A9488',
-                      boxShadow: productLine === line ? '0 2px 10px -4px rgba(28,32,41,.08)' : 'none',
+                      background: productLine === line ? 'var(--med-card)' : 'transparent',
+                      color: productLine === line ? 'var(--med-ink)' : 'var(--med-tertiary)',
+                      boxShadow: productLine === line ? 'var(--med-shadow-sm)' : 'none',
                     }}
                   >
                     {line === 'medicine' ? 'Medicine' : '11+'}
@@ -112,8 +113,8 @@ export function MedicineDashboardShell({
               </div>
 
               <button onClick={onOpenCredits} style={{
-                display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 20,
-                border: '1px solid rgba(28,32,41,.15)', background: '#fff', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: '#1C2029',
+                display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 16,
+                border: '1px solid var(--med-border-strong)', background: 'var(--med-card)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--med-ink)',
               }}>
                 <Wallet className="h-3.5 w-3.5" /> {credits}<span className="hidden sm:inline">&nbsp;credits</span>
               </button>
@@ -122,7 +123,7 @@ export function MedicineDashboardShell({
                 <DropdownMenuTrigger asChild>
                   <button style={{
                     width: 34, height: 34, borderRadius: '50%', border: 0, cursor: 'pointer',
-                    background: '#FFE4D6', color: '#E8622F', fontWeight: 700, fontSize: 13,
+                    background: 'var(--med-primary-soft)', color: 'var(--med-primary-dark)', fontWeight: 700, fontSize: 13,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     {userInitial}
@@ -150,8 +151,8 @@ export function MedicineDashboardShell({
         <nav
           className="flex md:hidden"
           style={{
-            position: 'fixed', bottom: 0, left: 0, right: 0, height: 76, background: '#fff',
-            borderTop: '1px solid rgba(28,32,41,.09)', zIndex: 40,
+            position: 'fixed', bottom: 0, left: 0, right: 0, height: 76, background: 'var(--med-card)',
+            borderTop: '1px solid var(--med-border)', zIndex: 40,
           }}
         >
           {TABS.map((tab) => {
@@ -163,7 +164,7 @@ export function MedicineDashboardShell({
                 style={{
                   flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4,
                   border: 0, background: 'transparent', cursor: 'pointer',
-                  color: active ? '#E8622F' : '#9A9488',
+                  color: active ? 'var(--med-primary-dark)' : 'var(--med-tertiary)',
                 }}
               >
                 <tab.icon className="h-5 w-5" />
@@ -173,6 +174,6 @@ export function MedicineDashboardShell({
           })}
         </nav>
       )}
-    </div>
+    </div></MedicineTheme>
   );
 }

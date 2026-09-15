@@ -21,11 +21,11 @@ export function MedicineFeedback() {
 
   return (
     <div>
-      <h1 style={{ fontFamily: "'Bricolage Grotesque',serif", fontWeight: 700, fontSize: 30, margin: '0 0 20px' }}>Feedback</h1>
+      <h1 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 30, margin: '0 0 20px' }}>Feedback</h1>
 
       {records.length === 0 ? (
         <div style={cardStyle}>
-          <p style={{ color: '#9A9488', fontSize: 15 }}>Once you've done a Medicine session, your written feedback will show up here.</p>
+          <p style={{ color: 'var(--med-tertiary)', fontSize: 15 }}>Once you've done a Medicine session, your written feedback will show up here.</p>
         </div>
       ) : (
         <div className="med-grid-feedback">
@@ -39,14 +39,14 @@ export function MedicineFeedback() {
                   style={{
                     display: 'block', width: '100%', textAlign: 'left', padding: '15px 16px', borderRadius: 14, border: 0,
                     cursor: 'pointer', marginBottom: 4, fontFamily: 'inherit',
-                    background: active ? '#FFF3EC' : 'transparent',
+                    background: active ? 'var(--med-primary-tint)' : 'transparent',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14.5, fontWeight: 600 }}>
                     <span>{titleFor(r)}</span>
-                    <span style={{ color: active ? '#E8622F' : '#9A9488' }}>{r.total_score ?? '—'}/20</span>
+                    <span style={{ color: active ? 'var(--med-primary-dark)' : 'var(--med-tertiary)' }}>{r.total_score ?? '—'}/20</span>
                   </div>
-                  <div style={{ color: '#9A9488', fontSize: 12.5, marginTop: 3 }}>
+                  <div style={{ color: 'var(--med-tertiary)', fontSize: 12.5, marginTop: 3 }}>
                     {new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                   </div>
                 </button>
@@ -59,40 +59,40 @@ export function MedicineFeedback() {
               <div style={cardStyle}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
                   <div>
-                    <h2 style={{ fontFamily: "'Bricolage Grotesque',serif", fontWeight: 700, fontSize: 25, margin: 0 }}>{titleFor(selected)}</h2>
-                    <div style={{ color: '#9A9488', fontSize: 13, marginTop: 6 }}>
+                    <h2 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 25, margin: 0 }}>{titleFor(selected)}</h2>
+                    <div style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 6 }}>
                       {new Date(selected.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontFamily: "'Bricolage Grotesque',serif", fontWeight: 700, fontSize: 34, color: '#E8622F' }}>{selected.total_score ?? '—'} / 20</div>
-                    <div style={{ color: '#9A9488', fontSize: 12.5 }}>Overall</div>
+                    <div style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 34, color: 'var(--med-primary-dark)' }}>{selected.total_score ?? '—'} / 20</div>
+                    <div style={{ color: 'var(--med-tertiary)', fontSize: 12.5 }}>Overall</div>
                   </div>
                 </div>
                 {selected.detailed_feedback?.overall && (
-                  <p style={{ color: '#1C2029', fontSize: 15.5, lineHeight: 1.65, marginTop: 18, maxWidth: 760 }}>
+                  <p style={{ color: 'var(--med-ink)', fontSize: 15.5, lineHeight: 1.65, marginTop: 18, maxWidth: 760 }}>
                     {selected.detailed_feedback.overall}
                   </p>
                 )}
               </div>
 
               <div style={cardStyle}>
-                <h3 style={{ fontFamily: "'Bricolage Grotesque',serif", fontWeight: 700, fontSize: 17, margin: '0 0 16px' }}>By skill</h3>
+                <h3 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 17, margin: '0 0 16px' }}>By skill</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {MEDICINE_SKILL_COLUMNS.map((row) => {
                     const score = selected[row.key];
                     return (
                       <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '210px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>
                         <span>{row.label}</span>
-                        <div style={{ height: 6, background: '#F1EFEA', borderRadius: 4 }}>
-                          <div style={{ height: 6, borderRadius: 4, width: `${((typeof score === 'number' ? score : 0) / 5) * 100}%`, background: 'linear-gradient(135deg,#FF7F50,#FF9F6B)' }} />
+                        <div style={{ height: 6, background: 'var(--med-track)', borderRadius: 4 }}>
+                          <div style={{ height: 6, borderRadius: 4, width: `${((typeof score === 'number' ? score : 0) / 5) * 100}%`, background: 'var(--med-action)' }} />
                         </div>
-                        <span style={{ textAlign: 'right', color: '#6B7280' }}>{typeof score === 'number' ? score : '—'}</span>
+                        <span style={{ textAlign: 'right', color: 'var(--med-muted)' }}>{typeof score === 'number' ? score : '—'}</span>
                       </div>
                     );
                   })}
                 </div>
-                <p style={{ color: '#9A9488', fontSize: 12.5, marginTop: 14 }}>
+                <p style={{ color: 'var(--med-tertiary)', fontSize: 12.5, marginTop: 14 }}>
                   Individual station scores aren't tracked separately yet — this circuit's overall score, broken down by skill.
                 </p>
               </div>
@@ -105,6 +105,6 @@ export function MedicineFeedback() {
 }
 
 const cardStyle: React.CSSProperties = {
-  background: '#fff', border: '1px solid rgba(28,32,41,.09)', borderRadius: 20, padding: '26px 28px',
-  boxShadow: '0 2px 10px -4px rgba(28,32,41,.08)',
+  background: 'var(--med-card)', border: '1px solid var(--med-border)', borderRadius: 16, padding: '26px 28px',
+  boxShadow: 'var(--med-shadow-sm)',
 };

@@ -11,6 +11,7 @@ import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { useToast } from '@/hooks/use-toast';
 import { Play, Square, Mic, MicOff, RotateCcw, Eye, EyeOff, Keyboard, Send } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
+import { MedicineTheme } from './medicine-dashboard/MedicineTheme';
 import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes';
 import { InterviewSetup, SetupChoice } from './InterviewSetup';
 import { ShareFeedbackBox } from './ShareFeedbackBox';
@@ -452,7 +453,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   }, []);
 
   return (
-    <div ref={rootRef} className="min-h-screen bg-background text-foreground overflow-y-auto">
+    <div ref={rootRef}><MedicineTheme enabled={interviewType.category === 'medicine'} live><div className="min-h-screen bg-background text-foreground overflow-y-auto">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
 
         {/* Compact top bar (deck style): recording state · title · question progress */}
@@ -475,7 +476,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             {isStreaming && stationTimer && (
               <div
                 className={
-                  stationTimer.phase === 'prep'
+                  interviewType.category === 'medicine'
+                    ? 'med-calm-timer flex items-center gap-1.5 rounded-full px-3 py-1 text-[12.5px] font-semibold'
+                    : stationTimer.phase === 'prep'
                     ? "flex items-center gap-1.5 rounded-full border border-sky/50 bg-sky/10 px-3 py-1 text-[12.5px] font-extrabold text-sky tabular-nums"
                     : stationTimer.secondsRemaining <= 20
                       ? "flex items-center gap-1.5 rounded-full border border-destructive/60 bg-destructive/15 px-3 py-1 text-[12.5px] font-extrabold text-destructive tabular-nums animate-pulsering"
@@ -678,13 +681,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   
                   <div className="w-full sm:w-auto">
                     <InterviewTimer 
+                      calm={interviewType.category === 'medicine'}
                       isActive={isStreaming}
                       duration={interviewType.duration}
                       onTimeUp={() => {
                         toast({
                           title: "Time's Up!",
                           description: `Your ${interviewType.duration}-minute interview session has ended.`,
-                          variant: "destructive",
+                          variant: interviewType.category === 'medicine' ? 'default' : 'destructive',
                         });
                         // Automatically stop the interview and generate feedback
                         handleStopInterview();
@@ -788,6 +792,6 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         )}
       </div>
       {isAdmin && <DebugConsole />}
-    </div>
+    </div></MedicineTheme></div>
   );
 };

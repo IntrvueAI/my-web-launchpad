@@ -1,0 +1,2475 @@
+[
+  {
+    "id": "MED-EXP-20260915-A01",
+    "subject": "medicine",
+    "title": "The cube that grew",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "scaling",
+      "geometry",
+      "modelling"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Imagine a cell as a cube of side length 1 unit. It grows to a side length of 2 units without changing shape. How do its surface area and volume change, and what might this suggest about exchanging substances across its surface?",
+    "answer": "Surface area rises from 6 to 24 square units (fourfold); volume rises from 1 to 8 cubic units (eightfold). Surface area per unit volume halves from 6 to 3. If demand scales with volume and exchange capacity with area, exchange becomes more limiting. Those are assumptions, not a complete model of a real cell.",
+    "modelReasoningPath": "Surface area rises from 6 to 24 square units (fourfold); volume rises from 1 to 8 cubic units (eightfold). Surface area per unit volume halves from 6 to 3. If demand scales with volume and exchange capacity with area, exchange becomes more limiting. Those are assumptions, not a complete model of a real cell.",
+    "liveProbes": [
+      {
+        "probe": "Would a long, thin shape change your conclusion?",
+        "goodResponse": "Compare shapes at equal volume; extra area can help exchange without proportional volume growth."
+      },
+      {
+        "probe": "What observation would tell you that our model is too simple?",
+        "goodResponse": "Suggest a measurable counterexample, such as changed membrane transport or lower demand per unit volume."
+      }
+    ],
+    "rubric": {
+      "strong": "Derives both scaling factors, distinguishes absolute area from area per volume, and states the demand assumption.",
+      "developing": "Gets the direction right but needs help separating surface area from volume.",
+      "weak": "Claims a bigger cell must exchange more efficiently just because its area is larger."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A02",
+    "subject": "medicine",
+    "title": "A membrane with two explanations",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "experiment-design",
+      "controls",
+      "diffusion"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Two identical bags contain the same solution and sit in separate beakers. Bag A gains more mass than bag B after 20 minutes. One student says A has a more permeable membrane; another says its surrounding solution was different. How would you distinguish these explanations?",
+    "answer": "The observation alone cannot identify the cause. Change one factor at a time: compare membranes under identical internal and external conditions, then compare external solutions using the same membrane type. Standardise initial mass, area, time and temperature, use repeats and check that mass gain is not simply liquid left on the outside.",
+    "modelReasoningPath": "The observation alone cannot identify the cause. Change one factor at a time: compare membranes under identical internal and external conditions, then compare external solutions using the same membrane type. Standardise initial mass, area, time and temperature, use repeats and check that mass gain is not simply liquid left on the outside.",
+    "liveProbes": [
+      {
+        "probe": "What would your control group be?",
+        "goodResponse": "A matched membrane and solution condition with the same handling provides a baseline."
+      },
+      {
+        "probe": "Suppose both factors affect the result. How would you extend the experiment?",
+        "goodResponse": "Use a small factorial design combining each membrane type with each solution and look for interaction."
+      }
+    ],
+    "rubric": {
+      "strong": "Proposes discriminating experiments, controls handling and recognises interacting causes.",
+      "developing": "Suggests repeating the experiment but leaves a relevant variable uncontrolled.",
+      "weak": "Selects one explanation confidently from the initial mass measurements alone."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A03",
+    "subject": "medicine",
+    "title": "The curve that flattens",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "graphs",
+      "enzymes",
+      "hypothesis-testing"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "In a fictional experiment, substrate concentration is 1, 2, 4 and 8 units. The corresponding reaction rates are 4, 7, 10 and 11 units per minute. What patterns do you see, and what experiment would help explain the flattening curve?",
+    "answer": "Rates rise but the incremental increase shrinks. Saturation is one possible explanation, but limited measurement range, another limiting input or experimental artefact could also produce a plateau. Hold conditions fixed and vary catalyst amount, extend substrate range and measure repeats. An increased maximum after adding catalyst would support a capacity limit without proving every mechanistic detail.",
+    "modelReasoningPath": "Rates rise but the incremental increase shrinks. Saturation is one possible explanation, but limited measurement range, another limiting input or experimental artefact could also produce a plateau. Hold conditions fixed and vary catalyst amount, extend substrate range and measure repeats. An increased maximum after adding catalyst would support a capacity limit without proving every mechanistic detail.",
+    "liveProbes": [
+      {
+        "probe": "Would joining these four points with a smooth curve prove the mechanism?",
+        "goodResponse": "No; several models fit sparse points. State predictions that distinguish models."
+      },
+      {
+        "probe": "What extra information should appear beside each rate?",
+        "goodResponse": "Replicate number, variability, measurement method and uncertainty matter."
+      }
+    ],
+    "rubric": {
+      "strong": "Describes the pattern precisely, offers competing explanations and proposes a discriminating test.",
+      "developing": "Recognises saturation but treats it as the only possible explanation.",
+      "weak": "Claims the reaction has stopped or that four points establish the complete mechanism."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A04",
+    "subject": "medicine",
+    "title": "A cooling model",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "models",
+      "rates",
+      "assumptions"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A warm object cools from 60°C to 40°C in ten minutes in a room at 20°C. A student predicts it will reach 20°C after another ten minutes. Is that prediction justified by the information given?",
+    "answer": "One interval does not establish a constant rate. As the object approaches room temperature, the temperature difference becomes smaller and cooling may slow. Under a model where excess temperature halves every ten minutes, the next value would be 30°C, not 20°C. That model is illustrative and would need more measurements.",
+    "modelReasoningPath": "One interval does not establish a constant rate. As the object approaches room temperature, the temperature difference becomes smaller and cooling may slow. Under a model where excess temperature halves every ten minutes, the next value would be 30°C, not 20°C. That model is illustrative and would need more measurements.",
+    "liveProbes": [
+      {
+        "probe": "How would you test constant-rate versus proportional cooling?",
+        "goodResponse": "Take intermediate readings and compare changes in temperature with changes in excess temperature."
+      },
+      {
+        "probe": "What practical factor might upset either model?",
+        "goodResponse": "Changing room temperature, airflow, insulation or a sensor delay could change measurements."
+      }
+    ],
+    "rubric": {
+      "strong": "Separates observed data from extrapolation and explains the alternative 30°C model.",
+      "developing": "Says cooling may slow but cannot connect that to a prediction.",
+      "weak": "Assumes the first ten-minute drop must repeat indefinitely."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A05",
+    "subject": "medicine",
+    "title": "A helpful mutation?",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "evolution",
+      "trade-offs",
+      "context"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "In a fictional organism, a genetic variant makes a digestive enzyme work faster at 15°C but less reliably at 35°C. Is the variant beneficial? Explain what else you would need to know.",
+    "answer": "Benefit depends on environment, diet, survival and reproduction rather than enzyme speed alone. Ask how often each temperature occurs, whether the enzyme is limiting, how large the trade-off is and whether other traits change. Compare carriers and non-carriers under controlled conditions and then consider ecological validity.",
+    "modelReasoningPath": "Benefit depends on environment, diet, survival and reproduction rather than enzyme speed alone. Ask how often each temperature occurs, whether the enzyme is limiting, how large the trade-off is and whether other traits change. Compare carriers and non-carriers under controlled conditions and then consider ecological validity.",
+    "liveProbes": [
+      {
+        "probe": "What if the environment changes between seasons?",
+        "goodResponse": "The frequency and severity of each condition can favour different trade-offs; avoid assuming one fixed optimum."
+      },
+      {
+        "probe": "Could a laboratory advantage fail to improve survival?",
+        "goodResponse": "Yes; another resource, predator risk or energy cost might dominate."
+      }
+    ],
+    "rubric": {
+      "strong": "Connects molecular performance to organism-level outcomes and environmental variation.",
+      "developing": "Recognises temperature matters but equates faster enzyme action with overall success.",
+      "weak": "Calls the variant universally good or bad without considering conditions."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A06",
+    "subject": "medicine",
+    "title": "The missing control",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "controls",
+      "causality",
+      "experimental-design"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Twenty seedlings are given a new nutrient mixture and grow taller over a week. The researcher concludes the mixture caused the growth. What is missing from this argument, and how would you improve the study?",
+    "answer": "Seedlings grow over time even without the new mixture. Include a comparison group with otherwise identical conditions, randomly allocate seedlings, measure initial height and growth, and define a meaningful outcome. Keep watering, light and handling consistent and use sufficient independent repeats.",
+    "modelReasoningPath": "Seedlings grow over time even without the new mixture. Include a comparison group with otherwise identical conditions, randomly allocate seedlings, measure initial height and growth, and define a meaningful outcome. Keep watering, light and handling consistent and use sufficient independent repeats.",
+    "liveProbes": [
+      {
+        "probe": "Why does initial height matter?",
+        "goodResponse": "Baseline differences could produce misleading final-height comparisons."
+      },
+      {
+        "probe": "Would measuring each leaf make the sample much larger?",
+        "goodResponse": "Leaves within a plant are not independent plants; distinguish repeated measurements from independent experimental units."
+      }
+    ],
+    "rubric": {
+      "strong": "Identifies natural growth and baseline confounding and avoids treating nested measurements as independent.",
+      "developing": "Adds a control but leaves allocation or starting differences unclear.",
+      "weak": "Treats growth after treatment as proof of an effect."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A07",
+    "subject": "medicine",
+    "title": "A rare marker",
+    "topic": "data-interpretation",
+    "difficulty": 3,
+    "tags": [
+      "probability",
+      "base-rates",
+      "numeracy"
+    ],
+    "questionType": "data interpretation",
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "This is a fictional screening exercise, not a clinical recommendation. Among 1,000 samples, 10 truly contain a marker. A test identifies 9 of those 10, but also flags 99 of the 990 samples without it. If a sample is flagged, how likely is it to contain the marker?",
+    "answer": "There are 108 flagged samples: 9 true positives and 99 false positives. The required proportion is 9/108, or about 8.3%. The 90% detection rate answers a different conditional question. Use a frequency table and explain that a positive result does not settle the sample status.",
+    "modelReasoningPath": "There are 108 flagged samples: 9 true positives and 99 false positives. The required proportion is 9/108, or about 8.3%. The 90% detection rate answers a different conditional question. Use a frequency table and explain that a positive result does not settle the sample status.",
+    "liveProbes": [
+      {
+        "probe": "What changes if the marker is much more common?",
+        "goodResponse": "With unchanged test properties, a larger prevalence increases the fraction of positive results that are true positives."
+      },
+      {
+        "probe": "Which denominator did you choose, and why?",
+        "goodResponse": "All positive results form the denominator because the sample is already known to be flagged."
+      }
+    ],
+    "rubric": {
+      "strong": "Uses the correct denominator, calculates approximately 8.3% and explains the base-rate effect.",
+      "developing": "Recognises false positives matter but needs help constructing the denominator.",
+      "weak": "Answers 90% by confusing detection rate with the probability given a positive result."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A08",
+    "subject": "medicine",
+    "title": "Correlation across classrooms",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "confounding",
+      "causality",
+      "study-design"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Across twelve schools, pupils who attend a voluntary science club score higher on a science test. The school wants to say the club caused the improvement. What alternative explanations and further evidence would you discuss?",
+    "answer": "Prior interest, prior attainment, teacher support and access to transport may influence both attendance and performance. Compare baseline scores and changes over time, measure plausible confounders and consider random allocation of invitations where appropriate. Acknowledge that attendance and invitation effects differ and that adjustment cannot remove every unmeasured difference.",
+    "modelReasoningPath": "Prior interest, prior attainment, teacher support and access to transport may influence both attendance and performance. Compare baseline scores and changes over time, measure plausible confounders and consider random allocation of invitations where appropriate. Acknowledge that attendance and invitation effects differ and that adjustment cannot remove every unmeasured difference.",
+    "liveProbes": [
+      {
+        "probe": "Would a larger sample solve the causal problem?",
+        "goodResponse": "It improves precision but does not automatically remove systematic bias."
+      },
+      {
+        "probe": "What would randomising invitations tell you?",
+        "goodResponse": "It estimates the effect of being offered access under the study conditions, which is not identical to the effect of attending."
+      }
+    ],
+    "rubric": {
+      "strong": "Offers specific confounders and distinguishes precision from causal identification.",
+      "developing": "Says correlation is not causation but gives only a vague study improvement.",
+      "weak": "Assumes a bigger observational sample alone proves causation."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A09",
+    "subject": "medicine",
+    "title": "Two routes through a network",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "systems",
+      "resistance",
+      "reasoning"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Consider a model with two parallel channels. Each carries 5 units of fluid per minute when a fixed pressure difference is applied. If one channel closes, what happens to total flow under the model? What changes if the pump instead maintains fixed total flow?",
+    "answer": "With the stated fixed pressure and unchanged channel behaviour, total flow falls from 10 to 5. A pump maintaining total flow would need to raise the pressure difference to drive 10 through the remaining channel, assuming the simple linear model can apply. Real channels and pumps may not behave linearly.",
+    "modelReasoningPath": "With the stated fixed pressure and unchanged channel behaviour, total flow falls from 10 to 5. A pump maintaining total flow would need to raise the pressure difference to drive 10 through the remaining channel, assuming the simple linear model can apply. Real channels and pumps may not behave linearly.",
+    "liveProbes": [
+      {
+        "probe": "Which assumption changed between the two cases?",
+        "goodResponse": "The externally controlled variable changes from pressure difference to total flow."
+      },
+      {
+        "probe": "Why should we be cautious applying this directly to a body?",
+        "goodResponse": "Real vessels change diameter, flow is regulated and the model omits many interacting constraints."
+      }
+    ],
+    "rubric": {
+      "strong": "Tracks the controlled variable and clearly separates model behaviour from physiology.",
+      "developing": "Gets the fixed-pressure case right but confuses the second case.",
+      "weak": "States the same flow change must happen regardless of pump behaviour."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A10",
+    "subject": "medicine",
+    "title": "What does an average hide?",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "distributions",
+      "statistics",
+      "uncertainty"
+    ],
+    "questionType": "data interpretation",
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Two fictional services both report a mean response time of 10 minutes. Service A always responds in about 10 minutes; service B responds immediately half the time and after about 20 minutes the other half. What would you want to know before saying the services are equivalent?",
+    "answer": "The same mean hides very different distributions and reliability. Consider spread, upper percentiles, the importance of delay, measurement start points and which users experience long waits. A mean is not wrong, but it is incomplete for deciding whether the services meet users’ needs.",
+    "modelReasoningPath": "The same mean hides very different distributions and reliability. Consider spread, upper percentiles, the importance of delay, measurement start points and which users experience long waits. A mean is not wrong, but it is incomplete for deciding whether the services meet users’ needs.",
+    "liveProbes": [
+      {
+        "probe": "Which additional statistic would you publish?",
+        "goodResponse": "Choose a measure linked to the decision, such as the 90th percentile, spread and proportion meeting a justified target."
+      },
+      {
+        "probe": "Could the faster responses compensate for the slow ones?",
+        "goodResponse": "It depends on consequences and users; averaging cannot automatically cancel a serious delay."
+      }
+    ],
+    "rubric": {
+      "strong": "Connects distribution and fairness to the decision, with a useful additional measure.",
+      "developing": "Says averages are misleading but struggles to choose better evidence.",
+      "weak": "Calls the services interchangeable because their means match."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A11",
+    "subject": "medicine",
+    "title": "An unexpected result",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "falsification",
+      "revision",
+      "measurement"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "You predict that increasing light always increases the growth of an experimental plant. Most groups follow that pattern, but the brightest group grows less. How would you reason through the unexpected result?",
+    "answer": "First check reliability, allocation and measurement, without discarding an inconvenient result. Consider heat, water availability or a non-linear light response. Propose additional measurements and experiments that distinguish explanations. Revise the original universal claim if the result is reproducible.",
+    "modelReasoningPath": "First check reliability, allocation and measurement, without discarding an inconvenient result. Consider heat, water availability or a non-linear light response. Propose additional measurements and experiments that distinguish explanations. Revise the original universal claim if the result is reproducible.",
+    "liveProbes": [
+      {
+        "probe": "What would justify excluding an observation?",
+        "goodResponse": "A documented measurement or protocol failure, using a consistent rule rather than disagreement with the hypothesis."
+      },
+      {
+        "probe": "What prediction follows from your heat explanation?",
+        "goodResponse": "Controlling temperature while varying light should reduce or remove the downturn if heat is responsible."
+      }
+    ],
+    "rubric": {
+      "strong": "Treats anomalous data as evidence, proposes testable explanations and revises the claim.",
+      "developing": "Suggests a plausible cause but does not describe a test.",
+      "weak": "Deletes the outlying group simply because it contradicts the prediction."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A12",
+    "subject": "medicine",
+    "title": "A feedback system overshoots",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "feedback",
+      "delay",
+      "systems"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A room heater switches on when a sensor reads below 20°C and off above 20°C. The room repeatedly becomes too warm and then too cold. How could this happen even if the sensor is accurate?",
+    "answer": "A delay between heating, temperature change and switching can cause overshoot; stored heat may continue to warm the room after power stops. Sensor placement and mixing also matter. Explain a possible sequence rather than assuming a broken sensor, and propose measurements over time.",
+    "modelReasoningPath": "A delay between heating, temperature change and switching can cause overshoot; stored heat may continue to warm the room after power stops. Sensor placement and mixing also matter. Explain a possible sequence rather than assuming a broken sensor, and propose measurements over time.",
+    "liveProbes": [
+      {
+        "probe": "What might happen if the heater were made much stronger?",
+        "goodResponse": "A larger response may worsen overshoot under the same delayed control rule."
+      },
+      {
+        "probe": "How would you distinguish delay from poor sensor placement?",
+        "goodResponse": "Compare readings at several locations with switching times and heating output."
+      }
+    ],
+    "rubric": {
+      "strong": "Explains a causal sequence involving delay and suggests observations that test it.",
+      "developing": "Mentions lag without explaining why it can produce alternating overshoot.",
+      "weak": "Assumes accurate measurement guarantees stable control."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A13",
+    "subject": "medicine",
+    "title": "One gene, several observations",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "genetics",
+      "inference",
+      "limitations"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "In a fictional family study, a trait appears in a parent and two children but not in another child. A researcher says this proves a single dominant gene causes it. What can and cannot be concluded from this family alone?",
+    "answer": "The pattern may be compatible with a dominant model but does not establish it. Small numbers, incomplete penetrance, shared environment, different genetic mechanisms and uncertain measurement may fit. More families, clear definitions and suitable genetic evidence could distinguish models.",
+    "modelReasoningPath": "The pattern may be compatible with a dominant model but does not establish it. Small numbers, incomplete penetrance, shared environment, different genetic mechanisms and uncertain measurement may fit. More families, clear definitions and suitable genetic evidence could distinguish models.",
+    "liveProbes": [
+      {
+        "probe": "Does one unaffected child refute every dominant model?",
+        "goodResponse": "No; inheritance is probabilistic and phenotype depends on the model’s assumptions."
+      },
+      {
+        "probe": "What information would you collect first?",
+        "goodResponse": "Clarify the trait, ages, parent information, relatedness and measurement reliability before asserting a mechanism."
+      }
+    ],
+    "rubric": {
+      "strong": "Uses compatibility rather than proof and identifies concrete missing information.",
+      "developing": "Recognises the sample is small but cannot explain an alternative.",
+      "weak": "Treats a suggestive pedigree as decisive proof of mechanism."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-A14",
+    "subject": "medicine",
+    "title": "Measuring the invisible",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "proxies",
+      "measurement",
+      "validity"
+    ],
+    "questionType": "scientific reasoning",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A project measures learning by counting how many pages students highlight in a textbook. What would make this a useful or misleading measure, and how could you evaluate it?",
+    "answer": "Highlighting is an observable proxy, not learning itself. It may reflect effort, habit or the book’s layout. Compare it with independently defined outcomes such as retention and application, check whether it predicts them across groups, and watch for incentives to highlight without understanding.",
+    "modelReasoningPath": "Highlighting is an observable proxy, not learning itself. It may reflect effort, habit or the book’s layout. Compare it with independently defined outcomes such as retention and application, check whether it predicts them across groups, and watch for incentives to highlight without understanding.",
+    "liveProbes": [
+      {
+        "probe": "What happens if rewards depend on highlighting more pages?",
+        "goodResponse": "People may optimise the proxy while the intended outcome stays unchanged or worsens."
+      },
+      {
+        "probe": "Could the measure still be useful?",
+        "goodResponse": "It might be a limited indicator combined with other evidence, after validation and with explicit caveats."
+      }
+    ],
+    "rubric": {
+      "strong": "Distinguishes construct from proxy and proposes validation and incentive checks.",
+      "developing": "Identifies a weakness but dismisses all measurement instead of improving it.",
+      "weak": "Equates more highlighting directly with more learning."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-D01",
+    "subject": "medicine",
+    "title": "A doubled success rate",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "risk",
+      "numeracy",
+      "communication"
+    ],
+    "questionType": "data interpretation",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "In a fictional service trial, 2 of 100 invitations led to attendance using wording A and 4 of 100 using wording B. A colleague calls B “twice as effective”. Explain what that claim captures and what it leaves out.",
+    "answer": "The observed attendance rate doubles from 2% to 4%, an absolute increase of 2 percentage points. Small counts create uncertainty; allocation, follow-up and the cost of changing wording matter. Report both absolute and relative change without claiming a reliable causal effect from these counts alone.",
+    "modelReasoningPath": "The observed attendance rate doubles from 2% to 4%, an absolute increase of 2 percentage points. Small counts create uncertainty; allocation, follow-up and the cost of changing wording matter. Report both absolute and relative change without claiming a reliable causal effect from these counts alone.",
+    "liveProbes": [
+      {
+        "probe": "How would you explain it without percentages?",
+        "goodResponse": "Two extra attendances per hundred invitations were observed in this sample."
+      },
+      {
+        "probe": "What would make a larger follow-up study fair?",
+        "goodResponse": "Randomise comparable invitations, use the same attendance definition and time window, and plan sample size around a meaningful effect."
+      }
+    ],
+    "rubric": {
+      "strong": "Calculates both effects correctly and explains uncertainty in ordinary language.",
+      "developing": "Understands doubling but needs help distinguishing percent from percentage points.",
+      "weak": "Claims a 100-percentage-point increase or a proven large benefit."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-D02",
+    "subject": "medicine",
+    "title": "The hidden denominator",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "denominators",
+      "comparison",
+      "service-data"
+    ],
+    "questionType": "data interpretation",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fictional clinic reports 30 missed appointments this month and 20 last month. It booked 600 appointments this month and 200 last month. Has attendance become worse? Talk through your reasoning.",
+    "answer": "The count increased but the missed proportion decreased from 10% to 5%. Both descriptions are true and matter for different decisions. Check whether appointments, people and time windows are comparable and whether case mix or recording changed.",
+    "modelReasoningPath": "The count increased but the missed proportion decreased from 10% to 5%. Both descriptions are true and matter for different decisions. Check whether appointments, people and time windows are comparable and whether case mix or recording changed.",
+    "liveProbes": [
+      {
+        "probe": "Could staff still face more wasted time?",
+        "goodResponse": "Yes; more missed appointments in absolute terms can waste more time despite a lower proportion."
+      },
+      {
+        "probe": "What extra breakdown would help understand the change?",
+        "goodResponse": "Examine appointment length, service type, first versus repeat visits and access barriers rather than assuming blame."
+      }
+    ],
+    "rubric": {
+      "strong": "Calculates 10% and 5%, reconciles counts and rates and asks useful comparability questions.",
+      "developing": "Uses the right denominator but treats one metric as the only valid description.",
+      "weak": "Concludes performance worsened solely because 30 exceeds 20."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-D03",
+    "subject": "medicine",
+    "title": "A ranking with missing data",
+    "topic": "data-interpretation",
+    "difficulty": 3,
+    "tags": [
+      "missing-data",
+      "bias",
+      "uncertainty"
+    ],
+    "questionType": "data interpretation",
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Two fictional departments ask visitors for feedback. Department A has 90% positive responses from 20% of visitors; B has 80% positive responses from 90% of visitors. Can you rank their quality using these figures?",
+    "answer": "The observed respondent percentages favour A, but unequal and possibly selective response makes a quality ranking uncertain. Ask who responded, how feedback was requested, sample sizes and whether the questions matched. Neither assuming all missing responses are negative nor ignoring them is justified.",
+    "modelReasoningPath": "The observed respondent percentages favour A, but unequal and possibly selective response makes a quality ranking uncertain. Ask who responded, how feedback was requested, sample sizes and whether the questions matched. Neither assuming all missing responses are negative nor ignoring them is justified.",
+    "liveProbes": [
+      {
+        "probe": "What if dissatisfied visitors are less likely to reply?",
+        "goodResponse": "The observed proportions may overstate satisfaction, especially where response is low, but the amount cannot be inferred without evidence."
+      },
+      {
+        "probe": "What sensitivity check could you try?",
+        "goodResponse": "Explore plausible satisfaction levels among non-respondents and see whether the ranking changes."
+      }
+    ],
+    "rubric": {
+      "strong": "Recognises selection bias and describes how conclusions depend on missing responses.",
+      "developing": "Flags low response but makes an unsupported correction.",
+      "weak": "Ranks quality confidently using respondent percentages alone."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-D04",
+    "subject": "medicine",
+    "title": "The average that reverses",
+    "topic": "data-interpretation",
+    "difficulty": 3,
+    "tags": [
+      "confounding",
+      "weighted-averages",
+      "reasoning"
+    ],
+    "questionType": "data interpretation",
+    "tracks": [
+      "academic"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "In fictional easy tasks, group A succeeds in 9/10 and B in 80/100. In difficult tasks, A succeeds in 20/100 and B in 1/10. Which group has the better success rate? Explain why your answer might depend on how the data are combined.",
+    "answer": "A performs better within each difficulty: 90% versus 80%, and 20% versus 10%. Overall A has 29/110 (26.4%) while B has 81/110 (73.6%). Different mixes of easy and hard tasks reverse the aggregate comparison. A fair comparison needs a common task mix or stratification; the observational data alone do not explain why groups received different tasks.",
+    "modelReasoningPath": "A performs better within each difficulty: 90% versus 80%, and 20% versus 10%. Overall A has 29/110 (26.4%) while B has 81/110 (73.6%). Different mixes of easy and hard tasks reverse the aggregate comparison. A fair comparison needs a common task mix or stratification; the observational data alone do not explain why groups received different tasks.",
+    "liveProbes": [
+      {
+        "probe": "Is either calculation mathematically wrong?",
+        "goodResponse": "No; within-stratum and aggregate rates answer different questions."
+      },
+      {
+        "probe": "How could you compare on a common basis?",
+        "goodResponse": "Apply the same weights to both difficulty-specific rates or compare each difficulty separately."
+      }
+    ],
+    "rubric": {
+      "strong": "Calculates both levels accurately and explains composition rather than declaring a contradiction.",
+      "developing": "Notices the reversal but cannot explain unequal weights.",
+      "weak": "Assumes the aggregate ranking must hold within each subgroup."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-E01",
+    "subject": "medicine",
+    "title": "A fair allocation rule",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "tags": [
+      "fairness",
+      "trade-offs",
+      "transparency"
+    ],
+    "questionType": "ethics scenarios",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Your student society has funding for five travel bursaries and twelve applicants. Some have high travel costs, some have no family support, and some applied earlier. How would you design and explain a fair allocation process?",
+    "answer": "Clarify the bursary’s purpose, agree relevant criteria before judging individuals, gather only necessary information, manage conflicts and communicate a consistent process. Need, access and benefit may matter; first-come-first-served can disadvantage people who heard late. Several allocation rules are defensible if transparent, proportionate and open to review.",
+    "modelReasoningPath": "Clarify the bursary’s purpose, agree relevant criteria before judging individuals, gather only necessary information, manage conflicts and communicate a consistent process. Need, access and benefit may matter; first-come-first-served can disadvantage people who heard late. Several allocation rules are defensible if transparent, proportionate and open to review.",
+    "liveProbes": [
+      {
+        "probe": "A close friend narrowly misses out. What would you do?",
+        "goodResponse": "Declare the conflict and avoid privately changing criteria or disclosing others’ circumstances."
+      },
+      {
+        "probe": "What if two people are equally eligible for the final bursary?",
+        "goodResponse": "Explain a pre-agreed tie-break method, such as a transparent draw, with reasons and any review route."
+      }
+    ],
+    "rubric": {
+      "strong": "Builds a defensible process, weighs competing values and addresses conflicts without favouritism.",
+      "developing": "Chooses a plausible rule but gives little thought to transparency or edge cases.",
+      "weak": "Allocates by personal preference or changes criteria to help a friend."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-E02",
+    "subject": "medicine",
+    "title": "Permission to share a story",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "tags": [
+      "consent",
+      "privacy",
+      "judgement"
+    ],
+    "questionType": "ethics professionalism",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "During volunteering, someone tells you a personal story that would make a powerful fundraising post. A teammate suggests removing the person’s name and posting it today. What would you consider before proceeding?",
+    "answer": "Removing a name may not prevent recognition. Consider the person’s wishes, purpose and possible effects of sharing, the organisation’s process and whether the story is necessary. Seek guidance from the responsible volunteer lead, avoid sharing private details without an appropriate basis and consider a fictionalised or general account approved for the campaign.",
+    "modelReasoningPath": "Removing a name may not prevent recognition. Consider the person’s wishes, purpose and possible effects of sharing, the organisation’s process and whether the story is necessary. Seek guidance from the responsible volunteer lead, avoid sharing private details without an appropriate basis and consider a fictionalised or general account approved for the campaign.",
+    "liveProbes": [
+      {
+        "probe": "Your teammate says the fundraiser urgently needs donations. Does that settle it?",
+        "goodResponse": "Urgency does not by itself resolve privacy and permission; explore another way to communicate the need."
+      },
+      {
+        "probe": "What if the person previously agreed to tell their story at a small event?",
+        "goodResponse": "Permission for one audience or medium should not be assumed to cover a wider permanent online audience."
+      }
+    ],
+    "rubric": {
+      "strong": "Recognises identifiability and scope of permission and offers a proportionate alternative.",
+      "developing": "Suggests asking permission but overlooks audience or power imbalance.",
+      "weak": "Assumes anonymity or a good cause automatically justifies publishing."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-C01",
+    "subject": "medicine",
+    "title": "Explain a changing forecast",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "tags": [
+      "plain-language",
+      "uncertainty",
+      "understanding"
+    ],
+    "questionType": "communication tasks",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A friend says, “Yesterday the event organiser said rain was unlikely, and today they cancelled our outdoor event. They must have lied.” Explain how a forecast can change without dishonesty, then check whether your explanation makes sense to them.",
+    "answer": "Acknowledge disappointment, explain that predictions reflect available information and can change as evidence improves, and distinguish a chance from a promise. Avoid inventing facts about this organiser. Invite the friend to describe their understanding and discuss what communication would have helped.",
+    "modelReasoningPath": "Acknowledge disappointment, explain that predictions reflect available information and can change as evidence improves, and distinguish a chance from a promise. Avoid inventing facts about this organiser. Invite the friend to describe their understanding and discuss what communication would have helped.",
+    "liveProbes": [
+      {
+        "probe": "Your friend says uncertainty makes forecasts useless. How would you respond?",
+        "goodResponse": "Explain that probabilities can still guide preparation even when they cannot guarantee an outcome."
+      },
+      {
+        "probe": "How will you check understanding without just asking “does that make sense?”",
+        "goodResponse": "Ask what the friend would take “unlikely” to mean or how they would explain the update to another attendee."
+      }
+    ],
+    "rubric": {
+      "strong": "Uses clear language, responds to the person’s concern and checks understanding openly.",
+      "developing": "Gives a sound explanation but uses jargon or misses the emotional concern.",
+      "weak": "Dismisses the friend as irrational or claims certainty about what happened."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-C02",
+    "subject": "medicine",
+    "title": "A difficult change of plan",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "tags": [
+      "empathy",
+      "boundaries",
+      "listening"
+    ],
+    "questionType": "communication tasks",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "You organise a student mentoring event. A participant has travelled a long way, but their booked mentor is unexpectedly absent. You can offer a different mentor now or help rearrange. Begin the conversation and explain how you would respond to their disappointment.",
+    "answer": "Acknowledge the inconvenience, explain the known change honestly without inventing reasons, ask what matters most to the participant and offer realistic choices. Avoid promises about refunds or future availability beyond your role. Check the agreed next step and identify someone who can authorise additional help if needed.",
+    "modelReasoningPath": "Acknowledge the inconvenience, explain the known change honestly without inventing reasons, ask what matters most to the participant and offer realistic choices. Avoid promises about refunds or future availability beyond your role. Check the agreed next step and identify someone who can authorise additional help if needed.",
+    "liveProbes": [
+      {
+        "probe": "They say, “You have wasted my whole day.” What would you say next?",
+        "goodResponse": "Recognise the impact without arguing or claiming to know exactly how they feel; invite the immediate concern."
+      },
+      {
+        "probe": "They demand a guarantee the original mentor will attend next time.",
+        "goodResponse": "Explain what can be confirmed and offer to seek an authorised update instead of making an unsupported promise."
+      }
+    ],
+    "rubric": {
+      "strong": "Combines acknowledgement, honest limits and a practical jointly agreed next step.",
+      "developing": "Offers a solution quickly but barely responds to the disappointment.",
+      "weak": "Blames the absent mentor, dismisses the concern or promises an outcome outside their control."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-T01",
+    "subject": "medicine",
+    "title": "The quiet expert",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "tags": [
+      "teamwork",
+      "inclusion",
+      "leadership"
+    ],
+    "questionType": "teamwork resilience judgement",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "In a group project, one confident member dominates planning while a quieter member has relevant experience and has stopped contributing. The deadline is tomorrow. How would you help the team move forward?",
+    "answer": "Create space for specific contributions without humiliating either person, clarify the task and constraints, invite the quieter member’s view and agree roles and decisions. Explore whether silence reflects preference, exclusion or uncertainty. Use time limits and check progress rather than assuming the loudest person is wrong or the quietest right.",
+    "modelReasoningPath": "Create space for specific contributions without humiliating either person, clarify the task and constraints, invite the quieter member’s view and agree roles and decisions. Explore whether silence reflects preference, exclusion or uncertainty. Use time limits and check progress rather than assuming the loudest person is wrong or the quietest right.",
+    "liveProbes": [
+      {
+        "probe": "The dominant member says there is no time for everyone to speak.",
+        "goodResponse": "Propose a brief structured round focused on the decision; better information can save rework."
+      },
+      {
+        "probe": "What if the quieter member does not want to present?",
+        "goodResponse": "Offer another contribution route and respect preferences while ensuring their expertise informs the work."
+      }
+    ],
+    "rubric": {
+      "strong": "Balances inclusion with the deadline and adapts roles without stereotyping.",
+      "developing": "Suggests equal speaking time but gives no workable plan under pressure.",
+      "weak": "Excludes the quieter member or confronts the other person without understanding the situation."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-T02",
+    "subject": "medicine",
+    "title": "A mistake before submission",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "tags": [
+      "honesty",
+      "accountability",
+      "resilience"
+    ],
+    "questionType": "teamwork resilience judgement",
+    "tracks": [
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "An hour before a group presentation, you discover that you copied a figure incorrectly and the team’s main conclusion may be wrong. What do you do now, and what would you learn afterwards?",
+    "answer": "Check the error promptly, tell the team clearly, assess which conclusions are affected and agree a correction or explicit limitation before presenting. Own the mistake without making the whole discussion about personal guilt. Afterward improve checking and version control, and reflect on how the pressure affected decisions.",
+    "modelReasoningPath": "Check the error promptly, tell the team clearly, assess which conclusions are affected and agree a correction or explicit limitation before presenting. Own the mistake without making the whole discussion about personal guilt. Afterward improve checking and version control, and reflect on how the pressure affected decisions.",
+    "liveProbes": [
+      {
+        "probe": "A teammate says nobody will notice and asks you to leave it.",
+        "goodResponse": "Explain the risk of misleading the audience and propose a truthful limited claim or revised slide."
+      },
+      {
+        "probe": "What if you cannot finish recalculating in time?",
+        "goodResponse": "Present only verified information, disclose the limitation and arrange a correction rather than pretending certainty."
+      }
+    ],
+    "rubric": {
+      "strong": "Acts quickly and honestly, protects the integrity of the presentation and identifies a practical learning change.",
+      "developing": "Accepts responsibility but gives an unclear correction plan.",
+      "weak": "Hides the mistake or knowingly presents an unsupported conclusion."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-M01",
+    "subject": "medicine",
+    "title": "A belief your experience changed",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "reflection",
+      "motivation",
+      "evidence"
+    ],
+    "questionType": "motivation reflection",
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Tell me about an experience that changed one of your assumptions about working with people. It can come from school, home responsibilities, a job or volunteering. What changed, and how might the lesson affect your approach to medicine?",
+    "answer": "There is no required background or prestigious experience. Look for one specific situation, an honestly described earlier assumption, evidence that challenged it and a realistic change in behaviour. The link to medicine should recognise limits of the experience rather than claim it proves readiness for clinical work.",
+    "modelReasoningPath": "There is no required background or prestigious experience. Look for one specific situation, an honestly described earlier assumption, evidence that challenged it and a realistic change in behaviour. The link to medicine should recognise limits of the experience rather than claim it proves readiness for clinical work.",
+    "liveProbes": [
+      {
+        "probe": "What did you do differently the next time?",
+        "goodResponse": "Give a concrete change and what happened, or honestly explain that there has not yet been another opportunity."
+      },
+      {
+        "probe": "What part of your original view might still be reasonable?",
+        "goodResponse": "Show nuance and avoid constructing a false before-and-after story simply to sound reflective."
+      }
+    ],
+    "rubric": {
+      "strong": "Uses a specific example and explains a credible change with appropriate limits.",
+      "developing": "Describes an event but the claimed lesson is generic or untested.",
+      "weak": "Gives a rehearsed moral without an example or invents certainty about others’ motives."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-M02",
+    "subject": "medicine",
+    "title": "Why medicine when other roles help?",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "motivation",
+      "professional-awareness",
+      "self-awareness"
+    ],
+    "questionType": "motivation reflection",
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Many careers involve science, helping people and teamwork. What draws you specifically towards medicine, and what have you done to test whether your picture of the career is realistic?",
+    "answer": "A strong answer connects personal interests to an informed understanding of the role, recognises uncertainty and demanding aspects, and uses accessible evidence such as conversations, reading, caring responsibilities or reflection. Do not reward expensive placements or demean other professions. Motivation need not be a single dramatic life story.",
+    "modelReasoningPath": "A strong answer connects personal interests to an informed understanding of the role, recognises uncertainty and demanding aspects, and uses accessible evidence such as conversations, reading, caring responsibilities or reflection. Do not reward expensive placements or demean other professions. Motivation need not be a single dramatic life story.",
+    "liveProbes": [
+      {
+        "probe": "What aspect of the role might you find hardest?",
+        "goodResponse": "Identify a credible challenge and an approach to learning or support without pretending it is already solved."
+      },
+      {
+        "probe": "What evidence could make you reconsider your choice?",
+        "goodResponse": "Show willingness to revise a decision in response to experience rather than treating certainty as the goal."
+      }
+    ],
+    "rubric": {
+      "strong": "Provides an informed, personal and nuanced account with evidence of testing assumptions.",
+      "developing": "Shows interest but relies on generic helping/science themes with little reflection.",
+      "weak": "Claims only doctors help people or treats status as sufficient understanding of the work."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-01",
+    "subject": "medicine",
+    "title": "Learning without a prestigious placement",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "access",
+      "reflection",
+      "motivation"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "motivation reflection",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "You have not had access to a hospital placement. How could you still build and test an informed picture of medicine? Choose one accessible activity and explain what it could teach you, and what it could not.",
+    "answer": "Relevant learning can come from ordinary caring responsibilities, public professional accounts, conversations, community work or structured online material. Explain a specific question to investigate and how to compare perspectives. Acknowledge that reading or one conversation cannot reveal every aspect of clinical work. Assess insight and initiative, not access to expensive opportunities.",
+    "modelReasoningPath": "Relevant learning can come from ordinary caring responsibilities, public professional accounts, conversations, community work or structured online material. Explain a specific question to investigate and how to compare perspectives. Acknowledge that reading or one conversation cannot reveal every aspect of clinical work. Assess insight and initiative, not access to expensive opportunities.",
+    "liveProbes": [
+      {
+        "probe": "How would you avoid hearing only positive accounts?",
+        "goodResponse": "Seek varied roles and perspectives, ask about difficult routine work and compare sources without demanding private patient stories."
+      },
+      {
+        "probe": "How would you show that the activity changed your understanding?",
+        "goodResponse": "Describe a specific prior assumption, evidence that challenged it and a realistic next step."
+      }
+    ],
+    "rubric": {
+      "strong": "Proposes an accessible investigation, tests assumptions and recognises limits of indirect experience.",
+      "developing": "Lists reasonable activities but gives little explanation of what would be learned.",
+      "weak": "Treats lack of a prestigious placement as proof of unsuitability or fabricates experience."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-02",
+    "subject": "medicine",
+    "title": "A small responsibility that mattered",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "responsibility",
+      "reflection",
+      "reliability"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "motivation reflection",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Describe an ordinary responsibility that other people depended on you to carry out. What made it difficult to sustain, how did you handle that, and what would you take from it into a demanding course?",
+    "answer": "The scale or prestige of the task is irrelevant. Look for a concrete responsibility, competing demands, an honest account of limits and evidence of follow-through. A useful reflection can include asking for help or renegotiating a commitment. Avoid rewarding heroic overwork as the only sign of dedication.",
+    "modelReasoningPath": "The scale or prestige of the task is irrelevant. Look for a concrete responsibility, competing demands, an honest account of limits and evidence of follow-through. A useful reflection can include asking for help or renegotiating a commitment. Avoid rewarding heroic overwork as the only sign of dedication.",
+    "liveProbes": [
+      {
+        "probe": "What happened when you could not meet the commitment?",
+        "goodResponse": "Explain early communication, proportionate repair and a plan to prevent avoidable surprises."
+      },
+      {
+        "probe": "What would not transfer directly to medicine?",
+        "goodResponse": "Recognise differences in expertise, accountability and consequences rather than equating everyday responsibility with clinical competence."
+      }
+    ],
+    "rubric": {
+      "strong": "Connects a specific responsibility to reliability, communication and a realistic learning need.",
+      "developing": "Describes being dependable but gives few concrete decisions or outcomes.",
+      "weak": "Claims never to struggle or treats exhaustion and refusing help as the ideal."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-03",
+    "subject": "medicine",
+    "title": "Changing a study strategy",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "learning",
+      "feedback",
+      "metacognition"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "motivation reflection",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Tell me about a time when working harder with the same method was not improving your understanding. How did you decide what to change, and how did you judge whether the new approach helped?",
+    "answer": "Look for diagnosis of the learning problem rather than a fashionable technique. The candidate might distinguish recall from understanding, ask for feedback, explain ideas aloud or use spaced practice. A useful outcome can be modest and honestly measured. Better marks alone do not reveal exactly why a method helped.",
+    "modelReasoningPath": "Look for diagnosis of the learning problem rather than a fashionable technique. The candidate might distinguish recall from understanding, ask for feedback, explain ideas aloud or use spaced practice. A useful outcome can be modest and honestly measured. Better marks alone do not reveal exactly why a method helped.",
+    "liveProbes": [
+      {
+        "probe": "What would you do if a method helped a friend but not you?",
+        "goodResponse": "Treat that as evidence to adapt the approach, consider context and test a manageable alternative."
+      },
+      {
+        "probe": "How could you tell understanding from familiarity?",
+        "goodResponse": "Attempt an unfamiliar application or explanation without notes rather than only rereading recognisable material."
+      }
+    ],
+    "rubric": {
+      "strong": "Identifies a learning bottleneck, makes a reasoned change and checks transfer to new problems.",
+      "developing": "Names a study method but cannot explain the original difficulty or evidence of improvement.",
+      "weak": "Equates longer hours or familiar-looking notes with demonstrated understanding."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-04",
+    "subject": "medicine",
+    "title": "When feedback stings",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "feedback",
+      "self-awareness",
+      "growth"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "motivation reflection",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Think of a time when feedback was uncomfortable to hear. You may use a school, work or everyday example. How did you decide which parts to act on, and what did you do afterwards?",
+    "answer": "A strong response distinguishes emotional reaction from evaluation of the feedback. It seeks examples, considers the source and context, identifies a concrete change and checks the effect. Respectful disagreement can be appropriate; automatically accepting every criticism is not the goal. Do not require disclosure of a painful personal experience.",
+    "modelReasoningPath": "A strong response distinguishes emotional reaction from evaluation of the feedback. It seeks examples, considers the source and context, identifies a concrete change and checks the effect. Respectful disagreement can be appropriate; automatically accepting every criticism is not the goal. Do not require disclosure of a painful personal experience.",
+    "liveProbes": [
+      {
+        "probe": "What if two people give conflicting feedback?",
+        "goodResponse": "Clarify their observations and goals, look for context differences and test a change against the actual task."
+      },
+      {
+        "probe": "What would make feedback less useful?",
+        "goodResponse": "Vague labels or unsupported assumptions need clarification; separate actionable observations from personal attacks."
+      }
+    ],
+    "rubric": {
+      "strong": "Processes discomfort constructively and shows a specific, evaluated response.",
+      "developing": "Says feedback is valuable but offers a generic improvement plan.",
+      "weak": "Dismisses all criticism or claims that unquestioning compliance is always required."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-05",
+    "subject": "medicine",
+    "title": "Curiosity beyond the headline",
+    "topic": "motivation-reflection",
+    "difficulty": 3,
+    "tags": [
+      "curiosity",
+      "sources",
+      "intellectual-humility"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "motivation reflection",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Choose a scientific idea you explored beyond a headline or lesson. Explain what first interested you, one question you pursued, and something you still do not understand. Specialist vocabulary is not required.",
+    "answer": "Assess depth of engagement and reasoning rather than obscure factual recall. A candidate should explain the idea in their own words, identify how a source or observation changed their view, and give a specific remaining uncertainty. Invite clarification where prior educational access differs. An honest limit is more useful than invented expertise.",
+    "modelReasoningPath": "Assess depth of engagement and reasoning rather than obscure factual recall. A candidate should explain the idea in their own words, identify how a source or observation changed their view, and give a specific remaining uncertainty. Invite clarification where prior educational access differs. An honest limit is more useful than invented expertise.",
+    "liveProbes": [
+      {
+        "probe": "How did you decide a source was trustworthy?",
+        "goodResponse": "Consider authorship, methods, evidence, date and independent corroboration rather than appearance alone."
+      },
+      {
+        "probe": "What evidence might change your current explanation?",
+        "goodResponse": "Offer an observation that would distinguish alternatives, or acknowledge what would need to be learned first."
+      }
+    ],
+    "rubric": {
+      "strong": "Explains an idea clearly, traces an enquiry and identifies a meaningful uncertainty.",
+      "developing": "Shows enthusiasm but mostly repeats a source without exploring its reasoning.",
+      "weak": "Uses technical language to conceal gaps or treats a headline as decisive proof."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-06",
+    "subject": "medicine",
+    "title": "A sustainable commitment",
+    "topic": "motivation-reflection",
+    "difficulty": 2,
+    "tags": [
+      "wellbeing",
+      "planning",
+      "boundaries"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "motivation reflection",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "You are preparing for exams while helping at home and volunteering. Someone suggests that a serious medicine applicant should always take on more. How would you decide what to continue, reduce or decline?",
+    "answer": "Commitment should be judged by thoughtful reliability, not the number of activities. Identify fixed responsibilities, realistic time and energy, and which activities serve a clear purpose. Communicate changes early and consider available support. Do not assume everyone can stop caring duties or has equal resources.",
+    "modelReasoningPath": "Commitment should be judged by thoughtful reliability, not the number of activities. Identify fixed responsibilities, realistic time and energy, and which activities serve a clear purpose. Communicate changes early and consider available support. Do not assume everyone can stop caring duties or has equal resources.",
+    "liveProbes": [
+      {
+        "probe": "What if reducing an activity disappoints someone?",
+        "goodResponse": "Acknowledge the impact, explain a realistic commitment and help arrange a handover where possible."
+      },
+      {
+        "probe": "How would you notice that your plan is not working?",
+        "goodResponse": "Look for specific signs such as repeated missed commitments or ineffective study, then review the plan with appropriate support."
+      }
+    ],
+    "rubric": {
+      "strong": "Balances obligations and limits with an achievable plan and respectful communication.",
+      "developing": "Recognises overload but relies on vague promises to manage time better.",
+      "weak": "Equates suitability for medicine with limitless availability or dismisses home responsibilities."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-07",
+    "subject": "medicine",
+    "title": "A dilution puzzle",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "concentration",
+      "mass-balance",
+      "numeracy"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "scientific reasoning",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A sealed container holds 100 mL of a solution containing 20 units of a dissolved substance. You add 100 mL of pure water without losing any substance. What changes and what stays constant? State any assumptions you need.",
+    "answer": "The amount of dissolved substance remains 20 units. Assuming volumes add, volume doubles to 200 mL and concentration halves from 0.2 to 0.1 units per mL. Distinguish amount, volume and concentration. The conclusion assumes no reaction, loss, precipitation or meaningful change in combined volume.",
+    "modelReasoningPath": "The amount of dissolved substance remains 20 units. Assuming volumes add, volume doubles to 200 mL and concentration halves from 0.2 to 0.1 units per mL. Distinguish amount, volume and concentration. The conclusion assumes no reaction, loss, precipitation or meaningful change in combined volume.",
+    "liveProbes": [
+      {
+        "probe": "What if you remove half the well-mixed original solution instead?",
+        "goodResponse": "Both amount and volume halve, so concentration stays the same."
+      },
+      {
+        "probe": "What would invalidate the simple calculation?",
+        "goodResponse": "A reaction, incomplete mixing, loss of material or non-additive volumes would require a different model."
+      }
+    ],
+    "rubric": {
+      "strong": "Separates amount from concentration and calculates both scenarios with explicit assumptions.",
+      "developing": "Gets dilution right but confuses the amount with its concentration.",
+      "weak": "Claims adding water removes half the dissolved substance."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-08",
+    "subject": "medicine",
+    "title": "Two clocks in an experiment",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "measurement",
+      "bias",
+      "calibration"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "scientific reasoning",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Two teams time the same repeated reaction. Team A consistently reports about two seconds longer than Team B, while both teams have very little variation between repeats. Does high repeatability mean that both results are accurate?",
+    "answer": "Repeatability describes consistency, not closeness to the intended quantity. A fixed offset in timing, different start/stop rules or instrument calibration could explain the difference. Compare both methods on the same event with an independent reference, standardise definitions and inspect systematic error as well as random variation.",
+    "modelReasoningPath": "Repeatability describes consistency, not closeness to the intended quantity. A fixed offset in timing, different start/stop rules or instrument calibration could explain the difference. Compare both methods on the same event with an independent reference, standardise definitions and inspect systematic error as well as random variation.",
+    "liveProbes": [
+      {
+        "probe": "Would taking one hundred more repeats remove the difference?",
+        "goodResponse": "It may estimate each method’s mean more precisely but does not automatically remove a systematic offset."
+      },
+      {
+        "probe": "What if there is no perfect reference clock?",
+        "goodResponse": "Compare methods transparently, characterise uncertainty and avoid calling agreement absolute proof of accuracy."
+      }
+    ],
+    "rubric": {
+      "strong": "Distinguishes precision and accuracy and proposes a test for systematic error.",
+      "developing": "Notices a possible timing error but assumes more repeats alone will solve it.",
+      "weak": "Treats consistent readings as necessarily correct measurements."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-09",
+    "subject": "medicine",
+    "title": "The enzyme and the container",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "experimental-design",
+      "surface-effects",
+      "alternatives"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "scientific reasoning",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A reaction runs faster in a small glass vessel than in a large plastic vessel. The researcher says glass accelerates the reaction. Identify at least two competing explanations and design a useful next experiment.",
+    "answer": "Material is confounded with size and potentially surface-area-to-volume ratio, heat transfer, mixing and adsorption. Compare matched-size vessels of different materials under controlled temperature and mixing, then vary size within a material. Measure initial quantities and rates consistently. Several factors may act together; one experiment should target a clear distinction.",
+    "modelReasoningPath": "Material is confounded with size and potentially surface-area-to-volume ratio, heat transfer, mixing and adsorption. Compare matched-size vessels of different materials under controlled temperature and mixing, then vary size within a material. Measure initial quantities and rates consistently. Several factors may act together; one experiment should target a clear distinction.",
+    "liveProbes": [
+      {
+        "probe": "Why is changing only one variable useful here?",
+        "goodResponse": "It makes attribution easier, although a later factorial experiment can examine interactions."
+      },
+      {
+        "probe": "Could the measured rate differ even if the chemical rate does not?",
+        "goodResponse": "Yes, detection, sampling or attachment to vessel surfaces could affect what is measured."
+      }
+    ],
+    "rubric": {
+      "strong": "Identifies confounding and a concrete comparison that separates plausible mechanisms.",
+      "developing": "Lists alternatives but proposes a comparison that changes several factors again.",
+      "weak": "Attributes the difference to material alone without considering the vessel size."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-10",
+    "subject": "medicine",
+    "title": "A population doubles",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "growth",
+      "extrapolation",
+      "limits"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "scientific reasoning",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fictional microorganism population rises from 100 to 200 to 400 over two equal time intervals. A student predicts 800 in the next interval and unlimited growth thereafter. Which part of that prediction is reasonable, and where does it become uncertain?",
+    "answer": "Doubling fits the observed short sequence, so 800 is a conditional extrapolation if conditions persist. Three values do not establish a permanent growth law. Nutrients, space, waste and interactions can change growth. Ask for more time points, repeat populations and measurements of potential limits before choosing a long-term model.",
+    "modelReasoningPath": "Doubling fits the observed short sequence, so 800 is a conditional extrapolation if conditions persist. Three values do not establish a permanent growth law. Nutrients, space, waste and interactions can change growth. Ask for more time points, repeat populations and measurements of potential limits before choosing a long-term model.",
+    "liveProbes": [
+      {
+        "probe": "What data would distinguish constant addition from proportional growth?",
+        "goodResponse": "Compare absolute increases with ratios across several intervals; here increases change while ratios remain two."
+      },
+      {
+        "probe": "Would a plateau prove that nutrients ran out?",
+        "goodResponse": "No; competing limits or measurement saturation could produce the same pattern."
+      }
+    ],
+    "rubric": {
+      "strong": "Uses the doubling pattern while clearly separating short-term prediction and long-term mechanism.",
+      "developing": "Predicts 800 correctly but gives a vague account of growth limits.",
+      "weak": "Treats a short pattern as proof of unlimited exponential growth."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-11",
+    "subject": "medicine",
+    "title": "Signals with a delay",
+    "topic": "scientific-reasoning",
+    "difficulty": 3,
+    "tags": [
+      "systems",
+      "delay",
+      "experimental-prediction"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "scientific reasoning",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A light sensor controls a lamp: below a brightness threshold the lamp switches on, and above it the lamp switches off. The sensor responds several seconds late. What behaviour might occur, and how could you make the system steadier?",
+    "answer": "A delay can cause repeated on/off switching as control responds to an earlier state. Consider different on and off thresholds, gradual control, a minimum switching interval or reducing sensor delay. Predictions depend on room light, lamp strength and the control rule. Explain the mechanism rather than simply naming feedback.",
+    "modelReasoningPath": "A delay can cause repeated on/off switching as control responds to an earlier state. Consider different on and off thresholds, gradual control, a minimum switching interval or reducing sensor delay. Predictions depend on room light, lamp strength and the control rule. Explain the mechanism rather than simply naming feedback.",
+    "liveProbes": [
+      {
+        "probe": "Why might two thresholds help?",
+        "goodResponse": "A buffer range avoids switching at every small fluctuation near a single threshold."
+      },
+      {
+        "probe": "Could more sensitive detection make the system worse?",
+        "goodResponse": "If it reacts to noise without smoothing or an appropriate rule, it may trigger unnecessary changes."
+      }
+    ],
+    "rubric": {
+      "strong": "Connects delayed information to oscillation and explains a practical modification and trade-off.",
+      "developing": "Predicts flickering but cannot explain why a proposed change would help.",
+      "weak": "Assumes any feedback system must immediately settle at the target."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-12",
+    "subject": "medicine",
+    "title": "One observation, two scales",
+    "topic": "scientific-reasoning",
+    "difficulty": 2,
+    "tags": [
+      "levels-of-explanation",
+      "mechanism",
+      "translation"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "scientific reasoning",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A substance makes isolated cells consume less energy in a dish. A headline says it will make a whole organism need less food. What steps in the reasoning would you examine before accepting the headline?",
+    "answer": "Cell-level changes do not automatically predict whole-organism effects. Ask whether cells remained viable, which tissues were studied, what concentration reached them and whether other processes compensated. Distinguish a plausible mechanism from demonstrated organism-level benefit. Propose staged evidence rather than assuming either success or failure.",
+    "modelReasoningPath": "Cell-level changes do not automatically predict whole-organism effects. Ask whether cells remained viable, which tissues were studied, what concentration reached them and whether other processes compensated. Distinguish a plausible mechanism from demonstrated organism-level benefit. Propose staged evidence rather than assuming either success or failure.",
+    "liveProbes": [
+      {
+        "probe": "Could lower energy use be an undesirable sign?",
+        "goodResponse": "It could reflect impaired function or fewer living cells; assess meaningful function as well as the measurement."
+      },
+      {
+        "probe": "What makes an intermediate experiment informative?",
+        "goodResponse": "It tests a specific missing link, such as whether the effect occurs in a more realistic system under comparable exposure."
+      }
+    ],
+    "rubric": {
+      "strong": "Identifies missing links across scales and considers alternative meanings of the initial result.",
+      "developing": "Asks for more research but does not identify what uncertainty the research must resolve.",
+      "weak": "Equates an isolated cell result with established effects in a whole organism."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-13",
+    "subject": "medicine",
+    "title": "The larger sample is not always better",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "selection-bias",
+      "sampling",
+      "representativeness"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "data interpretation",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A voluntary online poll of 10,000 students says 80% like a new timetable. A randomly selected survey of 300 students finds 55%. Which result would you trust more, and what further information would you request?",
+    "answer": "Sample size alone does not decide quality. The voluntary poll may overrepresent highly engaged students or duplicate responses. The random sample may better cover the population, but response rates and nonresponse still matter. Ask who was eligible, how students were selected, wording, timing and uncertainty. Avoid declaring either percentage certainly true.",
+    "modelReasoningPath": "Sample size alone does not decide quality. The voluntary poll may overrepresent highly engaged students or duplicate responses. The random sample may better cover the population, but response rates and nonresponse still matter. Ask who was eligible, how students were selected, wording, timing and uncertainty. Avoid declaring either percentage certainly true.",
+    "liveProbes": [
+      {
+        "probe": "Could the random survey still be biased?",
+        "goodResponse": "Yes, if selected students do not respond and nonresponders differ, or if wording and coverage are poor."
+      },
+      {
+        "probe": "What does a larger sample improve when selection is sound?",
+        "goodResponse": "It generally reduces random sampling uncertainty, not systematic bias."
+      }
+    ],
+    "rubric": {
+      "strong": "Separates sampling bias from random variation and identifies relevant information about both surveys.",
+      "developing": "Prefers the random sample but treats its result as unquestionably correct.",
+      "weak": "Chooses 10,000 solely because the number is larger."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-14",
+    "subject": "medicine",
+    "title": "A rate and a head count",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "rates",
+      "exposure",
+      "denominators"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "data interpretation",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Two fictional clubs record injuries during sport. Club A has 12 injuries during 6,000 participant-hours; Club B has 8 during 2,000 participant-hours. What comparison can you make, and what can you not conclude?",
+    "answer": "The recorded rates are 2 per 1,000 participant-hours for A and 4 for B. B has fewer injuries but a higher recorded rate per exposure time. This alone does not prove one club is less safe: sport type, severity, recording, participants and chance may differ. Define the outcome and denominator before interpreting.",
+    "modelReasoningPath": "The recorded rates are 2 per 1,000 participant-hours for A and 4 for B. B has fewer injuries but a higher recorded rate per exposure time. This alone does not prove one club is less safe: sport type, severity, recording, participants and chance may differ. Define the outcome and denominator before interpreting.",
+    "liveProbes": [
+      {
+        "probe": "What if Club A includes minor injuries but Club B records only major ones?",
+        "goodResponse": "The numerators use different definitions, so the apparent comparison is not reliable."
+      },
+      {
+        "probe": "How could uncertainty affect the conclusion?",
+        "goodResponse": "Small event counts can fluctuate; gather comparable observations and quantify uncertainty before strong claims."
+      }
+    ],
+    "rubric": {
+      "strong": "Calculates rates correctly and distinguishes observed association from explanations of safety.",
+      "developing": "Recognises exposure matters but makes an arithmetic or interpretation error.",
+      "weak": "Calls Club B safer simply because it has fewer recorded injuries."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-15",
+    "subject": "medicine",
+    "title": "The chart starts at ninety",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "graphs",
+      "visual-literacy",
+      "scale"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "data interpretation",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A bar chart shows average satisfaction scores of 92 and 94 out of 100. Its vertical axis starts at 90, making one bar twice the height of the other. Explain the change accurately to someone who has only seen the picture.",
+    "answer": "The difference is two points on a hundred-point scale, not a doubling of satisfaction. The truncated axis magnifies the visual difference. Explain the axis calmly, show the actual values and ask about sample size, variability and how satisfaction was measured. A small numerical change can still matter, but significance cannot be read from bar height alone.",
+    "modelReasoningPath": "The difference is two points on a hundred-point scale, not a doubling of satisfaction. The truncated axis magnifies the visual difference. Explain the axis calmly, show the actual values and ask about sample size, variability and how satisfaction was measured. A small numerical change can still matter, but significance cannot be read from bar height alone.",
+    "liveProbes": [
+      {
+        "probe": "Must every graph start at zero?",
+        "goodResponse": "Not always; a restricted scale can reveal detail if clearly labelled, but bar lengths invite magnitude comparisons and need particular care."
+      },
+      {
+        "probe": "What would you put in a clearer caption?",
+        "goodResponse": "State both scores, the two-point difference, the scale and relevant uncertainty or sample details."
+      }
+    ],
+    "rubric": {
+      "strong": "Explains the visual distortion without dismissing the possibility that a small change matters.",
+      "developing": "Spots the axis issue but cannot express the actual change clearly.",
+      "weak": "Reports satisfaction doubled or assumes the graph proves deliberate deception."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-16",
+    "subject": "medicine",
+    "title": "Missing follow-up changes the story",
+    "topic": "data-interpretation",
+    "difficulty": 3,
+    "tags": [
+      "attrition",
+      "uncertainty",
+      "bounds"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "data interpretation",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fictional study follows 100 people. At the end, 60 report improvement, 20 report no improvement and 20 cannot be contacted. A summary says 75% improved. Explain the denominator and give a cautious range for the whole original group.",
+    "answer": "Seventy-five percent is 60 of the 80 with observed outcomes. Across the original 100, improvement lies between 60% if none of the missing people improved and 80% if all improved. These are extreme bounds, not a confidence interval. Missingness may be related to outcome, so complete-case results should not be silently generalised.",
+    "modelReasoningPath": "Seventy-five percent is 60 of the 80 with observed outcomes. Across the original 100, improvement lies between 60% if none of the missing people improved and 80% if all improved. These are extreme bounds, not a confidence interval. Missingness may be related to outcome, so complete-case results should not be silently generalised.",
+    "liveProbes": [
+      {
+        "probe": "What would narrow the uncertainty?",
+        "goodResponse": "Seek follow-up information and investigate why outcomes are missing, without pretending assumptions can replace all missing observations."
+      },
+      {
+        "probe": "Is excluding missing people always dishonest?",
+        "goodResponse": "No, but the denominator, missing count and limitations must be clear and the analysis justified."
+      }
+    ],
+    "rubric": {
+      "strong": "Calculates 75%, 60% and 80% correctly and distinguishes bounds from statistical confidence.",
+      "developing": "Recognises missingness but gives only one unqualified overall percentage.",
+      "weak": "Claims that all 100 people have a known 75% improvement rate."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-17",
+    "subject": "medicine",
+    "title": "An intervention and a seasonal change",
+    "topic": "data-interpretation",
+    "difficulty": 3,
+    "tags": [
+      "time-series",
+      "confounding",
+      "controls"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "data interpretation",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A library starts a study-support programme in January. Average attendance rises from 40 a day in December to 70 in January. The director credits the programme. What evidence would help test that explanation?",
+    "answer": "The timing alone cannot separate the programme from seasonal patterns, exams, opening hours, weather or recording changes. Compare previous years and suitable libraries without the programme, use several time points before and after, and consider differences in trends. A comparison must be plausible; simply adding more unrelated data is not enough.",
+    "modelReasoningPath": "The timing alone cannot separate the programme from seasonal patterns, exams, opening hours, weather or recording changes. Compare previous years and suitable libraries without the programme, use several time points before and after, and consider differences in trends. A comparison must be plausible; simply adding more unrelated data is not enough.",
+    "liveProbes": [
+      {
+        "probe": "What if every nearby library started the programme?",
+        "goodResponse": "Look for staggered timing or another defensible comparison, and be explicit if causal attribution remains weak."
+      },
+      {
+        "probe": "Why not compare only the first day and last day?",
+        "goodResponse": "Individual days are noisy and may not represent underlying trends or recurring patterns."
+      }
+    ],
+    "rubric": {
+      "strong": "Identifies temporal confounding and proposes a credible comparison with repeated observations.",
+      "developing": "Requests more months of data but ignores seasonality or comparison quality.",
+      "weak": "Treats a before-and-after increase as definitive proof of causation."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-18",
+    "subject": "medicine",
+    "title": "Relative change in opposite directions",
+    "topic": "data-interpretation",
+    "difficulty": 2,
+    "tags": [
+      "percentages",
+      "baseline",
+      "numeracy"
+    ],
+    "tracks": [
+      "academic"
+    ],
+    "questionType": "data interpretation",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fictional measurement rises from 80 to 100 units and then returns to 80. A student says it rose by 20% and fell by 20%, so the changes cancel. Explain the correct percentages and why the absolute changes can match while percentages differ.",
+    "answer": "The rise is 20/80=25%. The fall is 20/100=20%. The absolute differences are both 20 units, but the percentage denominators differ. Returning to the starting value does not require equal percentage changes. State the reference value whenever reporting a percentage change.",
+    "modelReasoningPath": "The rise is 20/80=25%. The fall is 20/100=20%. The absolute differences are both 20 units, but the percentage denominators differ. Returning to the starting value does not require equal percentage changes. State the reference value whenever reporting a percentage change.",
+    "liveProbes": [
+      {
+        "probe": "What happens if 100 rises by 20% then falls by 20%?",
+        "goodResponse": "It becomes 120 and then 96, because the decrease is 24 units."
+      },
+      {
+        "probe": "How would you explain this without algebra?",
+        "goodResponse": "Use the actual starting amounts and calculate what one fifth means at each stage."
+      }
+    ],
+    "rubric": {
+      "strong": "Calculates both percentages and explains the changing baseline in plain language.",
+      "developing": "Gets one calculation right but struggles to explain the denominator difference.",
+      "weak": "Assumes equal and opposite percentage changes always return to the starting value."
+    },
+    "reviewRequired": [
+      "science educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-19",
+    "subject": "medicine",
+    "title": "A teammate left out",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "tags": [
+      "empathy",
+      "listening",
+      "inclusion"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "roleplay stations",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Roleplay: you are a student team member. Alex says, “Everyone made decisions while I was away. I clearly do not matter.” Speak with Alex before the next meeting. You do not know why they were away and cannot promise the decisions will all be reversed.",
+    "answer": "Start by acknowledging the exclusion Alex experienced and invite their perspective. Clarify what decisions mattered and what involvement they want now. Explain what you know without defending the group reflexively. Agree a realistic next step, such as reviewing open decisions or improving how updates are shared. Do not demand personal reasons for their absence.",
+    "modelReasoningPath": "Start by acknowledging the exclusion Alex experienced and invite their perspective. Clarify what decisions mattered and what involvement they want now. Explain what you know without defending the group reflexively. Agree a realistic next step, such as reviewing open decisions or improving how updates are shared. Do not demand personal reasons for their absence.",
+    "liveProbes": [
+      {
+        "probe": "Alex says, “You are just trying to calm me down.” How do you respond?",
+        "goodResponse": "Acknowledge the concern, avoid arguing about their feelings and ask what practical involvement would demonstrate that their view matters."
+      },
+      {
+        "probe": "Alex asks you to guarantee the project will start over.",
+        "goodResponse": "Be honest about your authority and offer to bring the concern to the group without promising an outcome."
+      }
+    ],
+    "rubric": {
+      "strong": "Listens to the specific concern, avoids assumptions and agrees a feasible next step.",
+      "developing": "Shows sympathy but rushes to a solution before understanding what was missed.",
+      "weak": "Dismisses the feeling of exclusion or promises changes beyond their control."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-20",
+    "subject": "medicine",
+    "title": "An anxious first-time volunteer",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "tags": [
+      "reassurance",
+      "boundaries",
+      "communication"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "roleplay stations",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Roleplay: you help welcome volunteers at a community event. Sam is about to greet visitors for the first time and says, “I will get everything wrong. You should replace me.” Speak to Sam and agree a practical next step within your role.",
+    "answer": "Acknowledge the anxiety, ask which part feels uncertain and break the role into a manageable first action. Offer a clear briefing or supported practice and explain where to ask for help. Give grounded reassurance without promising nothing will go wrong. Respect a request to pause and avoid treating ordinary nervousness as a diagnosis.",
+    "modelReasoningPath": "Acknowledge the anxiety, ask which part feels uncertain and break the role into a manageable first action. Offer a clear briefing or supported practice and explain where to ask for help. Give grounded reassurance without promising nothing will go wrong. Respect a request to pause and avoid treating ordinary nervousness as a diagnosis.",
+    "liveProbes": [
+      {
+        "probe": "Sam says they do not want the whole team to know.",
+        "goodResponse": "Respect privacy and discuss what limited information would help arrange support, rather than promising secrecy in every possible circumstance."
+      },
+      {
+        "probe": "Sam makes a small mistake during practice.",
+        "goodResponse": "Respond calmly, explain the correction and let them try again without ridicule."
+      }
+    ],
+    "rubric": {
+      "strong": "Explores the worry and offers proportionate, specific support while preserving choice.",
+      "developing": "Reassures kindly but relies on vague encouragement with no practical step.",
+      "weak": "Pressures Sam to continue, labels them incapable or guarantees flawless performance."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-21",
+    "subject": "medicine",
+    "title": "A complaint about a long wait",
+    "topic": "roleplay-stations",
+    "difficulty": 2,
+    "tags": [
+      "de-escalation",
+      "service",
+      "honesty"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "roleplay stations",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Roleplay: you are helping at a free community advice event. Jo has waited an hour and says, “You do not care about people who cannot pay.” You cannot control the advisers’ schedules. Respond to Jo and explore what you can do.",
+    "answer": "Acknowledge the wait and its impact without disputing Jo’s feelings. Ask about immediate practical constraints, explain only what is known and check with the organiser for an accurate update. Offer realistic choices if available. Do not invent a waiting time or share another visitor’s circumstances to justify the delay.",
+    "modelReasoningPath": "Acknowledge the wait and its impact without disputing Jo’s feelings. Ask about immediate practical constraints, explain only what is known and check with the organiser for an accurate update. Offer realistic choices if available. Do not invent a waiting time or share another visitor’s circumstances to justify the delay.",
+    "liveProbes": [
+      {
+        "probe": "Jo demands to know why someone else was seen first.",
+        "goodResponse": "Explain that you cannot share other people’s details and seek a general explanation of the queue process."
+      },
+      {
+        "probe": "There is no reliable estimate. What do you say?",
+        "goodResponse": "Be clear that the time is uncertain, offer to obtain an update and discuss available alternatives without guaranteeing priority."
+      }
+    ],
+    "rubric": {
+      "strong": "Combines empathy, honest information and feasible action while respecting others’ privacy.",
+      "developing": "Apologises but gives no concrete next step or becomes defensive.",
+      "weak": "Invents a time, discloses another visitor’s details or blames Jo for being upset."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-22",
+    "subject": "medicine",
+    "title": "Correcting your own explanation",
+    "topic": "roleplay-stations",
+    "difficulty": 3,
+    "tags": [
+      "candour",
+      "repair",
+      "trust"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "roleplay stations",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Roleplay: you previously told a fellow student, Riley, that a project deadline was Friday. You now discover it is Wednesday. Riley says, “I planned my week around what you said.” Tell Riley about the mistake and respond to their reaction.",
+    "answer": "State the correct information promptly, acknowledge your error and its impact, and apologise without shifting responsibility. Verify the official deadline and help explore realistic options such as contacting the organiser. Avoid promising an extension. Explain a practical change to how you will check shared information in future.",
+    "modelReasoningPath": "State the correct information promptly, acknowledge your error and its impact, and apologise without shifting responsibility. Verify the official deadline and help explore realistic options such as contacting the organiser. Avoid promising an extension. Explain a practical change to how you will check shared information in future.",
+    "liveProbes": [
+      {
+        "probe": "Riley says the apology does not give them back the time.",
+        "goodResponse": "Agree that the impact remains; focus on what help is possible now instead of demanding forgiveness."
+      },
+      {
+        "probe": "Would you wait until you have a solution before telling Riley?",
+        "goodResponse": "No; delay may remove their remaining options. Share the correction promptly while working on support."
+      }
+    ],
+    "rubric": {
+      "strong": "Corrects promptly, owns the error and supports repair without making false promises.",
+      "developing": "Apologises but softens the correction or focuses mainly on defending their intent.",
+      "weak": "Conceals the mistake, blames Riley or guarantees an extension they cannot authorise."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-23",
+    "subject": "medicine",
+    "title": "A limited accessibility budget",
+    "topic": "ethics-scenarios",
+    "difficulty": 3,
+    "tags": [
+      "fairness",
+      "accessibility",
+      "trade-offs"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "ethics scenarios",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fictional student society has enough money for either live captioning at one large event or travel support for several smaller meetings. Members disagree about which is fairer. How would you help them make and explain a decision?",
+    "answer": "Clarify the aims, barriers, affected people, alternatives and actual costs before treating the options as fixed. Involve members without forcing disclosure of private circumstances. Consider meaningful access rather than simply counting beneficiaries. Look for additional resources, a transparent decision process and a review point. This is an ethical exercise, not a claim about legal duties.",
+    "modelReasoningPath": "Clarify the aims, barriers, affected people, alternatives and actual costs before treating the options as fixed. Involve members without forcing disclosure of private circumstances. Consider meaningful access rather than simply counting beneficiaries. Look for additional resources, a transparent decision process and a review point. This is an ethical exercise, not a claim about legal duties.",
+    "liveProbes": [
+      {
+        "probe": "Should the majority vote always settle it?",
+        "goodResponse": "A vote can inform preferences but may overlook a small group’s essential access needs; explain principles and safeguards."
+      },
+      {
+        "probe": "What if neither option is sufficient?",
+        "goodResponse": "Acknowledge the shortfall, consider redesign or funding alternatives and avoid presenting partial provision as full inclusion."
+      }
+    ],
+    "rubric": {
+      "strong": "Balances access needs, transparent reasoning and practical alternatives without reducing fairness to head count.",
+      "developing": "Recognises competing needs but selects an option with little consultation or justification.",
+      "weak": "Dismisses minority needs or assumes the largest number always defines fairness."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-24",
+    "subject": "medicine",
+    "title": "An incentive to answer a survey",
+    "topic": "ethics-scenarios",
+    "difficulty": 2,
+    "tags": [
+      "voluntariness",
+      "research-ethics",
+      "fairness"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "ethics scenarios",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A student researcher offers a large prize draw to encourage classmates to complete a sensitive wellbeing survey. What concerns would you discuss before the survey is launched, and what changes might make participation more respectful?",
+    "answer": "Consider whether participants understand the purpose, what data are collected, how privacy is protected and that participation is optional. Incentives may affect who responds and can create pressure, particularly alongside teacher or peer influence. Review whether sensitive questions are necessary and seek the appropriate research supervision before collecting data. Avoid asserting a universal acceptable prize amount.",
+    "modelReasoningPath": "Consider whether participants understand the purpose, what data are collected, how privacy is protected and that participation is optional. Incentives may affect who responds and can create pressure, particularly alongside teacher or peer influence. Review whether sensitive questions are necessary and seek the appropriate research supervision before collecting data. Avoid asserting a universal acceptable prize amount.",
+    "liveProbes": [
+      {
+        "probe": "Is an incentive always unethical?",
+        "goodResponse": "No; assess context, scale, fairness and whether people can make an informed unpressured choice."
+      },
+      {
+        "probe": "Why might anonymous data still be identifiable?",
+        "goodResponse": "Rare combinations of answers or small groups can identify people even without names."
+      }
+    ],
+    "rubric": {
+      "strong": "Considers informed choice, privacy, pressure and sampling effects with proportionate safeguards.",
+      "developing": "Mentions consent but assumes a tick box resolves all concerns.",
+      "weak": "Treats a prize as permission to collect any information or pressures classmates to participate."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-25",
+    "subject": "medicine",
+    "title": "A useful tool with unequal errors",
+    "topic": "ethics-scenarios",
+    "difficulty": 3,
+    "tags": [
+      "technology",
+      "fairness",
+      "evaluation"
+    ],
+    "tracks": [
+      "academic",
+      "mmi"
+    ],
+    "questionType": "ethics scenarios",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fictional tool helps allocate extra tutoring. It is accurate on average but misses students who need help more often in one language group. The school wants to use it next week. What should decision-makers consider?",
+    "answer": "Average accuracy can conceal unequal errors and unequal consequences. Ask how need was defined, whether the data and evaluation represent all groups, and what alternatives and human review exist. Consider delaying or limiting use until the disparity is understood. Include affected students and monitor outcomes. Do not assume removing the language label removes all proxies or bias.",
+    "modelReasoningPath": "Average accuracy can conceal unequal errors and unequal consequences. Ask how need was defined, whether the data and evaluation represent all groups, and what alternatives and human review exist. Consider delaying or limiting use until the disparity is understood. Include affected students and monitor outcomes. Do not assume removing the language label removes all proxies or bias.",
+    "liveProbes": [
+      {
+        "probe": "Would equal error rates prove the system is fair?",
+        "goodResponse": "No; access, the definition of need, consequences and the decision process also matter."
+      },
+      {
+        "probe": "Could human review introduce its own bias?",
+        "goodResponse": "Yes; review needs clear criteria, training and evaluation rather than being treated as automatically objective."
+      }
+    ],
+    "rubric": {
+      "strong": "Connects group-specific errors to consequences and proposes an accountable evaluation process.",
+      "developing": "Calls for a more accurate tool but does not examine unequal consequences.",
+      "weak": "Approves the tool solely on overall accuracy or assumes technology is inherently neutral."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-26",
+    "subject": "medicine",
+    "title": "Two reasonable plans",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "tags": [
+      "conflict",
+      "decision-making",
+      "teamwork"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "teamwork resilience judgement",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "Your team has two reasonable ideas for a community project and half the members support each. A deadline is approaching. How would you help the group choose without turning the discussion into a contest between people?",
+    "answer": "Agree the goal and criteria, compare evidence and constraints, hear reservations and identify a decision owner or process. A small trial or combination may help if feasible, but compromise is not automatically best. Once a decision is made, clarify responsibilities and a review point. Do not claim everyone must become enthusiastic before work can proceed.",
+    "modelReasoningPath": "Agree the goal and criteria, compare evidence and constraints, hear reservations and identify a decision owner or process. A small trial or combination may help if feasible, but compromise is not automatically best. Once a decision is made, clarify responsibilities and a review point. Do not claim everyone must become enthusiastic before work can proceed.",
+    "liveProbes": [
+      {
+        "probe": "What if your preferred plan loses?",
+        "goodResponse": "Support the agreed decision while recording relevant concerns and using the review process constructively."
+      },
+      {
+        "probe": "What if one member keeps interrupting?",
+        "goodResponse": "Set respectful turn-taking and invite quieter views without humiliating the interrupting person."
+      }
+    ],
+    "rubric": {
+      "strong": "Creates a fair decision process and a concrete path from disagreement to action.",
+      "developing": "Encourages politeness but provides no method to resolve the choice.",
+      "weak": "Uses popularity, status or volume as a substitute for agreed criteria."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-27",
+    "subject": "medicine",
+    "title": "The task nobody owns",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 2,
+    "tags": [
+      "handover",
+      "accountability",
+      "planning"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "teamwork resilience judgement",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A group presentation is tomorrow. Everyone thought someone else was checking the references, and several claims now lack a source. You have limited time. What would you do now and change for the next project?",
+    "answer": "Identify the unsupported claims and their importance, allocate specific owners and deadlines, and correct or remove claims that cannot be justified. Inform the team promptly and avoid inventing references. For the next project, make ownership explicit and include an earlier checkpoint. Focus on fixing the shared process rather than finding someone to blame.",
+    "modelReasoningPath": "Identify the unsupported claims and their importance, allocate specific owners and deadlines, and correct or remove claims that cannot be justified. Inform the team promptly and avoid inventing references. For the next project, make ownership explicit and include an earlier checkpoint. Focus on fixing the shared process rather than finding someone to blame.",
+    "liveProbes": [
+      {
+        "probe": "What if removing a claim weakens the presentation?",
+        "goodResponse": "An honest limited conclusion is preferable to a stronger unsupported one; explain the uncertainty."
+      },
+      {
+        "probe": "How would you check that a handover worked?",
+        "goodResponse": "Ask the recipient to confirm the task, deadline and any unresolved questions rather than assuming a message was enough."
+      }
+    ],
+    "rubric": {
+      "strong": "Prioritises accuracy, allocates clear action and learns from the ownership gap.",
+      "developing": "Offers to do everything alone without checking feasibility or fixing the process.",
+      "weak": "Invents a citation, hides uncertainty or spends the remaining time assigning blame."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-28",
+    "subject": "medicine",
+    "title": "When a plan fails on the day",
+    "topic": "teamwork-resilience-judgement",
+    "difficulty": 3,
+    "tags": [
+      "adaptability",
+      "prioritisation",
+      "support"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "teamwork resilience judgement",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "You helped organise an outdoor student event. Heavy rain makes the venue unusable, one organiser is absent and attendees are arriving. You are a volunteer, not the event lead. Explain your immediate priorities and how you would support a revised plan.",
+    "answer": "Check immediate safety and available shelter, contact the responsible organiser, establish what information is reliable and communicate a clear update. Help divide tasks within your role and avoid improvising beyond authority or capacity. Consider access needs and whether postponement is the honest option. Afterwards, review contingency planning without blaming the absent person without context.",
+    "modelReasoningPath": "Check immediate safety and available shelter, contact the responsible organiser, establish what information is reliable and communicate a clear update. Help divide tasks within your role and avoid improvising beyond authority or capacity. Consider access needs and whether postponement is the honest option. Afterwards, review contingency planning without blaming the absent person without context.",
+    "liveProbes": [
+      {
+        "probe": "What if no organiser can be reached immediately?",
+        "goodResponse": "Take proportionate steps to reduce immediate risk, use established procedures and seek appropriate on-site support while continuing contact attempts."
+      },
+      {
+        "probe": "How do you prevent conflicting announcements?",
+        "goodResponse": "Agree a single verified message and update channel with clear responsibility."
+      }
+    ],
+    "rubric": {
+      "strong": "Prioritises immediate needs, clear communication and role-appropriate escalation.",
+      "developing": "Suggests alternatives but overlooks coordination or attendees already arriving.",
+      "weak": "Promises the event will proceed before checking whether a safe viable option exists."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-29",
+    "subject": "medicine",
+    "title": "An impressive claim on an application",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "tags": [
+      "honesty",
+      "boundaries",
+      "professionalism"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "ethics professionalism",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A friend asks you to review their application. They describe “leading” a project where they mainly completed assigned tasks. They say everyone exaggerates and ask you to leave it alone. How would you respond?",
+    "answer": "Speak privately and focus on the difference between a clear description and an inaccurate claim. Encourage a truthful account of their contribution and what they learned, which can still be valuable. Explain your concern without assuming malicious intent or rewriting the application for them. Decline to endorse information you know is misleading.",
+    "modelReasoningPath": "Speak privately and focus on the difference between a clear description and an inaccurate claim. Encourage a truthful account of their contribution and what they learned, which can still be valuable. Explain your concern without assuming malicious intent or rewriting the application for them. Decline to endorse information you know is misleading.",
+    "liveProbes": [
+      {
+        "probe": "What if they say honesty will disadvantage them?",
+        "goodResponse": "Acknowledge the pressure and help identify specific truthful achievements without accepting that misrepresentation is necessary."
+      },
+      {
+        "probe": "Would you publicly accuse them?",
+        "goodResponse": "A private, proportionate conversation is an appropriate first step in this scenario; avoid unnecessary exposure."
+      }
+    ],
+    "rubric": {
+      "strong": "Addresses the inaccurate claim respectfully and offers a credible truthful alternative.",
+      "developing": "Expresses discomfort but avoids making the honesty concern clear.",
+      "weak": "Endorses the exaggeration or treats status as more important than accurate representation."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-30",
+    "subject": "medicine",
+    "title": "A screenshot in the group chat",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "tags": [
+      "privacy",
+      "digital-conduct",
+      "judgement"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "ethics professionalism",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "During a student project, a teammate shares a screenshot containing a participant’s name and personal comments in a large group chat. The information is not needed by everyone in the chat. What would you do within your role?",
+    "answer": "Act promptly to reduce further sharing, ask the sender to remove the screenshot where possible and tell the responsible supervisor or project lead what happened. Follow the project’s data-handling process and seek advice about informing the affected person. Do not download or forward extra copies. Deletion does not guarantee that exposure has been reversed.",
+    "modelReasoningPath": "Act promptly to reduce further sharing, ask the sender to remove the screenshot where possible and tell the responsible supervisor or project lead what happened. Follow the project’s data-handling process and seek advice about informing the affected person. Do not download or forward extra copies. Deletion does not guarantee that exposure has been reversed.",
+    "liveProbes": [
+      {
+        "probe": "What if the sender says everyone in the group is trustworthy?",
+        "goodResponse": "Trust does not remove the need to limit access to appropriate people and purposes."
+      },
+      {
+        "probe": "What would you record about the incident?",
+        "goodResponse": "An accurate minimal account through the proper channel, avoiding unnecessary duplication of the personal information."
+      }
+    ],
+    "rubric": {
+      "strong": "Limits spread, uses appropriate reporting and recognises the limits of deletion.",
+      "developing": "Asks for removal but assumes that fully resolves the incident.",
+      "weak": "Forwards the screenshot as proof to more people or ignores it because the group is familiar."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-31",
+    "subject": "medicine",
+    "title": "Asked to speak beyond your knowledge",
+    "topic": "ethics-professionalism",
+    "difficulty": 2,
+    "tags": [
+      "scope",
+      "uncertainty",
+      "help-seeking"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "ethics professionalism",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "At a careers event, a visitor assumes you are a medical student and asks for advice about a personal health concern. You are a school pupil helping with registration. How would you clarify your role and respond helpfully?",
+    "answer": "Correct the misunderstanding kindly and state that you cannot assess their health concern. Avoid guessing or collecting unnecessary personal details. Help them identify the event’s appropriate staff contact or an established route to qualified support. If an immediate emergency is apparent, seek urgent on-site help according to the setting’s procedures. Assess role awareness rather than clinical knowledge.",
+    "modelReasoningPath": "Correct the misunderstanding kindly and state that you cannot assess their health concern. Avoid guessing or collecting unnecessary personal details. Help them identify the event’s appropriate staff contact or an established route to qualified support. If an immediate emergency is apparent, seek urgent on-site help according to the setting’s procedures. Assess role awareness rather than clinical knowledge.",
+    "liveProbes": [
+      {
+        "probe": "What if they say, “Just tell me what you think”?",
+        "goodResponse": "Maintain the boundary and explain that guessing could mislead them, while continuing to help them reach the right person."
+      },
+      {
+        "probe": "How can you avoid sounding dismissive?",
+        "goodResponse": "Acknowledge the concern, use plain language and offer a specific practical route to help."
+      }
+    ],
+    "rubric": {
+      "strong": "Clarifies role, avoids unsupported advice and provides a respectful practical next step.",
+      "developing": "Declines to answer but gives little help finding appropriate support.",
+      "weak": "Pretends to have expertise or gives a confident personal health assessment."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-32",
+    "subject": "medicine",
+    "title": "Explain an unfamiliar rule",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "tags": [
+      "plain-language",
+      "teach-back",
+      "structure"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "communication tasks",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A community event introduces a booking rule: people may reserve one session initially, then book a second if spaces remain the day before. Explain the rule to someone who is unfamiliar with online booking, without assuming they are careless or incapable.",
+    "answer": "Start with the purpose and immediate action, explain the two stages using an example and avoid unnecessary technical terms. Check the person’s access and preferred way to receive information. Invite them to describe what they would do next as a check on your explanation, not a test of intelligence. Offer an available non-digital route if one exists; do not invent one.",
+    "modelReasoningPath": "Start with the purpose and immediate action, explain the two stages using an example and avoid unnecessary technical terms. Check the person’s access and preferred way to receive information. Invite them to describe what they would do next as a check on your explanation, not a test of intelligence. Offer an available non-digital route if one exists; do not invent one.",
+    "liveProbes": [
+      {
+        "probe": "They ask why they cannot book two sessions now.",
+        "goodResponse": "Explain the aim of giving more people an initial opportunity, acknowledge inconvenience and clarify when extra places open."
+      },
+      {
+        "probe": "They repeat the rule incorrectly.",
+        "goodResponse": "Take responsibility for explaining more clearly and try a concrete example rather than repeating the same words louder."
+      }
+    ],
+    "rubric": {
+      "strong": "Explains the sequence simply and checks understanding respectfully without assuming access.",
+      "developing": "States the rule accurately but does not check understanding or access barriers.",
+      "weak": "Uses jargon, blames the listener or promises an option that has not been confirmed."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-33",
+    "subject": "medicine",
+    "title": "Disagree without dismissing",
+    "topic": "communication-tasks",
+    "difficulty": 3,
+    "tags": [
+      "reasoning",
+      "dialogue",
+      "respect"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "communication tasks",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "A fellow student says, “If a study is published, its conclusion must be right.” Explain why you disagree while keeping the conversation constructive and avoiding the opposite claim that research cannot be trusted.",
+    "answer": "Acknowledge that publication can indicate scrutiny, then distinguish that from certainty. Methods, sample, measurement, analysis and replication affect confidence. Explain one simple example of a limitation and how further evidence can strengthen or revise a conclusion. Invite the student’s reasoning rather than lecturing or mocking them.",
+    "modelReasoningPath": "Acknowledge that publication can indicate scrutiny, then distinguish that from certainty. Methods, sample, measurement, analysis and replication affect confidence. Explain one simple example of a limitation and how further evidence can strengthen or revise a conclusion. Invite the student’s reasoning rather than lecturing or mocking them.",
+    "liveProbes": [
+      {
+        "probe": "They reply that experts know more than students.",
+        "goodResponse": "Agree that expertise matters while explaining that expert judgement also evaluates evidence and uncertainty."
+      },
+      {
+        "probe": "How would you express confidence without saying “anything is possible”?",
+        "goodResponse": "State what the evidence supports, how strongly and what specific uncertainty remains."
+      }
+    ],
+    "rubric": {
+      "strong": "Balances respect for expertise with a clear explanation of evidence and uncertainty.",
+      "developing": "Mentions limitations but leaves the impression that all studies are equally unreliable.",
+      "weak": "Treats publication as proof or dismisses all expert research wholesale."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  },
+  {
+    "id": "MED-EXP-20260915-B02-34",
+    "subject": "medicine",
+    "title": "A short handover under pressure",
+    "topic": "communication-tasks",
+    "difficulty": 2,
+    "tags": [
+      "handover",
+      "prioritisation",
+      "clarity"
+    ],
+    "tracks": [
+      "mmi"
+    ],
+    "questionType": "communication tasks",
+    "status": "draft",
+    "dateAdded": "2026-09-15",
+    "question": "You are leaving a student event desk. The next volunteer has one minute before visitors arrive. There is a changed room, one unresolved accessibility request and a list of routine tasks. How would you structure the handover?",
+    "answer": "Lead with the immediate change and unresolved issue, state what has already been done, who owns the next action and where verified details are recorded. Share sensitive information only as needed through the appropriate channel. Separate urgent matters from routine tasks, invite a brief check-back and identify a contact for uncertainty.",
+    "modelReasoningPath": "Lead with the immediate change and unresolved issue, state what has already been done, who owns the next action and where verified details are recorded. Share sensitive information only as needed through the appropriate channel. Separate urgent matters from routine tasks, invite a brief check-back and identify a contact for uncertainty.",
+    "liveProbes": [
+      {
+        "probe": "What if the next volunteer is interrupted halfway through?",
+        "goodResponse": "Ensure the critical action and contact are received, use a concise written record and confirm the handover when possible."
+      },
+      {
+        "probe": "How would you avoid overwhelming them?",
+        "goodResponse": "Prioritise the decision-relevant facts, group routine items and avoid unrelated background."
+      }
+    ],
+    "rubric": {
+      "strong": "Prioritises critical information and confirms responsibility and understanding.",
+      "developing": "Lists all information accurately but without priorities or a clear next owner.",
+      "weak": "Assumes mentioning an issue means it has been handed over successfully."
+    },
+    "reviewRequired": [
+      "medical admissions educator",
+      "editorial"
+    ],
+    "originality": "Original authored practice scenario. No claim to reproduce a university interview question. Numerical examples are fictional."
+  }
+]
