@@ -1,42 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { FeedbackService } from '@/services/FeedbackService';
-import { FeedbackRecord } from '@/types/interview';
+import { useState } from 'react';
+import { useMedicineDashboardStats, titleFor, MEDICINE_SKILL_COLUMNS } from '@/hooks/useMedicineDashboardStats';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const MEDICINE_TYPES = ['medicine-mmi', 'medicine-mmi-manchester'];
-
-// Real per-skill breakdown (see useMedicineDashboardStats.ts for why these column names don't
-// match their real meaning) — used as the "station by station" fallback since individual MMI
-// stations aren't persisted as separate scored rows yet, only the whole circuit's total.
-const SKILL_ROWS: { key: keyof FeedbackRecord; label: string }[] = [
-  { key: 'pattern_recognition_score', label: 'Content & Reasoning' },
-  { key: 'logical_deduction_score', label: 'Communication & Delivery' },
-  { key: 'mathematical_logic_score', label: 'Empathy & Professional Judgement' },
-  { key: 'clarity_of_thought_score', label: 'Insight & Reflection' },
-];
-
-const titleFor = (r: FeedbackRecord) => r.interview_type === 'medicine-mmi-manchester' ? 'Manchester circuit' : 'Leeds circuit';
-
 export function MedicineFeedback() {
-  const { user } = useAuth();
-  const [records, setRecords] = useState<FeedbackRecord[] | null>(null);
+  // Same react-query cache entry Home/Progress already populate — switching to this tab doesn't
+  // re-fetch (see useMedicineDashboardStats.ts's `records` field).
+  const { stats, loading } = useMedicineDashboardStats();
+  const records = stats?.records ?? [];
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!user) return;
-    FeedbackService.getUserFeedbackHistory(user.id, 200).then((all) => {
-      const medicine = all.filter((r) => MEDICINE_TYPES.includes(r.interview_type ?? ''));
-      setRecords(medicine);
-      setSelectedId(medicine[0]?.id ?? null);
-    });
-  }, [user]);
-
-  if (records === null) {
+  if (loading) {
     return <div style={{ display: 'grid', gap: 16 }}><Skeleton className="h-10 w-64" /><Skeleton className="h-96 rounded-2xl" /></div>;
   }
 
-  const selected = records.find((r) => r.id === selectedId) ?? null;
+  // Derived directly rather than synced via an effect — with data already warm in the react-query
+  // cache (e.g. arriving here from Home/Progress), an effect-based default would leave the detail
+  // pane empty for the first render before it runs.
+  const effectiveSelectedId = selectedId ?? records[0]?.id ?? null;
+  const selected = records.find((r) => r.id === effectiveSelectedId) ?? null;
 
   return (
     <div>
@@ -50,7 +31,7 @@ export function MedicineFeedback() {
         <div className="med-grid-feedback">
           <div style={{ ...cardStyle, padding: 10 }}>
             {records.map((r) => {
-              const active = r.id === selectedId;
+              const active = r.id === effectiveSelectedId;
               return (
                 <button
                   key={r.id}
@@ -98,7 +79,7 @@ export function MedicineFeedback() {
               <div style={cardStyle}>
                 <h3 style={{ fontFamily: "'Bricolage Grotesque',serif", fontWeight: 700, fontSize: 17, margin: '0 0 16px' }}>By skill</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {SKILL_ROWS.map((row) => {
+                  {MEDICINE_SKILL_COLUMNS.map((row) => {
                     const score = selected[row.key];
                     return (
                       <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '210px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>

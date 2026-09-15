@@ -24,3 +24,10 @@ export function getStoredMedicineDashboardStyle(): MedicineDashboardStyle {
 export function setStoredMedicineDashboardStyle(style: MedicineDashboardStyle): void {
   localStorage.setItem(STYLE_STORAGE_KEY, style);
 }
+
+// NOTE: both keys above are plain per-browser localStorage, not tied to the account. On a shared
+// machine, a different person signing in after someone else can inherit their product line /
+// dashboard style. Deliberately not "fixed" by clearing on sign-out — that regresses the far more
+// common case (the same person signing out and back in) since there is no server-side product
+// line to restore from, and no in-app way back to Medicine once cleared. Revisit by scoping the
+// key to the signed-in user id instead, if the shared-machine case turns out to matter in practice.

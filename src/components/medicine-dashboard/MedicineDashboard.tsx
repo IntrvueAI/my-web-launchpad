@@ -37,6 +37,21 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
 
   const userInitial = ((user?.user_metadata?.full_name as string | undefined)?.[0] || user?.email?.[0] || '?').toUpperCase();
 
+  // Full-page takeover, same reasoning as Index.tsx's own 'grownup' branch: it has its own "Back"
+  // button and a transcript dialog, so it must not sit inside the shell with the tab bar (desktop)
+  // or bottom nav (mobile) still clickable underneath it.
+  if (accountView === 'grownup') {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#FAFAF8' }}>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#FF7F50' }} />
+        </div>
+      }>
+        <GrownupView onBack={() => setAccountView(null)} />
+      </Suspense>
+    );
+  }
+
   if (accountView) {
     return (
       <MedicineDashboardShell
@@ -58,7 +73,6 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
           </button>
           {accountView === 'credits' && <CreditsStore />}
           {accountView === 'settings' && <UserSettings />}
-          {accountView === 'grownup' && <GrownupView onBack={() => setAccountView(null)} />}
         </Suspense>
       </MedicineDashboardShell>
     );
