@@ -20,7 +20,7 @@ const THEMES = {
 } as const;
 type PaletteTheme = (typeof THEMES)[keyof typeof THEMES];
 
-function recommendMode(school: SchoolRoute): { label: string; note: string } {
+export function recommendMode(school: SchoolRoute): { label: string; note: string } {
   if (school.prep_time_min === 0) {
     return { label: 'Manchester-style', note: 'This school publishes zero reading time — the closest real match is our no-prep, cold-start mode.' };
   }

@@ -49,6 +49,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const TourOverlay = lazy(() => import('@/components/tour/TourOverlay').then((m) => ({ default: m.TourOverlay })));
 import { SidebarNav, SidebarTopBar } from '@/components/dashboard/SidebarLayout';
 import { LayoutGrid, PanelLeft } from 'lucide-react';
+import { getStoredProductLine, setStoredProductLine, type ProductLine } from '@/lib/productLine';
+const MedicineDashboard = lazy(() => import('@/components/medicine-dashboard/MedicineDashboard').then((m) => ({ default: m.MedicineDashboard })));
 
 const Index = () => {
   const {
@@ -60,6 +62,14 @@ const Index = () => {
   } = useAuth();
   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState<'dashboard' | 'selection' | 'interview' | 'history' | 'settings' | 'credits' | 'questions' | 'achievements' | 'grownup'>('dashboard');
+  // Medicine-first rollout: defaults to '11plus' for every existing user, so nothing below this
+  // changes for them. Only set to 'medicine' by Auth.tsx when sign-in was initiated from the
+  // Medicine landing page (see src/lib/productLine.ts) — never touched by anything else here.
+  const [productLine, setProductLine] = useState<ProductLine>(() => getStoredProductLine());
+  const handleProductLineChange = (line: ProductLine) => {
+    setStoredProductLine(line);
+    setProductLine(line);
+  };
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
   // Testing aid: bump to force-restart the guided tour (see Dashboard's "Replay onboarding flow"
@@ -248,6 +258,27 @@ const Index = () => {
         </div>
       }>
         <OnboardingFlow userId={user.id} onComplete={handleOnboardingComplete} />
+      </Suspense>
+    );
+  }
+
+  // The entire Medicine dashboard is a separate shell (coral redesign) — early-returned here so
+  // nothing below this line runs for Medicine users. Excluded while `currentView === 'interview'`
+  // so a live session still renders through the SAME branch 11+ uses further down (shared engine,
+  // not touched by this redesign); once the session ends and currentView resets, this branch
+  // resumes rendering the Medicine shell.
+  if (productLine === 'medicine' && currentView !== 'interview') {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#FAFAF8' }}>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#FF7F50' }} />
+        </div>
+      }>
+        <MedicineDashboard
+          onProductLineChange={handleProductLineChange}
+          onStartInterview={handleSelectInterview}
+          onSignOut={handleSignOut}
+        />
       </Suspense>
     );
   }

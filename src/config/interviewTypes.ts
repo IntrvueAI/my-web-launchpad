@@ -243,7 +243,6 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     costCredits: 0, // beta/pilot content — admins and invited testers shouldn't spend real credits on it
     engineDriven: true,
     engineSubject: 'medicine',
-    adminOnly: true,
     timingSeconds: { prep: 120, response: 360 },
     verifiedAgainst: {
       university: 'University of Leeds',
@@ -280,7 +279,6 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     costCredits: 0,
     engineDriven: true,
     engineSubject: 'medicine',
-    adminOnly: true,
     timingSeconds: { prep: 0, response: 480 },
     verifiedAgainst: {
       university: 'University of Manchester',

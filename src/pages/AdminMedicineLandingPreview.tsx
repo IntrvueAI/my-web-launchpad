@@ -3,9 +3,9 @@ import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { MedicineLandingCoralPreview } from '@/components/marketing/MedicineLandingCoralPreview';
 
 /**
- * Admin-only preview of a redesigned Medicine landing page using the site's original white/coral
- * palette (from the Aug 2025 "True Coral #FF7F50" theme, before the dark warm-scholar redesign).
- * Same copy and layout as the live /medicine page — just restyled. Not linked publicly.
+ * Admin-only, no-toggle view of the coral Medicine landing design — the same component the public
+ * /medicine page now offers via its "View coral design" switch (src/pages/Medicine.tsx). Kept
+ * around as a direct link for reviewing this one design without the toggle button.
  */
 export default function AdminMedicineLandingPreview() {
   const { isAdmin, isLoading } = useAdminStatus();

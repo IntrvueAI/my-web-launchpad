@@ -175,6 +175,11 @@ export default function AdminDashboard() {
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/medicine-landing-preview" target="_blank" rel="noopener noreferrer">
+              <Stethoscope className="h-3.5 w-3.5" /> Medicine landing page
+            </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/?dashboardLayout=sidebar" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3.5 w-3.5" /> Preview Dashboard 2
             </Link>

@@ -13,6 +13,7 @@ import { validateEmail, validatePassword, validateName, sanitizeInput } from '@/
 import { sanitizeErrorMessage, authRateLimiter } from '@/utils/secureErrorHandler';
 import { useSimpleAuth } from '@/hooks/useSimpleAuth';
 import { ArrowLeft } from 'lucide-react';
+import { setStoredProductLine } from '@/lib/productLine';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -22,11 +23,24 @@ const Auth = () => {
   const [error, setError] = useState<string | null>(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
-  
+
   const { user, signInWithGoogle } = useAuth();
   const { handleSignIn: authSignIn, handleSignUp: authSignUp, handleResetPassword } = useSimpleAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Capture "arrived via the Medicine landing page" before anything else runs, so it survives
+  // both the plain email/password flow and a full-page Google OAuth round-trip (localStorage
+  // persists across that redirect; the URL/query string does not need to).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'medicine') {
+      setStoredProductLine('medicine');
+      params.delete('mode');
+      const rest = params.toString();
+      window.history.replaceState({}, '', window.location.pathname + (rest ? `?${rest}` : ''));
+    }
+  }, []);
 
   // Redirect if already authenticated
   useEffect(() => {
