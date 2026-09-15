@@ -48,8 +48,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 // reasoning as Dashboard/OnboardingFlow above — no reason for a logged-out visitor to download it.
 const TourOverlay = lazy(() => import('@/components/tour/TourOverlay').then((m) => ({ default: m.TourOverlay })));
 import { SidebarNav, SidebarTopBar } from '@/components/dashboard/SidebarLayout';
-import { LayoutGrid, PanelLeft } from 'lucide-react';
-import { getStoredProductLine, setStoredProductLine, type ProductLine } from '@/lib/productLine';
+import { LayoutGrid, PanelLeft, Palette } from 'lucide-react';
+import { getStoredProductLine, setStoredProductLine, getStoredMedicineDashboardStyle, setStoredMedicineDashboardStyle, type ProductLine, type MedicineDashboardStyle } from '@/lib/productLine';
 const MedicineDashboard = lazy(() => import('@/components/medicine-dashboard/MedicineDashboard').then((m) => ({ default: m.MedicineDashboard })));
 
 const Index = () => {
@@ -69,6 +69,16 @@ const Index = () => {
   const handleProductLineChange = (line: ProductLine) => {
     setStoredProductLine(line);
     setProductLine(line);
+  };
+  // Which shell a Medicine user sees — coral redesign or the original dashboard shared with 11+.
+  // Toggleable from either side (see the avatar menu below, and MedicineDashboardShell's own
+  // switch) so it's easy to compare the two without changing product line.
+  const [medicineDashboardStyle, setMedicineDashboardStyle] = useState<MedicineDashboardStyle>(
+    () => getStoredMedicineDashboardStyle()
+  );
+  const handleMedicineDashboardStyleChange = (style: MedicineDashboardStyle) => {
+    setStoredMedicineDashboardStyle(style);
+    setMedicineDashboardStyle(style);
   };
   const [selectedInterviewType, setSelectedInterviewType] = useState<InterviewType | null>(null);
   const [paymentSuccessDismissed, setPaymentSuccessDismissed] = useState(false);
@@ -266,8 +276,10 @@ const Index = () => {
   // nothing below this line runs for Medicine users. Excluded while `currentView === 'interview'`
   // so a live session still renders through the SAME branch 11+ uses further down (shared engine,
   // not touched by this redesign); once the session ends and currentView resets, this branch
-  // resumes rendering the Medicine shell.
-  if (productLine === 'medicine' && currentView !== 'interview') {
+  // resumes rendering the Medicine shell. Also excluded when medicineDashboardStyle === 'classic'
+  // — a Medicine user can opt into the original dashboard below instead (see the avatar menu's
+  // "Switch to coral dashboard" item for the way back).
+  if (productLine === 'medicine' && currentView !== 'interview' && medicineDashboardStyle === 'coral') {
     return (
       <Suspense fallback={
         <div className="min-h-screen flex items-center justify-center" style={{ background: '#FAFAF8' }}>
@@ -278,6 +290,7 @@ const Index = () => {
           onProductLineChange={handleProductLineChange}
           onStartInterview={handleSelectInterview}
           onSignOut={handleSignOut}
+          onSwitchToClassic={() => handleMedicineDashboardStyleChange('classic')}
         />
       </Suspense>
     );
@@ -491,6 +504,11 @@ const Index = () => {
                 <DropdownMenuItem onClick={() => showPaymentSuccess ? clearPaymentSuccessAndNavigate('grownup') : setCurrentView('grownup')}>
                   <UserCog className="w-4 h-4 mr-2" /> Grown-up view
                 </DropdownMenuItem>
+                {productLine === 'medicine' && (
+                  <DropdownMenuItem onClick={() => handleMedicineDashboardStyleChange('coral')}>
+                    <Palette className="w-4 h-4 mr-2" /> Switch to coral dashboard
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" /> Sign out
                 </DropdownMenuItem>
@@ -572,6 +590,23 @@ const Index = () => {
           </div>
         ) : (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
+            {/* Settings is the one view every layout (desktop header, mobile bottom nav, sidebar)
+                already routes to, so it's the reliable place for this toggle on mobile — the
+                header dropdown above only renders md:flex and up. */}
+            {productLine === 'medicine' && (
+              <button
+                type="button"
+                onClick={() => handleMedicineDashboardStyleChange('coral')}
+                className="mb-6 w-full flex items-center justify-between gap-3 rounded-xl border px-4 py-3.5 text-left hover:bg-accent transition-colors"
+                style={{ borderColor: 'rgba(232,98,47,.28)', background: 'linear-gradient(180deg,#FFF3EC,#FFE9DD)' }}
+              >
+                <span className="flex items-center gap-2.5 text-sm font-semibold" style={{ color: '#1C2029' }}>
+                  <Palette className="w-4 h-4" style={{ color: '#E8622F' }} />
+                  Switch to the coral Medicine dashboard
+                </span>
+                <span className="text-xs font-semibold" style={{ color: '#E8622F' }}>Switch →</span>
+              </button>
+            )}
             <UserSettings />
           </div>
         )}

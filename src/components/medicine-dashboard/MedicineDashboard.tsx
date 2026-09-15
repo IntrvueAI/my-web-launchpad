@@ -20,14 +20,16 @@ interface Props {
   onProductLineChange: (line: ProductLine) => void;
   onStartInterview: (type: InterviewType) => void;
   onSignOut: () => void;
+  onSwitchToClassic: () => void;
 }
 
 /**
- * Only ever mounted when productLine === 'medicine' (see Index.tsx's early-return branch).
- * Owns its own 5-tab navigation state; interview start and sign-out are delegated back up to
- * Index.tsx so they reuse the exact same credit-consuming session-start path 11+ already uses.
+ * Only ever mounted when productLine === 'medicine' AND medicineDashboardStyle === 'coral' (see
+ * Index.tsx's early-return branch). Owns its own 5-tab navigation state; interview start and
+ * sign-out are delegated back up to Index.tsx so they reuse the exact same credit-consuming
+ * session-start path 11+ already uses.
  */
-export function MedicineDashboard({ onProductLineChange, onStartInterview, onSignOut }: Props) {
+export function MedicineDashboard({ onProductLineChange, onStartInterview, onSignOut, onSwitchToClassic }: Props) {
   const { user } = useAuth();
   const { credits } = useCredits();
   const [activeTab, setActiveTab] = useState<MedicineTab>('home');
@@ -47,6 +49,7 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
         onOpenSettings={() => setAccountView('settings')}
         onOpenGrownup={() => setAccountView('grownup')}
         onSignOut={onSignOut}
+        onSwitchToClassic={onSwitchToClassic}
         userInitial={userInitial}
       >
         <Suspense fallback={null}>
@@ -72,6 +75,7 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
       onOpenSettings={() => setAccountView('settings')}
       onOpenGrownup={() => setAccountView('grownup')}
       onSignOut={onSignOut}
+      onSwitchToClassic={onSwitchToClassic}
       userInitial={userInitial}
     >
       {activeTab === 'home' && (

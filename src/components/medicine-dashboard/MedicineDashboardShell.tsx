@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Home, Stethoscope, TrendingUp, MapPin, FileText, Wallet, Settings, Users, LogOut, ChevronDown } from 'lucide-react';
+import { Home, Stethoscope, TrendingUp, MapPin, FileText, Wallet, Settings, Users, LogOut, ChevronDown, Palette } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,6 +45,7 @@ interface Props {
   onOpenSettings: () => void;
   onOpenGrownup: () => void;
   onSignOut: () => void;
+  onSwitchToClassic: () => void;
   userInitial: string;
   children: ReactNode;
   hideChrome?: boolean;
@@ -57,7 +58,7 @@ interface Props {
  */
 export function MedicineDashboardShell({
   activeTab, onTabChange, productLine, onProductLineChange, credits,
-  onOpenCredits, onOpenSettings, onOpenGrownup, onSignOut, userInitial, children, hideChrome,
+  onOpenCredits, onOpenSettings, onOpenGrownup, onSignOut, onSwitchToClassic, userInitial, children, hideChrome,
 }: Props) {
   return (
     <div style={{ background: '#FAFAF8', minHeight: '100vh', fontFamily: "'Inter Tight',system-ui,-apple-system,sans-serif", color: '#1C2029' }}>
@@ -131,6 +132,7 @@ export function MedicineDashboardShell({
                   <DropdownMenuItem onClick={onOpenCredits}><Wallet className="h-4 w-4 mr-2" /> Credits & billing</DropdownMenuItem>
                   <DropdownMenuItem onClick={onOpenSettings}><Settings className="h-4 w-4 mr-2" /> Settings</DropdownMenuItem>
                   <DropdownMenuItem onClick={onOpenGrownup}><Users className="h-4 w-4 mr-2" /> Grown-up view</DropdownMenuItem>
+                  <DropdownMenuItem onClick={onSwitchToClassic}><Palette className="h-4 w-4 mr-2" /> Switch to classic dashboard</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={onSignOut}><LogOut className="h-4 w-4 mr-2" /> Sign out</DropdownMenuItem>
                 </DropdownMenuContent>
