@@ -1,6 +1,7 @@
 import { useMemo, useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
+import { MedicineTheme } from '@/components/medicine-dashboard/MedicineTheme';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -29,7 +30,7 @@ export default function AdminMedicinePortal() {
   if (isLoading) return <div className="min-h-screen bg-background flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div>;
   if (!isAdmin) return <div className="min-h-screen bg-background flex items-center justify-center px-4 text-center"><p className="text-muted-foreground">Admin access required.</p></div>;
 
-  return (
+  return (<MedicineTheme>
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
@@ -39,7 +40,7 @@ export default function AdminMedicinePortal() {
               The UK medicine MMI content pack — stations, roleplay personas, the current-affairs register, the school map and the master ontology, all sourced from the 29 August 2026 research pack.
             </p>
           </div>
-          <div className="flex items-center gap-3 flex-none">
+          <div className="flex items-center gap-3 flex-wrap">
             <Link to="/admin/medicine-lab" className="text-sm text-primary underline whitespace-nowrap">Expansion lab →</Link>
             <Link to="/admin/medicine-landing-preview" className="text-sm text-primary underline whitespace-nowrap">Landing page preview (coral) →</Link>
             <Link to="/admin/medicine-interviews" className="text-sm text-primary underline whitespace-nowrap">Launch the interview →</Link>
@@ -48,7 +49,7 @@ export default function AdminMedicinePortal() {
         </div>
 
         <Tabs defaultValue="expansion" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 md:grid-cols-8">
+          <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4 xl:grid-cols-8 [&>button]:min-h-11">
             <TabsTrigger value="expansion">Expansion lab</TabsTrigger>
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
@@ -78,7 +79,7 @@ export default function AdminMedicinePortal() {
           <TabsContent value="ontology"><OntologyTab /></TabsContent>
         </Tabs>
       </div>
-    </div>
+    </div></MedicineTheme>
   );
 }
 

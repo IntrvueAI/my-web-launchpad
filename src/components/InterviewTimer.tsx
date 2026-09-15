@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
+import React, { useState, useEffect, useRef } from 'react';
 import { Clock } from 'lucide-react';
 
 interface InterviewTimerProps {
@@ -16,6 +15,8 @@ export const InterviewTimer: React.FC<InterviewTimerProps> = ({
   calm = false
 }) => {
   const [timeLeft, setTimeLeft] = useState(duration * 60); // duration in seconds
+  const onTimeUpRef = useRef(onTimeUp);
+  onTimeUpRef.current = onTimeUp;
 
   useEffect(() => {
     if (!isActive) {
@@ -23,18 +24,21 @@ export const InterviewTimer: React.FC<InterviewTimerProps> = ({
       return;
     }
 
+    const endsAt = Date.now() + duration * 60 * 1000;
+    setTimeLeft(duration * 60);
+    let finished = false;
     const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          onTimeUp?.();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+      const remaining = Math.max(0, Math.ceil((endsAt - Date.now()) / 1000));
+      setTimeLeft(remaining);
+      if (!remaining && !finished) {
+        finished = true;
+        clearInterval(interval);
+        onTimeUpRef.current?.();
+      }
+    }, 250);
 
     return () => clearInterval(interval);
-  }, [isActive, onTimeUp, duration]);
+  }, [isActive, duration]);
 
   // Don't render if not active
   if (!isActive) return null;

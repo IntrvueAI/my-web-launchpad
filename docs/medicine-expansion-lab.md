@@ -12,6 +12,7 @@ The admin Medicine portal opens on the new expansion lab. It combines a build jo
 - `/admin/medicine-lab`: admin-gated research and rehearsal page.
 - `/admin/medicine-portal`: existing portal, now with an Expansion tab.
 - `/__dev/medicine-lab`: development-only local preview; omitted in production.
+- `/__dev/medicine-design`: development-only preview of the real dashboard views using isolated illustrative data, with example, empty and loading states.
 
 ## Content and evidence
 
@@ -26,7 +27,7 @@ The admin Medicine portal opens on the new expansion lab. It combines a build jo
 
 Oxford, Cambridge, Imperial and mixed MMI practice plans assemble eligible distinct drafts from a shared bank. A seeded backtracking allocator respects track, topic, difficulty and explicit history exclusions. It reports shortages instead of recycling excluded content. Timers model reading, response and optional transitions. Profiles clearly distinguish published timing from editorial practice choices.
 
-Review notes, theme preference and practice history are saved in this browser only. Plans and reflections can be exported. The manual lab does not make paid avatar calls or generate AI assessments. Draft review decisions do not publish content: publication remains a reviewed merge through the existing content workflow.
+Review notes, theme preference and practice history are saved in this browser only. Plans and reflections can be exported. The coverage panel shows topic depth and demonstrated no-repeat circuit sequences. Full editorial packs export as JSON or readable Markdown, including prompts, guidance and local notes. The manual lab does not make paid avatar calls or generate AI assessments. Draft review decisions do not publish content: publication remains a reviewed merge through the existing content workflow.
 
 ## Local check feed
 
@@ -34,10 +35,19 @@ The Vite development plugin exposes a loopback-only, same-origin runner with thr
 
 ## Validation at milestone
 
-- 21 tests passed across four medicine test files, including runtime isolation, distinct station allocation, exclusions, reproducibility, difficulty and transition totals.
+- 26 tests passed across five medicine/UI test files, including runtime isolation, distinct station allocation, exclusions, reproducibility, difficulty, transition totals, countdown deadlines and honest school-mode descriptions.
 - `node scripts/check-medicine-expansion.mjs` passed for all 60 drafts and the sourced priority metrics.
 - TypeScript app check passed.
 - Direct Vite production build passed. Existing large-chunk and old browser-data warnings remain.
 - Browser checks at 1440px and 390px covered theme persistence, notes, filters, timers, circuit completion, exported self-assessment, no-repeat history and evidence search; no page exceptions or horizontal overflow.
+- All five dashboard preview tabs passed desktop/mobile checks, including new-account and loading states.
+
+The progress chart uses the supplied area/line presentation and leaves missing scores as gaps. The live countdown now uses an elapsed-time deadline, survives parent rerenders and fires completion once. It does not change the configured session allowance.
+
+## Open release issue
+
+The existing live Medicine types both configure a 25-minute session limit. This is shorter than the sum of their full station timings. Their provider budget and server session lifecycle need coordinated review before advertising a complete live circuit. The lab surfaces this issue; the new manual rehearsal profiles have independent, explicit timing. No provider plan assumptions or paid test sessions were used to mask the mismatch.
+
+For a second local Vite preview alongside port 8080, set `MEDICINE_LAB_PREVIEW=1` to use an isolated dependency cache. This avoids stale dependency errors between preview servers.
 
 Authenticated student sessions and paid live calls were not started. The legacy runtime has two dedicated timed MMI modes; the new academic and Imperial circuits are admin rehearsals until reviewed and integrated into the runtime.

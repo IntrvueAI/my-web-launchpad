@@ -32,6 +32,7 @@ const AdminUnreleasedInterviews = lazy(() => import("./pages/AdminUnreleasedInte
 const AdminMedicineInterviews = lazy(() => import("./pages/AdminMedicineInterviews"));
 const AdminMedicinePortal = lazy(() => import("./pages/AdminMedicinePortal"));
 const AdminMedicineLab = lazy(() => import("./pages/AdminMedicineLab"));
+const MedicineDesignPreview = import.meta.env.DEV ? lazy(() => import("./pages/MedicineDesignPreview")) : null;
 const AdminMedicineLandingPreview = lazy(() => import("./pages/AdminMedicineLandingPreview"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -68,7 +69,6 @@ const AppContent = () => {
       <div className="w-full h-full pointer-events-auto">
         <Toaster />
         <Sonner />
-        <ShutdownBanner />
         {shouldShowDowntime && (
           <div className="fixed inset-0 bg-gradient-to-br from-background to-muted/30 z-50 flex items-center justify-center p-4">
             <div className="max-w-lg text-center space-y-6 p-8 bg-card/90 backdrop-blur-sm rounded-2xl border border-border shadow-xl">
@@ -120,6 +120,7 @@ const AppContent = () => {
           </div>
         )}
         <BrowserRouter>
+          <ShutdownBanner />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -141,6 +142,7 @@ const AppContent = () => {
               <Route path="/admin/medicine-portal" element={<AdminMedicinePortal />} />
               <Route path="/admin/medicine-lab" element={<AdminMedicineLab />} />
               {import.meta.env.DEV && <Route path="/__dev/medicine-lab" element={<AdminMedicineLab localPreview />} />}
+              {MedicineDesignPreview && <Route path="/__dev/medicine-design" element={<MedicineDesignPreview />} />}
               <Route path="/admin/medicine-landing-preview" element={<AdminMedicineLandingPreview />} />
               <Route path="/admin/logs" element={<AdminLogs />} />
               {/* Temporary standalone demo route for the practice minigames */}

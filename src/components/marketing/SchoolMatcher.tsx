@@ -21,13 +21,16 @@ const THEMES = {
 type PaletteTheme = (typeof THEMES)[keyof typeof THEMES];
 
 export function recommendMode(school: SchoolRoute): { label: string; note: string } {
+  if (!school.engines.includes('E1')) {
+    return { label: 'General MMI practice', note: `This route describes ${school.interview_type.toLowerCase()} interviews. Our timed MMI modes can rehearse individual skills, but do not reproduce an academic, panel or group interview.` };
+  }
   if (school.prep_time_min === 0) {
-    return { label: 'Manchester-style', note: 'This school publishes zero reading time — the closest real match is our no-prep, cold-start mode.' };
+    return { label: 'Manchester-style', note: 'The mapped source describes no reading time. This mode practises answering without prep; other timings and logistics may differ. Check your invitation.' };
   }
   if (typeof school.prep_time_min === 'number' && school.prep_time_min > 0) {
     return { label: 'Leeds-style', note: `This school gives ${school.prep_time_min} minute${school.prep_time_min === 1 ? '' : 's'} of reading time — closer to our Leeds-style mode than a cold start.` };
   }
-  return { label: 'Try both', note: "This school hasn't published its reading-time policy, so we can't say for certain — Leeds-style is the safer default, since most schools that DO publish detail give some prep time." };
+  return { label: 'Try both', note: 'Reading time is unconfirmed in the mapped source. Try either mode to practise the skill, and use your invitation for the actual arrangements.' };
 }
 
 function formatField(v: string | number | boolean | null | undefined): string {

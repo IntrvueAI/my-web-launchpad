@@ -1,0 +1,22 @@
+import { useState } from 'react';
+import { MedicineDashboardShell, type MedicineTab } from '@/components/medicine-dashboard/MedicineDashboardShell';
+import { MedicineHomeView } from '@/components/medicine-dashboard/MedicineHome';
+import { MedicineProgressView } from '@/components/medicine-dashboard/MedicineProgress';
+import { MedicineFeedbackView } from '@/components/medicine-dashboard/MedicineFeedback';
+import { MedicinePractice } from '@/components/medicine-dashboard/MedicinePractice';
+import { MEDICINE_SKILL_COLUMNS, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
+import { type FeedbackRecord } from '@/types/interview';
+import SchoolEvidenceExplorer from '@/components/admin/medicine/SchoolEvidenceExplorer';
+import '@/components/admin/medicine/expansion-lab.css';
+import '@/components/admin/medicine/expansion-workbench.css';
+import '@/components/admin/medicine/medicine-lab-extras.css';
+
+// Only imported by a DEV-guarded lazy route. These examples never enter a user's query cache.
+const records:FeedbackRecord[]=[16,14,13,15,11,10].map((score,i)=>({id:`design-example-${i}`,interview_session_id:`design-only-${i}`,created_at:`2026-09-${String(15-i*2).padStart(2,'0')}T12:00:00Z`,interview_type:i%2?'medicine-mmi':'medicine-mmi-manchester',total_score:score,pattern_recognition_score:4,logical_deduction_score:4,mathematical_logic_score:3,clarity_of_thought_score:5,detailed_feedback:{overall:'Illustrative feedback for design review: your answer considered more than one perspective and explained the uncertainty. Next time, state your first practical step before exploring alternatives.',band_assessment:'Example only'},overall_improvement_feedback:'Illustrative next step: make your opening summary more concise.'}));
+const example:MedicineDashboardStats={totalSessions:6,averageScore:13.2,scoreDeltaLastMonth:2.5,recentTrend:records.map(r=>({date:r.created_at,score:r.total_score})).reverse(),recentSessions:records.slice(0,5).map(r=>({id:r.id,date:r.created_at,title:r.interview_type==='medicine-mmi'?'Leeds circuit':'Manchester circuit',band:r.total_score})),skills:MEDICINE_SKILL_COLUMNS.map((s,i)=>({label:s.label,average:[3.5,3.8,3.2,4.1][i]})),streak:3,weekStrip:[true,false,true,false,true,true,true],byStationType:[{type:'Leeds circuit',count:4,averageScore:12.5},{type:'Manchester circuit',count:2,averageScore:14.5}],records};
+const empty:MedicineDashboardStats={...example,totalSessions:0,averageScore:null,scoreDeltaLastMonth:null,recentTrend:[],recentSessions:[],records:[],byStationType:[],skills:example.skills.map(s=>({...s,average:null})),streak:0,weekStrip:[false,false,false,false,false,false,false]};
+export default function MedicineDesignPreview(){
+  const [tab,setTab]=useState<MedicineTab>('home');const [state,setState]=useState('example');const [notice,setNotice]=useState('');
+  const stats=state==='empty'?empty:example;const action=()=>setNotice('Design preview only. Use the research lab for manual rehearsal or the signed-in dashboard for a real session.');
+  return <MedicineDashboardShell activeTab={tab} onTabChange={setTab} productLine="medicine" onProductLineChange={action} credits={0} onOpenCredits={action} onOpenSettings={action} onOpenGrownup={action} onSignOut={action} onSwitchToClassic={action} userInitial="D"><div className="medicine-design-toolbar"><div><b>Design review · illustrative data</b><p>The real dashboard components, with isolated examples. No account data or live calls.</p></div><label>Preview state<select aria-label="Preview state" value={state} onChange={e=>setState(e.target.value)}><option value="example">Example history</option><option value="empty">New account</option><option value="loading">Loading</option></select></label><a href="/__dev/medicine-lab">Back to research desk ↗</a></div>{notice&&<p className="medicine-design-notice" role="status">{notice}</p>}{tab==='home'&&<MedicineHomeView credits={0} stats={stats} loading={state==='loading'} firstName="Alex" onOpenCredits={action} onOpenTab={setTab} onStartInterview={action} nextRealInterview={state==='example'?{school:'Imperial — example diary entry',date:'2027-01-15',daysUntil:122}:undefined}/>} {tab==='practice'&&<MedicinePractice onStartInterview={action}/>} {tab==='progress'&&<MedicineProgressView stats={stats} loading={state==='loading'}/>} {tab==='feedback'&&<MedicineFeedbackView stats={stats} loading={state==='loading'}/>} {tab==='schools'&&<div className="med-lab"><SchoolEvidenceExplorer/></div>}</MedicineDashboardShell>;
+}

@@ -312,6 +312,13 @@
   ],
   "updates": [
     {
+      "id": "follow-up-ui",
+      "date": "2026-09-15 · 23:48 BST",
+      "category": "BUILD & VERIFICATION",
+      "title": "Dashboard preview, review exports and reliable countdowns.",
+      "body": "The real dashboard views now have an isolated design preview with example, empty and loading states. Added content coverage and complete JSON/Markdown review packs. The countdown keeps its deadline through rerenders. All 26 regression tests, type checks and production build passed; desktop and mobile previews were checked."
+    },
+    {
       "id": "batch-02",
       "date": "2026-09-15 · 23:34 BST",
       "category": "CONTENT & VERIFICATION",

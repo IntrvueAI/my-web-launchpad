@@ -11,7 +11,7 @@ function storedTheme(): MedicineColourScheme {
 export function useMedicineColourScheme() {
   const [theme, setTheme] = useState<MedicineColourScheme>(storedTheme);
   useEffect(() => {
-    const update = (event: Event) => setTheme(event instanceof CustomEvent ? event.detail : storedTheme());
+    const update = (event: Event) => { const value = event instanceof CustomEvent ? event.detail : storedTheme(); if (value === 'clinical' || value === 'coral') setTheme(value); };
     window.addEventListener(EVENT, update); window.addEventListener('storage', update);
     return () => { window.removeEventListener(EVENT, update); window.removeEventListener('storage', update); };
   }, []);

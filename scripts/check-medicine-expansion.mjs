@@ -6,6 +6,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(readFileSync(path.join(root,p),'utf8'));
 const drafts = read('src/data/interview-staging/medicine-expansion.json');
 const research = read('src/interview/medicine-content/expansion/research.json');
+const evidence = read('src/interview/medicine-content/expansion/evidence.json');
+const schoolMap = read('src/interview/medicine-content/data/uk-medical-school-interview-map.json');
 function walk(dir) { return readdirSync(dir,{withFileTypes:true}).flatMap((x)=>x.isDirectory()?walk(path.join(dir,x.name)):x.name.endsWith('.json')?[path.join(dir,x.name)]:[]); }
 const runtime = walk(path.join(root,'src/interview/bank/questions/medicine')).flatMap((p)=>JSON.parse(readFileSync(p,'utf8')));
 const ids = new Set(); const prompts = new Set();
@@ -34,5 +36,17 @@ for(const school of research.schools) {
  if(school.metric.unit==='%') assert.equal((100*school.metric.numerator/school.metric.denominator).toFixed(1)+'%',school.metric.display);
 }
 console.log('PASS: school claims resolve to source records; derived offer rates reconcile with raw counts.');
+assert.equal(new Set(research.sources.map(s=>s.id)).size,research.sources.length,'Duplicate source IDs');
+for(const format of evidence.formats){
+ assert(schoolMap.schools.some(s=>s.id===format.id),`${format.id}: unknown school route`);
+ assert(sources.has(format.sourceId),`${format.id}: missing refreshed source`);
+ assert(format.unknowns && format.cycle && format.checked,`${format.id}: missing scope or uncertainty`);
+}
+for(const metric of evidence.metrics){
+ assert(sources.has(metric.sourceId),`${metric.school}: missing statistics source`);
+ assert(metric.population && metric.cycle && metric.note,`${metric.school}: missing comparison scope`);
+ if(metric.offers!==null)assert(metric.applications>0 && metric.offers<=metric.applications,`${metric.school}: invalid offer denominator`);
+}
+console.log(`PASS: ${evidence.formats.length} refreshed format records and ${evidence.metrics.length} scoped statistics resolve to sources.`);
 for(const track of ['academic','mmi'])console.log(`COVERAGE: ${track}: ${drafts.filter((q)=>q.tracks.includes(track)).length} eligible draft stations.`);
 console.log('NOTE: these are structural checks. Human content review and release are still required.');

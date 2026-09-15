@@ -1,11 +1,13 @@
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis } from 'recharts';
-import { useMedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis, YAxis } from 'recharts';
+import { useMedicineDashboardStats, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
 import { Skeleton } from '@/components/ui/skeleton';
-
-const RAMP = ['var(--med-primary-soft)', 'var(--med-primary-soft)', 'var(--med-secondary-bar)', 'var(--med-primary)', 'var(--med-primary)'];
 
 export function MedicineProgress() {
   const { stats, loading } = useMedicineDashboardStats();
+  return <MedicineProgressView stats={stats} loading={loading}/>;
+}
+
+export function MedicineProgressView({stats,loading=false}:{stats?:MedicineDashboardStats;loading?:boolean}) {
 
   if (loading || !stats) {
     return <div style={{ display: 'grid', gap: 16 }}><Skeleton className="h-10 w-64" /><Skeleton className="h-80 rounded-2xl" /></div>;
@@ -22,7 +24,7 @@ export function MedicineProgress() {
     );
   }
 
-  const chartData = stats.recentTrend.map((t, i) => ({ ...t, fill: RAMP[Math.min(i, RAMP.length - 1)] }));
+  const chartData = stats.recentTrend;
   const sortedByCount = [...stats.byStationType].sort((a, b) => b.count - a.count);
   const strongest = sortedByCount[0];
   const leastPractised = sortedByCount[sortedByCount.length - 1];
@@ -51,16 +53,16 @@ export function MedicineProgress() {
         </div>
         <div style={{ height: 160, marginTop: 16 }}>
           <ResponsiveContainer>
-            <BarChart data={chartData}>
+            <AreaChart data={chartData} margin={{ top: 10, right: 12, bottom: 0, left: -20 }} accessibilityLayer>
+              <CartesianGrid vertical={false} stroke="var(--med-border)" />
+              <YAxis domain={[0,20]} ticks={[0,5,10,15,20]} tick={{fontSize:11,fill:'var(--med-tertiary)'}} axisLine={false} tickLine={false} />
               <XAxis dataKey="date" tickFormatter={(d) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} tick={{ fontSize: 11, fill: 'var(--med-tertiary)' }} />
               <RechartsTooltip
                 contentStyle={{ fontSize: 12, background: 'var(--med-card)', border: '1px solid var(--med-border)', borderRadius: 8 }}
                 labelFormatter={(d) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}
               />
-              <Bar dataKey="score" radius={[8, 8, 0, 0]}>
-                {chartData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
-              </Bar>
-            </BarChart>
+              <Area type="linear" dataKey="score" name="Score / 20" stroke="var(--med-primary)" strokeWidth={2} fill="var(--med-primary-soft)" connectNulls={false} dot={{r:3,fill:'var(--med-primary)',stroke:'var(--med-card)',strokeWidth:2}} isAnimationActive={false} />
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
@@ -86,7 +88,7 @@ export function MedicineProgress() {
         <h3 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 17, margin: '0 0 14px' }}>By skill</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {stats.skills.map((skill) => (
-            <div key={skill.label} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>
+            <div key={skill.label} className="med-skill-row" style={{ display: 'grid', gridTemplateColumns: '220px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>
               <span>{skill.label}</span>
               <div style={{ height: 6, background: 'var(--med-track)', borderRadius: 4 }}>
                 <div style={{ height: 6, borderRadius: 4, width: `${((skill.average ?? 0) / 5) * 100}%`, background: 'var(--med-action)' }} />

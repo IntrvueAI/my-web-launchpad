@@ -32,7 +32,7 @@ export interface MedicineDashboardStats {
   totalSessions: number;
   averageScore: number | null;
   scoreDeltaLastMonth: number | null;
-  recentTrend: { date: string; score: number }[];
+  recentTrend: { date: string; score: number | null }[];
   recentSessions: { id: string; date: string; title: string; band: number | null }[];
   skills: MedicineSkillAverage[];
   streak: number;
@@ -125,7 +125,7 @@ export const useMedicineDashboardStats = () => {
         totalSessions: medicineHistory.length,
         averageScore,
         scoreDeltaLastMonth,
-        recentTrend: medicineHistory.slice(0, 12).map((r) => ({ date: r.created_at, score: r.total_score ?? 0 })).reverse(),
+        recentTrend: medicineHistory.slice(0, 12).map((r) => ({ date: r.created_at, score: r.total_score ?? null })).reverse(),
         recentSessions: medicineHistory.slice(0, 5).map((r) => ({
           id: r.id,
           date: r.created_at,

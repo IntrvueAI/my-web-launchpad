@@ -5,10 +5,13 @@
  */
 import { useState, useEffect, useRef } from "react";
 import { X, Calendar } from "lucide-react";
+import { useLocation } from 'react-router-dom';
 
 const STORAGE_KEY = "intrvue-shutdown-banner-dismissed";
 
 export const ShutdownBanner = () => {
+  const { pathname } = useLocation();
+  const medicinePage = pathname === '/medicine' || pathname.startsWith('/admin/medicine') || pathname.startsWith('/__dev/medicine');
   const [isVisible, setIsVisible] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +28,7 @@ export const ShutdownBanner = () => {
   // space on <body> instead, kept in sync with a ResizeObserver since the banner's height
   // changes as its text wraps differently across viewport widths.
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || medicinePage) return;
     const el = bannerRef.current;
     if (!el) return;
     const sync = () => { document.body.style.paddingTop = `${el.offsetHeight}px`; };
@@ -36,14 +39,14 @@ export const ShutdownBanner = () => {
       observer.disconnect();
       document.body.style.paddingTop = "";
     };
-  }, [isVisible]);
+  }, [isVisible, medicinePage]);
 
   const handleDismiss = () => {
     setIsVisible(false);
     localStorage.setItem(STORAGE_KEY, "true");
   };
 
-  if (!isVisible) return null;
+  if (!isVisible || medicinePage) return null;
 
   return (
     <div ref={bannerRef} className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground shadow-lg">

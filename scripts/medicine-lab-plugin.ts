@@ -17,7 +17,7 @@ export function medicineLabPlugin(): Plugin {
         content: ['scripts/check-medicine-expansion.mjs'],
         types: ['node_modules/typescript/bin/tsc', '--noEmit', '-p', 'tsconfig.app.json'],
         tests: ['node_modules/vitest/vitest.mjs', 'run', 'src/interview/medicine-content/__tests__/expansion.test.ts',
-          'src/interview/medicine-content/__tests__/circuit.test.ts', 'src/interview/medicine-content/__tests__/data.test.ts', 'src/interview/subjects/medicine/__tests__/schoolModes.test.ts'],
+          'src/interview/medicine-content/__tests__/circuit.test.ts', 'src/interview/medicine-content/__tests__/data.test.ts', 'src/interview/subjects/medicine/__tests__/schoolModes.test.ts', 'src/components/medicine-dashboard/__tests__/medicine-ui.test.tsx'],
       };
       const log = (text: string, stream = 'system') => {
         state.logs.push({ at: new Date().toISOString(), text: text.replace(/\x1b\[[0-9;]*m/g, ''), stream });

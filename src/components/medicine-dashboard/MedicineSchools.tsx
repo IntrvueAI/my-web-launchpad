@@ -71,7 +71,7 @@ export function MedicineSchools({ onStartInterview }: Props) {
           </div>
         )
       ) : (
-        <p style={{ color: 'var(--med-tertiary)', fontSize: 14 }}>Search above to browse all {schools.length} schools, or start with the {inDiarySchool ? "one in your diary above" : 'featured formats below'}.</p>
+        <p style={{ color: 'var(--med-tertiary)', fontSize: 14 }}>Search above to browse all {schools.length} course routes, or start with the {inDiarySchool ? "one in your diary above" : 'featured formats below'}.</p>
       )}
 
       {!query.trim() && !inDiarySchool && (
@@ -115,7 +115,7 @@ function SchoolCard({ school, inDiary, onStartInterview }: { school: SchoolRoute
       <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--med-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <span style={{ display: 'inline-flex', alignItems: 'center', padding: '5px 12px', borderRadius: 999, background: 'var(--med-primary-soft)', color: 'var(--med-primary-dark)', fontSize: 12.5, fontWeight: 700 }}>
-            Closest practice mode: {rec.label}
+            Practice option: {rec.label}
           </span>
           <p style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 8, maxWidth: 480 }}>{rec.note}</p>
         </div>
@@ -123,10 +123,10 @@ function SchoolCard({ school, inDiary, onStartInterview }: { school: SchoolRoute
           onClick={() => onStartInterview(timedMode ?? (rec.label === 'Manchester-style' ? INTERVIEW_TYPES['medicine-mmi-manchester'] : INTERVIEW_TYPES['medicine-mmi']))}
           style={{
             background: 'var(--med-action)', color: 'var(--med-card)', border: 0, borderRadius: 12,
-            padding: '12px 18px', fontWeight: 600, fontSize: 14, cursor: 'pointer', minHeight: 44, whiteSpace: 'nowrap',
+            padding: '12px 18px', fontWeight: 600, fontSize: 14, cursor: 'pointer', minHeight: 44,
           }}
         >
-          {timedMode ? `Practise the exact ${school.university.replace('University of ', '')} format` : 'Practise closest format'}
+          {timedMode ? `Start ${school.university.replace('University of ', '')}-style practice` : 'Start general MMI practice'}
         </button>
       </div>
     </div>

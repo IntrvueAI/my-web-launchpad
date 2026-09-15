@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { useMedicineDashboardStats, titleFor, MEDICINE_SKILL_COLUMNS } from '@/hooks/useMedicineDashboardStats';
+import { useMedicineDashboardStats, titleFor, MEDICINE_SKILL_COLUMNS, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function MedicineFeedback() {
   // Same react-query cache entry Home/Progress already populate — switching to this tab doesn't
   // re-fetch (see useMedicineDashboardStats.ts's `records` field).
   const { stats, loading } = useMedicineDashboardStats();
+  return <MedicineFeedbackView stats={stats} loading={loading}/>;
+}
+
+export function MedicineFeedbackView({stats,loading=false}:{stats?:MedicineDashboardStats;loading?:boolean}) {
   const records = stats?.records ?? [];
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -82,7 +86,7 @@ export function MedicineFeedback() {
                   {MEDICINE_SKILL_COLUMNS.map((row) => {
                     const score = selected[row.key];
                     return (
-                      <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '210px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>
+                      <div key={row.label} className="med-skill-row" style={{ display: 'grid', gridTemplateColumns: '210px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>
                         <span>{row.label}</span>
                         <div style={{ height: 6, background: 'var(--med-track)', borderRadius: 4 }}>
                           <div style={{ height: 6, borderRadius: 4, width: `${((typeof score === 'number' ? score : 0) / 5) * 100}%`, background: 'var(--med-action)' }} />

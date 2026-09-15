@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useDashboardStats } from '@/hooks/useDashboardStats';
-import { useMedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
+import { useDashboardStats, type UpcomingSchoolInterview } from '@/hooks/useDashboardStats';
+import { useMedicineDashboardStats, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
 import { INTERVIEW_TYPES, InterviewType } from '@/config/interviewTypes';
 import { Skeleton } from '@/components/ui/skeleton';
 import { TrendingUp } from 'lucide-react';
@@ -26,6 +26,10 @@ export function MedicineHome({ credits, onStartInterview, onOpenTab, onOpenCredi
   const { stats: generalStats } = useDashboardStats();
   const { stats, loading } = useMedicineDashboardStats();
   const firstName = (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0] || 'there';
+  return <MedicineHomeView credits={credits} onStartInterview={onStartInterview} onOpenTab={onOpenTab} onOpenCredits={onOpenCredits} stats={stats} loading={loading} firstName={firstName} nextRealInterview={generalStats?.upcomingSchoolInterviews?.[0]} />;
+}
+
+export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenCredits, stats, loading=false, firstName='there', nextRealInterview }: Props & { stats?: MedicineDashboardStats; loading?: boolean; firstName?: string; nextRealInterview?: UpcomingSchoolInterview }) {
 
   const recommended = useMemo(() => {
     if (!stats) return LEEDS;
@@ -33,8 +37,6 @@ export function MedicineHome({ credits, onStartInterview, onOpenTab, onOpenCredi
     const manchesterCount = stats.byStationType.find((s) => s.type === 'Manchester circuit')?.count ?? 0;
     return manchesterCount < leedsCount ? MANCHESTER : LEEDS;
   }, [stats]);
-
-  const nextRealInterview = generalStats?.upcomingSchoolInterviews?.[0];
 
   if (loading || !stats) {
     return (
