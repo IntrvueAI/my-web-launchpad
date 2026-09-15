@@ -34,6 +34,7 @@ const FILES = [
   'engine/flow.ts',
   'engine/agent.ts',
   'bank/select.ts',
+  'bank/normalize.ts',
   'subjects/types.ts',
   'subjects/maths/pack.ts',
   'subjects/logic/pack.ts',
@@ -41,6 +42,8 @@ const FILES = [
   'subjects/elevenplus/pack.ts',
   'subjects/medicine/pack.ts',
   'subjects/medicine/schoolModes.ts',
+  'subjects/medicine/pilots.ts',
+  'medicine-content/expansion/circuit.ts',
   'subjects/chat/pack.ts',
 ];
 
@@ -95,12 +98,15 @@ async function buildBanks(out) {
 }
 
 let counts = {};
+const codeOnly = process.argv.includes('--code-only');
 for (const out of TARGETS) {
-  await fs.rm(out, { recursive: true, force: true }); // drop stale vendored files
   await fs.mkdir(out, { recursive: true });
   await copyFiles(out);
   await copyLogger(out);
-  counts = await buildBanks(out);
+  // Targeted writes preserve unrelated local bank edits and other shared modules.
+  // --code-only is for engine changes that do not change the published question bank.
+  if (!codeOnly) counts = await buildBanks(out);
+  await fs.copyFile(path.join(root, 'src/data/interview-staging/medicine-expansion.json'), path.join(out, 'medicine-pilot-bank.json'));
 }
 const summary = Object.entries(counts).map(([s, n]) => `${s}:${n}`).join(', ');
 console.log(`[brain:build] vendored ${FILES.length} engine files + banks (${summary}) → ${TARGETS.length} functions`);

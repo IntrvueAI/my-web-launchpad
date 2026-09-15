@@ -78,6 +78,9 @@ export interface AgentState {
    *  the system prompt tell the model whether the topic is about to change, so it can signpost the
    *  shift explicitly instead of a generic "let's try another". Undefined before the first question. */
   previousTopic?: string;
+  /** Server-assembled ordered circuit. Never supplied by a student request. */
+  questionPlan?: { profileId: string; questionIds: string[]; contentStatus: 'draft' | 'reviewed' };
+  lastTurn?: { id: string; say: string };
 }
 
 export interface AgentDeps {
@@ -93,6 +96,7 @@ export interface AgentRequest {
   studentText?: string;
   mode?: Mode;
   topic?: string;
+  expectedQuestionIndex?: number;
 }
 
 export interface AgentResult {
@@ -155,7 +159,7 @@ export function phaseInfo(pack: SubjectPack, state: AgentState): { phase: 'about
 
 // ---- Tools the model uses to drive the bank + review ----
 
-const VALID_OUTCOMES = new Set<Outcome>(['correct_method', 'correct_no_method', 'incorrect', 'stuck', 'skipped']);
+const VALID_OUTCOMES = new Set<Outcome>(['correct_method', 'correct_no_method', 'incorrect', 'stuck', 'skipped', 'incomplete']);
 
 const TOOLS = [
   {
@@ -215,7 +219,7 @@ function topicLabel(pack: SubjectPack, id?: string): string {
  */
 function renderCurrentProblem(q: BankQuestion | null, pack?: SubjectPack, topicChanged?: boolean): string {
   if (!q) return 'No problem is on the table yet.';
-  if (q.roleplay) return renderRoleplayStation(q.roleplay);
+  if (q.roleplay) return renderRoleplayStation(q.roleplay) + (q.rubric ? `\nPRIVATE assessment rubric (never read aloud): ${JSON.stringify(q.rubric)}` : '');
   const out: string[] = [
     pack ? `Topic of THIS question: ${topicLabel(pack, q.topic)}${topicChanged ? ' (a NEW topic — different from the one you just finished; signpost the change per the rule above)' : ''}.` : '',
     `The problem currently on the table (read it verbatim): "${q.question}"`,
@@ -253,7 +257,7 @@ function renderRoleplayStation(rp: RoleplayRuntime): string {
   return [
     `ROLEPLAY STATION — YOU ARE NOT CLARA RIGHT NOW. You are playing a character: ${rp.name}, ${rp.role}.`,
     `The candidate's role in this scenario: ${rp.applicantRole}`,
-    `Your opening line (say this now, verbatim, in character): "${rp.openingStatement}"`,
+    `Your opening line: "${rp.openingStatement}". Use it only on entering the station. After that, respond to what the candidate actually says without repeating the opening.`,
     `Your starting emotional state: ${rp.actorStateInitial}`,
     `How your state moves over the course of the station: ${rp.actorStateTrajectory}`,
     rp.hiddenFacts.length
@@ -369,7 +373,7 @@ function phaseLine(pack: SubjectPack, state: AgentState): string {
 
 function logEvidence(state: AgentState, args: { outcome?: string; method_quality?: string; band?: string; hints_given?: number; note?: string }) {
   if (!state.current) return;
-  const outcome = (VALID_OUTCOMES.has(args.outcome as Outcome) ? args.outcome : 'stuck') as Outcome;
+  const outcome = (VALID_OUTCOMES.has(args.outcome as Outcome) ? args.outcome : 'incomplete') as Outcome;
   const methodQuality = (['sound', 'partial', 'none', 'unknown'].includes(args.method_quality as string)
     ? args.method_quality
     : 'unknown') as Evidence['methodQuality'];
@@ -384,7 +388,7 @@ function logEvidence(state: AgentState, args: { outcome?: string; method_quality
     }),
   );
   state.questionIndex = state.evidence.length;
-  if (state.mode === 'mock') {
+  if (state.mode === 'mock' && !state.questionPlan) {
     // Adapt to how they did: TWO consecutive clean solves climb a level; a hinted solve holds; a
     // wrong/stuck answer eases down so the next one is the same level or gentler.
     let cleanStreak = 0;
@@ -418,12 +422,14 @@ function respondWithQuestion(state: AgentState, q: BankQuestion, customNote?: st
     question_type: q.questionType,
     difficulty: q.difficulty,
     question: q.question,
+    opening_line: q.roleplay?.openingStatement,
     answer: q.answer,
     model_reasoning_path: q.modelReasoningPath,
     rubric: q.rubric,
     common_mistakes: q.commonMistakes,
     live_probes: q.liveProbes,
     hints: q.hints,
+    roleplay_instructions: q.roleplay ? renderRoleplayStation(q.roleplay) : undefined,
   };
 }
 
@@ -457,8 +463,10 @@ function advanceFlow(state: AgentState, deps: AgentDeps): Record<string, any> {
 }
 
 function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): Record<string, any> {
+  if (state.done) return { no_more_problems: true, message: 'The interview is complete. Do not fetch or assess another problem.' };
+  if (call.name !== 'next_problem' && call.name !== 'finish_interview') return { rejected: 'Unknown tool. Use next_problem or finish_interview.' };
   if (call.name === 'finish_interview') {
-    if (call.args.outcome && state.current) logEvidence(state, call.args);
+    if (state.current) logEvidence(state, call.args.outcome ? call.args : { outcome: 'incomplete', note: 'Session closed without an assessment; do not infer poor performance.' });
     state.done = true;
     return { ok: true };
   }
@@ -479,6 +487,16 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
 
   if (state.mode === 'mock' && state.questionIndex >= state.targetQuestions) {
     return { no_more_problems: true, message: 'That was the last planned problem. Give a warm closing, then call finish_interview.' };
+  }
+
+  if (state.questionPlan) {
+    const id = state.questionPlan.questionIds[state.questionIndex];
+    const q = selectQuestion({ bank: deps.bank.filter(item => item.id === id), mode: 'mock', difficulty: state.difficulty, askedIds: state.askedIds, questionIndex: state.questionIndex, seed: state.seed });
+    if (!q) {
+      state.done = true;
+      return { no_more_problems: true, message: 'The planned question is no longer available. Close this practice session; do not substitute an unrelated station.' };
+    }
+    return respondWithQuestion(state, q);
   }
 
   // Two-phase mix (e.g. 11+): draw the first `primaryShare` from the primarySubject at a fixed,
@@ -524,6 +542,7 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
     // If the phase pool is exhausted, fall back to the whole bank so the interview never stalls.
     ?? (bank !== deps.bank ? selectQuestion({ bank: deps.bank, difficulty: state.difficulty, ...params }) : null);
   if (!q) {
+    state.done = true;
     return { no_more_problems: true, message: 'No more problems are available. Give a warm closing, then call finish_interview.' };
   }
   // Full guidance also lives in the system prompt next turn; respondWithQuestion returns it here
@@ -556,13 +575,17 @@ const MAX_CONTEXT_TURNS = 30;
 /** Advance one turn: build context, let the model talk + use tools, return Clara's spoken line. */
 export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: AgentDeps): Promise<AgentResult> {
   const state: AgentState = structuredCloneSafe(prev);
+  if (state.done || (req.expectedQuestionIndex !== undefined && req.expectedQuestionIndex !== state.questionIndex)) {
+    return { say: '', state, done: state.done };
+  }
 
   if (req.action === 'switch_topic' && req.topic) state.currentTopic = req.topic;
 
-  if (req.action === 'answer' && req.studentText?.trim()) {
+  if (req.studentText?.trim()) {
     state.transcript.push({ role: 'user', content: req.studentText.trim() });
     if (state.current) state.currentStudentTurns.push(req.studentText.trim());
-  } else {
+  }
+  if (req.action !== 'answer') {
     const note = controlNote(req, deps);
     if (note) state.transcript.push({ role: 'user', content: note });
   }
@@ -575,6 +598,9 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   ];
 
   const questionBefore = state.current?.id;
+  const evidenceBefore = state.evidence.length;
+  const turnLimitReached = req.action === 'answer' && !!deps.pack.maxStudentTurnsPerQuestion && state.currentStudentTurns.length >= deps.pack.maxStudentTurnsPerQuestion;
+  if (turnLimitReached) messages.push({ role: 'system', content: 'This station has reached its answer-turn limit. Record the available evidence and call next_problem now. Do not ask another probe or infer an error merely because time/turns ran out.' });
   let say = '';
   // One fresh question per turn, max. Without this the model sometimes pulled a question, read it,
   // then immediately recorded it (unanswered!) and pulled ANOTHER in the same turn — the student
@@ -588,8 +614,15 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
       if (res.toolCalls.length > 0) {
         messages.push({ role: 'assistant', content: res.content || '', tool_calls: res.raw });
         for (const call of res.toolCalls) {
-          const result = call.name === 'next_problem' && fetchedThisTurn
+          if (req.action === 'skip' && state.current?.id === questionBefore && (call.name === 'next_problem' || call.name === 'finish_interview')) {
+            call.args = { outcome:'skipped', method_quality:'unknown', note:'Candidate chose to skip this station.' };
+          }
+          const result = (call.name === 'next_problem' || call.name === 'finish_interview') && fetchedThisTurn
             ? { rejected: 'You already have a fresh problem on the table this turn. Ask it and WAIT for the student to answer — never ask two problems at once.' }
+            : req.action === 'end' && call.name === 'next_problem'
+            ? { rejected: 'The candidate ended the interview. Record the current evidence with finish_interview; do not fetch another question.' }
+            : state.questionPlan && call.name === 'finish_interview' && req.action !== 'end' && state.questionIndex + (state.current ? 1 : 0) < state.targetQuestions
+            ? { rejected: 'There are planned stations remaining. Record the current question with next_problem and continue the circuit.' }
             : executeTool(call, state, deps);
           if (call.name === 'next_problem' && (result as any)?.question) fetchedThisTurn = true;
           messages.push({ role: 'tool', tool_call_id: call.id, name: call.name, content: JSON.stringify(result) });
@@ -604,6 +637,25 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     console.error('agent chat loop failed:', (err as Error)?.message || err);
   }
 
+  // Controls must work even if the model ignores them, fails, or returns prose without a tool call.
+  // Missing assessment is explicitly incomplete, never an invented weak/incorrect score.
+  const reason: Evidence['completionReason'] | undefined = req.action === 'skip' ? 'skipped'
+    : req.action === 'time_up' ? 'time_up' : req.action === 'end' ? 'ended'
+    : req.action === 'switch_topic' ? 'topic_changed' : turnLimitReached ? 'turn_limit' : undefined;
+  if (reason && state.current?.id === questionBefore && state.current) {
+    logEvidence(state, { outcome: reason === 'skipped' ? 'skipped' : 'incomplete', note: `Station ended: ${reason}. Assessment unavailable; use the recorded answer, not the stopping reason, to evaluate it.` });
+    if (req.action !== 'end') {
+      const next = executeTool({ id: 'control-next', name: 'next_problem', args: {} }, state, deps);
+      say = state.current ? `Let's move on. ${state.current.roleplay?.openingStatement ?? state.current.question}` : 'That completes this practice session. Your answers are saved for review.';
+      if (next.no_more_problems) state.done = true;
+    } else say = 'Thank you for practising today. Your answers are saved for review.';
+  }
+  if (reason && state.evidence[evidenceBefore]) state.evidence[evidenceBefore].completionReason = reason;
+  if (req.action === 'end') {
+    state.done = true;
+    if (!say.trim() || state.current) say = 'Thank you for practising today. Your answers are saved for review.';
+  }
+
   // A flow-driven interview (see engine/flow.ts) is "exhausted" once its current node is an End
   // node, the same role questionIndex >= targetQuestions plays for the adaptive path below.
   const atFlowEnd = !!(state.flow && deps.flowGraph && findFlowNode(deps.flowGraph, state.flow.currentNodeId)?.type === 'end');
@@ -613,7 +665,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   if (!state.done && req.action === 'answer' && !state.current &&
       !(state.mode === 'mock' && state.questionIndex >= state.targetQuestions) && !atFlowEnd) {
     const forced = executeTool({ id: 'forced-next', name: 'next_problem', args: {} }, state, deps) as any;
-    if (forced?.question) say = say ? `${say} ${forced.question}` : forced.question;
+    if (forced?.question) say = forced.opening_line ?? forced.question;
   }
 
   // Deterministically END a mock once all planned problems are done. The bank is out of questions
@@ -631,7 +683,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // Never leave the avatar silent. If the model pulled a fresh question via next_problem but forgot
   // to actually say it, read that question aloud — otherwise fall back to a warm opener / nudge.
   if (!say.trim()) {
-    const freshQuestion = state.current && state.current.id !== questionBefore ? state.current.question : '';
+    const freshQuestion = state.current && state.current.id !== questionBefore ? state.current.roleplay?.openingStatement ?? state.current.question : '';
     if (freshQuestion) {
       say = freshQuestion;
     } else {

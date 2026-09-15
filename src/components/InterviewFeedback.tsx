@@ -1,3 +1,5 @@
+import { getMedicinePilot, packForMedicinePilot } from '@/interview/subjects/medicine/pilots';
+import { medicinePack } from '@/interview/subjects/medicine/pack';
 /**
  * InterviewFeedback Component
  * 
@@ -173,7 +175,9 @@ export const InterviewFeedback = ({
   const isMathsInterview = interviewType === 'maths-interview';
   const isVerbalInterview = interviewType === 'verbal-interview';
   const isCurrentAffairs = interviewType === 'current-affairs-interview';
-  const isMedicineMMI = interviewType === 'medicine-mmi';
+  const medicinePilot = getMedicinePilot(interviewType);
+  const isMedicineMMI = interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || !!medicinePilot;
+  const medicineDomains = medicinePilot ? packForMedicinePilot(medicinePilot).domains : medicinePack.domains;
   const isChatWithClara = interviewType === 'chat-with-clara';
 
   let maxScore, maxIndividualScore;
@@ -332,25 +336,25 @@ export const InterviewFeedback = ({
     // Medicine MMI interview reuses the logic score fields with MMI station titles
     sections = [
       {
-        title: 'Ethical & Clinical Reasoning',
+        title: medicineDomains[0],
         icon: 'Stethoscope',
         score: feedback.pattern_recognition_score || 0,
         feedback: feedback.detailed_feedback.pattern_recognition || '',
       },
       {
-        title: 'Structured Judgement & Prioritisation',
+        title: medicineDomains[1],
         icon: 'ClipboardList',
         score: feedback.logical_deduction_score || 0,
         feedback: feedback.detailed_feedback.logical_deduction || '',
       },
       {
-        title: 'Communication & Clarity',
+        title: medicineDomains[2],
         icon: 'MessageCircle',
         score: feedback.mathematical_logic_score || 0,
         feedback: feedback.detailed_feedback.mathematical_logic || '',
       },
       {
-        title: 'Insight, Motivation & Professionalism',
+        title: medicineDomains[3],
         icon: 'HeartHandshake',
         score: feedback.clarity_of_thought_score || 0,
         feedback: feedback.detailed_feedback.clarity_of_thought || '',

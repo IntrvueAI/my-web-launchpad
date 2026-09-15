@@ -74,50 +74,49 @@ if (userErr || !userData?.user) {
 }
 userId = userData.user.id;
 
-// Rate limit: reject only if the user has a *genuinely concurrent* live session, to
-// prevent Anam quota exhaustion. The client creates the active interview_sessions row
-// for THIS attempt before requesting a token, so we must ignore freshly-created rows
-// (younger than 90s) or every start would block itself. We also ignore rows older than
-// 30 minutes: a session can't still be live past the max interview length, so those are
-// stale/abandoned rows that should never lock a user out.
-const now = Date.now();
-const ignoreYoungerThan = new Date(now - 90 * 1000).toISOString();        // this attempt's own row
-const ignoreOlderThan = new Date(now - 30 * 60 * 1000).toISOString();     // stale/abandoned rows
-const supabaseService = createClient(supabaseUrl!, supabaseServiceKey!);
-
-// Self-heal: a genuinely live session is always younger than 90s at this point, so any of the
-// user's OWN active sessions older than that are abandoned (tab closed / refreshed without ending).
-// Mark them abandoned so they can never lock the user out of starting a new interview.
-await supabaseService
-  .from('interview_sessions')
-  .update({ status: 'abandoned', ended_at: new Date().toISOString() })
-  .eq('user_id', userData.user.id)
-  .eq('status', 'active')
-  .lt('created_at', ignoreYoungerThan);
-
-const { count: activeSessions } = await supabaseService
-  .from('interview_sessions')
-  .select('id', { count: 'exact', head: true })
-  .eq('user_id', userData.user.id)
-  .eq('status', 'active')
-  .lt('created_at', ignoreYoungerThan)
-  .gt('created_at', ignoreOlderThan);
-if ((activeSessions ?? 0) >= 1) {
-  return new Response(JSON.stringify({ error: 'You already have an active session. Please end it before starting a new one.' }), {
-    status: 429,
-    headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
-  });
-}
-
-// Input validation and sanitization
+// Long circuits must not be labelled abandoned merely because they exceed 90 seconds.
+// The current attempt is identified explicitly; other recently active sessions still block it.
 const requestBody = await req.json();
-const { personaConfig } = requestBody;
+const { personaConfig, sessionReference } = requestBody;
+const now = Date.now();
+const staleBefore = new Date(now - 15 * 60 * 1000).toISOString();
+const hardLimitBefore = new Date(now - 2 * 60 * 60 * 1000).toISOString();
+const supabaseService = createClient(supabaseUrl!, supabaseServiceKey!);
+let currentSession: { id: string; interview_type: string; status: string } | null = null;
+if (sessionReference) {
+  const { data, error } = await supabaseService.from('interview_sessions').select('id, interview_type, status')
+    .eq('session_reference', sessionReference).eq('user_id', userId).maybeSingle();
+  if (error || !data || data.status !== 'active') return new Response(JSON.stringify({ error:'Active session not found' }), {status:403,headers:{...corsHeaders,'Content-Type':'application/json'}});
+  currentSession = data;
+  if (['medicine-oxford-pilot','medicine-cambridge-pilot','medicine-imperial-pilot'].includes(data.interview_type)) {
+    const caller = createClient(supabaseUrl!, supabaseAnonKey!, {global:{headers:{Authorization:authHeader}}});
+    const { data: isAdmin, error: adminError } = await caller.rpc('is_current_user_admin');
+    if (adminError || isAdmin !== true) return new Response(JSON.stringify({error:'Draft pilots require administrator access'}), {status:403,headers:{...corsHeaders,'Content-Type':'application/json'}});
+  }
+}
+const { error: cleanupError } = await supabaseService.from('interview_sessions')
+  .update({status:'abandoned',ended_at:new Date().toISOString()}).eq('user_id',userId).eq('status','active')
+  .or(`created_at.lt.${hardLimitBefore},last_activity_at.lt.${staleBefore},and(last_activity_at.is.null,created_at.lt.${staleBefore})`);
+if (cleanupError) throw cleanupError;
+let activeQuery = supabaseService.from('interview_sessions').select('id',{count:'exact',head:true})
+  .eq('user_id',userId).eq('status','active');
+if (currentSession) activeQuery = activeQuery.neq('id',currentSession.id);
+else activeQuery = activeQuery.lt('created_at',new Date(now-90*1000).toISOString()); // older clients do not send their reference
+const { count:activeSessions, error:activeError } = await activeQuery;
+if (activeError) throw activeError;
+if ((activeSessions ?? 0) > 0) return new Response(JSON.stringify({error:'You already have an active session. Please end it before starting another.'}), {status:429,headers:{...corsHeaders,'Content-Type':'application/json'}});
 
 if (!personaConfig || typeof personaConfig !== 'object') {
   return new Response(JSON.stringify({ error: 'Valid personaConfig is required' }), {
     status: 400,
     headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin, 'Content-Type': 'application/json' },
   });
+}
+
+// A finite provider-side cap is required; student input cannot request an unlimited session.
+const duration = personaConfig.maxSessionLengthSeconds;
+if (typeof duration !== 'number' || !Number.isFinite(duration) || duration <= 0 || duration > 7200) {
+  return new Response(JSON.stringify({error:'Session duration must be between 1 and 7200 seconds'}), {status:400,headers:{...corsHeaders,'Content-Type':'application/json'}});
 }
 
     // Engine-driven (orchestrated) interviews are puppeteered by our interview-brain via talk().

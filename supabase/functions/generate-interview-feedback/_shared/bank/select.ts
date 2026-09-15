@@ -66,7 +66,9 @@ export interface SelectParams {
  * than per-subject, so any future dated content gets the same protection for free.
  */
 function isExpired(q: BankQuestion, now: Date): boolean {
-  return !!q.currentAffairsExpiry && new Date(q.currentAffairsExpiry).getTime() < now.getTime();
+  if (!q.currentAffairsExpiry) return false;
+  const expiry = new Date(q.currentAffairsExpiry).getTime();
+  return !Number.isFinite(expiry) || expiry < now.getTime();
 }
 
 /**

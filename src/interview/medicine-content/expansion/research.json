@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-15",
-  "edition": "02",
+  "updatedAt": "2026-09-16",
+  "edition": "03",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -100,7 +100,8 @@
       "sourceIds": [
         "cam-format",
         "cam-stats",
-        "cam-course"
+        "cam-course",
+        "cam-medical-criteria"
       ]
     },
     {
@@ -308,9 +309,45 @@
       "access": "Full official page retrieved",
       "supports": "Online, thirty minutes, two conversational sections; ethical-scenario choice in panel B.",
       "checked": "2026-09-15"
+    },
+    {
+      "id": "cam-medical-criteria",
+      "title": "Cambridge — Key Criteria for Medical Admissions",
+      "url": "https://www.undergraduate.study.cam.ac.uk/sites/default/files/publications/key_criteria_for_medical_admissions.pdf",
+      "checked": "2026-09-16",
+      "access": "Official indexed PDF text; direct retrieval returned 403",
+      "supports": "Applying scientific knowledge to unfamiliar situations, forming and comparing hypotheses, flexibility in interpreting evidence, communication and reflection."
     }
   ],
   "updates": [
+    {
+      "id": "engine-verification-20260916",
+      "category": "VERIFIED",
+      "date": "16 SEP · ENGINE MILESTONE",
+      "title": "96 regression checks and 12 browser diagnostics",
+      "body": "The focused suite covers complete circuits, station clocks, queued and retried bells, stale replies, evidence retention and draft isolation. Browser checks cover all three school profiles and full actor notes on mobile. App and server type checks, the production build and a local PostgreSQL migration check pass. Live AI/avatar acceptance follows backend deployment; these results do not claim model-quality validation."
+    },
+    {
+      "id": "engine-workbench-20260916",
+      "category": "ENGINE",
+      "date": "16 SEP · 00:24 BST",
+      "title": "Three distinct practice engines are ready for admin testing",
+      "body": "Oxford and Cambridge now use academic plans and reasoning rubrics; Imperial uses a six-exercise MMI practice design with five-minute answers. The workbench runs the real sequencing engine with scripted probes, exports transcripts and executes twelve diagnostics. These are engineering checks, not a live model-quality evaluation."
+    },
+    {
+      "id": "engine-reliability-20260916",
+      "category": "FIXED",
+      "date": "16 SEP · 00:24 BST",
+      "title": "The station clock survives follow-ups; late bells cannot skip ahead",
+      "body": "Added queued timer controls, stale-event protection, preserved answers on stop, finite follow-ups and honest unassessed evidence. Full-session application budgets now cover each practice circuit. Backend migration/deployment and a supported avatar account are required before the live acceptance run."
+    },
+    {
+      "id": "actor-drafts-20260916",
+      "category": "CONTENT",
+      "date": "16 SEP · 00:24 BST",
+      "title": "Four roleplays now have full actor instructions",
+      "body": "Alex, Sam, Jo and Riley have opening lines, conditional disclosures, escalation and de-escalation rules, realistic resistance, red flags and alternative endings. All sixty new prompts remain drafts for human review."
+    },
     {
       "id": "follow-up-ui",
       "date": "2026-09-15 · 23:48 BST",

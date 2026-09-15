@@ -169,6 +169,7 @@ export interface Evidence {
   /** Reasoning band from the question's rubric, when one was authored. */
   band?: 'strong' | 'developing' | 'weak';
   notes: string;          // short interviewer-side note ("misread the question", etc.)
+  completionReason?: 'assessed' | 'time_up' | 'skipped' | 'ended' | 'turn_limit' | 'topic_changed';
 }
 
 /** Which node of the flow the engine is currently at (1:1 with the flow diagram). */
@@ -217,6 +218,8 @@ export type BrainAction =
 export interface BrainRequest {
   sessionId: string;
   action: BrainAction;
+  expectedQuestionIndex?: number;
+  turnId?: string;
   studentText?: string;
   /** For 'start' / 'set_mode' / 'switch_topic'. */
   mode?: Mode;

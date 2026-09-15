@@ -5,6 +5,7 @@ import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
 import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
+import { MEDICINE_PILOTS, packForMedicinePilot } from "./_shared/subjects/medicine/pilots.ts";
 import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
 import { chatPack } from "./_shared/subjects/chat/pack.ts";
 import { logAppEvent } from "./_shared/appLogger.ts";
@@ -21,6 +22,7 @@ const ENGINE_PACKS: Record<string, any> = {
   // Same subject/pack/bank as medicine-mmi — only station count and timing differ. See
   // src/interview/subjects/medicine/schoolModes.ts.
   'medicine-mmi-manchester': medicinePack,
+  ...Object.fromEntries(MEDICINE_PILOTS.map(p => [p.interviewTypeId, packForMedicinePilot(p)])),
   'chat-with-clara': chatPack,
 };
 
@@ -183,7 +185,7 @@ Segment to analyze:`;
           }
           return [];
         } catch (e) {
-          console.warn(`Segment ${segment.segmentNumber} annotation failed:`, e?.message || e);
+          console.warn(`Segment ${segment.segmentNumber} annotation failed:`, (e instanceof Error ? e.message : String(e)));
           return [];
         }
       }));
@@ -193,7 +195,7 @@ Segment to analyze:`;
       console.log(`Total annotations generated from all segments: ${annotations.length}`);
 
     } catch (e) {
-      console.warn('Segmented annotation generation failed, falling back to single request:', e?.message || e);
+      console.warn('Segmented annotation generation failed, falling back to single request:', (e instanceof Error ? e.message : String(e)));
       
       // Fallback to original single-request method with increased token limit
       const fallbackAnnotationPrompt = `You are an expert speaking examiner providing comprehensive feedback. Given a transcript string, extract quoted spans from ONLY the Student's lines throughout the ENTIRE conversation.
@@ -260,7 +262,7 @@ CRITICAL: You MUST provide exactly 30-35 annotations to give thorough feedback c
           }
         }
       } catch (fallbackError) {
-        console.warn('Fallback annotation generation failed:', fallbackError?.message || fallbackError);
+        console.warn('Fallback annotation generation failed:', (fallbackError instanceof Error ? fallbackError.message : String(fallbackError)));
       }
     }
 
@@ -400,6 +402,11 @@ const INTERVIEW_TYPES: Record<string, any> = {
 };
 
 // Dynamic system prompt generation based on interview configuration
+for (const pilot of MEDICINE_PILOTS) {
+  INTERVIEW_TYPES[pilot.interviewTypeId] = { ...INTERVIEW_TYPES['medicine-mmi'], id:pilot.interviewTypeId,
+    name:`${pilot.school} Medicine pilot`, scoringCriteria:packForMedicinePilot(pilot).domains };
+}
+
 const getSystemPrompt = (interviewType: string, scoringSystem: string): string => {
   const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
   
@@ -733,6 +740,7 @@ serve(async (req) => {
   let sessionDbId: string | null = null;
 
 try {
+  if (!openAIApiKey) throw new Error('OPENAI_API_KEY is not configured');
   // Input validation and sanitization
   const inputBody = await req.json();
   const { transcription, sessionId, userId, interviewType, interviewCategory, scoringSystem, sessionReference } = inputBody;
@@ -930,7 +938,7 @@ try {
       model: 'gpt-4.1',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields.\n\n${sanitizedTranscription}${evidenceSummary}` }
+        { role: 'user', content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text.\n\n${sanitizedTranscription}${evidenceSummary}` }
       ],
       temperature: 0,
       response_format: { type: 'json_object' },
@@ -1021,7 +1029,7 @@ try {
         }
         
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || interviewType === 'chat-with-clara') {
+        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || MEDICINE_PILOTS.some(p => p.interviewTypeId === interviewType) || interviewType === 'chat-with-clara') {
           // Logic / maths / verbal / current-affairs validation (shared score fields)
           const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
           for (const field of requiredFields) {
@@ -1064,10 +1072,10 @@ try {
       }
       
     } catch (e) {
-      console.error('JSON parsing error:', e.message);
+      console.error('JSON parsing error:', e instanceof Error ? e.message : String(e));
       
       // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || interviewType === 'chat-with-clara') {
+      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || MEDICINE_PILOTS.some(p => p.interviewTypeId === interviewType) || interviewType === 'chat-with-clara') {
         feedbackData = {
           pattern_recognition_score: 3,
           logical_deduction_score: 3,
@@ -1334,7 +1342,7 @@ STUDENT PERFORMANCE DATA:`;
     };
 
     // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || interviewType === 'chat-with-clara') {
+    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || MEDICINE_PILOTS.some(p => p.interviewTypeId === interviewType) || interviewType === 'chat-with-clara') {
       insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
       insertData.logical_deduction_score = feedbackData.logical_deduction_score;
       insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;
@@ -1364,15 +1372,15 @@ STUDENT PERFORMANCE DATA:`;
     });
 
   } catch (error) {
-    console.error('Error in generate-interview-feedback function:', error.message);
+    console.error('Error in generate-interview-feedback function:', error instanceof Error ? error.message : String(error));
     logAppEvent('edge:generate-interview-feedback', {
       level: 'error',
       eventType: 'unhandled_exception',
-      message: error?.message || String(error),
+      message: (error instanceof Error ? error.message : String(error)),
       userId: loggedUserId,
       interviewSessionId: sessionDbId,
       requestId,
-      metadata: { stack: error?.stack },
+      metadata: { stack: error instanceof Error ? error.stack : undefined },
     }).catch(() => {});
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,

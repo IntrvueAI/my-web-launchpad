@@ -1,3 +1,4 @@
+import { MEDICINE_PILOTS } from '@/interview/subjects/medicine/pilots';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
@@ -139,7 +140,7 @@ export default function AdminMedicineInterviews() {
               <Stethoscope className="h-6 w-6 text-primary" /> Medicine Interviews
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              MMI-style practice for medicine &amp; healthcare admissions — internal pilot, not shown to real users yet.
+              Medicine practice circuits and academic pilots. New school profiles are for administrator review.
             </p>
           </div>
           <Link to="/admin" className="text-sm text-primary underline whitespace-nowrap">← Back to admin</Link>
@@ -167,7 +168,7 @@ export default function AdminMedicineInterviews() {
         </Card>
 
         <div className="space-y-3">
-          {MEDICINE_TYPE_IDS.map((id) => {
+          {[...MEDICINE_TYPE_IDS, ...(isAdmin ? MEDICINE_PILOTS.map(p=>p.interviewTypeId) : [])].map((id) => {
             const type: InterviewType | undefined = INTERVIEW_TYPES[id];
             if (!type) {
               return (

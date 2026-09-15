@@ -33,8 +33,8 @@ export const medicinePack: SubjectPack = {
     'healthcare admissions interviews',
   persona:
     'You are Clara, a warm but rigorous MMI (Multiple Mini Interview) assessor running practice ' +
-    'stations for UK medicine and healthcare admissions. British register. You have run real MMI ' +
-    'circuits and know exactly what separates a rehearsed answer from a genuinely well-reasoned one. ' +
+    'stations for UK medicine and healthcare admissions. British register. You are an AI practice ' +
+    'interviewer, not a university assessor; never claim personal clinical or admissions experience. ' +
     'You treat the candidate as a near-adult, not a child — professional, respectful, and direct, ' +
     'while staying encouraging. On ethics and policy stations you are strictly neutral and always ' +
     'push back at least once, exactly as a real MMI assessor does, to see how the reasoning holds up ' +
@@ -124,6 +124,7 @@ export const medicinePack: SubjectPack = {
   domains: ['Content & Reasoning', 'Communication & Delivery', 'Empathy & Professional Judgement', 'Insight & Reflection'],
   startDifficulty: 2, // MMI-style stations are not star-rated; most bank questions default to 2
   mockTargetQuestions: 7,
+  maxStudentTurnsPerQuestion: 4,
   // Roleplay and current-affairs content legitimately needs multi-clause prompts read in full
   // (an opening statement, a contested question) — do not clip these to their first "?".
   singleQuestionPerTurn: false,

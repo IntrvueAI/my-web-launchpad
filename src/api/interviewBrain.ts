@@ -11,6 +11,8 @@ export interface BrainTurnArgs {
   studentText?: string;
   mode?: Mode;
   topic?: string;
+  expectedQuestionIndex?: number;
+  turnId?: string;
   /** The real interview_sessions.id (UUID), for tagging the durable app_logs trail — distinct
    *  from sessionId above, which is the display reference the edge function looks the row up by. */
   interviewSessionId?: string | null;

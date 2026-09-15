@@ -9,6 +9,7 @@
  */
 
 import { InterviewTypeConfig, InterviewType as ModernInterviewType } from '@/types/interview';
+import { MEDICINE_PILOTS, packForMedicinePilot, sessionBudgetMinutes } from '@/interview/subjects/medicine/pilots';
 
 // Keep the original interface for backward compatibility
 export interface InterviewType {
@@ -229,7 +230,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     description: 'An 8-station MMI circuit with reading time before each station, matching the University of Leeds\'s own published format — ethics, roleplay, current affairs, data and motivation stations.',
     category: 'medicine',
     promptFile: 'medicine/medicine-mmi.md', // vestigial, ignored when engineDriven
-    duration: 25,
+    duration: sessionBudgetMinutes(8, { prep:120, response:360 }),
     scoringSystem: '0-5',
     scoringCriteria: [
       'Ethical & Clinical Reasoning',
@@ -265,7 +266,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     description: 'A 5-station MMI circuit with zero reading time — the same question bank as our Leeds-style mock, run at the University of Manchester\'s own published pace: cold-start, 8 minutes per station.',
     category: 'medicine',
     promptFile: 'medicine/medicine-mmi.md', // vestigial, ignored when engineDriven
-    duration: 25,
+    duration: sessionBudgetMinutes(5, { prep:0, response:480 }),
     scoringSystem: '0-5',
     scoringCriteria: [
       'Ethical & Clinical Reasoning',
@@ -289,7 +290,7 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
       "This is a 5-station MMI circuit modelled on the University of Manchester's own published " +
       "format: 8 minutes per station, with NO reading or writing time at all — you respond cold, the " +
       "moment the station starts. Same question bank as our Leeds-style mock; the pace is what's " +
-      "different, and for Manchester the pace is the point.\n\n" +
+      "different, and for Manchester the pace is the point. This practice omits Manchester's published two-minute gaps between stations.\n\n" +
       "Clara will move between short stations — live roleplay, ethical scenarios, current affairs, " +
       "data interpretation, and questions about your own motivation and experience.\n\n" +
       "This is a voice practice tool — it assesses what you SAY, not your tone or expression, so make " +
@@ -345,6 +346,22 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     costCredits: 0
   }
 };
+
+// Draft pilots are visible only in admin launchers and independently authorised by the server.
+for (const pilot of MEDICINE_PILOTS) {
+  const pack = packForMedicinePilot(pilot);
+  INTERVIEW_TYPES[pilot.interviewTypeId] = {
+    id: pilot.interviewTypeId, name: `${pilot.school} Medicine — ${pilot.style === 'academic' ? 'academic' : 'MMI'} pilot`,
+    description: `${pilot.evidence} Draft content for admin review.`, category:'medicine',
+    promptFile:'medicine/medicine-mmi.md', engineDriven:true, engineSubject:'medicine', adminOnly:true,
+    topicPracticeEnabled:false, scoringSystem:'0-5', scoringCriteria:pack.domains, difficultyLevel:3,
+    tags:['medicine',pilot.style,'admin pilot','draft content'], icon:'Stethoscope', costCredits:0,
+    timingSeconds:{prep:pilot.circuit.prepSeconds,response:pilot.circuit.responseSeconds},
+    duration:sessionBudgetMinutes(pilot.circuit.slots.length,{prep:pilot.circuit.prepSeconds,response:pilot.circuit.responseSeconds}),
+    preStartNote:`This is an original ${pilot.school} practice pilot with ${pilot.circuit.slots.length} exercises. Content awaits educator/editorial review.\n\n${pilot.circuit.timingBasis}\n\n${pilot.behaviours.join(' ')}\n\nFeedback uses our practice rubric, not university marks or admissions predictions.`,
+  };
+}
+
 
 export const INTERVIEW_CATEGORIES = {
   academic: {
@@ -812,6 +829,15 @@ const CHAT_WITH_CLARA_CONFIG: InterviewTypeConfig = {
 /**
  * Enhanced configurations mapped by modern interview type
  */
+function pilotFeedbackConfig(id: ModernInterviewType): InterviewTypeConfig {
+  const pilot = MEDICINE_PILOTS.find(p => p.interviewTypeId === id)!;
+  const domains = packForMedicinePilot(pilot).domains;
+  return { ...MEDICINE_MMI_CONFIG, name:INTERVIEW_TYPES[id].name,
+    description:INTERVIEW_TYPES[id].description,
+    sections:MEDICINE_MMI_CONFIG.sections.map((section,i) => ({...section,title:domains[i],description:'Original practice rubric; not university marks.'})),
+  };
+}
+
 export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeConfig> = {
   '11-plus': ELEVEN_PLUS_CONFIG,
   '11-plus-v2': ELEVEN_PLUS_CONFIG,
@@ -821,6 +847,9 @@ export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeCo
   'current-affairs-interview': CURRENT_AFFAIRS_INTERVIEW_CONFIG,
   'medicine-mmi': MEDICINE_MMI_CONFIG,
   'medicine-mmi-manchester': MEDICINE_MMI_MANCHESTER_CONFIG,
+  'medicine-oxford-pilot': pilotFeedbackConfig('medicine-oxford-pilot'),
+  'medicine-cambridge-pilot': pilotFeedbackConfig('medicine-cambridge-pilot'),
+  'medicine-imperial-pilot': pilotFeedbackConfig('medicine-imperial-pilot'),
   'chat-with-clara': CHAT_WITH_CLARA_CONFIG,
   'ielts': IELTS_CONFIG,
   // Placeholder configurations for future interview types

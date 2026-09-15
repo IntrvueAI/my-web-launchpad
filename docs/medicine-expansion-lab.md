@@ -44,10 +44,10 @@ The Vite development plugin exposes a loopback-only, same-origin runner with thr
 
 The progress chart uses the supplied area/line presentation and leaves missing scores as gaps. The live countdown now uses an elapsed-time deadline, survives parent rerenders and fires completion once. It does not change the configured session allowance.
 
-## Open release issue
+## Engine expansion follow-up — 16 September
 
-The existing live Medicine types both configure a 25-minute session limit. This is shorter than the sum of their full station timings. Their provider budget and server session lifecycle need coordinated review before advertising a complete live circuit. The lab surfaces this issue; the new manual rehearsal profiles have independent, explicit timing. No provider plan assumptions or paid test sessions were used to mask the mismatch.
+The engine expansion replaces the 25-minute Medicine caps with full-plan application budgets and adds Oxford, Cambridge and Imperial admin pilots, an interactive engine workbench and twelve scripted diagnostics. See [medicine-engine-expansion.md](medicine-engine-expansion.md) for implementation, verification and required backend deployment order. A deployed live avatar/model acceptance run and content review remain open.
 
 For a second local Vite preview alongside port 8080, set `MEDICINE_LAB_PREVIEW=1` to use an isolated dependency cache. This avoids stale dependency errors between preview servers.
 
-Authenticated student sessions and paid live calls were not started. The legacy runtime has two dedicated timed MMI modes; the new academic and Imperial circuits are admin rehearsals until reviewed and integrated into the runtime.
+Authenticated student sessions and paid live calls were not started. The new academic and Imperial profiles are integrated behind server-side administrator authorization. They remain draft pilots pending deployment, acceptance testing and human review.

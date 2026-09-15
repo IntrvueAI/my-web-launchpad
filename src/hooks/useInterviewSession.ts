@@ -9,7 +9,9 @@ import { useConnectionHealthCheck } from './useConnectionHealthCheck';
 import { useToast } from './use-toast';
 import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
-import { computeStationClock, type StationClockState } from '@/interview/engine/stationClock';
+import type { StationClockState } from '@/interview/engine/stationClock';
+import { useStationClock } from './useStationClock';
+import { StationControlQueue } from '@/interview/engine/controlQueue';
 import { logDebug } from '@/interview/debug/debugBus';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 
@@ -89,11 +91,13 @@ export const useInterviewSession = (
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [brainUiState, setBrainUiState] = useState<BrainResponse['uiState'] | null>(null);
   const [interviewComplete, setInterviewComplete] = useState(false);
-  const [stationTimer, setStationTimer] = useState<UseInterviewSessionReturn['stationTimer']>(null);
-  // Which questionIndex the currently-running countdown belongs to, so a re-render / a non-question
-  // brain turn (e.g. a follow-up within the same station) doesn't restart the clock.
-  const timedQuestionIndexRef = useRef<number | null>(null);
-  const stationTimerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const uiStateRef = useRef<BrainResponse['uiState'] | null>(null);
+  const controlsRef = useRef(new StationControlQueue());
+  const answerRetriesRef = useRef(0);
+  type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string };
+  type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up';
+  const turnRef = useRef<(action: TurnAction, payload?: TurnPayload) => Promise<void>>(async () => {});
+  const retryTurnRef = useRef<{action:TurnAction;payload:TurnPayload}|null>(null);
 
   // Ref to store the anam client instance and messages
   const clientRef = useRef<AnamClient | null>(null);
@@ -133,6 +137,7 @@ export const useInterviewSession = (
   /** Speak a brain line through the avatar and record it. */
   const speak = useCallback(async (say: string) => {
     const client = clientRef.current;
+    const speakingSession = sessionRefRef.current;
     if (!client || !say?.trim()) return;
     logDebug({ source: 'anam', kind: 'request', label: 'client.talk()', detail: say });
     try {
@@ -141,43 +146,79 @@ export const useInterviewSession = (
       console.error('Failed to talk:', err);
       logDebug({ source: 'anam', kind: 'error', label: 'client.talk() failed', detail: (err as Error)?.message || String(err) });
     }
-    pushTranscript('assistant', say);
+    if (speakingSession === sessionRefRef.current && client === clientRef.current) pushTranscript('assistant', say);
   }, [pushTranscript]);
 
   /** Run one brain turn and speak the result. Serialised via brainBusyRef. */
   const runBrainTurn = useCallback(async (
-    action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up',
-    payload: { studentText?: string; mode?: Mode; topic?: string } = {},
+    action: TurnAction,
+    payload: TurnPayload = {},
   ) => {
     const sessionId = sessionRefRef.current;
-    if (!sessionId || brainBusyRef.current) return;
+    if (!sessionId) return;
+    payload = { ...payload, turnId: payload.turnId ?? crypto.randomUUID() };
+    if (action === 'answer') payload.expectedQuestionIndex ??= uiStateRef.current?.questionIndex;
+    const isControl = action === 'skip' || action === 'time_up' || action === 'switch_topic';
+    if (isControl) {
+      payload = { ...payload, expectedQuestionIndex: payload.expectedQuestionIndex ?? uiStateRef.current?.questionIndex };
+      // Preserve speech that arrived before the bell with the station it belongs to.
+      if (pendingStudentRef.current.length) {
+        payload.studentText = [payload.studentText, ...pendingStudentRef.current].filter(Boolean).join(' ');
+        pendingStudentRef.current = [];
+      }
+    }
+    if (brainBusyRef.current) {
+      if (isControl) controlsRef.current.enqueue({ action, stationIndex: payload.expectedQuestionIndex, topic: payload.topic, studentText: payload.studentText });
+      return;
+    }
+    if (payload.expectedQuestionIndex !== undefined && payload.expectedQuestionIndex !== uiStateRef.current?.questionIndex) return;
     brainBusyRef.current = true;
     const requestBody = { sessionId, action, ...payload, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);
       logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
+      if (sessionRefRef.current !== sessionId) return;
+      const changedStation = uiStateRef.current?.questionIndex !== res.uiState.questionIndex;
+      uiStateRef.current = res.uiState;
       setBrainUiState(res.uiState);
+      answerRetriesRef.current = 0;
+      // Buffered speech was captured under the previous station. Never apply it to a fresh one.
+      if (changedStation || res.done) pendingStudentRef.current = [];
       await speak(res.say);
+      if (sessionRefRef.current !== sessionId) return;
       if (res.done) setInterviewComplete(true);
       lastMessageTimeRef.current = Date.now();
     } catch (err) {
+      if (sessionRefRef.current !== sessionId) return;
       console.error('Brain turn failed:', err);
       logDebug({ source: 'brain', kind: 'error', label: `interview-brain: ${action} failed`, detail: (err as Error)?.message || String(err) });
       sessionLogger.logError(`Brain turn (${action}) failed: ${(err as Error)?.message || err}`)
         .catch(() => {});
-      // A failed 'answer' call must not silently drop what the student just said — put it back
-      // at the front of the queue so the pending-flush below retries it automatically, and tell
-      // them, so a slow/failed reply reads as "hang on" rather than looking like nothing happened.
-      if (action === 'answer' && payload.studentText) {
-        pendingStudentRef.current = [payload.studentText, ...pendingStudentRef.current];
+      // Retry transient answer/control failures with the same identifier. A timer bell has no
+      // second natural firing, so it needs the same bounded delivery guarantee as an answer.
+      if (((action === 'answer' && payload.studentText) || isControl) && answerRetriesRef.current < 2) {
+        answerRetriesRef.current += 1;
+        retryTurnRef.current = {action,payload};
       }
       toast({
         title: "Didn't quite catch that",
-        description: 'Retrying your last message…',
+        description: retryTurnRef.current ? 'Retrying your last message…' : 'Your transcript is saved locally. Please try your last action again.',
       });
     } finally {
+      if (sessionRefRef.current !== sessionId) return;
       brainBusyRef.current = false;
+      if (retryTurnRef.current) {
+        if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
+        flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS * (answerRetriesRef.current + 1));
+        return;
+      }
+      const queued = controlsRef.current.take(uiStateRef.current?.questionIndex);
+      if (queued && !uiStateRef.current?.onQuestion) controlsRef.current.clear();
+      else if (queued) {
+        void turnRef.current(queued.action, { topic: queued.topic, studentText: queued.studentText, expectedQuestionIndex: queued.stationIndex });
+        return;
+      }
       // Anything the student said while we were busy is queued — handle it now (coalesced), unless
       // push-to-talk is being held, in which case it waits for the explicit release flush too.
       if (pendingStudentRef.current.length > 0 && !pushToTalkModeRef.current) {
@@ -187,51 +228,12 @@ export const useInterviewSession = (
     }
   }, [speak, sessionLogger, toast]);
 
-  /**
-   * Drive the per-station countdown from the brain's own `timingSeconds` (real, verified per-school
-   * numbers — see subjects/medicine/schoolModes.ts). Absent for every interview type except the two
-   * Medicine MMI school modes, so this effect is a no-op everywhere else. Starts a fresh clock only
-   * when `questionIndex` actually advances to a NEW station (not on every turn — a follow-up within
-   * the same station shouldn't reset it). Prep counts down first if the school mode has any (Leeds:
-   * 2 minutes; Manchester: none, straight to the response clock), then response; hitting zero on the
-   * response clock fires `time_up` exactly once, automatically, the same way a real MMI bell would.
-   */
-  useEffect(() => {
-    const timing = brainUiState?.timingSeconds;
-    const questionIndex = brainUiState?.questionIndex;
-    if (!timing || !brainUiState?.onQuestion || questionIndex === undefined) {
-      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
-      setStationTimer(null);
-      return;
-    }
-    if (timedQuestionIndexRef.current === questionIndex) return; // already timing this station
-    timedQuestionIndexRef.current = questionIndex;
-    if (stationTimerIntervalRef.current) clearInterval(stationTimerIntervalRef.current);
-
-    // Deadline-based, not tick-decrementing — see stationClock.ts for why. `startedAt` is the one
-    // source of truth; every tick recomputes from it, so a throttled/delayed tick (backgrounded tab)
-    // catches up to the correct value instead of drifting further behind.
-    const startedAt = Date.now();
-    let firedTimeUp = false;
-    setStationTimer(computeStationClock(0, timing));
-
-    stationTimerIntervalRef.current = setInterval(() => {
-      const clock = computeStationClock(Date.now() - startedAt, timing);
-      setStationTimer(clock);
-      if (clock.expired && !firedTimeUp) {
-        // Real MMI stations end mid-sentence — stop the clock and let the interviewer wrap up in
-        // character rather than freezing at 0:00 or firing time_up more than once.
-        firedTimeUp = true;
-        if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
-        runBrainTurn('time_up');
-      }
-    }, 500);
-
-    return () => {
-      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only questionIndex/timingSeconds/onQuestion should retrigger this; runBrainTurn is stable across the run.
-  }, [brainUiState?.questionIndex, brainUiState?.timingSeconds, brainUiState?.onQuestion]);
+  turnRef.current = runBrainTurn;
+  const stationTimer = useStationClock({
+    stationKey: isStreaming && brainUiState?.onQuestion ? `${sessionRefRef.current}:${brainUiState.questionIndex}` : null,
+    timing: brainUiState?.timingSeconds,
+    onTimeUp: () => { void runBrainTurn('time_up', { expectedQuestionIndex: brainUiState?.questionIndex }); },
+  });
 
   /**
    * Send the buffered student utterance(s) to the brain as one answer. Coalescing means two quick
@@ -241,6 +243,12 @@ export const useInterviewSession = (
   const flushStudentBuffer = useCallback(() => {
     if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
     if (brainBusyRef.current) return; // still talking — the turn's `finally` will re-schedule this
+    if (retryTurnRef.current) {
+      const retry = retryTurnRef.current;
+      retryTurnRef.current = null;
+      void runBrainTurn(retry.action,retry.payload);
+      return;
+    }
     const buffered = pendingStudentRef.current.join(' ').replace(/\s+/g, ' ').trim();
     if (!buffered) return;
     pendingStudentRef.current = [];
@@ -277,7 +285,7 @@ export const useInterviewSession = (
       }
 
       const { data, error } = await invokeEdgeFunction<{ sessionToken: string }>('get-anam-session-token', {
-        body: { personaConfig, engineDriven },
+        body: { personaConfig, engineDriven, sessionReference: sessionRefRef.current },
         interviewSessionId: sessionLogger.sessionId ?? undefined,
       });
 
@@ -325,9 +333,12 @@ export const useInterviewSession = (
       processedUserIdsRef.current.clear();
       pendingStudentRef.current = [];
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
-      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
-      timedQuestionIndexRef.current = null;
-      setStationTimer(null);
+      controlsRef.current.clear();
+      uiStateRef.current = null;
+      setBrainUiState(null);
+      brainBusyRef.current = false;
+      answerRetriesRef.current = 0;
+      retryTurnRef.current = null;
       startedRef.current = false;
       startOptsRef.current = opts;
 
@@ -494,6 +505,11 @@ export const useInterviewSession = (
    * Stop the interview session and get transcription.
    */
   const stopInterview = useCallback(async (): Promise<string | null> => {
+    sessionRefRef.current = null;
+    retryTurnRef.current = null;
+    startedRef.current = false;
+    setIsStreaming(false);
+    controlsRef.current.clear();
     try {
       let transcription: string | null = null;
       await sessionLogger.logEvent('stop_interview', 'Interview stop initiated');
@@ -520,9 +536,11 @@ export const useInterviewSession = (
       }
 
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
-      if (stationTimerIntervalRef.current) { clearInterval(stationTimerIntervalRef.current); stationTimerIntervalRef.current = null; }
-      timedQuestionIndexRef.current = null;
-      setStationTimer(null);
+      controlsRef.current.clear();
+      uiStateRef.current = null;
+      setBrainUiState(null);
+      brainBusyRef.current = false;
+      answerRetriesRef.current = 0;
       pendingStudentRef.current = [];
 
       connectionHealth.stopMonitoring();
@@ -549,6 +567,7 @@ export const useInterviewSession = (
   useEffect(() => {
     if (!isStreaming) return;
     const timeoutCheck = setInterval(() => {
+      void sessionLogger.updateActivity().catch(() => {});
       const timeSinceLastMessage = Date.now() - lastMessageTimeRef.current;
       if (timeSinceLastMessage > 120000) {
         sessionLogger.logError(`Session timeout detected - no activity for ${Math.round(timeSinceLastMessage / 1000)} seconds`, {
@@ -564,6 +583,10 @@ export const useInterviewSession = (
    */
   useEffect(() => {
     return () => {
+      sessionRefRef.current = null;
+      startedRef.current = false;
+      controlsRef.current.clear();
+      if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
       if (clientRef.current) {
         clientRef.current.stopStreaming().catch(console.error);
       }

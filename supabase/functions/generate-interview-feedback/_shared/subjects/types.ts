@@ -72,4 +72,6 @@ export interface SubjectPack {
    * current-affairs moral dilemmas) would have real content silently clipped by this.
    */
   singleQuestionPerTurn?: boolean;
+  /** Finite answer turns per station; the engine enforces this even when the model stalls. */
+  maxStudentTurnsPerQuestion?: number;
 }
