@@ -52,7 +52,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
 
   const subline = stats.totalSessions > 0
     ? `You've done ${stats.totalSessions} Medicine ${stats.totalSessions === 1 ? 'session' : 'sessions'} so far.${nextRealInterview ? ` ${nextRealInterview.school} is ${nextRealInterview.daysUntil} day${nextRealInterview.daysUntil === 1 ? '' : 's'} away.` : ''}`
-    : "You haven't started a Medicine MMI practice session yet — the recommended circuit below is a good first one.";
+    : "Start with a short solo practice, or make time for a full spoken circuit.";
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -78,7 +78,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
                   <button onClick={() => onStartInterview(recommended)} style={primaryBtn}>
                     Start circuit · {recommended.costCredits ?? 0} credits
                   </button>
-                  <button onClick={() => onOpenTab('practice')} style={ghostBtn}>Choose a different format</button>
+                  <button onClick={() => onOpenTab('practice')} style={ghostBtn}>Try free solo practice</button>
                 </div>
               </div>
               <div style={{ width: 220, background: 'var(--med-bg)', borderRadius: 14, padding: 16, fontSize: 13 }}>

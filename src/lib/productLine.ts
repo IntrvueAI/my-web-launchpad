@@ -8,6 +8,7 @@ export function getStoredProductLine(): ProductLine {
 
 export function setStoredProductLine(line: ProductLine): void {
   localStorage.setItem(STORAGE_KEY, line);
+  window.dispatchEvent(new Event('intrvue:product-line-changed'));
 }
 
 // Only meaningful when productLine === 'medicine' — which dashboard shell a Medicine user sees:

@@ -17,7 +17,7 @@ export function medicineLabPlugin(): Plugin {
         content: ['scripts/check-medicine-expansion.mjs'],
         types: ['node_modules/typescript/bin/tsc', '--noEmit', '-p', 'tsconfig.app.json'],
         tests: ['node_modules/vitest/vitest.mjs', 'run', 'src/interview/medicine-content/__tests__/expansion.test.ts',
-          'src/interview/medicine-content/__tests__/circuit.test.ts', 'src/interview/medicine-content/__tests__/data.test.ts', 'src/interview/subjects/medicine/__tests__', 'src/interview/engine/__tests__', 'src/interview/bank/__tests__/select.test.ts', 'src/hooks/__tests__', 'src/components/medicine-dashboard/__tests__/medicine-ui.test.tsx'],
+          'src/interview/medicine-content/__tests__/circuit.test.ts', 'src/interview/medicine-content/__tests__/data.test.ts', 'src/interview/subjects/medicine/__tests__', 'src/interview/engine/__tests__', 'src/interview/bank/__tests__/select.test.ts', 'src/hooks/__tests__', 'src/components/medicine-dashboard/__tests__/medicine-ui.test.tsx', 'src/interview/studio/__tests__', 'src/components/medicine-studio/__tests__'],
       };
       const log = (text: string, stream = 'system') => {
         state.logs.push({ at: new Date().toISOString(), text: text.replace(/\x1b\[[0-9;]*m/g, ''), stream });

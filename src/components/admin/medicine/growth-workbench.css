@@ -1,0 +1,225 @@
+.growth-workbench {
+  scroll-margin-top: 30px;
+}
+.growth-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+}
+.growth-intro > div {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  max-width: 780px;
+}
+.growth-intro svg {
+  flex-shrink: 0;
+  color: var(--med-primary);
+}
+.growth-intro p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--med-muted);
+}
+.growth-intro > a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  color: var(--med-primary-dark);
+  white-space: nowrap;
+}
+.growth-disclosure {
+  font-size: 12px;
+  color: var(--med-muted);
+  line-height: 1.7;
+  padding: 14px 17px;
+  border-radius: 10px;
+  background: var(--med-primary-tint);
+}
+.growth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 35px;
+  margin-top: 24px;
+}
+.growth-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-content: start;
+}
+.growth-inputs label > span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  min-height: 36px;
+  color: var(--med-muted);
+  margin-bottom: 8px;
+}
+.growth-inputs label > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--med-border-strong);
+  border-radius: 10px;
+  padding: 3px 13px;
+  background: var(--med-card);
+}
+.growth-inputs b {
+  font-size: 12px;
+  color: var(--med-tertiary);
+  font-weight: 400;
+}
+.growth-inputs input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  font-size: 16px;
+  border: 0;
+  background: transparent;
+  color: var(--med-ink);
+}
+.growth-main-result {
+  padding: 27px;
+  background: var(--med-surface-dark);
+  border-radius: 14px;
+  color: white;
+}
+.growth-main-result > span {
+  font-family: var(--med-mono);
+  font-size: 10px;
+  color: var(--med-on-dark);
+  letter-spacing: 0.05em;
+}
+.growth-main-result strong {
+  font-family: var(--med-display);
+  font-size: 50px;
+  display: block;
+  margin: 13px 0;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+.growth-main-result p {
+  font-size: 12px;
+  color: var(--med-on-dark);
+  margin: 0;
+}
+.growth-results {
+  margin-top: 12px;
+}
+.growth-results > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--med-border);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.growth-results span {
+  color: var(--med-muted);
+}
+.growth-results b {
+  text-align: right;
+  font-weight: 500;
+}
+.growth-export {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--med-border-strong);
+  border-radius: 9px;
+  background: var(--med-card);
+  color: var(--med-primary-dark);
+  padding: 10px 14px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.growth-experiments {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+}
+.growth-experiments article {
+  padding: 24px;
+  border: 1px solid var(--med-border);
+  border-radius: 13px;
+  background: var(--med-card);
+}
+.growth-experiments span {
+  font-family: var(--med-mono);
+  font-size: 10px;
+  color: var(--med-primary-dark);
+  letter-spacing: 0.07em;
+}
+.growth-experiments h3 {
+  font-family: var(--med-display);
+  font-size: 18px;
+  margin: 14px 0;
+}
+.growth-experiments p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--med-muted);
+}
+.growth-experiments small {
+  font-size: 11px;
+  line-height: 1.6;
+  display: block;
+  color: var(--med-tertiary);
+}
+.growth-research {
+  padding: 20px;
+  border: 1px solid var(--med-border);
+  border-radius: 12px;
+  margin-top: 22px;
+}
+.growth-research summary {
+  font-size: 14px;
+  cursor: pointer;
+  min-height: 30px;
+}
+.growth-research p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--med-muted);
+}
+.growth-research > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+.growth-research a {
+  font-size: 12px;
+  color: var(--med-primary-dark);
+}
+@media (max-width: 800px) {
+  .growth-intro {
+    display: block;
+  }
+  .growth-intro > a {
+    margin: 10px 0 20px;
+  }
+  .growth-grid {
+    grid-template-columns: 1fr;
+  }
+  .growth-experiments {
+    grid-template-columns: 1fr;
+  }
+  .growth-inputs {
+    gap: 18px 12px;
+  }
+  .growth-inputs label > span {
+    font-size: 11px;
+  }
+  .growth-results > div {
+    gap: 12px;
+  }
+  .growth-main-result strong {
+    font-size: 44px;
+  }
+}

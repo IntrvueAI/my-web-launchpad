@@ -1,6 +1,6 @@
 {
   "updatedAt": "2026-09-16",
-  "edition": "03",
+  "edition": "04",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -317,9 +317,54 @@
       "checked": "2026-09-16",
       "access": "Official indexed PDF text; direct retrieval returned 403",
       "supports": "Applying scientific knowledge to unfamiliar situations, forming and comparing hypotheses, flexibility in interpreting evidence, communication and reflection."
+    },
+    {
+      "id": "product-medify-20260916",
+      "title": "Medify: Interviews Online Course",
+      "url": "https://medify.co/interviews",
+      "checked": "2026-09-16",
+      "access": "Full official product page",
+      "supports": "Competitor features: spoken or typed responses, question library, personalised feedback and progress tracking. Product claims, not independently verified learning outcomes."
+    },
+    {
+      "id": "product-ninja-20260916",
+      "title": "Interviews Ninja: peer interview practice",
+      "url": "https://interviews.ninja/",
+      "checked": "2026-09-16",
+      "access": "Full official product page",
+      "supports": "Competitor positioning around peer practice and feedback from both sides of an interview."
+    },
+    {
+      "id": "retrieval-study-2006",
+      "title": "Roediger & Karpicke: Test-Enhanced Learning (2006)",
+      "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
+      "checked": "2026-09-16",
+      "access": "Full publisher abstract page",
+      "supports": "Retrieval practice and long-term retention in an experimental learning task. Applying it to interview practice is a product design inference, not validation of intrvue or the editorial 1/3/7-day revisit schedule."
     }
   ],
   "updates": [
+    {
+      "id": "studio-verification-20260916",
+      "category": "VERIFIED",
+      "date": "16 SEP · PRODUCT MILESTONE",
+      "title": "129 checks pass; the studio works in the production build",
+      "body": "The local regression suite now covers 129 tests in 17 files. Browser checks completed the public warm-up, real browser audio capture/playback/cleanup, saved reflections, calendar and story exports, backup merge/rejection, reloads, dashboard integration and 320/390px layouts. Ten scoped axe checks reported no WCAG A/AA violations. TypeScript, selected-module lint, content integrity and the production build pass. The built bundle also completed a full reflection-to-history journey. No payment or live AI/provider call was made."
+    },
+    {
+      "id": "studio-build-20260916",
+      "category": "BUILT / STUDENT EXPERIENCE",
+      "date": "16 SEP · PRODUCT STUDIO",
+      "title": "A complete solo practice loop, from first answer to next attempt",
+      "body": "The free studio offers 48 explicitly selected existing prompts, timed or untimed responses, private audio playback, follow-ups, self-review, bookmarks and a revisit queue. A personal story bank, two-week calendar export, backup restore and explicit guest-note transfer support return visits. Clinical-action prompts and all new school drafts stay outside this solo release. Both colour schemes use the same functional public page and dashboard."
+    },
+    {
+      "id": "growth-model-20260916",
+      "category": "RESEARCH & PRODUCT",
+      "date": "16 SEP · GROWTH WORKBENCH",
+      "title": "Make the £100k monthly ambition measurable",
+      "body": "A new admin scenario model connects assumed price, AI usage, delivery cost, fees, churn and conversion to the customer count required. It is a hypothetical subscription model, not connected revenue and not a checkout change. Competitor product research and retrieval-practice evidence inform the first-use and return-visit experience."
+    },
     {
       "id": "engine-verification-20260916",
       "category": "VERIFIED",

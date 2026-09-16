@@ -11,6 +11,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    // Formatters replace files on Windows. Wait for writes to settle before transforming them.
+    watch: { awaitWriteFinish: { stabilityThreshold: 150, pollInterval: 50 } },
   },
   plugins: [
     react(),

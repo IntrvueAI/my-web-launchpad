@@ -6,12 +6,21 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Calendar } from "lucide-react";
 import { useLocation } from 'react-router-dom';
+import { getStoredProductLine } from '@/lib/productLine';
 
 const STORAGE_KEY = "intrvue-shutdown-banner-dismissed";
 
 export const ShutdownBanner = () => {
-  const { pathname } = useLocation();
-  const medicinePage = pathname === '/medicine' || pathname.startsWith('/admin/medicine') || pathname.startsWith('/__dev/medicine');
+  const { pathname, search } = useLocation();
+  const [productLine, setProductLine] = useState(() => { try { return getStoredProductLine(); } catch { return '11plus'; } });
+  useEffect(() => {
+    const sync = () => { try { setProductLine(getStoredProductLine()); } catch { /* Retain current view if storage is blocked. */ } };
+    window.addEventListener('storage', sync);
+    window.addEventListener('intrvue:product-line-changed', sync);
+    return () => { window.removeEventListener('storage', sync); window.removeEventListener('intrvue:product-line-changed', sync); };
+  }, []);
+  const medicineAccountPage = ['/', '/landing', '/auth', '/reset-password'].includes(pathname) && (productLine === 'medicine' || new URLSearchParams(search).get('mode') === 'medicine');
+  const medicinePage = medicineAccountPage || pathname === '/medicine' || pathname.startsWith('/medicine/') || pathname.startsWith('/admin/medicine') || pathname.startsWith('/__dev/medicine');
   const [isVisible, setIsVisible] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 

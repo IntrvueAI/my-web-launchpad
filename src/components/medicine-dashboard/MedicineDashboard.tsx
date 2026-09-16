@@ -100,7 +100,7 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
           onOpenCredits={() => setAccountView('credits')}
         />
       )}
-      {activeTab === 'practice' && <MedicinePractice onStartInterview={onStartInterview} />}
+      {activeTab === 'practice' && <MedicinePractice onStartInterview={onStartInterview} scope={user?.id ?? 'guest'} />}
       {activeTab === 'progress' && <MedicineProgress />}
       {activeTab === 'schools' && <MedicineSchools onStartInterview={onStartInterview} />}
       {activeTab === 'feedback' && <MedicineFeedback />}

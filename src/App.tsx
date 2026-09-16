@@ -21,6 +21,7 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const Medicine = lazy(() => import("./pages/Medicine"));
+const MedicinePracticeStudio = lazy(() => import("./pages/MedicinePracticeStudio"));
 const Faq = lazy(() => import("./pages/Faq"));
 const AdminSttBakeoff = lazy(() => import("./pages/AdminSttBakeoff"));
 const AdminSchoolFinder = lazy(() => import("./pages/AdminSchoolFinder"));
@@ -129,6 +130,7 @@ const AppContent = () => {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/medicine" element={<Medicine />} />
+              <Route path="/medicine/practice" element={<MedicinePracticeStudio />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
