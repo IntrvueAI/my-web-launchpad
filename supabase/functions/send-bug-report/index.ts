@@ -1,3 +1,4 @@
+import { withJson, escapeHtml, HttpError } from "../_shared/http.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
@@ -7,7 +8,8 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id",
 };
 
 interface BugReportRequest {
@@ -19,17 +21,9 @@ interface BugReportRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Log incoming request
-  console.log('🔧 [EdgeFunction] Received request:', {
-    method: req.method,
-    url: req.url,
-    hasAuthHeader: !!req.headers.get("Authorization"),
-    authHeaderPreview: req.headers.get("Authorization")?.substring(0, 30) + '...'
-  });
-
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
-    console.log('🔧 [EdgeFunction] Handling OPTIONS request');
+    console.log("🔧 [EdgeFunction] Handling OPTIONS request");
     return new Response(null, { headers: corsHeaders });
   }
 
@@ -39,54 +33,44 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     // Verify authentication
     const authHeader = req.headers.get("Authorization");
-    console.log('🔧 [EdgeFunction] Auth header check:', {
-      hasAuthHeader: !!authHeader,
-      authHeaderLength: authHeader?.length || 0,
-      authHeaderStart: authHeader?.substring(0, 20) || 'missing'
-    });
-
     if (!authHeader) {
-      console.error('🔧 [EdgeFunction] Missing authorization header');
+      console.error("🔧 [EdgeFunction] Missing authorization header");
       throw new Error("Missing authorization header");
     }
 
     // Check environment variables
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY");
-    
-    console.log('🔧 [EdgeFunction] Environment variables check:', {
-      hasSupabaseUrl: !!supabaseUrl,
-      supabaseUrl: supabaseUrl || 'MISSING',
-      hasSupabaseKey: !!supabaseKey,
-      supabaseKeyPreview: supabaseKey?.substring(0, 20) + '...' || 'MISSING'
-    });
 
     if (!supabaseUrl || !supabaseKey) {
-      console.error('🔧 [EdgeFunction] Missing Supabase environment variables');
+      console.error("🔧 [EdgeFunction] Missing Supabase environment variables");
       throw new Error("Server configuration error");
     }
 
     // Extract token from Authorization header
-    const token = authHeader.replace('Bearer ', '');
-    console.log('🔧 [EdgeFunction] Token extracted, length:', token.length);
+    const token = authHeader.replace("Bearer ", "");
+    console.log("🔧 [EdgeFunction] Token extracted, length:", token.length);
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    console.log('🔧 [EdgeFunction] Supabase client created, verifying user with token...');
+    console.log(
+      "🔧 [EdgeFunction] Supabase client created, verifying user with token...",
+    );
 
     // Pass token directly to getUser() - this is the correct pattern
-    const { data: userData, error: userError } = await supabase.auth.getUser(token);
-    
-    console.log('🔧 [EdgeFunction] User verification result:', {
+    const { data: userData, error: userError } =
+      await supabase.auth.getUser(token);
+
+    console.log("🔧 [EdgeFunction] User verification result:", {
       hasUser: !!userData?.user,
       userId: userData?.user?.id,
       userEmail: userData?.user?.email,
       hasError: !!userError,
-      errorMessage: userError?.message
+      errorMessage: userError?.message,
     });
 
     if (userError || !userData?.user) {
-      console.error('🔧 [EdgeFunction] User verification failed:', userError);
+      console.error("🔧 [EdgeFunction] User verification failed:", userError);
       throw new Error("Unauthorized");
     }
 
@@ -94,35 +78,57 @@ const handler = async (req: Request): Promise<Response> => {
     userId = user.id;
 
     // Server-side rate limit: max 5 bug reports per hour per user
-    const serviceClient = createClient(supabaseUrl!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+    const serviceClient = createClient(
+      supabaseUrl!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-    const { count: reportCount } = await serviceClient
+    const { count: reportCount, error: reportLimitError } = await serviceClient
       .from("user_feedback")
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
       .gte("created_at", oneHourAgo);
+    if (reportLimitError) throw new Error("Unable to check report limit");
     if ((reportCount ?? 0) >= 5) {
       return new Response(
-        JSON.stringify({ error: "Rate limit exceeded. Maximum 5 bug reports per hour." }),
-        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        JSON.stringify({
+          error: "Rate limit exceeded. Maximum 5 bug reports per hour.",
+        }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        },
       );
     }
 
     // Parse and validate request body
-    const { subject, category, description, stepsToReproduce, currentUrl }: BugReportRequest = await req.json();
+    const {
+      subject,
+      category,
+      description,
+      stepsToReproduce,
+      currentUrl,
+    }: BugReportRequest = await req.json();
 
     // Basic validation
-    if (!subject || subject.length > 100) {
-      throw new Error("Invalid subject");
+    if (typeof subject !== "string" || !subject || subject.length > 100) {
+      throw new HttpError(400, "Invalid subject");
     }
-    if (!category) {
-      throw new Error("Category is required");
+    if (typeof category !== "string" || !category || category.length > 80) {
+      throw new HttpError(400, "Category is required");
     }
-    if (!description || description.length > 1000) {
-      throw new Error("Invalid description");
+    if (
+      typeof description !== "string" ||
+      !description ||
+      description.length > 1000
+    ) {
+      throw new HttpError(400, "Invalid description");
     }
-    if (stepsToReproduce && stepsToReproduce.length > 500) {
-      throw new Error("Steps to reproduce is too long");
+    if (
+      stepsToReproduce !== undefined &&
+      (typeof stepsToReproduce !== "string" || stepsToReproduce.length > 500)
+    ) {
+      throw new HttpError(400, "Steps to reproduce is too long");
     }
 
     // Prepare bug report data
@@ -136,15 +142,13 @@ const handler = async (req: Request): Promise<Response> => {
     };
 
     // Store in database
-    const { error: dbError } = await supabase
-      .from("user_feedback")
-      .insert({
-        user_id: user.id,
-        category: "bug_report",
-        subject: subject,
-        message: JSON.stringify(bugReportData),
-        status: "new",
-      });
+    const { error: dbError } = await supabase.from("user_feedback").insert({
+      user_id: user.id,
+      category: "bug_report",
+      subject: subject,
+      message: JSON.stringify(bugReportData),
+      status: "new",
+    });
 
     if (dbError) {
       console.error("Database error:", dbError);
@@ -153,9 +157,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Format category for display
     const categoryDisplay = category
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
 
     // Send email notification to admin
     const emailHtml = `
@@ -182,35 +186,39 @@ const handler = async (req: Request): Promise<Response> => {
             <div class="content">
               <div class="section">
                 <div class="label">Category</div>
-                <div><span class="badge">${categoryDisplay}</span></div>
+                <div><span class="badge">${escapeHtml(categoryDisplay)}</span></div>
               </div>
 
               <div class="section">
                 <div class="label">Subject</div>
-                <div class="value">${subject}</div>
+                <div class="value">${escapeHtml(subject)}</div>
               </div>
 
               <div class="section">
                 <div class="label">User Email</div>
-                <div class="value">${user.email}</div>
+                <div class="value">${escapeHtml(user.email)}</div>
               </div>
 
               <div class="section">
                 <div class="label">Current Page</div>
-                <div class="value">${currentUrl}</div>
+                <div class="value">${escapeHtml(currentUrl)}</div>
               </div>
 
               <div class="section">
                 <div class="label">Description</div>
-                <div class="value">${description.replace(/\n/g, '<br>')}</div>
+                <div class="value">${escapeHtml(description).replace(/\n/g, "<br>")}</div>
               </div>
 
-              ${stepsToReproduce ? `
+              ${
+                stepsToReproduce
+                  ? `
               <div class="section">
                 <div class="label">Steps to Reproduce</div>
-                <div class="value">${stepsToReproduce.replace(/\n/g, '<br>')}</div>
+                <div class="value">${escapeHtml(stepsToReproduce).replace(/\n/g, "<br>")}</div>
               </div>
-              ` : ''}
+              `
+                  : ""
+              }
 
               <div class="footer">
                 <p>Submitted: ${new Date().toLocaleString()}</p>
@@ -229,12 +237,13 @@ const handler = async (req: Request): Promise<Response> => {
       html: emailHtml,
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    if (emailResponse.error)
+      console.warn("Bug report saved; notification delivery failed");
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
-        message: "Bug report submitted successfully"
+        message: "Bug report submitted successfully",
       }),
       {
         status: 200,
@@ -242,9 +251,14 @@ const handler = async (req: Request): Promise<Response> => {
           "Content-Type": "application/json",
           ...corsHeaders,
         },
-      }
+      },
     );
   } catch (error: any) {
+    if (error instanceof HttpError)
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: error.status,
+        headers: corsHeaders,
+      });
     console.error("Error in send-bug-report function:", error);
     logAppEvent("edge:send-bug-report", {
       level: "error",
@@ -255,18 +269,21 @@ const handler = async (req: Request): Promise<Response> => {
       metadata: { stack: error?.stack },
     }).catch(() => {});
     return new Response(
-      JSON.stringify({ 
-        error: error.message || "An error occurred while processing your bug report"
+      JSON.stringify({
+        error:
+          error.message === "Unauthorized"
+            ? "Unauthorized"
+            : "Unable to save bug report",
       }),
       {
         status: error.message === "Unauthorized" ? 401 : 500,
-        headers: { 
-          "Content-Type": "application/json", 
-          ...corsHeaders 
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
         },
-      }
+      },
     );
   }
 };
 
-serve(handler);
+serve(withJson(handler));

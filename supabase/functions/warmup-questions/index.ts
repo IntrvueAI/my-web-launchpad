@@ -1,3 +1,4 @@
+import { withJson } from "../_shared/http.ts";
 // Serves a small set of optional "warm-up" questions to the student Questions page. The question
 // bank lives in an admin-only table (answers must not leak wholesale to the client), so this
 // function reads it with the service role and returns only what a warm-up needs — the question plus,
@@ -13,61 +14,90 @@ const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "X-Content-Type-Options": "nosniff",
   "Cache-Control": "no-store",
 };
 
 const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
-  const requestId = req.headers.get("x-request-id");
-  let userId: string | null = null;
-  try {
-    const token = (req.headers.get("Authorization") || "").replace("Bearer ", "");
-    const authClient = createClient(supabaseUrl, supabaseAnonKey);
-    const { data: userData, error: userErr } = await authClient.auth.getUser(token);
-    if (userErr || !userData?.user) return json({ error: "Unauthorized" }, 401);
-    userId = userData.user.id;
+serve(
+  withJson(async (req) => {
+    if (req.method === "OPTIONS")
+      return new Response(null, { headers: corsHeaders });
+    const requestId = req.headers.get("x-request-id");
+    let userId: string | null = null;
+    try {
+      const token = (req.headers.get("Authorization") || "").replace(
+        "Bearer ",
+        "",
+      );
+      const authClient = createClient(supabaseUrl, supabaseAnonKey);
+      const { data: userData, error: userErr } =
+        await authClient.auth.getUser(token);
+      if (userErr || !userData?.user)
+        return json({ error: "Unauthorized" }, 401);
+      userId = userData.user.id;
 
-    const body = await req.json().catch(() => ({}));
-    const subject: string | undefined = body?.subject && body.subject !== "mixed" ? body.subject : undefined;
-    const limit = Math.min(Math.max(Number(body?.limit) || 5, 1), 10);
+      const body = await req.json().catch(() => ({}));
+      if (
+        body.subject !== undefined &&
+        (typeof body.subject !== "string" || body.subject.length > 80)
+      )
+        return json({ error: "Invalid subject" }, 400);
+      const subject: string | undefined =
+        body?.subject && body.subject !== "mixed" ? body.subject : undefined;
+      const limit = Math.min(Math.max(Number(body?.limit) || 5, 1), 10);
 
-    const admin = createClient(supabaseUrl, supabaseServiceKey);
-    let q = admin.from("questions").select(
-      "id, subject, topic, question_type, difficulty, title, question, answer, model_reasoning_path, hints",
-    ).eq("active", true).eq("warmup", true);
-    if (subject) q = q.eq("subject", subject);
-    const { data, error } = await q;
-    if (error) return json({ error: error.message }, 500);
+      const admin = createClient(supabaseUrl, supabaseServiceKey);
+      let q = admin
+        .from("questions")
+        .select(
+          "id, subject, topic, question_type, difficulty, title, question, answer, model_reasoning_path, hints",
+        )
+        .eq("active", true)
+        .eq("warmup", true);
+      if (subject) q = q.eq("subject", subject);
+      const { data, error } = await q;
+      if (error)
+        return json({ error: "Questions temporarily unavailable" }, 503);
 
-    // Shuffle server-side and take `limit` so each warm-up feels fresh.
-    const pool = (data ?? []).slice();
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
+      // Shuffle server-side and take `limit` so each warm-up feels fresh.
+      const pool = (data ?? []).slice();
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      const questions = pool.slice(0, limit).map((r: any) => ({
+        id: r.id,
+        subject: r.subject,
+        topic: r.topic,
+        questionType: r.question_type,
+        difficulty: r.difficulty,
+        title: r.title,
+        question: r.question,
+        answer: r.answer,
+        modelReasoningPath: r.model_reasoning_path,
+        firstHint: Array.isArray(r.hints) && r.hints.length ? r.hints[0] : null,
+      }));
+      return json({ questions });
+    } catch (err) {
+      console.error("warmup-questions error:", (err as Error)?.message || err);
+      logAppEvent("edge:warmup-questions", {
+        level: "error",
+        eventType: "unhandled_exception",
+        message: (err as Error)?.message || String(err),
+        userId,
+        requestId,
+        metadata: { stack: (err as Error)?.stack },
+      }).catch(() => {});
+      return json({ error: "Internal server error" }, 500);
     }
-    const questions = pool.slice(0, limit).map((r: any) => ({
-      id: r.id, subject: r.subject, topic: r.topic, questionType: r.question_type,
-      difficulty: r.difficulty, title: r.title, question: r.question,
-      answer: r.answer, modelReasoningPath: r.model_reasoning_path,
-      firstHint: Array.isArray(r.hints) && r.hints.length ? r.hints[0] : null,
-    }));
-    return json({ questions });
-  } catch (err) {
-    console.error("warmup-questions error:", (err as Error)?.message || err);
-    logAppEvent("edge:warmup-questions", {
-      level: "error",
-      eventType: "unhandled_exception",
-      message: (err as Error)?.message || String(err),
-      userId,
-      requestId,
-      metadata: { stack: (err as Error)?.stack },
-    }).catch(() => {});
-    return json({ error: "Internal server error" }, 500);
-  }
-});
+  }),
+);

@@ -1,11 +1,15 @@
+import { withJson } from "../_shared/http.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import { mathsPack } from "./_shared/subjects/maths/pack.ts";
 import { logicPack } from "./_shared/subjects/logic/pack.ts";
 import { currentaffairsPack } from "./_shared/subjects/currentaffairs/pack.ts";
 import { elevenplusPack } from "./_shared/subjects/elevenplus/pack.ts";
-import { MEDICINE_PILOTS, packForMedicinePilot } from "./_shared/subjects/medicine/pilots.ts";
+import {
+  MEDICINE_PILOTS,
+  packForMedicinePilot,
+} from "./_shared/subjects/medicine/pilots.ts";
 import { medicinePack } from "./_shared/subjects/medicine/pack.ts";
 import { chatPack } from "./_shared/subjects/chat/pack.ts";
 import { logAppEvent } from "./_shared/appLogger.ts";
@@ -14,34 +18,52 @@ import { logAppEvent } from "./_shared/appLogger.ts";
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
 // rubric. Maps the four assessed domains onto the existing four score columns.
 const ENGINE_PACKS: Record<string, any> = {
-  'maths-interview': mathsPack,
-  'logic-puzzles': logicPack,
-  'current-affairs-interview': currentaffairsPack,
-  '11-plus': elevenplusPack,
-  'medicine-mmi': medicinePack,
+  "maths-interview": mathsPack,
+  "logic-puzzles": logicPack,
+  "current-affairs-interview": currentaffairsPack,
+  "11-plus": elevenplusPack,
+  "11-plus-v2": elevenplusPack,
+  "medicine-mmi": medicinePack,
   // Same subject/pack/bank as medicine-mmi — only station count and timing differ. See
   // src/interview/subjects/medicine/schoolModes.ts.
-  'medicine-mmi-manchester': medicinePack,
-  ...Object.fromEntries(MEDICINE_PILOTS.map(p => [p.interviewTypeId, packForMedicinePilot(p)])),
-  'chat-with-clara': chatPack,
+  "medicine-mmi-manchester": medicinePack,
+  ...Object.fromEntries(
+    MEDICINE_PILOTS.map((p) => [p.interviewTypeId, packForMedicinePilot(p)]),
+  ),
+  "chat-with-clara": chatPack,
 };
 
 function buildEngineDrivenSystemPrompt(pack: any): string {
   const [d1, d2, d3, d4] = pack.domains;
   // The score/feedback keys must match how this subject is validated + saved downstream. The 11+
   // main interview uses the personal_insight/… columns; the academic minis use the pattern_… ones.
-  const isElevenPlus = pack.subject === 'elevenplus';
+  const isElevenPlus = pack.subject === "elevenplus";
   const sk = isElevenPlus
-    ? ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score']
-    : ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
+    ? [
+        "personal_insight_score",
+        "reasoning_score",
+        "extracurricular_score",
+        "current_awareness_score",
+      ]
+    : [
+        "pattern_recognition_score",
+        "logical_deduction_score",
+        "mathematical_logic_score",
+        "clarity_of_thought_score",
+      ];
   const fk = isElevenPlus
-    ? ['personal_insight', 'reasoning', 'extracurricular', 'current_awareness']
-    : ['pattern_recognition', 'logical_deduction', 'mathematical_logic', 'clarity_of_thought'];
-  return `You are an expert, warm evaluator for an 11+ ${pack.subject} mini-interview. You MUST respond with valid JSON only.
+    ? ["personal_insight", "reasoning", "extracurricular", "current_awareness"]
+    : [
+        "pattern_recognition",
+        "logical_deduction",
+        "mathematical_logic",
+        "clarity_of_thought",
+      ];
+  return `You are an expert, warm evaluator for ${pack.subject === "medicine" ? "a medical school admissions practice interview for a prospective medical student" : `an 11+ ${pack.subject} mini-interview`}. You MUST respond with valid JSON only.
 
-${pack.scoringPhilosophy || ''}
+${pack.scoringPhilosophy || ""}
 
-Score these FOUR dimensions, each 0-5 (total out of 20). Weight PROCESS and ADAPTABILITY far above the final answer — a child who reasons well but reaches a wrong answer outscores one who states a correct answer with no reasoning:
+Score these FOUR dimensions, each 0-5 (total out of 20). Weight PROCESS and ADAPTABILITY far above the final answer — a candidate who reasons well but reaches a wrong answer outscores one who states a correct answer with no reasoning:
 1. ${d1}
 2. ${d2}
 3. ${d3}
@@ -55,7 +77,7 @@ CALIBRATION — be rigorous, not generous. These scores guide real preparation, 
 - 0-1 = little to no evidence shown.
 A typical decent performance lands 10-13 total. Reserve 15+ for genuinely impressive interviews (fluent reasoning, minimal hints, specific and reflective answers throughout). Check the evidence log: hints used, wrong answers, "stuck" outcomes and thin one-line replies MUST pull the relevant dimension down — do not award a 4 where the log shows repeated scaffolding.
 
-Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write feedback that names one specific reasoning strength actually observed and one concrete next step — warm, concrete, process-focused, never reducing the child to their final answer.
+Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write feedback that names one specific reasoning strength actually observed and one concrete next step — warm, concrete, process-focused, never reducing the candidate to their final answer.
 
 CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure (the four score keys map to ${d1}, ${d2}, ${d3}, ${d4} in order):
 {
@@ -75,56 +97,66 @@ CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure
 }`;
 }
 
-
 /**
  * Transcript annotations (Student-only quoted highlights). Extracted to a function so the
  * request handler can START it in parallel with the main scoring call — the sequential
  * stages were the main reason long interviews blew the request time budget.
  */
-async function generateTranscriptAnnotations(sanitizedTranscription: string, openAIApiKey: string): Promise<any[]> {
-    let annotations: any[] = [];
+async function generateTranscriptAnnotations(
+  sanitizedTranscription: string,
+  openAIApiKey: string,
+  deadline: AbortSignal,
+): Promise<any[]> {
+  let annotations: any[] = [];
 
-    
-    // Helper function to split transcript into segments for better coverage
-    const splitTranscriptIntoSegments = (transcript: string, numSegments: number = 4) => {
-      const lines = transcript.split('\n');
-      const studentLines = lines.filter(line => line.trim().startsWith('Student:'));
-      const segmentSize = Math.ceil(studentLines.length / numSegments);
-      
-      const segments = [];
-      for (let i = 0; i < numSegments; i++) {
-        const startIdx = i * segmentSize;
-        const endIdx = Math.min((i + 1) * segmentSize, studentLines.length);
-        const segmentLines = studentLines.slice(startIdx, endIdx);
-        
-        if (segmentLines.length > 0) {
-          // Find the position of these lines in the original transcript
-          const firstLine = segmentLines[0];
-          const lastLine = segmentLines[segmentLines.length - 1];
-          const startPos = transcript.indexOf(firstLine);
-          const endPos = transcript.indexOf(lastLine) + lastLine.length;
-          
-          segments.push({
-            content: transcript.substring(startPos, endPos),
-            segmentNumber: i + 1,
-            totalSegments: numSegments,
-            expectedAnnotations: Math.ceil(8 / numSegments) // Aim for 8-10 annotations per segment
-          });
-        }
+  // Helper function to split transcript into segments for better coverage
+  const splitTranscriptIntoSegments = (
+    transcript: string,
+    numSegments: number = 4,
+  ) => {
+    const lines = transcript.split("\n");
+    const studentLines = lines.filter((line) =>
+      line.trim().startsWith("Student:"),
+    );
+    const segmentSize = Math.ceil(studentLines.length / numSegments);
+
+    const segments = [];
+    for (let i = 0; i < numSegments; i++) {
+      const startIdx = i * segmentSize;
+      const endIdx = Math.min((i + 1) * segmentSize, studentLines.length);
+      const segmentLines = studentLines.slice(startIdx, endIdx);
+
+      if (segmentLines.length > 0) {
+        // Find the position of these lines in the original transcript
+        const firstLine = segmentLines[0];
+        const lastLine = segmentLines[segmentLines.length - 1];
+        const startPos = transcript.indexOf(firstLine);
+        const endPos = transcript.indexOf(lastLine) + lastLine.length;
+
+        segments.push({
+          content: transcript.substring(startPos, endPos),
+          segmentNumber: i + 1,
+          totalSegments: numSegments,
+          expectedAnnotations: Math.ceil(8 / numSegments), // Aim for 8-10 annotations per segment
+        });
       }
-      return segments;
-    };
+    }
+    return segments;
+  };
 
-    try {
-      const segments = splitTranscriptIntoSegments(sanitizedTranscription, 4);
-      console.log(`Processing ${segments.length} transcript segments for comprehensive annotation coverage`);
+  try {
+    const segments = splitTranscriptIntoSegments(sanitizedTranscription, 4);
+    console.log(
+      `Processing ${segments.length} transcript segments for comprehensive annotation coverage`,
+    );
 
-      // Process all segments IN PARALLEL — this used to be sequential (4 slow LLM calls one after
-      // another), which on long transcripts pushed the whole request past the edge-function time
-      // budget and surfaced as intermittent "feedback error". Each call also no longer embeds the
-      // full transcript a second time: quotes are re-anchored to character offsets by
-      // sanitizeAnnotation() below, so the model's own indices are optional anyway.
-      const segmentResults = await Promise.all(segments.map(async (segment) => {
+    // Process all segments IN PARALLEL — this used to be sequential (4 slow LLM calls one after
+    // another), which on long transcripts pushed the whole request past the edge-function time
+    // budget and surfaced as intermittent "feedback error". Each call also no longer embeds the
+    // full transcript a second time: quotes are re-anchored to character offsets by
+    // sanitizeAnnotation() below, so the model's own indices are optional anyway.
+    const segmentResults = await Promise.all(
+      segments.map(async (segment) => {
         const segmentAnnotationPrompt = `You are an expert speaking examiner. Analyze ONLY this specific segment (${segment.segmentNumber}/${segment.totalSegments}) of the student's interview transcript.
 
 CRITICAL INSTRUCTIONS:
@@ -144,61 +176,81 @@ CRITICAL INSTRUCTIONS:
 Segment to analyze:`;
 
         const segmentRequest = {
-          model: 'gpt-4.1',
+          model: "gpt-4.1",
           messages: [
-            { role: 'system', content: segmentAnnotationPrompt },
-            { role: 'user', content: segment.content }
+            { role: "system", content: segmentAnnotationPrompt },
+            { role: "user", content: segment.content },
           ],
           temperature: 0,
           max_tokens: 2000,
-          response_format: { type: 'json_object' },
+          response_format: { type: "json_object" },
         };
 
         try {
-          const segmentResp = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${openAIApiKey}`,
-              'Content-Type': 'application/json',
+          const segmentResp = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${openAIApiKey}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(segmentRequest),
+              signal: AbortSignal.any([deadline, AbortSignal.timeout(25_000)]), // a hung call must never eat the whole request budget
             },
-            body: JSON.stringify(segmentRequest),
-            signal: AbortSignal.timeout(60_000), // a hung call must never eat the whole request budget
-          });
+          );
 
           if (!segmentResp.ok) {
-            console.warn(`Segment ${segment.segmentNumber} annotation API error:`, segmentResp.status);
+            console.warn(
+              `Segment ${segment.segmentNumber} annotation API error:`,
+              segmentResp.status,
+            );
             return [];
           }
           const segmentData = await segmentResp.json();
-          const segmentText = (segmentData.choices?.[0]?.message?.content || '').trim();
+          const segmentText = (
+            segmentData.choices?.[0]?.message?.content || ""
+          ).trim();
           try {
             const parsed = JSON.parse(segmentText);
-            if (parsed && Array.isArray(parsed.annotations)) return parsed.annotations;
+            if (parsed && Array.isArray(parsed.annotations))
+              return parsed.annotations;
           } catch (_) {
             const match = segmentText.match(/\{[\s\S]*\}/);
             if (match) {
               try {
                 const parsed = JSON.parse(match[0]);
-                if (parsed && Array.isArray(parsed.annotations)) return parsed.annotations;
-              } catch { /* ignore */ }
+                if (parsed && Array.isArray(parsed.annotations))
+                  return parsed.annotations;
+              } catch {
+                /* ignore */
+              }
             }
           }
           return [];
         } catch (e) {
-          console.warn(`Segment ${segment.segmentNumber} annotation failed:`, (e instanceof Error ? e.message : String(e)));
+          console.warn(
+            `Segment ${segment.segmentNumber} annotation failed:`,
+            e instanceof Error ? e.message : String(e),
+          );
           return [];
         }
-      }));
-      // Concatenate in segment order so annotations stay chronological.
-      annotations = segmentResults.flat();
+      }),
+    );
+    // Concatenate in segment order so annotations stay chronological.
+    annotations = segmentResults.flat();
 
-      console.log(`Total annotations generated from all segments: ${annotations.length}`);
+    console.log(
+      `Total annotations generated from all segments: ${annotations.length}`,
+    );
+  } catch (e) {
+    console.warn(
+      "Segmented annotation generation failed, falling back to single request:",
+      e instanceof Error ? e.message : String(e),
+    );
 
-    } catch (e) {
-      console.warn('Segmented annotation generation failed, falling back to single request:', (e instanceof Error ? e.message : String(e)));
-      
-      // Fallback to original single-request method with increased token limit
-      const fallbackAnnotationPrompt = `You are an expert speaking examiner providing comprehensive feedback. Given a transcript string, extract quoted spans from ONLY the Student's lines throughout the ENTIRE conversation.
+    // Fallback to original single-request method with increased token limit
+    const fallbackAnnotationPrompt = `You are an expert speaking examiner providing comprehensive feedback. Given a transcript string, extract quoted spans from ONLY the Student's lines throughout the ENTIRE conversation.
 
 CRITICAL: You MUST provide exactly 30-35 annotations to give thorough feedback coverage across the ENTIRE transcript.
 
@@ -219,198 +271,222 @@ CRITICAL: You MUST provide exactly 30-35 annotations to give thorough feedback c
 - Ensure balanced distribution: ~8-9 annotations per category (strength, grammar, fluency, lexical)
 - Return ONLY valid JSON with shape: { "annotations": Annotation[] }`;
 
-      const fallbackRequest = {
-        model: 'gpt-4.1',
-        messages: [
-          { role: 'system', content: fallbackAnnotationPrompt },
-          { role: 'user', content: `Transcript to annotate (only highlight Student lines):\n\n${sanitizedTranscription}` }
-        ],
-        temperature: 0,
-        max_tokens: 3000,
-        response_format: { type: 'json_object' },
-      };
+    const fallbackRequest = {
+      model: "gpt-4.1",
+      messages: [
+        { role: "system", content: fallbackAnnotationPrompt },
+        {
+          role: "user",
+          content: `Transcript to annotate (only highlight Student lines):\n\n${sanitizedTranscription}`,
+        },
+      ],
+      temperature: 0,
+      max_tokens: 3000,
+      response_format: { type: "json_object" },
+    };
 
-      try {
-        const fallbackResp = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
+    try {
+      const fallbackResp = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
           headers: {
-            'Authorization': `Bearer ${openAIApiKey}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${openAIApiKey}`,
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(fallbackRequest),
-          signal: AbortSignal.timeout(60_000),
-        });
+          signal: AbortSignal.any([deadline, AbortSignal.timeout(25_000)]),
+        },
+      );
 
-        if (fallbackResp.ok) {
-          const fallbackData = await fallbackResp.json();
-          const fallbackText = (fallbackData.choices?.[0]?.message?.content || '').trim();
-          try {
-            const parsed = JSON.parse(fallbackText);
-            if (parsed && Array.isArray(parsed.annotations)) {
-              annotations = parsed.annotations;
-            }
-          } catch (_) {
-            const match = fallbackText.match(/\{[\s\S]*\}/);
-            if (match) {
-              try {
-                const parsed = JSON.parse(match[0]);
-                if (parsed && Array.isArray(parsed.annotations)) {
-                  annotations = parsed.annotations;
-                }
-              } catch { /* ignore */ }
+      if (fallbackResp.ok) {
+        const fallbackData = await fallbackResp.json();
+        const fallbackText = (
+          fallbackData.choices?.[0]?.message?.content || ""
+        ).trim();
+        try {
+          const parsed = JSON.parse(fallbackText);
+          if (parsed && Array.isArray(parsed.annotations)) {
+            annotations = parsed.annotations;
+          }
+        } catch (_) {
+          const match = fallbackText.match(/\{[\s\S]*\}/);
+          if (match) {
+            try {
+              const parsed = JSON.parse(match[0]);
+              if (parsed && Array.isArray(parsed.annotations)) {
+                annotations = parsed.annotations;
+              }
+            } catch {
+              /* ignore */
             }
           }
         }
-      } catch (fallbackError) {
-        console.warn('Fallback annotation generation failed:', (fallbackError instanceof Error ? fallbackError.message : String(fallbackError)));
       }
+    } catch (fallbackError) {
+      console.warn(
+        "Fallback annotation generation failed:",
+        fallbackError instanceof Error
+          ? fallbackError.message
+          : String(fallbackError),
+      );
     }
+  }
 
-    return annotations;
+  return annotations;
 }
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Security-Policy': "default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';",
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
-  'X-Permitted-Cross-Domain-Policies': 'none',
-  'Cache-Control': 'no-store, no-cache, must-revalidate, private',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Content-Security-Policy":
+    "default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "X-XSS-Protection": "1; mode=block",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+  "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+  "X-Permitted-Cross-Domain-Policies": "none",
+  "Cache-Control": "no-store, no-cache, must-revalidate, private",
 };
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+const openAIApiKey = Deno.env.get("OPENAI_API_KEY");
+const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
 
 // Import interview configuration for dynamic prompt generation
 const INTERVIEW_TYPES: Record<string, any> = {
-  '11-plus': {
-    id: '11-plus',
-    name: '11+ School Interview',
-    category: 'academic',
-    scoringSystem: '0-5',
+  "11-plus": {
+    id: "11-plus",
+    name: "11+ School Interview",
+    category: "academic",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Personal Insight & Self-Awareness',
-      'Reasoning & Problem-Solving', 
-      'Extracurricular Activities & Leadership',
-      'Current Awareness & Curiosity'
-    ]
+      "Personal Insight & Self-Awareness",
+      "Reasoning & Problem-Solving",
+      "Extracurricular Activities & Leadership",
+      "Current Awareness & Curiosity",
+    ],
   },
-  'logic-puzzles': {
-    id: 'logic-puzzles',
-    name: '11+ Logic Puzzles',
-    category: 'academic',
-    scoringSystem: '0-5',
+  "logic-puzzles": {
+    id: "logic-puzzles",
+    name: "11+ Logic Puzzles",
+    category: "academic",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Pattern Recognition & Sequences',
-      'Logical Deduction & Reasoning',
-      'Mathematical Logic & World Problems',
-      'Clarity of Thought'
-    ]
+      "Pattern Recognition & Sequences",
+      "Logical Deduction & Reasoning",
+      "Mathematical Logic & World Problems",
+      "Clarity of Thought",
+    ],
   },
-  'maths-interview': {
-    id: 'maths-interview',
-    name: '11+ Maths Mock Interview',
-    category: 'maths',
-    scoringSystem: '0-5',
+  "maths-interview": {
+    id: "maths-interview",
+    name: "11+ Maths Mock Interview",
+    category: "maths",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Number & Calculation',
-      'Problem-Solving & Method',
-      'Mathematical Reasoning',
-      'Clarity of Explanation'
-    ]
+      "Number & Calculation",
+      "Problem-Solving & Method",
+      "Mathematical Reasoning",
+      "Clarity of Explanation",
+    ],
   },
-  'verbal-interview': {
-    id: 'verbal-interview',
-    name: '11+ Verbal Reasoning Mock Interview',
-    category: 'logic',
-    scoringSystem: '0-5',
+  "verbal-interview": {
+    id: "verbal-interview",
+    name: "11+ Verbal Reasoning Mock Interview",
+    category: "logic",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Vocabulary & Word Knowledge',
-      'Verbal Reasoning & Deduction',
-      'Word Relationships & Patterns',
-      'Clarity of Explanation'
-    ]
+      "Vocabulary & Word Knowledge",
+      "Verbal Reasoning & Deduction",
+      "Word Relationships & Patterns",
+      "Clarity of Explanation",
+    ],
   },
-  'current-affairs-interview': {
-    id: 'current-affairs-interview',
-    name: '11+ Current Affairs & Moral Reasoning Interview',
-    category: 'academic',
-    scoringSystem: '0-5',
+  "current-affairs-interview": {
+    id: "current-affairs-interview",
+    name: "11+ Current Affairs & Moral Reasoning Interview",
+    category: "academic",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'World Awareness & Engagement',
-      'Forming & Defending a View',
-      'Considering Other Perspectives',
-      'Moral Maturity & Clarity'
-    ]
+      "World Awareness & Engagement",
+      "Forming & Defending a View",
+      "Considering Other Perspectives",
+      "Moral Maturity & Clarity",
+    ],
   },
-  'medicine-mmi': {
-    id: 'medicine-mmi',
-    name: 'Medicine MMI Interview — Leeds-style',
-    category: 'medicine',
-    scoringSystem: '0-5',
+  "medicine-mmi": {
+    id: "medicine-mmi",
+    name: "Medicine MMI Interview — Leeds-style",
+    category: "medicine",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Ethical & Clinical Reasoning',
-      'Structured Judgement & Prioritisation',
-      'Communication & Clarity',
-      'Insight, Motivation & Professionalism'
-    ]
+      "Ethical & Clinical Reasoning",
+      "Structured Judgement & Prioritisation",
+      "Communication & Clarity",
+      "Insight, Motivation & Professionalism",
+    ],
   },
-  'medicine-mmi-manchester': {
-    id: 'medicine-mmi-manchester',
-    name: 'Medicine MMI Interview — Manchester-style',
-    category: 'medicine',
-    scoringSystem: '0-5',
+  "medicine-mmi-manchester": {
+    id: "medicine-mmi-manchester",
+    name: "Medicine MMI Interview — Manchester-style",
+    category: "medicine",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Ethical & Clinical Reasoning',
-      'Structured Judgement & Prioritisation',
-      'Communication & Clarity',
-      'Insight, Motivation & Professionalism'
-    ]
+      "Ethical & Clinical Reasoning",
+      "Structured Judgement & Prioritisation",
+      "Communication & Clarity",
+      "Insight, Motivation & Professionalism",
+    ],
   },
-  'chat-with-clara': {
-    id: 'chat-with-clara',
-    name: 'Demo Interview',
-    category: 'other',
-    scoringSystem: '0-5',
+  "chat-with-clara": {
+    id: "chat-with-clara",
+    name: "Demo Interview",
+    category: "other",
+    scoringSystem: "0-5",
     scoringCriteria: [
-      'Warmth & Openness',
-      'Specific & Genuine Detail',
-      'Communication & Clarity',
-      'Curiosity & Engagement'
-    ]
+      "Warmth & Openness",
+      "Specific & Genuine Detail",
+      "Communication & Clarity",
+      "Curiosity & Engagement",
+    ],
   },
-  'demo': {
-    id: 'demo',
-    name: 'Demo Interview Old',
-    category: 'language',
-    scoringSystem: '0-5',
-    scoringCriteria: [
-      'Communication',
-      'Clarity',
-      'Confidence',
-      'Relevance'
-    ]
-  }
+  demo: {
+    id: "demo",
+    name: "Demo Interview Old",
+    category: "language",
+    scoringSystem: "0-5",
+    scoringCriteria: ["Communication", "Clarity", "Confidence", "Relevance"],
+  },
 };
 
 // Dynamic system prompt generation based on interview configuration
 for (const pilot of MEDICINE_PILOTS) {
-  INTERVIEW_TYPES[pilot.interviewTypeId] = { ...INTERVIEW_TYPES['medicine-mmi'], id:pilot.interviewTypeId,
-    name:`${pilot.school} Medicine pilot`, scoringCriteria:packForMedicinePilot(pilot).domains };
+  INTERVIEW_TYPES[pilot.interviewTypeId] = {
+    ...INTERVIEW_TYPES["medicine-mmi"],
+    id: pilot.interviewTypeId,
+    name: `${pilot.school} Medicine pilot`,
+    scoringCriteria: packForMedicinePilot(pilot).domains,
+  };
 }
 
-const getSystemPrompt = (interviewType: string, scoringSystem: string): string => {
-  const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
-  
-  if (interviewType === 'logic-puzzles') {
+INTERVIEW_TYPES["11-plus-v2"] = {
+  ...INTERVIEW_TYPES["11-plus"],
+  id: "11-plus-v2",
+};
+
+const getSystemPrompt = (
+  interviewType: string,
+  scoringSystem: string,
+): string => {
+  const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES["11-plus"];
+
+  if (interviewType === "logic-puzzles") {
     return `You are an expert evaluator for logic puzzles interviews designed for 11+ preparation. You MUST respond with valid JSON only.
 
 SCORING RUBRIC (Each section scored 0-5, total out of 20):
@@ -473,8 +549,8 @@ Required JSON structure:
   }
 }`;
   }
-  
-  if (interviewType === 'maths-interview') {
+
+  if (interviewType === "maths-interview") {
     return `You are an expert evaluator for 11+ maths mock interviews. The student answered 10 maths questions out loud, talking through their method. You MUST respond with valid JSON only.
 
 SCORING RUBRIC (Each section scored 0-5, total out of 20):
@@ -538,7 +614,7 @@ Required JSON structure:
 }`;
   }
 
-  if (interviewType === 'verbal-interview') {
+  if (interviewType === "verbal-interview") {
     return `You are an expert evaluator for 11+ verbal reasoning mock interviews. The student answered 10 verbal reasoning questions out loud, talking through their thinking. You MUST respond with valid JSON only.
 
 SCORING RUBRIC (Each section scored 0-5, total out of 20):
@@ -602,7 +678,7 @@ Required JSON structure:
 }`;
   }
 
-  if (interviewType === 'current-affairs-interview') {
+  if (interviewType === "current-affairs-interview") {
     return `You are an expert evaluator for 11+ current affairs & moral reasoning interviews at top independent school level. The student discussed news and ethical dilemmas out loud and was deliberately pushed back on. There are NO right answers — assess the QUALITY OF REASONING, not which views they hold. You MUST respond with valid JSON only.
 
 SCORING RUBRIC (Each section scored 0-5, total out of 20):
@@ -730,292 +806,441 @@ Required JSON structure:
 }`;
 };
 
-serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
-  }
-
-  const requestId = req.headers.get('x-request-id');
-  let loggedUserId: string | null = null;
-  let sessionDbId: string | null = null;
-
-try {
-  if (!openAIApiKey) throw new Error('OPENAI_API_KEY is not configured');
-  // Input validation and sanitization
-  const inputBody = await req.json();
-  const { transcription, sessionId, userId, interviewType, interviewCategory, scoringSystem, sessionReference } = inputBody;
-  loggedUserId = typeof userId === 'string' ? userId : null;
-
-  // Validate required fields
-  if (!transcription || typeof transcription !== 'string') {
-    return new Response(JSON.stringify({ error: 'Valid transcription is required' }), {
-      status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  if (!userId || typeof userId !== 'string') {
-    return new Response(JSON.stringify({ error: 'Valid userId is required' }), {
-      status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  // Auth check: ensure caller matches provided userId
-  const authHeader = req.headers.get('Authorization') || '';
-  const token = authHeader.replace('Bearer ', '');
-  const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey);
-  const { data: userData, error: userErr } = await supabaseAuth.auth.getUser(token);
-  if (userErr || !userData?.user) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-      status: 401,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-  if (userData.user.id !== userId) {
-    return new Response(JSON.stringify({ error: 'Forbidden' }), {
-      status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  // Rate limit: max 10 feedback generations per 10 minutes per user. (Was 3 — too tight for real
-  // use: a testing session with several back-to-back interviews + regenerations on one account hit
-  // it and surfaced as intermittent "feedback error". Credits are the real spend guard anyway.)
-  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
-  const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
-  const { count: recentCount } = await supabaseAdmin
-    .from('feedback')
-    .select('id', { count: 'exact', head: true })
-    .eq('user_id', userId)
-    .gte('created_at', tenMinutesAgo);
-  if ((recentCount ?? 0) >= 10) {
-    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please wait before generating more feedback.' }), {
-      status: 429,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  // Credits are charged once, at interview start (src/pages/Index.tsx handleSelectInterview) — NOT
-  // here. This used to also consume_credit() on every feedback generation, which double-charged
-  // every paid interview (once to start it, once for its feedback) and meant the "Regenerate
-  // feedback" action silently charged again each time it was used on an interview already paid for.
-
-    // Sanitize and validate transcription length
-    const sanitizedTranscription = transcription.trim();
-    if (sanitizedTranscription.length < 100) {
-      return new Response(JSON.stringify({ error: 'Transcription too short — minimum 100 characters required' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+serve(
+  withJson(async (req) => {
+    if (req.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
     }
 
-    if (sanitizedTranscription.length > 50000) {
-      return new Response(JSON.stringify({ error: 'Transcription too long - maximum 50,000 characters allowed' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
+    const requestId = req.headers.get("x-request-id");
+    let loggedUserId: string | null = null;
+    let sessionDbId: string | null = null;
 
-    const supabase = supabaseAdmin;
-
-    // Persist the raw transcript to the session row up front, so a student's words are kept even if
-    // the (expensive, failure-prone) feedback generation below errors out. Best-effort; never blocks.
-    if (sessionReference) {
-      try {
-        await supabaseAdmin
-          .from('interview_sessions')
-          .update({ transcript: sanitizedTranscription, transcript_saved_at: new Date().toISOString() })
-          .eq('session_reference', sessionReference)
-          .eq('user_id', userId);
-      } catch (e) {
-        console.warn('transcript persist failed (continuing):', (e as any)?.message || e);
-      }
-    }
-
-    // Engine-driven interviews carry a structured evidence log on the session row. Prefer it: it is
-    // cheaper and more reliable to score from than re-parsing the raw transcript, and it powers the
-    // "questions asked / skipped" review the student sees.
-    let evidence: any[] = [];
-    let questionsReview: any[] = [];
-    if (sessionReference) {
-      const { data: sessionRow } = await supabaseAdmin
-        .from('interview_sessions')
-        .select('id, evidence, subject, engine_state')
-        .eq('session_reference', sessionReference)
-        .eq('user_id', userId)
-        .maybeSingle();
-      sessionDbId = (sessionRow as any)?.id ?? null;
-      if (sessionRow?.evidence && Array.isArray(sessionRow.evidence)) {
-        evidence = sessionRow.evidence;
-
-        // If the interview ended with a question still "on the table" (never recorded by the model),
-        // score it as a DNF so the last question always counts — even if they ran out of time on it.
-        const current = (sessionRow as any).engine_state?.current;
-        if (current?.id && !evidence.some((e: any) => e.id === current.id)) {
-          const partial = Array.isArray((sessionRow as any).engine_state?.currentStudentTurns)
-            ? (sessionRow as any).engine_state.currentStudentTurns.join(' ').trim()
-            : '';
-          evidence = [...evidence, {
-            index: evidence.length + 1,
-            id: current.id,
-            topic: current.topic,
-            difficulty: current.difficulty,
-            question: current.question,
-            outcome: 'incomplete',
-            skipped: false,
-            hintsUsed: 0,
-            studentAnswer: partial,
-            methodQuality: 'unknown',
-            notes: 'Interview ended before this question was finished.',
-          }];
-        }
-
-        // Flatten the evidence log into the dashboard's per-question table. Best-effort and
-        // idempotent (clears any prior rows for this session so regenerating feedback won't dupe).
-        try {
-          await supabaseAdmin.from('question_attempts').delete().eq('session_reference', sessionReference).eq('user_id', userId);
-          const rows = evidence.map((e: any) => ({
-            user_id: userId,
-            session_reference: sessionReference,
-            interview_type: interviewType,
-            subject: sessionRow.subject ?? null,
-            topic: e.topic ?? null,
-            difficulty: e.difficulty ?? null,
-            question_id: e.id ?? null,
-            question: e.question ?? null,
-            outcome: e.outcome ?? null,
-            band: e.band ?? null,
-            skipped: Boolean(e.skipped),
-            hints_used: Number.isFinite(e.hintsUsed) ? e.hintsUsed : 0,
-            student_answer: e.studentAnswer ?? null,
-            question_index: e.index ?? null,
-          }));
-          if (rows.length) await supabaseAdmin.from('question_attempts').insert(rows);
-        } catch (err) {
-          console.warn('question_attempts write skipped (continuing):', (err as any)?.message || err);
-        }
-
-        questionsReview = evidence.map((e: any) => ({
-          index: e.index,
-          topic: e.topic,
-          difficulty: e.difficulty,
-          question: e.question,
-          asked: !e.skipped,
-          skipped: Boolean(e.skipped),
-          outcome: e.outcome,
-          band: e.band || null,
-          your_answer: e.studentAnswer || '',
-          note: e.notes || '',
-        }));
-      }
-    }
-
-    // A compact, model-readable summary of the evidence to ground the scoring (when available).
-    const evidenceSummary = evidence.length
-      ? '\n\nStructured evidence log (one line per question — use this to ground your scores):\n' +
-        evidence
-          .map((e: any) =>
-            `Q${e.index} [${e.topic}/${e.difficulty}] ${e.skipped ? 'SKIPPED' : `outcome=${e.outcome}, method=${e.methodQuality}, hints=${e.hintsUsed}`}` +
-            (e.skipped ? '' : ` — said: "${(e.studentAnswer || '').slice(0, 200)}"`),
-          )
-          .join('\n')
-      : '';
-
-    // Get system prompt: engine-driven subjects use their own pack (qualities + scoring philosophy);
-    // everything else uses the legacy hardcoded rubric.
-    const enginePack = ENGINE_PACKS[interviewType as string];
-    const systemPrompt = enginePack
-      ? buildEngineDrivenSystemPrompt(enginePack)
-      : getSystemPrompt(interviewType || '11-plus', scoringSystem || '0-5');
-
-    if (Deno.env.get('NODE_ENV') !== 'production') {
-      console.log('Preparing OpenAI request...');
-      console.log('Transcription length:', sanitizedTranscription.length);
-    }
-
-    const requestBody = {
-      model: 'gpt-4.1',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text.\n\n${sanitizedTranscription}${evidenceSummary}` }
-      ],
-      temperature: 0,
-      response_format: { type: 'json_object' },
-    };
-
-    // Add security headers
-    const securityHeaders = {
-      ...corsHeaders,
-      'Content-Type': 'application/json',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin'
-    };
-
-    if (Deno.env.get('NODE_ENV') !== 'production') {
-      console.log('Making OpenAI request with model:', requestBody.model);
-    }
-    
-    // Start the annotation pass NOW — it only needs the transcript, so it runs while the
-    // scoring call below is in flight.
-    const annotationsPromise = generateTranscriptAnnotations(sanitizedTranscription, openAIApiKey);
-
-    // Generate feedback using OpenAI. This is the one call the whole request depends on, so it
-    // retries: a single transient 429/5xx/network blip used to fail the entire feedback run
-    // ("feedback generation failed" after a full interview). 90s cap per attempt.
-    let response: Response | null = null;
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      try {
-        response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${openAIApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-          signal: AbortSignal.timeout(90_000),
-        });
-        if (response.ok) break;
-        console.error(`OpenAI scoring attempt ${attempt} failed with status:`, response.status);
-        // 429s and 5xxs are worth retrying; other 4xxs won't heal.
-        if (response.status !== 429 && response.status < 500) break;
-      } catch (e) {
-        console.error(`OpenAI scoring attempt ${attempt} threw:`, (e as Error)?.message || e);
-        response = null;
-      }
-      if (attempt < 3) await new Promise((r) => setTimeout(r, 1500 * attempt));
-    }
-
-    if (Deno.env.get('NODE_ENV') !== 'production') {
-      console.log('OpenAI response status:', response?.status);
-    }
-
-    if (!response || !response.ok) {
-      return new Response(JSON.stringify({ error: 'Failed to generate feedback' }), {
-        status: 500,
-        headers: securityHeaders,
-      });
-    }
-
-    const data = await response.json();
-    const feedbackText = data.choices[0].message.content;
-    
-    if (Deno.env.get('NODE_ENV') !== 'production') {
-      console.log('AI response received successfully');
-    }
-    
-    // Parse the JSON response with robust error handling
-    let feedbackData;
     try {
-      // Clean the response text and try multiple parsing strategies
-      let cleanedText = feedbackText.trim();
-      
-      // Remove any potential markdown formatting
-      cleanedText = cleanedText.replace(/```json\s*/, '').replace(/```\s*$/, '');
-      
-      // Try direct parsing first
+      if (!openAIApiKey) throw new Error("OPENAI_API_KEY is not configured");
+      // Input validation and sanitization
+      const inputBody = await req.json();
+      const {
+        transcription,
+        sessionId,
+        userId,
+        interviewCategory,
+        scoringSystem,
+        sessionReference,
+      } = inputBody;
+      let interviewType = inputBody.interviewType;
+      loggedUserId = typeof userId === "string" ? userId : null;
+
+      // Validate required fields
+      if (!transcription || typeof transcription !== "string") {
+        return new Response(
+          JSON.stringify({ error: "Valid transcription is required" }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+
+      if (!userId || typeof userId !== "string") {
+        return new Response(
+          JSON.stringify({ error: "Valid userId is required" }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+
+      // Auth check: ensure caller matches provided userId
+      const authHeader = req.headers.get("Authorization") || "";
+      const token = authHeader.replace("Bearer ", "");
+      const supabaseAuth = createClient(supabaseUrl, supabaseAnonKey);
+      const { data: userData, error: userErr } =
+        await supabaseAuth.auth.getUser(token);
+      if (userErr || !userData?.user) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (userData.user.id !== userId) {
+        return new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // Resolve the actual owned session before persisting or choosing a rubric.
+      const sessionAdmin = createClient(supabaseUrl, supabaseServiceKey);
+      if (sessionReference !== undefined && sessionReference !== null) {
+        if (
+          typeof sessionReference !== "string" ||
+          !sessionReference ||
+          sessionReference.length > 100
+        )
+          return new Response(
+            JSON.stringify({ error: "Invalid session reference" }),
+            { status: 400, headers: corsHeaders },
+          );
+        const { data: ownedSession, error: lookupError } = await sessionAdmin
+          .from("interview_sessions")
+          .select("id, interview_type")
+          .eq("session_reference", sessionReference)
+          .eq("user_id", userId)
+          .maybeSingle();
+        if (lookupError)
+          return new Response(
+            JSON.stringify({ error: "Session lookup failed" }),
+            { status: 503, headers: corsHeaders },
+          );
+        if (!ownedSession)
+          return new Response(JSON.stringify({ error: "Session not found" }), {
+            status: 404,
+            headers: corsHeaders,
+          });
+        if (interviewType && ownedSession.interview_type !== interviewType)
+          return new Response(
+            JSON.stringify({ error: "Interview type does not match session" }),
+            { status: 400, headers: corsHeaders },
+          );
+        interviewType = ownedSession.interview_type;
+        sessionDbId = ownedSession.id;
+      }
+      if (MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType)) {
+        if (!sessionReference)
+          return new Response(
+            JSON.stringify({ error: "A pilot session is required" }),
+            { status: 400, headers: corsHeaders },
+          );
+        const caller = createClient(supabaseUrl, supabaseAnonKey, {
+          global: { headers: { Authorization: authHeader } },
+        });
+        const { data: isAdmin, error: adminError } = await caller.rpc(
+          "is_current_user_admin",
+        );
+        if (adminError || isAdmin !== true)
+          return new Response(
+            JSON.stringify({
+              error: "Draft pilots require administrator access",
+            }),
+            { status: 403, headers: corsHeaders },
+          );
+      }
+
+      // Rate limit: max 10 feedback generations per 10 minutes per user. (Was 3 — too tight for real
+      // use: a testing session with several back-to-back interviews + regenerations on one account hit
+      // it and surfaced as intermittent "feedback error". Credits are the real spend guard anyway.)
+      const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+      const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+      const { count: recentCount, error: rateError } = await supabaseAdmin
+        .from("feedback")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .gte("created_at", tenMinutesAgo);
+      if (rateError)
+        return new Response(
+          JSON.stringify({ error: "Feedback temporarily unavailable" }),
+          { status: 503, headers: corsHeaders },
+        );
+      if ((recentCount ?? 0) >= 10) {
+        return new Response(
+          JSON.stringify({
+            error:
+              "Rate limit exceeded. Please wait before generating more feedback.",
+          }),
+          {
+            status: 429,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+
+      // Credits are charged once, at interview start (src/pages/Index.tsx handleSelectInterview) — NOT
+      // here. This used to also consume_credit() on every feedback generation, which double-charged
+      // every paid interview (once to start it, once for its feedback) and meant the "Regenerate
+      // feedback" action silently charged again each time it was used on an interview already paid for.
+
+      // Sanitize and validate transcription length
+      const sanitizedTranscription = transcription.trim();
+      if (sanitizedTranscription.length < 100) {
+        return new Response(
+          JSON.stringify({
+            error: "Transcription too short — minimum 100 characters required",
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+
+      if (sanitizedTranscription.length > 50000) {
+        return new Response(
+          JSON.stringify({
+            error: "Transcription too long - maximum 50,000 characters allowed",
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+
+      const supabase = supabaseAdmin;
+
+      // Persist the raw transcript to the session row up front, so a student's words are kept even if
+      // the feedback generation below errors out. Fail before paid model calls if saving fails.
+      if (sessionReference) {
+        try {
+          const { data: savedTranscript, error: transcriptError } =
+            await supabaseAdmin
+              .from("interview_sessions")
+              .update({
+                transcript: sanitizedTranscription,
+                transcript_saved_at: new Date().toISOString(),
+              })
+              .eq("session_reference", sessionReference)
+              .eq("user_id", userId)
+              .select("id")
+              .maybeSingle();
+          if (transcriptError || !savedTranscript)
+            throw transcriptError || new Error("Session no longer exists");
+        } catch (e) {
+          console.warn("transcript persist failed:", (e as any)?.message || e);
+          return new Response(
+            JSON.stringify({
+              error:
+                "Your transcript could not be saved. Please retry feedback.",
+            }),
+            { status: 503, headers: corsHeaders },
+          );
+        }
+      }
+
+      // Engine-driven interviews carry a structured evidence log on the session row. Prefer it: it is
+      // cheaper and more reliable to score from than re-parsing the raw transcript, and it powers the
+      // "questions asked / skipped" review the student sees.
+      let evidence: any[] = [];
+      let questionsReview: any[] = [];
+      if (sessionReference) {
+        const { data: sessionRow } = await supabaseAdmin
+          .from("interview_sessions")
+          .select("id, evidence, subject, engine_state")
+          .eq("session_reference", sessionReference)
+          .eq("user_id", userId)
+          .maybeSingle();
+        sessionDbId = (sessionRow as any)?.id ?? null;
+        if (sessionRow?.evidence && Array.isArray(sessionRow.evidence)) {
+          evidence = sessionRow.evidence;
+
+          // If the interview ended with a question still "on the table" (never recorded by the model),
+          // score it as a DNF so the last question always counts — even if they ran out of time on it.
+          const current = (sessionRow as any).engine_state?.current;
+          if (current?.id && !evidence.some((e: any) => e.id === current.id)) {
+            const partial = Array.isArray(
+              (sessionRow as any).engine_state?.currentStudentTurns,
+            )
+              ? (sessionRow as any).engine_state.currentStudentTurns
+                  .join(" ")
+                  .trim()
+              : "";
+            evidence = [
+              ...evidence,
+              {
+                index: evidence.length + 1,
+                id: current.id,
+                topic: current.topic,
+                difficulty: current.difficulty,
+                question: current.question,
+                outcome: "incomplete",
+                skipped: false,
+                hintsUsed: 0,
+                studentAnswer: partial,
+                methodQuality: "unknown",
+                notes: "Interview ended before this question was finished.",
+              },
+            ];
+          }
+
+          // Flatten the evidence log into the dashboard's per-question table. Best-effort and
+          // idempotent (clears any prior rows for this session so regenerating feedback won't dupe).
+          try {
+            const rows = evidence.map((e: any) => ({
+              user_id: userId,
+              session_reference: sessionReference,
+              interview_type: interviewType,
+              subject: sessionRow.subject ?? null,
+              topic: e.topic ?? null,
+              difficulty: e.difficulty ?? null,
+              question_id: e.id ?? null,
+              question: e.question ?? null,
+              outcome: e.outcome ?? null,
+              band: e.band ?? null,
+              skipped: Boolean(e.skipped),
+              hints_used: Number.isFinite(e.hintsUsed) ? e.hintsUsed : 0,
+              student_answer: e.studentAnswer ?? null,
+              question_index: e.index ?? null,
+            }));
+            const { error: attemptsError } = await supabaseAdmin.rpc(
+              "replace_session_question_attempts",
+              {
+                p_user_id: userId,
+                p_session_reference: sessionReference,
+                p_attempts: rows,
+              },
+            );
+            if (attemptsError) throw attemptsError;
+          } catch (err) {
+            console.warn(
+              "question_attempts write skipped (continuing):",
+              (err as any)?.message || err,
+            );
+          }
+
+          questionsReview = evidence.map((e: any) => ({
+            index: e.index,
+            topic: e.topic,
+            difficulty: e.difficulty,
+            question: e.question,
+            asked: !e.skipped,
+            skipped: Boolean(e.skipped),
+            outcome: e.outcome,
+            band: e.band || null,
+            your_answer: e.studentAnswer || "",
+            note: e.notes || "",
+          }));
+        }
+      }
+
+      // A compact, model-readable summary of the evidence to ground the scoring (when available).
+      const evidenceSummary = evidence.length
+        ? "\n\nStructured evidence log (one line per question — use this to ground your scores):\n" +
+          evidence
+            .map(
+              (e: any) =>
+                `Q${e.index} [${e.topic}/${e.difficulty}] ${e.skipped ? "SKIPPED" : `outcome=${e.outcome}, method=${e.methodQuality}, hints=${e.hintsUsed}`}` +
+                (e.skipped
+                  ? ""
+                  : ` — said: "${(e.studentAnswer || "").slice(0, 200)}"`),
+            )
+            .join("\n")
+        : "";
+
+      // Get system prompt: engine-driven subjects use their own pack (qualities + scoring philosophy);
+      // everything else uses the legacy hardcoded rubric.
+      const enginePack = ENGINE_PACKS[interviewType as string];
+      const systemPrompt = enginePack
+        ? buildEngineDrivenSystemPrompt(enginePack)
+        : getSystemPrompt(interviewType || "11-plus", scoringSystem || "0-5");
+
+      if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
+        console.log("Preparing OpenAI request...");
+        console.log("Transcription length:", sanitizedTranscription.length);
+      }
+
+      const requestBody = {
+        model: "gpt-4.1",
+        messages: [
+          { role: "system", content: systemPrompt },
+          {
+            role: "user",
+            content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text.\n\n${sanitizedTranscription}${evidenceSummary}`,
+          },
+        ],
+        temperature: 0,
+        response_format: { type: "json_object" },
+      };
+
+      // Add security headers
+      const securityHeaders = {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+      };
+
+      if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
+        console.log("Making OpenAI request with model:", requestBody.model);
+      }
+
+      // Start the annotation pass NOW — it only needs the transcript, so it runs while the
+      // scoring call below is in flight.
+      const deadline = AbortSignal.timeout(110_000);
+      const annotationsPromise = generateTranscriptAnnotations(
+        sanitizedTranscription,
+        openAIApiKey,
+        deadline,
+      );
+
+      // Generate feedback using OpenAI. This is the one call the whole request depends on, so it
+      // retries: a single transient 429/5xx/network blip used to fail the entire feedback run
+      // ("feedback generation failed" after a full interview). 35s cap per attempt, within the edge request budget.
+      let response: Response | null = null;
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${openAIApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+            signal: AbortSignal.any([deadline, AbortSignal.timeout(35_000)]),
+          });
+          if (response.ok) break;
+          console.error(
+            `OpenAI scoring attempt ${attempt} failed with status:`,
+            response.status,
+          );
+          // 429s and 5xxs are worth retrying; other 4xxs won't heal.
+          if (response.status !== 429 && response.status < 500) break;
+        } catch (e) {
+          console.error(
+            `OpenAI scoring attempt ${attempt} threw:`,
+            (e as Error)?.message || e,
+          );
+          response = null;
+        }
+        if (attempt < 2)
+          await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+
+      if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
+        console.log("OpenAI response status:", response?.status);
+      }
+
+      if (!response || !response.ok) {
+        return new Response(
+          JSON.stringify({ error: "Failed to generate feedback" }),
+          {
+            status: 500,
+            headers: securityHeaders,
+          },
+        );
+      }
+
+      const data = await response.json();
+      const feedbackText = data.choices[0].message.content;
+
+      if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
+        console.log("AI response received successfully");
+      }
+
+      // Parse the JSON response with robust error handling
+      let feedbackData;
+      try {
+        // Clean the response text and try multiple parsing strategies
+        let cleanedText = feedbackText.trim();
+
+        // Remove any potential markdown formatting
+        cleanedText = cleanedText
+          .replace(/```json\s*/, "")
+          .replace(/```\s*$/, "");
+
+        // Try direct parsing first
         try {
           feedbackData = JSON.parse(cleanedText);
         } catch (firstError) {
@@ -1027,231 +1252,319 @@ try {
             throw firstError;
           }
         }
-        
+
         // Validate and ensure all required fields exist with proper types
-        if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || MEDICINE_PILOTS.some(p => p.interviewTypeId === interviewType) || interviewType === 'chat-with-clara') {
+        if (
+          interviewType === "logic-puzzles" ||
+          interviewType === "maths-interview" ||
+          interviewType === "verbal-interview" ||
+          interviewType === "current-affairs-interview" ||
+          interviewType === "medicine-mmi" ||
+          interviewType === "medicine-mmi-manchester" ||
+          MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType) ||
+          interviewType === "chat-with-clara"
+        ) {
           // Logic / maths / verbal / current-affairs validation (shared score fields)
-          const requiredFields = ['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score'];
+          const requiredFields = [
+            "pattern_recognition_score",
+            "logical_deduction_score",
+            "mathematical_logic_score",
+            "clarity_of_thought_score",
+          ];
           for (const field of requiredFields) {
             // Convert to number if it's a string
-            if (typeof feedbackData[field] === 'string') {
+            if (typeof feedbackData[field] === "string") {
               feedbackData[field] = parseFloat(feedbackData[field]);
             }
-            if (typeof feedbackData[field] !== 'number' || isNaN(feedbackData[field]) || feedbackData[field] < 0 || feedbackData[field] > 5) {
-              throw new Error(`Invalid or missing ${field}: must be a number between 0-5`);
+            if (
+              typeof feedbackData[field] !== "number" ||
+              isNaN(feedbackData[field]) ||
+              feedbackData[field] < 0 ||
+              feedbackData[field] > 5
+            ) {
+              throw new Error(
+                `Invalid or missing ${field}: must be a number between 0-5`,
+              );
             }
           }
-          
+
           // Calculate total_score from individual scores
-          feedbackData.total_score = feedbackData.pattern_recognition_score + 
-                                     feedbackData.logical_deduction_score + 
-                                     feedbackData.mathematical_logic_score +
-                                     feedbackData.clarity_of_thought_score;
+          feedbackData.total_score =
+            feedbackData.pattern_recognition_score +
+            feedbackData.logical_deduction_score +
+            feedbackData.mathematical_logic_score +
+            feedbackData.clarity_of_thought_score;
         } else {
           // 11+ validation
-          const requiredFields = ['personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score'];
+          const requiredFields = [
+            "personal_insight_score",
+            "reasoning_score",
+            "extracurricular_score",
+            "current_awareness_score",
+          ];
           for (const field of requiredFields) {
             // Convert to number if it's a string
-            if (typeof feedbackData[field] === 'string') {
+            if (typeof feedbackData[field] === "string") {
               feedbackData[field] = parseFloat(feedbackData[field]);
             }
-            if (typeof feedbackData[field] !== 'number' || isNaN(feedbackData[field]) || feedbackData[field] < 0 || feedbackData[field] > 5) {
-              throw new Error(`Invalid or missing ${field}: must be a number between 0-5`);
+            if (
+              typeof feedbackData[field] !== "number" ||
+              isNaN(feedbackData[field]) ||
+              feedbackData[field] < 0 ||
+              feedbackData[field] > 5
+            ) {
+              throw new Error(
+                `Invalid or missing ${field}: must be a number between 0-5`,
+              );
             }
           }
-          
+
           // Calculate total_score from individual scores
-          feedbackData.total_score = feedbackData.personal_insight_score + 
-                                     feedbackData.reasoning_score + 
-                                     feedbackData.extracurricular_score + 
-                                     feedbackData.current_awareness_score;
+          feedbackData.total_score =
+            feedbackData.personal_insight_score +
+            feedbackData.reasoning_score +
+            feedbackData.extracurricular_score +
+            feedbackData.current_awareness_score;
         }
-      
-      if (!feedbackData.detailed_feedback || typeof feedbackData.detailed_feedback !== 'object') {
-        throw new Error('Missing or invalid detailed_feedback object');
-      }
-      
-    } catch (e) {
-      console.error('JSON parsing error:', e instanceof Error ? e.message : String(e));
-      
-      // Create a fallback response based on interview type
-      if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || MEDICINE_PILOTS.some(p => p.interviewTypeId === interviewType) || interviewType === 'chat-with-clara') {
-        feedbackData = {
-          pattern_recognition_score: 3,
-          logical_deduction_score: 3,
-          mathematical_logic_score: 3,
-          clarity_of_thought_score: 3,
-          total_score: 12,
-          detailed_feedback: {
-            pattern_recognition: "Unable to fully assess due to processing error. Please try again.",
-            logical_deduction: "Unable to fully assess due to processing error. Please try again.",
-            mathematical_logic: "Unable to fully assess due to processing error. Please try again.",
-            clarity_of_thought: "Unable to fully assess due to processing error. Please try again.",
-            overall: "There was an issue processing your interview. Please try conducting another interview for a complete assessment.",
-            band_assessment: "Processing error - assessment incomplete. Please retry."
-          }
-        };
-      } else {
-        feedbackData = {
-          personal_insight_score: 3,
-          reasoning_score: 3,
-          extracurricular_score: 3,
-          current_awareness_score: 3,
-          total_score: 12,
-          detailed_feedback: {
-            personal_insight: "Unable to fully assess due to processing error. Please try again.",
-            reasoning: "Unable to fully assess due to processing error. Please try again.",
-            extracurricular: "Unable to fully assess due to processing error. Please try again.",
-            current_awareness: "Unable to fully assess due to processing error. Please try again.",
-            overall: "There was an issue processing your interview. Please try conducting another interview for a complete assessment.",
-            band_assessment: "Processing error - assessment incomplete. Please retry."
-          }
-        };
-      }
-      
-      if (Deno.env.get('NODE_ENV') !== 'production') {
-        console.log('Using fallback feedback data');
-      }
-    }
 
-    // Annotations were started in parallel before the scoring call — collect them now.
-    let annotations: any[] = await annotationsPromise.catch(() => [] as any[]);
-
-    // Post-process annotations: normalize categories, compute indices constrained to Student lines, and constrain to transcript bounds
-    const allowedCategories = new Set(['strength', 'grammar', 'fluency', 'lexical']);
-    const normalizeCategory = (c: string) => {
-      const s = String(c || '').toLowerCase();
-      if (s.includes('lexical')) return 'lexical';
-      if (s.includes('grammar')) return 'grammar';
-      if (s.includes('fluency')) return 'fluency';
-      if (s.includes('strength') || s.includes('good') || s.includes('strong') || s.includes('positive')) return 'strength';
-      return 'grammar';
-    };
-
-    // Build ranges that only include the Student's responses in the full transcript
-    const buildStudentRanges = (text: string) => {
-      const ranges: Array<{ start: number; end: number }> = [];
-      try {
-        const re = /(^|\n)Student:\s?([\s\S]*?)(?=(\nInterviewer:)|$)/g;
-        let m: RegExpExecArray | null;
-        while ((m = re.exec(text)) !== null) {
-          const prefixLen = (m[1] || '').length; // '' or '\n'
-          const labelLen = 'Student:'.length;
-          let start = (m.index || 0) + prefixLen + labelLen;
-          if (text[start] === ' ') start += 1; // skip single space after label if present
-          const content = m[2] || '';
-          const end = start + content.length;
-          if (end > start) ranges.push({ start, end });
-        }
-      } catch {}
-      return ranges;
-    };
-
-    const studentRanges = buildStudentRanges(sanitizedTranscription);
-
-    const isWithinStudentRange = (start: number, end: number) => {
-      return studentRanges.some(r => start >= r.start && end <= r.end);
-    };
-
-    const computeIndex = (quote: string) => {
-      if (!quote) return null as any;
-      const tryInRange = (segStart: number, segEnd: number) => {
-        const segment = sanitizedTranscription.slice(segStart, segEnd);
-        let idx = segment.indexOf(quote);
-        if (idx !== -1) return { start: segStart + idx, end: segStart + idx + quote.length };
-        idx = segment.toLowerCase().indexOf(quote.toLowerCase());
-        if (idx !== -1) return { start: segStart + idx, end: segStart + idx + quote.length };
-        try {
-          const words = quote.trim().split(/\s+/).filter(Boolean).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-          if (words.length) {
-            const re = new RegExp(words.join('\\W+'), 'i');
-            const m = re.exec(segment);
-            if (m && typeof m.index === 'number') {
-              return { start: segStart + m.index, end: segStart + m.index + m[0].length };
-            }
-          }
-        } catch {}
-        return null as any;
-      };
-      for (const r of studentRanges) {
-        const pos = tryInRange(r.start, r.end);
-        if (pos) return pos;
-      }
-      // Final fallback (should rarely be used)
-      const exact = sanitizedTranscription.indexOf(quote);
-      if (exact !== -1) return { start: exact, end: exact + quote.length };
-      const ci = sanitizedTranscription.toLowerCase().indexOf(quote.toLowerCase());
-      if (ci !== -1) return { start: ci, end: ci + quote.length };
-      return null as any;
-    };
-
-    const sanitizeAnnotation = (a: any) => {
-      const quote = typeof a?.quote === 'string' ? a.quote : '';
-      let start = Number.isFinite(a?.start) ? a.start : undefined as number | undefined;
-      let end = Number.isFinite(a?.end) ? a.end : undefined as number | undefined;
-
-      // If provided indices are invalid or outside student ranges, recompute
-      const providedValid = Number.isFinite(start) && Number.isFinite(end) && (end as number) > (start as number) && isWithinStudentRange(start as number, end as number) && sanitizedTranscription.slice(start as number, end as number).length > 0;
-      if (!providedValid) {
-        const pos = computeIndex(quote);
-        if (pos) { start = pos.start; end = pos.end; }
-      }
-
-      // Final validation
-      if (!(Number.isFinite(start) && Number.isFinite(end) && (end as number) > (start as number))) return null;
-      if (!isWithinStudentRange(start as number, end as number)) return null;
-
-      const categoryRaw = (a?.category ?? '') as string;
-      const category = allowedCategories.has(categoryRaw as any) ? categoryRaw : normalizeCategory(categoryRaw);
-      const explanation = typeof a?.explanation === 'string' ? a.explanation : '';
-      const suggestion = typeof a?.suggestion === 'string' ? a.suggestion : undefined;
-      return { quote: quote || sanitizedTranscription.slice(start as number, end as number), category, explanation, suggestion, start, end };
-    };
-
-    annotations = Array.isArray(annotations) ? annotations : [];
-    annotations = annotations
-      .map(sanitizeAnnotation)
-      .filter((a: any) => !!a)
-      .slice(0, 30) as any[];
-
-    // If still empty, try a backup generation pass limited to Student content only
-    if (annotations.length === 0) {
-      try {
-        const backupPrompt = `Extract 15 to 25 quotes from ONLY Student lines throughout the ENTIRE transcript that reflect strengths or issues. Analyze the complete conversation systematically from beginning to end. Categories: strength, grammar, fluency, lexical. Ensure good distribution across all categories and conversation portions. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
-        const backupReq = {
-          model: 'gpt-4.1',
-          messages: [
-            { role: 'system', content: backupPrompt },
-            { role: 'user', content: `Original Transcript (includes Interviewer labels):\n\n${sanitizedTranscription}` }
-          ],
-          temperature: 0,
-          response_format: { type: 'json_object' },
-        } as const;
-        const backupRes = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${openAIApiKey}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify(backupReq),
-          signal: AbortSignal.timeout(60_000),
-        });
-        if (backupRes.ok) {
-          const b = await backupRes.json();
-          const txt = (b.choices?.[0]?.message?.content || '').trim();
-          try {
-            const parsed = JSON.parse(txt);
-            if (parsed && Array.isArray(parsed.annotations)) {
-              annotations = parsed.annotations.map(sanitizeAnnotation).filter((a: any) => !!a);
-            }
-          } catch {}
+        if (
+          !feedbackData.detailed_feedback ||
+          typeof feedbackData.detailed_feedback !== "object" ||
+          Array.isArray(feedbackData.detailed_feedback)
+        ) {
+          throw new Error("Missing or invalid detailed_feedback object");
         }
       } catch (e) {
-        console.warn('Backup annotations generation failed:', (e as any)?.message || e);
-      }
-    }
+        console.error(
+          "JSON parsing error:",
+          e instanceof Error ? e.message : String(e),
+        );
 
-    // Generate overall improvement feedback
-    let overallImprovementFeedback = '';
-    try {
-      const improvementSystemPrompt = `You are an experienced teacher providing constructive feedback to help students improve their interview performance.
+        // A processing failure is not a learner score. Keep the saved transcript for retry.
+        void annotationsPromise.catch(() => []);
+        return new Response(
+          JSON.stringify({
+            error: "Assessment could not be completed. Please retry feedback.",
+          }),
+          { status: 502, headers: securityHeaders },
+        );
+      }
+
+      // Annotations were started in parallel before the scoring call — collect them now.
+      let annotations: any[] = await annotationsPromise.catch(
+        () => [] as any[],
+      );
+
+      // Post-process annotations: normalize categories, compute indices constrained to Student lines, and constrain to transcript bounds
+      const allowedCategories = new Set([
+        "strength",
+        "grammar",
+        "fluency",
+        "lexical",
+      ]);
+      const normalizeCategory = (c: string) => {
+        const s = String(c || "").toLowerCase();
+        if (s.includes("lexical")) return "lexical";
+        if (s.includes("grammar")) return "grammar";
+        if (s.includes("fluency")) return "fluency";
+        if (
+          s.includes("strength") ||
+          s.includes("good") ||
+          s.includes("strong") ||
+          s.includes("positive")
+        )
+          return "strength";
+        return "grammar";
+      };
+
+      // Build ranges that only include the Student's responses in the full transcript
+      const buildStudentRanges = (text: string) => {
+        const ranges: Array<{ start: number; end: number }> = [];
+        try {
+          const re = /(^|\n)Student:\s?([\s\S]*?)(?=(\nInterviewer:)|$)/g;
+          let m: RegExpExecArray | null;
+          while ((m = re.exec(text)) !== null) {
+            const prefixLen = (m[1] || "").length; // '' or '\n'
+            const labelLen = "Student:".length;
+            let start = (m.index || 0) + prefixLen + labelLen;
+            if (text[start] === " ") start += 1; // skip single space after label if present
+            const content = m[2] || "";
+            const end = start + content.length;
+            if (end > start) ranges.push({ start, end });
+          }
+        } catch {}
+        return ranges;
+      };
+
+      const studentRanges = buildStudentRanges(sanitizedTranscription);
+
+      const isWithinStudentRange = (start: number, end: number) => {
+        return studentRanges.some((r) => start >= r.start && end <= r.end);
+      };
+
+      const computeIndex = (quote: string) => {
+        if (!quote) return null as any;
+        const tryInRange = (segStart: number, segEnd: number) => {
+          const segment = sanitizedTranscription.slice(segStart, segEnd);
+          let idx = segment.indexOf(quote);
+          if (idx !== -1)
+            return {
+              start: segStart + idx,
+              end: segStart + idx + quote.length,
+            };
+          idx = segment.toLowerCase().indexOf(quote.toLowerCase());
+          if (idx !== -1)
+            return {
+              start: segStart + idx,
+              end: segStart + idx + quote.length,
+            };
+          try {
+            const words = quote
+              .trim()
+              .split(/\s+/)
+              .filter(Boolean)
+              .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+            if (words.length) {
+              const re = new RegExp(words.join("\\W+"), "i");
+              const m = re.exec(segment);
+              if (m && typeof m.index === "number") {
+                return {
+                  start: segStart + m.index,
+                  end: segStart + m.index + m[0].length,
+                };
+              }
+            }
+          } catch {}
+          return null as any;
+        };
+        for (const r of studentRanges) {
+          const pos = tryInRange(r.start, r.end);
+          if (pos) return pos;
+        }
+        // Final fallback (should rarely be used)
+        const exact = sanitizedTranscription.indexOf(quote);
+        if (exact !== -1) return { start: exact, end: exact + quote.length };
+        const ci = sanitizedTranscription
+          .toLowerCase()
+          .indexOf(quote.toLowerCase());
+        if (ci !== -1) return { start: ci, end: ci + quote.length };
+        return null as any;
+      };
+
+      const sanitizeAnnotation = (a: any) => {
+        const quote = typeof a?.quote === "string" ? a.quote : "";
+        let start = Number.isFinite(a?.start)
+          ? a.start
+          : (undefined as number | undefined);
+        let end = Number.isFinite(a?.end)
+          ? a.end
+          : (undefined as number | undefined);
+
+        // If provided indices are invalid or outside student ranges, recompute
+        const providedValid =
+          Number.isFinite(start) &&
+          Number.isFinite(end) &&
+          (end as number) > (start as number) &&
+          isWithinStudentRange(start as number, end as number) &&
+          sanitizedTranscription.slice(start as number, end as number).length >
+            0;
+        if (!providedValid) {
+          const pos = computeIndex(quote);
+          if (pos) {
+            start = pos.start;
+            end = pos.end;
+          }
+        }
+
+        // Final validation
+        if (
+          !(
+            Number.isFinite(start) &&
+            Number.isFinite(end) &&
+            (end as number) > (start as number)
+          )
+        )
+          return null;
+        if (!isWithinStudentRange(start as number, end as number)) return null;
+
+        const categoryRaw = (a?.category ?? "") as string;
+        const category = allowedCategories.has(categoryRaw as any)
+          ? categoryRaw
+          : normalizeCategory(categoryRaw);
+        const explanation =
+          typeof a?.explanation === "string" ? a.explanation : "";
+        const suggestion =
+          typeof a?.suggestion === "string" ? a.suggestion : undefined;
+        return {
+          quote:
+            quote ||
+            sanitizedTranscription.slice(start as number, end as number),
+          category,
+          explanation,
+          suggestion,
+          start,
+          end,
+        };
+      };
+
+      annotations = Array.isArray(annotations) ? annotations : [];
+      annotations = annotations
+        .map(sanitizeAnnotation)
+        .filter((a: any) => !!a)
+        .slice(0, 30) as any[];
+
+      // If still empty, try a backup generation pass limited to Student content only
+      if (annotations.length === 0) {
+        try {
+          const backupPrompt = `Extract 15 to 25 quotes from ONLY Student lines throughout the ENTIRE transcript that reflect strengths or issues. Analyze the complete conversation systematically from beginning to end. Categories: strength, grammar, fluency, lexical. Ensure good distribution across all categories and conversation portions. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
+          const backupReq = {
+            model: "gpt-4.1",
+            messages: [
+              { role: "system", content: backupPrompt },
+              {
+                role: "user",
+                content: `Original Transcript (includes Interviewer labels):\n\n${sanitizedTranscription}`,
+              },
+            ],
+            temperature: 0,
+            response_format: { type: "json_object" },
+          } as const;
+          const backupRes = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${openAIApiKey}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(backupReq),
+              signal: AbortSignal.any([deadline, AbortSignal.timeout(25_000)]),
+            },
+          );
+          if (backupRes.ok) {
+            const b = await backupRes.json();
+            const txt = (b.choices?.[0]?.message?.content || "").trim();
+            try {
+              const parsed = JSON.parse(txt);
+              if (parsed && Array.isArray(parsed.annotations)) {
+                annotations = parsed.annotations
+                  .map(sanitizeAnnotation)
+                  .filter((a: any) => !!a);
+              }
+            } catch {}
+          }
+        } catch (e) {
+          console.warn(
+            "Backup annotations generation failed:",
+            (e as any)?.message || e,
+          );
+        }
+      }
+
+      // Generate overall improvement feedback
+      let overallImprovementFeedback = "";
+      try {
+        const improvementSystemPrompt = `You are an experienced teacher providing constructive feedback to help students improve their interview performance.
 
 Create feedback using this exact format:
 
@@ -1265,131 +1578,188 @@ Use encouraging, teacher-like language throughout. Be specific about what they d
 
 STUDENT PERFORMANCE DATA:`;
 
-      const improvementRequest = {
-        model: 'gpt-4.1',
-        messages: [
-          { role: 'system', content: improvementSystemPrompt },
-          { role: 'user', content: `Scores: ${JSON.stringify(feedbackData)}\n\nDetailed Feedback: ${JSON.stringify(feedbackData.detailed_feedback)}\n\nPlease create a comprehensive action plan for this student's improvement.` }
-        ],
-        max_tokens: 800,
-      };
+        const improvementRequest = {
+          model: "gpt-4.1",
+          messages: [
+            { role: "system", content: improvementSystemPrompt },
+            {
+              role: "user",
+              content: `Scores: ${JSON.stringify(feedbackData)}\n\nDetailed Feedback: ${JSON.stringify(feedbackData.detailed_feedback)}\n\nPlease create a comprehensive action plan for this student's improvement.`,
+            },
+          ],
+          max_tokens: 800,
+        };
 
-      console.log('Generating overall improvement feedback...');
-      const improvementResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(improvementRequest),
-        signal: AbortSignal.timeout(45_000),
-      });
+        console.log("Generating overall improvement feedback...");
+        const improvementResponse = await fetch(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${openAIApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(improvementRequest),
+            signal: AbortSignal.any([deadline, AbortSignal.timeout(20_000)]),
+          },
+        );
 
-      if (improvementResponse.ok) {
-        const improvementData = await improvementResponse.json();
-        overallImprovementFeedback = improvementData.choices[0]?.message?.content || '';
-        console.log('Generated overall improvement feedback:', overallImprovementFeedback.substring(0, 200) + '...');
-      } else {
-        const errorText = await improvementResponse.text();
-        console.error('Failed to generate improvement feedback:', errorText);
+        if (improvementResponse.ok) {
+          const improvementData = await improvementResponse.json();
+          overallImprovementFeedback =
+            improvementData.choices[0]?.message?.content || "";
+        } else {
+          const errorText = await improvementResponse.text();
+          console.error("Failed to generate improvement feedback:", errorText);
+          overallImprovementFeedback = `Based on your performance, here are key areas for improvement:\n\n• Review the detailed feedback above for specific guidance on each assessment criteria\n• Practice expressing your thoughts more clearly and confidently\n• Focus on the areas where you scored lower to maximize your improvement\n• Consider doing additional practice interviews to build your skills\n\nKeep practicing - every interview is a step toward success!`;
+        }
+      } catch (improvementError) {
+        console.error(
+          "Error generating improvement feedback:",
+          improvementError,
+        );
         overallImprovementFeedback = `Based on your performance, here are key areas for improvement:\n\n• Review the detailed feedback above for specific guidance on each assessment criteria\n• Practice expressing your thoughts more clearly and confidently\n• Focus on the areas where you scored lower to maximize your improvement\n• Consider doing additional practice interviews to build your skills\n\nKeep practicing - every interview is a step toward success!`;
       }
-    } catch (improvementError) {
-      console.error('Error generating improvement feedback:', improvementError);
-      overallImprovementFeedback = `Based on your performance, here are key areas for improvement:\n\n• Review the detailed feedback above for specific guidance on each assessment criteria\n• Practice expressing your thoughts more clearly and confidently\n• Focus on the areas where you scored lower to maximize your improvement\n• Consider doing additional practice interviews to build your skills\n\nKeep practicing - every interview is a step toward success!`;
+
+      // Attach raw transcription and annotations to response
+      feedbackData.transcription = sanitizedTranscription;
+      feedbackData.annotations = annotations;
+      feedbackData.overall_improvement_feedback = overallImprovementFeedback;
+      feedbackData.questions_review = questionsReview;
+      // Build flexible scores object for new JSONB column
+      const config =
+        INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES["11-plus"];
+      const flexibleScores: Record<string, number> = {};
+
+      // Generate criteria keys and map scores (reserved for future use)
+      const criteriaKeys = config.scoringCriteria.map((criteria: string) =>
+        criteria
+          .toLowerCase()
+          .replace(/\s+/g, "_")
+          .replace(/[^a-z0-9_]/g, ""),
+      );
+
+      const scoreFields =
+        enginePack?.subject === "elevenplus" || !enginePack
+          ? [
+              "personal_insight_score",
+              "reasoning_score",
+              "extracurricular_score",
+              "current_awareness_score",
+            ]
+          : [
+              "pattern_recognition_score",
+              "logical_deduction_score",
+              "mathematical_logic_score",
+              "clarity_of_thought_score",
+            ];
+      criteriaKeys.forEach((key: string, index: number) => {
+        const score = feedbackData[scoreFields[index]];
+        if (Number.isFinite(score)) flexibleScores[key] = score;
+      });
+      flexibleScores.personal_insight_self_awareness =
+        feedbackData.personal_insight_score;
+      flexibleScores.reasoning_problem_solving = feedbackData.reasoning_score;
+      flexibleScores.extracurricular_activities_leadership =
+        feedbackData.extracurricular_score;
+      flexibleScores.current_awareness_curiosity =
+        feedbackData.current_awareness_score;
+
+      // Prepare data for DB insert (ensure integer total_score for schema)
+      const dbTotalScore = Number.isFinite(feedbackData.total_score)
+        ? Math.round(feedbackData.total_score)
+        : null;
+
+      // Save feedback to database with flexible scoring
+      const insertData: any = {
+        user_id: userId,
+        interview_session_id: sessionId || `session_${Date.now()}`,
+        session_reference: sessionReference || null, // Add session reference to the feedback
+        transcription: sanitizedTranscription,
+        total_score: dbTotalScore,
+        detailed_feedback: feedbackData.detailed_feedback,
+        feedback_content: JSON.stringify(feedbackData.detailed_feedback),
+        interview_type: interviewType || "11-plus",
+        interview_category: config.category,
+        scoring_system: config.scoringSystem,
+        scores: flexibleScores, // New flexible JSONB scores
+        annotations: annotations,
+        overall_improvement_feedback: overallImprovementFeedback,
+        questions_review: questionsReview,
+      };
+
+      // Keep legacy columns for backward compatibility based on interview type
+      if (
+        interviewType === "logic-puzzles" ||
+        interviewType === "maths-interview" ||
+        interviewType === "verbal-interview" ||
+        interviewType === "current-affairs-interview" ||
+        interviewType === "medicine-mmi" ||
+        interviewType === "medicine-mmi-manchester" ||
+        MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType) ||
+        interviewType === "chat-with-clara"
+      ) {
+        insertData.pattern_recognition_score =
+          feedbackData.pattern_recognition_score;
+        insertData.logical_deduction_score =
+          feedbackData.logical_deduction_score;
+        insertData.mathematical_logic_score =
+          feedbackData.mathematical_logic_score;
+        insertData.clarity_of_thought_score =
+          feedbackData.clarity_of_thought_score;
+        insertData.rating = Math.min(
+          5,
+          Math.max(1, Math.round(feedbackData.total_score / 4)),
+        ); // Convert to 1-5 scale
+      } else {
+        insertData.personal_insight_score = feedbackData.personal_insight_score;
+        insertData.reasoning_score = feedbackData.reasoning_score;
+        insertData.extracurricular_score = feedbackData.extracurricular_score;
+        insertData.current_awareness_score =
+          feedbackData.current_awareness_score;
+        insertData.rating = Math.min(
+          5,
+          Math.max(1, Math.round(feedbackData.total_score / 4)),
+        ); // Convert to 1-5 scale
+      }
+
+      const { data: feedbackRecord, error: insertError } = await supabase
+        .from("feedback")
+        .insert(insertData)
+        .select()
+        .maybeSingle();
+
+      if (insertError) {
+        console.warn("Database insert warning:", insertError.message);
+        // Do not fail the request; return the generated feedback so the UI can display it
+      }
+
+      return new Response(JSON.stringify(feedbackData), {
+        headers: securityHeaders,
+      });
+    } catch (error) {
+      console.error(
+        "Error in generate-interview-feedback function:",
+        error instanceof Error ? error.message : String(error),
+      );
+      logAppEvent("edge:generate-interview-feedback", {
+        level: "error",
+        eventType: "unhandled_exception",
+        message: error instanceof Error ? error.message : String(error),
+        userId: loggedUserId,
+        interviewSessionId: sessionDbId,
+        requestId,
+        metadata: { stack: error instanceof Error ? error.stack : undefined },
+      }).catch(() => {});
+      return new Response(JSON.stringify({ error: "Internal server error" }), {
+        status: 500,
+        headers: {
+          ...corsHeaders,
+          "Content-Type": "application/json",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "DENY",
+        },
+      });
     }
-
-    // Attach raw transcription and annotations to response
-    feedbackData.transcription = sanitizedTranscription;
-    feedbackData.annotations = annotations;
-    feedbackData.overall_improvement_feedback = overallImprovementFeedback;
-    feedbackData.questions_review = questionsReview;
-    // Build flexible scores object for new JSONB column
-    const config = INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES['11-plus'];
-    const flexibleScores: Record<string, number> = {};
-    
-    // Generate criteria keys and map scores (reserved for future use)
-    const criteriaKeys = config.scoringCriteria.map((criteria: string) => 
-      criteria.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '')
-    );
-    
-    flexibleScores.personal_insight_self_awareness = feedbackData.personal_insight_score;
-    flexibleScores.reasoning_problem_solving = feedbackData.reasoning_score;
-    flexibleScores.extracurricular_activities_leadership = feedbackData.extracurricular_score;
-    flexibleScores.current_awareness_curiosity = feedbackData.current_awareness_score;
-
-    // Prepare data for DB insert (ensure integer total_score for schema)
-    const dbTotalScore = Number.isFinite(feedbackData.total_score)
-      ? Math.round(feedbackData.total_score)
-      : null;
-
-    // Save feedback to database with flexible scoring
-    const insertData: any = {
-      user_id: userId,
-      interview_session_id: sessionId || `session_${Date.now()}`,
-      session_reference: sessionReference || null, // Add session reference to the feedback
-      transcription: sanitizedTranscription,
-      total_score: dbTotalScore,
-      detailed_feedback: feedbackData.detailed_feedback,
-      feedback_content: JSON.stringify(feedbackData.detailed_feedback),
-      interview_type: interviewType || '11-plus',
-      interview_category: config.category, 
-      scoring_system: config.scoringSystem,
-      scores: flexibleScores, // New flexible JSONB scores
-      annotations: annotations,
-      overall_improvement_feedback: overallImprovementFeedback,
-      questions_review: questionsReview,
-    };
-
-    // Keep legacy columns for backward compatibility based on interview type
-    if (interviewType === 'logic-puzzles' || interviewType === 'maths-interview' || interviewType === 'verbal-interview' || interviewType === 'current-affairs-interview' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || MEDICINE_PILOTS.some(p => p.interviewTypeId === interviewType) || interviewType === 'chat-with-clara') {
-      insertData.pattern_recognition_score = feedbackData.pattern_recognition_score;
-      insertData.logical_deduction_score = feedbackData.logical_deduction_score;
-      insertData.mathematical_logic_score = feedbackData.mathematical_logic_score;
-      insertData.clarity_of_thought_score = feedbackData.clarity_of_thought_score;
-      insertData.rating = Math.min(5, Math.max(1, Math.round(feedbackData.total_score / 4))); // Convert to 1-5 scale
-    } else {
-      insertData.personal_insight_score = feedbackData.personal_insight_score;
-      insertData.reasoning_score = feedbackData.reasoning_score;
-      insertData.extracurricular_score = feedbackData.extracurricular_score;
-      insertData.current_awareness_score = feedbackData.current_awareness_score;
-      insertData.rating = Math.min(5, Math.max(1, Math.round(feedbackData.total_score / 4))); // Convert to 1-5 scale
-    }
-
-    const { data: feedbackRecord, error: insertError } = await supabase
-      .from('feedback')
-      .insert(insertData)
-      .select()
-      .maybeSingle();
-
-    if (insertError) {
-      console.warn('Database insert warning:', insertError.message);
-      // Do not fail the request; return the generated feedback so the UI can display it
-    }
-
-    return new Response(JSON.stringify(feedbackData), {
-      headers: securityHeaders,
-    });
-
-  } catch (error) {
-    console.error('Error in generate-interview-feedback function:', error instanceof Error ? error.message : String(error));
-    logAppEvent('edge:generate-interview-feedback', {
-      level: 'error',
-      eventType: 'unhandled_exception',
-      message: (error instanceof Error ? error.message : String(error)),
-      userId: loggedUserId,
-      interviewSessionId: sessionDbId,
-      requestId,
-      metadata: { stack: error instanceof Error ? error.stack : undefined },
-    }).catch(() => {});
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
-      status: 500,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json',
-        'X-Content-Type-Options': 'nosniff',
-        'X-Frame-Options': 'DENY'
-      },
-    });
-  }
-});
+  }),
+);

@@ -345,6 +345,13 @@
   ],
   "updates": [
     {
+      "id": "backend-reliability-20260917",
+      "category": "BACKEND & DEPLOYMENT",
+      "date": "17 SEP · BUILD REVIEW",
+      "title": "All 16 backend functions audited; deployment awaits account access.",
+      "body": "Fixed payment settlement races, invalid fallback grades, auth-email compilation, avatar failure handling and speech-relay cleanup. Added authenticated Tavus callbacks, transactional question history, backend handler tests and a guarded deployment command. Read-only production checks confirm the required new database columns are still missing. The backend is not deployed: Supabase CLI sign-in and Tavus callback configuration must be completed first. Use Backend tests in this local lab to see actual handler test output."
+    },
+    {
       "id": "studio-verification-20260916",
       "category": "VERIFIED",
       "date": "16 SEP · PRODUCT MILESTONE",

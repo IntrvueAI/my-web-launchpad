@@ -19,7 +19,7 @@ const SOURCE = path.join(FUNCTIONS_DIR, '_shared-src/appLogger.ts');
 const SKIP = new Set(['_shared-src', 'interview-brain', 'generate-interview-feedback']);
 
 const entries = await fs.readdir(FUNCTIONS_DIR, { withFileTypes: true });
-const targets = entries.filter((e) => e.isDirectory() && !SKIP.has(e.name)).map((e) => e.name);
+const targets = entries.filter((e) => e.isDirectory() && !e.name.startsWith('_') && !SKIP.has(e.name)).map((e) => e.name);
 
 const code = await fs.readFile(SOURCE, 'utf8');
 for (const fn of targets) {

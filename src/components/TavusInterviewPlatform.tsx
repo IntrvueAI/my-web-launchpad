@@ -78,6 +78,18 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
 
   useEffect(() => () => cleanupCall(), [cleanupCall]);
 
+  useEffect(() => {
+    if (view !== 'live') return;
+    const heartbeat = setInterval(() => {
+      const reference = sessionReferenceRef.current;
+      if (reference) void supabase.from('interview_sessions')
+        .update({last_activity_at:new Date().toISOString()})
+        .eq('session_reference',reference).eq('status','active')
+        .then(({error: heartbeatError}) => { if (heartbeatError) console.warn('Session heartbeat failed'); });
+    }, 30_000);
+    return () => clearInterval(heartbeat);
+  }, [view]);
+
   const loadSummary = useCallback(async (sessionReference: string) => {
     const { data, error: fetchErr } = await (supabase as any)
       .from('question_attempts')
@@ -111,7 +123,12 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
       const { error: endErr } = await invokeEdgeFunction('tavus-end-conversation', {
         body: { conversation_id: conversationId },
       });
-      if (endErr) console.error('tavus-end-conversation failed:', endErr.message);
+      if (endErr) {
+        endingRef.current = false;
+        setError('We could not confirm that the interview ended. Please retry ending it before starting another.');
+        setView('error');
+        return;
+      }
     }
     if (sessionReferenceRef.current) {
       // Give the webhook a moment to land any final tool calls before we read the summary back.
@@ -119,6 +136,7 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
       await loadSummary(sessionReferenceRef.current);
     }
     setView('ended');
+    conversationIdRef.current = null;
   }, [cleanupCall, loadSummary]);
 
   // Fires once the 'connecting' view has actually rendered (so containerRef is live) AND we have a
@@ -202,8 +220,8 @@ export const TavusInterviewPlatform: React.FC<TavusInterviewPlatformProps> = ({ 
           </div>
         )}
 
-        <Button onClick={startInterview} size="lg" className="w-full">
-          Start Interview
+        <Button onClick={conversationIdRef.current ? endInterview : startInterview} size="lg" className="w-full">
+          {conversationIdRef.current ? 'Retry ending interview' : 'Start Interview'}
         </Button>
       </Card>
     );

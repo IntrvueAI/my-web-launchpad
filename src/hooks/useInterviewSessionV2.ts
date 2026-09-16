@@ -187,7 +187,7 @@ export const useInterviewSessionV2 = (
       };
 
       const { data, error } = await invokeEdgeFunction<{ sessionToken: string }>('get-anam-session-token', {
-        body: { personaConfig, engineDriven: true },
+        body: { personaConfig, engineDriven: true, sessionReference: sessionRefRef.current },
         interviewSessionId: sessionLogger.sessionId ?? undefined,
       });
 
@@ -444,6 +444,7 @@ export const useInterviewSessionV2 = (
   useEffect(() => {
     if (!isStreaming) return;
     const timeoutCheck = setInterval(() => {
+      void sessionLogger.updateActivity().catch(() => {});
       const timeSinceLastMessage = Date.now() - lastMessageTimeRef.current;
       if (timeSinceLastMessage > 120000) {
         sessionLogger.logError(`Session timeout detected - no activity for ${Math.round(timeSinceLastMessage / 1000)} seconds`, {

@@ -1,3 +1,4 @@
+import { withJson } from "../_shared/http.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
@@ -7,7 +8,8 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
@@ -23,91 +25,131 @@ interface EmailRequest {
 const handler = async (req: Request): Promise<Response> => {
   const origin = req.headers.get("origin") || "*";
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: { ...corsHeaders, "Access-Control-Allow-Origin": origin } });
-  }
-
-if (req.method !== "POST") {
-  return new Response(JSON.stringify({ error: "Method not allowed" }), {
-    status: 405,
-    headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
-  });
-}
-
-const requestId = req.headers.get("x-request-id");
-let userId: string | null = null;
-
-try {
-  // Auth: require logged-in user and only allow sending to self
-  const authHeader = req.headers.get("Authorization") || "";
-  const token = authHeader.replace("Bearer ", "");
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data: userData, error: userErr } = await supabase.auth.getUser(token);
-  if (userErr || !userData?.user) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
+    return new Response(null, {
+      headers: { ...corsHeaders, "Access-Control-Allow-Origin": origin },
     });
   }
-  userId = userData.user.id;
 
-  const { to, subject, html, from }: EmailRequest = await req.json();
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
+  }
 
-if (!to || !subject || !html) {
-  return new Response(
-    JSON.stringify({ error: "Missing required fields: to, subject, html" }),
-    {
-      status: 400,
-      headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
+
+  try {
+    // Auth: require logged-in user and only allow sending to self
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace("Bearer ", "");
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { data: userData, error: userErr } =
+      await supabase.auth.getUser(token);
+    if (userErr || !userData?.user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+          "Access-Control-Allow-Origin": origin,
+        },
+      });
     }
-  );
-}
+    userId = userData.user.id;
 
-if (to.toLowerCase() !== userData.user.email?.toLowerCase()) {
-  return new Response(JSON.stringify({ error: "Forbidden" }), {
-    status: 403,
-    headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
-  });
-}
+    const { to, subject, html, from }: EmailRequest = await req.json();
 
-// Basic size limits
-if (subject.length > 200 || html.length > 20000) {
-  return new Response(JSON.stringify({ error: "Payload too large" }), {
-    status: 413,
-    headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
-  });
-}
+    if (
+      typeof to !== "string" ||
+      typeof subject !== "string" ||
+      typeof html !== "string" ||
+      !to ||
+      !subject ||
+      !html
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields: to, subject, html" }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders,
+            "Access-Control-Allow-Origin": origin,
+          },
+        },
+      );
+    }
 
-const emailResponse = await resend.emails.send({
-  from: from || "Intrvue AI <noreply@yourdomain.com>",
-  to: [to],
+    if (to.toLowerCase() !== userData.user.email?.toLowerCase()) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), {
+        status: 403,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+          "Access-Control-Allow-Origin": origin,
+        },
+      });
+    }
+
+    // Basic size limits
+    if (subject.length > 200 || html.length > 20000) {
+      return new Response(JSON.stringify({ error: "Payload too large" }), {
+        status: 413,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+          "Access-Control-Allow-Origin": origin,
+        },
+      });
+    }
+
+    const emailResponse = await resend.emails.send({
+      from:
+        Deno.env.get("EMAIL_FROM") || from || "Intrvue AI <noreply@intrvue.ai>",
+      to: [to],
       subject,
       html,
     });
 
-console.log("Email sent successfully:", emailResponse);
+    if (emailResponse.error)
+      return new Response(
+        JSON.stringify({ error: "Email provider rejected the request" }),
+        { status: 502, headers: corsHeaders },
+      );
 
-return new Response(JSON.stringify(emailResponse), {
-  status: 200,
-  headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
-});
+    return new Response(JSON.stringify(emailResponse), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
   } catch (error: any) {
     console.error("Error sending email:", error);
-logAppEvent("edge:send-email", {
-  level: "error",
-  eventType: "unhandled_exception",
-  message: error?.message || String(error),
-  userId,
-  requestId,
-  metadata: { stack: error?.stack },
-}).catch(() => {});
-return new Response(
-  JSON.stringify({ error: error.message }),
-  {
-    status: 500,
-    headers: { "Content-Type": "application/json", ...corsHeaders, "Access-Control-Allow-Origin": origin },
-  }
-);
+    logAppEvent("edge:send-email", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: error?.message || String(error),
+      userId,
+      requestId,
+      metadata: { stack: error?.stack },
+    }).catch(() => {});
+    return new Response(JSON.stringify({ error: "Unable to send email" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
   }
 };
 
-serve(handler);
+serve(withJson(handler));

@@ -16,6 +16,11 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
+    "test:backend": "vitest run --config scripts/vitest-backend.config.ts",
+    "backend:sql-check": "node scripts/check-backend-migrations.mjs",
+    "backend:readiness": "node scripts/check-supabase-readiness.mjs",
+    "supabase:plan": "node scripts/deploy-supabase.mjs",
+    "supabase:deploy": "node scripts/deploy-supabase.mjs --apply",
     "test:ui": "vitest --ui"
   },
   "dependencies": {

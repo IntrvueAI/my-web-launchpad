@@ -9,6 +9,7 @@
 // which the browser's native WebSocket API cannot set — so we verify manually via ?token= instead.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import { logAppEvent } from "./_shared/appLogger.ts";
+import { AudioBuffer } from "../_shared/audioBuffer.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -32,10 +33,14 @@ Deno.serve(async (req) => {
     }
 
     const token = url.searchParams.get("token") || "";
-    const pauseMs = Math.min(3000, Math.max(300, Number(url.searchParams.get("pauseMs")) || 1200));
+    const pauseMs = Math.min(
+      3000,
+      Math.max(300, Number(url.searchParams.get("pauseMs")) || 1200),
+    );
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    const { data: userData, error: userErr } = await supabase.auth.getUser(token);
+    const { data: userData, error: userErr } =
+      await supabase.auth.getUser(token);
     if (userErr || !userData?.user) {
       return new Response("Unauthorized", { status: 401 });
     }
@@ -46,9 +51,30 @@ Deno.serve(async (req) => {
     let deepgramWs: WebSocket | null = null;
     // Deepgram's own connection takes a moment to open after ours does — audio arriving in that gap
     // would otherwise be silently dropped, which can eat the very start of what the student says.
-    const pending: unknown[] = [];
+    const pending = new AudioBuffer();
+    let closed = false;
+    const close = () => {
+      if (closed) return;
+      closed = true;
+      clearTimeout(connectTimeout);
+      clearTimeout(sessionTimeout);
+      pending.clear();
+      try {
+        deepgramWs?.close();
+      } catch {
+        /* already closed */
+      }
+      try {
+        clientWs.close();
+      } catch {
+        /* already closed */
+      }
+    };
+    const connectTimeout = setTimeout(close, 15_000);
+    const sessionTimeout = setTimeout(close, 35 * 60_000);
 
     clientWs.onopen = () => {
+      if (closed) return;
       const endpointing = pauseMs;
       const utteranceEndMs = Math.max(1000, pauseMs);
       const dgUrl =
@@ -61,8 +87,12 @@ Deno.serve(async (req) => {
       deepgramWs = new WebSocket(dgUrl, ["token", deepgramApiKey]);
 
       deepgramWs.onopen = () => {
-        for (const chunk of pending) deepgramWs!.send(chunk as never);
-        pending.length = 0;
+        if (closed) {
+          deepgramWs?.close();
+          return;
+        }
+        clearTimeout(connectTimeout);
+        pending.drain((chunk) => deepgramWs!.send(chunk));
       };
       deepgramWs.onmessage = (ev) => {
         if (clientWs.readyState === WebSocket.OPEN) clientWs.send(ev.data);
@@ -80,21 +110,27 @@ Deno.serve(async (req) => {
         if (clientWs.readyState === WebSocket.OPEN) {
           clientWs.send(JSON.stringify({ error: "Deepgram connection error" }));
         }
+        close();
       };
       deepgramWs.onclose = () => {
-        if (clientWs.readyState === WebSocket.OPEN) clientWs.close();
+        close();
       };
     };
 
     clientWs.onmessage = (ev) => {
       if (deepgramWs?.readyState === WebSocket.OPEN) deepgramWs.send(ev.data);
-      else if (deepgramWs) pending.push(ev.data);
+      else if (
+        !closed &&
+        (!deepgramWs || deepgramWs.readyState === WebSocket.CONNECTING)
+      ) {
+        if (!pending.push(ev.data)) close();
+      }
     };
     clientWs.onclose = () => {
-      if (deepgramWs?.readyState === WebSocket.OPEN) deepgramWs.close();
+      close();
     };
     clientWs.onerror = () => {
-      if (deepgramWs?.readyState === WebSocket.OPEN) deepgramWs.close();
+      close();
     };
 
     return response;

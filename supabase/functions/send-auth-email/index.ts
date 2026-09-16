@@ -1,19 +1,24 @@
+import { withJson, escapeHtml } from "../_shared/http.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import { logAppEvent } from "./_shared/appLogger.ts";
 
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-request-id",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 interface AuthEmailRequest {
   email: string;
-  type: 'signup' | 'reset' | 'magic_link';
+  type: "signup" | "reset" | "magic_link";
   token?: string;
   confirmationUrl?: string;
   resetUrl?: string;
@@ -60,7 +65,7 @@ const getEmailTemplate = (type: string, data: any) => {
   `;
 
   switch (type) {
-    case 'signup':
+    case "signup":
       return `
         ${baseStyle}
         <div class="email-container">
@@ -81,8 +86,13 @@ const getEmailTemplate = (type: string, data: any) => {
           </div>
         </div>
       `;
-    
-    case 'reset':
+
+    case "magic_link":
+      return `${baseStyle}<div class="email-container"><div class="header"><h1>Sign in to Intrvue AI</h1></div>
+        <div class="content"><p>Use your requested sign-in link below.</p><a class="button" href="${data.confirmationUrl}">Sign in</a>
+        <p>If you did not request this link, you can ignore this email.</p></div></div>`;
+
+    case "reset":
       return `
         ${baseStyle}
         <div class="email-container">
@@ -124,100 +134,152 @@ const getEmailTemplate = (type: string, data: any) => {
 
 const getSubject = (type: string) => {
   switch (type) {
-    case 'signup':
-      return 'Welcome to Intrvue AI - Confirm your email';
-    case 'reset':
-      return 'Reset your Intrvue AI password';
-    case 'magic_link':
-      return 'Your Intrvue AI login link';
+    case "signup":
+      return "Welcome to Intrvue AI - Confirm your email";
+    case "reset":
+      return "Reset your Intrvue AI password";
+    case "magic_link":
+      return "Your Intrvue AI login link";
     default:
-      return 'Intrvue AI Notification';
+      return "Intrvue AI Notification";
   }
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  const origin = req.headers.get('origin') || '*';
+  const origin = req.headers.get("origin") || "*";
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: { ...corsHeaders, 'Access-Control-Allow-Origin': origin } });
-  }
-
-if (req.method !== "POST") {
-  return new Response(JSON.stringify({ error: "Method not allowed" }), {
-    status: 405,
-    headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
-  });
-}
-
-const requestId = req.headers.get("x-request-id");
-let userId: string | null = null;
-
-try {
-  // Require auth; only allow sending to the authenticated user
-  const authHeader = req.headers.get('Authorization') || '';
-  const token = authHeader.replace('Bearer ', '');
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data: userData, error: userErr } = await supabase.auth.getUser(token);
-  if (userErr || !userData?.user) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-      status: 401,
-      headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
+    return new Response(null, {
+      headers: { ...corsHeaders, "Access-Control-Allow-Origin": origin },
     });
   }
-  userId = userData.user.id;
 
-  const { email, type, confirmationUrl, resetUrl, from }: AuthEmailRequest = await req.json();
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
+  }
 
-if (!email || !type) {
-  return new Response(
-    JSON.stringify({ error: "Missing required fields: email, type" }),
-    {
-      status: 400,
-      headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
+  const requestId = req.headers.get("x-request-id");
+  let userId: string | null = null;
+
+  try {
+    // Require auth; only allow sending to the authenticated user
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace("Bearer ", "");
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { data: userData, error: userErr } =
+      await supabase.auth.getUser(token);
+    if (userErr || !userData?.user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+          "Access-Control-Allow-Origin": origin,
+        },
+      });
     }
-  );
-}
+    userId = userData.user.id;
 
-if (email.toLowerCase() !== userData.user.email?.toLowerCase()) {
-  return new Response(JSON.stringify({ error: 'Forbidden' }), {
-    status: 403,
-    headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
-  });
-}
+    const { email, type, confirmationUrl, resetUrl, from }: AuthEmailRequest =
+      await req.json();
 
-    const html = getEmailTemplate(type, { confirmationUrl, resetUrl });
+    if (
+      typeof email !== "string" ||
+      !email ||
+      !["signup", "reset", "magic_link"].includes(type)
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields: email, type" }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders,
+            "Access-Control-Allow-Origin": origin,
+          },
+        },
+      );
+    }
+
+    if (email.toLowerCase() !== userData.user.email?.toLowerCase()) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), {
+        status: 403,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+          "Access-Control-Allow-Origin": origin,
+        },
+      });
+    }
+
+    const link = type === "reset" ? resetUrl : confirmationUrl;
+    let parsedLink: URL;
+    try {
+      parsedLink = new URL(link || "");
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "A valid authentication link is required" }),
+        { status: 400, headers: corsHeaders },
+      );
+    }
+    if (!["https:", "http:"].includes(parsedLink.protocol))
+      return new Response(
+        JSON.stringify({ error: "Invalid authentication link" }),
+        { status: 400, headers: corsHeaders },
+      );
+    const html = getEmailTemplate(type, {
+      confirmationUrl: escapeHtml(confirmationUrl),
+      resetUrl: escapeHtml(resetUrl),
+    });
     const subject = getSubject(type);
 
     const emailResponse = await resend.emails.send({
-      from: from || "Intrvue AI <noreply@yourdomain.com>",
+      from:
+        Deno.env.get("EMAIL_FROM") || from || "Intrvue AI <noreply@intrvue.ai>",
       to: [email],
       subject,
       html,
     });
 
-    console.log("Auth email sent successfully:", emailResponse);
+    if (emailResponse.error)
+      return new Response(
+        JSON.stringify({ error: "Email provider rejected the request" }),
+        { status: 502, headers: corsHeaders },
+      );
 
-return new Response(JSON.stringify(emailResponse), {
-  status: 200,
-  headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
-});
+    return new Response(JSON.stringify(emailResponse), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
   } catch (error: any) {
-console.error("Error sending auth email:", error);
-logAppEvent("edge:send-auth-email", {
-  level: "error",
-  eventType: "unhandled_exception",
-  message: error?.message || String(error),
-  userId,
-  requestId,
-  metadata: { stack: error?.stack },
-}).catch(() => {});
-return new Response(
-  JSON.stringify({ error: (error as any).message }),
-  {
-    status: 500,
-    headers: { "Content-Type": "application/json", ...corsHeaders, 'Access-Control-Allow-Origin': origin },
-  }
-);
+    console.error("Error sending auth email:", error);
+    logAppEvent("edge:send-auth-email", {
+      level: "error",
+      eventType: "unhandled_exception",
+      message: error?.message || String(error),
+      userId,
+      requestId,
+      metadata: { stack: error?.stack },
+    }).catch(() => {});
+    return new Response(JSON.stringify({ error: "Unable to send email" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
   }
 };
 
-serve(handler);
+serve(withJson(handler));

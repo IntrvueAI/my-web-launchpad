@@ -28,3 +28,31 @@ verify_jwt = false
 # Same reason as deepgram-relay — verified manually via ?token= instead.
 [functions.stt-bakeoff-relay]
 verify_jwt = false
+
+# Explicitly list the remaining application endpoints for complete deployments.
+[functions.admin-credit-management]
+verify_jwt = true
+
+[functions.create-payment]
+verify_jwt = true
+
+[functions.generate-interview-feedback]
+verify_jwt = true
+
+[functions.get-anam-session-token]
+verify_jwt = true
+
+[functions.interview-brain]
+verify_jwt = true
+
+[functions.send-auth-email]
+verify_jwt = true
+
+[functions.send-email]
+verify_jwt = true
+
+[functions.verify-payment]
+verify_jwt = true
+
+[functions.warmup-questions]
+verify_jwt = true
