@@ -35,8 +35,8 @@ const checks = [
     "orders?select=id,amount,currency,credits_purchased,status&limit=0",
   ],
   [
-    "Attempt deduplication",
-    "question_attempts?select=id,provider_event_key&limit=0",
+    "Question attempts",
+    "question_attempts?select=id,user_id,session_reference,question_id&limit=0",
   ],
 ];
 let ready = true;
@@ -50,5 +50,24 @@ for (const [name, path] of checks) {
     `${response.ok ? "PASS" : "PENDING"} ${name}: HTTP ${response.status}${body?.code ? ` (${body.code})` : ""}`,
   );
   ready &&= response.ok;
+}
+// Read the API description to check RPC availability without invoking any writes.
+const schemaResponse = await fetch(`${url}/rest/v1/`, {
+  headers: {
+    apikey: key,
+    Authorization: `Bearer ${key}`,
+    Accept: "application/openapi+json",
+  },
+  signal: AbortSignal.timeout(10000),
+});
+const schema = await schemaResponse.json().catch(() => null);
+for (const name of [
+  "settle_checkout_payment",
+  "adjust_credits_atomic",
+  "replace_session_question_attempts",
+]) {
+  const present = schemaResponse.ok && Boolean(schema?.paths?.[`/rpc/${name}`]);
+  console.log(`${present ? "PASS" : "PENDING"} Database operation: ${name}`);
+  ready &&= present;
 }
 process.exitCode = ready ? 0 : 1;

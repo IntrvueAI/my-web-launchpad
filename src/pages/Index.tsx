@@ -16,7 +16,6 @@ const OnboardingFlow = lazy(() => import('@/components/onboarding/OnboardingFlow
 // up front. This (plus Index/LandingV2 staying eager for the logged-out first paint) was the
 // biggest single contributor to a ~3.9MB single-chunk bundle.
 const InterviewPlatform = lazy(() => import('@/components/InterviewPlatform').then((m) => ({ default: m.InterviewPlatform })));
-const TavusInterviewPlatform = lazy(() => import('@/components/TavusInterviewPlatform').then((m) => ({ default: m.TavusInterviewPlatform })));
 const InterviewPlatformV2 = lazy(() => import('@/components/InterviewPlatformV2').then((m) => ({ default: m.InterviewPlatformV2 })));
 const InterviewSelection = lazy(() => import('@/components/InterviewSelection').then((m) => ({ default: m.InterviewSelection })));
 const QuestionsHub = lazy(() => import('@/components/questions/QuestionsHub').then((m) => ({ default: m.QuestionsHub })));
@@ -563,11 +562,7 @@ const Index = () => {
         ) : currentView === 'achievements' ? (
           <AchievementsPage />
         ) : currentView === 'interview' ? (
-          selectedInterviewType?.provider === 'tavus' ? (
-            <div className="container mx-auto px-4 py-8">
-              <TavusInterviewPlatform selectedInterviewType={selectedInterviewType} />
-            </div>
-          ) : selectedInterviewType?.provider === 'anam-deepgram' ? (
+          selectedInterviewType?.provider === 'anam-deepgram' ? (
             <InterviewPlatformV2 selectedInterviewType={selectedInterviewType} />
           ) : (
             <InterviewPlatform selectedInterviewType={selectedInterviewType} />

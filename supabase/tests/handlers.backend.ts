@@ -46,8 +46,7 @@ const regular = [
   "send-auth-email",
   "send-bug-report",
   "send-email",
-  "tavus-create-conversation",
-  "tavus-end-conversation",
+
   "verify-payment",
   "warmup-questions",
 ];
@@ -497,92 +496,6 @@ describe("Feedback", () => {
   );
 });
 
-describe("Tavus", () => {
-  it("does not launch another conversation when a session is active", async () => {
-    state.resolve = (q) => ({
-      data: null,
-      count: q.operation === "select" ? 1 : 0,
-      error: null,
-    });
-    expect(
-      (await (await handler("tavus-create-conversation"))(req())).status,
-    ).toBe(429);
-    expect(state.fetch).not.toHaveBeenCalled();
-    const cleanup = state.queries.find((q) => q.operation === "update");
-    expect(
-      cleanup?.filters.some(
-        ([method, args]) =>
-          method === "or" && String(args).includes("last_activity_at"),
-      ),
-    ).toBe(true);
-  });
-  it("does not report a successful shutdown when the provider fails", async () => {
-    state.resolve = () => ({
-      data: { user_id: session.user_id, session_reference: "S1" },
-      error: null,
-    });
-    state.fetch.mockResolvedValue(new Response("{}", { status: 503 }));
-    expect(
-      (
-        await (
-          await handler("tavus-end-conversation")
-        )(req({ conversation_id: "conversation" }))
-      ).status,
-    ).toBe(502);
-    expect(state.queries.some((q) => q.operation === "update")).toBe(false);
-  });
-  it("authenticates callbacks before any database write", async () => {
-    const run = await handler("tavus-webhook");
-    expect((await run(req())).status).toBe(401);
-    expect(state.queries).toHaveLength(0);
-    const response = await run(
-      req(
-        { event_type: "unknown" },
-        {
-          "x-tavus-webhook-secret": state.env.TAVUS_WEBHOOK_SECRET,
-          authorization: "Bearer sensitive",
-        },
-      ),
-    );
-    expect(response.status).toBe(200);
-    const archive = state.queries.find((q) => q.table === "tavus_webhook_debug")
-      ?.value as any;
-    expect(archive.headers).not.toHaveProperty("authorization");
-    expect(archive.headers).not.toHaveProperty("x-tavus-webhook-secret");
-  });
-  it("accepts duplicate tool delivery without duplicating an attempt", async () => {
-    state.resolve = (q) =>
-      q.table === "tavus_conversations"
-        ? {
-            data: { user_id: session.user_id, session_reference: "S1" },
-            error: null,
-          }
-        : q.table === "question_attempts"
-          ? { data: null, error: { code: "23505" } }
-          : { data: null, error: null };
-    const response = await (
-      await handler("tavus-webhook")
-    )(
-      req(
-        {
-          conversation_id: "convo",
-          question_id: "MA-A1",
-          question_text: "Prompt",
-          child_final_answer: "Answer",
-          was_correct: true,
-          hints_given: 0,
-        },
-        { "x-tavus-webhook-secret": state.env.TAVUS_WEBHOOK_SECRET },
-      ),
-    );
-    expect(response.status).toBe(200);
-    expect(
-      (state.queries.find((q) => q.table === "question_attempts")?.value as any)
-        .provider_event_key,
-    ).toMatch(/^tavus:[0-9a-f]{64}$/);
-  });
-});
-
 class FakeSocket {
   static CONNECTING = 0;
   static OPEN = 1;
@@ -721,10 +634,10 @@ describe("Deployment inventory", () => {
     const directories = readdirSync("supabase/functions", {
       withFileTypes: true,
     }).filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"));
-    expect(directories).toHaveLength(16);
+    expect(directories).toHaveLength(13);
     const external = new Set([
       "stripe-webhook",
-      "tavus-webhook",
+
       "deepgram-relay",
       "stt-bakeoff-relay",
     ]);

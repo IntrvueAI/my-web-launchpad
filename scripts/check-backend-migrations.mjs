@@ -208,15 +208,6 @@ try {
   check((await db.query("SELECT question_id FROM question_attempts")).rows, [
     { question_id: "Q2" },
   ]);
-  await db.exec(
-    "INSERT INTO question_attempts(provider_event_key) VALUES('tavus:repeat')",
-  );
-  await assert.rejects(() =>
-    db.exec(
-      "INSERT INTO question_attempts(provider_event_key) VALUES('tavus:repeat')",
-    ),
-  );
-  checks++;
   check(
     (
       await db.query(

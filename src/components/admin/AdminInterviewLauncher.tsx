@@ -4,19 +4,10 @@ import { Button } from '@/components/ui/button';
 import { InterviewType } from '@/config/interviewTypes';
 import { InterviewPlatform } from '@/components/InterviewPlatform';
 import { InterviewPlatformV2 } from '@/components/InterviewPlatformV2';
-import { TavusInterviewPlatform } from '@/components/TavusInterviewPlatform';
 import { ArrowLeft } from 'lucide-react';
 
-/**
- * Provider-aware launch, shared by every admin interview-launcher page — mirrors the routing switch
- * in pages/Index.tsx so admin previews behave identically to the real app. Previously duplicated
- * (and buggy) in two places: AdminDemoInterviews.tsx hardcoded InterviewPlatformV2 for everything
- * regardless of `provider`, which would have launched a 'tavus' or default-provider adminOnly type
- * on the wrong platform component. AdminMedicineInterviews.tsx had the correct routing; this is
- * that logic, extracted once.
- */
+/** Match the public app’s Anam transport selection in every admin preview. */
 export function pickPlatform(iv: InterviewType) {
-  if (iv.provider === 'tavus') return TavusInterviewPlatform;
   if (iv.provider === 'anam-deepgram') return InterviewPlatformV2;
   return InterviewPlatform;
 }

@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "@anam-ai/js-sdk": "^3.4.0",
-    "@daily-co/daily-js": "^0.91.0",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",

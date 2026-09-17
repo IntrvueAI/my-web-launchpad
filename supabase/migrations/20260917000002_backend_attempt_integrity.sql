@@ -19,9 +19,3 @@ END;
 $$;
 REVOKE ALL ON FUNCTION public.replace_session_question_attempts(uuid,text,jsonb) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.replace_session_question_attempts(uuid,text,jsonb) TO service_role;
-
--- Older attempts have NULL keys and are preserved. Signed/provider-authenticated redeliveries
--- of the same Tavus tool payload cannot create duplicate dashboard attempts.
-ALTER TABLE public.question_attempts ADD COLUMN IF NOT EXISTS provider_event_key text;
-CREATE UNIQUE INDEX IF NOT EXISTS question_attempts_provider_event_key_idx
-ON public.question_attempts(provider_event_key) WHERE provider_event_key IS NOT NULL;

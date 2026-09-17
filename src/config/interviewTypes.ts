@@ -39,13 +39,8 @@ export interface InterviewType {
    * Paragraphs separated by a blank line; the final paragraph is emphasised.
    */
   preStartNote?: string;
-  /**
-   * Which video/avatar platform runs this interview. Defaults to 'anam' (the existing
-   * useInterviewSession/InterviewPlatform path). 'tavus' interviews are rendered by
-   * TavusInterviewPlatform instead — a different SDK (Daily, not Anam) with its own
-   * conversation-creation and scoring plumbing (supabase/functions/tavus-*).
-   */
-  provider?: 'anam' | 'tavus' | 'anam-deepgram';
+  /** Anam avatar transport; Deepgram listening is available for admin trials. */
+  provider?: 'anam' | 'anam-deepgram';
   /** When true, hidden from the normal interview picker — only reachable from an admin page. */
   adminOnly?: boolean;
   /**
@@ -172,31 +167,6 @@ export const INTERVIEW_TYPES: Record<string, InterviewType> = {
     costCredits: 2, // £19.99 — see the 2-credit pack in CreditsStore
     engineDriven: true,
     engineSubject: 'maths'
-  },
-  'maths-v2': {
-    id: 'maths-v2',
-    name: '11+ Maths Mock Interview (V2)',
-    description: 'A spoken maths mock interview with Clara, running on our new video platform — talk through your method on real 11+ questions',
-    category: 'maths',
-    promptFile: 'academic/maths-interview.md',
-    duration: 20,
-    scoringSystem: '0-5',
-    scoringCriteria: [
-      'Number & Calculation',
-      'Problem-Solving & Method',
-      'Mathematical Reasoning',
-      'Clarity of Explanation'
-    ],
-    difficultyLevel: 2,
-    tags: ['11+', 'maths', 'mock interview', 'word problems', 'reasoning', 'beta'],
-    icon: 'Calculator',
-    costCredits: 2, // same interview as maths-interview, just an alternate video platform — same price
-    provider: 'tavus',
-    adminOnly: true, // was publicly visible + credit-gated despite being tagged 'beta' — 11-plus-v2 already gets this treatment, this didn't; now consistent
-    preStartNote:
-      "This is a new version of the maths interview, running on our new video platform — you're one of the first to try it.\n\n" +
-      "Clara will read out real 11+ questions and talk you through them one at a time. Explain your thinking out loud as you go.\n\n" +
-      "Ready when you are."
   },
   'current-affairs-interview': {
     id: 'current-affairs-interview',

@@ -25,8 +25,6 @@ beforeEach(() => {
     ANAM_API_KEY: "anam-test",
     STRIPE_SECRET_KEY: "stripe-test",
     STRIPE_WEBHOOK_SECRET: "webhook-test",
-    TAVUS_API_KEY: "tavus-test",
-    TAVUS_WEBHOOK_SECRET: "test-callback-secret-01234567890123456789",
     RESEND_API_KEY: "resend-test",
     DEEPGRAM_API_KEY: "deepgram-test",
     ASSEMBLYAI_API_KEY: "assembly-test",

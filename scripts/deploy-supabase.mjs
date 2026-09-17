@@ -1,8 +1,17 @@
 // Defaults to a read-only deployment plan. --apply is an explicit live deployment.
-// Never resets the database, replays historical migrations or prunes remote functions.
-import { readdir, readFile } from "node:fs/promises";
+// Never resets the database, replays historical migrations or broadly prunes functions.
+// The three retired avatar endpoints are explicitly removed after successful deployment.
+import {
+  readdir,
+  readFile,
+  mkdir,
+  mkdtemp,
+  writeFile,
+  copyFile,
+} from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const project = "fjkuuzfuysemrofcmnvd";
 const names = (
@@ -20,6 +29,11 @@ for (const name of names) {
     new URL(`../supabase/functions/${name}/index.ts`, import.meta.url),
   );
 }
+const retiredFunctions = [
+  "tavus-create-conversation",
+  "tavus-end-conversation",
+  "tavus-webhook",
+];
 const apply = process.argv.includes("--apply");
 const allowedMigrations = new Set([
   "20260916000001_medicine_engine_reliability.sql",
@@ -29,20 +43,29 @@ const allowedMigrations = new Set([
 console.log(
   `${apply ? "Deploying" : "Planning"} ${names.length} functions for ${project}: ${names.join(", ")}`,
 );
-function cli(args, combined = false) {
+function cli(args, combined = false, cwd = root) {
   // Arguments are fixed command words, project ID and validated directory names, never secrets.
   if (args.some((value) => !/^[A-Za-z0-9_./=-]+$/.test(value)))
     throw new Error("Unsafe CLI argument");
-  const command = ["npx", "--yes", "supabase@2.117.0", ...args];
+  const command = [
+    "npx",
+    "--yes",
+    "supabase@2.117.0",
+    ...args,
+    "--agent",
+    "no",
+    "--output-format",
+    "text",
+  ];
   const result =
     process.platform === "win32"
       ? spawnSync("cmd.exe", ["/d", "/s", "/c", command.join(" ")], {
-          cwd: root,
+          cwd,
           encoding: "utf8",
           windowsHide: true,
         })
       : spawnSync(command[0], command.slice(1), {
-          cwd: root,
+          cwd,
           encoding: "utf8",
         });
   if (result.error) throw result.error;
@@ -59,6 +82,15 @@ try {
     !projects.some((item) => item.id === project || item.ref === project)
   )
     throw new Error("Account does not have access to the configured project");
+  const before = JSON.parse(
+    cli(["functions", "list", "--project-ref", project, "--output", "json"]),
+  );
+  const toRetire = retiredFunctions.filter((name) =>
+    before.some((item) => (item.slug || item.name) === name),
+  );
+  console.log(
+    `Retired endpoints to remove: ${toRetire.join(", ") || "none present"}`,
+  );
   const secrets = JSON.parse(
     cli(["secrets", "list", "--project-ref", project, "--output", "json"]),
   );
@@ -69,17 +101,48 @@ try {
     "STRIPE_SECRET_KEY",
     "STRIPE_WEBHOOK_SECRET",
     "RESEND_API_KEY",
-    "TAVUS_API_KEY",
-    "TAVUS_WEBHOOK_SECRET",
     "DEEPGRAM_API_KEY",
   ];
   const missing = required.filter((name) => !secretNames.has(name));
   console.log(
     `Secrets: ${missing.length ? `missing ${missing.join(", ")}` : "required names present (values not inspected)"}`,
   );
+  // This project has historical local/remote timestamp differences and schema applied
+  // outside the CLI. Fetch the real remote ledger into an isolated work directory;
+  // append only this reviewed release, without repairing history or replaying old SQL.
+  const tempRoot = join(root, "supabase", ".temp");
+  await mkdir(tempRoot, { recursive: true });
+  const migrationRoot = await mkdtemp(join(tempRoot, "release-"));
+  await mkdir(join(migrationRoot, "supabase", "migrations"), {
+    recursive: true,
+  });
+  await writeFile(
+    join(migrationRoot, "supabase", "config.toml"),
+    `project_id = "${project}"\n`,
+  );
+  cli(
+    ["migration", "fetch", "--project-ref", project, "--yes"],
+    true,
+    migrationRoot,
+  );
+  const remoteFiles = await readdir(
+    join(migrationRoot, "supabase", "migrations"),
+  );
+  const remoteVersions = new Set(remoteFiles.map((name) => name.split("_")[0]));
+  for (const name of allowedMigrations) {
+    if (!remoteVersions.has(name.split("_")[0]))
+      await copyFile(
+        join(root, "supabase", "migrations", name),
+        join(migrationRoot, "supabase", "migrations", name),
+      );
+  }
+  console.log(
+    `Migration baseline: ${remoteVersions.size} recorded remote versions; only the three reviewed release migrations may be added.`,
+  );
   const preview = cli(
     ["db", "push", "--project-ref", project, "--dry-run", "--skip-vault"],
     true,
+    migrationRoot,
   );
   console.log(preview);
   const pending = [
@@ -96,16 +159,12 @@ try {
     );
   if (!apply) {
     console.log(
-      "Read-only plan complete. Configure Tavus tool callbacks as documented before --apply.",
+      "Read-only plan complete. --apply deploys the active functions and removes only the three retired avatar endpoints.",
     );
   } else {
     if (missing.length)
       throw new Error(
         "Required provider configuration is missing; no deployment applied.",
-      );
-    if (process.env.TAVUS_CALLBACK_CONFIGURED !== "1")
-      throw new Error(
-        "Configure the Tavus persona tool callback secret, then set TAVUS_CALLBACK_CONFIGURED=1. No deployment applied.",
       );
     // Verify local checks immediately before mutation; caller must also perform the documented SQL rehearsal.
     for (const args of [
@@ -134,6 +193,7 @@ try {
       cli(
         ["db", "push", "--project-ref", project, "--skip-vault", "--yes"],
         true,
+        migrationRoot,
       ),
     );
     console.log(
@@ -149,9 +209,23 @@ try {
         true,
       ),
     );
+    for (const name of toRetire) {
+      console.log(
+        cli(
+          ["functions", "delete", name, "--project-ref", project, "--yes"],
+          true,
+        ),
+      );
+    }
     const deployed = JSON.parse(
       cli(["functions", "list", "--project-ref", project, "--output", "json"]),
     );
+    if (
+      deployed.some((item) => retiredFunctions.includes(item.slug || item.name))
+    )
+      throw new Error(
+        "A retired avatar endpoint is still deployed; review removal output.",
+      );
     const available = new Set(
       deployed
         .filter((item) => item.status === "ACTIVE")
