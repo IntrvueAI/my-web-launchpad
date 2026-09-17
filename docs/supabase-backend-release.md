@@ -36,13 +36,13 @@ Missing credentials, provider secret names, unexpected pending migrations or fai
 
 ## Verified results
 
-- 211 application tests, 59 backend handler tests and 37 isolated PostgreSQL checks passed.
+- The original deployment passed 211 application tests, 59 backend handler tests and 37 isolated PostgreSQL checks. The subsequent [Oxford/Cambridge experience update](oxbridge-anam-release.md) expands these to 223 application tests and 60 backend tests.
 - All 13 managed function entrypoints passed Deno checking; application TypeScript and the production build passed. The existing large main-bundle warning remains.
 - Live schema checks find all required columns and all three new database operations.
 - Oxford, Cambridge and Imperial: real Anam token creation, engine opening and follow-up, persisted school-specific circuits, replay without duplicate state updates, ended-session rejection and ordinary-user denial all passed.
 - Existing maths, 11+, chat and Medicine engine openings passed against the live service.
 - Temporary test accounts, administrator entries and sessions were removed.
-- Full microphone/video conversations, real Stripe events and email delivery have not been verified. Anam token issuance alone does not establish audiovisual quality.
+- Short Oxford and Cambridge conversations subsequently passed real Anam video/audio, answer delivery, feedback and cleanup. Complete four-exercise engine circuits also saved feedback with academic scoring dimensions. See the linked update for the scope and one earlier feedback failure. Full-duration avatar sessions, real Stripe events and email delivery remain unverified.
 - Pre-deployment function sources and version inventory were saved locally for recovery.
 
 ## Repeatable checks

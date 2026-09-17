@@ -152,6 +152,19 @@ describe("Anam tokens", () => {
 });
 
 describe("Interview brain ownership and retries", () => {
+  it("exposes only the candidate prompt for an academic exercise", async () => {
+    state.resolve = () => ({ data: { ...session, interview_type: "medicine-oxford-pilot", engine_state: {
+      mode: "mock", difficulty: 2, questionIndex: 0, targetQuestions: 4, done: false,
+      current: { id: "OX1", question: "How would you test this explanation?", topic: "scientific-reasoning", answer: "PRIVATE ANSWER", rubric: {strong:"PRIVATE RUBRIC"}, hints:["PRIVATE HINT"] },
+      lastTurn: { id: "repeat-turn", say: "How would you test this explanation?" },
+    } }, error: null });
+    const result = await (await handler("interview-brain"))(req({sessionId:"S1",action:"repeat",turnId:"repeat-turn"}));
+    expect(result.status).toBe(200);
+    const body = await result.json();
+    expect(body.uiState.exercise).toEqual({id:"OX1",prompt:"How would you test this explanation?",topic:"scientific-reasoning"});
+    expect(JSON.stringify(body)).not.toContain("PRIVATE");
+    expect(state.fetch).not.toHaveBeenCalled();
+  });
   it("denies another user’s session before spending on AI", async () => {
     state.resolve = () => ({
       data: { ...session, user_id: "another-user" },

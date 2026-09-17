@@ -247,5 +247,7 @@ export interface BrainResponse {
      *  interview type's client UI is completely unaffected — no timer renders without this. Reset
      *  by the client whenever `questionIndex` advances or `onQuestion` newly becomes true. */
     timingSeconds?: { prep: number; response: number };
+    /** Candidate-facing text only; never private answers, hints or assessment guidance. */
+    exercise?: { id: string; prompt: string; topic: string };
   };
 }

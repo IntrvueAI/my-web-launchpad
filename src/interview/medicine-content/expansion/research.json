@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-16",
-  "edition": "04",
+  "updatedAt": "2026-09-17",
+  "edition": "05",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -344,6 +344,20 @@
     }
   ],
   "updates": [
+    {
+      "id": "oxbridge-feedback-recovery-20260917",
+      "category": "VERIFIED / SAVED WORK",
+      "date": "17 SEP · COMPLETE ENGINE CIRCUITS",
+      "title": "Both four-exercise circuits save academic feedback; failed feedback can be retried.",
+      "body": "Oxford and Cambridge completed their full planned circuits against the live engine, including skip, time-up and duplicate timer delivery. Both saved feedback with Scientific Reasoning, Evidence & Uncertainty, Communication & Clarity, and Reflection & Adaptability scores. An earlier feedback request returned a server error; the interview page now keeps a downloadable transcript and offers an explicit retry. A browser test injected a scoring outage, downloaded the transcript, retried successfully against Supabase and verified exactly one feedback record. Anam video/audio and clean shutdown still passed. All temporary test accounts and data were removed. These accelerated engine checks do not claim a 36-minute avatar endurance test."
+    },
+    {
+      "id": "oxbridge-live-experience-20260917",
+      "category": "LIVE BUILD / OXBRIDGE",
+      "date": "17 SEP · LIVE CONVERSATIONS VERIFIED",
+      "title": "Oxford and Cambridge: real Anam speech, video and feedback verified.",
+      "body": "Both school pilots completed real browser conversations with Anam video/audio, answers reaching the engine, reasoning notes, feedback and clean shutdown. Cambridge also passed synthetic microphone speech through Anam transcription. Oxford passed active 320px and 390px layouts, typed-mode microphone controls and response replay. Added dedicated academic follow-ups, candidate-only exercise text, an optional reasoning pad and a local microphone check. Fixed dropped early answers, late connections after cancellation, completed-session status being overwritten and live coral colours. Checks: 223 application tests, 60 backend tests, types, production build and draft integrity pass. The pilots remain administrator-only original drafts. The public website still needs Lovable Publish → Update after GitHub sync; these short calls do not establish full-duration avatar or educator assessment validity."
+    },
     {
       "id": "backend-reliability-20260917",
       "category": "BACKEND & DEPLOYMENT",

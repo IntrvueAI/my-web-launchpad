@@ -33,7 +33,8 @@ export const SessionService = {
     const { error } = await supabase
       .from('interview_sessions')
       .update({ status, ended_at: new Date().toISOString() })
-      .eq('id', sessionId);
+      .eq('id', sessionId)
+      .eq('status', 'active');
     if (error) throw error;
   },
 

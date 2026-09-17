@@ -189,6 +189,9 @@ const uiStateOf = (
     questionIndex: s.questionIndex,
     targetQuestions: s.targetQuestions,
     onQuestion: !!s.current,
+    exercise: getMedicinePilot(interviewType)?.style === "academic" && s.current
+      ? { id: s.current.id, prompt: s.current.question, topic: s.current.topic }
+      : undefined,
     phase: pack.mixedBank ? phase : undefined,
     aboutYouCount,
     timingSeconds:

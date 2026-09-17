@@ -18,6 +18,9 @@ import { ShareFeedbackBox } from './ShareFeedbackBox';
 import { getSubjectPack } from '@/interview/subjects';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { DebugConsole } from './interview/DebugConsole';
+import { AcademicWorkpad, emptyReasoningNotes, type ReasoningNotes } from './interview/AcademicWorkpad';
+import { InterviewDeviceCheck } from './interview/InterviewDeviceCheck';
+import { getMedicinePilot } from '@/interview/subjects/medicine/pilots';
 
 interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
@@ -89,7 +92,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   // Mic is muted while on so stray room noise can't interleave with typed answers.
   const [typeMode, setTypeMode] = useState(false);
   const [typedText, setTypedText] = useState('');
+  const [reasoningNotes, setReasoningNotes] = useState<Record<string, ReasoningNotes>>({});
   const [feedback, setFeedback] = useState(null);
+  const [pendingTranscript, setPendingTranscript] = useState<string | null>(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
   const { user } = useAuth();
   const { isAdmin } = useAdminStatus();
@@ -104,6 +109,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   // Use selected interview type or default to 11-plus
   const interviewType = selectedInterviewType || getDefaultInterviewType();
   const engineDriven = Boolean(interviewType.engineDriven);
+  const academic = getMedicinePilot(interviewType.id)?.style === 'academic';
 
   // Engine-driven interviews show a Practice/Mock setup gate before connecting.
   const [setupChoice, setSetupChoice] = useState<SetupChoice | null>(null);
@@ -113,6 +119,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const {
     isConnected,
     isStreaming,
+    isThinking,
+    repeatLastResponse,
     error,
     chatHistory,
     sessionReference,
@@ -251,6 +259,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     }
 
     try {
+      setReasoningNotes({});
+      setFeedback(null);
+      setPendingTranscript(null);
       await startInterview(user.id, engineDriven ? (setupChoice ?? { mode: 'mock' }) : undefined);
     } catch (err) {
       console.error('Failed to start interview:', err);
@@ -266,6 +277,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       const transcription = await stopInterview();
       
       if (transcription && user) {
+        setPendingTranscript(transcription);
         // Generate feedback using the edge function
         const { data, error } = await invokeEdgeFunction('generate-interview-feedback', {
           body: {
@@ -289,6 +301,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           });
         } else {
           setFeedback(data);
+          setPendingTranscript(null);
           toast({
             title: "Feedback Generated",
             description: "Your interview has been analyzed and feedback is ready!",
@@ -311,12 +324,12 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     } finally {
       setIsGeneratingFeedback(false);
     }
-  }, [stopInterview, user, toast]);
+  }, [stopInterview, user, toast, sessionReference, sessionId, interviewType]);
 
   // Regenerate feedback from existing transcript
   const handleRegenerateFeedback = useCallback(async () => {
     try {
-      const t = (feedback as any)?.transcription;
+      const t = (feedback as any)?.transcription || pendingTranscript;
       if (!t || !user) {
         toast({
           title: 'Cannot Regenerate',
@@ -329,7 +342,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       const { data, error } = await invokeEdgeFunction('generate-interview-feedback', {
         body: {
           transcription: t,
-          sessionId: Date.now().toString(),
+          sessionId: sessionReference || Date.now().toString(),
           userId: user.id,
           interviewType: interviewType.id,
           interviewCategory: interviewType.category,
@@ -347,6 +360,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         });
       } else {
         setFeedback(data);
+        setPendingTranscript(null);
         toast({
           title: 'Feedback Regenerated',
           description: 'We re-analyzed your interview and updated the feedback.',
@@ -358,7 +372,17 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     } finally {
       setIsGeneratingFeedback(false);
     }
-  }, [feedback, user, interviewType, toast]);
+  }, [feedback, pendingTranscript, user, interviewType, toast, sessionReference, sessionId]);
+
+  const downloadPendingTranscript = () => {
+    if (!pendingTranscript) return;
+    const url = URL.createObjectURL(new Blob([pendingTranscript], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `interview-${sessionReference || 'transcript'}.txt`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
 
   // Toggle audio input (microphone) on the live Anam session
   const toggleAudio = useCallback(() => {
@@ -388,11 +412,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   }, [typeMode, pushToTalk, isStreaming, isAudioEnabled, setMicMuted, setPushToTalkMode]);
 
   const pttStart = useCallback(() => {
-    if (!pushToTalk || !isStreaming) return;
+    if (!pushToTalk || !isStreaming || typeMode) return;
     if (pttMuteTimerRef.current) { clearTimeout(pttMuteTimerRef.current); pttMuteTimerRef.current = null; }
     setPttHeld(true);
     setMicMuted(false);
-  }, [pushToTalk, isStreaming, setMicMuted]);
+  }, [pushToTalk, isStreaming, typeMode, setMicMuted]);
 
   const pttEnd = useCallback(() => {
     if (!pushToTalk) return;
@@ -458,7 +482,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
         {/* Compact top bar (deck style): recording state · title · question progress */}
         <div className="flex items-center justify-between flex-wrap gap-3 mb-5">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             {isStreaming && (
               <span className="flex items-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 px-3 py-1.5">
                 <span className="h-2 w-2 rounded-full bg-destructive animate-pulsering" />
@@ -467,7 +491,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             )}
             <span className="font-display text-[15px] font-semibold text-white">{interviewType.name}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center flex-wrap gap-3 min-w-0">
             {isStreaming && brainUiState && !hideTranscript && (
               <div className="text-[13px] font-extrabold text-white">
                 {progressLabel(brainUiState)}
@@ -548,6 +572,12 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   sessionStatus={sessionStatus}
                   error={error}
                 />
+                {sessionStatus !== 'connecting' && !isStreaming && <InterviewDeviceCheck />}
+                {isStreaming && engineDriven && <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
+                  <span role="status" className="text-muted-foreground">{isThinking ? 'Clara is considering your answer…' : 'Take your time. You can speak or type.'}</span>
+                  <Button size="sm" variant="outline" disabled={isThinking || !chatHistory.some(m=>m.role==='assistant')} onClick={()=>void repeatLastResponse()}>Repeat last response</Button>
+                </div>}
+                {!isStreaming && chatHistory.length > 0 && <Button variant="secondary" onClick={()=>void handleStopInterview()} disabled={isGeneratingFeedback}>Save transcript and get feedback</Button>}
 
                 {/* Session Reference Display */}
                 {sessionReference && (
@@ -643,7 +673,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                       onChange={(e) => setTypedText(e.target.value)}
                       placeholder="Type your answer to Clara and press Enter…"
                       autoFocus
-                      className="flex-1 rounded-full border border-white/12 bg-white/[0.05] px-4 py-2.5 text-sm font-semibold text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-sky/60"
+                      className="min-w-0 flex-1 rounded-full border border-white/12 bg-white/[0.05] px-4 py-2.5 text-sm font-semibold text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-sky/60"
                     />
                     <Button type="submit" size="sm" disabled={!typedText.trim()} className="rounded-full min-h-[42px] px-4 gap-1.5">
                       <Send className="w-4 h-4" /> Send
@@ -657,11 +687,16 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     variant="outline"
                     size="sm"
                     onClick={toggleAudio}
-                    disabled={pushToTalk}
+                    disabled={pushToTalk || typeMode}
                     className="gap-2 w-full sm:w-auto min-h-[44px]"
-                    title={pushToTalk ? 'Push to talk is on — hold the talk button to speak' : undefined}
+                    title={typeMode ? 'Your microphone is muted while you type answers' : pushToTalk ? 'Push to talk is on — hold the talk button to speak' : undefined}
                   >
-                    {pushToTalk ? (
+                    {typeMode ? (
+                      <>
+                        <MicOff className="w-4 h-4" />
+                        <span className="text-sm">Microphone off · typing</span>
+                      </>
+                    ) : pushToTalk ? (
                       <>
                         <MicOff className="w-4 h-4" />
                         <span className="text-sm">Push to talk on</span>
@@ -705,7 +740,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 isStreaming={isStreaming}
                 onStartInterview={handleStartInterview}
                 onStopInterview={handleStopInterview}
-                disabled={!!error}
+                disabled={sessionStatus === 'connecting' || isGeneratingFeedback}
                 highlightEnd={highlightEnd}
                 endHint={endHintText || undefined}
                 onSkipQuestion={engineDriven ? skipQuestion : undefined}
@@ -723,6 +758,10 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               Hidden in focus mode so a mock feels like a real interview. */}
           {!hideTranscript && (
           <div className="lg:block space-y-4">
+            {academic && brainUiState?.exercise && <AcademicWorkpad exercise={brainUiState.exercise}
+              notes={reasoningNotes[brainUiState.exercise.id] ?? emptyReasoningNotes}
+              onChange={notes=>setReasoningNotes(previous=>({...previous,[brainUiState.exercise!.id]:notes}))}
+              onSubmit={sendTypedMessage} disabled={!isStreaming || isThinking} />}
             {isStreaming && brainUiState && (
               <div className="tile p-5">
                 <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">
@@ -761,26 +800,37 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         )}
 
         {/* Feedback Section */}
-        {(feedback || isGeneratingFeedback) && (
+        {(feedback || pendingTranscript || isGeneratingFeedback) && (
           <div className="mt-12">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
               <h2 className="text-2xl font-bold">Your Interview Feedback</h2>
               <Button
                 variant="secondary"
                 onClick={handleRegenerateFeedback}
-                disabled={isGeneratingFeedback || !feedback}
+                disabled={isGeneratingFeedback || (!feedback && !pendingTranscript)}
                 className="gap-2"
               >
                 <RotateCcw className="w-4 h-4" />
-                {isGeneratingFeedback ? 'Regenerating…' : 'Regenerate Feedback'}
+                {isGeneratingFeedback ? 'Preparing feedback…' : feedback ? 'Regenerate Feedback' : 'Retry feedback'}
               </Button>
             </div>
-            <FeedbackVersions
+            {pendingTranscript && !feedback && !isGeneratingFeedback && (
+              <Card className="p-5 space-y-4 mb-6">
+                <p role="status">Your interview has ended, but feedback could not be completed. You can retry without another interview.</p>
+                <p className="text-sm text-muted-foreground">Your transcript is still available here. Download a copy before leaving this page or starting another interview.</p>
+                <Button variant="outline" onClick={downloadPendingTranscript}>Download transcript</Button>
+                <details>
+                  <summary className="cursor-pointer text-sm font-semibold">View transcript</summary>
+                  <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap break-words text-sm font-sans">{pendingTranscript}</pre>
+                </details>
+              </Card>
+            )}
+            {(feedback || isGeneratingFeedback) && <FeedbackVersions
               feedback={feedback}
               isLoading={isGeneratingFeedback}
               interviewType={interviewType.id}
               scoringSystem={interviewType.scoringSystem}
-            />
+            />}
             {feedback && !isGeneratingFeedback && (
               <ShareFeedbackBox
                 sessionReference={sessionReference}

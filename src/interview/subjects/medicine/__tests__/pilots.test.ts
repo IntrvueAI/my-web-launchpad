@@ -73,6 +73,23 @@ describe("Medicine pilot engines", () => {
     ).toBeGreaterThan(5 * 480);
     expect(sessionBudgetMinutes(4, { prep: 0, response: 480 })).toBe(36);
   });
+  it.each(MEDICINE_PILOTS.slice(0, 2))("$school gets academic discussion guidance without school or MMI instructions", async pilot => {
+    const planned = initialiseMedicinePilot(pilot, bank, {seed:2});
+    if (!planned.ok) throw new Error('fixture');
+    const pack = packForMedicinePilot(pilot);
+    const prompt = buildSystemPrompt(pack, planned.state);
+    expect(prompt).toContain('competing explanation');
+    expect(prompt).toContain('quantities, units');
+    expect(prompt).not.toContain('seven times eight');
+    expect(prompt).not.toContain('10–11 year old');
+    expect(prompt).not.toContain('real school interviewer');
+    let control = '';
+    await advanceAgent(planned.state, {action:'time_up'}, {bank,pack,chat:async ({messages}) => {
+      control = messages.map(m=>m.content||'').join('\n');
+      return {content:'We will move on to the next exercise.',toolCalls:[],raw:[]};
+    }});
+    expect(control).not.toContain('REAL MMI');
+  });
   it("reports shortages rather than substituting unrelated or repeated exercises", () => {
     const result = initialiseMedicinePilot(MEDICINE_PILOTS[0], bank, {
       seed: 1,
@@ -81,6 +98,17 @@ describe("Medicine pilot engines", () => {
         .map((q) => q.id),
     });
     expect(result.ok).toBe(false);
+  });
+  it('keeps academic follow-ups to one ask while preserving a repeated authored exercise', async () => {
+    const pilot=MEDICINE_PILOTS[0], pack=packForMedicinePilot(pilot);
+    const planned=initialiseMedicinePilot(pilot,bank,{seed:3});
+    if(!planned.ok)throw new Error('fixture');
+    planned.state.current=bank.find(q=>q.id===planned.state.questionPlan!.questionIds[0])!;
+    const deps={bank,pack,chat:async()=>({content:'What mechanism could explain it? Which process might cause it?',toolCalls:[],raw:[]})};
+    const answer=await advanceAgent(planned.state,{action:'answer',studentText:'I would investigate the mechanism.'},deps);
+    expect(answer.say).toBe('What mechanism could explain it?');
+    const repeated=await advanceAgent(planned.state,{action:'repeat'},deps);
+    expect(repeated.say).toContain('Which process');
   });
   it("closes safely if a planned prompt disappears after assembly", async () => {
     const p = MEDICINE_PILOTS[0],

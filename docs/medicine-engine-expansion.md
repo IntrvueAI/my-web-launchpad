@@ -40,7 +40,7 @@ Open `/__dev/medicine-lab#engine-rehearsal` locally, or the expansion lab in the
 
 The workbench uses a deterministic scripted adapter. It does **not** call an AI model, assess answers, or simulate actor response quality. Its twelve diagnostics execute the actual shared sequencing engine. Use `/admin/medicine-interviews` for authenticated AI pilots after backend deployment.
 
-Edition 03 of the journal records completed work and release limits. The terminal runs the expanded regression suite and displays actual process output.
+The journal records completed work and release limits. The terminal runs the expanded regression suite and displays actual process output. See the [17 September live Anam update](oxbridge-anam-release.md) for the academic workpad, connection recovery and real browser acceptance results.
 
 ## Verification — 16 September 2026
 
@@ -50,11 +50,11 @@ Edition 03 of the journal records completed work and release limits. The termina
 - Local PostgreSQL migration execution via PGlite passed syntax, default revision, actor restoration, retired-state preservation, edited-prompt protection, repeated application and preservation of admin metadata.
 - Content integrity checks passed for all 60 drafts and the source ledger.
 
-## Deployment and acceptance still required
+## Deployment and acceptance — updated 17 September 2026
 
-Apply `supabase/migrations/20260916000001_medicine_engine_reliability.sql` **before** deploying `interview-brain`. Then deploy `interview-brain`, `get-anam-session-token`, and `generate-interview-feedback` together. The new brain requires `engine_revision`; deploying it first will fail session loading. Regenerate shared code with `node scripts/build-interview-brain.mjs --code-only` for engine/pilot changes, preserving unrelated published-bank edits.
+The reliability migration and both backend-integrity migrations have been applied to the linked Supabase project. Thirteen managed functions were deployed, including the brain, Anam token and feedback functions. The latest academic engine changes are also deployed. See [the backend release](supabase-backend-release.md) for the migration-ledger handling and retired endpoints. Regenerate shared code with `node scripts/build-interview-brain.mjs --code-only` for subsequent engine/pilot changes.
 
-No remote migration, edge deployment, paid model evaluation or live avatar session was performed. Before release, verify administrator/ordinary-account rejection, a complete live circuit, real model/actor quality, concurrent-session rejection, and the avatar account's supported duration. Scripted checks establish engineering behaviour, not assessment validity. Educator/editorial review remains required before publishing the drafts.
+Real administrator and ordinary-account checks, live engine openings/follow-ups, saved plans, turn replay and ended-session protection passed. Oxford and Cambridge also passed real Anam video/audio conversations and saved feedback; Cambridge used synthetic microphone speech through Anam transcription. These are short acceptance calls, not a full-duration avatar or educator validity study. Full-length live circuits, human speech conditions and educator/editorial review remain release acceptance work. The public frontend still requires Lovable publication after GitHub sync.
 
 ## Primary evidence
 

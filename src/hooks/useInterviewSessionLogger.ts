@@ -19,16 +19,16 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
   const sessionReferenceRef = useRef<string | null>(null);
 
   const startSession = useCallback(async (interviewType: InterviewType, userId: string): Promise<string> => {
+    sessionIdRef.current = null;
+    sessionReferenceRef.current = null;
     try {
       const session = await SessionService.createSession(userId, interviewType);
       sessionIdRef.current = session.id;
       sessionReferenceRef.current = session.session_reference;
       return session.session_reference;
     } catch (error) {
-      console.warn('Session logging failed - using fallback:', error);
-      const fallbackRef = `F${Date.now().toString(36).toUpperCase()}`;
-      sessionReferenceRef.current = fallbackRef;
-      return fallbackRef;
+      console.warn('Could not create interview session:', error);
+      throw new Error('Your interview could not be saved. Please check your connection and try again.');
     }
   }, []);
 

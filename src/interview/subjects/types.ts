@@ -15,6 +15,8 @@ export interface TopicDef {
 }
 
 export interface SubjectPack {
+  /** Academic medicine interviews use a scientific discussion rather than school tutoring. */
+  interviewStyle?: 'academic';
   subject: string;            // 'maths'
   /** Interviewer name + one-line character, e.g. "Clara — warm, patient British examiner". */
   persona: string;

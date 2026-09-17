@@ -87,6 +87,7 @@ export function packForMedicinePilot(pilot: MedicinePilot): SubjectPack {
   const academic = pilot.style === "academic";
   return {
     ...medicinePack,
+    interviewStyle: academic ? 'academic' : undefined,
     persona: `You are Clara, an AI medicine admissions practice interviewer. This is an original ${pilot.school} ${pilot.style} practice session, not an official university interview. Never claim university affiliation or personal clinical experience.`,
     speakingNotes: `${academic ? "Run a thoughtful academic conversation: reasoning aloud, scientific mechanisms, alternative explanations, assumptions and uncertainty. Do not demand specialist clinical knowledge. Let the candidate work before offering one small prompt. Keep disagreement exploratory rather than combative." : medicinePack.speakingNotes}\n${pilot.behaviours.join("\n")}\nUse authored probes one at a time and respond to the candidate's actual reasoning. A limit ends the exercise; it is not evidence of a weak answer.`,
     guardrails: `${medicinePack.guardrails}\nDo not ask the candidate to disclose a patient identity or personal trauma. Accept transferable examples from school, work, caring or volunteering; privileged work experience is not required. Use only the planned stations; no invented replacement exercises.`,

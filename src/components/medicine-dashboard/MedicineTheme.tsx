@@ -34,8 +34,8 @@ export function MedicineTheme({ children, bottomNav = false, live = false, enabl
     {children}
     <div className="medicine-theme-switch" role="group" aria-label="Medicine colour scheme">
       <Palette size={16} aria-hidden="true"/>
-      <button type="button" aria-pressed={theme === 'clinical'} onClick={() => change('clinical')}><i className="medicine-swatch-clinical"/>Clinical teal</button>
-      <button type="button" aria-pressed={theme === 'coral'} onClick={() => change('coral')}><i className="medicine-swatch-coral"/>Warm coral</button>
+      <button type="button" title="Clinical teal" aria-pressed={theme === 'clinical'} onClick={() => change('clinical')}><i className="medicine-swatch-clinical"/><span>Clinical teal</span></button>
+      <button type="button" title="Warm coral" aria-pressed={theme === 'coral'} onClick={() => change('coral')}><i className="medicine-swatch-coral"/><span>Warm coral</span></button>
     </div>
   </div>;
 }

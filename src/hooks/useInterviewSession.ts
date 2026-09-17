@@ -37,6 +37,8 @@ export interface StartOptions {
 interface UseInterviewSessionReturn {
   isConnected: boolean;
   isStreaming: boolean;
+  isThinking: boolean;
+  repeatLastResponse: () => Promise<void>;
   error: string | null;
   sessionStatus: SessionStatus;
   chatHistory: ChatMessage[];
@@ -86,6 +88,11 @@ export const useInterviewSession = (
   // State management
   const [isConnected, setIsConnected] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+  const mountedRef = useRef(true);
+  const generationRef = useRef(0);
+  const startingRef = useRef(false);
+  const latestResponseRef = useRef('');
   const [error, setError] = useState<string | null>(null);
   const [sessionStatus, setSessionStatus] = useState<SessionStatus>('idle');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -139,11 +146,15 @@ export const useInterviewSession = (
     const client = clientRef.current;
     const speakingSession = sessionRefRef.current;
     if (!client || !say?.trim()) return;
+    latestResponseRef.current = say;
     logDebug({ source: 'anam', kind: 'request', label: 'client.talk()', detail: say });
     try {
       await client.talk(say);
     } catch (err) {
       console.error('Failed to talk:', err);
+      if (speakingSession === sessionRefRef.current && mountedRef.current) {
+        setError('The spoken reply could not be delivered. You can read it in the transcript or repeat the last response.');
+      }
       logDebug({ source: 'anam', kind: 'error', label: 'client.talk() failed', detail: (err as Error)?.message || String(err) });
     }
     if (speakingSession === sessionRefRef.current && client === clientRef.current) pushTranscript('assistant', say);
@@ -173,13 +184,16 @@ export const useInterviewSession = (
     }
     if (payload.expectedQuestionIndex !== undefined && payload.expectedQuestionIndex !== uiStateRef.current?.questionIndex) return;
     brainBusyRef.current = true;
+    setIsThinking(true);
     const requestBody = { sessionId, action, ...payload, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);
       logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
       if (sessionRefRef.current !== sessionId) return;
-      const changedStation = uiStateRef.current?.questionIndex !== res.uiState.questionIndex;
+      // A first greeting assigns the initial index; it is not a station change.
+      // Preserve answers submitted while that first request is still running.
+      const changedStation = uiStateRef.current !== null && uiStateRef.current.questionIndex !== res.uiState.questionIndex;
       uiStateRef.current = res.uiState;
       setBrainUiState(res.uiState);
       answerRetriesRef.current = 0;
@@ -197,7 +211,7 @@ export const useInterviewSession = (
         .catch(() => {});
       // Retry transient answer/control failures with the same identifier. A timer bell has no
       // second natural firing, so it needs the same bounded delivery guarantee as an answer.
-      if (((action === 'answer' && payload.studentText) || isControl) && answerRetriesRef.current < 2) {
+      if ((action === 'start' || (action === 'answer' && payload.studentText) || isControl) && answerRetriesRef.current < 2) {
         answerRetriesRef.current += 1;
         retryTurnRef.current = {action,payload};
       }
@@ -208,6 +222,7 @@ export const useInterviewSession = (
     } finally {
       if (sessionRefRef.current !== sessionId) return;
       brainBusyRef.current = false;
+      setIsThinking(false);
       if (retryTurnRef.current) {
         if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
         flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS * (answerRetriesRef.current + 1));
@@ -320,16 +335,26 @@ export const useInterviewSession = (
    * Start the interview session.
    */
   const startInterview = useCallback(async (userId: string, opts: StartOptions = {}) => {
+    if (startingRef.current || clientRef.current) return;
     if (!videoRef.current) {
       setError('Video element not found');
       return;
     }
 
+    startingRef.current = true;
+    const generation = ++generationRef.current;
+    const current = () => mountedRef.current && generation === generationRef.current;
+    let connectingClient: AnamClient | null = null;
     try {
       setError(null);
       setSessionStatus('connecting');
       setInterviewComplete(false);
       transcriptRef.current = [];
+      messagesRef.current = [];
+      latestResponseRef.current = '';
+      setChatHistory([]);
+      setIsThinking(false);
+      lastMessageTimeRef.current = Date.now();
       processedUserIdsRef.current.clear();
       pendingStudentRef.current = [];
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
@@ -343,14 +368,16 @@ export const useInterviewSession = (
       startOptsRef.current = opts;
 
       // Start session logging — for the engine path we MUST have the session_reference before the
-      // first brain call, so await it here (it's still resilient: it falls back to a local ref).
+      // first brain call. Stop here if the database cannot create an owned session.
       const sessionRef = await sessionLogger.startSession(interviewType, userId);
+      if (!current()) { await sessionLogger.endSession('error'); return; }
       sessionRefRef.current = sessionRef;
       sessionLogger.logEvent('session_start', 'Interview session initialization started').catch(() => {});
 
       connectionHealth.startMonitoring();
 
       const sessionToken = await getSessionToken();
+      if (!current()) return;
 
       sessionLogger.logEvent('anam_token', 'Successfully obtained Anam session token').catch(() => {});
 
@@ -362,11 +389,13 @@ export const useInterviewSession = (
         // laggy; 0.45 is snappier while still giving a short pause for thinking. Lower if she cuts in.
         voiceDetection: { endOfSpeechSensitivity: 0.45 },
       });
+      connectingClient = client;
       clientRef.current = client;
 
       // Anam fires MESSAGE_HISTORY_UPDATED when the student finishes speaking, with the full history
       // including the new user message (the documented signal for "bring your own LLM" mode).
       client.addListener(AnamEvent.MESSAGE_HISTORY_UPDATED, (messages: AnamMessage[]) => {
+        if (!current() || clientRef.current !== client) return;
         messagesRef.current = messages;
         lastMessageTimeRef.current = Date.now();
         if (!engineDriven) {
@@ -393,14 +422,42 @@ export const useInterviewSession = (
       // Engine path: kick off the interview (greeting + unmarked opener) once the session is ready.
       if (engineDriven) {
         client.addListener(AnamEvent.SESSION_READY, () => {
-          if (startedRef.current) return;
+          if (!current() || clientRef.current !== client || startedRef.current) return;
           startedRef.current = true;
           runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic });
         });
       }
 
+      client.addListener(AnamEvent.CONNECTION_CLOSED, () => {
+        if (!current() || clientRef.current !== client) return;
+        generationRef.current += 1;
+        sessionRefRef.current = null;
+        clientRef.current = null;
+        startedRef.current = false;
+        retryTurnRef.current = null;
+        pendingStudentRef.current = [];
+        controlsRef.current.clear();
+        if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
+        setIsConnected(false);
+        setIsStreaming(false);
+        setIsThinking(false);
+        setSessionStatus('error');
+        setError('The interview connection ended. Your transcript is still available below.');
+        connectionHealth.stopMonitoring();
+        void client.stopStreaming().catch(() => {});
+        void sessionLogger.endSession('error');
+      });
       if (!videoRef.current) throw new Error('Video element lost during initialization');
-      await client.streamToVideoElement('interview-video');
+      let connectionTimer: ReturnType<typeof setTimeout> | undefined;
+      const stream = client.streamToVideoElement('interview-video');
+      // A provider resolving after cancellation must not reopen microphone/video resources.
+      void stream.then(() => { if (!current()) void client.stopStreaming().catch(() => {}); }, () => {});
+      try {
+        await Promise.race([stream, new Promise<never>((_, reject) => {
+          connectionTimer = setTimeout(() => reject(new Error('Connection timed out. Check microphone permission and your connection, then try again.')), 45000);
+        })]);
+      } finally { if (connectionTimer) clearTimeout(connectionTimer); }
+      if (!current()) return;
 
       setIsConnected(true);
       setIsStreaming(true);
@@ -414,6 +471,17 @@ export const useInterviewSession = (
       }
 
     } catch (err) {
+      if (!current()) return;
+      generationRef.current += 1;
+      sessionRefRef.current = null;
+      clientRef.current = null;
+      startedRef.current = false;
+      if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
+      if (connectingClient) void connectingClient.stopStreaming().catch(() => {});
+      connectionHealth.stopMonitoring();
+      await sessionLogger.endSession('error');
+      if (!mountedRef.current) return;
+      setIsThinking(false);
       console.error('❌ Failed to start interview:', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to start interview';
       sessionLogger.logError(`Failed to start interview: ${errorMessage}`).catch(() => {});
@@ -421,6 +489,8 @@ export const useInterviewSession = (
       setSessionStatus('error');
       setIsConnected(false);
       setIsStreaming(false);
+    } finally {
+      startingRef.current = false;
     }
   }, [videoRef, sessionLogger, connectionHealth, interviewType, engineDriven, runBrainTurn, handleStudentTurn]);
 
@@ -505,14 +575,17 @@ export const useInterviewSession = (
    * Stop the interview session and get transcription.
    */
   const stopInterview = useCallback(async (): Promise<string | null> => {
+    generationRef.current += 1;
     sessionRefRef.current = null;
+    setIsThinking(false);
     retryTurnRef.current = null;
     startedRef.current = false;
     setIsStreaming(false);
     controlsRef.current.clear();
     try {
-      let transcription: string | null = null;
-      await sessionLogger.logEvent('stop_interview', 'Interview stop initiated');
+      let transcription: string | null = buildTranscription();
+      // Diagnostic writes must never delay releasing the microphone or block saved work.
+      void sessionLogger.logEvent('stop_interview', 'Interview stop initiated').catch(() => {});
 
       if (clientRef.current) {
         try {
@@ -520,19 +593,21 @@ export const useInterviewSession = (
           const hasStudent = (transcription || '').includes('Student:');
           if (!hasStudent) {
             console.warn('No student responses detected in transcription.');
-            await sessionLogger.logError('No student responses detected in transcription');
+            void sessionLogger.logError('No student responses detected in transcription').catch(() => {});
           }
-          await sessionLogger.logEvent('transcription_generated', `Transcription built`, 'info', {
+          void sessionLogger.logEvent('transcription_generated', `Transcription built`, 'info', {
             has_student_responses: hasStudent,
             engine_driven: engineDriven,
-          });
+          }).catch(() => {});
         } catch (transcriptionError) {
           console.warn('Could not build transcription:', transcriptionError);
-          await sessionLogger.logError(`Transcription error: ${transcriptionError}`);
+          void sessionLogger.logError(`Transcription error: ${transcriptionError}`).catch(() => {});
         }
 
-        await clientRef.current.stopStreaming();
+        const stoppingClient = clientRef.current;
         clientRef.current = null;
+        try { await stoppingClient.stopStreaming(); }
+        catch (err) { console.warn('Avatar shutdown failed; preserving transcript:', err); }
       }
 
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
@@ -582,7 +657,10 @@ export const useInterviewSession = (
    * Cleanup on unmount only
    */
   useEffect(() => {
+    mountedRef.current = true;
     return () => {
+      mountedRef.current = false;
+      generationRef.current += 1;
       sessionRefRef.current = null;
       startedRef.current = false;
       controlsRef.current.clear();
@@ -617,7 +695,22 @@ export const useInterviewSession = (
     flushStudentBuffer();
   }, [flushStudentBuffer]);
 
+  const repeatLastResponse = useCallback(async () => {
+    const client = clientRef.current;
+    if (!client || !latestResponseRef.current) return;
+    const generation = generationRef.current;
+    const current = () => mountedRef.current && generation === generationRef.current && client === clientRef.current;
+    try {
+      await client.talk(latestResponseRef.current);
+      if (current()) setError(null);
+    } catch {
+      if (current()) setError('Audio is unavailable. Your latest response is visible in the transcript.');
+    }
+  }, []);
+
   return {
+    isThinking,
+    repeatLastResponse,
     isConnected,
     isStreaming,
     error,

@@ -1,4 +1,4 @@
-name: Backend regression checks
+name: Application and backend checks
 on:
   push:
     branches: [main]
@@ -6,8 +6,11 @@ on:
       [
         "supabase/**",
         "scripts/**",
-        "src/interview/**",
-        "src/hooks/**",
+        "src/**",
+        "public/**",
+        "index.html",
+        "vite.config.ts",
+        "tsconfig*.json",
         "package*.json",
         ".github/workflows/backend-checks.yml",
       ]
@@ -16,8 +19,11 @@ on:
       [
         "supabase/**",
         "scripts/**",
-        "src/interview/**",
-        "src/hooks/**",
+        "src/**",
+        "public/**",
+        "index.html",
+        "vite.config.ts",
+        "tsconfig*.json",
         "package*.json",
         ".github/workflows/backend-checks.yml",
       ]
@@ -37,6 +43,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run test:run
       - run: npm run test:backend
+      - run: npx vite build
       - run: npm install --no-save --package-lock=false @electric-sql/pglite@0.5.8
       - run: npm run backend:sql-check
       - uses: denoland/setup-deno@v2

@@ -282,6 +282,32 @@ function renderRoleplayStation(rp: RoleplayRuntime): string {
 
 /** The system prompt is where the tutoring quality lives — persona + voice + how to run the session. */
 export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string {
+  if (pack.interviewStyle === 'academic') {
+    return [
+      pack.persona,
+      `You are speaking with ${pack.audience}. This is an academic medicine practice conversation.`,
+      'Speak plainly, professionally and with curiosity. Ask one question at a time, then give the candidate room to reason. Avoid exaggerated praise and stock reassurance.',
+      'Keep follow-ups to one or two short sentences. When first presenting an authored exercise, preserve all facts, quantities, units, uncertainties and constraints even if it needs more words.',
+      'Begin with one brief introduction and one question about what the candidate wants to practise. After their reply, call next_problem and start the first planned exercise. Do not prolong the warm-up.',
+      'Use only exercises returned by next_problem. Do not substitute a remembered university question or imply that any exercise is official.',
+      'Explore the reasoning in the answer just given: first the proposed mechanism, then an assumption or competing explanation, then a way to distinguish the explanations. Choose one relevant probe per turn; do not recite this sequence mechanically.',
+      'When the candidate is unsure, ask them to identify what is known and make an explicit assumption. If they remain stuck after a genuine attempt, offer one small authored hint and record that assistance.',
+      'Treat scientific uncertainty honestly. A correlation alone does not establish causation; an appropriate limitation or revised hypothesis is valuable reasoning. Do not invent observations, study results or clinical facts to contradict a candidate.',
+      'Use authored live_probes and model_reasoning_path privately. Never reveal answer keys, marking bands, private notes or the full solution during the exercise.',
+      'A hypothetical change must be clearly introduced as hypothetical and must not silently change the original data. Ask how it changes their explanation, then listen.',
+      'Reflect on experience through one concrete event, the candidate’s role, what they learned and what they would change. Do not favour prestigious placements or demand personal or patient identifiers.',
+      'Call next_problem when the current exercise has been explored, supplying the observed outcome, method_quality, hints_given and a specific evidence note. Do not award a strong band for fluent delivery without reasoning.',
+      'If speech seems garbled, ask for clarification before evaluating. A stray goodbye does not end a session; clarify an ambiguous request to stop. Respect an explicit request to end by calling finish_interview.',
+      'Time limits are practice settings. When a control ends an exercise, move on briefly without claiming that time expiry means failure. Finish without predicting admission or inventing praise.',
+      CORE_SPEAKING_STYLE,
+      pack.speakingNotes || '',
+      pack.guardrails,
+      pack.scoringPhilosophy || '',
+      `Progress: ${state.questionIndex} exercises completed out of ${state.targetQuestions}. Follow the planned order.`,
+      renderCurrentProblem(state.current, pack),
+      state.currentNodeNote || '',
+    ].filter(Boolean).join('\n');
+  }
   const mock = state.mode === 'mock';
   // A single hardcoded quoted example in a prompt gets echoed back near-verbatim, turn after
   // turn — picking a fresh one per session is what actually produces variation, "vary your
@@ -554,7 +580,9 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
 function controlNote(req: AgentRequest, deps: AgentDeps): string | null {
   switch (req.action) {
     case 'start':
-      return '[The interview is starting. Greet me warmly and ask one light warm-up question. Do not ask a maths problem yet.]';
+      return deps.pack.interviewStyle === 'academic'
+        ? '[The academic practice interview is starting. Briefly introduce yourself as an AI practice interviewer and ask what I want to work on. Begin the first planned exercise after my reply.]'
+        : '[The interview is starting. Greet me warmly and ask one light warm-up question. Begin the first authored exercise after my reply.]';
     case 'skip':
       return '[I would like to skip this problem — please acknowledge kindly and move on to the next one.]';
     case 'switch_topic':
@@ -564,7 +592,9 @@ function controlNote(req: AgentRequest, deps: AgentDeps): string | null {
     case 'end':
       return '[I need to stop now. Please give a short, warm closing and finish the interview.]';
     case 'time_up':
-      return "[The station clock has just run out. This is a REAL MMI station ending mid-sentence — do not apologise for it or explain the timer. Wrap up in one short sentence (offer a close if I'm mid-thought), then move straight to the next station.]";
+      return deps.pack.interviewStyle === 'academic'
+        ? '[The practice time for this exercise has ended. Briefly acknowledge the reasoning so far, then move to the next planned exercise without treating unfinished work as a wrong answer.]'
+        : '[The practice station clock has just run out. Close this station briefly; do not apologise for the timer. Move to the next station without treating unfinished work as a wrong answer.]';
     default:
       return null;
   }
@@ -701,7 +731,8 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // NOT applied elsewhere by default — several authored current-affairs problems (moral dilemmas
   // especially) legitimately contain two "?" as ONE question that must be read in full, and a blind
   // truncation there would silently drop authored content.
-  if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn) say = enforceSingleAsk(say);
+  const academicFollowUp = deps.pack.interviewStyle === 'academic' && req.action === 'answer' && state.current?.id === questionBefore;
+  if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn || academicFollowUp) say = enforceSingleAsk(say);
 
   state.transcript.push({ role: 'assistant', content: say });
   return { say, state, done: state.done };
