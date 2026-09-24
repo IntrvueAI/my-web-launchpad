@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PipCustomizationProvider } from "@/contexts/PipCustomizationContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
-import { ShutdownBanner } from "@/components/ShutdownBanner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Mail, Calendar } from "lucide-react";
 // Index (the landing page) stays a direct import — it's the most-visited route and should render
@@ -121,7 +120,6 @@ const AppContent = () => {
           </div>
         )}
         <BrowserRouter>
-          <ShutdownBanner />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
