@@ -59,8 +59,8 @@ const parseImprovementFeedback = (text?: string | null): { good: string[]; tips:
       .map((sentence) => sentence.trim())
       .filter((sentence) => sentence.length > 0);
 
-  const [goodPart, tipsPart] = text.split(/\*\*Even better if\*\*/i);
-  const good = toSentences((goodPart || '').replace(/\*\*What went well\*\*/i, '')).slice(0, 3);
+  const [goodPart, tipsPart] = text.split(/(?:\*\*)?(?:Even better if|Practise next)(?:\*\*)?\s*:?/i);
+  const good = toSentences((goodPart || '').replace(/(?:\*\*)?(?:What went well|Keep doing)(?:\*\*)?\s*:?/i, '')).slice(0, 3);
   const tips = toSentences(tipsPart || '').slice(0, 3);
   return { good, tips };
 };

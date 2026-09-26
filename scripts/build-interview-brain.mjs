@@ -33,6 +33,7 @@ const FILES = [
   'engine/evidence.ts',
   'engine/flow.ts',
   'engine/agent.ts',
+  'engine/publicPrompt.ts',
   'bank/select.ts',
   'bank/normalize.ts',
   'subjects/types.ts',
@@ -43,6 +44,8 @@ const FILES = [
   'subjects/medicine/pack.ts',
   'subjects/medicine/schoolModes.ts',
   'subjects/medicine/pilots.ts',
+  'subjects/medicine/practiceModes.ts',
+  'shared/transcript.ts',
   'medicine-content/expansion/circuit.ts',
   'subjects/chat/pack.ts',
 ];

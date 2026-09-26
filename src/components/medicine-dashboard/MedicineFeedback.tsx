@@ -1,17 +1,18 @@
+import { FeedbackSummary } from '@/components/feedback/FeedbackSummary';
 import { useState } from 'react';
-import { useMedicineDashboardStats, titleFor, MEDICINE_SKILL_COLUMNS, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
+import { useMedicineDashboardStats, titleFor, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export function MedicineFeedback() {
+export function MedicineFeedback({selectedFeedbackId}: {selectedFeedbackId?: string}) {
   // Same react-query cache entry Home/Progress already populate — switching to this tab doesn't
   // re-fetch (see useMedicineDashboardStats.ts's `records` field).
   const { stats, loading } = useMedicineDashboardStats();
-  return <MedicineFeedbackView stats={stats} loading={loading}/>;
+  return <MedicineFeedbackView stats={stats} loading={loading} selectedFeedbackId={selectedFeedbackId}/>;
 }
 
-export function MedicineFeedbackView({stats,loading=false}:{stats?:MedicineDashboardStats;loading?:boolean}) {
+export function MedicineFeedbackView({stats,loading=false,selectedFeedbackId}:{stats?:MedicineDashboardStats;loading?:boolean;selectedFeedbackId?:string}) {
   const records = stats?.records ?? [];
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(selectedFeedbackId ?? null);
 
   if (loading) {
     return <div style={{ display: 'grid', gap: 16 }}><Skeleton className="h-10 w-64" /><Skeleton className="h-96 rounded-2xl" /></div>;
@@ -58,50 +59,8 @@ export function MedicineFeedbackView({stats,loading=false}:{stats?:MedicineDashb
             })}
           </div>
 
-          {selected && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={cardStyle}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
-                  <div>
-                    <h2 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 25, margin: 0 }}>{titleFor(selected)}</h2>
-                    <div style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 6 }}>
-                      {new Date(selected.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 34, color: 'var(--med-primary-dark)' }}>{selected.total_score ?? '—'} / 20</div>
-                    <div style={{ color: 'var(--med-tertiary)', fontSize: 12.5 }}>Overall</div>
-                  </div>
-                </div>
-                {selected.detailed_feedback?.overall && (
-                  <p style={{ color: 'var(--med-ink)', fontSize: 15.5, lineHeight: 1.65, marginTop: 18, maxWidth: 760 }}>
-                    {selected.detailed_feedback.overall}
-                  </p>
-                )}
-              </div>
+          {selected && <FeedbackSummary key={selected.id} feedback={selected} interviewType={selected.interview_type ?? 'medicine-mmi'}/>}
 
-              <div style={cardStyle}>
-                <h3 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 17, margin: '0 0 16px' }}>By skill</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {MEDICINE_SKILL_COLUMNS.map((row) => {
-                    const score = selected[row.key];
-                    return (
-                      <div key={row.label} className="med-skill-row" style={{ display: 'grid', gridTemplateColumns: '210px 1fr 32px', alignItems: 'center', gap: 10, fontSize: 14 }}>
-                        <span>{row.label}</span>
-                        <div style={{ height: 6, background: 'var(--med-track)', borderRadius: 4 }}>
-                          <div style={{ height: 6, borderRadius: 4, width: `${((typeof score === 'number' ? score : 0) / 5) * 100}%`, background: 'var(--med-action)' }} />
-                        </div>
-                        <span style={{ textAlign: 'right', color: 'var(--med-muted)' }}>{typeof score === 'number' ? score : '—'}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <p style={{ color: 'var(--med-tertiary)', fontSize: 12.5, marginTop: 14 }}>
-                  Individual station scores aren't tracked separately yet — this circuit's overall score, broken down by skill.
-                </p>
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>

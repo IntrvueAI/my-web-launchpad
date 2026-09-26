@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import DOMPurify from 'dompurify';
+import { censorTranscript } from '@/interview/shared/transcript';
 
 interface LiveTranscriptionProps {
   transcription: string;
@@ -14,7 +15,7 @@ export const LiveTranscription: React.FC<LiveTranscriptionProps> = ({
 }) => {
   // Sanitize transcription content to prevent XSS
   const sanitizedTranscription = transcription 
-    ? DOMPurify.sanitize(transcription, { 
+    ? DOMPurify.sanitize(censorTranscript(transcription), {
         ALLOWED_TAGS: [],
         ALLOWED_ATTR: []
       })

@@ -1,4 +1,6 @@
 import { withJson } from "../_shared/http.ts";
+import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING } from './_shared/subjects/medicine/practiceModes.ts';
+import { publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 // Interview Brain — the LLM-driven orchestrator the client calls each time the student finishes
 // speaking. The model (Clara) drives the whole conversation; the server owns the question bank
 // (answers never reach the client) and the evidence log via tool calls. Vendored engine is built
@@ -189,13 +191,13 @@ const uiStateOf = (
     questionIndex: s.questionIndex,
     targetQuestions: s.targetQuestions,
     onQuestion: !!s.current,
-    exercise: getMedicinePilot(interviewType)?.style === "academic" && s.current
-      ? { id: s.current.id, prompt: s.current.question, topic: s.current.topic }
+    exercise: (getMedicinePilot(interviewType)?.style === "academic" || getMedicinePractice(interviewType)) && s.current
+      ? { id: s.current.id, prompt: publicQuestionPrompt(s.current), topic: s.current.topic }
       : undefined,
     phase: pack.mixedBank ? phase : undefined,
     aboutYouCount,
     timingSeconds:
-      getSchoolMode(interviewType)?.timingSeconds ??
+      (getMedicinePractice(interviewType) ? PRACTICE_TIMING : undefined) ?? getSchoolMode(interviewType)?.timingSeconds ??
       (getMedicinePilot(interviewType)
         ? {
             prep: getMedicinePilot(interviewType)!.circuit.prepSeconds,
@@ -310,14 +312,16 @@ serve(
             400,
           );
       }
-      const subject = pilot ? "medicine" : SUBJECT_BY_TYPE[interviewTypeId];
+      const practice = getMedicinePractice(interviewTypeId);
+      if (practice && (action === 'switch_topic' || body.mode === 'practice')) return json({ error: 'Focused practice follows one station in the selected topic.' }, 400);
+      const subject = pilot || practice ? "medicine" : SUBJECT_BY_TYPE[interviewTypeId];
       const basePack = subject ? PACKS[subject] : undefined;
       if (!basePack)
         return json({ error: "This interview type is not engine-driven" }, 400);
       // Two Medicine interview TYPES share one subject/pack/bank but differ in station count and
       // timing — see subjects/medicine/schoolModes.ts for why (verified per-school MMI data).
       const schoolMode = getSchoolMode(interviewTypeId);
-      const pack = pilot
+      const pack = practice ? packForMedicinePractice(practice) : pilot
         ? packForMedicinePilot(pilot)
         : schoolMode
           ? { ...basePack, mockTargetQuestions: schoolMode.mockTargetQuestions }
@@ -344,7 +348,7 @@ serve(
       const deps = {
         bank: pilot
           ? (pilotBank as PilotQuestion[])
-          : await loadBank(admin, subject),
+          : (await loadBank(admin, subject)).filter(question => !practice || question.topic === practice.topic),
         pack,
         chat,
       };

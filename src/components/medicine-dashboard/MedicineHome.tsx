@@ -1,4 +1,6 @@
-import { useMemo } from 'react';
+import { conciseFeedback } from '@/utils/feedbackSummary';
+import { getInterviewTypeConfig } from '@/config/interviewTypes';
+import type { InterviewType as InterviewTypeId } from '@/types/interview';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats, type UpcomingSchoolInterview } from '@/hooks/useDashboardStats';
 import { useMedicineDashboardStats, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
@@ -6,14 +8,13 @@ import { INTERVIEW_TYPES, InterviewType } from '@/config/interviewTypes';
 import { Skeleton } from '@/components/ui/skeleton';
 import { TrendingUp } from 'lucide-react';
 
-const LEEDS = INTERVIEW_TYPES['medicine-mmi'];
-const MANCHESTER = INTERVIEW_TYPES['medicine-mmi-manchester'];
 
 interface Props {
   credits: number;
   onStartInterview: (type: InterviewType) => void;
   onOpenTab: (tab: 'practice' | 'progress' | 'feedback' | 'schools') => void;
   onOpenCredits: () => void;
+  onOpenFeedback?: (id: string) => void;
 }
 
 const cardStyle: React.CSSProperties = {
@@ -21,22 +22,19 @@ const cardStyle: React.CSSProperties = {
   boxShadow: 'var(--med-shadow-sm)',
 };
 
-export function MedicineHome({ credits, onStartInterview, onOpenTab, onOpenCredits }: Props) {
+export function MedicineHome({ credits, onStartInterview, onOpenTab, onOpenCredits, onOpenFeedback }: Props) {
   const { user } = useAuth();
   const { stats: generalStats } = useDashboardStats();
   const { stats, loading } = useMedicineDashboardStats();
   const firstName = (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0] || 'there';
-  return <MedicineHomeView credits={credits} onStartInterview={onStartInterview} onOpenTab={onOpenTab} onOpenCredits={onOpenCredits} stats={stats} loading={loading} firstName={firstName} nextRealInterview={generalStats?.upcomingSchoolInterviews?.[0]} />;
+  return <MedicineHomeView credits={credits} onStartInterview={onStartInterview} onOpenTab={onOpenTab} onOpenCredits={onOpenCredits} onOpenFeedback={onOpenFeedback} stats={stats} loading={loading} firstName={firstName} nextRealInterview={generalStats?.upcomingSchoolInterviews?.[0]} />;
 }
 
-export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenCredits, stats, loading=false, firstName='there', nextRealInterview }: Props & { stats?: MedicineDashboardStats; loading?: boolean; firstName?: string; nextRealInterview?: UpcomingSchoolInterview }) {
+export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenCredits, onOpenFeedback, stats, loading=false, firstName='there', nextRealInterview }: Props & { stats?: MedicineDashboardStats; loading?: boolean; firstName?: string; nextRealInterview?: UpcomingSchoolInterview }) {
 
-  const recommended = useMemo(() => {
-    if (!stats) return LEEDS;
-    const leedsCount = stats.byStationType.find((s) => s.type === 'Leeds circuit')?.count ?? 0;
-    const manchesterCount = stats.byStationType.find((s) => s.type === 'Manchester circuit')?.count ?? 0;
-    return manchesterCount < leedsCount ? MANCHESTER : LEEDS;
-  }, [stats]);
+  const recommended = INTERVIEW_TYPES['medicine-ethics-practice'];
+  const latest = stats?.records?.[0];
+  const latestSummary = latest ? conciseFeedback(latest, getInterviewTypeConfig(latest.interview_type as InterviewTypeId).sections) : null;
 
   if (loading || !stats) {
     return (
@@ -52,7 +50,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
 
   const subline = stats.totalSessions > 0
     ? `You've done ${stats.totalSessions} Medicine ${stats.totalSessions === 1 ? 'session' : 'sessions'} so far.${nextRealInterview ? ` ${nextRealInterview.school} is ${nextRealInterview.daysUntil} day${nextRealInterview.daysUntil === 1 ? '' : 's'} away.` : ''}`
-    : "Start with a short solo practice, or make time for a full spoken circuit.";
+    : "Start with one five-minute station and choose one thing to improve.";
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -76,20 +74,26 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
                 <p style={{ color: 'var(--med-muted)', fontSize: 15, lineHeight: 1.6, marginTop: 10, maxWidth: 460 }}>{recommended.description}</p>
                 <div style={{ display: 'flex', gap: 12, marginTop: 22, flexWrap: 'wrap' }}>
                   <button onClick={() => onStartInterview(recommended)} style={primaryBtn}>
-                    Start circuit · {recommended.costCredits ?? 0} credits
+                    Start a 5-minute station
                   </button>
-                  <button onClick={() => onOpenTab('practice')} style={ghostBtn}>Try free solo practice</button>
+                  <button onClick={() => onOpenTab('practice')} style={ghostBtn}>See all practice formats</button>
                 </div>
               </div>
               <div style={{ width: 220, background: 'var(--med-bg)', borderRadius: 14, padding: 16, fontSize: 13 }}>
                 <div style={{ color: 'var(--med-tertiary)', fontWeight: 600, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 10 }}>Format</div>
-                <Row label="Stations" value={String(recommended.timingSeconds ? (recommended === LEEDS ? 8 : 5) : '—')} />
-                <Row label="Prep time" value={recommended.timingSeconds?.prep ? `${recommended.timingSeconds.prep / 60} min` : 'None'} />
+                <Row label="Stations" value={'1'} />
+                <Row label="Prep time" value={recommended.timingSeconds?.prep ? '30 seconds' : 'None'} />
                 <Row label="Per station" value={recommended.timingSeconds ? `${recommended.timingSeconds.response / 60} min` : '—'} />
               </div>
             </div>
           </div>
 
+          {latest && latestSummary && <section style={cardStyle} aria-label="Your last interview">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">Your last interview</p>
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><h2 className="font-display text-xl font-semibold">{INTERVIEW_TYPES[latest.interview_type ?? '']?.name ?? 'Medicine practice'}</h2><strong className="text-2xl">{latest.total_score}/20</strong></div>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2"><div><h3 className="text-sm font-semibold">Keep doing</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{latestSummary.strength}</p></div><div><h3 className="text-sm font-semibold">Try next</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{latestSummary.nextStep}</p></div></div>
+            <button onClick={() => onOpenFeedback ? onOpenFeedback(latest.id) : onOpenTab('feedback')} className="mt-4 text-sm font-semibold underline underline-offset-4">Review this interview →</button>
+          </section>}
           <div style={cardStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 17, margin: 0 }}>How you're scoring</h3>
@@ -131,11 +135,12 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
             ) : (
               <div style={{ marginTop: 12 }}>
                 {stats.recentSessions.map((s, i) => (
-                  <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '14px 0', borderTop: i > 0 ? '1px solid var(--med-border)' : undefined }}>
-                    <span style={{ color: 'var(--med-tertiary)', fontSize: 13, width: 86 }}>{new Date(s.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
-                    <span style={{ flex: 1, fontSize: 14.5 }}>{s.title}</span>
-                    {s.band !== null && <span style={{ background: 'var(--med-primary-soft)', color: 'var(--med-primary-dark)', fontSize: 12.5, fontWeight: 600, padding: '4px 10px', borderRadius: 8 }}>Score {s.band}/20</span>}
-                    <button onClick={() => onOpenTab('feedback')} style={linkStyle}>View feedback</button>
+                  <div key={s.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 py-4" style={{ borderTop: i > 0 ? '1px solid var(--med-border)' : undefined }}>
+                    <div className="min-w-0"><p className="text-sm font-medium">{s.title}</p><p className="mt-1 text-xs text-muted-foreground">{new Date(s.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</p></div>
+                    <div className="flex flex-col items-end gap-2">
+                      {s.band !== null && <span className="rounded-lg bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">{s.band}/20</span>}
+                      <button aria-label={`View feedback for ${s.title}`} onClick={() => onOpenFeedback ? onOpenFeedback(s.id) : onOpenTab('feedback')} style={linkStyle}>View feedback</button>
+                    </div>
                   </div>
                 ))}
               </div>

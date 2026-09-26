@@ -1,3 +1,6 @@
+import { InterviewToolbar } from './interview/InterviewToolbar';
+import { censorTranscript } from '@/interview/shared/transcript';
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -97,6 +100,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const [pendingTranscript, setPendingTranscript] = useState<string | null>(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const { isAdmin } = useAdminStatus();
   const { toast } = useToast();
   
@@ -301,6 +305,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           });
         } else {
           setFeedback(data);
+          void queryClient.invalidateQueries({ queryKey: ['medicine-dashboard-stats', user.id] });
+          void queryClient.invalidateQueries({ queryKey: ['dashboard-stats', user.id] });
           setPendingTranscript(null);
           toast({
             title: "Feedback Generated",
@@ -360,6 +366,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         });
       } else {
         setFeedback(data);
+        void queryClient.invalidateQueries({ queryKey: ['medicine-dashboard-stats', user.id] });
+        void queryClient.invalidateQueries({ queryKey: ['dashboard-stats', user.id] });
         setPendingTranscript(null);
         toast({
           title: 'Feedback Regenerated',
@@ -376,7 +384,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
   const downloadPendingTranscript = () => {
     if (!pendingTranscript) return;
-    const url = URL.createObjectURL(new Blob([pendingTranscript], { type: 'text/plain;charset=utf-8' }));
+    const url = URL.createObjectURL(new Blob([censorTranscript(pendingTranscript)], { type: 'text/plain;charset=utf-8' }));
     const link = document.createElement('a');
     link.href = url;
     link.download = `interview-${sessionReference || 'transcript'}.txt`;
@@ -480,71 +488,10 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     <div ref={rootRef}><MedicineTheme enabled={interviewType.category === 'medicine'} live><div className="min-h-screen bg-background text-foreground overflow-y-auto">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
 
-        {/* Compact top bar (deck style): recording state · title · question progress */}
-        <div className="flex items-center justify-between flex-wrap gap-3 mb-5">
-          <div className="flex items-center gap-3 min-w-0">
-            {isStreaming && (
-              <span className="flex items-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 px-3 py-1.5">
-                <span className="h-2 w-2 rounded-full bg-destructive animate-pulsering" />
-                <span className="text-[11px] font-extrabold uppercase tracking-wide text-[#FCA5A5]">Recording</span>
-              </span>
-            )}
-            <span className="font-display text-[15px] font-semibold text-white">{interviewType.name}</span>
-          </div>
-          <div className="flex items-center flex-wrap gap-3 min-w-0">
-            {isStreaming && brainUiState && !hideTranscript && (
-              <div className="text-[13px] font-extrabold text-white">
-                {progressLabel(brainUiState)}
-              </div>
-            )}
-            {isStreaming && stationTimer && (
-              <div
-                className={
-                  interviewType.category === 'medicine'
-                    ? 'med-calm-timer flex items-center gap-1.5 rounded-full px-3 py-1 text-[12.5px] font-semibold'
-                    : stationTimer.phase === 'prep'
-                    ? "flex items-center gap-1.5 rounded-full border border-sky/50 bg-sky/10 px-3 py-1 text-[12.5px] font-extrabold text-sky tabular-nums"
-                    : stationTimer.secondsRemaining <= 20
-                      ? "flex items-center gap-1.5 rounded-full border border-destructive/60 bg-destructive/15 px-3 py-1 text-[12.5px] font-extrabold text-destructive tabular-nums animate-pulsering"
-                      : "flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 text-[12.5px] font-extrabold text-[#C7D2E4] tabular-nums"
-                }
-                title={stationTimer.phase === 'prep' ? 'Reading time for this station' : 'Time remaining in this station'}
-              >
-                {stationTimer.phase === 'prep' ? 'Reading' : 'Station'} · {formatStationClock(stationTimer.secondsRemaining)}
-              </div>
-            )}
-            {isStreaming && (
-              <button
-                onClick={() => setTypeMode((v) => !v)}
-                className={typeMode
-                  ? "flex items-center gap-1.5 rounded-full border border-sky/60 bg-sky/15 px-3.5 py-1.5 text-[12.5px] font-extrabold text-sky transition-colors"
-                  : "flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-extrabold text-[#C7D2E4] hover:bg-white/10 transition-colors"}
-                title="Answer by typing instead of talking (mutes the microphone)"
-              >
-                <Keyboard className="w-4 h-4" /> Type answers{typeMode ? ': on' : ''}
-              </button>
-            )}
-            {isStreaming && (
-              <button
-                onClick={togglePushToTalk}
-                className={pushToTalk
-                  ? "flex items-center gap-1.5 rounded-full border border-primary/60 bg-primary/15 px-3.5 py-1.5 text-[12.5px] font-extrabold text-primary-soft transition-colors"
-                  : "flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-extrabold text-[#C7D2E4] hover:bg-white/10 transition-colors"}
-                title="When on, the microphone only listens while you hold the talk button (or hold T)"
-              >
-                <Mic className="w-4 h-4" /> Push to talk{pushToTalk ? ': on' : ''}
-              </button>
-            )}
-            {isStreaming && (
-              <button
-                onClick={toggleFocusMode}
-                className="flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[12.5px] font-extrabold text-[#C7D2E4] hover:bg-white/10 transition-colors"
-              >
-                {hideTranscript ? <><Eye className="w-4 h-4" /> Show transcript</> : <><EyeOff className="w-4 h-4" /> Hide transcript</>}
-              </button>
-            )}
-          </div>
-        </div>
+        {!feedback && !pendingTranscript && !isGeneratingFeedback && <InterviewToolbar title={interviewType.name} live={isStreaming}
+          progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : 'Connecting'}
+          timer={stationTimer} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
+          onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}/>}
         {!isStreaming && !engineDriven && (
           <p className="text-muted-foreground text-sm max-w-2xl mb-5">{interviewType.description}</p>
         )}
@@ -557,7 +504,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         )}
 
         {/* Main Interview Interface - Mobile First Layout */}
-        {(!engineDriven || setupChoice || isStreaming) && (
+        {!feedback && !pendingTranscript && !isGeneratingFeedback && (!engineDriven || setupChoice || isStreaming) && (
         <div className={hideTranscript ? "space-y-6" : "space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0"}>
 
           {/* Video Interview Area */}
@@ -580,7 +527,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 {!isStreaming && chatHistory.length > 0 && <Button variant="secondary" onClick={()=>void handleStopInterview()} disabled={isGeneratingFeedback}>Save transcript and get feedback</Button>}
 
                 {/* Session Reference Display */}
-                {sessionReference && (
+                {sessionReference && isAdmin && (
                   <div className="text-xs text-muted-foreground text-center">
                     Session: <code className="bg-muted px-1 py-0.5 rounded text-xs">{sessionReference}</code>
                   </div>
@@ -714,7 +661,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     )}
                   </Button>
                   
-                  <div className="w-full sm:w-auto">
+                  <div className={stationTimer ? 'sr-only' : 'w-full sm:w-auto'}>
                     <InterviewTimer 
                       calm={interviewType.category === 'medicine'}
                       isActive={isStreaming}
@@ -758,11 +705,17 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               Hidden in focus mode so a mock feels like a real interview. */}
           {!hideTranscript && (
           <div className="lg:block space-y-4">
+            {!academic && brainUiState?.exercise && (
+              <section className="tile p-5 min-w-0" aria-label="Your scenario">
+                <h2 className="text-sm font-bold mb-3">Your scenario</h2>
+                <p className="text-sm leading-relaxed whitespace-pre-line break-words">{brainUiState.exercise.prompt}</p>
+              </section>
+            )}
             {academic && brainUiState?.exercise && <AcademicWorkpad exercise={brainUiState.exercise}
               notes={reasoningNotes[brainUiState.exercise.id] ?? emptyReasoningNotes}
               onChange={notes=>setReasoningNotes(previous=>({...previous,[brainUiState.exercise!.id]:notes}))}
               onSubmit={sendTypedMessage} disabled={!isStreaming || isThinking} />}
-            {isStreaming && brainUiState && (
+            {isStreaming && brainUiState && interviewType.category !== 'medicine' && (
               <div className="tile p-5">
                 <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">
                   {brainUiState.phase === 'about-you' ? 'Part 1 · About you' : brainUiState.phase === 'challenge' ? 'Part 2 · The challenge' : 'Progress'}
@@ -801,9 +754,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
         {/* Feedback Section */}
         {(feedback || pendingTranscript || isGeneratingFeedback) && (
-          <div className="mt-12">
+          <div className="mt-4">
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-              <h2 className="text-2xl font-bold">Your Interview Feedback</h2>
+              <p className="text-sm font-medium text-muted-foreground">{isGeneratingFeedback ? 'Reviewing your interview' : 'Interview complete'}</p>
               <Button
                 variant="secondary"
                 onClick={handleRegenerateFeedback}
@@ -821,7 +774,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 <Button variant="outline" onClick={downloadPendingTranscript}>Download transcript</Button>
                 <details>
                   <summary className="cursor-pointer text-sm font-semibold">View transcript</summary>
-                  <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap break-words text-sm font-sans">{pendingTranscript}</pre>
+                  <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap break-words text-sm font-sans">{censorTranscript(pendingTranscript)}</pre>
                 </details>
               </Card>
             )}
@@ -832,11 +785,11 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               scoringSystem={interviewType.scoringSystem}
             />}
             {feedback && !isGeneratingFeedback && (
-              <ShareFeedbackBox
+              <details className="mt-5 rounded-2xl border bg-card p-5"><summary className="cursor-pointer text-sm font-semibold">Tell us how this practice went</summary><ShareFeedbackBox
                 sessionReference={sessionReference}
                 interviewType={interviewType.id}
                 transcript={(feedback as any)?.transcription}
-              />
+              /></details>
             )}
           </div>
         )}

@@ -744,7 +744,7 @@
       "actorStateTrajectory": "This anger is legitimate and will not be soothed by sympathy alone. Responds to acknowledgement plus a concrete commitment. Escalates sharply at any hint of a non-apology or of blaming the equipment.",
       "hiddenFacts": [
         {
-          "fact": "Her son is in the car and she has not told him yet.",
+          "fact": "Her son is waiting nearby with another volunteer and she has not told him yet.",
           "disclosureCondition": "If the candidate asks where he is or how she will manage the rest of the day."
         },
         {
@@ -783,7 +783,7 @@
         {
           "id": "A",
           "condition": "Acknowledgement first, specific apology, concrete commitment about notification",
-          "description": "She calms, mentions he is in the car, and accepts a plan for a text list. Thanks the candidate."
+          "description": "She calms, mentions he is waiting nearby with another volunteer, and accepts a plan for a text list. Thanks the candidate."
         },
         {
           "id": "B",
@@ -807,7 +807,7 @@
         "Arguing about how much notice was given",
         "Walking away"
       ],
-      "actorResponseToStrong": "Volume drops. Mentions her son in the car. Engages with the notification plan.",
+      "actorResponseToStrong": "Volume drops. Mentions her son waiting nearby with another volunteer. Engages with the notification plan.",
       "actorResponseToWeak": "Escalates. Asks for a name. Says she will complain."
     }
   },

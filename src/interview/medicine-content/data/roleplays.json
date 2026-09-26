@@ -2192,7 +2192,7 @@
    },
    "hidden_facts": [
     {
-     "fact": "Her son is in the car and she has not told him yet.",
+     "fact": "Her son is waiting nearby with another volunteer and she has not told him yet.",
      "disclosure_condition": "If the candidate asks where he is or how she will manage the rest of the day."
     },
     {
@@ -2231,7 +2231,7 @@
     {
      "id": "A",
      "condition": "Acknowledgement first, specific apology, concrete commitment about notification",
-     "description": "She calms, mentions he is in the car, and accepts a plan for a text list. Thanks the candidate."
+     "description": "She calms, mentions he is waiting nearby with another volunteer, and accepts a plan for a text list. Thanks the candidate."
     },
     {
      "id": "B",
@@ -2261,7 +2261,7 @@
     "S6": 0.25,
     "S1": 0.2
    },
-   "actor_response_to_strong": "Volume drops. Mentions her son in the car. Engages with the notification plan.",
+   "actor_response_to_strong": "Volume drops. Mentions her son waiting nearby with another volunteer. Engages with the notification plan.",
    "actor_response_to_weak": "Escalates. Asks for a name. Says she will complain.",
    "clinical_boundary": "NONE",
    "university_fit": [

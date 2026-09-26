@@ -450,7 +450,7 @@ describe("Feedback", () => {
       ),
     ).toBe(false);
   });
-  it.each(["maths-interview", "11-plus", "11-plus-v2", "medicine-mmi"])(
+  it.each(["maths-interview", "11-plus", "11-plus-v2", "medicine-mmi", "medicine-mmi-manchester", "medicine-ethics-practice", "medicine-roleplay-practice", "medicine-motivation-practice", "medicine-data-practice"])(
     "preserves successful %s feedback",
     async (interviewType) => {
       state.resolve = (q) => ({
@@ -492,9 +492,18 @@ describe("Feedback", () => {
       );
       const response = await (
         await handler("generate-interview-feedback")
-      )(req({ ...body, interviewType }));
+      )(req({ ...body, interviewType, transcription: body.transcription + '\nStudent: That was fucking difficult, but I would listen and clarify.' }));
       expect(response.status).toBe(200);
-      expect((await response.json()).total_score).toBe(12);
+      const payload = await response.json();
+      expect(payload.total_score).toBe(12);
+      expect(payload.transcription).toContain('******* difficult');
+      const stored = state.queries.find(q => q.table === 'feedback' && q.operation === 'insert')?.value as any;
+      expect(stored.transcription).not.toContain('fucking');
+      if (interviewType.startsWith('medicine-')) {
+        expect(stored.scores).toHaveProperty('content__reasoning', 3);
+        expect(stored.scores).toHaveProperty('communication__delivery', 3);
+        expect(stored.scores).not.toHaveProperty('ethical__clinical_reasoning');
+      }
       expect(
         state.queries.find(
           (q) => q.table === "feedback" && q.operation === "insert",

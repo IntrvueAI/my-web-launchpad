@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { InterviewFeedback } from './InterviewFeedback';
-import { InterviewFeedbackV2 } from './InterviewFeedbackV2';
 import { Button } from '@/components/ui/button';
 import { ArrowLeftRight } from 'lucide-react';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
+import { FeedbackSummary } from './feedback/FeedbackSummary';
 
 /**
  * Shows interview feedback in the V2 layout by default for everyone. The original layout
@@ -16,15 +16,15 @@ export function FeedbackVersions(props: any) {
   const [v2, setV2] = useState(true);
   return (
     <div className="space-y-6">
-      {v2 ? <InterviewFeedbackV2 {...props} /> : <InterviewFeedback {...props} />}
+      {v2 ? <FeedbackSummary {...props} /> : <InterviewFeedback {...props} />}
       {isAdmin && (
         <div className="flex flex-col items-center gap-1.5 pt-2">
           <Button variant="outline" onClick={() => setV2((x) => !x)} className="gap-2 rounded-full">
             <ArrowLeftRight className="w-4 h-4" />
-            {v2 ? 'Admin: view original feedback format' : 'Admin: back to V2'}
+            {v2 ? 'Admin: view original feedback format' : 'Admin: back to concise feedback'}
           </Button>
           <span className="text-xs text-muted-foreground">
-            Admin-only — regular users always see V2.
+            Admin-only — candidates see concise feedback.
           </span>
         </div>
       )}

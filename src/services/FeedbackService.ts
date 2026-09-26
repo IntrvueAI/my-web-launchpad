@@ -1,6 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { FeedbackRecord } from '@/models/Feedback';
+import { censorFeedback } from '@/interview/shared/transcript';
 
 export interface ProgressSummary {
   totalSessions: number;
@@ -25,7 +26,7 @@ export const FeedbackService = {
       .eq('id', feedbackId)
       .single();
     if (error) throw error;
-    return data as unknown as FeedbackRecord;
+    return censorFeedback(data) as unknown as FeedbackRecord;
   },
 
   async getUserFeedbackHistory(userId: string, limit = 20, offset = 0): Promise<FeedbackRecord[]> {
@@ -36,7 +37,7 @@ export const FeedbackService = {
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
     if (error) throw error;
-    return (data ?? []) as unknown as FeedbackRecord[];
+    return censorFeedback(data ?? []) as unknown as FeedbackRecord[];
   },
 
   async getProgressSummary(userId: string): Promise<ProgressSummary> {

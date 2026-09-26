@@ -19,6 +19,7 @@ import { makeEvidence } from './evidence';
 import { corePrinciples, CORE_SPEAKING_STYLE } from './core';
 import type { FlowGraph } from './flow';
 import { findFlowNode, pickNextFlowNode } from './flow';
+import { publicQuestionPrompt } from './publicPrompt';
 
 // ---- Chat LLM interface (a small slice of OpenAI's chat+tools API) ----
 
@@ -607,6 +608,16 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   const state: AgentState = structuredCloneSafe(prev);
   if (state.done || (req.expectedQuestionIndex !== undefined && req.expectedQuestionIndex !== state.questionIndex)) {
     return { say: '', state, done: state.done };
+  }
+
+  if (req.action === 'start' && deps.pack.focusedPractice && !state.current) {
+    executeTool({ id: 'focused-start', name: 'next_problem', args: {} }, state, deps);
+    const opened = state.current as BankQuestion | null;
+    const say = opened
+      ? `I'm Clara, your AI practice interviewer. Take thirty seconds to read this scenario, then ${opened.roleplay ? 'respond in character' : 'explain your thinking'}. ${publicQuestionPrompt(opened)}`
+      : 'There are no available stations for this topic. Please choose another practice.';
+    state.transcript.push({ role: 'assistant', content: say });
+    return { say, state, done: state.done };
   }
 
   if (req.action === 'switch_topic' && req.topic) state.currentTopic = req.topic;

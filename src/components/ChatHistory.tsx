@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { censorTranscript } from '@/interview/shared/transcript';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -64,7 +65,7 @@ export const ChatHistory: React.FC<ChatHistoryProps> = ({
                       {message.role === 'user' ? 'You' : 'Interviewer'}
                     </div>
                     <div className="leading-relaxed">
-                      {message.content}
+                      {censorTranscript(message.content)}
                     </div>
                   </div>
                 </div>

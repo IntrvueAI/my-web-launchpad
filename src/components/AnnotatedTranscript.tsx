@@ -16,6 +16,7 @@
  */
 
 import React from 'react';
+import { censorFeedback, censorTranscript } from '@/interview/shared/transcript';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AnnotationCategory, Annotation } from '@/types/interview';
 import { ANNOTATION_STYLES, ANNOTATION_LEGEND } from '@/constants/feedback';
@@ -53,6 +54,8 @@ const buildFlexiblePattern = (quote: string) => {
  * Renders transcript with highlighted annotations and speaker differentiation
  */
 export const AnnotatedTranscript: React.FC<AnnotatedTranscriptProps> = ({ transcript, annotations }) => {
+  transcript = censorTranscript(transcript);
+  annotations = censorFeedback(annotations);
   // Filter and sort annotations by quote length (longest first for better matching)
   const sorted = [...(annotations || [])]
     .filter(a => a && a.quote && a.quote.trim().length > 2)

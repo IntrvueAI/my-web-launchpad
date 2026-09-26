@@ -49,6 +49,8 @@ const TourOverlay = lazy(() => import('@/components/tour/TourOverlay').then((m) 
 import { SidebarNav, SidebarTopBar } from '@/components/dashboard/SidebarLayout';
 import { LayoutGrid, PanelLeft, Palette } from 'lucide-react';
 import { getStoredProductLine, setStoredProductLine, getStoredMedicineDashboardStyle, setStoredMedicineDashboardStyle, type ProductLine, type MedicineDashboardStyle } from '@/lib/productLine';
+import { getMedicinePractice } from '@/interview/subjects/medicine/practiceModes';
+const MedicineLanding = lazy(() => import('./Medicine'));
 const MedicineDashboard = lazy(() => import('@/components/medicine-dashboard/MedicineDashboard').then((m) => ({ default: m.MedicineDashboard })));
 
 const Index = () => {
@@ -245,6 +247,31 @@ const Index = () => {
     setCurrentView(view);
   };
 
+  useEffect(() => {
+    if (loading) return;
+    const params = new URLSearchParams(window.location.search);
+    let pending: string | null = null;
+    try { pending = sessionStorage.getItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
+    const requested = params.get('medicinePractice') ?? pending;
+    if (!requested || !getMedicinePractice(requested)) return;
+    if (!user) {
+      try { sessionStorage.setItem('intrvue:pending-medicine-practice', requested); } catch { /* The practice picker remains available after sign-in. */ }
+      setStoredProductLine('medicine');
+      navigate('/auth?mode=medicine');
+      return;
+    }
+    setStoredProductLine('medicine'); setProductLine('medicine');
+    let cancelled = false;
+    void import('@/config/interviewTypes').then(({ INTERVIEW_TYPES }) => {
+      if (!cancelled) {
+        try { sessionStorage.removeItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
+        const url = new URL(window.location.href); url.searchParams.delete('medicinePractice'); window.history.replaceState({}, '', url);
+        setSelectedInterviewType(INTERVIEW_TYPES[requested]); setCurrentView('interview');
+      }
+    });
+    return () => { cancelled = true; };
+  }, [loading, user?.id, navigate]);
+
   // Show loading spinner while checking auth
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
@@ -254,6 +281,7 @@ const Index = () => {
 
   // Show landing page if not authenticated
   if (!user) {
+    if (productLine === 'medicine') return <Suspense fallback={<div className="p-8">Opening Medicine…</div>}><MedicineLanding/></Suspense>;
     return <LandingV2 onSignUp={() => navigate('/auth')} />;
   }
 
@@ -525,7 +553,7 @@ const Index = () => {
       </header>
       
       {/* Mobile Bottom Navigation */}
-      {isMobile && (
+      {isMobile && currentView !== 'interview' && (
         <MobileBottomNav
           currentView={currentView}
           credits={credits ?? 0}

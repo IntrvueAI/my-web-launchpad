@@ -33,6 +33,7 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
   const { user } = useAuth();
   const { credits } = useCredits();
   const [activeTab, setActiveTab] = useState<MedicineTab>('home');
+  const [feedbackId, setFeedbackId] = useState<string | undefined>();
   const [accountView, setAccountView] = useState<AccountView>(null);
 
   const userInitial = ((user?.user_metadata?.full_name as string | undefined)?.[0] || user?.email?.[0] || '?').toUpperCase();
@@ -97,13 +98,14 @@ export function MedicineDashboard({ onProductLineChange, onStartInterview, onSig
           credits={credits}
           onStartInterview={onStartInterview}
           onOpenTab={setActiveTab}
+          onOpenFeedback={id => { setFeedbackId(id); setActiveTab('feedback'); }}
           onOpenCredits={() => setAccountView('credits')}
         />
       )}
       {activeTab === 'practice' && <MedicinePractice onStartInterview={onStartInterview} scope={user?.id ?? 'guest'} />}
       {activeTab === 'progress' && <MedicineProgress />}
       {activeTab === 'schools' && <MedicineSchools onStartInterview={onStartInterview} />}
-      {activeTab === 'feedback' && <MedicineFeedback />}
+      {activeTab === 'feedback' && <MedicineFeedback selectedFeedbackId={feedbackId} />}
     </MedicineDashboardShell>
   );
 }

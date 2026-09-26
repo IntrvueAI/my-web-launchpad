@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-17",
-  "edition": "05",
+  "updatedAt": "2026-09-26",
+  "edition": "06",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -344,6 +344,13 @@
     }
   ],
   "updates": [
+    {
+      "id": "focused-practice-feedback-20260926",
+      "category": "PRODUCT / LIVE CHECKS",
+      "date": "26 SEP · SHORT PRACTICE RELEASE",
+      "title": "Five-minute stations, concise feedback and worked answers.",
+      "body": "Added focused ethics, communication, motivation and data sessions, with 30 seconds to read and five minutes to answer. Feedback now leads with a score, evidenced strength and one next step; detailed evidence stays expandable. Added ten original worked examples with drafting and self-review, corrected the Questions layout, mobile interview controls and links to specific past interviews, and masked common profanity in transcripts and feedback. Two reviewed non-clinical roleplays were added to the live database without changing its 32 existing Medicine questions. Local frontend checks against the live backend passed all four modes using Anam video/audio; 11+ also passed synthetic microphone speech, saved feedback and credit charging. A feedback failure retained the transcript and recovered on retry; a deliberately injected outage also passed the UI download/retry flow. These are short functional checks, not full-duration clinical or educational validation. The frontend still needs Lovable Publish → Update after GitHub sync, and medicine.intrvue.ai needs DNS and hosting configuration. Admissions source research was not refreshed in this release."
+    },
     {
       "id": "oxbridge-feedback-recovery-20260917",
       "category": "VERIFIED / SAVED WORK",

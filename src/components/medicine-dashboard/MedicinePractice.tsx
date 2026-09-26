@@ -1,241 +1,149 @@
 import { lazy, Suspense, useState } from "react";
-import { INTERVIEW_TYPES, InterviewType } from "@/config/interviewTypes";
-import { listOntologyDomains } from "@/interview/medicine-content";
-
-interface Props {
-  onStartInterview: (type: InterviewType) => void;
-  scope?: string;
-}
-
+import { Link } from "react-router-dom";
+import { Clock, ArrowRight } from "lucide-react";
+import { INTERVIEW_TYPES, type InterviewType } from "@/config/interviewTypes";
+import { MEDICINE_PRACTICE_MODES } from "@/interview/subjects/medicine/practiceModes";
 const MedicineStudio = lazy(
   () => import("@/components/medicine-studio/MedicineStudio"),
 );
-
-const CIRCUITS = [
-  INTERVIEW_TYPES["medicine-mmi"],
-  INTERVIEW_TYPES["medicine-mmi-manchester"],
-];
-
 export function MedicinePractice({
   onStartInterview,
-  scope = "design-preview",
-}: Props) {
-  const [practiceMode, setPracticeMode] = useState<"solo" | "live">("solo");
-  const [showBank, setShowBank] = useState(false);
-  const domains = listOntologyDomains();
-
+  scope = "guest",
+}: {
+  onStartInterview: (type: InterviewType) => void;
+  scope?: string;
+}) {
+  const [mode, setMode] = useState<"quick" | "circuit" | "solo">("quick");
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-      <div style={{ display: "flex", gap: 12 }} aria-label="Practice type">
-        <button
-          style={{
-            ...primaryBtn,
-            background:
-              practiceMode === "solo" ? "var(--med-action)" : "var(--med-card)",
-            color:
-              practiceMode === "solo" ? "white" : "var(--med-primary-dark)",
-          }}
-          aria-pressed={practiceMode === "solo"}
-          onClick={() => setPracticeMode("solo")}
-        >
-          Solo practice studio
-        </button>
-        <button
-          style={{
-            ...primaryBtn,
-            background:
-              practiceMode === "live" ? "var(--med-action)" : "var(--med-card)",
-            color:
-              practiceMode === "live" ? "white" : "var(--med-primary-dark)",
-          }}
-          aria-pressed={practiceMode === "live"}
-          onClick={() => setPracticeMode("live")}
-        >
-          Live AI circuits
-        </button>
+    <div className="space-y-6 text-foreground">
+      <header>
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+          Make one answer better
+        </p>
+        <h1 className="mt-2 font-display text-3xl font-semibold">
+          Your practice, your pace
+        </h1>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Start with one focused station. Get feedback while your answer is
+          fresh.
+        </p>
+      </header>
+      <div className="flex flex-wrap gap-2" aria-label="Practice format">
+        {(
+          [
+            { id: "quick", label: "5-minute stations" },
+            { id: "circuit", label: "Full school circuits" },
+            { id: "solo", label: "Solo practice studio" },
+          ] as const
+        ).map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setMode(tab.id)}
+            aria-pressed={mode === tab.id}
+            className="min-h-11 rounded-xl border bg-card px-4 py-3 text-sm font-semibold aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground"
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
-      {practiceMode === "solo" ? (
-        <Suspense fallback={<p>Opening your practice desk…</p>}>
+      {mode === "solo" ? (
+        <Suspense fallback={<p role="status">Opening your practice desk…</p>}>
           <MedicineStudio
             key={scope}
             scope={scope}
             compact
-            onStartLive={() => setPracticeMode("live")}
+            onStartLive={() => setMode("quick")}
           />
         </Suspense>
-      ) : (
+      ) : mode === "quick" ? (
         <>
-          <div>
-            <h1
-              style={{
-                fontFamily: "var(--med-display)",
-                fontWeight: 700,
-                fontSize: 30,
-                margin: 0,
-              }}
-            >
-              Practice
-            </h1>
-            <p
-              style={{ color: "var(--med-muted)", fontSize: 15, marginTop: 6 }}
-            >
-              Practise original questions with Clara in a circuit guided by
-              published timings.
-            </p>
-          </div>
-
-          <div className="med-grid-two">
-            {CIRCUITS.map((type) => (
-              <div key={type.id} style={cardStyle}>
-                <h3
-                  style={{
-                    fontFamily: "var(--med-display)",
-                    fontWeight: 700,
-                    fontSize: 20,
-                    margin: 0,
-                  }}
-                >
-                  {type.name.replace("Medicine MMI — ", "")}
-                </h3>
-                <p
-                  style={{
-                    color: "var(--med-muted)",
-                    fontSize: 14.5,
-                    lineHeight: 1.6,
-                    marginTop: 10,
-                  }}
-                >
-                  {type.description}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {MEDICINE_PRACTICE_MODES.map((practice, index) => (
+              <article
+                key={practice.id}
+                className="flex min-w-0 flex-col rounded-2xl border bg-card p-5 sm:p-6"
+              >
+                <span className="text-xs font-semibold tracking-widest text-primary">
+                  0{index + 1} · ONE STATION
+                </span>
+                <h2 className="mt-3 font-display text-xl font-semibold">
+                  {practice.label}
+                </h2>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {practice.description}
                 </p>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: 16,
-                    marginTop: 16,
-                    fontSize: 13,
-                    color: "var(--med-tertiary)",
-                  }}
-                >
-                  <span>
-                    {type.timingSeconds?.prep
-                      ? `${type.timingSeconds.prep / 60} min prep`
-                      : "No prep"}
-                  </span>
-                  <span>·</span>
-                  <span>
-                    {type.timingSeconds
-                      ? `${type.timingSeconds.response / 60} min per station`
-                      : ""}
-                  </span>
-                </div>
+                <p className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  30 seconds reading · 5 minutes answering
+                </p>
                 <button
-                  onClick={() => onStartInterview(type)}
-                  style={{ ...primaryBtn, width: "100%", marginTop: 18 }}
+                  onClick={() => onStartInterview(INTERVIEW_TYPES[practice.id])}
+                  className="mt-4 flex min-h-11 items-center justify-between rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground"
                 >
-                  Start · {type.costCredits ?? 0} credits
+                  Start station
+                  <ArrowRight className="h-4 w-4" />
                 </button>
-              </div>
+              </article>
             ))}
           </div>
-
-          <div style={cardStyle}>
-            <button
-              onClick={() => setShowBank((v) => !v)}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-                background: "none",
-                border: 0,
-                cursor: "pointer",
-                fontFamily: "inherit",
-                padding: 0,
-              }}
+          <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border bg-card p-5">
+            <div>
+              <h2 className="font-semibold">
+                See the reasoning behind a strong answer
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Try, compare and improve with our worked examples.
+              </p>
+            </div>
+            <Link
+              className="text-sm font-semibold underline underline-offset-4"
+              to="/medicine/examples"
             >
-              <h3
-                style={{
-                  fontFamily: "var(--med-display)",
-                  fontWeight: 700,
-                  fontSize: 17,
-                  margin: 0,
-                }}
-              >
-                Skills in the practice bank
-              </h3>
-              <span
-                style={{
-                  color: "var(--med-primary-dark)",
-                  fontWeight: 600,
-                  fontSize: 13.5,
-                }}
-              >
-                {showBank ? "Hide" : "Browse"} →
-              </span>
-            </button>
-            {showBank && (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                  gap: 14,
-                  marginTop: 18,
-                }}
-              >
-                {domains.map((d) => (
-                  <div
-                    key={d.id}
-                    style={{
-                      background: "var(--med-bg)",
-                      borderRadius: 12,
-                      padding: 16,
-                    }}
+              Explore worked answers →
+            </Link>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="text-sm text-muted-foreground">
+            Practise a complete circuit with timings guided by each school’s
+            published format. Choose a five-minute station above for focused
+            practice.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {["medicine-mmi", "medicine-mmi-manchester"].map((id) => {
+              const type = INTERVIEW_TYPES[id];
+              return (
+                <article key={id} className="rounded-2xl border bg-card p-6">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                    Full circuit
+                  </p>
+                  <h2 className="mt-3 font-display text-xl font-semibold">
+                    {type.name}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {type.description}
+                  </p>
+                  <p className="mt-4 text-sm font-medium">
+                    {id === "medicine-mmi"
+                      ? "8 stations · 64 minutes of station time"
+                      : "5 stations · 40 minutes of station time"}
+                  </p>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Allow a little extra time for introductions and transitions.
+                  </p>
+                  <button
+                    onClick={() => onStartInterview(type)}
+                    className="mt-5 min-h-11 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
                   >
-                    <div style={{ fontWeight: 600, fontSize: 14.5 }}>
-                      {d.label}
-                    </div>
-                    <div
-                      style={{
-                        color: "var(--med-tertiary)",
-                        fontSize: 13,
-                        marginTop: 4,
-                      }}
-                    >
-                      {d.subdomains.reduce((n, s) => n + s.topics.length, 0)}{" "}
-                      topic
-                      {d.subdomains.reduce((n, s) => n + s.topics.length, 0) ===
-                      1
-                        ? ""
-                        : "s"}{" "}
-                      across {d.subdomains.length} area
-                      {d.subdomains.length === 1 ? "" : "s"}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                    Start full circuit
+                  </button>
+                </article>
+              );
+            })}
           </div>
         </>
       )}
     </div>
   );
 }
-
-const cardStyle: React.CSSProperties = {
-  background: "var(--med-card)",
-  border: "1px solid var(--med-border)",
-  borderRadius: 16,
-  padding: "26px 28px",
-  boxShadow: "var(--med-shadow-sm)",
-};
-const primaryBtn: React.CSSProperties = {
-  background: "var(--med-action)",
-  color: "var(--med-card)",
-  border: 0,
-  borderRadius: 12,
-  padding: "14px 22px",
-  fontWeight: 600,
-  fontSize: 15,
-  cursor: "pointer",
-  minHeight: 48,
-  boxShadow: "0 10px 26px -10px var(--med-primary-soft)",
-};

@@ -1,3 +1,4 @@
+import { censorTranscript } from '@/interview/shared/transcript';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
@@ -147,7 +148,7 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
             <DialogTitle className="capitalize">{transcript?.title}</DialogTitle>
             <p className="text-xs text-muted-foreground">{transcript?.when}</p>
           </DialogHeader>
-          <div className="overflow-y-auto whitespace-pre-wrap text-sm leading-relaxed rounded-lg bg-white/[0.03] p-4">{transcript?.text}</div>
+          <div className="overflow-y-auto whitespace-pre-wrap text-sm leading-relaxed rounded-lg bg-white/[0.03] p-4">{censorTranscript(transcript?.text ?? '')}</div>
         </DialogContent>
       </Dialog>
     </div>

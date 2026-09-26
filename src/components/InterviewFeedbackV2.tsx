@@ -1,3 +1,4 @@
+import { getMedicinePractice } from '@/interview/subjects/medicine/practiceModes';
 import { getMedicinePilot, packForMedicinePilot } from '@/interview/subjects/medicine/pilots';
 import { medicinePack } from '@/interview/subjects/medicine/pack';
 /**
@@ -178,7 +179,7 @@ export const InterviewFeedbackV2 = ({
   const isVerbalInterview = interviewType === 'verbal-interview';
   const isCurrentAffairs = interviewType === 'current-affairs-interview';
   const medicinePilot = getMedicinePilot(interviewType);
-  const isMedicineMMI = interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || !!medicinePilot;
+  const isMedicineMMI = interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || !!medicinePilot || !!getMedicinePractice(interviewType);
   const medicineDomains = medicinePilot ? packForMedicinePilot(medicinePilot).domains : medicinePack.domains;
   const isChatWithClara = interviewType === 'chat-with-clara';
 

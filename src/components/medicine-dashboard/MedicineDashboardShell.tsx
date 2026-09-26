@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { Home, Stethoscope, TrendingUp, MapPin, FileText, Wallet, Settings, Users, LogOut, ChevronDown, Palette } from 'lucide-react';
 import {
   DropdownMenu,
@@ -144,6 +145,7 @@ export function MedicineDashboardShell({
       )}
 
       <main style={{ maxWidth: 1440, margin: '0 auto', padding: hideChrome ? 0 : '34px 28px 44px' }}>
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground"><span>Medicine interview practice</span><Link to="/medicine/examples" className="font-semibold underline underline-offset-4">Worked answers →</Link></div>
         {children}
       </main>
 

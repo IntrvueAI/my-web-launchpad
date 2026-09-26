@@ -1,4 +1,6 @@
 import { withJson } from "../_shared/http.ts";
+import { MEDICINE_PRACTICE_MODES, getMedicinePractice, packForMedicinePractice } from './_shared/subjects/medicine/practiceModes.ts';
+import { censorFeedback, censorTranscript } from './_shared/shared/transcript.ts';
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
@@ -18,6 +20,7 @@ import { logAppEvent } from "./_shared/appLogger.ts";
 // interview — so the feedback uses the document's qualities + scoring philosophy, not a hardcoded
 // rubric. Maps the four assessed domains onto the existing four score columns.
 const ENGINE_PACKS: Record<string, any> = {
+  ...Object.fromEntries(MEDICINE_PRACTICE_MODES.map(mode => [mode.id, packForMedicinePractice(mode)])),
   "maths-interview": mathsPack,
   "logic-puzzles": logicPack,
   "current-affairs-interview": currentaffairsPack,
@@ -77,7 +80,7 @@ CALIBRATION — be rigorous, not generous. These scores guide real preparation, 
 - 0-1 = little to no evidence shown.
 A typical decent performance lands 10-13 total. Reserve 15+ for genuinely impressive interviews (fluent reasoning, minimal hints, specific and reflective answers throughout). Check the evidence log: hints used, wrong answers, "stuck" outcomes and thin one-line replies MUST pull the relevant dimension down — do not award a 4 where the log shows repeated scaffolding.
 
-Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write feedback that names one specific reasoning strength actually observed and one concrete next step — warm, concrete, process-focused, never reducing the candidate to their final answer.
+Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write at most TWO short sentences (45 words maximum): one specific strength actually observed and one concrete next step. If evidence is missing, say what was not assessed instead of inventing a strength. Keep overall feedback to 45 words and band_assessment to 20 words. Never infer tone or delivery from a transcript.
 
 CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure (the four score keys map to ${d1}, ${d2}, ${d3}, ${d4} in order):
 {
@@ -91,7 +94,9 @@ CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure
     "${fk[1]}": "feedback on ${d2}",
     "${fk[2]}": "feedback on ${d3}",
     "${fk[3]}": "feedback on ${d4}",
-    "overall": "Overall assessment, process-focused",
+    "strength": "One specific observed strength, at most 30 words; acknowledge missing evidence when necessary",
+    "next_step": "One concrete practice action relevant to this interview, at most 30 words",
+    "overall": "Overall assessment, process-focused, at most 45 words",
     "band_assessment": "Which band and why"
   }
 }`;
@@ -473,6 +478,10 @@ for (const pilot of MEDICINE_PILOTS) {
     name: `${pilot.school} Medicine pilot`,
     scoringCriteria: packForMedicinePilot(pilot).domains,
   };
+}
+
+for (const id of ['medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PRACTICE_MODES.map(mode => mode.id)]) {
+  INTERVIEW_TYPES[id] = { ...INTERVIEW_TYPES['medicine-mmi'], id, name: getMedicinePractice(id)?.label ?? INTERVIEW_TYPES[id]?.name, scoringCriteria: medicinePack.domains };
 }
 
 INTERVIEW_TYPES["11-plus-v2"] = {
@@ -997,7 +1006,7 @@ serve(
             await supabaseAdmin
               .from("interview_sessions")
               .update({
-                transcript: sanitizedTranscription,
+                transcript: censorTranscript(sanitizedTranscription),
                 transcript_saved_at: new Date().toISOString(),
               })
               .eq("session_reference", sessionReference)
@@ -1260,7 +1269,7 @@ serve(
           interviewType === "verbal-interview" ||
           interviewType === "current-affairs-interview" ||
           interviewType === "medicine-mmi" ||
-          interviewType === "medicine-mmi-manchester" ||
+          interviewType === "medicine-mmi-manchester" || getMedicinePractice(interviewType) ||
           MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType) ||
           interviewType === "chat-with-clara"
         ) {
@@ -1564,19 +1573,7 @@ serve(
       // Generate overall improvement feedback
       let overallImprovementFeedback = "";
       try {
-        const improvementSystemPrompt = `You are an experienced teacher providing constructive feedback to help students improve their interview performance.
-
-Create feedback using this exact format:
-
-**What went well**
-[Write exactly 5 sentences about what the student did well, focusing on specific strengths and positive aspects of their performance. Sound like a supportive teacher giving genuine praise for concrete achievements.]
-
-**Even better if**
-[Write exactly 5 sentences with actionable next steps based on areas that need improvement. Each sentence should be a specific, practical action they can take. Sound like a teacher guiding them toward improvement.]
-
-Use encouraging, teacher-like language throughout. Be specific about what they did well and what concrete steps they can take to improve.
-
-STUDENT PERFORMANCE DATA:`;
+        const improvementSystemPrompt = `Write a concise practice plan grounded only in the supplied feedback. Address the candidate directly and match the interview type. Use two headings: "Keep doing" and "Practise next". Under each, write at most two short bullet points. Total maximum 90 words. Name concrete actions, not generic encouragement. Acknowledge missing evidence and never invent strengths, delivery cues, or an admissions prediction.`;
 
         const improvementRequest = {
           model: "gpt-4.1",
@@ -1584,10 +1581,10 @@ STUDENT PERFORMANCE DATA:`;
             { role: "system", content: improvementSystemPrompt },
             {
               role: "user",
-              content: `Scores: ${JSON.stringify(feedbackData)}\n\nDetailed Feedback: ${JSON.stringify(feedbackData.detailed_feedback)}\n\nPlease create a comprehensive action plan for this student's improvement.`,
+              content: `Scores: ${JSON.stringify(feedbackData)}\n\nDetailed Feedback: ${JSON.stringify(feedbackData.detailed_feedback)}\n\nInterview type: ${interviewType}. Give a brief, specific practice plan.`,
             },
           ],
-          max_tokens: 800,
+          max_tokens: 350,
         };
 
         console.log("Generating overall improvement feedback...");
@@ -1622,10 +1619,11 @@ STUDENT PERFORMANCE DATA:`;
       }
 
       // Attach raw transcription and annotations to response
-      feedbackData.transcription = sanitizedTranscription;
+      feedbackData.transcription = censorTranscript(sanitizedTranscription);
       feedbackData.annotations = annotations;
       feedbackData.overall_improvement_feedback = overallImprovementFeedback;
       feedbackData.questions_review = questionsReview;
+      feedbackData = censorFeedback(feedbackData);
       // Build flexible scores object for new JSONB column
       const config =
         INTERVIEW_TYPES[interviewType] || INTERVIEW_TYPES["11-plus"];
@@ -1675,7 +1673,7 @@ STUDENT PERFORMANCE DATA:`;
         user_id: userId,
         interview_session_id: sessionId || `session_${Date.now()}`,
         session_reference: sessionReference || null, // Add session reference to the feedback
-        transcription: sanitizedTranscription,
+        transcription: censorTranscript(sanitizedTranscription),
         total_score: dbTotalScore,
         detailed_feedback: feedbackData.detailed_feedback,
         feedback_content: JSON.stringify(feedbackData.detailed_feedback),
@@ -1695,7 +1693,7 @@ STUDENT PERFORMANCE DATA:`;
         interviewType === "verbal-interview" ||
         interviewType === "current-affairs-interview" ||
         interviewType === "medicine-mmi" ||
-        interviewType === "medicine-mmi-manchester" ||
+        interviewType === "medicine-mmi-manchester" || getMedicinePractice(interviewType) ||
         MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType) ||
         interviewType === "chat-with-clara"
       ) {
@@ -1725,7 +1723,7 @@ STUDENT PERFORMANCE DATA:`;
 
       const { data: feedbackRecord, error: insertError } = await supabase
         .from("feedback")
-        .insert(insertData)
+        .insert(censorFeedback(insertData))
         .select()
         .maybeSingle();
 

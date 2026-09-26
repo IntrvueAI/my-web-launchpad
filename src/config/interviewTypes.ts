@@ -10,6 +10,8 @@
 
 import { InterviewTypeConfig, InterviewType as ModernInterviewType } from '@/types/interview';
 import { MEDICINE_PILOTS, packForMedicinePilot, sessionBudgetMinutes } from '@/interview/subjects/medicine/pilots';
+import { MEDICINE_PRACTICE_MODES, PRACTICE_TIMING, PRACTICE_SESSION_MINUTES } from '@/interview/subjects/medicine/practiceModes';
+import { medicinePack } from '@/interview/subjects/medicine/pack';
 
 // Keep the original interface for backward compatibility
 export interface InterviewType {
@@ -332,6 +334,17 @@ for (const pilot of MEDICINE_PILOTS) {
   };
 }
 
+
+for (const mode of MEDICINE_PRACTICE_MODES) {
+  INTERVIEW_TYPES[mode.id] = {
+    ...INTERVIEW_TYPES['medicine-mmi'], id: mode.id, name: mode.label,
+    description: mode.description, adminOnly: false, duration: PRACTICE_SESSION_MINUTES,
+    timingSeconds: PRACTICE_TIMING, topicPracticeEnabled: false,
+    scoringCriteria: medicinePack.domains, tags: ['medicine', '5-minute practice', mode.topic],
+    preStartNote: 'One original practice station. Read for 30 seconds, then discuss your answer with Clara for up to 5 minutes. Your feedback follows immediately. You can finish early at any time.',
+  };
+}
+for (const id of ['medicine-mmi', 'medicine-mmi-manchester']) INTERVIEW_TYPES[id].scoringCriteria = medicinePack.domains;
 
 export const INTERVIEW_CATEGORIES = {
   academic: {
@@ -738,6 +751,10 @@ const MEDICINE_MMI_CONFIG: InterviewTypeConfig = {
 
 // Same domains and score fields as MEDICINE_MMI_CONFIG — the two Medicine interview TYPES share one
 // subject/pack/bank and differ only in station count and timing (see schoolModes.ts).
+MEDICINE_MMI_CONFIG.sections = MEDICINE_MMI_CONFIG.sections.map((section, index) => ({
+  ...section, title: medicinePack.domains[index], description: 'Assessed from the reasoning and responses in your transcript.',
+}));
+
 const MEDICINE_MMI_MANCHESTER_CONFIG: InterviewTypeConfig = {
   ...MEDICINE_MMI_CONFIG,
   name: 'Medicine MMI Interview — Manchester-style',
@@ -809,6 +826,10 @@ function pilotFeedbackConfig(id: ModernInterviewType): InterviewTypeConfig {
 }
 
 export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeConfig> = {
+  'medicine-ethics-practice': { ...MEDICINE_MMI_CONFIG, name: 'Ethics & judgement' },
+  'medicine-roleplay-practice': { ...MEDICINE_MMI_CONFIG, name: 'Communication & empathy' },
+  'medicine-motivation-practice': { ...MEDICINE_MMI_CONFIG, name: 'Motivation & reflection' },
+  'medicine-data-practice': { ...MEDICINE_MMI_CONFIG, name: 'Data & prioritisation' },
   '11-plus': ELEVEN_PLUS_CONFIG,
   '11-plus-v2': ELEVEN_PLUS_CONFIG,
   'logic-puzzles': LOGIC_PUZZLES_CONFIG,

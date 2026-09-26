@@ -3,11 +3,17 @@ export type ProductLine = '11plus' | 'medicine';
 const STORAGE_KEY = 'intrvue_product_line';
 
 export function getStoredProductLine(): ProductLine {
-  return localStorage.getItem(STORAGE_KEY) === 'medicine' ? 'medicine' : '11plus';
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') === 'medicine' || params.has('medicinePractice')) return 'medicine';
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'medicine' || stored === '11plus') return stored;
+  } catch { /* A blocked storage setting must not prevent the landing page loading. */ }
+  return window.location.hostname.toLowerCase() === 'medicine.intrvue.ai' ? 'medicine' : '11plus';
 }
 
 export function setStoredProductLine(line: ProductLine): void {
-  localStorage.setItem(STORAGE_KEY, line);
+  try { localStorage.setItem(STORAGE_KEY, line); } catch { /* Keep the current tab usable. */ }
   window.dispatchEvent(new Event('intrvue:product-line-changed'));
 }
 

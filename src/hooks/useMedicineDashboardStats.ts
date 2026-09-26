@@ -1,3 +1,6 @@
+import { INTERVIEW_TYPES } from '@/config/interviewTypes';
+import { MEDICINE_PRACTICE_MODES } from '@/interview/subjects/medicine/practiceModes';
+import { MEDICINE_PILOTS, getMedicinePilot } from '@/interview/subjects/medicine/pilots';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -6,10 +9,10 @@ import { FeedbackRecord } from '@/types/interview';
 
 // Exported so every Medicine dashboard view filters/labels feedback records identically instead
 // of re-declaring its own copy (MedicineFeedback.tsx used to keep a second, easy-to-drift copy).
-export const MEDICINE_TYPES = ['medicine-mmi', 'medicine-mmi-manchester'];
+export const MEDICINE_TYPES = ['medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PRACTICE_MODES.map(mode => mode.id), ...MEDICINE_PILOTS.map(pilot => pilot.interviewTypeId)];
 
 export const titleFor = (r: FeedbackRecord): string =>
-  r.interview_type === 'medicine-mmi-manchester' ? 'Manchester circuit' : 'Leeds circuit';
+  r.interview_type === 'medicine-mmi-manchester' ? 'Manchester circuit' : r.interview_type === 'medicine-mmi' ? 'Leeds circuit' : INTERVIEW_TYPES[r.interview_type ?? '']?.name ?? 'Medicine practice';
 
 // Medicine feedback is scored and stored under the same 4 DB columns the maths/logic subjects use
 // (see supabase/functions/generate-interview-feedback/index.ts's ENGINE_PACKS + `isElevenPlus`
@@ -132,7 +135,7 @@ export const useMedicineDashboardStats = () => {
           title: titleFor(r),
           band: r.total_score ?? null,
         })),
-        skills: MEDICINE_SKILL_COLUMNS.map(({ key, label }) => ({ label, average: average(medicineHistory, key) })),
+        skills: MEDICINE_SKILL_COLUMNS.map(({ key, label }) => ({ label, average: average(medicineHistory.filter(record => getMedicinePilot(record.interview_type ?? '')?.style !== 'academic'), key) })),
         streak: computeStreak(createdAtDates),
         weekStrip: buildWeekStrip(createdAtDates),
         byStationType,
