@@ -15,7 +15,7 @@ Live checks found 32 active Medicine questions but no roleplay stations. Release
 
 | ID | Scenario | Review |
 | --- | --- | --- |
-| MED-RP-013 | The group project | Fictional peer disagreement; candidate owns their action, asks about the obstacle and agrees a plan. Candidate context and opening are complete. Hidden facts and marking instructions stay server-side. No clinical knowledge or missing prop. |
+| MED-RP-013 | The group project | Fictional peer disagreement; candidate owns their action, asks about the obstacle and agrees a plan. Candidate context and opening are complete. The opening and live exercise response exclude actor instructions, unrevealed facts and marking guidance. No clinical knowledge or missing prop. |
 | MED-RP-018 | Cancelled again | Fictional cancelled community activity; candidate acknowledges inconvenience and offers a realistic contact plan. No diagnosis, treatment or promises to fix equipment. Corrected a travel inconsistency: the family arrives by bus, so the child waits nearby with another volunteer rather than in a car. |
 
 This is an editorial and functional review, not a clinician's endorsement or a validated admissions assessment. Roleplay endings guide actor behaviour; the final score remains based on observed candidate evidence across the four MMI dimensions.
