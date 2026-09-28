@@ -5,22 +5,24 @@ import { PRACTICE_EXAMPLES } from "@/data/practice-examples";
 import { useAuth } from "@/contexts/AuthContext";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { censorTranscript } from "@/interview/shared/transcript";
+import { MedicineMMIExamples } from "@/components/medicine/MedicineMMIExamples";
 
 export function PracticeExamplesContent({
   medicine = true,
 }: {
   medicine?: boolean;
 }) {
+  return medicine ? <MedicineMMIExamples /> : <SchoolExamplesContent />;
+}
+
+function SchoolExamplesContent() {
   const [params] = useSearchParams();
   const requested = params.get("interview") ?? "";
-  const examples = PRACTICE_EXAMPLES.filter((example) =>
-    medicine ? example.topic !== "11+" : example.topic === "11+",
+  const examples = PRACTICE_EXAMPLES.filter(
+    (example) => example.topic === "11+",
   );
   const initial =
     examples.find((example) => example.interviewType === requested) ??
-    (requested.includes("oxford") || requested.includes("cambridge")
-      ? examples.find((example) => example.topic === "Scientific reasoning")
-      : undefined) ??
     examples[0];
   const [selectedId, setSelectedId] = useState(initial.id);
   const [query, setQuery] = useState("");
@@ -160,7 +162,7 @@ export function PracticeExamplesContent({
             <button
               onClick={() => setRevealed((value) => !value)}
               aria-expanded={revealed}
-              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
+              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-foreground px-5 py-3 text-sm font-semibold text-background"
             >
               <BookOpen className="h-4 w-4" />
               {revealed ? "Hide worked answer" : "Compare with a worked answer"}
@@ -242,12 +244,10 @@ export function PracticeExamplesContent({
             </section>
           )}
           <Link
-            to={medicine ? `/?medicinePractice=${selected.interviewType}` : "/"}
+            to="/"
             className="inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
           >
-            {medicine
-              ? "Practise this skill with Clara"
-              : "Back to your practice dashboard"}
+            Back to your practice dashboard
             <ArrowRight className="h-4 w-4" />
           </Link>
         </article>

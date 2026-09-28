@@ -107,7 +107,8 @@ export function FeedbackSummary({
             to={`${medicine ? "/medicine/examples" : "/examples"}?interview=${encodeURIComponent(interviewType)}`}
             className="mt-4 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
           >
-            See worked answers <ArrowRight className="h-4 w-4" />
+            {medicine ? "See MMI worked answers" : "See worked answers"}{" "}
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </article>
       </div>

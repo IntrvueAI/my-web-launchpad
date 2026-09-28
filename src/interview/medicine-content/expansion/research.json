@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-26",
-  "edition": "06",
+  "updatedAt": "2026-09-28",
+  "edition": "07",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -344,6 +344,13 @@
     }
   ],
   "updates": [
+    {
+      "id": "medicine-mmi-examples-20260928",
+      "category": "CONTENT / MMI PRACTICE",
+      "date": "28 SEP · WORKED ANSWER LIBRARY",
+      "title": "24 medicine-specific MMI stations with worked responses and follow-up practice.",
+      "body": "Replaced the eight generic Medicine examples with 24 original patient, healthcare and NHS scenarios across ethics and consent, patient communication, professionalism and safety, motivation and reflection, NHS and public health, and health data and numeracy. Every station has a candidate brief, explicit role, approach, worked response, self-review and two follow-up challenges. Four fictional data exercises include eight calculation checks. Added an optional five-minute rehearsal clock, saved station-specific notes, topic and keyword filters, and bookmarkable station links. Guidance was checked against official GMC, NHS, Medical Schools Council and Birmingham sources on 28 September; examples and self-checks are educational designs, not a validated university mark scheme or clinician-reviewed clinical training. The two 11+ examples remain separate. This frontend library does not change the live Anam question bank or Supabase functions. Publication requires Lovable Publish → Update after GitHub sync; admissions research elsewhere in this journal was not refreshed."
+    },
     {
       "id": "focused-practice-feedback-20260926",
       "category": "PRODUCT / LIVE CHECKS",
