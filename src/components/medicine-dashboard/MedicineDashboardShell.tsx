@@ -1,3 +1,5 @@
+import { isMedicineSite, siteName, siteProduct } from '@/lib/site';
+import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Stethoscope, TrendingUp, MapPin, FileText, Wallet, Settings, Users, LogOut, ChevronDown, Palette } from 'lucide-react';
@@ -62,6 +64,7 @@ export function MedicineDashboardShell({
   activeTab, onTabChange, productLine, onProductLineChange, credits,
   onOpenCredits, onOpenSettings, onOpenGrownup, onSignOut, onSwitchToClassic, userInitial, children, hideChrome,
 }: Props) {
+  const { isAdmin } = useAdminStatus();
   return (
     <MedicineTheme bottomNav={!hideChrome}><div className="med-dashboard-root" style={{ background: 'var(--med-bg)', minHeight: '100vh', fontFamily: 'var(--med-body)', color: 'var(--med-ink)' }}>
       <style dangerouslySetInnerHTML={{ __html: MEDICINE_GRID_CSS }} />
@@ -70,7 +73,7 @@ export function MedicineDashboardShell({
           <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 28px', height: '100%', display: 'flex', alignItems: 'center', gap: 28 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexShrink: 0 }}>
               <div style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--med-action)' }} />
-              <span style={{ fontFamily: "var(--med-display)", fontWeight: 600, fontSize: 15, color: 'var(--med-primary-dark)' }}>intrvue.ai</span>
+              <span style={{ fontFamily: "var(--med-display)", fontWeight: 600, fontSize: 15, color: 'var(--med-primary-dark)' }}>{siteName()}</span>
             </div>
 
             <nav className="hidden md:flex" style={{ alignItems: 'center', gap: 4, flex: 1, overflowX: 'auto' }} aria-label="Dashboard">
@@ -96,7 +99,7 @@ export function MedicineDashboardShell({
             </nav>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-              <div style={{ display: 'flex', background: 'var(--med-track)', borderRadius: 10, padding: 3 }}>
+              {siteProduct() === 'combined' && <div style={{ display: 'flex', background: 'var(--med-track)', borderRadius: 10, padding: 3 }}>
                 {(['medicine', '11plus'] as ProductLine[]).map((line) => (
                   <button
                     key={line}
@@ -111,7 +114,7 @@ export function MedicineDashboardShell({
                     {line === 'medicine' ? 'Medicine' : '11+'}
                   </button>
                 ))}
-              </div>
+              </div>}
 
               <button onClick={onOpenCredits} style={{
                 display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 16,
@@ -122,7 +125,7 @@ export function MedicineDashboardShell({
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button style={{
+                  <button aria-label="Account menu" style={{
                     width: 34, height: 34, borderRadius: '50%', border: 0, cursor: 'pointer',
                     background: 'var(--med-primary-soft)', color: 'var(--med-primary-dark)', fontWeight: 700, fontSize: 13,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -133,8 +136,10 @@ export function MedicineDashboardShell({
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={onOpenCredits}><Wallet className="h-4 w-4 mr-2" /> Credits & billing</DropdownMenuItem>
                   <DropdownMenuItem onClick={onOpenSettings}><Settings className="h-4 w-4 mr-2" /> Settings</DropdownMenuItem>
-                  <DropdownMenuItem onClick={onOpenGrownup}><Users className="h-4 w-4 mr-2" /> Grown-up view</DropdownMenuItem>
-                  <DropdownMenuItem onClick={onSwitchToClassic}><Palette className="h-4 w-4 mr-2" /> Switch to classic dashboard</DropdownMenuItem>
+                  {!isMedicineSite() && <DropdownMenuItem onClick={onOpenGrownup}><Users className="h-4 w-4 mr-2" /> Grown-up view</DropdownMenuItem>}
+                  {!isMedicineSite() && <DropdownMenuItem onClick={onSwitchToClassic}><Palette className="h-4 w-4 mr-2" /> Switch to classic dashboard</DropdownMenuItem>}
+                  {isAdmin && <DropdownMenuItem asChild><Link to="/admin/guest-trials">Guest trials</Link></DropdownMenuItem>}
+                  <DropdownMenuItem asChild><Link to="/medicine/move">Move my practice notes</Link></DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={onSignOut}><LogOut className="h-4 w-4 mr-2" /> Sign out</DropdownMenuItem>
                 </DropdownMenuContent>

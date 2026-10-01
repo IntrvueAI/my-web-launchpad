@@ -50,6 +50,8 @@ import { SidebarNav, SidebarTopBar } from '@/components/dashboard/SidebarLayout'
 import { LayoutGrid, PanelLeft, Palette } from 'lucide-react';
 import { getStoredProductLine, setStoredProductLine, getStoredMedicineDashboardStyle, setStoredMedicineDashboardStyle, type ProductLine, type MedicineDashboardStyle } from '@/lib/productLine';
 import { getMedicinePractice } from '@/interview/subjects/medicine/practiceModes';
+import { isMedicineSite, siteName, siteProduct } from '@/lib/site';
+import { MedicineTheme } from '@/components/medicine-dashboard/MedicineTheme';
 const MedicineLanding = lazy(() => import('./Medicine'));
 const MedicineDashboard = lazy(() => import('@/components/medicine-dashboard/MedicineDashboard').then((m) => ({ default: m.MedicineDashboard })));
 
@@ -68,6 +70,8 @@ const Index = () => {
   // Medicine landing page (see src/lib/productLine.ts) — never touched by anything else here.
   const [productLine, setProductLine] = useState<ProductLine>(() => getStoredProductLine());
   const handleProductLineChange = (line: ProductLine) => {
+    const product = siteProduct();
+    if (product !== 'combined') line = product;
     setStoredProductLine(line);
     setProductLine(line);
   };
@@ -287,7 +291,7 @@ const Index = () => {
 
   // Full-page takeover for onboarding (fresh sign-ups, or the admin "Replay onboarding flow" aid)
   // — its own header stands in for the real nav, then chains into the guided tour + founder video.
-  if (showPostSignupForm) {
+  if (showPostSignupForm && productLine !== 'medicine') {
     return (
       <Suspense fallback={
         <div className="min-h-screen flex items-center justify-center">
@@ -306,6 +310,22 @@ const Index = () => {
   // resumes rendering the Medicine shell. Also excluded when medicineDashboardStyle === 'classic'
   // — a Medicine user can opt into the original dashboard below instead (see the avatar menu's
   // "Switch to coral dashboard" item for the way back).
+  if (productLine === 'medicine' && showPaymentSuccess) {
+    return <MedicineTheme><Suspense fallback={<p className="p-8">Confirming your payment…</p>}><PaymentSuccess onGoToPractice={() => clearPaymentSuccessAndNavigate('selection')} onGoToCredits={() => clearPaymentSuccessAndNavigate('credits')} /></Suspense></MedicineTheme>;
+  }
+
+  if (isMedicineSite() && currentView === 'interview' && selectedInterviewType) {
+    return <MedicineTheme live><main className="min-h-screen bg-background px-4 py-5 pb-28 text-foreground">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <span className="font-display text-lg font-semibold">{siteName()}</span>
+          <button className="min-h-11 text-sm font-semibold underline" onClick={() => { setSelectedInterviewType(null); setCurrentView('dashboard'); }}>Back to my dashboard</button>
+        </header>
+        <Suspense fallback={<p>Opening your interview…</p>}><InterviewPlatform key={selectedInterviewType.id} selectedInterviewType={selectedInterviewType} /></Suspense>
+      </div>
+    </main></MedicineTheme>;
+  }
+
   if (productLine === 'medicine' && currentView !== 'interview' && medicineDashboardStyle === 'coral') {
     return (
       <Suspense fallback={
@@ -314,6 +334,8 @@ const Index = () => {
         </div>
       }>
         <MedicineDashboard
+          initialTab={currentView === 'selection' ? 'practice' : 'home'}
+          initialAccountView={currentView === 'credits' ? 'credits' : null}
           onProductLineChange={handleProductLineChange}
           onStartInterview={handleSelectInterview}
           onSignOut={handleSignOut}

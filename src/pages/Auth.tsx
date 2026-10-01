@@ -1,3 +1,5 @@
+import { isMedicineSite, siteName } from '@/lib/site';
+import { MedicineTheme } from '@/components/medicine-dashboard/MedicineTheme';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -45,7 +47,7 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate(new URLSearchParams(window.location.search).get('returnTo') === '/admin/guest-trials' ? '/admin/guest-trials' : '/');
     }
   }, [user, navigate]);
 
@@ -156,7 +158,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
+    <MedicineTheme enabled={isMedicineSite()}><div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center relative">
           <Button
@@ -168,9 +170,9 @@ const Auth = () => {
           >
             <ArrowLeft className="h-4 w-4" /> Back
           </Button>
-          <CardTitle className="text-2xl font-bold">Intrvue AI</CardTitle>
+          <CardTitle className="text-2xl font-bold">{siteName()}</CardTitle>
           <CardDescription>
-            Access your personalized interview practice platform
+            {isMedicineSite() ? 'Sign in with your existing Intrvue account. Your saved interviews and credits are already here.' : 'Access your personalized interview practice platform'}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -363,7 +365,7 @@ const Auth = () => {
           )}
         </CardContent>
       </Card>
-    </div>
+    </div></MedicineTheme>
   );
 };
 

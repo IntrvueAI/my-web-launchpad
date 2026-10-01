@@ -1,4 +1,5 @@
-import { withJson } from "../_shared/http.ts";
+import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
+import { withJson, HttpError } from "../_shared/http.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
@@ -129,6 +130,7 @@ serve(
         interview_type: string;
         status: string;
       } | null = null;
+      let guestAllowed = false;
       if (sessionReference) {
         const { data, error } = await supabaseService
           .from("interview_sessions")
@@ -145,6 +147,7 @@ serve(
             },
           );
         currentSession = data;
+        guestAllowed = await authorizeGuestInterview(supabaseService, userData.user, data.id, 'token');
         if (
           [
             "medicine-oxford-pilot",
@@ -158,7 +161,7 @@ serve(
           const { data: isAdmin, error: adminError } = await caller.rpc(
             "is_current_user_admin",
           );
-          if (adminError || isAdmin !== true)
+          if (!guestAllowed && (adminError || isAdmin !== true))
             return new Response(
               JSON.stringify({
                 error: "Draft pilots require administrator access",
@@ -169,6 +172,11 @@ serve(
               },
             );
         }
+      }
+      if (!currentSession) await authorizeGuestInterview(supabaseService, userData.user, null, 'token');
+      if (guestAllowed) {
+        personaConfig.avatarId = 'bb4f5306-ffdb-4437-a837-da6fdc23cbff';
+        personaConfig.voiceId = '04965b9e-ff4c-4b54-a4dc-fba6e458c760';
       }
       let cleanup = supabaseService
         .from("interview_sessions")
@@ -241,10 +249,20 @@ serve(
       }
 
       // Engine-driven (orchestrated) interviews are puppeteered by our interview-brain via talk().
+      if (guestAllowed && currentSession) {
+        const guestMinutes: Record<string, number> = {
+          'medicine-mmi': 69, 'medicine-mmi-manchester': 45,
+          'medicine-ethics-practice': 7, 'medicine-roleplay-practice': 7,
+          'medicine-motivation-practice': 7, 'medicine-data-practice': 7,
+          'medicine-oxford-pilot': 36, 'medicine-cambridge-pilot': 36, 'medicine-imperial-pilot': 35,
+        };
+        // The guest browser cannot turn a short station into a two-hour avatar session.
+        personaConfig.maxSessionLengthSeconds = Math.min(duration, (guestMinutes[currentSession.interview_type] || 7) * 60);
+      }
       // Anam's official "bring your own LLM" mode disables its built-in AI so the avatar only speaks
       // the text we send: set llmId="CUSTOMER_CLIENT_V1" and omit any systemPrompt.
       const engineDriven =
-        requestBody.engineDriven === true ||
+        guestAllowed || requestBody.engineDriven === true ||
         personaConfig.engineDriven === true;
       delete personaConfig.engineDriven;
       if (engineDriven) {
@@ -354,6 +372,7 @@ serve(
         },
       });
     } catch (error) {
+      if (error instanceof HttpError) throw error;
       console.error(
         "Error in get-anam-session-token function:",
         (error as any).message || error,
@@ -377,5 +396,5 @@ serve(
         },
       });
     }
-  }),
+  }, { allowGuests: true }),
 );

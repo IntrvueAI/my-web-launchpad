@@ -656,8 +656,9 @@ describe("Deployment inventory", () => {
     const directories = readdirSync("supabase/functions", {
       withFileTypes: true,
     }).filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"));
-    expect(directories).toHaveLength(13);
+    expect(directories).toHaveLength(14);
     const external = new Set([
+      "mmi-guest-access",
       "stripe-webhook",
 
       "deepgram-relay",

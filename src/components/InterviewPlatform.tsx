@@ -489,7 +489,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       <div className="container mx-auto px-4 py-8 max-w-6xl">
 
         {!feedback && !pendingTranscript && !isGeneratingFeedback && <InterviewToolbar title={interviewType.name} live={isStreaming}
-          progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : 'Connecting'}
+          progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : sessionStatus === 'connecting' ? 'Connecting…' : sessionStatus === 'error' ? 'Connection needs attention' : 'Ready to begin'}
           timer={stationTimer} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
           onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}/>}
         {!isStreaming && !engineDriven && (

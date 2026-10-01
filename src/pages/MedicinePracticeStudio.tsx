@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import MedicineStudio from "@/components/medicine-studio/MedicineStudio";
+import { isMedicineSite, siteName } from '@/lib/site';
 
 export default function MedicinePracticeStudio() {
   const { user } = useAuth();
@@ -10,7 +11,7 @@ export default function MedicinePracticeStudio() {
     <MedicineTheme>
       <nav className="studio-page-nav" aria-label="Practice navigation">
         <a href="/medicine">
-          intrvue.ai <span> / Medicine</span>
+          {siteName()} {!isMedicineSite() && <span> / Medicine</span>}
         </a>
         <a href={user ? "/" : "/auth?mode=medicine"}>
           {user ? "My dashboard" : "Explore live interviews"} →

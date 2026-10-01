@@ -11,7 +11,7 @@ export const state = {
   user: {
     id: "11111111-1111-4111-8111-111111111111",
     email: "learner@example.test",
-  } as { id: string; email: string } | null,
+  } as { id: string; email: string; app_metadata?: Record<string, unknown> } | null,
   queries: [] as Query[],
   resolve: (_query: Query): any => ({ data: null, count: 0, error: null }),
   rpc: vi.fn(
@@ -20,6 +20,8 @@ export const state = {
       error: null,
     }),
   ),
+  authCreate: vi.fn(),
+  authSignIn: vi.fn(),
   fetch: vi.fn(),
   stripe: {
     checkout: {

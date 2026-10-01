@@ -1,8 +1,11 @@
+import { siteProduct } from './site';
 export type ProductLine = '11plus' | 'medicine';
 
 const STORAGE_KEY = 'intrvue_product_line';
 
 export function getStoredProductLine(): ProductLine {
+  const product = siteProduct();
+  if (product !== 'combined') return product;
   const params = new URLSearchParams(window.location.search);
   if (params.get('mode') === 'medicine' || params.has('medicinePractice')) return 'medicine';
   try {
@@ -13,6 +16,8 @@ export function getStoredProductLine(): ProductLine {
 }
 
 export function setStoredProductLine(line: ProductLine): void {
+  const product = siteProduct();
+  if (product !== 'combined') line = product;
   try { localStorage.setItem(STORAGE_KEY, line); } catch { /* Keep the current tab usable. */ }
   window.dispatchEvent(new Event('intrvue:product-line-changed'));
 }
@@ -25,11 +30,13 @@ export type MedicineDashboardStyle = 'coral' | 'classic';
 const STYLE_STORAGE_KEY = 'intrvue_medicine_dashboard_style';
 
 export function getStoredMedicineDashboardStyle(): MedicineDashboardStyle {
-  return localStorage.getItem(STYLE_STORAGE_KEY) === 'classic' ? 'classic' : 'coral';
+  if (siteProduct() === 'medicine') return 'coral';
+  try { return localStorage.getItem(STYLE_STORAGE_KEY) === 'classic' ? 'classic' : 'coral'; }
+  catch { return 'coral'; }
 }
 
 export function setStoredMedicineDashboardStyle(style: MedicineDashboardStyle): void {
-  localStorage.setItem(STYLE_STORAGE_KEY, style);
+  try { localStorage.setItem(STYLE_STORAGE_KEY, siteProduct() === 'medicine' ? 'coral' : style); } catch { /* Keep the current tab usable. */ }
 }
 
 // NOTE: both keys above are plain per-browser localStorage, not tied to the account. On a shared

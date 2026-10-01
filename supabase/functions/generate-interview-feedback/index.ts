@@ -1,4 +1,5 @@
-import { withJson } from "../_shared/http.ts";
+import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
+import { withJson, HttpError } from "../_shared/http.ts";
 import { MEDICINE_PRACTICE_MODES, getMedicinePractice, packForMedicinePractice } from './_shared/subjects/medicine/practiceModes.ts';
 import { censorFeedback, censorTranscript } from './_shared/shared/transcript.ts';
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
@@ -916,6 +917,7 @@ serve(
         interviewType = ownedSession.interview_type;
         sessionDbId = ownedSession.id;
       }
+      const guestAllowed = await authorizeGuestInterview(sessionAdmin, userData.user, sessionDbId, 'feedback');
       if (MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType)) {
         if (!sessionReference)
           return new Response(
@@ -928,7 +930,7 @@ serve(
         const { data: isAdmin, error: adminError } = await caller.rpc(
           "is_current_user_admin",
         );
-        if (adminError || isAdmin !== true)
+        if (!guestAllowed && (adminError || isAdmin !== true))
           return new Response(
             JSON.stringify({
               error: "Draft pilots require administrator access",
@@ -1736,6 +1738,7 @@ serve(
         headers: securityHeaders,
       });
     } catch (error) {
+      if (error instanceof HttpError) throw error;
       console.error(
         "Error in generate-interview-feedback function:",
         error instanceof Error ? error.message : String(error),
@@ -1759,5 +1762,5 @@ serve(
         },
       });
     }
-  }),
+  }, { allowGuests: true }),
 );

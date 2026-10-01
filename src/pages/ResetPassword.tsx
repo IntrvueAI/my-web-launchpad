@@ -1,3 +1,4 @@
+import { siteName } from '@/lib/site';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -105,7 +106,7 @@ const ResetPassword = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Reset Your Password</CardTitle>
+          <CardTitle className="text-2xl font-bold">Reset your {siteName()} password</CardTitle>
           <CardDescription>
             Enter your new password below
           </CardDescription>

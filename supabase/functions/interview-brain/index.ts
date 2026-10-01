@@ -1,4 +1,5 @@
-import { withJson } from "../_shared/http.ts";
+import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
+import { withJson, HttpError } from "../_shared/http.ts";
 import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING } from './_shared/subjects/medicine/practiceModes.ts';
 import { publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 // Interview Brain — the LLM-driven orchestrator the client calls each time the student finishes
@@ -295,13 +296,14 @@ serve(
       if (session.status !== "active")
         return json({ error: "This session has ended" }, 409);
 
+      const guestAllowed = await authorizeGuestInterview(admin, userData.user, session.id, 'brain');
       const interviewTypeId = session.interview_type as string;
       const pilot = getMedicinePilot(interviewTypeId);
       if (pilot) {
         const { data: isAdmin, error: adminError } = await authClient.rpc(
           "is_current_user_admin",
         );
-        if (adminError || isAdmin !== true)
+        if (!guestAllowed && (adminError || isAdmin !== true))
           return json(
             { error: "Medicine draft pilots require administrator access" },
             403,
@@ -437,6 +439,7 @@ serve(
       };
       return json(response);
     } catch (err) {
+      if (err instanceof HttpError) throw err;
       console.error("interview-brain error:", (err as Error)?.message || err);
       logAppEvent("edge:interview-brain", {
         level: "error",
@@ -449,5 +452,5 @@ serve(
       }).catch(() => {});
       return json({ error: "Internal server error" }, 500);
     }
-  }),
+  }, { allowGuests: true }),
 );

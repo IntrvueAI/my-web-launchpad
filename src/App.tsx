@@ -1,9 +1,11 @@
-import { lazy, Suspense } from "react";
+import { isGuestDocument, isMedicineSite } from '@/lib/site';
+import { getStoredProductLine } from '@/lib/productLine';
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PipCustomizationProvider } from "@/contexts/PipCustomizationContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
@@ -15,6 +17,11 @@ import { Mail, Calendar } from "lucide-react";
 // only ever hit by a fraction of visitors, so there's no reason to ship their JS to everyone who
 // just lands on "/". This was the single biggest contributor to a ~3.9MB single-chunk bundle.
 import Index from "./pages/Index";
+const GuestWelcome = lazy(() => import('./pages/GuestWelcome'));
+const GuestSession = lazy(() => import('./pages/GuestSession'));
+const AdminGuestTrials = lazy(() => import('./pages/AdminGuestTrials'));
+const MedicineTransfer = lazy(() => import('./pages/MedicineTransfer'));
+const MedicineInfo = lazy(() => import('./pages/MedicineInfo'));
 const Auth = lazy(() => import("./pages/Auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
@@ -47,15 +54,33 @@ const RouteFallback = () => (
 
 const queryClient = new QueryClient();
 
+function GuestDocumentExit() {
+  const location = useLocation();
+  useEffect(() => { window.location.assign(location.pathname + location.search + location.hash); }, [location]);
+  return <RouteFallback/>;
+}
+
 const IS_SITE_DOWN = import.meta.env.VITE_SITE_DOWN === 'true';
 const ADMIN_BYPASS_EMAIL = (import.meta.env.VITE_ADMIN_BYPASS_EMAIL ?? '') as string;
 
 const AppContent = () => {
   const { user } = useAuth();
+  useEffect(() => {
+    if (isMedicineSite()) document.title = 'MMI Practice | Medicine interview preparation';
+    if (['/try', '/guest-session'].includes(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
+      const robots = document.createElement('meta'); robots.name = 'robots'; robots.content = 'noindex, nofollow'; document.head.appendChild(robots);
+      const referrer = document.createElement('meta'); referrer.name = 'referrer'; referrer.content = 'no-referrer'; document.head.appendChild(referrer);
+      return () => { robots.remove(); referrer.remove(); };
+    }
+  }, []);
+  // This document's shared interview client uses isolated guest storage. Do not
+  // let SPA navigation expose normal account pages through that client.
+  if (isGuestDocument()) return <BrowserRouter><Suspense fallback={<RouteFallback/>}><Toaster/><Sonner/><Routes><Route path="/guest-session" element={<GuestSession/>}/><Route path="*" element={<GuestDocumentExit/>}/></Routes></Suspense></BrowserRouter>;
+
   
   // Check if current user is the admin who can bypass downtime
   const isAdminBypass = user?.email?.toLowerCase() === ADMIN_BYPASS_EMAIL;
-  const shouldShowDowntime = IS_SITE_DOWN && !isAdminBypass;
+  const shouldShowDowntime = IS_SITE_DOWN && !isAdminBypass && getStoredProductLine() !== 'medicine';
 
   return (
     <ClickSpark
@@ -125,14 +150,18 @@ const AppContent = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/landing" element={<Index />} />
+              <Route path="/medicine/move" element={<MedicineTransfer />} />
+              <Route path="/try" element={<GuestWelcome />} />
+              <Route path="/admin/guest-trials" element={<AdminGuestTrials />} />
+              <Route path="/practice" element={<MedicinePracticeStudio />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/about" element={<AboutUs />} />
+              <Route path="/about" element={isMedicineSite() ? <MedicineInfo/> : <AboutUs />} />
               <Route path="/medicine" element={<Medicine />} />
               <Route path="/medicine/practice" element={<MedicinePracticeStudio />} />
               <Route path="/medicine/examples" element={<PracticeExamples />} />
               <Route path="/examples" element={<PracticeExamples />} />
-              <Route path="/faq" element={<Faq />} />
+              <Route path="/faq" element={isMedicineSite() ? <MedicineInfo faq/> : <Faq />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/stt-bakeoff" element={<AdminSttBakeoff />} />
               <Route path="/admin/school-finder" element={<AdminSchoolFinder />} />

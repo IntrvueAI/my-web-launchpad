@@ -17,6 +17,8 @@ const CreditsStore = lazy(() => import('@/components/credits/CreditsStore').then
 type AccountView = 'credits' | 'settings' | 'grownup' | null;
 
 interface Props {
+  initialTab?: MedicineTab;
+  initialAccountView?: AccountView;
   onProductLineChange: (line: ProductLine) => void;
   onStartInterview: (type: InterviewType) => void;
   onSignOut: () => void;
@@ -29,12 +31,12 @@ interface Props {
  * sign-out are delegated back up to Index.tsx so they reuse the exact same credit-consuming
  * session-start path 11+ already uses.
  */
-export function MedicineDashboard({ onProductLineChange, onStartInterview, onSignOut, onSwitchToClassic }: Props) {
+export function MedicineDashboard({ initialTab = 'home', initialAccountView = null, onProductLineChange, onStartInterview, onSignOut, onSwitchToClassic }: Props) {
   const { user } = useAuth();
   const { credits } = useCredits();
-  const [activeTab, setActiveTab] = useState<MedicineTab>('home');
+  const [activeTab, setActiveTab] = useState<MedicineTab>(initialTab);
   const [feedbackId, setFeedbackId] = useState<string | undefined>();
-  const [accountView, setAccountView] = useState<AccountView>(null);
+  const [accountView, setAccountView] = useState<AccountView>(initialAccountView);
 
   const userInitial = ((user?.user_metadata?.full_name as string | undefined)?.[0] || user?.email?.[0] || '?').toUpperCase();
 

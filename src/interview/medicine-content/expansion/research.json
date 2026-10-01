@@ -345,6 +345,13 @@
   ],
   "updates": [
     {
+      "id": "mmi-domains-guest-trials-20261001",
+      "date": "1 October 2026",
+      "category": "PRODUCT & RELEASE",
+      "title": "MMI Practice gets its own domain identity and private guest rooms.",
+      "body": "One Lovable project and one shared Anam engine now support separate Medicine and 11+ domains. Added named private trials, a founder results page, expiring invitation links, interview allowances and a browser-notes transfer page. Guest identities are isolated from founder login and credits. Fixed hidden Medicine payment confirmation and false success messages after failed payment verification. All nine Medicine modes started against the live backend; a guest browser received Anam video/audio, submitted an answer and saved feedback. Supabase migration and functions are deployed. Lovable publication, domain DNS and new-domain auth redirects remain pending; see docs/MMI-DOMAIN-LAUNCH.md."
+    },
+    {
       "id": "medicine-mmi-examples-20260928",
       "category": "CONTENT / MMI PRACTICE",
       "date": "28 SEP · WORKED ANSWER LIBRARY",

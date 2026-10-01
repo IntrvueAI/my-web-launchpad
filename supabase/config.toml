@@ -46,3 +46,7 @@ verify_jwt = true
 
 [functions.warmup-questions]
 verify_jwt = true
+
+# Public invitation redemption; all founder actions verify the caller inside the handler.
+[functions.mmi-guest-access]
+verify_jwt = false

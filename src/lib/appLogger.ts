@@ -34,7 +34,8 @@ export async function logAppEvent(args: LogAppEventArgs): Promise<void> {
       user_id: userId,
       interview_session_id: args.interviewSessionId ?? null,
       request_id: args.requestId ?? null,
-      metadata: { ...args.metadata, url: window.location.href },
+      // Fragments can contain private invitation codes or OAuth tokens.
+      metadata: { ...args.metadata, url: window.location.origin + window.location.pathname + window.location.search },
     });
     if (error) console.warn('logAppEvent insert failed:', error);
   } catch (err) {

@@ -1,3 +1,4 @@
+import { siteName } from '@/lib/site';
 import {
   ArrowRight,
   Check,
@@ -72,7 +73,7 @@ export function MedicineLandingClinical() {
           <span className="med-logo-mark">
             <Stethoscope size={19} />
           </span>
-          intrvue<span>.</span>ai
+          {siteName()}
         </a>
         <nav aria-label="Medicine landing">
           <a href="#how-it-works">Your practice routine</a>
@@ -364,7 +365,7 @@ export function MedicineLandingClinical() {
         </section>
       </main>
       <footer className="med-landing-footer">
-        <span>intrvue.ai · Medicine</span>
+        <span>{siteName()} · Medicine</span>
         <span>
           Independent practice. Not affiliated with or endorsed by the named
           universities.

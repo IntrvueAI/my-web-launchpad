@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { censorTranscript } from "@/interview/shared/transcript";
 import { MedicineMMIExamples } from "@/components/medicine/MedicineMMIExamples";
+import { isMedicineSite } from '@/lib/site';
 
 export function PracticeExamplesContent({
   medicine = true,
@@ -256,7 +257,7 @@ function SchoolExamplesContent() {
   );
 }
 export default function PracticeExamples() {
-  const medicine = window.location.pathname.startsWith("/medicine");
+  const medicine = isMedicineSite() || window.location.pathname.startsWith("/medicine");
   return (
     <MedicineTheme enabled={medicine}>
       <main className="min-h-screen bg-background px-4 py-6 pb-28 text-foreground sm:px-6">

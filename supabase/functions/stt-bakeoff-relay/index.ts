@@ -75,6 +75,7 @@ Deno.serve(async (req) => {
       return new Response("Forbidden: admin only", { status: 403 });
     }
 
+    if (typeof userData.user.app_metadata?.mmi_guest_trial === 'string') return new Response('This service is not included in guest trials', { status: 403 });
     const { socket: clientWs, response } = Deno.upgradeWebSocket(req);
 
     let deepgramWs: WebSocket | null = null;

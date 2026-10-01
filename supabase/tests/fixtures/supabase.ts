@@ -2,6 +2,8 @@ import { state, type Query } from "./state";
 export function createClient() {
   return {
     auth: {
+      admin: { createUser: state.authCreate },
+      signInWithPassword: state.authSignIn,
       getUser: async () => ({
         data: { user: state.user },
         error: state.user ? null : { message: "unauthorized" },

@@ -52,7 +52,7 @@ export async function readText(
   }
 }
 
-export function withJson(handler: (req: Request) => Promise<Response>) {
+export function withJson(handler: (req: Request) => Promise<Response>, options: { allowGuests?: boolean } = {}) {
   return async (req: Request): Promise<Response> => {
     if (req.method === "OPTIONS")
       return new Response(null, { status: 204, headers: corsHeaders });
@@ -65,6 +65,17 @@ export function withJson(handler: (req: Request) => Promise<Response>) {
       return json({ error: "Unauthorized" }, 401);
     }
     try {
+      // Decode only to DENY access. The gateway/endpoint still verifies authenticity;
+      // no permission is ever granted from these unverified claims.
+      let guest = false;
+      try {
+        const part = req.headers.get('authorization')!.split('.')[1];
+        const claims = JSON.parse(atob(part.replace(/-/g, '+').replace(/_/g, '/')));
+        guest = typeof claims.app_metadata?.mmi_guest_trial === 'string';
+      } catch { /* Normal authentication rejects malformed tokens. */ }
+      if (guest && !options.allowGuests) {
+        throw new HttpError(403, 'This action is not included in a guest trial');
+      }
       let body: unknown;
       try {
         body = JSON.parse(await readText(req));

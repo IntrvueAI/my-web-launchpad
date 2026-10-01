@@ -1,10 +1,11 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { Palette } from 'lucide-react';
 import './medicine-theme.css';
 
 export type MedicineColourScheme = 'clinical' | 'coral';
 const KEY = 'intrvue:medicine-colour-scheme:v1';
 const EVENT = 'medicine-colour-scheme-changed';
+const NestedMedicineTheme = createContext(false);
 function storedTheme(): MedicineColourScheme {
   try { return localStorage.getItem(KEY) === 'coral' ? 'coral' : 'clinical'; } catch { return 'clinical'; }
 }
@@ -22,6 +23,7 @@ export function useMedicineColourScheme() {
   return { theme, change };
 }
 export function MedicineTheme({ children, bottomNav = false, live = false, enabled = true }: { children: ReactNode; bottomNav?: boolean; live?: boolean; enabled?: boolean }) {
+  const nested = useContext(NestedMedicineTheme);
   const { theme, change } = useMedicineColourScheme();
   useEffect(() => {
     if (!enabled || document.getElementById('medicine-identity-fonts')) return;
@@ -30,12 +32,12 @@ export function MedicineTheme({ children, bottomNav = false, live = false, enabl
     document.head.appendChild(link);
   }, [enabled]);
   if (!enabled) return <>{children}</>;
-  return <div className={`medicine-theme ${live ? 'medicine-live-theme' : ''}`} data-medicine-theme={theme} data-bottom-nav={bottomNav || undefined}>
+  return <NestedMedicineTheme.Provider value={true}><div className={`medicine-theme ${live ? 'medicine-live-theme' : ''}`} data-medicine-theme={theme} data-bottom-nav={bottomNav || undefined}>
     {children}
-    <div className="medicine-theme-switch" role="group" aria-label="Medicine colour scheme">
+    {!nested && <div className="medicine-theme-switch" role="group" aria-label="Medicine colour scheme">
       <Palette size={16} aria-hidden="true"/>
       <button type="button" title="Clinical teal" aria-pressed={theme === 'clinical'} onClick={() => change('clinical')}><i className="medicine-swatch-clinical"/><span>Clinical teal</span></button>
       <button type="button" title="Warm coral" aria-pressed={theme === 'coral'} onClick={() => change('coral')}><i className="medicine-swatch-coral"/><span>Warm coral</span></button>
-    </div>
-  </div>;
+    </div>}
+  </div></NestedMedicineTheme.Provider>;
 }

@@ -36,6 +36,7 @@ const retiredFunctions = [
 ];
 const apply = process.argv.includes("--apply");
 const allowedMigrations = new Set([
+  "20261001000001_mmi_guest_trials.sql",
   "20260916000001_medicine_engine_reliability.sql",
   "20260917000001_backend_payment_integrity.sql",
   "20260917000002_backend_attempt_integrity.sql",
@@ -96,6 +97,7 @@ try {
   );
   const secretNames = new Set(secrets.map((item) => item.name));
   const required = [
+    "MMI_GUEST_LINK_SECRET",
     "OPENAI_API_KEY",
     "ANAM_API_KEY",
     "STRIPE_SECRET_KEY",
@@ -137,7 +139,7 @@ try {
       );
   }
   console.log(
-    `Migration baseline: ${remoteVersions.size} recorded remote versions; only the three reviewed release migrations may be added.`,
+    `Migration baseline: ${remoteVersions.size} recorded remote versions; only the reviewed release migrations may be added.`,
   );
   const preview = cli(
     ["db", "push", "--project-ref", project, "--dry-run", "--skip-vault"],

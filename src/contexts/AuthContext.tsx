@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Show post-signup form for new signups
         if (event === 'SIGNED_IN' && session?.user) {
           const isNewUser = new Date(session.user.created_at).getTime() > Date.now() - 10000; // Within 10 seconds
-          if (isNewUser) {
+          if (isNewUser && !session.user.app_metadata?.mmi_guest_trial) {
             setShowPostSignupForm(true);
           }
         }

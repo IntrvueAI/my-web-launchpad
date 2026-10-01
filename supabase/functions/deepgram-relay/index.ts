@@ -46,6 +46,7 @@ Deno.serve(async (req) => {
     }
     const userId = userData.user.id;
 
+    if (typeof userData.user.app_metadata?.mmi_guest_trial === 'string') return new Response('This service is not included in guest trials', { status: 403 });
     const { socket: clientWs, response } = Deno.upgradeWebSocket(req);
 
     let deepgramWs: WebSocket | null = null;

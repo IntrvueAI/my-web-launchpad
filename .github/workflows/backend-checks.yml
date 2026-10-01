@@ -46,6 +46,7 @@ jobs:
       - run: npx vite build
       - run: npm install --no-save --package-lock=false @electric-sql/pglite@0.5.8
       - run: npm run backend:sql-check
+      - run: node scripts/check-guest-trial-migration.mjs
       - uses: denoland/setup-deno@v2
         with:
           deno-version: "2.9.6"

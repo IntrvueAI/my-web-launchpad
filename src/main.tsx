@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { logAppEvent } from './lib/appLogger';
+import { medicineHandoverTarget } from './lib/site';
 
 // Registered before the app mounts so failures during module load / before React is up are still
 // caught — the ErrorBoundary in App.tsx only sees errors thrown during React's own render/lifecycle.
@@ -22,4 +23,6 @@ window.addEventListener('unhandledrejection', (e) => {
   }).catch(() => {});
 });
 
-createRoot(document.getElementById("root")!).render(<App />);
+const handover = medicineHandoverTarget(new URL(window.location.href));
+if (handover) window.location.replace(handover);
+else createRoot(document.getElementById("root")!).render(<App />);

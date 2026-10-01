@@ -31,8 +31,16 @@
          explicitly toggle to light. -->
     <script>
       (function () {
-        var saved = localStorage.getItem('intrvue-theme');
-        if (saved !== 'light') document.documentElement.classList.add('dark');
+        try { var saved = localStorage.getItem('intrvue-theme'); if (saved !== 'light') document.documentElement.classList.add('dark'); } catch (_) {}
+        var medicine = ['mmipractice.co.uk', 'www.mmipractice.co.uk', 'mmi.localhost'].includes(location.hostname.toLowerCase());
+        if (medicine) {
+          document.title = 'MMI Practice | Medicine interview preparation';
+          var description = 'Practise medical school interviews with an AI interviewer. Explore MMI scenarios, worked answers and focused feedback.';
+          document.querySelector('meta[name="description"]').content = description;
+          document.querySelector('meta[property="og:title"]').content = document.title;
+          document.querySelector('meta[property="og:description"]').content = description;
+          document.querySelector('link[rel="icon"]').href = '/mmi-icon.svg';
+        }
       })();
     </script>
     <div id="root"></div>
