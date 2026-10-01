@@ -30,10 +30,12 @@ export function FeedbackSummary({
   feedback: input,
   interviewType = "11-plus",
   isLoading = false,
+  audience = "candidate",
 }: {
   feedback: SummaryFeedback;
   interviewType?: string;
   isLoading?: boolean;
+  audience?: "candidate" | "admin";
 }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   if (isLoading)
@@ -72,7 +74,7 @@ export function FeedbackSummary({
             {title}
           </p>
           <h2 className="mt-2 font-display text-2xl font-semibold">
-            Your Interview Feedback
+            {audience === "admin" ? "AI assessment" : "Your Interview Feedback"}
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
             {summary.overview}
@@ -80,10 +82,16 @@ export function FeedbackSummary({
         </div>
         <div
           className="rounded-2xl bg-primary/10 px-5 py-4 text-center"
-          aria-label={`Practice score ${feedback.total_score} out of ${config.maxTotalScore}`}
+          aria-label={
+            typeof feedback.total_score === "number"
+              ? `Practice score ${feedback.total_score} out of ${config.maxTotalScore}`
+              : "Not scored"
+          }
         >
           <strong className="text-4xl tabular-nums">
-            {feedback.total_score}
+            {typeof feedback.total_score === "number"
+              ? feedback.total_score
+              : "—"}
           </strong>
           <span className="text-muted-foreground">/{config.maxTotalScore}</span>
           <p className="mt-1 text-xs font-medium">Practice score</p>
@@ -103,17 +111,21 @@ export function FeedbackSummary({
             Try next
           </h3>
           <p className="mt-3 text-sm leading-relaxed">{summary.nextStep}</p>
-          <Link
-            to={`${medicine ? "/medicine/examples" : "/examples"}?interview=${encodeURIComponent(interviewType)}`}
-            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
-          >
-            {medicine ? "See MMI worked answers" : "See worked answers"}{" "}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          {audience === "candidate" && (
+            <Link
+              to={`${medicine ? "/medicine/examples" : "/examples"}?interview=${encodeURIComponent(interviewType)}`}
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
+            >
+              {medicine ? "See MMI worked answers" : "See worked answers"}{" "}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          )}
         </article>
       </div>
       <div className="rounded-2xl border bg-card p-5">
-        <h3 className="font-semibold">Your skills</h3>
+        <h3 className="font-semibold">
+          {audience === "admin" ? "Skills assessed" : "Your skills"}
+        </h3>
         <p className="mt-1 text-xs text-muted-foreground">
           Select a skill for its evidence and next step.
         </p>
@@ -167,7 +179,8 @@ export function FeedbackSummary({
       {!!feedback.questions_review?.length && (
         <details className="rounded-2xl border bg-card p-5">
           <summary className="cursor-pointer font-semibold">
-            Review your {medicine ? "stations" : "questions"} ·{" "}
+            {audience === "admin" ? "Review" : "Review your"}{" "}
+            {medicine ? "stations" : "questions"} ·{" "}
             {feedback.questions_review.length}
           </summary>
           <div className="mt-4 space-y-3">

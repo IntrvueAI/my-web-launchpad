@@ -10,7 +10,7 @@ The existing Supabase project, `fjkuuzfuysemrofcmnvd`, keeps accounts, credits a
 
 The Medicine domains respond over HTTPS. On 1 October 2026, the saved Supabase CLI login was used to add and verify all four MMI sign-in/reset return addresses while preserving every existing auth setting. Email/password sign-in was verified on `www.mmipractice.co.uk` with a temporary account. Existing production accounts and credits remain in the original Supabase project.
 
-The beta-link migration and backend functions are deployed. **Publish → Update** in the existing Lovable project after GitHub has synced this release to publish the new beta portal, short-link routes and required feedback page. There is no authenticated Lovable publishing control in the current development environment.
+The two-attempt beta links and required tester survey are published on the Medicine domains. The new interview feedback hub has its Supabase migration and endpoint deployed. After GitHub syncs the feedback-hub release, use **Publish → Update** in the existing Lovable project to publish `/admin/guest-feedback` and the updated navigation. There is no authenticated Lovable publishing control in the current development environment.
 
 Keep both domains attached to the same Lovable project, with primary domain unset so the two brands retain their addresses. `MEDICINE_DOMAIN_LIVE` remains false pending the final old-domain handover check; Medicine already appears on the new domain, and new beta links use `mmipractice.co.uk` in production. The flag only controls redirects and the original domain becoming 11+ only. Real Google-provider completion and payment checkout on the new domain remain separate launch checks.
 
@@ -32,7 +32,8 @@ The portal labels links ready, claimed, completed, expired or closed, and disabl
 | Page                   | Address after publication           | What it does                                                      |
 | ---------------------- | ----------------------------------- | ----------------------------------------------------------------- |
 | Medicine home          | New domain `/`                      | MMI branding, Medicine dashboard, existing account access         |
-| Guest management       | `/admin/guest-trials`               | Create, copy and close private links; review named tester results |
+| Guest management       | `/admin/guest-trials`               | Create, copy and close private links; open a tester’s feedback |
+| Founder feedback hub   | `/admin/guest-feedback`             | Search testers, filter issues and interview types, read each assessment and trial review |
 | Private welcome        | `/medicine/<private-code>`   | Name, consent and entry without ordinary signup                   |
 | Product feedback       | `/guest-feedback`                  | Required tester survey, then access to saved interview assessments |
 | Guest interview room   | `/guest-session` after joining      | All nine Medicine modes using the shared Anam engine              |
@@ -48,6 +49,18 @@ New invitations: one guest, two interview attempts, seven-day link lifetime by d
 Guests explicitly acknowledge that their host can see their name, transcript, scores and feedback. Tokens stay in that tab's session storage. Ordinary account storage stays separate. The founder's trial page reads only the guests belonging to that founder's invitations. Revocation blocks further interview requests immediately and open guest pages check every 30 seconds; an already issued external avatar connection is bounded by its session limit.
 
 Pilot previews remain labelled as original practice drafts, with no claim of official university questions or validation. Invited guests may access the three pilots; ordinary uninvited accounts retain the existing pilot access rules.
+
+## Review tester feedback
+
+Open **Beta testing portal → Interview feedback**, or **Tester interview feedback** in the Medicine account menu. This page shows only invitations owned by the signed-in founder. Existing accounts’ personal feedback remains in their usual dashboard.
+
+- Select a tester, then choose an interview. AI assessments show the practice score, strengths, next step and the rubric for that interview, including academic Oxford/Cambridge criteria. Skill evidence, the censored transcript, transcript download and full improvement notes are expandable.
+- **Tester’s product feedback** is their own usefulness rating and comment about the whole trial. It is collected once per trial, not once per interview. Counts and average ratings do not duplicate a review across its two interviews.
+- Search names/invitation labels, filter by interview type, or choose **Reported an issue**, **Review received** or **Awaiting review**. Results are paged in groups of 20 testers; summary totals cover all owned invitations, or the selected invitation.
+- Started attempts without saved AI feedback appear as **No saved assessment**, without an invented zero. Regenerated assessments show the newest saved result for that session. Older saved results remain visible even when their session record has been removed.
+- Results refresh every 30 seconds while the page is open. A failed refresh keeps the previous result and provides a retry. On phones, choose a tester to open their detail view and use **All testers** to return.
+
+The read-only `get_mmi_feedback_inbox` database function is executable only by the service role. `mmi-guest-access` verifies founder status and supplies the owner ID from the authenticated user; callers cannot choose another owner. Full transcripts are fetched on demand through the existing invitation ownership check. No guest quota, Anam, credit or interview-brain behavior was changed for this release.
 
 ## Browser-only notes
 
@@ -65,4 +78,6 @@ Live checks started all nine Medicine modes, including Oxford, Cambridge and Imp
 
 The beta-link release also passed 22 live/backend/browser checks, including concurrent single-use redemption, two real Anam connections, saved assessments, reload-safe quotas, third-attempt denial, automatic survey navigation, failed-submit recovery, assessment retry before survey navigation, claimed-link sharing controls, completed-trial lockout, and founder-only product feedback. These used the local frontend against the deployed backend. Test accounts and invitations were removed.
 
-These are functional checks using temporary test accounts. They do not establish full-duration reliability on every device, clinical validation, completed real purchases, or completed Google OAuth/provider flows. The new beta frontend still needs Lovable publication as described above. Metadata changes with hostname in the browser; crawlers that do not execute JavaScript can still see the shared initial HTML metadata, so inspect social/search previews after the domain is live.
+The feedback hub passed 263 application tests, 110 backend tests, 33 additional isolated PostgreSQL checks, TypeScript, the affected edge-function type check and a production build. Sixteen live/backend/browser checks used temporary founder and guest accounts with controlled assessment fixtures: ownership boundaries, direct-RPC denial, academic rubrics, separate product comments, censored transcript/download, interview switching, filters, missing assessments, mobile layout, accessibility, both palettes, invitation navigation, refresh failure/retry and zero browser runtime errors. All temporary accounts and their data were removed. This release did not start new Anam calls because interview execution was unchanged.
+
+These are functional checks using temporary test accounts. They do not establish full-duration reliability on every device, clinical validation, completed real purchases, or completed Google OAuth/provider flows. The new feedback-hub frontend still needs Lovable publication as described above. Metadata changes with hostname in the browser; crawlers that do not execute JavaScript can still see the shared initial HTML metadata, so inspect social/search previews after the domain is live.

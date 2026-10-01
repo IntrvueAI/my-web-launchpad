@@ -21,6 +21,7 @@ const GuestWelcome = lazy(() => import('./pages/GuestWelcome'));
 const GuestSession = lazy(() => import('./pages/GuestSession'));
 const GuestTrialFeedback = lazy(() => import('./pages/GuestTrialFeedback'));
 const AdminGuestTrials = lazy(() => import('./pages/AdminGuestTrials'));
+const AdminGuestFeedback = lazy(() => import('./pages/AdminGuestFeedback'));
 const MedicineTransfer = lazy(() => import('./pages/MedicineTransfer'));
 const MedicineInfo = lazy(() => import('./pages/MedicineInfo'));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -154,6 +155,7 @@ const AppContent = () => {
               <Route path="/medicine/move" element={<MedicineTransfer />} />
               <Route path="/try" element={<GuestWelcome />} />
               <Route path="/admin/guest-trials" element={<AdminGuestTrials />} />
+              <Route path="/admin/guest-feedback" element={<AdminGuestFeedback />} />
               <Route path="/practice" element={<MedicinePracticeStudio />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />

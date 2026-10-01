@@ -44,6 +44,77 @@ async function code() {
   return guestInviteCode(inviteId);
 }
 
+describe("Founder feedback inbox", () => {
+  it("always scopes the inbox to the verified founder, ignoring supplied owner IDs", async () => {
+    const payload = { trials: [], total: 0, page: 2 };
+    state.rpc.mockImplementation(async (name) => ({
+      data: name === "is_current_user_admin" ? true : payload,
+      error: null,
+    }));
+    const response = await run("mmi-guest-access", {
+      action: "feedback-inbox",
+      ownerId: trialId,
+      search: " Alice ",
+      review: "issues",
+      page: 2,
+      inviteId,
+      interviewType: "medicine-oxford-pilot",
+    });
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(payload);
+    expect(state.rpc).toHaveBeenCalledWith("get_mmi_feedback_inbox", {
+      p_owner_id: state.user!.id,
+      p_search: "Alice",
+      p_review: "issues",
+      p_page: 2,
+      p_invite_id: inviteId,
+      p_interview_type: "medicine-oxford-pilot",
+    });
+  });
+  it("denies guests before making an inbox query", async () => {
+    state.user!.app_metadata = { mmi_guest_trial: trialId };
+    expect(
+      (await run("mmi-guest-access", { action: "feedback-inbox" })).status,
+    ).toBe(403);
+    expect(state.rpc).not.toHaveBeenCalled();
+  });
+  it("denies ordinary accounts and failed admin checks", async () => {
+    state.rpc.mockResolvedValue({ data: false, error: null });
+    expect(
+      (await run("mmi-guest-access", { action: "feedback-inbox" })).status,
+    ).toBe(403);
+    expect(state.rpc).toHaveBeenCalledTimes(1);
+  });
+  it("returns a safe retryable error without exposing database errors", async () => {
+    state.rpc.mockImplementation(async (name) =>
+      name === "is_current_user_admin"
+        ? { data: true, error: null }
+        : { data: null, error: { message: "private database detail" } },
+    );
+    const response = await run("mmi-guest-access", {
+      action: "feedback-inbox",
+    });
+    expect(response.status).toBe(503);
+    expect(await response.text()).not.toContain("private database detail");
+  });
+  it.each([
+    { page: 0 },
+    { page: 1.5 },
+    { page: 100001 },
+    { search: [] },
+    { search: "a".repeat(101) },
+    { review: "unknown" },
+    { interviewType: "11-plus" },
+    { inviteId: "forged" },
+  ])("rejects malformed filters %j", async (filter) => {
+    expect(
+      (await run("mmi-guest-access", { action: "feedback-inbox", ...filter }))
+        .status,
+    ).toBe(400);
+    expect(state.rpc).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe("Private invitations", () => {
   it("generates independent URL-safe 128-bit short codes", () => {
     const codes = Array.from({ length: 64 }, () => newGuestLinkCode());

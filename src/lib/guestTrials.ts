@@ -69,6 +69,39 @@ export interface TrialFeedback {
   created_at: string;
   detailed_feedback: Record<string, string> | null;
 }
+export interface TrialInterviewSummary {
+  id: string;
+  feedback_id: string | null;
+  interview_type: string;
+  created_at: string;
+  status: string;
+  total_score: number | null;
+  overview: string | null;
+}
+export interface TrialInboxEntry {
+  id: string;
+  display_name: string;
+  created_at: string;
+  updated_at: string;
+  interviews_started: number;
+  invite_id: string;
+  invite_label: string;
+  review: TrialReview | null;
+  interviews: TrialInterviewSummary[];
+}
+export interface TrialInbox {
+  total: number;
+  page: number;
+  pageSize: number;
+  summary: {
+    testers: number;
+    assessments: number;
+    reviews: number;
+    issues: number;
+    averageRating: number | null;
+  };
+  trials: TrialInboxEntry[];
+}
 export class TrialError extends Error {
   constructor(
     message: string,

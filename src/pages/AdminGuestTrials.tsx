@@ -4,9 +4,8 @@ import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { FeedbackVersions } from "@/components/FeedbackVersions";
-import { INTERVIEW_TYPES } from "@/config/interviewTypes";
+import { Link } from "react-router-dom";
+import { BetaPortalNav } from "@/components/admin/BetaPortalNav";
 import {
   trialApi,
   type TrialInvite,
@@ -14,7 +13,6 @@ import {
   type TrialFeedback,
   type TrialReview,
   trialInvitationPath,
-  trialReviewExperience,
 } from "@/lib/guestTrials";
 import { MEDICINE_ORIGIN } from "@/lib/site";
 
@@ -28,7 +26,6 @@ export default function AdminGuestTrials() {
     feedback: TrialFeedback[];
     reviews: TrialReview[];
   } | null>(null);
-  const [detail, setDetail] = useState<Record<string, unknown> | null>(null);
   const [label, setLabel] = useState("Private product preview");
   const [days, setDays] = useState(7);
   const [busy, setBusy] = useState(false);
@@ -122,18 +119,6 @@ export default function AdminGuestTrials() {
       setBusy(false);
     }
   }
-  async function showFeedback(item: TrialFeedback) {
-    try {
-      const result = await trialApi<{ feedback: Record<string, unknown> }>({
-        action: "feedback",
-        inviteId: selected,
-        feedbackId: item.id,
-      });
-      setDetail(result.feedback);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Unable to load feedback");
-    }
-  }
   return (
     <MedicineTheme>
       <main className="min-h-screen bg-background px-5 py-8 pb-28 text-foreground">
@@ -147,8 +132,9 @@ export default function AdminGuestTrials() {
           <p className="mb-8 max-w-2xl text-muted-foreground">
             Create a private link for each tester. They enter their name and get
             two interviews, with no email, password or signup. Their results and
-            product feedback appear here under your account.
+            product feedback are saved in your private feedback hub.
           </p>
+          <BetaPortalNav />
           {loading || isLoading ? (
             <p role="status">Checking founder access…</p>
           ) : !user ? (
@@ -323,71 +309,22 @@ export default function AdminGuestTrials() {
                               {guest.interviews_started} attempts used ·{" "}
                               {feedback.length} saved results
                             </p>
-                            <div className="mb-5 rounded-2xl border bg-muted/30 p-5">
-                              <h4 className="mb-2 font-semibold">
-                                Product feedback
-                              </h4>
-                              {review ? (
-                                <div className="space-y-3 text-sm">
-                                  <p>
-                                    <strong>
-                                      {review.rating}/5 usefulness
-                                    </strong>{" "}
-                                    · {trialReviewExperience[review.experience]}
-                                  </p>
-                                  <p className="whitespace-pre-wrap break-words">
-                                    {review.improvement}
-                                  </p>
-                                  <p className="text-xs text-muted-foreground">
-                                    Submitted{" "}
-                                    {new Date(
-                                      review.created_at,
-                                    ).toLocaleString()}
-                                  </p>
-                                </div>
-                              ) : (
-                                <p className="text-sm text-muted-foreground">
-                                  {guest.review_required_at ||
-                                  guest.interviews_started >=
-                                    (invites.find((i) => i.id === selected)
-                                      ?.max_interviews || 2)
-                                    ? "Awaiting the tester’s feedback form."
-                                    : "The tester will complete a short form when they finish."}
-                                </p>
-                              )}
-                            </div>
-                            {!feedback.length && (
-                              <p className="text-sm text-muted-foreground">
-                                Feedback will appear after they finish an
-                                interview.
-                              </p>
-                            )}
-                            {feedback.map((f) => (
-                              <div key={f.id} className="border-t py-4">
-                                <div className="flex flex-wrap justify-between gap-2">
-                                  <h4 className="font-medium">
-                                    {INTERVIEW_TYPES[f.interview_type]?.name ||
-                                      f.interview_type}
-                                  </h4>
-                                  <span className="font-semibold">
-                                    {f.total_score === null
-                                      ? "Not scored"
-                                      : `${f.total_score}/20`}
-                                  </span>
-                                </div>
-                                <p className="my-2 text-sm text-muted-foreground">
-                                  {f.detailed_feedback?.overall ||
-                                    "Open this result to read the assessment."}
-                                </p>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => void showFeedback(f)}
-                                >
-                                  View feedback & transcript
-                                </Button>
-                              </div>
-                            ))}
+                            <p className="mb-4 text-sm text-muted-foreground">
+                              {review
+                                ? `${review.rating}/5 usefulness · Product review received`
+                                : "Awaiting product feedback"}
+                            </p>
+                            <Button
+                              asChild
+                              variant="outline"
+                              className="rounded-xl"
+                            >
+                              <Link
+                                to={`/admin/guest-feedback?invite=${selected}&trial=${guest.id}`}
+                              >
+                                View interviews & product feedback
+                              </Link>
+                            </Button>
                           </article>
                         );
                       })}
@@ -397,22 +334,6 @@ export default function AdminGuestTrials() {
               </div>
             </>
           )}
-          <Dialog
-            open={!!detail}
-            onOpenChange={(open) => {
-              if (!open) setDetail(null);
-            }}
-          >
-            <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto">
-              <DialogTitle>Guest interview feedback</DialogTitle>
-              {detail && (
-                <FeedbackVersions
-                  feedback={detail}
-                  interviewType={String(detail.interview_type)}
-                />
-              )}
-            </DialogContent>
-          </Dialog>
         </div>
       </main>
     </MedicineTheme>

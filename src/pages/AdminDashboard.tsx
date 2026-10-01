@@ -152,6 +152,9 @@ export default function AdminDashboard() {
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/guest-trials"><Stethoscope className="h-3.5 w-3.5" /> Beta testing portal</Link>
           </Button>
+          <Button variant="secondary" size="sm" asChild>
+            <Link to="/admin/guest-feedback">Interview feedback</Link>
+          </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/stt-bakeoff" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-3.5 w-3.5" /> STT bake-off

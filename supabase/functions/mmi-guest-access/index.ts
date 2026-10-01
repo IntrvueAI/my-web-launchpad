@@ -218,6 +218,36 @@ serve(
       if (adminError || isAdmin !== true)
         throw new HttpError(403, "Founder access required");
 
+      if (body.action === "feedback-inbox") {
+        const search = body.search ?? "";
+        const review = body.review ?? "all";
+        const interviewType = body.interviewType ?? "";
+        if (
+          typeof search !== "string" ||
+          search.length > 100 ||
+          !["all", "reviewed", "waiting", "issues"].includes(review) ||
+          typeof interviewType !== "string" ||
+          (interviewType !== "" &&
+            !/^medicine-[a-z-]{1,60}$/.test(interviewType)) ||
+          (body.inviteId != null && !isUuid(body.inviteId))
+        )
+          throw new HttpError(400, "Invalid feedback filter");
+        const { data, error } = await service.rpc("get_mmi_feedback_inbox", {
+          p_owner_id: user.id,
+          p_search: search.trim(),
+          p_review: review,
+          p_interview_type: interviewType,
+          p_invite_id: body.inviteId ?? null,
+          p_page: integer(body.page, 1, 100000, 1),
+        });
+        if (error || !data)
+          throw new HttpError(
+            503,
+            "Unable to load interview feedback. Please retry.",
+          );
+        return json(data);
+      }
+
       if (body.action === "create") {
         const label = typeof body.label === "string" ? body.label.trim() : "";
         if (!label || label.length > 100)

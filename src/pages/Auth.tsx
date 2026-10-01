@@ -18,6 +18,10 @@ import { ArrowLeft } from 'lucide-react';
 import { setStoredProductLine } from '@/lib/productLine';
 
 const Auth = () => {
+  const founderReturnPath = () => {
+    const path = new URLSearchParams(window.location.search).get('returnTo');
+    return path && ['/admin/guest-trials', '/admin/guest-feedback'].includes(path) ? path : '/';
+  };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -47,7 +51,7 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate(new URLSearchParams(window.location.search).get('returnTo') === '/admin/guest-trials' ? '/admin/guest-trials' : '/');
+      navigate(founderReturnPath());
     }
   }, [user, navigate]);
 
@@ -117,7 +121,7 @@ const Auth = () => {
 
     const { error } = await authSignIn(sanitizedEmail, password);
     if (!error) {
-      navigate(new URLSearchParams(window.location.search).get('returnTo') === '/admin/guest-trials' ? '/admin/guest-trials' : '/');
+      navigate(founderReturnPath());
     }
     
     setLoading(false);

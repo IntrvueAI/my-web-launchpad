@@ -139,6 +139,7 @@ export function MedicineDashboardShell({
                   {!isMedicineSite() && <DropdownMenuItem onClick={onOpenGrownup}><Users className="h-4 w-4 mr-2" /> Grown-up view</DropdownMenuItem>}
                   {!isMedicineSite() && <DropdownMenuItem onClick={onSwitchToClassic}><Palette className="h-4 w-4 mr-2" /> Switch to classic dashboard</DropdownMenuItem>}
                   {isAdmin && <DropdownMenuItem asChild><Link to="/admin/guest-trials">Beta testing portal</Link></DropdownMenuItem>}
+                  {isAdmin && <DropdownMenuItem asChild><Link to="/admin/guest-feedback">Tester interview feedback</Link></DropdownMenuItem>}
                   <DropdownMenuItem asChild><Link to="/medicine/move">Move my practice notes</Link></DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={onSignOut}><LogOut className="h-4 w-4 mr-2" /> Sign out</DropdownMenuItem>
