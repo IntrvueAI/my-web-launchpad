@@ -172,7 +172,9 @@ describe('LLM-driven agent', () => {
     expect(medPrompt).not.toContain('a child says something unexpected');
     expect(medPrompt).not.toContain('a child goes quiet');
     expect(medPrompt).not.toContain('a child is mid-interview');
-    expect(medPrompt).toContain('a real interviewer SPEAKING OUT LOUD to a UK university applicant');
+    expect(medPrompt).toContain('professional admissions interviewer');
+    expect(medPrompt).not.toContain('what\'s seven times eight');
+    expect(medPrompt).not.toContain('like a real school interviewer');
     expect(medPrompt).toContain('candidate');
   });
 

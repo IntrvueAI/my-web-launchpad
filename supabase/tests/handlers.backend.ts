@@ -152,6 +152,35 @@ describe("Anam tokens", () => {
 });
 
 describe("Interview brain ownership and retries", () => {
+  it("returns a retryable failure without committing a Medicine answer when the model is unavailable", async () => {
+    const engineState = {
+      subject: "medicine", mode: "mock", difficulty: 2, questionIndex: 0,
+      targetQuestions: 5, done: false, seed: 1, askedIds: ["M1"],
+      currentStudentTurns: [], evidence: [], transcript: [],
+      current: { id: "M1", subject: "medicine", difficulty: 2, topic: "motivation-reflection", question: "Why medicine?", answer: "Reflect on experience." },
+    };
+    state.resolve = q => ({ data: q.table === "interview_sessions" ? { ...session, engine_state: engineState } : null, error: null });
+    state.fetch.mockImplementation(async () => new Response("", { status: 429, headers: { "retry-after": "60" } }));
+    const response = await (await handler("interview-brain"))(req({ sessionId: "S1", action: "answer", studentText: "Volunteering showed me the importance of listening.", turnId: "retry-this-answer" }));
+    expect(response.status).toBe(503);
+    expect((await response.json()).error).toContain("retry the same turn");
+    expect(state.queries.some(q => q.table === "interview_sessions" && q.operation === "update")).toBe(false);
+    expect(engineState.currentStudentTurns).toEqual([]);
+  });
+  it.each(["medicine-mmi", "medicine-mmi-manchester", "medicine-imperial-pilot"])("exposes a complete public roleplay brief in %s while keeping actor instructions private", async interviewType => {
+    state.resolve = () => ({ data: { ...session, interview_type: interviewType, engine_state: {
+      mode: "mock", difficulty: 2, questionIndex: 0, targetQuestions: 5, done: false,
+      current: { id: "RP", question: "You are joking.", topic: "roleplay-stations", answer: "PRIVATE ANSWER", roleplay: { name: "Steph", role: "a parent", applicantRole: "You are a volunteer. The pool is closed.", openingStatement: "You are joking.", hiddenFacts: [{fact:"PRIVATE FACT"}], actorStateTrajectory:"PRIVATE TRAJECTORY" } },
+      lastTurn: { id: "brief-retry", say: "Here is your station." },
+    } }, error: null });
+    const response = await (await handler("interview-brain"))(req({sessionId:"S1",action:"repeat",turnId:"brief-retry"}));
+    expect(response.status).toBe(200);
+    const result = await response.json();
+    expect(result.uiState.exercise.prompt).toContain("You are a volunteer. The pool is closed.");
+    expect(result.uiState.exercise.prompt).toContain("Steph");
+    expect(JSON.stringify(result)).not.toContain("PRIVATE");
+    expect(state.fetch).not.toHaveBeenCalled();
+  });
   it("exposes only the candidate prompt for an academic exercise", async () => {
     state.resolve = () => ({ data: { ...session, interview_type: "medicine-oxford-pilot", engine_state: {
       mode: "mock", difficulty: 2, questionIndex: 0, targetQuestions: 4, done: false,
@@ -449,6 +478,15 @@ describe("Feedback", () => {
         x.messages?.[0]?.content.includes("an 11+ medicine"),
       ),
     ).toBe(false);
+  });
+  it("preserves the transcript and returns a retryable feedback error during a long provider hold", async () => {
+    state.resolve = q => ({ data: q.table === "interview_sessions" ? session : null, count: 0, error: null });
+    state.fetch.mockImplementation(async () => new Response("", { status: 429, headers: { "retry-after": "60" } }));
+    const response = await (await handler("generate-interview-feedback"))(req(body));
+    expect(response.status).toBe(503);
+    expect((await response.json()).error).toContain("transcript is saved");
+    expect(state.queries.some(q => q.table === "interview_sessions" && q.operation === "update" && (q.value as any).transcript === body.transcription)).toBe(true);
+    expect(state.queries.some(q => q.table === "feedback" && q.operation === "insert")).toBe(false);
   });
   it.each(["maths-interview", "11-plus", "11-plus-v2", "medicine-mmi", "medicine-mmi-manchester", "medicine-ethics-practice", "medicine-roleplay-practice", "medicine-motivation-practice", "medicine-data-practice"])(
     "preserves successful %s feedback",

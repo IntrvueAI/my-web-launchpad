@@ -1,6 +1,7 @@
 import { InterviewToolbar } from './interview/InterviewToolbar';
 import { censorTranscript } from '@/interview/shared/transcript';
 import { useQueryClient } from '@tanstack/react-query';
+import { MedicineStationBrief } from '@/components/interview/MedicineStationBrief';
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -522,6 +523,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
           {/* Video Interview Area */}
           <div className={hideTranscript ? "" : "lg:col-span-2"}>
+            {hideTranscript && !academic && brainUiState?.exercise && <div className="mb-4"><MedicineStationBrief prompt={brainUiState.exercise.prompt} /></div>}
             <Card className="p-4 md:p-6 shadow-medium">
               <div className="space-y-4">
                 
@@ -719,10 +721,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           {!hideTranscript && (
           <div className="lg:block space-y-4">
             {!academic && brainUiState?.exercise && (
-              <section className="tile p-5 min-w-0" aria-label="Your scenario">
-                <h2 className="text-sm font-bold mb-3">Your scenario</h2>
-                <p className="text-sm leading-relaxed whitespace-pre-line break-words">{brainUiState.exercise.prompt}</p>
-              </section>
+              <MedicineStationBrief prompt={brainUiState.exercise.prompt} />
             )}
             {academic && brainUiState?.exercise && <AcademicWorkpad exercise={brainUiState.exercise}
               notes={reasoningNotes[brainUiState.exercise.id] ?? emptyReasoningNotes}

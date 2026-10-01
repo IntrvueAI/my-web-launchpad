@@ -108,7 +108,8 @@ describe("Medicine pilot engines", () => {
     const answer=await advanceAgent(planned.state,{action:'answer',studentText:'I would investigate the mechanism.'},deps);
     expect(answer.say).toBe('What mechanism could explain it?');
     const repeated=await advanceAgent(planned.state,{action:'repeat'},deps);
-    expect(repeated.say).toContain('Which process');
+    expect(repeated.say).toContain(planned.state.current!.question);
+    expect(repeated.state.currentStudentTurns).toEqual(planned.state.currentStudentTurns);
   });
   it("closes safely if a planned prompt disappears after assembly", async () => {
     const p = MEDICINE_PILOTS[0],

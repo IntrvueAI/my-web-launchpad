@@ -15,7 +15,7 @@ describe('Focused Medicine practice', () => {
     const chat = vi.fn();
     const opening = await advanceAgent(initAgentState({ subject:'medicine', mode:'mock', pack, seed:1 }), { action:'start' }, { pack, bank:[question], chat });
     expect(opening.say).toContain(question.roleplay!.applicantRole);
-    expect(opening.say).toContain('respond in character');
+    expect(opening.say).toContain('Speak directly to me as that person');
     expect(publicQuestionPrompt(question)).toContain('Speak directly to Amara');
     for (const fact of question.roleplay!.hiddenFacts) {
       expect(opening.say).not.toContain(fact.fact);

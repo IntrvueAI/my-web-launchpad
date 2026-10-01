@@ -1,5 +1,6 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
+import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
 import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING } from './_shared/subjects/medicine/practiceModes.ts';
 import { publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 // Interview Brain — the LLM-driven orchestrator the client calls each time the student finishes
@@ -12,6 +13,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 import {
   advanceAgent,
+  InterviewResponseUnavailable,
   initAgentState,
   phaseInfo,
   type AgentState,
@@ -113,9 +115,8 @@ function firstNameFrom(
 
 /** OpenAI chat-completions with tool calling. gpt-4.1 is used (confirmed available on this key). */
 const chat: ChatComplete = async ({ messages, tools }) => {
-  const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+  const resp = await fetchWithProviderRetry("https://api.openai.com/v1/chat/completions", {
     method: "POST",
-    signal: AbortSignal.timeout(30_000),
     headers: {
       Authorization: `Bearer ${openAIApiKey}`,
       "Content-Type": "application/json",
@@ -129,7 +130,7 @@ const chat: ChatComplete = async ({ messages, tools }) => {
       temperature: 0.7,
       max_tokens: 400,
     }),
-  });
+  }, { signal: AbortSignal.timeout(30_000), attemptTimeoutMs: 20_000 });
   if (!resp.ok) {
     const detail = await resp.text();
     throw new Error(`OpenAI ${resp.status}: ${detail.slice(0, 300)}`);
@@ -192,7 +193,7 @@ const uiStateOf = (
     questionIndex: s.questionIndex,
     targetQuestions: s.targetQuestions,
     onQuestion: !!s.current,
-    exercise: (getMedicinePilot(interviewType)?.style === "academic" || getMedicinePractice(interviewType)) && s.current
+    exercise: pack.subject === "medicine" && s.current
       ? { id: s.current.id, prompt: publicQuestionPrompt(s.current), topic: s.current.topic }
       : undefined,
     phase: pack.mixedBank ? phase : undefined,
@@ -440,6 +441,7 @@ serve(
       return json(response);
     } catch (err) {
       if (err instanceof HttpError) throw err;
+      if (err instanceof InterviewResponseUnavailable) return json({ error: err.message }, 503);
       console.error("interview-brain error:", (err as Error)?.message || err);
       logAppEvent("edge:interview-brain", {
         level: "error",

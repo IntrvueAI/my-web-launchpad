@@ -1,5 +1,6 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
+import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
 import { MEDICINE_PRACTICE_MODES, getMedicinePractice, packForMedicinePractice } from './_shared/subjects/medicine/practiceModes.ts';
 import { censorFeedback, censorTranscript } from './_shared/shared/transcript.ts';
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
@@ -1186,37 +1187,19 @@ serve(
         deadline,
       );
 
-      // Generate feedback using OpenAI. This is the one call the whole request depends on, so it
-      // retries: a single transient 429/5xx/network blip used to fail the entire feedback run
-      // ("feedback generation failed" after a full interview). 35s cap per attempt, within the edge request budget.
+      // Respect temporary rate-limit holds, with bounded attempts inside the edge deadline.
       let response: Response | null = null;
-      for (let attempt = 1; attempt <= 2; attempt++) {
-        try {
-          response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${openAIApiKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody),
-            signal: AbortSignal.any([deadline, AbortSignal.timeout(35_000)]),
-          });
-          if (response.ok) break;
-          console.error(
-            `OpenAI scoring attempt ${attempt} failed with status:`,
-            response.status,
-          );
-          // 429s and 5xxs are worth retrying; other 4xxs won't heal.
-          if (response.status !== 429 && response.status < 500) break;
-        } catch (e) {
-          console.error(
-            `OpenAI scoring attempt ${attempt} threw:`,
-            (e as Error)?.message || e,
-          );
-          response = null;
-        }
-        if (attempt < 2)
-          await new Promise((r) => setTimeout(r, 1500 * attempt));
+      try {
+        response = await fetchWithProviderRetry("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${openAIApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }, { signal: deadline, attempts: 3, attemptTimeoutMs: 35_000 });
+      } catch (e) {
+        console.error("OpenAI scoring request failed:", (e as Error)?.message || e);
       }
 
       if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
@@ -1224,10 +1207,12 @@ serve(
       }
 
       if (!response || !response.ok) {
+        void annotationsPromise.catch(() => []);
+        console.error("OpenAI scoring unavailable; status:", response?.status ?? "timeout/network");
         return new Response(
-          JSON.stringify({ error: "Failed to generate feedback" }),
+          JSON.stringify({ error: "Assessment is temporarily unavailable. Your transcript is saved; please retry feedback." }),
           {
-            status: 500,
+            status: 503,
             headers: securityHeaders,
           },
         );

@@ -17,6 +17,8 @@ export interface TopicDef {
 export interface SubjectPack {
   /** Start directly on a single authored station, without an introductory question. */
   focusedPractice?: boolean;
+  /** Preferred authored opening tasks for unplanned full mocks; never a warm-up. */
+  openingQuestionIds?: string[];
   /** Academic medicine interviews use a scientific discussion rather than school tutoring. */
   interviewStyle?: 'academic';
   subject: string;            // 'maths'

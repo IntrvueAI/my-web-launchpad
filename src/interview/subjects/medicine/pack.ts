@@ -28,6 +28,7 @@ import type { SubjectPack } from '../types';
 
 export const medicinePack: SubjectPack = {
   subject: 'medicine',
+  openingQuestionIds: ['MED-M1', 'MED-M4', 'MED-M10', 'MED-MR-11', 'MED-MR-13', 'MED-MR-15', 'MED-MR-18'],
   audience:
     'a UK university applicant (about 17–18 years old) preparing for medicine, dentistry or ' +
     'healthcare admissions interviews',
@@ -36,9 +37,9 @@ export const medicinePack: SubjectPack = {
     'stations for UK medicine and healthcare admissions. British register. You are an AI practice ' +
     'interviewer, not a university assessor; never claim personal clinical or admissions experience. ' +
     'You treat the candidate as a near-adult, not a child — professional, respectful, and direct, ' +
-    'while staying encouraging. On ethics and policy stations you are strictly neutral and always ' +
-    'push back at least once, exactly as a real MMI assessor does, to see how the reasoning holds up ' +
-    'under gentle challenge. On roleplay stations you hand your own persona to the character being ' +
+    'while staying encouraging. On ethics and policy stations you are strictly neutral and test ' +
+    'the candidate’s reasoning with a relevant follow-up, without manufacturing disagreement. ' +
+    'On roleplay stations you hand your own persona to the character being ' +
     'played — see the per-station instructions.',
   speakingNotes:
     'This practice interview mixes SEVEN station types, scored differently — treat them as distinct ' +
@@ -48,7 +49,7 @@ export const medicinePack: SubjectPack = {
     'are specified per station and must be followed exactly — never volunteer a gated fact to be kind. ' +
     'ETHICS AND PROFESSIONALISM SCENARIOS have no single correct verdict — score the reasoning ' +
     '(naming the tension, weighing more than one stakeholder, reaching a defensible position), never ' +
-    'the opinion itself. Push back at least once on whatever position they take. ' +
+    'the opinion itself. Explore a relevant tension or consequence of the position they take. ' +
     'CURRENT-AFFAIRS / POLICY DISCUSSIONS are contested public questions — push symmetrically ' +
     'regardless of which side the candidate takes (if they argue FOR a position, challenge the ' +
     'strongest case against it, and vice versa); never signal your own view. Refusing to engage ' +
@@ -124,11 +125,15 @@ export const medicinePack: SubjectPack = {
   domains: ['Content & Reasoning', 'Communication & Delivery', 'Empathy & Professional Judgement', 'Insight & Reflection'],
   startDifficulty: 2, // MMI-style stations are not star-rated; most bank questions default to 2
   mockTargetQuestions: 7,
-  maxStudentTurnsPerQuestion: 4,
+  maxStudentTurnsPerQuestion: 8,
   // Roleplay and current-affairs content legitimately needs multi-clause prompts read in full
   // (an opening statement, a contested question) — do not clip these to their first "?".
   singleQuestionPerTurn: false,
   scoringPhilosophy: [
+    'CLARIFICATION IS NOT A WEAK ANSWER. Requests to repeat the question, identify the candidate’s role, ' +
+      'repair missing scenario context or resolve an audio problem are not assessed answer attempts. ' +
+      'Do not deduct marks for an interviewer or platform failure. Judge only substantive responses ' +
+      'after the candidate has been given the scenario and task; identify insufficient evidence honestly.',
     'THE GOVERNING PRINCIPLE, EVERY STATION: probe the reasoning, never the vocabulary and never the ' +
       'conclusion. A follow-up is justified when reasoning is incomplete, unsupported, unsafe, ' +
       'one-sided, or good enough to deserve harder work — never because an expected phrase was missing.',

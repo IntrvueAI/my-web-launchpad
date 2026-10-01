@@ -3,6 +3,7 @@
  * The feedback step scores from these and renders the "questions asked / skipped" review.
  */
 import type { BankQuestion, Evidence, Outcome } from './types';
+import { publicQuestionPrompt } from './publicPrompt';
 
 export interface JudgeResult {
   outcome: Outcome;
@@ -26,7 +27,7 @@ export function makeEvidence(
     id: question.id,
     topic: question.topic,
     difficulty: question.difficulty,
-    question: question.question,
+    question: publicQuestionPrompt(question),
     outcome: judged.outcome,
     skipped: judged.outcome === 'skipped',
     hintsUsed,

@@ -19,7 +19,7 @@ import { makeEvidence } from './evidence.ts';
 import { corePrinciples, CORE_SPEAKING_STYLE } from './core.ts';
 import type { FlowGraph } from './flow.ts';
 import { findFlowNode, pickNextFlowNode } from './flow.ts';
-import { publicQuestionPrompt } from './publicPrompt.ts';
+import { spokenQuestionPrompt, spokenTaskBrief, asksToClarifyTask } from './publicPrompt.ts';
 
 // ---- Chat LLM interface (a small slice of OpenAI's chat+tools API) ----
 
@@ -309,6 +309,31 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       state.currentNodeNote || '',
     ].filter(Boolean).join('\n');
   }
+  if (pack.subject === 'medicine') {
+    return [
+      pack.persona,
+      `You are speaking with ${pack.audience}. Run an MMI practice station as a professional admissions interviewer, not a school tutor.`,
+      'The server introduces each station with its complete candidate brief. Do not invent a warm-up, ask about hobbies to fill time, or imply that a mock is an informal chat.',
+      'Stay on the current scenario. Respond to the substance of the candidate’s last answer with ONE relevant follow-up, then listen. Do not repeat the original question after a substantive answer.',
+      'Follow-ups should be one or two concise sentences. The initial scenario must retain every fact and constraint; never shorten a candidate brief to meet a word limit.',
+      'For an ethical discussion, neutrally test a reason, an assumption, a competing interest or a practical consequence. Do not mark a defensible position wrong, force a predetermined verdict, or contradict the candidate merely to seem challenging.',
+      'For motivation and reflection, probe a specific experience, the candidate’s own actions, what they learned or what they would change. Accept ordinary experiences; do not demand clinical expertise or prestigious placements.',
+      'For data, use only the supplied quantities and assumptions. Ask about interpretation, uncertainty or a missing comparator. Never invent additional data or silently change the scenario.',
+      'For a ROLEPLAY STATION, the candidate has already heard their role and the character’s identity. Speak as that character, reacting to what the candidate actually says. Do not narrate your feelings, ask examiner-style marking questions, replay your opening line, or treat comments from an earlier station as if they happened in this scenario.',
+      'A request to repeat or clarify the task must receive the public brief, not hostility, a hint, or an assessment of the candidate’s ability. Do not count setup questions, audio problems or clarification requests as poor performance.',
+      'If words are unclear, ask what the candidate meant. Never silently guess a clinically or ethically material fact from a speech-recognition error.',
+      'Explore the response before moving on: ordinarily ask a relevant follow-up after the initial answer. A roleplay should allow the conversation to develop, including a response to an open question from the candidate. Do not rush through the circuit after one superficial exchange.',
+      'Only use exercises supplied by next_problem. Call it when this station has been explored, supplying an honest outcome and specific evidence note. The server will announce the next station and reset the role; do not blend two scenarios into one reply.',
+      'The clock, a skip or an explicit end request can close a station. Do not infer failure from a stopping reason. Never invent praise, a score, a university affiliation or an admissions prediction. Keep assessment and coaching private until feedback.',
+      'Use plain spoken English, without markdown, lists or stage directions. Ask one thing and give the candidate time to respond.',
+      pack.speakingNotes || '',
+      pack.guardrails,
+      pack.scoringPhilosophy || '',
+      `Progress: ${state.questionIndex} stations completed out of ${state.targetQuestions}.`,
+      renderCurrentProblem(state.current, pack, state.previousTopic !== state.current?.topic),
+      state.currentNodeNote || '',
+    ].filter(Boolean).join('\n');
+  }
   const mock = state.mode === 'mock';
   // A single hardcoded quoted example in a prompt gets echoed back near-verbatim, turn after
   // turn — picking a fresh one per session is what actually produces variation, "vary your
@@ -449,6 +474,7 @@ function respondWithQuestion(state: AgentState, q: BankQuestion, customNote?: st
     question_type: q.questionType,
     difficulty: q.difficulty,
     question: q.question,
+    candidate_brief: spokenQuestionPrompt(q),
     opening_line: q.roleplay?.openingStatement,
     answer: q.answer,
     model_reasoning_path: q.modelReasoningPath,
@@ -565,7 +591,10 @@ function executeTool(call: ParsedToolCall, state: AgentState, deps: AgentDeps): 
     // Prefer a category not yet covered this run, for a good spread across question types.
     recentTopics: state.evidence.map((e) => e.topic),
   };
-  const q = selectQuestion({ bank, difficulty, ...params })
+  const openingBank = state.mode === 'mock' && state.questionIndex === 0 && !deps.pack.focusedPractice
+    ? bank.filter(q => deps.pack.openingQuestionIds?.includes(q.id)) : [];
+  const q = (openingBank.length ? selectQuestion({ bank: openingBank, difficulty, ...params }) : null)
+    ?? selectQuestion({ bank, difficulty, ...params })
     // If the phase pool is exhausted, fall back to the whole bank so the interview never stalls.
     ?? (bank !== deps.bank ? selectQuestion({ bank: deps.bank, difficulty: state.difficulty, ...params }) : null);
   if (!q) {
@@ -603,6 +632,27 @@ function controlNote(req: AgentRequest, deps: AgentDeps): string | null {
 
 const MAX_CONTEXT_TURNS = 30;
 
+export class InterviewResponseUnavailable extends Error {
+  constructor() { super('Interview response temporarily unavailable. Please retry the same turn.'); }
+}
+
+function medicineStationOpening(state: AgentState, pack: SubjectPack, opening = false, bridge = ''): string {
+  const q = state.current;
+  if (!q) return 'That completes this practice session. Your answers are saved for review.';
+  const academic = pack.interviewStyle === 'academic';
+  const label = academic ? 'Exercise' : 'Station';
+  const intro = opening
+    ? `Hello, I'm Clara, your AI practice interviewer. ${pack.focusedPractice ? 'We will work through one focused station.' : `We will work through ${state.targetQuestions} ${academic ? 'exercises' : 'stations'}.`} I will introduce each task before you respond. `
+    : state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. Let’s begin. ';
+  return `${bridge ? bridge + ' ' : ''}${intro}${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}. ${spokenQuestionPrompt(q)}`;
+}
+
+/** Explicit spoken stop requests; never match statements about stopping a treatment. */
+function asksToEndInterview(text: string): boolean {
+  return /^(?:(?:please|can we|could we|i want to|i'd like to|i would like to|let's)\s+)?(?:stop|end|finish)(?: (?:the|this|my))? (?:interview|session|practice)(?: (?:now|please))?[.!?]*$/i.test(text.trim())
+    || /^(?:i(?:'m| am) done for (?:now|today)|let's stop here|stop the interview please)[.!?]*$/i.test(text.trim());
+}
+
 /** Advance one turn: build context, let the model talk + use tools, return Clara's spoken line. */
 export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: AgentDeps): Promise<AgentResult> {
   const state: AgentState = structuredCloneSafe(prev);
@@ -610,12 +660,23 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     return { say: '', state, done: state.done };
   }
 
-  if (req.action === 'start' && deps.pack.focusedPractice && !state.current) {
+  const medicine = deps.pack.subject === 'medicine';
+  const mmi = medicine && deps.pack.interviewStyle !== 'academic';
+  if (medicine && req.action === 'answer' && asksToEndInterview(req.studentText || '')) req = { ...req, action: 'end' };
+  if (req.action === 'start' && (deps.pack.focusedPractice || mmi) && !state.current) {
     executeTool({ id: 'focused-start', name: 'next_problem', args: {} }, state, deps);
     const opened = state.current as BankQuestion | null;
     const say = opened
-      ? `I'm Clara, your AI practice interviewer. Take thirty seconds to read this scenario, then ${opened.roleplay ? 'respond in character' : 'explain your thinking'}. ${publicQuestionPrompt(opened)}`
+      ? medicineStationOpening(state, deps.pack, true)
       : 'There are no available stations for this topic. Please choose another practice.';
+    state.transcript.push({ role: 'assistant', content: say });
+    return { say, state, done: state.done };
+  }
+
+  if (medicine && state.current && (req.action === 'repeat' || (req.action === 'answer' && asksToClarifyTask(req.studentText || '')))) {
+    // Keep clarification in the conversation, but out of scored answer evidence and turn caps.
+    if (req.studentText?.trim()) state.transcript.push({ role: 'user', content: req.studentText.trim() });
+    const say = `Let me restate the task. ${spokenTaskBrief(state.current)}`;
     state.transcript.push({ role: 'assistant', content: say });
     return { say, state, done: state.done };
   }
@@ -643,6 +704,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   const turnLimitReached = req.action === 'answer' && !!deps.pack.maxStudentTurnsPerQuestion && state.currentStudentTurns.length >= deps.pack.maxStudentTurnsPerQuestion;
   if (turnLimitReached) messages.push({ role: 'system', content: 'This station has reached its answer-turn limit. Record the available evidence and call next_problem now. Do not ask another probe or infer an error merely because time/turns ran out.' });
   let say = '';
+  let transitionBridge = '';
   // One fresh question per turn, max. Without this the model sometimes pulled a question, read it,
   // then immediately recorded it (unanswered!) and pulled ANOTHER in the same turn — the student
   // heard two questions in one breath and the first was scored as if they'd attempted it.
@@ -654,21 +716,38 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
       const res = await deps.chat({ messages, tools: TOOLS });
       if (res.toolCalls.length > 0) {
         messages.push({ role: 'assistant', content: res.content || '', tool_calls: res.raw });
+        let acceptedTool = false;
         for (const call of res.toolCalls) {
           if (req.action === 'skip' && state.current?.id === questionBefore && (call.name === 'next_problem' || call.name === 'finish_interview')) {
             call.args = { outcome:'skipped', method_quality:'unknown', note:'Candidate chose to skip this station.' };
           }
-          const result = (call.name === 'next_problem' || call.name === 'finish_interview') && fetchedThisTurn
+          const prematureMove = mmi && req.action === 'answer' && state.current &&
+            state.currentStudentTurns.length < 2 && (call.name === 'next_problem' || call.name === 'finish_interview');
+          const result = prematureMove
+            ? { rejected: 'The candidate has given only their first answer. Respond to that answer and ask one relevant follow-up in this same station before moving on. In roleplay, respond as the character to what they said.' }
+            : (call.name === 'next_problem' || call.name === 'finish_interview') && fetchedThisTurn
             ? { rejected: 'You already have a fresh problem on the table this turn. Ask it and WAIT for the student to answer — never ask two problems at once.' }
             : req.action === 'end' && call.name === 'next_problem'
             ? { rejected: 'The candidate ended the interview. Record the current evidence with finish_interview; do not fetch another question.' }
-            : state.questionPlan && call.name === 'finish_interview' && req.action !== 'end' && state.questionIndex + (state.current ? 1 : 0) < state.targetQuestions
+            : (state.questionPlan || mmi) && call.name === 'finish_interview' && req.action !== 'end' && state.questionIndex + (state.current ? 1 : 0) < state.targetQuestions
             ? { rejected: 'There are planned stations remaining. Record the current question with next_problem and continue the circuit.' }
             : executeTool(call, state, deps);
-          if (call.name === 'next_problem' && (result as any)?.question) fetchedThisTurn = true;
+          if (!(result as any)?.rejected) acceptedTool = true;
+          if (call.name === 'next_problem' && (result as any)?.question) {
+            fetchedThisTurn = true;
+            // Preserve a concise acknowledgement made while the model still had
+            // only the previous task. Never carry an actor's anger into a new room.
+            const candidateBridge = res.content?.trim() || '';
+            if (medicine && !prev.current?.roleplay && prev.current &&
+              candidateBridge && !candidateBridge.includes('?') &&
+              candidateBridge.split(/\s+/).length <= 30) transitionBridge = candidateBridge;
+          }
           messages.push({ role: 'tool', tool_call_id: call.id, name: call.name, content: JSON.stringify(result) });
         }
-        if (res.content?.trim()) say = say ? `${say} ${res.content.trim()}` : res.content.trim();
+        if ((!medicine || acceptedTool) && res.content?.trim()) say = say ? `${say} ${res.content.trim()}` : res.content.trim();
+        // The public Medicine brief is rendered below; another model call cannot
+        // improve it and could skip facts or start a second scenario prematurely.
+        if (medicine && fetchedThisTurn) break;
         continue;
       }
       if (res.content?.trim()) say = say ? `${say} ${res.content.trim()}` : res.content.trim();
@@ -687,7 +766,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     logEvidence(state, { outcome: reason === 'skipped' ? 'skipped' : 'incomplete', note: `Station ended: ${reason}. Assessment unavailable; use the recorded answer, not the stopping reason, to evaluate it.` });
     if (req.action !== 'end') {
       const next = executeTool({ id: 'control-next', name: 'next_problem', args: {} }, state, deps);
-      say = state.current ? `Let's move on. ${state.current.roleplay?.openingStatement ?? state.current.question}` : 'That completes this practice session. Your answers are saved for review.';
+      say = state.current ? `Let's move on. ${spokenQuestionPrompt(state.current)}` : 'That completes this practice session. Your answers are saved for review.';
       if (next.no_more_problems) state.done = true;
     } else say = 'Thank you for practising today. Your answers are saved for review.';
   }
@@ -706,7 +785,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   if (!state.done && req.action === 'answer' && !state.current &&
       !(state.mode === 'mock' && state.questionIndex >= state.targetQuestions) && !atFlowEnd) {
     const forced = executeTool({ id: 'forced-next', name: 'next_problem', args: {} }, state, deps) as any;
-    if (forced?.question) say = forced.opening_line ?? forced.question;
+    if (forced?.question) say = state.current ? spokenQuestionPrompt(state.current) : forced.question;
   }
 
   // Deterministically END a mock once all planned problems are done. The bank is out of questions
@@ -724,7 +803,12 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // Never leave the avatar silent. If the model pulled a fresh question via next_problem but forgot
   // to actually say it, read that question aloud — otherwise fall back to a warm opener / nudge.
   if (!say.trim()) {
-    const freshQuestion = state.current && state.current.id !== questionBefore ? state.current.roleplay?.openingStatement ?? state.current.question : '';
+    // The client can retry the same turn without duplicating it. A generic nudge
+    // here falsely implies we heard the answer and commits an unanswered turn.
+    if (medicine && req.action === 'answer' && !reason && state.current?.id === questionBefore) {
+      throw new InterviewResponseUnavailable();
+    }
+    const freshQuestion = state.current && state.current.id !== questionBefore ? spokenQuestionPrompt(state.current) : '';
     if (freshQuestion) {
       say = freshQuestion;
     } else {
@@ -735,6 +819,13 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     }
   }
 
+  // Every way of entering a Medicine station (tools, forced warm-up exit, skip,
+  // timer or model failure) must deliver its full public brief before the actor.
+  // Never rely on a probabilistic model to remember this boundary.
+  if (medicine && state.current && state.current.id !== questionBefore) {
+    say = medicineStationOpening(state, deps.pack, false, transitionBridge);
+  }
+
   // Deterministic backstop for the "one question per turn" rule (the prompt asks for it, but the
   // model still slips sometimes). Safe to apply during 11+'s about-you phase (always improvised
   // phrasing, never verbatim bank text) and for any pack that opts in via singleQuestionPerTurn
@@ -743,7 +834,8 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // especially) legitimately contain two "?" as ONE question that must be read in full, and a blind
   // truncation there would silently drop authored content.
   const academicFollowUp = deps.pack.interviewStyle === 'academic' && req.action === 'answer' && state.current?.id === questionBefore;
-  if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn || academicFollowUp) say = enforceSingleAsk(say);
+  const medicineFollowUp = medicine && !state.current?.roleplay && req.action === 'answer' && state.current?.id === questionBefore;
+  if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn || academicFollowUp || medicineFollowUp) say = enforceSingleAsk(say);
 
   state.transcript.push({ role: 'assistant', content: say });
   return { say, state, done: state.done };

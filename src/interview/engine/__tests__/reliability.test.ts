@@ -100,7 +100,7 @@ describe("Station controls and evidence", () => {
   });
   it("bounds repeated follow-ups without treating the limit as poor performance", async () => {
     const { state, deps } = fixture();
-    state.currentStudentTurns = ["first", "second", "third"];
+    state.currentStudentTurns = Array.from({ length: medicinePack.maxStudentTurnsPerQuestion! - 1 }, (_, i) => `answer ${i}`);
     const r = await advanceAgent(
       state,
       { action: "answer", studentText: "fourth" },
