@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { guestSupabase } from "@/integrations/supabase/client";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { InterviewPlatform } from "@/components/InterviewPlatform";
 import { Button } from "@/components/ui/button";
@@ -18,10 +17,26 @@ export default function GuestSession() {
   const [selected, setSelected] = useState<InterviewType | null>(null);
   const [error, setError] = useState("");
   const [closed, setClosed] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [attemptFinished, setAttemptFinished] = useState(false);
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
+  const feedbackPage = () => window.location.assign("/guest-feedback");
   const refresh = useCallback(async () => {
     try {
       const status = await trialApi<TrialStatus>({ action: "status" }, true);
       setTrial(status);
+      if (
+        status.phase === "complete" ||
+        (!selectedRef.current && status.phase === "review")
+      ) {
+        feedbackPage();
+        return;
+      }
+      if (status.accessClosed) {
+        setSelected(null);
+        feedbackPage();
+      }
       setError("");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unable to check your trial");
@@ -41,34 +56,50 @@ export default function GuestSession() {
     if (!trial) return;
     const timer = setTimeout(
       () => {
-        setClosed(true);
         setSelected(null);
-        setError(
-          "Your guest trial has expired. Thanks for trying MMI Practice.",
-        );
+        feedbackPage();
       },
       Math.max(0, Date.parse(trial.expiresAt) - Date.now()),
     );
     return () => clearTimeout(timer);
   }, [trial?.expiresAt]);
   async function leave() {
-    setSelected(null);
-    await guestSupabase.auth.signOut({ scope: "local" });
-    // Normal account storage is untouched. A document reload selects the normal client.
-    window.location.assign("/try");
+    setBusy(true);
+    try {
+      await trialApi({ action: "request-review" }, true);
+      feedbackPage();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Please try again.");
+      setBusy(false);
+    }
   }
+  const finished = useCallback(async (feedbackReady: boolean) => {
+    setAttemptFinished(true);
+    try {
+      const status = await trialApi<TrialStatus>({ action: "status" }, true);
+      setTrial(status);
+      // Keep the transcript and retry controls visible if assessment generation failed.
+      if (status.phase !== "practice" && feedbackReady) feedbackPage();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unable to check your trial");
+    }
+  }, []);
   return (
     <MedicineTheme live={!!selected}>
       <main className="min-h-screen bg-background px-4 py-6 pb-28 text-foreground">
         <div className="mx-auto max-w-7xl">
           <header className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b pb-5">
-            <a href="/" className="font-display text-xl font-semibold">
+            <span className="font-display text-xl font-semibold">
               MMI Practice
-            </a>
+            </span>
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <span>Private guest trial</span>
-              <Button variant="outline" onClick={() => void leave()}>
-                Leave trial
+              <Button
+                variant="outline"
+                disabled={busy || !trial || closed}
+                onClick={() => void leave()}
+              >
+                Finish trial & give feedback
               </Button>
             </div>
           </header>
@@ -123,24 +154,33 @@ export default function GuestSession() {
                   <Button
                     variant="outline"
                     className="mb-5"
+                    disabled={busy}
                     onClick={() => {
                       setSelected(null);
+                      selectedRef.current = null;
                       void refresh();
                     }}
                   >
-                    End this attempt and choose another
+                    {attemptFinished
+                      ? trial.remaining === 0
+                        ? "Continue to trial feedback"
+                        : "Continue to your next interview"
+                      : "Back to interviews"}
                   </Button>
                   <InterviewPlatform
                     key={selected.id}
                     selectedInterviewType={selected}
+                    onAttemptFinished={(ready) => void finished(ready)}
+                    onBusyChange={setBusy}
                   />
                 </>
               ) : (
                 <>
                   <p className="mb-6 max-w-2xl text-muted-foreground">
-                    Start small or try a complete circuit. End the interview
-                    using its End Interview button to save your transcript and
-                    receive feedback. Your host can review the saved results.
+                    Your invitation includes two attempts. Choose a focused
+                    station or a full circuit. End the interview using its End
+                    Interview button to save your transcript and receive
+                    feedback. Your host can review the saved results.
                   </p>
                   {trial.remaining === 0 && (
                     <p role="status" className="mb-5 rounded-xl border p-4">
@@ -173,7 +213,10 @@ export default function GuestSession() {
                           </p>
                           <Button
                             disabled={trial.remaining < 1 || !!error}
-                            onClick={() => setSelected(type)}
+                            onClick={() => {
+                              setAttemptFinished(false);
+                              setSelected(type);
+                            }}
                           >
                             Try this interview
                           </Button>

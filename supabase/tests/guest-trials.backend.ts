@@ -5,6 +5,9 @@ import {
   verifyGuestInvite,
   guestDisplayName,
   authorizeGuestInterview,
+  isShortGuestCode,
+  newGuestLinkCode,
+  guestReviewInput,
 } from "../functions/_shared/guestTrials";
 import { withJson, json } from "../functions/_shared/http";
 const modules = import.meta.glob("../functions/*/index.ts");
@@ -42,6 +45,30 @@ async function code() {
 }
 
 describe("Private invitations", () => {
+  it("generates independent URL-safe 128-bit short codes", () => {
+    const codes = Array.from({ length: 64 }, () => newGuestLinkCode());
+    expect(new Set(codes).size).toBe(64);
+    expect(codes.every(isShortGuestCode)).toBe(true);
+    for (const invalid of ["short", "a".repeat(23), "../examples", null])
+      expect(isShortGuestCode(invalid)).toBe(false);
+  });
+  it("looks up a short link without exposing its bearer code", async () => {
+    const shortCode = newGuestLinkCode();
+    state.resolve = () => ({
+      data: { ...invite, link_code: shortCode },
+      error: null,
+    });
+    const response = await run("mmi-guest-access", {
+      action: "inspect",
+      code: shortCode,
+    });
+    expect(response.status).toBe(200);
+    expect((await response.json()).invite.link_code).toBeUndefined();
+    expect(state.queries[0].filters).toContainEqual([
+      "eq",
+      ["link_code", shortCode],
+    ]);
+  });
   it("authenticates the invitation signature and rejects tampering", async () => {
     const signed = await code();
     expect(await verifyGuestInvite(signed)).toBe(inviteId);
@@ -186,6 +213,8 @@ describe("Founder ownership", () => {
           action: "create",
           label: "Preview",
           owner_id: trialId,
+          maxGuests: 50,
+          maxInterviews: 12,
         })
       ).status,
     ).toBe(200);
@@ -193,6 +222,11 @@ describe("Founder ownership", () => {
       (state.queries.find((q) => q.operation === "insert")?.value as any)
         .owner_id,
     ).toBe(state.user!.id);
+    const inserted = state.queries.find((q) => q.operation === "insert")!
+      .value as any;
+    expect(inserted.max_guests).toBe(1);
+    expect(inserted.max_interviews).toBe(2);
+    expect(isShortGuestCode(inserted.link_code)).toBe(true);
   });
   it.each(["revoke", "guests", "feedback"])(
     "denies %s access to another founder’s invitation",
@@ -235,6 +269,143 @@ describe("Founder ownership", () => {
     ).toBe(404);
     const query = state.queries.find((q) => q.table === "feedback")!;
     expect(query.filters).toContainEqual(["in", ["user_id", [trialId]]]);
+  });
+});
+describe("Required beta product feedback", () => {
+  it("summarises claimed and completed links for their owner", async () => {
+    const short = newGuestLinkCode();
+    state.resolve = (q) => ({
+      data:
+        q.table === "mmi_trial_invites"
+          ? [{ ...invite, link_code: short }]
+          : [
+              {
+                invite_id: inviteId,
+                interviews_started: 2,
+                mmi_trial_reviews: { created_at: "2026-10-01" },
+              },
+            ],
+      error: null,
+    });
+    const response = await run("mmi-guest-access", { action: "list" });
+    expect(response.status).toBe(200);
+    expect((await response.json()).invites[0]).toMatchObject({
+      code: short,
+      guest_count: 1,
+      attempts_used: 2,
+      review_count: 1,
+    });
+    expect(state.queries[0].filters).toContainEqual([
+      "eq",
+      ["owner_id", state.user!.id],
+    ]);
+    expect(state.queries[1].filters).toContainEqual([
+      "in",
+      ["invite_id", [inviteId]],
+    ]);
+  });
+  it("validates rating, experience and a bounded meaningful comment", () => {
+    expect(
+      guestReviewInput({
+        rating: 4,
+        experience: "smooth",
+        improvement: "  Helpful practice  ",
+      }),
+    ).toEqual({
+      rating: 4,
+      experience: "smooth",
+      improvement: "Helpful practice",
+    });
+    for (const patch of [
+      { rating: 0 },
+      { rating: 6 },
+      { rating: 2.5 },
+      { rating: "4" },
+      { experience: "unknown" },
+      { improvement: "    " },
+      { improvement: "a".repeat(1501) },
+    ]) {
+      expect(() =>
+        guestReviewInput({
+          rating: 4,
+          experience: "smooth",
+          improvement: "Helpful practice",
+          ...patch,
+        }),
+      ).toThrow("complete the short feedback");
+    }
+  });
+  it.each(["status", "request-review", "submit-review"])(
+    "requires a restricted guest identity for %s",
+    async (action) => {
+      const response = await run("mmi-guest-access", { action });
+      expect(response.status).toBe(403);
+      expect(state.rpc).not.toHaveBeenCalled();
+    },
+  );
+  it("saves product feedback only for the authenticated tester", async () => {
+    state.user!.app_metadata = { mmi_guest_trial: trialId };
+    state.rpc.mockResolvedValue({
+      data: { trialId, phase: "complete" },
+      error: null,
+    });
+    const response = await run("mmi-guest-access", {
+      action: "submit-review",
+      userId: sessionId,
+      trialId: inviteId,
+      rating: 4,
+      experience: "some-issues",
+      improvement: "The audio was too quiet",
+    });
+    expect(response.status).toBe(200);
+    expect(state.rpc).toHaveBeenCalledWith("submit_mmi_trial_review", {
+      p_user_id: state.user!.id,
+      p_rating: 4,
+      p_experience: "some-issues",
+      p_improvement: "The audio was too quiet",
+    });
+  });
+  it("rejects malformed feedback before any database call", async () => {
+    state.user!.app_metadata = { mmi_guest_trial: trialId };
+    expect(
+      (await run("mmi-guest-access", { action: "submit-review", rating: 5 }))
+        .status,
+    ).toBe(400);
+    expect(state.rpc).not.toHaveBeenCalled();
+  });
+  it("does not accept a status response belonging to another trial", async () => {
+    state.user!.app_metadata = { mmi_guest_trial: trialId };
+    state.rpc.mockResolvedValue({ data: { trialId: inviteId }, error: null });
+    expect((await run("mmi-guest-access", { action: "status" })).status).toBe(
+      403,
+    );
+  });
+  it("keeps temporary database errors retryable without exposing diagnostics", async () => {
+    state.user!.app_metadata = { mmi_guest_trial: trialId };
+    state.rpc.mockResolvedValue({
+      data: null,
+      error: { message: "private database details" },
+    });
+    const response = await run("mmi-guest-access", { action: "status" });
+    expect(response.status).toBe(503);
+    expect(await response.text()).not.toContain("private database details");
+  });
+  it("returns tester reviews only for trials inside the owned invitation", async () => {
+    state.resolve = (q) => ({
+      data:
+        q.table === "mmi_trial_invites"
+          ? { id: inviteId }
+          : q.table === "mmi_guest_trials"
+            ? [{ id: trialId, guest_user_id: sessionId }]
+            : [],
+      error: null,
+    });
+    expect(
+      (await run("mmi-guest-access", { action: "guests", inviteId })).status,
+    ).toBe(200);
+    expect(
+      state.queries.find((q) => q.table === "mmi_trial_reviews")!.filters,
+    ).toContainEqual(["in", ["trial_id", [trialId]]]);
   });
 });
 describe("Guest engine boundary", () => {

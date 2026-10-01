@@ -27,6 +27,7 @@ export async function authorizeGuestInterview(
       "This interview has reached its connection retry limit",
       "This interview has reached its conversation limit",
       "This interview has reached its feedback retry limit",
+      "Please finish your trial feedback",
     ];
     throw new HttpError(
       403,
@@ -39,6 +40,36 @@ export async function authorizeGuestInterview(
 }
 
 const encoder = new TextEncoder();
+export const isShortGuestCode = (code: unknown): code is string =>
+  typeof code === "string" && /^[A-Za-z0-9_-]{22}$/.test(code);
+export function newGuestLinkCode(): string {
+  // 128 random bits keep a readable path unguessable. It is a bearer invitation.
+  return btoa(
+    String.fromCharCode(...crypto.getRandomValues(new Uint8Array(16))),
+  )
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+export function guestReviewInput(body: Record<string, unknown>) {
+  if (
+    !Number.isInteger(body.rating) ||
+    Number(body.rating) < 1 ||
+    Number(body.rating) > 5 ||
+    !["smooth", "some-issues", "could-not-complete"].includes(
+      String(body.experience),
+    ) ||
+    typeof body.improvement !== "string" ||
+    body.improvement.trim().length < 5 ||
+    body.improvement.trim().length > 1500
+  )
+    throw new HttpError(400, "Please complete the short feedback form");
+  return {
+    rating: Number(body.rating),
+    experience: String(body.experience),
+    improvement: body.improvement.trim(),
+  };
+}
 async function signingKey() {
   const secret = Deno.env.get("MMI_GUEST_LINK_SECRET");
   if (!secret || secret.length < 32)

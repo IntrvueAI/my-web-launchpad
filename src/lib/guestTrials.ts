@@ -19,12 +19,21 @@ export interface TrialInvite {
   max_interviews: number;
   guest_hours: number;
   code: string;
+  link_code?: string | null;
+  guest_count?: number;
+  attempts_used?: number;
+  review_count?: number;
 }
 export interface TrialStatus {
   name: string;
   expiresAt: string;
   remaining: number;
   maxInterviews: number;
+  trialId: string;
+  interviewsStarted: number;
+  phase: "practice" | "review" | "complete";
+  accessClosed: boolean;
+  review: TrialReview | null;
 }
 export interface TrialGuest {
   id: string;
@@ -32,6 +41,25 @@ export interface TrialGuest {
   guest_user_id: string | null;
   created_at: string;
   expires_at: string;
+  interviews_started: number;
+  review_required_at: string | null;
+}
+export interface TrialReview {
+  trial_id: string;
+  rating: number;
+  experience: "smooth" | "some-issues" | "could-not-complete";
+  improvement: string;
+  created_at: string;
+}
+export const trialReviewExperience = {
+  smooth: "Everything worked",
+  "some-issues": "I had a few issues",
+  "could-not-complete": "I couldn't complete an interview",
+};
+export function trialInvitationPath(invite: TrialInvite): string {
+  return invite.link_code
+    ? `/medicine/${invite.link_code}`
+    : `/try#${invite.code}`;
 }
 export interface TrialFeedback {
   id: string;

@@ -6,24 +6,26 @@ Use the **existing Lovable project** connected to [IntrvueAI/my-web-launchpad](h
 
 The existing Supabase project, `fjkuuzfuysemrofcmnvd`, keeps accounts, credits and saved interviews in place. Existing users sign in with the same details on the new domain. Their browser login is not automatically shared across domains.
 
-## Queued steps for the founder
+## Current release and remaining publication step
 
-These require your Lovable, domain-provider and Supabase settings access. No new Lovable project or GitHub repository is needed.
+The Medicine domains respond over HTTPS. On 1 October 2026, the saved Supabase CLI login was used to add and verify all four MMI sign-in/reset return addresses while preserving every existing auth setting. Email/password sign-in was verified on `www.mmipractice.co.uk` with a temporary account. Existing production accounts and credits remain in the original Supabase project.
 
-1. **Publish the update in the existing Lovable project.** Check that GitHub has synced the latest `main`, then choose **Publish → Update**.
-2. **Add `mmipractice.co.uk` and `www.mmipractice.co.uk`** under **Settings → Domains → Connect existing domain**. Use the exact DNS records Lovable supplies in your domain-provider panel. Current nameservers are one.com; preserve email records. **Unset the primary domain**, so both brands keep their own address. [Lovable domain settings](https://docs.lovable.dev/features/custom-domain#primary-domain).
-3. **Add the new sign-in return addresses** to the existing Supabase project's **Authentication → URL Configuration → Redirect URLs**. Keep the existing addresses and Site URL. Add:
-   - `https://mmipractice.co.uk/`
-   - `https://mmipractice.co.uk/reset-password`
-   - `https://www.mmipractice.co.uk/`
-   - `https://www.mmipractice.co.uk/reset-password`
+The beta-link migration and backend functions are deployed. **Publish → Update** in the existing Lovable project after GitHub has synced this release to publish the new beta portal, short-link routes and required feedback page. There is no authenticated Lovable publishing control in the current development environment.
 
-   These cover the app's email confirmation, Google sign-in and password-reset destinations. [Supabase redirect settings](https://supabase.com/docs/guides/auth/redirect-urls).
+Keep both domains attached to the same Lovable project, with primary domain unset so the two brands retain their addresses. `MEDICINE_DOMAIN_LIVE` remains false pending the final old-domain handover check; Medicine already appears on the new domain, and new beta links use `mmipractice.co.uk` in production. The flag only controls redirects and the original domain becoming 11+ only. Real Google-provider completion and payment checkout on the new domain remain separate launch checks.
 
-4. **Return here once both domains show Live in Lovable.** We can then check HTTPS, existing-account sign-in, Google/email returns, a real interview and payment return on the actual new domain. After those pass, switch `MEDICINE_DOMAIN_LIVE` in `src/lib/site.ts` to `true` and publish that small handover release.
-5. **Create your tester link** while signed into your usual admin account: open `/admin/guest-trials`, create an invitation, and use **Copy link**. The signed-in account owns its invitations and results. No founder email needs to be copied into code.
+## Invite a beta tester
 
-Until step 4, Medicine remains available on intrvue.ai. The new domain already selects the Medicine interface when it serves this build. The handover flag only controls the existing domain's transition and the default domain for newly copied invitations.
+1. Sign into your usual founder/admin account and open `/admin/guest-trials` (also linked as **Beta testing portal** from the account menu and main admin page).
+2. Add a label, set the link lifetime from 1–14 days, and choose **Create private invitation**.
+3. Use **Copy link** or **Draft email**. Draft email opens your email app with the link and instructions; it does not send anything automatically.
+4. The tester follows `/medicine/<private-code>`, enters a name and acknowledges that the host can review their trial. No email, password, Gmail login or signup form is required.
+5. They receive **two interview attempts**, across the nine Medicine modes, with six hours from joining (or until invitation expiry, if sooner). An attempt counts when the server authorises its first interview request. Reconnecting the same attempt does not consume another; ending early does not reset the allowance.
+6. After the second interview, the required `/guest-feedback` page asks for a usefulness rating, whether the interview worked, and a short improvement suggestion. **Finish trial & give feedback** ends an unused remainder early. Saved product feedback and interview assessments appear under the host's invitation.
+
+A new link admits one guest identity. The same tab can retry admission after a connection problem without using another place. A second tester cannot claim it. Keep the tab open for both attempts; reloads preserve usage. Short links contain 128 bits of randomness, are removed from the address bar on entry, and are excluded from app URL logs and referrers. Treat the link as a private invitation.
+
+The portal labels links ready, claimed, completed, expired or closed, and disables sharing controls after all guest places are claimed. A tester can still submit product feedback if the invitation expires or is closed. They cannot restart practice after finishing the trial or use a third interview. Forms retain drafts on reload and after a network failure. Previously issued signed invitations keep their original limits and are labelled as earlier invitations; all newly generated links use the fixed one-guest/two-attempt policy.
 
 ## Where to find the changes
 
@@ -31,7 +33,8 @@ Until step 4, Medicine remains available on intrvue.ai. The new domain already s
 | ---------------------- | ----------------------------------- | ----------------------------------------------------------------- |
 | Medicine home          | New domain `/`                      | MMI branding, Medicine dashboard, existing account access         |
 | Guest management       | `/admin/guest-trials`               | Create, copy and close private links; review named tester results |
-| Private welcome        | `/try#…` from the invitation page   | Name, consent and entry without ordinary signup                   |
+| Private welcome        | `/medicine/<private-code>`   | Name, consent and entry without ordinary signup                   |
+| Product feedback       | `/guest-feedback`                  | Required tester survey, then access to saved interview assessments |
 | Guest interview room   | `/guest-session` after joining      | All nine Medicine modes using the shared Anam engine              |
 | Worked answers         | `/medicine/examples`                | Existing 24 medicine-specific MMI scenarios and follow-ups        |
 | Practice studio        | `/medicine/practice` or `/practice` | Existing rehearsal, reflection and planning tools                 |
@@ -40,9 +43,9 @@ Until step 4, Medicine remains available on intrvue.ai. The new domain already s
 
 ## Guest trials
 
-Default invitation: 10 guests, 12 interviews each, seven-day link lifetime, six hours per guest. The founder can change the guest count and link lifetime. Links can be closed early. Guest requests check expiry, revocation, owned sessions and quotas on the server. Each guest has a separate restricted identity; the founder's credentials and credits are not shared.
+New invitations: one guest, two interview attempts, seven-day link lifetime by default, six hours per guest. The founder can change the link lifetime. Links can be closed early. Guest requests check expiry, revocation, owned sessions and quotas on the server. Each guest has a separate restricted identity; the founder's credentials and credits are not shared.
 
-Guests explicitly acknowledge that their host can see their name, transcript, scores and feedback. Tokens stay in that tab's session storage. Ordinary account storage stays separate. The founder's trial page reads only the guests belonging to that founder's invitations. Revocation blocks further requests immediately and open guest pages check every 30 seconds; an already issued external avatar connection is bounded by its session limit.
+Guests explicitly acknowledge that their host can see their name, transcript, scores and feedback. Tokens stay in that tab's session storage. Ordinary account storage stays separate. The founder's trial page reads only the guests belonging to that founder's invitations. Revocation blocks further interview requests immediately and open guest pages check every 30 seconds; an already issued external avatar connection is bounded by its session limit.
 
 Pilot previews remain labelled as original practice drafts, with no claim of official university questions or validation. Invited guests may access the three pilots; ordinary uninvited accounts retain the existing pilot access rules.
 
@@ -56,8 +59,10 @@ For visual changes, specify whether they apply to **MMI Practice**, **11+**, or 
 
 ## Release verification
 
-The backend migration and all 14 functions were deployed on 1 October 2026. Validation passed: 260 application tests, 86 backend tests, 94 PostgreSQL checks, TypeScript, all edge-function type checks and the production build. Local tests cover invitation signatures, ownership, expiry, revocation, retry behaviour, quotas, forged feedback, session-state tampering, ordinary-user compatibility, note transfer and payment failure/retry states.
+The two guest migrations and all 14 functions were deployed on 1 October 2026. The beta-link release passed 261 application tests, 98 backend tests, 132 PostgreSQL checks, TypeScript, affected edge-function type checks and the production build. Local tests cover invitation signatures, ownership, expiry, revocation, retry behaviour, quotas, forged feedback, session-state tampering, ordinary-user compatibility, note transfer and payment failure/retry states.
 
 Live checks started all nine Medicine modes, including Oxford, Cambridge and Imperial; generated saved Medicine feedback; tested owner-only transcript review; and rejected guest email/feedback forgery. A browser trial received real Anam video and audio, submitted a typed answer, ended the call and rendered saved feedback. It preserved an existing founder login, fitted a 390px mobile viewport, and had no runtime errors in the tested flow. The ordinary 11+ flow also charged a temporary account’s own three-credit balance, started its brain and Anam token, processed an answer and saved school-rubric feedback. Test identities and invitations were removed.
 
-These are functional checks using temporary test accounts. They do not establish full-duration reliability on every device, clinical validation, completed real purchases, or publication at the new domain. DNS, provider settings and Lovable publication remain the queue above. Metadata changes with hostname in the browser; crawlers that do not execute JavaScript can still see the shared initial HTML metadata, so inspect social/search previews after the domain is live.
+The beta-link release also passed 22 live/backend/browser checks, including concurrent single-use redemption, two real Anam connections, saved assessments, reload-safe quotas, third-attempt denial, automatic survey navigation, failed-submit recovery, assessment retry before survey navigation, claimed-link sharing controls, completed-trial lockout, and founder-only product feedback. These used the local frontend against the deployed backend. Test accounts and invitations were removed.
+
+These are functional checks using temporary test accounts. They do not establish full-duration reliability on every device, clinical validation, completed real purchases, or completed Google OAuth/provider flows. The new beta frontend still needs Lovable publication as described above. Metadata changes with hostname in the browser; crawlers that do not execute JavaScript can still see the shared initial HTML metadata, so inspect social/search previews after the domain is live.

@@ -22,6 +22,17 @@ beforeEach(() => {
 });
 
 describe('logAppEvent', () => {
+  it('redacts private beta codes from logged page addresses', async () => {
+    const chain = mockInsertChain({ error: null });
+    vi.mocked(supabase.from).mockReturnValue(chain as any);
+    window.history.replaceState({}, '', '/medicine/AbCdEfGhIjKlMnOpQrStUv');
+    try {
+      await logAppEvent({ eventType: 'test', message: 'ok' });
+      const value = chain.insert.mock.calls[0][0];
+      expect(value.metadata.url).toContain('/medicine/[private-invitation]');
+      expect(value.metadata.url).not.toContain('AbCdEfGhIjKlMnOpQrStUv');
+    } finally { window.history.replaceState({}, '', '/'); }
+  });
   it('inserts a row with the resolved user id and level defaulted to info', async () => {
     const chain = mockInsertChain({ error: null });
     vi.mocked(supabase.from).mockReturnValue(chain as any);

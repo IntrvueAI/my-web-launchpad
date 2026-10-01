@@ -5,11 +5,13 @@ import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { guestSupabase } from "@/integrations/supabase/client";
 import { trialApi, type TrialInvite } from "@/lib/guestTrials";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 export default function GuestWelcome() {
+  const { code: pathCode } = useParams();
   const [code] = useState(() => {
     try {
-      const fragment = window.location.hash.slice(1);
+      const fragment = pathCode || window.location.hash.slice(1);
       if (fragment) {
         sessionStorage.setItem("mmi:trial-invite", fragment);
         window.history.replaceState({}, "", "/try");
@@ -82,9 +84,10 @@ export default function GuestWelcome() {
               practice room.
             </h1>
             <p className="text-lg text-muted-foreground">
-              Thanks for trying MMI Practice. Meet your AI interviewer, work
-              through a Medicine scenario and see feedback you can put into
-              practice.
+              Thanks for helping us test MMI Practice. Your private invitation
+              includes {invite?.max_interviews ?? 2} interview attempts and a
+              short feedback form at the end. Enter your name to begin. No
+              email, password or signup needed.
             </p>
             <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-primary" />
@@ -110,6 +113,16 @@ export default function GuestWelcome() {
               <p className="mt-2 text-sm text-muted-foreground">
                 {invite.max_interviews} interviews · up to {invite.guest_hours}{" "}
                 hours · no payment required
+              </p>
+            )}
+            {invite && (
+              <p className="mt-3 text-sm text-muted-foreground">
+                {invite.max_guests === 1
+                  ? "This link admits one tester."
+                  : "This is your private tester invitation."}{" "}
+                Use this browser tab for your interviews; refreshing keeps your
+                remaining attempts. A short product-feedback form completes your
+                trial.
               </p>
             )}
             {!invite && !error && (

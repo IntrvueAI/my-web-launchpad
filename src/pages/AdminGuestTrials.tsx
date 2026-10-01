@@ -12,8 +12,11 @@ import {
   type TrialInvite,
   type TrialGuest,
   type TrialFeedback,
+  type TrialReview,
+  trialInvitationPath,
+  trialReviewExperience,
 } from "@/lib/guestTrials";
-import { MEDICINE_DOMAIN_LIVE, MEDICINE_ORIGIN } from "@/lib/site";
+import { MEDICINE_ORIGIN } from "@/lib/site";
 
 export default function AdminGuestTrials() {
   const { user, loading } = useAuth();
@@ -23,10 +26,10 @@ export default function AdminGuestTrials() {
   const [results, setResults] = useState<{
     guests: TrialGuest[];
     feedback: TrialFeedback[];
+    reviews: TrialReview[];
   } | null>(null);
   const [detail, setDetail] = useState<Record<string, unknown> | null>(null);
   const [label, setLabel] = useState("Private product preview");
-  const [maxGuests, setMaxGuests] = useState(10);
   const [days, setDays] = useState(7);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
@@ -42,7 +45,10 @@ export default function AdminGuestTrials() {
     }
   }, []);
   useEffect(() => {
-    if (isAdmin) void load();
+    if (!isAdmin) return;
+    void load();
+    const timer = setInterval(() => void load(), 30000);
+    return () => clearInterval(timer);
   }, [isAdmin, load]);
   useEffect(() => {
     if (!selected) {
@@ -56,6 +62,7 @@ export default function AdminGuestTrials() {
         const data = await trialApi<{
           guests: TrialGuest[];
           feedback: TrialFeedback[];
+          reviews: TrialReview[];
         }>({ action: "guests", inviteId: selected });
         if (!cancelled) setResults(data);
       } catch (e) {
@@ -79,7 +86,6 @@ export default function AdminGuestTrials() {
       const { invite } = await trialApi<{ invite: TrialInvite }>({
         action: "create",
         label,
-        maxGuests,
         days,
       });
       setSelected(invite.id);
@@ -92,7 +98,7 @@ export default function AdminGuestTrials() {
     }
   }
   const link = (invite: TrialInvite) =>
-    `${MEDICINE_DOMAIN_LIVE ? MEDICINE_ORIGIN : window.location.origin}/try#${invite.code}`;
+    `${import.meta.env.DEV ? window.location.origin : MEDICINE_ORIGIN}${trialInvitationPath(invite)}`;
   async function copy(invite: TrialInvite) {
     try {
       await navigator.clipboard.writeText(link(invite));
@@ -136,12 +142,12 @@ export default function AdminGuestTrials() {
             ← Back to dashboard
           </a>
           <h1 className="mb-3 mt-7 font-display text-4xl font-semibold">
-            Your guest trials
+            Beta testing portal
           </h1>
           <p className="mb-8 max-w-2xl text-muted-foreground">
-            Invite testers to try MMI Practice and follow their results here.
-            Guest interviews are sponsored by the invitation; they do not spend
-            your personal credits.
+            Create a private link for each tester. They enter their name and get
+            two interviews, with no email, password or signup. Their results and
+            product feedback appear here under your account.
           </p>
           {loading || isLoading ? (
             <p role="status">Checking founder access…</p>
@@ -171,7 +177,7 @@ export default function AdminGuestTrials() {
               )}
               <form
                 onSubmit={create}
-                className="mb-8 grid items-end gap-4 rounded-2xl border bg-card p-6 sm:grid-cols-2 lg:grid-cols-4"
+                className="mb-8 grid items-end gap-4 rounded-2xl border bg-card p-6 sm:grid-cols-2 lg:grid-cols-3"
               >
                 <label className="space-y-2 text-sm font-medium">
                   Invitation label
@@ -180,17 +186,6 @@ export default function AdminGuestTrials() {
                     onChange={(e) => setLabel(e.target.value)}
                     required
                     maxLength={100}
-                  />
-                </label>
-                <label className="space-y-2 text-sm font-medium">
-                  Number of guests
-                  <Input
-                    type="number"
-                    value={maxGuests}
-                    min={1}
-                    max={50}
-                    onChange={(e) => setMaxGuests(Number(e.target.value))}
-                    required
                   />
                 </label>
                 <label className="space-y-2 text-sm font-medium">
@@ -205,10 +200,11 @@ export default function AdminGuestTrials() {
                   />
                 </label>
                 <Button disabled={busy}>Create private invitation</Button>
-                <p className="text-xs text-muted-foreground sm:col-span-2 lg:col-span-4">
-                  Each guest gets up to 12 interviews across all nine Medicine
-                  modes and six hours from joining, ending earlier if the link
-                  expires. Closing an invitation blocks further use.
+                <p className="text-xs text-muted-foreground sm:col-span-2 lg:col-span-3">
+                  One tester per new link · two interview attempts · six hours
+                  from joining · required product feedback. The link closes to
+                  new testers once claimed. Interview attempts count when
+                  started, including attempts ended early.
                 </p>
               </form>
               <div className="grid gap-7 lg:grid-cols-[340px_1fr]">
@@ -235,7 +231,13 @@ export default function AdminGuestTrials() {
                           ? "Closed"
                           : Date.parse(invite.expires_at) <= Date.now()
                             ? "Expired"
-                            : `Up to ${invite.max_guests} guests`}{" "}
+                            : invite.link_code
+                              ? invite.review_count
+                                ? "Complete · feedback received"
+                                : invite.guest_count
+                                  ? `Claimed · ${invite.attempts_used || 0}/2 attempts used`
+                                  : "Ready to share · one tester"
+                              : `Earlier invitation · up to ${invite.max_guests} guests`}{" "}
                         · expires{" "}
                         {new Date(invite.expires_at).toLocaleDateString()}
                       </p>
@@ -254,10 +256,25 @@ export default function AdminGuestTrials() {
                             <div className="flex flex-wrap gap-2">
                               <Button
                                 size="sm"
+                                disabled={
+                                  (invite.guest_count || 0) >= invite.max_guests
+                                }
                                 onClick={() => void copy(invite)}
                               >
-                                Copy link
+                                {(invite.guest_count || 0) >= invite.max_guests
+                                  ? "Already claimed"
+                                  : "Copy link"}
                               </Button>
+                              {(invite.guest_count || 0) <
+                                invite.max_guests && (
+                                <Button size="sm" variant="outline" asChild>
+                                  <a
+                                    href={`mailto:?subject=${encodeURIComponent("Your private MMI Practice beta invitation")}&body=${encodeURIComponent(`I'd love your feedback on MMI Practice. This private link gives you two interview attempts, followed by a short feedback form. Enter your name to begin; no signup or payment needed. Please keep the link for yourself.\n\n${link(invite)}`)}`}
+                                  >
+                                    Draft email
+                                  </a>
+                                </Button>
+                              )}
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -286,6 +303,9 @@ export default function AdminGuestTrials() {
                   ) : (
                     <div className="space-y-4">
                       {results.guests.map((guest) => {
+                        const review = results.reviews?.find(
+                          (r) => r.trial_id === guest.id,
+                        );
                         const feedback = results.feedback.filter(
                           (f) => f.user_id === guest.guest_user_id,
                         );
@@ -300,8 +320,42 @@ export default function AdminGuestTrials() {
                             <p className="mb-4 text-xs text-muted-foreground">
                               Joined{" "}
                               {new Date(guest.created_at).toLocaleString()} ·{" "}
+                              {guest.interviews_started} attempts used ·{" "}
                               {feedback.length} saved results
                             </p>
+                            <div className="mb-5 rounded-2xl border bg-muted/30 p-5">
+                              <h4 className="mb-2 font-semibold">
+                                Product feedback
+                              </h4>
+                              {review ? (
+                                <div className="space-y-3 text-sm">
+                                  <p>
+                                    <strong>
+                                      {review.rating}/5 usefulness
+                                    </strong>{" "}
+                                    · {trialReviewExperience[review.experience]}
+                                  </p>
+                                  <p className="whitespace-pre-wrap break-words">
+                                    {review.improvement}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    Submitted{" "}
+                                    {new Date(
+                                      review.created_at,
+                                    ).toLocaleString()}
+                                  </p>
+                                </div>
+                              ) : (
+                                <p className="text-sm text-muted-foreground">
+                                  {guest.review_required_at ||
+                                  guest.interviews_started >=
+                                    (invites.find((i) => i.id === selected)
+                                      ?.max_interviews || 2)
+                                    ? "Awaiting the tester’s feedback form."
+                                    : "The tester will complete a short form when they finish."}
+                                </p>
+                              )}
+                            </div>
                             {!feedback.length && (
                               <p className="text-sm text-muted-foreground">
                                 Feedback will appear after they finish an

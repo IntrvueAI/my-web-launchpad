@@ -35,7 +35,7 @@ export async function logAppEvent(args: LogAppEventArgs): Promise<void> {
       interview_session_id: args.interviewSessionId ?? null,
       request_id: args.requestId ?? null,
       // Fragments can contain private invitation codes or OAuth tokens.
-      metadata: { ...args.metadata, url: window.location.origin + window.location.pathname + window.location.search },
+      metadata: { ...args.metadata, url: window.location.origin + window.location.pathname.replace(/^\/medicine\/[A-Za-z0-9_-]{22}$/, '/medicine/[private-invitation]') + window.location.search },
     });
     if (error) console.warn('logAppEvent insert failed:', error);
   } catch (err) {

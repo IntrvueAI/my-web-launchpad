@@ -7,11 +7,15 @@ import {
   guestPassword,
   guestDisplayName,
   isGuestUser,
+  isShortGuestCode,
+  newGuestLinkCode,
+  guestReviewInput,
 } from "../_shared/guestTrials.ts";
 
 const inviteFields =
-  "id,label,expires_at,max_guests,max_interviews,guest_hours,revoked_at,created_at";
-const guestFields = "id,display_name,guest_user_id,expires_at,created_at";
+  "id,label,expires_at,max_guests,max_interviews,guest_hours,revoked_at,created_at,link_code";
+const guestFields =
+  "id,display_name,guest_user_id,expires_at,created_at,interviews_started,review_required_at";
 function integer(value: unknown, min: number, max: number, fallback: number) {
   if (value === undefined) return fallback;
   if (
@@ -51,16 +55,21 @@ serve(
         auth: { persistSession: false, autoRefreshToken: false },
       });
       if (body.action === "inspect" || body.action === "redeem") {
-        const id = await verifyGuestInvite(body.code);
+        const short = isShortGuestCode(body.code);
+        const id = short ? null : await verifyGuestInvite(body.code);
         const { data: invite, error } = await service
           .from("mmi_trial_invites")
           .select(inviteFields)
-          .eq("id", id)
+          .eq(short ? "link_code" : "id", short ? body.code : id)
           .maybeSingle();
         if (error)
           throw new HttpError(503, "Invitations are temporarily unavailable");
         available(invite);
-        if (body.action === "inspect") return json({ invite });
+        // Do not echo the bearer code into public responses or generic loggers.
+        if (body.action === "inspect") {
+          const { link_code: _privateCode, ...publicInvite } = invite!;
+          return json({ invite: publicInvite });
+        }
         const name = guestDisplayName(body.name);
         if (!isUuid(body.nonce) || body.acknowledged !== true)
           throw new HttpError(
@@ -70,7 +79,7 @@ serve(
         const { data: trial, error: reserveError } = await service.rpc(
           "reserve_mmi_guest_trial",
           {
-            p_invite_id: id,
+            p_invite_id: invite!.id,
             p_display_name: name,
             p_client_nonce: body.nonce,
           },
@@ -163,39 +172,39 @@ serve(
         error: userError,
       } = await auth.auth.getUser(token);
       if (userError || !user) throw new HttpError(401, "Please sign in");
-      if (body.action === "status") {
+      if (["status", "request-review", "submit-review"].includes(body.action)) {
         if (!isGuestUser(user))
           throw new HttpError(
             403,
             "Open your private trial invitation to begin",
           );
-        const { data: trial, error } = await service
-          .from("mmi_guest_trials")
-          .select("id,invite_id,display_name,expires_at,interviews_started")
-          .eq("guest_user_id", user.id)
-          .eq("id", user.app_metadata.mmi_guest_trial)
-          .maybeSingle();
-        if (error)
-          throw new HttpError(503, "Trial status is temporarily unavailable");
-        if (!trial || Date.parse(trial.expires_at) <= Date.now())
-          throw new HttpError(403, "Your guest trial has expired");
-        const { data: invite, error: inviteError } = await service
-          .from("mmi_trial_invites")
-          .select(inviteFields)
-          .eq("id", trial.invite_id)
-          .maybeSingle();
-        if (inviteError)
-          throw new HttpError(503, "Trial status is temporarily unavailable");
-        available(invite);
-        return json({
-          name: trial.display_name,
-          expiresAt: trial.expires_at,
-          remaining: Math.max(
-            0,
-            invite!.max_interviews - trial.interviews_started,
-          ),
-          maxInterviews: invite!.max_interviews,
-        });
+        const args: Record<string, unknown> = { p_user_id: user.id };
+        let rpc =
+          body.action === "request-review"
+            ? "request_mmi_trial_review"
+            : "get_mmi_guest_trial_status";
+        if (body.action === "submit-review") {
+          const review = guestReviewInput(body);
+          rpc = "submit_mmi_trial_review";
+          Object.assign(args, {
+            p_rating: review.rating,
+            p_experience: review.experience,
+            p_improvement: review.improvement,
+          });
+        }
+        const { data: status, error } = await service.rpc(rpc, args);
+        if (error && error.message !== "Guest trial not found")
+          throw new HttpError(
+            503,
+            "Trial feedback is temporarily unavailable. Please retry.",
+          );
+        if (
+          error ||
+          !status ||
+          status.trialId !== user.app_metadata.mmi_guest_trial
+        )
+          throw new HttpError(403, "Your guest trial is not available");
+        return json(status);
       }
       if (isGuestUser(user))
         throw new HttpError(403, "Founder access required");
@@ -215,7 +224,8 @@ serve(
           throw new HttpError(400, "Give this invitation a short label");
         // Check configuration before creating a row which could not be shared.
         const id = crypto.randomUUID();
-        const code = await guestInviteCode(id);
+        await guestPassword(id, id); // Check the server signing secret before creating a link.
+        const code = newGuestLinkCode();
         const { data: invite, error } = await service
           .from("mmi_trial_invites")
           .insert({
@@ -225,9 +235,10 @@ serve(
             expires_at: new Date(
               Date.now() + integer(body.days, 1, 14, 7) * 86400000,
             ).toISOString(),
-            max_guests: integer(body.maxGuests, 1, 50, 10),
-            max_interviews: integer(body.maxInterviews, 1, 12, 12),
-            guest_hours: integer(body.guestHours, 1, 24, 6),
+            link_code: code,
+            max_guests: 1,
+            max_interviews: 2,
+            guest_hours: 6,
           })
           .select(inviteFields)
           .single();
@@ -242,11 +253,49 @@ serve(
           .order("created_at", { ascending: false })
           .limit(100);
         if (error) throw new HttpError(503, "Unable to load invitations");
+        const summaries = new Map<
+          string,
+          { guest_count: number; attempts_used: number; review_count: number }
+        >();
+        if (data?.length) {
+          const { data: trials, error: trialsError } = await service
+            .from("mmi_guest_trials")
+            .select(
+              "invite_id,interviews_started,mmi_trial_reviews(created_at)",
+            )
+            .in(
+              "invite_id",
+              data.map((invite) => invite.id),
+            )
+            .limit(5000);
+          if (trialsError)
+            throw new HttpError(503, "Unable to load invitation usage");
+          for (const trial of trials || []) {
+            const summary = summaries.get(trial.invite_id) || {
+              guest_count: 0,
+              attempts_used: 0,
+              review_count: 0,
+            };
+            summary.guest_count += 1;
+            summary.attempts_used += trial.interviews_started;
+            summary.review_count += Array.isArray(trial.mmi_trial_reviews)
+              ? trial.mmi_trial_reviews.length
+              : trial.mmi_trial_reviews
+                ? 1
+                : 0;
+            summaries.set(trial.invite_id, summary);
+          }
+        }
         return json({
           invites: await Promise.all(
             (data || []).map(async (invite) => ({
               ...invite,
-              code: await guestInviteCode(invite.id),
+              ...(summaries.get(invite.id) || {
+                guest_count: 0,
+                attempts_used: 0,
+                review_count: 0,
+              }),
+              code: invite.link_code || (await guestInviteCode(invite.id)),
             })),
           ),
         });
@@ -292,7 +341,19 @@ serve(
           if (!feedback) throw new HttpError(404, "Feedback not found");
           return json({ feedback });
         }
-        if (!ids.length) return json({ guests: guests || [], feedback: [] });
+        const trialIds = (guests || []).map((g) => g.id);
+        let reviews: unknown[] = [];
+        if (trialIds.length) {
+          const { data, error: reviewError } = await service
+            .from("mmi_trial_reviews")
+            .select("trial_id,rating,experience,improvement,created_at")
+            .in("trial_id", trialIds);
+          if (reviewError)
+            throw new HttpError(503, "Unable to load tester feedback");
+          reviews = data || [];
+        }
+        if (!ids.length)
+          return json({ guests: guests || [], feedback: [], reviews });
         const { data: feedback, error: feedbackError } = await service
           .from("feedback")
           .select(
@@ -303,7 +364,7 @@ serve(
           .limit(1000);
         if (feedbackError)
           throw new HttpError(503, "Unable to load guest results");
-        return json({ guests, feedback: feedback || [] });
+        return json({ guests, feedback: feedback || [], reviews });
       }
       throw new HttpError(400, "Unknown trial action");
     },

@@ -19,7 +19,7 @@ export const isMedicineSite = () => siteProduct() === "medicine";
 export const siteName = () =>
   isMedicineSite() ? "MMI Practice" : "intrvue.ai";
 export const isGuestDocument = () =>
-  window.location.pathname === "/guest-session";
+  ["/guest-session", "/guest-feedback"].includes(window.location.pathname);
 
 export function medicineHandoverTarget(
   url: URL,

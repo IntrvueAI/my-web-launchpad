@@ -117,7 +117,7 @@ const Auth = () => {
 
     const { error } = await authSignIn(sanitizedEmail, password);
     if (!error) {
-      navigate('/');
+      navigate(new URLSearchParams(window.location.search).get('returnTo') === '/admin/guest-trials' ? '/admin/guest-trials' : '/');
     }
     
     setLoading(false);

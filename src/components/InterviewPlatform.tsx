@@ -27,6 +27,8 @@ import { getMedicinePilot } from '@/interview/subjects/medicine/pilots';
 
 interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
+  onAttemptFinished?: (feedbackReady: boolean) => void;
+  onBusyChange?: (busy: boolean) => void;
 }
 
 type BrainUiState = ReturnType<typeof useInterviewSession>['brainUiState'];
@@ -75,7 +77,7 @@ function phaseDots(ui: NonNullable<BrainUiState>): { count: number; idx: number 
  * Handles the complete interview preparation experience
  */
 export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({ 
-  selectedInterviewType 
+  selectedInterviewType, onAttemptFinished, onBusyChange
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -143,6 +145,10 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     interviewComplete,
     stationTimer
   } = useInterviewSession(videoRef, interviewType);
+
+  useEffect(() => {
+    onBusyChange?.(isGeneratingFeedback || ['connecting', 'connected', 'streaming'].includes(sessionStatus));
+  }, [onBusyChange, isGeneratingFeedback, sessionStatus]);
 
   // Engine-driven runs emit an explicit completion signal — trust it directly.
   useEffect(() => {
@@ -274,6 +280,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
   // Handle stopping the interview session and generate feedback
   const handleStopInterview = useCallback(async () => {
+    let feedbackReady = false;
     try {
       setIsGeneratingFeedback(true);
       
@@ -304,6 +311,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             variant: "destructive",
           });
         } else {
+          feedbackReady = true;
           setFeedback(data);
           void queryClient.invalidateQueries({ queryKey: ['medicine-dashboard-stats', user.id] });
           void queryClient.invalidateQueries({ queryKey: ['dashboard-stats', user.id] });
@@ -314,6 +322,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           });
         }
       } else if (!transcription) {
+        feedbackReady = true;
         toast({
           title: "No Transcription Available",
           description: "Unable to generate feedback without interview transcription.",
@@ -329,11 +338,13 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       });
     } finally {
       setIsGeneratingFeedback(false);
+      onAttemptFinished?.(feedbackReady);
     }
-  }, [stopInterview, user, toast, sessionReference, sessionId, interviewType]);
+  }, [stopInterview, user, toast, sessionReference, sessionId, interviewType, onAttemptFinished]);
 
   // Regenerate feedback from existing transcript
   const handleRegenerateFeedback = useCallback(async () => {
+    let feedbackReady = false;
     try {
       const t = (feedback as any)?.transcription || pendingTranscript;
       if (!t || !user) {
@@ -365,6 +376,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           variant: 'destructive',
         });
       } else {
+        feedbackReady = true;
         setFeedback(data);
         void queryClient.invalidateQueries({ queryKey: ['medicine-dashboard-stats', user.id] });
         void queryClient.invalidateQueries({ queryKey: ['dashboard-stats', user.id] });
@@ -379,8 +391,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
       toast({ title: 'Error', description: 'Unexpected error occurred.', variant: 'destructive' });
     } finally {
       setIsGeneratingFeedback(false);
+      if (feedbackReady) onAttemptFinished?.(true);
     }
-  }, [feedback, pendingTranscript, user, interviewType, toast, sessionReference, sessionId]);
+  }, [feedback, pendingTranscript, user, interviewType, toast, sessionReference, sessionId, onAttemptFinished]);
 
   const downloadPendingTranscript = () => {
     if (!pendingTranscript) return;
@@ -784,7 +797,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               interviewType={interviewType.id}
               scoringSystem={interviewType.scoringSystem}
             />}
-            {feedback && !isGeneratingFeedback && (
+            {feedback && !isGeneratingFeedback && !user?.app_metadata?.mmi_guest_trial && (
               <details className="mt-5 rounded-2xl border bg-card p-5"><summary className="cursor-pointer text-sm font-semibold">Tell us how this practice went</summary><ShareFeedbackBox
                 sessionReference={sessionReference}
                 interviewType={interviewType.id}

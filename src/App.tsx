@@ -19,6 +19,7 @@ import { Mail, Calendar } from "lucide-react";
 import Index from "./pages/Index";
 const GuestWelcome = lazy(() => import('./pages/GuestWelcome'));
 const GuestSession = lazy(() => import('./pages/GuestSession'));
+const GuestTrialFeedback = lazy(() => import('./pages/GuestTrialFeedback'));
 const AdminGuestTrials = lazy(() => import('./pages/AdminGuestTrials'));
 const MedicineTransfer = lazy(() => import('./pages/MedicineTransfer'));
 const MedicineInfo = lazy(() => import('./pages/MedicineInfo'));
@@ -67,7 +68,7 @@ const AppContent = () => {
   const { user } = useAuth();
   useEffect(() => {
     if (isMedicineSite()) document.title = 'MMI Practice | Medicine interview preparation';
-    if (['/try', '/guest-session'].includes(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
+    if (['/try', '/guest-session', '/guest-feedback'].includes(window.location.pathname) || /^\/medicine\/[A-Za-z0-9_-]{22}$/.test(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
       const robots = document.createElement('meta'); robots.name = 'robots'; robots.content = 'noindex, nofollow'; document.head.appendChild(robots);
       const referrer = document.createElement('meta'); referrer.name = 'referrer'; referrer.content = 'no-referrer'; document.head.appendChild(referrer);
       return () => { robots.remove(); referrer.remove(); };
@@ -75,7 +76,7 @@ const AppContent = () => {
   }, []);
   // This document's shared interview client uses isolated guest storage. Do not
   // let SPA navigation expose normal account pages through that client.
-  if (isGuestDocument()) return <BrowserRouter><Suspense fallback={<RouteFallback/>}><Toaster/><Sonner/><Routes><Route path="/guest-session" element={<GuestSession/>}/><Route path="*" element={<GuestDocumentExit/>}/></Routes></Suspense></BrowserRouter>;
+  if (isGuestDocument()) return <BrowserRouter><Suspense fallback={<RouteFallback/>}><Toaster/><Sonner/><Routes><Route path="/guest-session" element={<GuestSession/>}/><Route path="/guest-feedback" element={<GuestTrialFeedback/>}/><Route path="*" element={<GuestDocumentExit/>}/></Routes></Suspense></BrowserRouter>;
 
   
   // Check if current user is the admin who can bypass downtime
@@ -160,6 +161,7 @@ const AppContent = () => {
               <Route path="/medicine" element={<Medicine />} />
               <Route path="/medicine/practice" element={<MedicinePracticeStudio />} />
               <Route path="/medicine/examples" element={<PracticeExamples />} />
+              <Route path="/medicine/:code" element={<GuestWelcome />} />
               <Route path="/examples" element={<PracticeExamples />} />
               <Route path="/faq" element={isMedicineSite() ? <MedicineInfo faq/> : <Faq />} />
               <Route path="/admin" element={<AdminDashboard />} />

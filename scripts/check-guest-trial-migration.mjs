@@ -50,11 +50,23 @@ try {
   );
   await db.exec(migration);
   await db.exec(migration);
+  const betaMigration = await readFile(
+    new URL(
+      "../supabase/migrations/20261001000002_mmi_beta_links.sql",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  await db.exec(betaMigration);
+  await db.exec(betaMigration);
   checks++;
   for (const role of ["anon", "authenticated"]) {
     for (const fn of [
       "reserve_mmi_guest_trial(uuid,text,uuid)",
       "authorize_mmi_guest_run(uuid,uuid,text)",
+      "get_mmi_guest_trial_status(uuid)",
+      "request_mmi_trial_review(uuid)",
+      "submit_mmi_trial_review(uuid,integer,text,text)",
     ]) {
       eq(
         await value(
@@ -68,6 +80,7 @@ try {
       "mmi_trial_invites",
       "mmi_guest_trials",
       "mmi_guest_runs",
+      "mmi_trial_reviews",
     ]) {
       eq(
         await value("SELECT has_table_privilege($1,$2,'SELECT') AS result", [
@@ -275,6 +288,189 @@ try {
   );
   eq(await value("SELECT guest_user_id AS result FROM mmi_guest_trials"), null);
   await reject(() => reserve(crypto.randomUUID()), /guest limit/);
+  // New single-tester beta invitations enforce both limits in PostgreSQL.
+  const beta = crypto.randomUUID(),
+    betaGuest = crypto.randomUUID();
+  const betaCode = "AbCdEfGhIjKlMnOpQrStUv";
+  await db.query("INSERT INTO auth.users VALUES($1)", [betaGuest]);
+  await reject(
+    () =>
+      db.query(
+        "INSERT INTO mmi_trial_invites(owner_id,label,expires_at,link_code,max_guests,max_interviews) VALUES($1,'bad',now()+interval '1 day',$2,2,2)",
+        [owner, betaCode],
+      ),
+    /mmi_beta_link_limits/,
+  );
+  await reject(
+    () =>
+      db.query(
+        "INSERT INTO mmi_trial_invites(owner_id,label,expires_at,link_code,max_interviews) VALUES($1,'bad',now()+interval '1 day',$2,3)",
+        [owner, betaCode],
+      ),
+    /mmi_beta_link_limits/,
+  );
+  await db.query(
+    "INSERT INTO mmi_trial_invites(id,owner_id,label,expires_at,link_code) VALUES($1,$2,'Beta',now()+interval '1 day',$3)",
+    [beta, owner, betaCode],
+  );
+  const betaNonce = crypto.randomUUID();
+  const claim = () =>
+    value("SELECT reserve_mmi_guest_trial($1,'Beta Tester',$2) AS result", [
+      beta,
+      betaNonce,
+    ]);
+  const betaTrial = await claim();
+  eq((await claim()).id, betaTrial.id);
+  await reject(
+    () =>
+      value(
+        "SELECT reserve_mmi_guest_trial($1,'Another Tester',$2) AS result",
+        [beta, crypto.randomUUID()],
+      ),
+    /guest limit/,
+  );
+  await db.query("UPDATE mmi_guest_trials SET guest_user_id=$1 WHERE id=$2", [
+    betaGuest,
+    betaTrial.id,
+  ]);
+  const status = () =>
+    value("SELECT get_mmi_guest_trial_status($1) AS result", [betaGuest]);
+  eq((await status()).remaining, 2);
+  eq((await status()).phase, "practice");
+  const betaSessions = [
+    crypto.randomUUID(),
+    crypto.randomUUID(),
+    crypto.randomUUID(),
+  ];
+  for (const session of betaSessions)
+    await db.query(
+      "INSERT INTO interview_sessions(id,user_id,interview_type) VALUES($1,$2,'medicine-mmi')",
+      [session, betaGuest],
+    );
+  const betaAuthorize = (session, kind = "token") =>
+    value("SELECT authorize_mmi_guest_run($1,$2,$3) AS result", [
+      betaGuest,
+      session,
+      kind,
+    ]);
+  await betaAuthorize(betaSessions[0]);
+  await betaAuthorize(betaSessions[0]); // Connection retry uses the same attempt.
+  eq((await status()).remaining, 1);
+  await db.query(
+    "UPDATE interview_sessions SET status='completed' WHERE id=$1",
+    [betaSessions[0]],
+  );
+  eq((await status()).phase, "practice");
+  await betaAuthorize(betaSessions[1]);
+  eq((await status()).remaining, 0);
+  eq((await status()).phase, "review");
+  await betaAuthorize(betaSessions[1], "brain"); // The second call may finish normally.
+  await reject(() => betaAuthorize(betaSessions[2]), /used the interviews/);
+  await value("SELECT request_mmi_trial_review($1) AS result", [betaGuest]);
+  await reject(
+    () => betaAuthorize(betaSessions[1], "brain"),
+    /finish your trial feedback/,
+  );
+  await betaAuthorize(betaSessions[1], "feedback"); // Saved assessment retries remain possible.
+  for (const args of [
+    [0, "smooth", "Useful interview"],
+    [5, "invalid", "Useful interview"],
+    [5, "smooth", "x"],
+  ]) {
+    await reject(
+      () =>
+        value("SELECT submit_mmi_trial_review($1,$2,$3,$4) AS result", [
+          betaGuest,
+          ...args,
+        ]),
+      /complete the short feedback/,
+    );
+  }
+  const submitted = await value(
+    "SELECT submit_mmi_trial_review($1,4,'some-issues','Please improve audio recovery') AS result",
+    [betaGuest],
+  );
+  eq(submitted.phase, "complete");
+  eq(submitted.review.rating, 4);
+  const repeated = await value(
+    "SELECT submit_mmi_trial_review($1,1,'smooth','Different second submission') AS result",
+    [betaGuest],
+  );
+  eq(repeated.review.improvement, "Please improve audio recovery");
+  eq(
+    await value(
+      "SELECT count(*)::integer AS result FROM mmi_trial_reviews WHERE trial_id=$1",
+      [betaTrial.id],
+    ),
+    1,
+  );
+  await reject(
+    () => betaAuthorize(betaSessions[2]),
+    /finish your trial feedback/,
+  );
+
+  // Finishing early consumes no extra interviews, but cannot be used to resume practice.
+  const earlyInvite = crypto.randomUUID();
+  await db.query(
+    "INSERT INTO mmi_trial_invites(id,owner_id,label,expires_at,link_code) VALUES($1,$2,'Early finish',now()+interval '1 day','zyxwvutsrqponmlkjihgfe')",
+    [earlyInvite, owner],
+  );
+  const earlyTrial = await value(
+    "SELECT reserve_mmi_guest_trial($1,'Early Tester',$2) AS result",
+    [earlyInvite, crypto.randomUUID()],
+  );
+  await db.query("UPDATE mmi_guest_trials SET guest_user_id=$1 WHERE id=$2", [
+    stranger,
+    earlyTrial.id,
+  ]);
+  const early = await value("SELECT request_mmi_trial_review($1) AS result", [
+    stranger,
+  ]);
+  eq(early.phase, "review");
+  eq(early.remaining, 2);
+  await db.query("UPDATE mmi_trial_invites SET revoked_at=now() WHERE id=$1", [
+    earlyInvite,
+  ]);
+  await db.query(
+    "UPDATE mmi_guest_trials SET expires_at=now()-interval '1 hour' WHERE id=$1",
+    [earlyTrial.id],
+  );
+  const expiredReview = await value(
+    "SELECT submit_mmi_trial_review($1,2,'could-not-complete','My microphone would not connect') AS result",
+    [stranger],
+  );
+  eq(expiredReview.phase, "complete");
+  eq(expiredReview.accessClosed, true);
+  await reject(
+    () =>
+      value("SELECT get_mmi_guest_trial_status($1) AS result", [
+        crypto.randomUUID(),
+      ]),
+    /Guest trial not found/,
+  );
+  await db.query("DELETE FROM auth.users WHERE id=$1", [betaGuest]);
+  eq(
+    await value(
+      "SELECT interviews_started AS result FROM mmi_guest_trials WHERE id=$1",
+      [betaTrial.id],
+    ),
+    2,
+  );
+  eq(
+    await value(
+      "SELECT count(*)::integer AS result FROM mmi_trial_reviews WHERE trial_id=$1",
+      [betaTrial.id],
+    ),
+    1,
+  );
+  await reject(
+    () =>
+      value(
+        "SELECT reserve_mmi_guest_trial($1,'Another Tester',$2) AS result",
+        [beta, crypto.randomUUID()],
+      ),
+    /guest limit/,
+  );
   console.log(`${checks} guest trial database checks passed`);
 } finally {
   await db.close();

@@ -4,6 +4,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+    <script>
+      // Remove bearer invitations before app logging or third-party assets load.
+      (function () {
+        var match = location.pathname.match(/^\/medicine\/([A-Za-z0-9_-]{22})$/);
+        if (match || ['/try', '/guest-session', '/guest-feedback'].includes(location.pathname)) {
+          var robots = document.createElement('meta'); robots.name = 'robots'; robots.content = 'noindex, nofollow'; document.head.appendChild(robots);
+        }
+        if (match) {
+          try { sessionStorage.setItem('mmi:trial-invite', match[1]); history.replaceState({}, '', '/try'); } catch (_) {}
+        }
+      })();
+    </script>
     <title>Intrvue AI - 11+ Interview Preparation</title>
     <link rel="icon" href="/lovable-uploads/icon-mark.png" type="image/png">
     <meta name="description" content="AI-powered interview preparation for UK 11+ private and grammar school admissions. Practice with digital humans and get instant feedback." />
