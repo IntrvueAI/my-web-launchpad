@@ -11,6 +11,7 @@ import { brainTurn } from '@/api/interviewBrain';
 import type { BrainResponse, Mode } from '@/interview/engine/types';
 import type { StationClockState } from '@/interview/engine/stationClock';
 import { useStationClock } from './useStationClock';
+import { asksToClarifyTask } from '@/interview/engine/publicPrompt';
 import { StationControlQueue } from '@/interview/engine/controlQueue';
 import { logDebug } from '@/interview/debug/debugBus';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
@@ -69,6 +70,7 @@ interface UseInterviewSessionReturn {
    * existing UIs render nothing extra by default.
    */
   stationTimer: StationClockState | null;
+  beginResponse: () => void;
 }
 
 /**
@@ -244,7 +246,7 @@ export const useInterviewSession = (
   }, [speak, sessionLogger, toast]);
 
   turnRef.current = runBrainTurn;
-  const stationTimer = useStationClock({
+  const { clock: stationTimer, beginResponse } = useStationClock({
     stationKey: isStreaming && brainUiState?.onQuestion ? `${sessionRefRef.current}:${brainUiState.questionIndex}` : null,
     timing: brainUiState?.timingSeconds,
     onTimeUp: () => { void runBrainTurn('time_up', { expectedQuestionIndex: brainUiState?.questionIndex }); },
@@ -320,6 +322,7 @@ export const useInterviewSession = (
    */
   const handleStudentTurn = useCallback((text: string) => {
     if (!text?.trim() || !startedRef.current) return;
+    if (!asksToClarifyTask(text)) beginResponse();
     pushTranscript('user', text);
     // Queue it rather than firing immediately: if Clara/the brain is mid-turn this is picked up when
     // she finishes (never dropped); otherwise we wait a beat to coalesce any follow-on burst.
@@ -329,7 +332,7 @@ export const useInterviewSession = (
     if (pushToTalkModeRef.current) return;
     if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
     flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
-  }, [pushTranscript]);
+  }, [pushTranscript, beginResponse]);
 
   /**
    * Start the interview session.
@@ -725,6 +728,7 @@ export const useInterviewSession = (
     setPushToTalkMode,
     flushPushToTalkTurn,
     sendTypedMessage,
+    beginResponse,
     skipQuestion,
     switchTopic,
     brainUiState,

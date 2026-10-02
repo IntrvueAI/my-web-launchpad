@@ -25,6 +25,7 @@ export const FEEDBACK_DEFAULTS = {
  */
 export const ANNOTATION_STYLES = {
   strength: 'text-success underline underline-offset-2 decoration-2',
+  development: 'text-primary underline underline-offset-2 decoration-2 decoration-dotted',
   grammar: 'text-destructive underline underline-offset-2 decoration-2',
   fluency: 'text-warning underline underline-offset-2 decoration-2',
   lexical: 'text-primary underline underline-offset-2 decoration-2'
@@ -35,6 +36,7 @@ export const ANNOTATION_STYLES = {
  */
 export const ANNOTATION_LEGEND = [
   { category: 'strength', label: 'Strength', colorClass: 'bg-success' },
+  { category: 'development', label: 'Try next', colorClass: 'bg-primary' },
   { category: 'grammar', label: 'Grammar', colorClass: 'bg-destructive' },
   { category: 'fluency', label: 'Fluency', colorClass: 'bg-warning' },
   { category: 'lexical', label: 'Lexical Resource', colorClass: 'bg-primary' }

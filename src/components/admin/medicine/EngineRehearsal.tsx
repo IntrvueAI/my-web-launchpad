@@ -110,7 +110,7 @@ export default function EngineRehearsal() {
     }
   }
   runRef.current = run;
-  const clock = useStationClock({
+  const { clock } = useStationClock({
     stationKey:
       timerOn && state?.current && !state.done
         ? `${state.seed}:${state.questionIndex}`

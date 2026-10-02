@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-28",
-  "edition": "07",
+  "updatedAt": "2026-10-02",
+  "edition": "08",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -166,6 +166,30 @@
   ],
   "comparisonNote": "Founder priority order, not a UK selectivity ranking. Offer rates, acceptance rates and applications per place answer different questions. Cycles, courses and fee-status cohorts must match before ranking schools. UK-wide comparison remains open.",
   "sources": [
+    {
+      "id": "leeds-interview-quality-20261002",
+      "title": "University of Leeds: Preparing for your MMI",
+      "url": "https://medicinehealth.leeds.ac.uk/medicine/doc/preparing-mmi",
+      "checked": "2026-10-02",
+      "access": "Full official page retrieved",
+      "supports": "Written station instructions, permission to request rephrasing, and assessment of values and attributes rather than clinical knowledge."
+    },
+    {
+      "id": "msc-interview-quality-20261002",
+      "title": "Medical Schools Council: Interviews",
+      "url": "https://www.medschools.ac.uk/for-students/applying-to-medical-school/interviews/",
+      "checked": "2026-10-02",
+      "access": "Full official page retrieved",
+      "supports": "MMI stations assess specific attributes; semi-structured interview questions can develop from the candidate's answers."
+    },
+    {
+      "id": "cam-interview-quality-20261002",
+      "title": "University of Cambridge: Interviews",
+      "url": "https://www.undergraduate.study.cam.ac.uk/apply/after/cambridge-interviews",
+      "checked": "2026-10-02",
+      "access": "Official search-index extract; direct page returned 403",
+      "supports": "Academic conversations examine critical thinking, curiosity and responses to unfamiliar ideas. No common Medicine timetable is inferred."
+    },
     {
       "id": "ox-colleges",
       "title": "Oxford Medicine: Colleges",
@@ -344,6 +368,13 @@
     }
   ],
   "updates": [
+    {
+      "id": "interview-quality-20261002",
+      "date": "2 October 2026",
+      "category": "INTERVIEW QUALITY & RELIABILITY",
+      "title": "Clearer follow-ups, quoted evidence and better feedback recovery.",
+      "body": "Reviewed live conversations across all 15 engine types. Medicine follow-ups now explicitly connect to the last answer and distinguish a relevant example from a generic response. New assessments combine scores, evidence and concise highlights in one model request. Each scored skill needs a recorded candidate quote; unassessed skills remain unscored, and clarification requests are excluded from scoring and highlights. Candidate briefs and academic reasoning pads stay available in focus mode. Added an early-start reading-time control, accessible transcript highlights, contained transcript scrolling and colour choices inside the interview toolbar. Fixed false offline indicators and bounded retries in the alternative 11+ voice mode. Supabase changes are deployed; frontend changes require Lovable Publish → Update. These are functional and conversation-quality checks, not educator validation of every station. Detailed evidence and known limits are recorded in docs/INTERVIEW-QUALITY-RELEASE-2026-10-02.md."
+    },
     {
       "id": "mmi-domains-guest-trials-20261001",
       "date": "1 October 2026",

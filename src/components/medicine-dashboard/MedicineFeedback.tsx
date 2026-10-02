@@ -49,7 +49,7 @@ export function MedicineFeedbackView({stats,loading=false,selectedFeedbackId}:{s
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14.5, fontWeight: 600 }}>
                     <span>{titleFor(r)}</span>
-                    <span style={{ color: active ? 'var(--med-primary-dark)' : 'var(--med-tertiary)' }}>{r.total_score ?? '—'}/20</span>
+                    <span style={{ color: active ? 'var(--med-primary-dark)' : 'var(--med-tertiary)' }}>{r.total_score == null ? 'Partial assessment' : `${r.total_score}/20`}</span>
                   </div>
                   <div style={{ color: 'var(--med-tertiary)', fontSize: 12.5, marginTop: 3 }}>
                     {new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}

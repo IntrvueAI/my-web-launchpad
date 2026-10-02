@@ -389,6 +389,28 @@ describe("Feedback", () => {
     transcription:
       "Student: I would first listen carefully to the patient, acknowledge their concerns, and ask the appropriate team member for help.\nInterviewer: Thank you.",
   };
+  it.each(['refusal', 'truncated', 'empty'])('keeps the transcript and returns retryable errors for %s model output', async kind => {
+    state.resolve = q => ({ data: q.table === 'interview_sessions' ? session : null, count: 0, error: null });
+    state.fetch.mockResolvedValue(new Response(JSON.stringify({ choices: kind === 'empty' ? [] : [{ message: { content: '{}', refusal: kind === 'refusal' ? 'Unable to assess' : null }, finish_reason: kind === 'truncated' ? 'length' : 'stop' }] })));
+    const response = await (await handler('generate-interview-feedback'))(req(body));
+    expect(response.status).toBe(502);
+    expect(state.queries.some(q => q.table === 'feedback' && q.operation === 'insert')).toBe(false);
+  });
+  it.each([true, false])('preserves partial scores and reports whether the assessment was saved (%s)', async saved => {
+    state.resolve = q => ({ data: q.table === 'interview_sessions' ? session : q.table === 'feedback' && q.operation === 'insert' && saved ? { id: 'f1' } : null, count: 0, error: q.table === 'feedback' && q.operation === 'insert' && !saved ? { message: 'Write failed' } : null });
+    const feedback = { pattern_recognition_score: 3, logical_deduction_score: null, mathematical_logic_score: null, clarity_of_thought_score: null,
+      score_evidence: { pattern_recognition_score: 'I would first listen carefully to the patient' }, detailed_feedback: { overall: 'You started by listening.', band_assessment: 'Partial', strength: 'Listening.', next_step: 'Explain the next step.' }, annotations: [] };
+    state.fetch.mockResolvedValue(new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(feedback) } }] })));
+    const response = await (await handler('generate-interview-feedback'))(req(body));
+    expect(response.status).toBe(saved ? 200 : 503);
+    const stored = state.queries.find(q => q.table === 'feedback' && q.operation === 'insert')?.value as any;
+    expect(stored.total_score).toBeNull();
+    expect(stored.rating).toBeNull();
+    expect(stored.scores.content__reasoning).toBe(3);
+    expect(stored.scores.communication__delivery).toBeUndefined();
+    expect(stored.logical_deduction_score).toBeNull();
+    if (!saved) expect((await response.json()).error).toContain('assessment could not be saved');
+  });
   it("does not spend on models when transcript persistence fails", async () => {
     state.resolve = (query) => ({
       data: query.operation === "select" ? session : null,
@@ -479,6 +501,15 @@ describe("Feedback", () => {
       ),
     ).toBe(false);
   });
+  it('keeps reasoning available to assessment after the candidate skips the rest of a station', async () => {
+    const answer = 'I would first listen carefully to the patient';
+    state.resolve = q => ({ data: q.table === 'interview_sessions' ? { ...session, evidence: [{ index:1, topic:'ethics', skipped:true, question:'What would you do?', studentAnswer:answer }] } : null, count:0, error:null });
+    state.fetch.mockResolvedValue(new Response(JSON.stringify({choices:[{message:{content:'{}'}}]})));
+    await (await handler('generate-interview-feedback'))(req(body));
+    const prompt = JSON.parse(state.fetch.mock.calls[0][1].body).messages[1].content;
+    expect(prompt).toContain('Candidate moved on after answering; assess the recorded reasoning.');
+    expect(prompt).toContain(`said: "${answer}"`);
+  });
   it("preserves the transcript and returns a retryable feedback error during a long provider hold", async () => {
     state.resolve = q => ({ data: q.table === "interview_sessions" ? session : null, count: 0, error: null });
     state.fetch.mockImplementation(async () => new Response("", { status: 429, headers: { "retry-after": "60" } }));
@@ -510,6 +541,7 @@ describe("Feedback", () => {
         reasoning_score: 3,
         extracurricular_score: 3,
         current_awareness_score: 3,
+        score_evidence: Object.fromEntries(['pattern_recognition_score', 'logical_deduction_score', 'mathematical_logic_score', 'clarity_of_thought_score', 'personal_insight_score', 'reasoning_score', 'extracurricular_score', 'current_awareness_score'].map(key => [key, 'I would first listen carefully to the patient'])),
         detailed_feedback: {
           overall: "A specific reflection on the answer",
           band_assessment: "Practice assessment",
@@ -534,6 +566,8 @@ describe("Feedback", () => {
       expect(response.status).toBe(200);
       const payload = await response.json();
       expect(payload.total_score).toBe(12);
+      expect(state.fetch).toHaveBeenCalledTimes(1);
+      expect(JSON.parse(state.fetch.mock.calls[0][1].body).response_format.type).toBe('json_schema');
       expect(payload.transcription).toContain('******* difficult');
       const stored = state.queries.find(q => q.table === 'feedback' && q.operation === 'insert')?.value as any;
       expect(stored.transcription).not.toContain('fucking');

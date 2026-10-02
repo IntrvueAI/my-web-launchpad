@@ -144,7 +144,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     switchTopic,
     brainUiState,
     interviewComplete,
-    stationTimer
+    stationTimer, beginResponse
   } = useInterviewSession(videoRef, interviewType);
 
   useEffect(() => {
@@ -502,9 +502,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     <div ref={rootRef}><MedicineTheme enabled={interviewType.category === 'medicine'} live><div className="min-h-screen bg-background text-foreground overflow-y-auto">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
 
-        {!feedback && !pendingTranscript && !isGeneratingFeedback && <InterviewToolbar title={interviewType.name} live={isStreaming}
+        {!feedback && !pendingTranscript && !isGeneratingFeedback && <InterviewToolbar medicine={interviewType.category === 'medicine'} title={interviewType.name} live={isStreaming}
           progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : sessionStatus === 'connecting' ? 'Connecting…' : sessionStatus === 'error' ? 'Connection needs attention' : 'Ready to begin'}
-          timer={stationTimer} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
+          timer={stationTimer} onBeginResponse={beginResponse} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
           onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}/>}
         {!isStreaming && !engineDriven && (
           <p className="text-muted-foreground text-sm max-w-2xl mb-5">{interviewType.description}</p>
@@ -523,7 +523,13 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
           {/* Video Interview Area */}
           <div className={hideTranscript ? "" : "lg:col-span-2"}>
-            {hideTranscript && !academic && brainUiState?.exercise && <div className="mb-4"><MedicineStationBrief prompt={brainUiState.exercise.prompt} /></div>}
+            {brainUiState?.exercise && <div className="mb-4">
+              {academic ? <AcademicWorkpad exercise={brainUiState.exercise}
+                notes={reasoningNotes[brainUiState.exercise.id] ?? emptyReasoningNotes}
+                onChange={notes=>setReasoningNotes(previous=>({...previous,[brainUiState.exercise!.id]:notes}))}
+                onSubmit={sendTypedMessage} disabled={!isStreaming || isThinking} />
+                : <MedicineStationBrief prompt={brainUiState.exercise.prompt} />}
+            </div>}
             <Card className="p-4 md:p-6 shadow-medium">
               <div className="space-y-4">
                 
@@ -634,8 +640,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                       value={typedText}
                       onChange={(e) => setTypedText(e.target.value)}
                       placeholder="Type your answer to Clara and press Enter…"
+                      aria-label="Your answer to Clara"
                       autoFocus
-                      className="min-w-0 flex-1 rounded-full border border-white/12 bg-white/[0.05] px-4 py-2.5 text-sm font-semibold text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-sky/60"
+                      className="min-w-0 flex-1 rounded-full border border-input bg-background px-4 py-2.5 text-sm font-semibold text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/60"
                     />
                     <Button type="submit" size="sm" disabled={!typedText.trim()} className="rounded-full min-h-[42px] px-4 gap-1.5">
                       <Send className="w-4 h-4" /> Send
@@ -720,13 +727,6 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
               Hidden in focus mode so a mock feels like a real interview. */}
           {!hideTranscript && (
           <div className="lg:block space-y-4">
-            {!academic && brainUiState?.exercise && (
-              <MedicineStationBrief prompt={brainUiState.exercise.prompt} />
-            )}
-            {academic && brainUiState?.exercise && <AcademicWorkpad exercise={brainUiState.exercise}
-              notes={reasoningNotes[brainUiState.exercise.id] ?? emptyReasoningNotes}
-              onChange={notes=>setReasoningNotes(previous=>({...previous,[brainUiState.exercise!.id]:notes}))}
-              onSubmit={sendTypedMessage} disabled={!isStreaming || isThinking} />}
             {isStreaming && brainUiState && interviewType.category !== 'medicine' && (
               <div className="tile p-5">
                 <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6] mb-2">

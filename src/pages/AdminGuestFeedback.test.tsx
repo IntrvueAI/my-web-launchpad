@@ -69,7 +69,7 @@ describe("Founder feedback display", () => {
       );
       expect(node.textContent).toContain("AI assessment");
       expect(node.textContent).toContain("Scientific Reasoning");
-      expect(node.querySelector('[aria-label="Not scored"]')).not.toBeNull();
+      expect(node.querySelector('[aria-label="0 of 4 skills assessed"]')).not.toBeNull();
       expect(node.textContent).not.toContain("0/20");
       expect(node.querySelectorAll("a")).toHaveLength(0);
     } finally {

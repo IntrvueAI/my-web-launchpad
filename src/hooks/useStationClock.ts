@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   computeStationClock,
   type StationClockState,
@@ -14,8 +14,10 @@ export function useStationClock({
   stationKey: string | null;
   timing?: StationTiming;
   onTimeUp: () => void;
-}): StationClockState | null {
+}): { clock: StationClockState | null; beginResponse: () => void } {
   const [clock, setClock] = useState<StationClockState | null>(null);
+  const beginRef = useRef<(() => void) | null>(null);
+  const beginResponse = useCallback(() => beginRef.current?.(), []);
   const callback = useRef(onTimeUp);
   callback.current = onTimeUp;
   const prep = timing?.prep;
@@ -25,7 +27,7 @@ export function useStationClock({
       setClock(null);
       return;
     }
-    const startedAt = Date.now();
+    let startedAt = Date.now();
     const stationTiming = { prep, response };
     let fired = false;
     const tick = () => {
@@ -39,7 +41,21 @@ export function useStationClock({
     };
     setClock(computeStationClock(0, stationTiming));
     const interval = setInterval(tick, 250);
-    return () => clearInterval(interval);
+    beginRef.current = () => {
+      // Starting early uses the full answer budget. Repeated clicks and later answers
+      // cannot reset or extend an already-running response clock.
+      if (
+        computeStationClock(Date.now() - startedAt, stationTiming).phase !==
+        "prep"
+      )
+        return;
+      startedAt = Date.now() - prep * 1000;
+      tick();
+    };
+    return () => {
+      clearInterval(interval);
+      beginRef.current = null;
+    };
   }, [stationKey, prep, response]);
-  return clock;
+  return { clock, beginResponse };
 }

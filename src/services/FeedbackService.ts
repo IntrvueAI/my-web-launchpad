@@ -62,7 +62,8 @@ export const FeedbackService = {
       bestScore: scores.length ? Math.max(...scores) : 0,
       recentTrend: records
         .slice(0, 10)
-        .map((r) => ({ date: r.created_at as string, score: (r.total_score as number) ?? 0 }))
+        .filter((r) => typeof r.total_score === 'number')
+        .map((r) => ({ date: r.created_at as string, score: r.total_score as number }))
         .reverse(),
     };
   },

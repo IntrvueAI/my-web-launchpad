@@ -5,7 +5,11 @@ import {
   getInterviewTypeConfig,
   INTERVIEW_TYPES,
 } from "@/config/interviewTypes";
-import type { FeedbackData, InterviewType } from "@/types/interview";
+import type {
+  FeedbackData,
+  InterviewType,
+  DetailedFeedback,
+} from "@/types/interview";
 import {
   censorFeedback,
   censorTranscript,
@@ -46,8 +50,14 @@ export function FeedbackSummary({
     );
   const feedback = censorFeedback(input);
   const config = getInterviewTypeConfig(interviewType as InterviewType);
-  const detail = feedback.detailed_feedback ?? {};
+  const detail: Partial<DetailedFeedback> = feedback.detailed_feedback ?? {};
   const sections = config.sections;
+  const assessedCount = sections.filter(
+    (section) => typeof feedback[section.scoreField] === "number",
+  ).length;
+  const hasTotal =
+    typeof feedback.total_score === "number" &&
+    assessedCount === sections.length;
   const summary = conciseFeedback(feedback, sections);
   const medicine = interviewType.startsWith("medicine-");
   const title = INTERVIEW_TYPES[interviewType]?.name ?? config.name;
@@ -83,18 +93,20 @@ export function FeedbackSummary({
         <div
           className="rounded-2xl bg-primary/10 px-5 py-4 text-center"
           aria-label={
-            typeof feedback.total_score === "number"
+            hasTotal
               ? `Practice score ${feedback.total_score} out of ${config.maxTotalScore}`
-              : "Not scored"
+              : `${assessedCount} of ${sections.length} skills assessed`
           }
         >
           <strong className="text-4xl tabular-nums">
-            {typeof feedback.total_score === "number"
-              ? feedback.total_score
-              : "—"}
+            {hasTotal ? feedback.total_score : assessedCount}
           </strong>
-          <span className="text-muted-foreground">/{config.maxTotalScore}</span>
-          <p className="mt-1 text-xs font-medium">Practice score</p>
+          <span className="text-muted-foreground">
+            /{hasTotal ? config.maxTotalScore : sections.length}
+          </span>
+          <p className="mt-1 text-xs font-medium">
+            {hasTotal ? "Practice score" : "Skills assessed"}
+          </p>
         </div>
       </header>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -133,9 +145,8 @@ export function FeedbackSummary({
           {sections.map((section) => {
             const score = feedback[section.scoreField];
             const assessed = typeof score === "number";
-            const text = (detail as Record<string, string>)[
-              section.feedbackField
-            ];
+            const value = detail[section.feedbackField as keyof typeof detail];
+            const text = typeof value === "string" ? value : "";
             const open = activeSection === section.id;
             return (
               <div key={section.id} className="min-w-0 rounded-xl border">
@@ -147,7 +158,9 @@ export function FeedbackSummary({
                   <span className="flex items-start justify-between gap-3 text-sm">
                     <span className="font-medium">{section.title}</span>
                     <span className="shrink-0 tabular-nums">
-                      {assessed ? `${score}/${config.maxSectionScore}` : "—"}
+                      {assessed
+                        ? `${score}/${config.maxSectionScore}`
+                        : "Not assessed"}
                     </span>
                   </span>
                   <span className="mt-3 block h-1.5 overflow-hidden rounded-full bg-muted">
@@ -160,10 +173,17 @@ export function FeedbackSummary({
                   </span>
                 </button>
                 {open && (
-                  <p className="px-4 pb-4 text-sm leading-relaxed text-muted-foreground">
-                    {text ||
-                      "There is not enough evidence to assess this skill yet."}
-                  </p>
+                  <div className="px-4 pb-4 text-sm leading-relaxed text-muted-foreground">
+                    {detail.evidence_quotes?.[section.scoreField] && (
+                      <blockquote className="mb-3 border-l-2 border-primary/40 pl-3">
+                        “{detail.evidence_quotes[section.scoreField]}”
+                      </blockquote>
+                    )}
+                    <p>
+                      {text ||
+                        "There is not enough evidence to assess this skill yet."}
+                    </p>
+                  </div>
                 )}
               </div>
             );
@@ -173,6 +193,12 @@ export function FeedbackSummary({
           <p className="mt-4 text-xs text-muted-foreground">
             This score reflects this session’s evidence. It is a practice
             rubric, not a university mark or admission prediction.
+          </p>
+        )}
+        {!hasTotal && (
+          <p className="mt-3 text-xs text-muted-foreground">
+            Unassessed skills are not zero marks. A total is shown only when all
+            four skills have enough evidence.
           </p>
         )}
       </div>
@@ -191,7 +217,7 @@ export function FeedbackSummary({
               >
                 <summary className="cursor-pointer text-sm font-medium">
                   {index + 1}. {review.topic?.replace(/-/g, " ")}
-                  {review.skipped ? " · Skipped" : ""}
+                  {review.skipped ? (review.your_answer?.trim() ? " · Moved on early" : " · Skipped") : ""}
                 </summary>
                 <p className="mt-3 text-sm">{review.question}</p>
                 {review.your_answer && (

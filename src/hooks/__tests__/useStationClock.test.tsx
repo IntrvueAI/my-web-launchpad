@@ -3,13 +3,16 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useStationClock } from "../useStationClock";
 function Clock({ id, done }: { id: string | null; done: () => void }) {
-  const value = useStationClock({
+  const { clock: value, beginResponse } = useStationClock({
     stationKey: id,
     timing: { prep: 1, response: 2 },
     onTimeUp: done,
   });
   return (
-    <span>{value ? `${value.phase}:${value.secondsRemaining}` : "off"}</span>
+    <>
+      <span>{value ? `${value.phase}:${value.secondsRemaining}` : "off"}</span>
+      <button aria-label="Begin answering" onClick={beginResponse} />
+    </>
   );
 }
 describe("Station clock lifecycle", () => {
@@ -59,5 +62,19 @@ describe("Station clock lifecycle", () => {
     vi.setSystemTime(new Date("2026-09-15T12:05:00Z"));
     act(() => vi.advanceTimersByTime(250));
     expect(done).toHaveBeenCalledTimes(1);
+  });
+  it("starts answering early with the full response budget and never restarts it", () => {
+    const done = vi.fn();
+    act(() => root.render(<Clock id="s1:0" done={done} />));
+    act(() => vi.advanceTimersByTime(500));
+    act(() => node.querySelector("button")!.click());
+    expect(node.textContent).toBe("response:2");
+    act(() => vi.advanceTimersByTime(1000));
+    act(() => node.querySelector("button")!.click());
+    expect(node.textContent).toBe("response:1");
+    act(() => vi.advanceTimersByTime(1000));
+    expect(done).toHaveBeenCalledTimes(1);
+    act(() => root.render(<Clock id="s1:1" done={done} />));
+    expect(node.textContent).toBe("prep:1");
   });
 });

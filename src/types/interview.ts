@@ -9,7 +9,7 @@
 // Core interview system types
 export type InterviewType = 'medicine-ethics-practice' | 'medicine-roleplay-practice' | 'medicine-motivation-practice' | 'medicine-data-practice' | '11-plus' | '11-plus-v2' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview' | 'verbal-interview' | 'current-affairs-interview' | 'medicine-mmi' | 'medicine-mmi-manchester' | 'medicine-oxford-pilot' | 'medicine-cambridge-pilot' | 'medicine-imperial-pilot' | 'chat-with-clara';
 export type ScoringSystem = '0-5' | '0-9' | '0-20' | '0-7';
-export type AnnotationCategory = 'strength' | 'grammar' | 'fluency' | 'lexical';
+export type AnnotationCategory = 'strength' | 'development' | 'grammar' | 'fluency' | 'lexical';
 
 /**
  * Represents an annotation on a transcript
@@ -89,31 +89,32 @@ export interface BandThreshold {
  */
 export interface FeedbackScores {
   // 11-plus specific scores
-  personal_insight_score?: number;
-  reasoning_score?: number;
-  extracurricular_score?: number;
-  current_awareness_score?: number;
+  personal_insight_score?: number | null;
+  reasoning_score?: number | null;
+  extracurricular_score?: number | null;
+  current_awareness_score?: number | null;
   
   // IELTS specific scores
-  fluency_coherence_score?: number;
-  lexical_resource_score?: number;
-  grammatical_range_score?: number;
-  pronunciation_score?: number;
+  fluency_coherence_score?: number | null;
+  lexical_resource_score?: number | null;
+  grammatical_range_score?: number | null;
+  pronunciation_score?: number | null;
   
   // Logic puzzles specific scores
-  pattern_recognition_score?: number;
-  logical_deduction_score?: number;
-  mathematical_logic_score?: number;
-  clarity_of_thought_score?: number;
+  pattern_recognition_score?: number | null;
+  logical_deduction_score?: number | null;
+  mathematical_logic_score?: number | null;
+  clarity_of_thought_score?: number | null;
   
   // Common fields
-  total_score: number;
+  total_score: number | null;
 }
 
 /**
  * Detailed feedback text for each section
  */
 export interface DetailedFeedback {
+  evidence_quotes?: Record<string, string>;
   // 11-plus feedback sections
   personal_insight?: string;
   reasoning?: string;

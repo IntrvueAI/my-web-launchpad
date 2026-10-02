@@ -1,6 +1,8 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
 import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
+import { assessmentResponseFormat, assessmentTranscript, groundAssessment, groundedAnnotations } from "../_shared/feedbackAssessment.ts";
+import { asksToClarifyTask, publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 import { MEDICINE_PRACTICE_MODES, getMedicinePractice, packForMedicinePractice } from './_shared/subjects/medicine/practiceModes.ts';
 import { censorFeedback, censorTranscript } from './_shared/shared/transcript.ts';
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
@@ -68,7 +70,7 @@ function buildEngineDrivenSystemPrompt(pack: any): string {
 
 ${pack.scoringPhilosophy || ""}
 
-Score these FOUR dimensions, each 0-5 (total out of 20). Weight PROCESS and ADAPTABILITY far above the final answer — a candidate who reasons well but reaches a wrong answer outscores one who states a correct answer with no reasoning:
+Assess these FOUR dimensions using only the recorded answers. Score 0-5 when there is enough evidence, or null when a dimension was not assessed. Weight reasoning and adaptability above a bare final answer:
 1. ${d1}
 2. ${d2}
 3. ${d3}
@@ -79,10 +81,13 @@ CALIBRATION — be rigorous, not generous. These scores guide real preparation, 
 - 4 = consistently strong across the whole interview in that dimension, with no real weak moments.
 - 3 = solid: real engagement and some good moments, but with clear gaps (needed hints, thin explanations, patchy structure).
 - 2 = developing: attempted but frequently stuck, vague, or reliant on heavy prompting.
-- 0-1 = little to no evidence shown.
-A typical decent performance lands 10-13 total. Reserve 15+ for genuinely impressive interviews (fluent reasoning, minimal hints, specific and reflective answers throughout). Check the evidence log: hints used, wrong answers, "stuck" outcomes and thin one-line replies MUST pull the relevant dimension down — do not award a 4 where the log shows repeated scaffolding.
+- 0-1 = demonstrated serious gaps or unsafe reasoning after a relevant opportunity to answer.
+- null = this skill was not elicited, the candidate had no opportunity to demonstrate it, or the available answer is too limited to support a judgement. Missing evidence is not a zero. A short ethics station does not automatically assess personal reflection; a data station does not automatically assess empathy.
+Use these anchors consistently; do not force a target total or penalise asking for clarification. Treat the evidence log as supporting information, not unquestionable truth: if its note contradicts the actual answers, use the transcript. Stopping early, skipping another station, platform failure and time limits are not themselves weak performance. ${pack.subject === 'chat' ? 'This is a friendly demo, not an admissions assessment. Offer light, specific observations without claims about ability or readiness.' : ''}
 
-Ground your scores in the structured evidence log provided (per-question reasoning band, outcome, hints used, and notes) as well as the transcript. For each dimension, write at most TWO short sentences (45 words maximum): one specific strength actually observed and one concrete next step. If evidence is missing, say what was not assessed instead of inventing a strength. Keep overall feedback to 45 words and band_assessment to 20 words. Never infer tone or delivery from a transcript.
+Ground your scores in the structured evidence log and transcript. For every numeric score, include one exact quote copied from a Student answer in score_evidence under the SAME score key. Use null for both score and quote if it was not assessed. Never quote the interviewer as evidence of the candidate's ability.
+For each dimension, write at most TWO short sentences (45 words maximum): one specific observation and one useful next step. If evidence is missing, say what was not assessed. Keep overall feedback to 45 words and band_assessment to 20 words. Never infer tone, accent, confidence, speech rate, response speed, expression or eye contact from text. Clarity means how understandable the recorded explanation is.
+Provide zero to six useful transcript annotations, using only categories "strength" or "development". Each quote must be an exact substring of a Student answer. Explain its relevance to THIS interview's reasoning, communication, empathy or reflection. Do not annotate clarification requests, audio repairs or instructions to stop. Do not mark spelling, punctuation or vocabulary sophistication, demand clinical jargon, invent a hidden intention, or turn a defensible ethical opinion into an error. Fewer grounded highlights are better than filling a quota.
 
 CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure (the four score keys map to ${d1}, ${d2}, ${d3}, ${d4} in order):
 {
@@ -90,7 +95,8 @@ CRITICAL: respond ONLY with a valid JSON object, no markdown. Required structure
   "${sk[1]}": 0,
   "${sk[2]}": 0,
   "${sk[3]}": 0,
-  "total_score": 0,
+  "score_evidence": { "${sk[0]}": null, "${sk[1]}": null, "${sk[2]}": null, "${sk[3]}": null },
+  "annotations": [],
   "detailed_feedback": {
     "${fk[0]}": "feedback on ${d1}",
     "${fk[1]}": "feedback on ${d2}",
@@ -1064,7 +1070,7 @@ serve(
                 id: current.id,
                 topic: current.topic,
                 difficulty: current.difficulty,
-                question: current.question,
+                question: publicQuestionPrompt(current),
                 outcome: "incomplete",
                 skipped: false,
                 hintsUsed: 0,
@@ -1115,7 +1121,7 @@ serve(
             topic: e.topic,
             difficulty: e.difficulty,
             question: e.question,
-            asked: !e.skipped,
+            asked: Boolean(e.studentAnswer?.trim()) || !e.skipped,
             skipped: Boolean(e.skipped),
             outcome: e.outcome,
             band: e.band || null,
@@ -1131,10 +1137,8 @@ serve(
           evidence
             .map(
               (e: any) =>
-                `Q${e.index} [${e.topic}/${e.difficulty}] ${e.skipped ? "SKIPPED" : `outcome=${e.outcome}, method=${e.methodQuality}, hints=${e.hintsUsed}`}` +
-                (e.skipped
-                  ? ""
-                  : ` — said: "${(e.studentAnswer || "").slice(0, 200)}"`),
+                `Q${e.index} [${e.topic}/${e.difficulty}] ${e.skipped ? (e.studentAnswer?.trim() ? "Candidate moved on after answering; assess the recorded reasoning." : "No recorded answer; unassessed.") : `outcome=${e.outcome}, method=${e.methodQuality}, hints=${e.hintsUsed}`}` +
+                ` — task: "${(e.question || '').slice(0, 250)}" — said: "${(e.studentAnswer || '').slice(0, 500)}"`,
             )
             .join("\n")
         : "";
@@ -1142,6 +1146,7 @@ serve(
       // Get system prompt: engine-driven subjects use their own pack (qualities + scoring philosophy);
       // everything else uses the legacy hardcoded rubric.
       const enginePack = ENGINE_PACKS[interviewType as string];
+      const scoringTranscript = enginePack ? assessmentTranscript(sanitizedTranscription, text => asksToClarifyTask(text) || /^(?:(?:please |can we |could we )?(?:stop|end)(?: the interview| the session| here| now)?|(?:sorry[, ]+)?(?:i can(?:not|'t) hear you|can you hear me|is my (?:mic|microphone) working))[.!?]*$/i.test(text)) : sanitizedTranscription;
       const systemPrompt = enginePack
         ? buildEngineDrivenSystemPrompt(enginePack)
         : getSystemPrompt(interviewType || "11-plus", scoringSystem || "0-5");
@@ -1157,11 +1162,11 @@ serve(
           { role: "system", content: systemPrompt },
           {
             role: "user",
-            content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text.\n\n${sanitizedTranscription}${evidenceSummary}`,
+            content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text. Blank Student turns are unassessed administrative requests; do not comment on or score these, or a lack of reply after the final question.\n\n${scoringTranscript}${evidenceSummary}`,
           },
         ],
         temperature: 0,
-        response_format: { type: "json_object" },
+        response_format: enginePack ? assessmentResponseFormat(enginePack.subject) : { type: "json_object" },
       };
 
       // Add security headers
@@ -1181,7 +1186,7 @@ serve(
       // Start the annotation pass NOW — it only needs the transcript, so it runs while the
       // scoring call below is in flight.
       const deadline = AbortSignal.timeout(110_000);
-      const annotationsPromise = generateTranscriptAnnotations(
+      const annotationsPromise = enginePack ? Promise.resolve([]) : generateTranscriptAnnotations(
         sanitizedTranscription,
         openAIApiKey,
         deadline,
@@ -1219,7 +1224,12 @@ serve(
       }
 
       const data = await response.json();
-      const feedbackText = data.choices[0].message.content;
+      const choice = data.choices?.[0];
+      const feedbackText = choice?.message?.content;
+      if (typeof feedbackText !== 'string' || !feedbackText.trim() || choice?.message?.refusal || choice?.finish_reason === 'length') {
+        void annotationsPromise.catch(() => []);
+        return new Response(JSON.stringify({ error: 'The assessment could not be completed. Your transcript is saved; please retry feedback.' }), { status: 502, headers: securityHeaders });
+      }
 
       if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
         console.log("AI response received successfully");
@@ -1250,7 +1260,10 @@ serve(
         }
 
         // Validate and ensure all required fields exist with proper types
-        if (
+        if (enginePack) {
+          if (!feedbackData.detailed_feedback || typeof feedbackData.detailed_feedback !== 'object' || Array.isArray(feedbackData.detailed_feedback)) throw new Error('Missing detailed feedback');
+          groundAssessment(feedbackData, enginePack.subject, scoringTranscript);
+        } else if (
           interviewType === "logic-puzzles" ||
           interviewType === "maths-interview" ||
           interviewType === "verbal-interview" ||
@@ -1347,13 +1360,14 @@ serve(
       }
 
       // Annotations were started in parallel before the scoring call — collect them now.
-      let annotations: any[] = await annotationsPromise.catch(
+      let annotations: any[] = enginePack ? groundedAnnotations(scoringTranscript, feedbackData.annotations) : await annotationsPromise.catch(
         () => [] as any[],
       );
 
       // Post-process annotations: normalize categories, compute indices constrained to Student lines, and constrain to transcript bounds
       const allowedCategories = new Set([
         "strength",
+        "development",
         "grammar",
         "fluency",
         "lexical",
@@ -1510,7 +1524,7 @@ serve(
         .slice(0, 30) as any[];
 
       // If still empty, try a backup generation pass limited to Student content only
-      if (annotations.length === 0) {
+      if (!enginePack && annotations.length === 0) {
         try {
           const backupPrompt = `Extract 15 to 25 quotes from ONLY Student lines throughout the ENTIRE transcript that reflect strengths or issues. Analyze the complete conversation systematically from beginning to end. Categories: strength, grammar, fluency, lexical. Ensure good distribution across all categories and conversation portions. Respond ONLY as {"annotations":[{quote,category,explanation,suggestion,start,end}]}. Ensure start/end are indices into the ORIGINAL transcript string you see below, not a cleaned version. Preserve exact spacing and punctuation.`;
           const backupReq = {
@@ -1558,8 +1572,8 @@ serve(
       }
 
       // Generate overall improvement feedback
-      let overallImprovementFeedback = "";
-      try {
+      let overallImprovementFeedback = `Keep doing\n${feedbackData.detailed_feedback.strength || 'Review the evidence from this session.'}\n\nPractise next\n${feedbackData.detailed_feedback.next_step || 'Choose one specific skill to practise next.'}`;
+      if (!enginePack) try {
         const improvementSystemPrompt = `Write a concise practice plan grounded only in the supplied feedback. Address the candidate directly and match the interview type. Use two headings: "Keep doing" and "Practise next". Under each, write at most two short bullet points. Total maximum 90 words. Name concrete actions, not generic encouragement. Acknowledge missing evidence and never invent strengths, delivery cues, or an admissions prediction.`;
 
         const improvementRequest = {
@@ -1708,15 +1722,17 @@ serve(
         ); // Convert to 1-5 scale
       }
 
+      if (feedbackData.total_score === null) insertData.rating = null;
+
       const { data: feedbackRecord, error: insertError } = await supabase
         .from("feedback")
         .insert(censorFeedback(insertData))
         .select()
         .maybeSingle();
 
-      if (insertError) {
-        console.warn("Database insert warning:", insertError.message);
-        // Do not fail the request; return the generated feedback so the UI can display it
+      if (insertError || !feedbackRecord) {
+        console.warn("Feedback save failed:", insertError?.message || 'No saved record');
+        return new Response(JSON.stringify({ error: 'Your transcript is saved, but the assessment could not be saved. Please retry feedback.' }), { status: 503, headers: securityHeaders });
       }
 
       return new Response(JSON.stringify(feedbackData), {

@@ -51,6 +51,13 @@ const current = (q: BankQuestion): AgentState => ({
 });
 
 describe("Medicine conversation boundaries", () => {
+  it('does not let an end request erase a real answer as skipped', async () => {
+    const state = current(pool);
+    const result = await advanceAgent(state, { action:'end' }, {bank,pack:medicinePack,chat:async()=>({content:'Thank you.',toolCalls:[{id:'end',name:'finish_interview',args:{outcome:'skipped',note:'No answer given.'}}],raw:[]})});
+    expect(result.state.evidence[0].skipped).toBe(false);
+    expect(result.state.evidence[0].studentAnswer).toContain('previous substantive answer');
+    expect(result.state.evidence[0].completionReason).toBe('ended');
+  });
   it("starts a full mock with an authored medicine question, not a school hobby warm-up", async () => {
     for (let seed = 0; seed < 20; seed++) {
       const chat = vi.fn(async () =>

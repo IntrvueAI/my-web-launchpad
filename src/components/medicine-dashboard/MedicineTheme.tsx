@@ -41,3 +41,14 @@ export function MedicineTheme({ children, bottomNav = false, live = false, enabl
     </div>}
   </div></NestedMedicineTheme.Provider>;
 }
+
+/** Interview controls occupy their own toolbar space instead of covering the answer buttons. */
+export function MedicineColourControls() {
+  const { theme, change } = useMedicineColourScheme();
+  return <div className="medicine-colour-inline inline-flex items-center gap-1 rounded-lg border px-2" role="group" aria-label="Medicine colour scheme">
+    <Palette className="mr-1 h-4 w-4" aria-hidden="true" />
+    {(['clinical', 'coral'] as const).map(value => <button key={value} type="button" onClick={() => change(value)} aria-pressed={theme === value} aria-label={value === 'clinical' ? 'Clinical teal' : 'Warm coral'} title={value === 'clinical' ? 'Clinical teal' : 'Warm coral'} className="flex h-10 w-10 items-center justify-center rounded-full aria-pressed:ring-2 aria-pressed:ring-inset aria-pressed:ring-current">
+      <span className="h-3.5 w-3.5 rounded-full" style={{ background: value === 'clinical' ? '#19b5cc' : '#f5a887' }} />
+    </button>)}
+  </div>;
+}

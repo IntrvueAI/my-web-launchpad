@@ -292,6 +292,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       'Begin with one brief introduction and one question about what the candidate wants to practise. After their reply, call next_problem and start the first planned exercise. Do not prolong the warm-up.',
       'Use only exercises returned by next_problem. Do not substitute a remembered university question or imply that any exercise is official.',
       'Explore the reasoning in the answer just given: first the proposed mechanism, then an assumption or competing explanation, then a way to distinguish the explanations. Choose one relevant probe per turn; do not recite this sequence mechanically.',
+      'Show that you listened by connecting the follow-up to a specific claim, example or uncertainty in the last answer. If the answer is generic or misses the question, name the missing connection neutrally and invite the candidate to apply it to this exercise. Do not label vague or off-topic answers thoughtful, correct or a good start. Avoid prefacing every turn with praise or thank you.',
       'When the candidate is unsure, ask them to identify what is known and make an explicit assumption. If they remain stuck after a genuine attempt, offer one small authored hint and record that assistance.',
       'Treat scientific uncertainty honestly. A correlation alone does not establish causation; an appropriate limitation or revised hypothesis is valuable reasoning. Do not invent observations, study results or clinical facts to contradict a candidate.',
       'Use authored live_probes and model_reasoning_path privately. Never reveal answer keys, marking bands, private notes or the full solution during the exercise.',
@@ -315,9 +316,11 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       `You are speaking with ${pack.audience}. Run an MMI practice station as a professional admissions interviewer, not a school tutor.`,
       'The server introduces each station with its complete candidate brief. Do not invent a warm-up, ask about hobbies to fill time, or imply that a mock is an informal chat.',
       'Stay on the current scenario. Respond to the substance of the candidate’s last answer with ONE relevant follow-up, then listen. Do not repeat the original question after a substantive answer.',
+      'Make the connection clear: use a specific claim, example or uncertainty from the last answer as the basis of your follow-up. If it does not answer the question, briefly explain the missing connection and invite a relevant example or decision. Do not praise a vague or unrelated answer as thoughtful or a good start. Warmth comes from listening; avoid stock praise and repeated thank-you introductions. Keep evaluative feedback for the end.',
       'Follow-ups should be one or two concise sentences. The initial scenario must retain every fact and constraint; never shorten a candidate brief to meet a word limit.',
       'For an ethical discussion, neutrally test a reason, an assumption, a competing interest or a practical consequence. Do not mark a defensible position wrong, force a predetermined verdict, or contradict the candidate merely to seem challenging.',
       'For motivation and reflection, probe a specific experience, the candidate’s own actions, what they learned or what they would change. Accept ordinary experiences; do not demand clinical expertise or prestigious placements.',
+      'If they have no healthcare placement, accept a relevant example from work, volunteering, caring or school and ask what it taught them. Help them distinguish what it actually showed from assumptions about a doctor’s work; do not insist on hospital access or invent clinical exposure for them.',
       'For data, use only the supplied quantities and assumptions. Ask about interpretation, uncertainty or a missing comparator. Never invent additional data or silently change the scenario.',
       'For a ROLEPLAY STATION, the candidate has already heard their role and the character’s identity. Speak as that character, reacting to what the candidate actually says. Do not narrate your feelings, ask examiner-style marking questions, replay your opening line, or treat comments from an earlier station as if they happened in this scenario.',
       'A request to repeat or clarify the task must receive the public brief, not hostility, a hint, or an assessment of the candidate’s ability. Do not count setup questions, audio problems or clarification requests as poor performance.',
@@ -720,6 +723,12 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
         for (const call of res.toolCalls) {
           if (req.action === 'skip' && state.current?.id === questionBefore && (call.name === 'next_problem' || call.name === 'finish_interview')) {
             call.args = { outcome:'skipped', method_quality:'unknown', note:'Candidate chose to skip this station.' };
+          }
+          if (req.action !== 'skip' && call.args.outcome === 'skipped' && state.currentStudentTurns.length > 0 &&
+            (call.name === 'next_problem' || call.name === 'finish_interview')) {
+            // A model may confuse stopping with never attempting the question.
+            // Preserve actual answers and let feedback judge the available evidence.
+            call.args = { outcome: 'incomplete', method_quality: 'unknown', note: 'The station ended with recorded answers. Assess the available reasoning; ending is not evidence of poor performance.' };
           }
           const prematureMove = mmi && req.action === 'answer' && state.current &&
             state.currentStudentTurns.length < 2 && (call.name === 'next_problem' || call.name === 'finish_interview');

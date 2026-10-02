@@ -1,4 +1,5 @@
 import { Eye, EyeOff, Keyboard, Mic } from "lucide-react";
+import { MedicineColourControls } from '@/components/medicine-dashboard/MedicineTheme';
 
 export function InterviewToolbar({
   title,
@@ -12,6 +13,8 @@ export function InterviewToolbar({
   onTypeMode,
   onPushToTalk,
   onFocus,
+  onBeginResponse,
+  medicine = false,
 }: {
   title: string;
   live: boolean;
@@ -24,6 +27,8 @@ export function InterviewToolbar({
   onTypeMode: () => void;
   onPushToTalk: () => void;
   onFocus: () => void;
+  onBeginResponse?: () => void;
+  medicine?: boolean;
 }) {
   const seconds = Math.max(0, timer?.secondsRemaining ?? 0);
   const clock = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
@@ -63,8 +68,10 @@ export function InterviewToolbar({
                 </span>
               </div>
             )}
+            {timer?.phase === 'prep' && onBeginResponse && <button className={button} onClick={onBeginResponse}>I'm ready · start answering</button>}
           </div>
         )}
+        {medicine && !live && <MedicineColourControls />}
       </div>
       {live && (
         <div className="flex flex-wrap items-center justify-between gap-3 border-t px-4 py-3">
@@ -78,6 +85,7 @@ export function InterviewToolbar({
                   : "Microphone muted"}
           </p>
           <div className="flex flex-wrap gap-2">
+            {medicine && <MedicineColourControls />}
             <button
               className={button}
               aria-pressed={typeMode}

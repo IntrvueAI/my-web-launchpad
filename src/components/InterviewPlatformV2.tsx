@@ -70,6 +70,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
   const [typeMode, setTypeMode] = useState(false);
   const [typedText, setTypedText] = useState('');
   const [feedback, setFeedback] = useState(null);
+  const [pendingTranscript, setPendingTranscript] = useState<string | null>(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
@@ -230,7 +231,8 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
     try {
       setIsGeneratingFeedback(true);
 
-      const transcription = await stopInterview();
+      const transcription = pendingTranscript ?? await stopInterview();
+      if (transcription) setPendingTranscript(transcription);
 
       if (transcription && user) {
         const { data, error } = await invokeEdgeFunction('generate-interview-feedback', {
@@ -255,6 +257,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
           });
         } else {
           setFeedback(data);
+          setPendingTranscript(null);
           toast({
             title: "Feedback Generated",
             description: "Your interview has been analyzed and feedback is ready!",
@@ -277,7 +280,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
     } finally {
       setIsGeneratingFeedback(false);
     }
-  }, [stopInterview, user, toast]);
+  }, [stopInterview, user, toast, pendingTranscript, interviewType, sessionReference, sessionId]);
 
   const handleRegenerateFeedback = useCallback(async () => {
     try {
@@ -466,7 +469,7 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
           </div>
         )}
 
-        {(!engineDriven || setupChoice || isStreaming) && (
+        {!pendingTranscript && !feedback && !isGeneratingFeedback && (!engineDriven || setupChoice || isStreaming) && (
         <div className={hideTranscript ? "space-y-6" : "space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0"}>
 
           <div className={hideTranscript ? "" : "lg:col-span-2"}>
@@ -680,6 +683,11 @@ export const InterviewPlatformV2: React.FC<InterviewPlatformProps> = ({
         </div>
         )}
 
+        {pendingTranscript && !isGeneratingFeedback && !feedback && <Card className="mt-6 p-6 space-y-4" role="status">
+          <h2 className="font-semibold">Your transcript is ready</h2>
+          <p className="text-sm text-muted-foreground">The assessment could not finish. You can retry using the same interview.</p>
+          <Button onClick={handleStopInterview}>Retry feedback</Button>
+        </Card>}
         {(feedback || isGeneratingFeedback) && (
           <div className="mt-12">
             <div className="flex items-center justify-between mb-6">

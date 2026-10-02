@@ -106,7 +106,7 @@ export const SectionScores: React.FC<SectionScoresProps> = ({
             section={section}
             score={score}
             maxScore={config.maxSectionScore}
-            feedback={feedbackText}
+            feedback={typeof feedbackText === 'string' ? feedbackText : ''}
             interviewType={interviewType}
           />
         );

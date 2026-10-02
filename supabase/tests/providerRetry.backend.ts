@@ -1,5 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { fetchWithProviderRetry } from "../functions/_shared/providerRetry";
+import {
+  fetchWithProviderRetry,
+  providerRetryDelay,
+} from "../functions/_shared/providerRetry";
 import { state } from "./fixtures/state";
 
 const options = () => ({
@@ -14,6 +17,33 @@ const call = (opts = options()) =>
   );
 
 describe("Temporary provider failures", () => {
+  it.each([
+    ["5.99s", 6240],
+    ["125ms", 375],
+  ])(
+    "uses a provider token-limit wait of %s when Retry-After is absent",
+    async (duration, delay) => {
+      const response = new Response(
+        JSON.stringify({
+          error: {
+            message: `Rate limit reached. Please try again in ${duration}.`,
+          },
+        }),
+        { status: 429 },
+      );
+      expect(await providerRetryDelay(response)).toBe(delay);
+      expect((await response.json()).error.message).toContain("Rate limit");
+    },
+  );
+  it("does not retry exhausted billing quota", async () => {
+    state.fetch.mockResolvedValue(
+      new Response(JSON.stringify({ error: { code: "insufficient_quota" } }), {
+        status: 429,
+      }),
+    );
+    expect((await call()).status).toBe(429);
+    expect(state.fetch).toHaveBeenCalledTimes(1);
+  });
   it("waits for Retry-After and resends the same request", async () => {
     vi.useFakeTimers();
     state.fetch

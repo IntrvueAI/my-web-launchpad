@@ -1,3 +1,36 @@
+/** The provider sometimes supplies its wait only in a 429 JSON error, without Retry-After. */
+export async function providerRetryDelay(
+  response?: Response,
+): Promise<number | undefined> {
+  const requested = response?.headers.get("retry-after");
+  if (requested) {
+    if (/^\d+(?:\.\d+)?$/.test(requested)) return Number(requested) * 1000;
+    const date = Date.parse(requested);
+    if (Number.isFinite(date)) return Math.max(0, date - Date.now());
+  }
+  if (response?.status === 429) {
+    try {
+      const data = await response.clone().json();
+      if (
+        ["insufficient_quota", "billing_hard_limit_reached"].includes(
+          data?.error?.code,
+        )
+      )
+        return Infinity;
+      const match =
+        typeof data?.error?.message === "string" &&
+        data.error.message.match(/try again in\s+(\d+(?:\.\d+)?)\s*(ms|s)\b/i);
+      if (match)
+        return (
+          Number(match[1]) * (match[2].toLowerCase() === "ms" ? 1 : 1000) + 250
+        );
+    } catch {
+      /* Missing JSON uses bounded exponential backoff below. */
+    }
+  }
+  return undefined;
+}
+
 /** Retry temporary provider failures within a caller-owned request deadline. */
 export async function fetchWithProviderRetry(
   url: string,
@@ -37,15 +70,8 @@ export async function fetchWithProviderRetry(
       if (response) return response;
       throw failure;
     }
-    const requested = response?.headers.get("retry-after");
-    const seconds =
-      requested && /^\d+(?:\.\d+)?$/.test(requested) ? Number(requested) : NaN;
-    const date = requested ? Date.parse(requested) : NaN;
-    const delay = Number.isFinite(seconds)
-      ? seconds * 1000
-      : Number.isFinite(date)
-        ? Math.max(0, date - Date.now())
-        : 2000 * 2 ** (attempt - 1);
+    const delay =
+      (await providerRetryDelay(response)) ?? 2000 * 2 ** (attempt - 1);
     // A longer provider hold cannot be shortened safely to fit an interactive call.
     if (delay > maxRetryDelayMs && response) return response;
     await response?.body?.cancel();

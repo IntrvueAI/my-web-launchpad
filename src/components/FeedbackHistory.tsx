@@ -307,14 +307,14 @@ export const FeedbackHistory: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="text-right">
                       <div className="text-2xl font-bold text-primary">
-                        {feedback.interview_type === 'ielts' 
+                        {feedback.total_score == null ? 'Partial assessment' : feedback.interview_type === 'ielts'
                           ? `${feedback.total_score}/9.0` 
                           : `${feedback.total_score}/20`
                         }
                       </div>
-                      <Badge className={`${getLegacyBandColor(feedback.total_score, feedback.interview_type)} text-white text-xs`}>
+                      {feedback.total_score != null && <Badge className={`${getLegacyBandColor(feedback.total_score, feedback.interview_type)} text-white text-xs`}>
                         {getLegacyBandLabel(feedback.total_score, feedback.interview_type, feedback.scoring_system)}
-                      </Badge>
+                      </Badge>}
                     </div>
                     <Button 
                       variant="ghost" 

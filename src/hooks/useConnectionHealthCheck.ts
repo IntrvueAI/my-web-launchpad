@@ -25,21 +25,23 @@ export const useConnectionHealthCheck = (intervalMs: number = 30000): Connection
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const checkConnection = useCallback(async (): Promise<void> => {
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     try {
       // Cancel any existing check
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
 
-      abortControllerRef.current = new AbortController();
+      abortControllerRef.current = controller;
+      timeout = setTimeout(() => controller.abort(new DOMException('Connection check timed out', 'TimeoutError')), 5000);
       const startTime = performance.now();
 
-      // Use a simple connectivity check instead of /ping
-      const response = await fetch('https://www.google.com/favicon.ico', {
+      // Check this site. A blocked third-party icon says nothing about the interview.
+      const response = await fetch('/favicon.ico', {
         method: 'HEAD',
-        signal: abortControllerRef.current.signal,
-        cache: 'no-cache',
-        mode: 'no-cors' // Avoid CORS issues
+        signal: controller.signal,
+        cache: 'no-store',
       });
 
       const endTime = performance.now();
@@ -49,22 +51,25 @@ export const useConnectionHealthCheck = (intervalMs: number = 30000): Connection
         isOnline: true, // If we reach here, we're online
         latency: latency,
         lastCheck: new Date(),
-        connectionQuality: latency < 500 ? 'good' : latency < 2000 ? 'poor' : 'offline'
+        connectionQuality: response.ok && latency < 500 ? 'good' : 'poor'
       };
 
-      setHealth(newHealth);
+      if (abortControllerRef.current === controller) setHealth(newHealth);
     } catch (error) {
       // If the request was aborted, don't update state
-      if (error instanceof Error && error.name === 'AbortError') {
+      if (abortControllerRef.current !== controller || (controller.signal.aborted && controller.signal.reason?.name !== 'TimeoutError')) {
         return;
       }
 
       setHealth({
-        isOnline: false,
+        isOnline: navigator.onLine,
         latency: null,
         lastCheck: new Date(),
-        connectionQuality: 'offline'
+        connectionQuality: navigator.onLine ? 'poor' : 'offline'
       });
+    } finally {
+      clearTimeout(timeout);
+      if (abortControllerRef.current === controller) abortControllerRef.current = null;
     }
   }, []);
 

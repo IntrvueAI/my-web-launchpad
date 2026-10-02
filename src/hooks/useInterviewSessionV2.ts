@@ -11,6 +11,7 @@ import type { BrainResponse, Mode } from '@/interview/engine/types';
 import { logDebug } from '@/interview/debug/debugBus';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { logAppEvent } from '@/lib/appLogger';
+import { StationControlQueue } from '@/interview/engine/controlQueue';
 
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
 
@@ -79,12 +80,21 @@ export const useInterviewSessionV2 = (
   const [interviewComplete, setInterviewComplete] = useState(false);
 
   const clientRef = useRef<AnamClient | null>(null);
+  const generationRef = useRef(0);
+  const startingRef = useRef(false);
   const lastMessageTimeRef = useRef<number>(Date.now());
 
   const sessionRefRef = useRef<string | null>(null);
   const startOptsRef = useRef<StartOptions>({});
   const transcriptRef = useRef<string[]>([]);
   const brainBusyRef = useRef<boolean>(false);
+  const uiStateRef = useRef<BrainResponse['uiState'] | null>(null);
+  const controlsRef = useRef(new StationControlQueue());
+  const answerRetriesRef = useRef(0);
+  type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic';
+  type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; turnId?: string; expectedQuestionIndex?: number };
+  const retryTurnRef = useRef<{ action: TurnAction; payload: TurnPayload } | null>(null);
+  const turnRef = useRef<(action: TurnAction, payload?: TurnPayload) => Promise<void>>(async () => {});
   const startedRef = useRef<boolean>(false);
   const pendingStudentRef = useRef<string[]>([]);
   const flushTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -113,6 +123,7 @@ export const useInterviewSessionV2 = (
 
   const speak = useCallback(async (say: string) => {
     const client = clientRef.current;
+    const speakingSession = sessionRefRef.current;
     if (!client || !say?.trim()) return;
     logDebug({ source: 'anam', kind: 'request', label: 'client.talk()', detail: say });
     try {
@@ -121,52 +132,89 @@ export const useInterviewSessionV2 = (
       console.error('Failed to talk:', err);
       logDebug({ source: 'anam', kind: 'error', label: 'client.talk() failed', detail: (err as Error)?.message || String(err) });
     }
-    pushTranscript('assistant', say);
+    if (speakingSession === sessionRefRef.current && client === clientRef.current) pushTranscript('assistant', say);
   }, [pushTranscript]);
 
   const runBrainTurn = useCallback(async (
-    action: 'start' | 'answer' | 'skip' | 'switch_topic',
-    payload: { studentText?: string; mode?: Mode; topic?: string } = {},
+    action: TurnAction,
+    payload: TurnPayload = {},
   ) => {
     const sessionId = sessionRefRef.current;
-    if (!sessionId || brainBusyRef.current) return;
+    if (!sessionId) return;
+    payload = { ...payload, turnId: payload.turnId ?? crypto.randomUUID() };
+    const isControl = action === 'skip' || action === 'switch_topic';
+    if (action !== 'start') payload.expectedQuestionIndex ??= uiStateRef.current?.questionIndex;
+    if (isControl && pendingStudentRef.current.length) {
+      payload.studentText = [payload.studentText, ...pendingStudentRef.current].filter(Boolean).join(' ');
+      pendingStudentRef.current = [];
+    }
+    if (brainBusyRef.current) {
+      if (isControl) controlsRef.current.enqueue({ action, stationIndex: payload.expectedQuestionIndex, topic: payload.topic, studentText: payload.studentText });
+      return;
+    }
+    if (payload.expectedQuestionIndex !== undefined && payload.expectedQuestionIndex !== uiStateRef.current?.questionIndex) return;
     brainBusyRef.current = true;
     const requestBody = { sessionId, action, ...payload, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);
+      if (sessionRefRef.current !== sessionId) return;
       logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
+      const changedStation = uiStateRef.current !== null && uiStateRef.current.questionIndex !== res.uiState.questionIndex;
+      uiStateRef.current = res.uiState;
       setBrainUiState(res.uiState);
+      answerRetriesRef.current = 0;
+      if (changedStation || res.done) pendingStudentRef.current = [];
       await speak(res.say);
+      if (sessionRefRef.current !== sessionId) return;
       if (res.done) setInterviewComplete(true);
       lastMessageTimeRef.current = Date.now();
     } catch (err) {
+      if (sessionRefRef.current !== sessionId) return;
       console.error('Brain turn failed:', err);
       logDebug({ source: 'brain', kind: 'error', label: `interview-brain: ${action} failed`, detail: (err as Error)?.message || String(err) });
       sessionLogger.logError(`Brain turn (${action}) failed: ${(err as Error)?.message || err}`)
         .catch(() => {});
-      // A failed 'answer' call must not silently drop what the student just said — put it back
-      // at the front of the queue so the pending-flush below retries it automatically, and tell
-      // them, so a slow/failed reply reads as "hang on" rather than looking like nothing happened.
-      if (action === 'answer' && payload.studentText) {
-        pendingStudentRef.current = [payload.studentText, ...pendingStudentRef.current];
+      // Keep the same operation identity and payload. Merging a new answer into a retry
+      // could score two different utterances twice if the first request had committed.
+      if (answerRetriesRef.current < 2) {
+        answerRetriesRef.current += 1;
+        retryTurnRef.current = { action, payload };
       }
       toast({
-        title: "Didn't quite catch that",
-        description: 'Retrying your last message…',
+        title: 'The reply was delayed',
+        description: retryTurnRef.current ? 'Retrying your last action…' : 'Please try your last action again. Your answer remains in the transcript.',
       });
     } finally {
+      if (sessionRefRef.current !== sessionId) return;
       brainBusyRef.current = false;
-      if (pendingStudentRef.current.length > 0) {
+      if (retryTurnRef.current) {
+        if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
+        flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS * (answerRetriesRef.current + 1));
+        return;
+      }
+      const queued = controlsRef.current.take(uiStateRef.current?.questionIndex);
+      if (queued && uiStateRef.current?.onQuestion) {
+        void turnRef.current(queued.action as TurnAction, { topic: queued.topic, studentText: queued.studentText, expectedQuestionIndex: queued.stationIndex });
+        return;
+      }
+      if (pendingStudentRef.current.length > 0 && !pushToTalkModeRef.current) {
         if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
         flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
       }
     }
   }, [speak, sessionLogger, toast]);
+  turnRef.current = runBrainTurn;
 
   const flushStudentBuffer = useCallback(() => {
     if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
     if (brainBusyRef.current) return;
+    if (retryTurnRef.current) {
+      const retry = retryTurnRef.current;
+      retryTurnRef.current = null;
+      void runBrainTurn(retry.action, retry.payload);
+      return;
+    }
     const buffered = pendingStudentRef.current.join(' ').replace(/\s+/g, ' ').trim();
     if (!buffered) return;
     pendingStudentRef.current = [];
@@ -269,29 +317,42 @@ export const useInterviewSessionV2 = (
   }, [deepgramMic]);
 
   const startInterview = useCallback(async (userId: string, opts: StartOptions = {}) => {
+    if (startingRef.current || clientRef.current) return;
     if (!videoRef.current) {
       setError('Video element not found');
       return;
     }
 
+    startingRef.current = true;
+    const generation = ++generationRef.current;
+    const current = () => generation === generationRef.current;
     try {
       setError(null);
       setSessionStatus('connecting');
       setInterviewComplete(false);
       transcriptRef.current = [];
       pendingStudentRef.current = [];
+      retryTurnRef.current = null;
+      controlsRef.current.clear();
+      uiStateRef.current = null;
+      answerRetriesRef.current = 0;
+      brainBusyRef.current = false;
+      setBrainUiState(null);
+      setChatHistory([]);
       utteranceBufferRef.current = '';
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
       startedRef.current = false;
       startOptsRef.current = opts;
 
       const sessionRef = await sessionLogger.startSession(interviewType, userId);
+      if (!current()) { await sessionLogger.endSession('error'); return; }
       sessionRefRef.current = sessionRef;
       sessionLogger.logEvent('session_start', 'Interview session initialization started').catch(() => {});
 
       connectionHealth.startMonitoring();
 
       const sessionToken = await getSessionToken();
+      if (!current()) return;
       sessionLogger.logEvent('anam_token', 'Successfully obtained Anam session token').catch(() => {});
 
       // Anam never touches the mic here — Deepgram (useDeepgramMic) does the listening instead.
@@ -304,7 +365,7 @@ export const useInterviewSessionV2 = (
       });
 
       const kickOff = () => {
-        if (startedRef.current) return;
+        if (!current() || startedRef.current) return;
         startedRef.current = true;
         runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic });
       };
@@ -312,6 +373,7 @@ export const useInterviewSessionV2 = (
 
       if (!videoRef.current) throw new Error('Video element lost during initialization');
       await client.streamToVideoElement('interview-video');
+      if (!current()) { await client.stopStreaming(); return; }
       startPeerAudioWatch();
 
       // Deepgram is our mic now — start it alongside the avatar stream.
@@ -348,6 +410,7 @@ export const useInterviewSessionV2 = (
           finalizeAckRef.current?.();
         },
       }, { sessionId: sessionLogger.sessionId ?? undefined });
+      if (!current()) { deepgramMic.stop(); return; }
 
       setIsConnected(true);
       setIsStreaming(true);
@@ -356,6 +419,16 @@ export const useInterviewSessionV2 = (
 
       if (!startedRef.current) kickOff();
     } catch (err) {
+      if (!current()) return;
+      sessionRefRef.current = null;
+      startedRef.current = false;
+      deepgramMic.stop();
+      stopPeerAudioWatch();
+      const failedClient = clientRef.current;
+      clientRef.current = null;
+      void failedClient?.stopStreaming().catch(() => {});
+      connectionHealth.stopMonitoring();
+      void sessionLogger.endSession('error').catch(() => {});
       console.error('❌ Failed to start interview (v2):', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to start interview';
       logDebug({ source: 'session', kind: 'error', label: 'startInterview failed', detail: errorMessage });
@@ -364,8 +437,10 @@ export const useInterviewSessionV2 = (
       setSessionStatus('error');
       setIsConnected(false);
       setIsStreaming(false);
+    } finally {
+      startingRef.current = false;
     }
-  }, [videoRef, sessionLogger, connectionHealth, interviewType, runBrainTurn, handleStudentTurn, deepgramMic, startPeerAudioWatch]);
+  }, [videoRef, sessionLogger, connectionHealth, interviewType, runBrainTurn, handleStudentTurn, deepgramMic, startPeerAudioWatch, stopPeerAudioWatch]);
 
   const sendTypedMessage = useCallback((text: string) => {
     const t = (text || '').trim();
@@ -388,9 +463,15 @@ export const useInterviewSessionV2 = (
   };
 
   const stopInterview = useCallback(async (): Promise<string | null> => {
+    generationRef.current += 1;
+    sessionRefRef.current = null;
+    startedRef.current = false;
+    retryTurnRef.current = null;
+    controlsRef.current.clear();
+    if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
     try {
-      let transcription: string | null = null;
-      await sessionLogger.logEvent('stop_interview', 'Interview stop initiated');
+      let transcription: string | null = buildTranscription();
+      void sessionLogger.logEvent('stop_interview', 'Interview stop initiated').catch(() => {});
 
       deepgramMic.stop();
       stopPeerAudioWatch();
@@ -403,18 +484,19 @@ export const useInterviewSessionV2 = (
             console.warn('No student responses detected in transcription.');
             await sessionLogger.logError('No student responses detected in transcription');
           }
-          await sessionLogger.logEvent('transcription_generated', 'Transcription built', 'info', {
+          void sessionLogger.logEvent('transcription_generated', 'Transcription built', 'info', {
             has_student_responses: hasStudent,
             engine_driven: true,
             stt_provider: 'deepgram',
-          });
+          }).catch(() => {});
         } catch (transcriptionError) {
           console.warn('Could not build transcription:', transcriptionError);
           await sessionLogger.logError(`Transcription error: ${transcriptionError}`);
         }
 
-        await clientRef.current.stopStreaming();
+        const stoppingClient = clientRef.current;
         clientRef.current = null;
+        try { await stoppingClient.stopStreaming(); } catch (err) { console.warn('Avatar shutdown failed; preserving transcript:', err); }
       }
 
       if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
@@ -426,6 +508,9 @@ export const useInterviewSessionV2 = (
       setIsConnected(false);
       setIsStreaming(false);
       setSessionStatus('idle');
+      uiStateRef.current = null;
+      setBrainUiState(null);
+      brainBusyRef.current = false;
       setError(null);
       setChatHistory([]);
       setLiveCaption('');
@@ -457,6 +542,12 @@ export const useInterviewSessionV2 = (
 
   useEffect(() => {
     return () => {
+      generationRef.current += 1;
+      sessionRefRef.current = null;
+      startedRef.current = false;
+      retryTurnRef.current = null;
+      controlsRef.current.clear();
+      if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
       deepgramMic.stop();
       if (peerAudioRef.current) {
         cancelAnimationFrame(peerAudioRef.current.raf);
