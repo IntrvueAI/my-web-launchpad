@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-// Temporary passcode fallback so an admin isn't locked out if their email isn't allow-listed.
-// NOTE: this lives in the client bundle, so it is NOT strong security — the email allowlist
-// (admin_users table) is the real gate. Override via VITE_ADMIN_PASSCODE. Change/remove before scale.
-const ADMIN_PASSCODE = (import.meta.env.VITE_ADMIN_PASSCODE as string) || 'intrvue-admin-2026';
 import { AdminOverview } from '@/components/admin/AdminOverview';
 import { AdminUserManagement } from '@/components/admin/AdminUserManagement';
 import { AdminInterviews } from '@/components/admin/AdminInterviews';
@@ -21,20 +16,16 @@ import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft } from 'lucide-react';
+import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft, CheckCircle } from 'lucide-react';
 
 export default function AdminDashboard() {
-  const { isAdmin, isLoading, error } = useAdminStatus();
+  const { isAdmin, isLoading, error, refetch } = useAdminStatus();
   const { user, signOut, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem('admin_unlocked') === '1');
-  const [passcode, setPasscode] = useState('');
-  const [passError, setPassError] = useState(false);
 
   const handleSignOut = async () => {
     sessionStorage.removeItem('admin_unlocked');
-    setUnlocked(false);
     await signOut();
     navigate('/auth'); // land on the full sign-in page so it's obvious you're signed out
   };
@@ -52,21 +43,12 @@ export default function AdminDashboard() {
     // On success the browser redirects to Google, so nothing else to do here.
   };
 
-  const tryUnlock = () => {
-    if (passcode.trim() === ADMIN_PASSCODE) {
-      sessionStorage.setItem('admin_unlocked', '1');
-      setUnlocked(true);
-    } else {
-      setPassError(true);
-    }
-  };
-
   // Add error logging
   if (error) {
     console.error('Admin status check error:', error);
   }
 
-  if (isLoading) {
+  if (user && isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -77,7 +59,7 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!isAdmin && !unlocked) {
+  if (!user || !isAdmin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-4">
         <Card className="w-full max-w-md">
@@ -87,20 +69,11 @@ export default function AdminDashboard() {
             </div>
             <CardTitle>Admin access</CardTitle>
             <CardDescription>
-              Your account isn't allow-listed. Enter the admin passcode to continue.
+              {error ? 'Administrator access could not be checked. Please retry.' : 'Sign in with an authorised administrator account to continue.'}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Input
-              type="password"
-              value={passcode}
-              autoFocus
-              placeholder="Passcode"
-              onChange={(e) => { setPasscode(e.target.value); setPassError(false); }}
-              onKeyDown={(e) => e.key === 'Enter' && tryUnlock()}
-            />
-            {passError && <p className="text-sm text-destructive">Incorrect passcode.</p>}
-            <Button className="w-full" onClick={tryUnlock}>Unlock</Button>
+            {user && <Button variant="outline" className="w-full" onClick={() => refetch()}>Check access again</Button>}
 
             <div className="pt-3 mt-1 border-t space-y-2 text-center">
               <p className="text-xs text-muted-foreground">
@@ -179,6 +152,9 @@ export default function AdminDashboard() {
             <Link to="/admin/medicine-portal" target="_blank" rel="noopener noreferrer">
               <Stethoscope className="h-3.5 w-3.5" /> Medicine portal
             </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/medicine-review"><CheckCircle className="h-3.5 w-3.5" /> Review sourced Medicine questions</Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/medicine-landing-preview" target="_blank" rel="noopener noreferrer">

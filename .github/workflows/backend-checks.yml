@@ -48,6 +48,7 @@ jobs:
       - run: npm run backend:sql-check
       - run: node scripts/check-guest-trial-migration.mjs
       - run: node scripts/check-feedback-inbox-migration.mjs
+      - run: node scripts/check-question-review-migration.mjs
       - uses: denoland/setup-deno@v2
         with:
           deno-version: "2.9.6"

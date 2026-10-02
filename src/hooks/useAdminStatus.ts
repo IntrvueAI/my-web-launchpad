@@ -15,7 +15,7 @@ export const useAdminStatus = () => {
       // Check if user is authenticated properly
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
       if (sessionError || !sessionData.session) {
-        console.error('No valid session found:', sessionError);
+        if (sessionError) throw sessionError;
         return false;
       }
 
@@ -23,8 +23,7 @@ export const useAdminStatus = () => {
       const { data: basicCheck, error: basicError } = await supabase.rpc('is_current_user_admin');
 
       if (basicError) {
-        console.error("Failed basic admin check:", basicError);
-        return false;
+        throw basicError;
       }
 
       return basicCheck as boolean;

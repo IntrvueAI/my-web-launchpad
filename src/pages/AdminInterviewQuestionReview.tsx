@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import elevenplusStaging from '@/data/interview-staging/elevenplus.json';
 import logicStaging from '@/data/interview-staging/logic.json';
@@ -136,6 +137,7 @@ export default function AdminInterviewQuestionReview() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <Link to="/admin/medicine-review" className="mb-5 block rounded-xl border border-primary/30 bg-primary/5 p-4 text-primary">New: review 24 sourced Medicine questions, with saved approvals and notes →</Link>
         <h1 className="text-2xl font-bold mb-1">Interview question review — thought-provoking batch</h1>
         <p className="text-muted-foreground mb-4">
           {ALL.length} questions staged for the 11+, logic, maths, current-affairs and medicine interviews.

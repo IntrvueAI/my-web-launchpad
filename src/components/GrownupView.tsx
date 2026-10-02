@@ -1,5 +1,6 @@
 import { censorTranscript } from '@/interview/shared/transcript';
 import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { FeedbackService } from '@/services/FeedbackService';
@@ -21,24 +22,24 @@ const band = (s: number) =>
 export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
   const { user } = useAuth();
   const { stats } = useDashboardStats();
-  const [rows, setRows] = useState<FbRow[] | null>(null);
+  const history = useQuery({queryKey:['grownup-feedback',user?.id],queryFn:() => FeedbackService.getUserFeedbackHistory(user!.id,9),enabled:!!user});
+  const rows = (history.data as unknown as FbRow[] | undefined) ?? null;
   const [transcript, setTranscript] = useState<{ title: string; when: string; text: string } | null>(null);
 
   const firstName =
     (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0] || user?.email?.split('@')[0] || 'Your child';
 
   useEffect(() => {
-    if (!user) return;
-    FeedbackService.getUserFeedbackHistory(user.id, 9).then((data) => setRows(data as unknown as FbRow[])).catch(() => setRows([]));
-  }, [user]);
+    setTranscript(null);
+  }, [user?.id]);
 
   const avg = stats?.averageScore ?? 0;
+  const hasScoredSessions = (stats?.scoredSessions ?? 0) > 0;
   const trend = stats?.recentTrend ?? [];
   const delta = trend.length >= 2 ? Math.round((trend[trend.length - 1].score - trend[trend.length - 2].score) * 10) / 10 : null;
   const thisWeek = (stats?.weekStrip ?? []).filter((d) => d.completed).length;
   const next = (stats?.upcomingSchoolInterviews ?? [])[0];
-  const readiness = Math.min(100, Math.round((avg / 20) * 70 + Math.min(30, (stats?.totalSessions ?? 0) * 3)));
-  const rLabel = readiness >= 70 ? 'Interview ready' : readiness >= 40 ? 'Building' : 'Just starting';
+  const practiceProgress = thisWeek / 7;
   const rCirc = 2 * Math.PI * 29;
 
   return (
@@ -62,20 +63,20 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
           <div className="relative w-[66px] h-[66px] flex-none">
             <svg width="66" height="66" viewBox="0 0 66 66">
               <circle cx="33" cy="33" r="29" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth="6" />
-              <circle cx="33" cy="33" r="29" fill="none" stroke={band(avg).ring} strokeWidth="6" strokeLinecap="round" strokeDasharray={rCirc} strokeDashoffset={rCirc * (1 - readiness / 100)} transform="rotate(-90 33 33)" />
+              <circle cx="33" cy="33" r="29" fill="none" stroke="hsl(var(--sky))" strokeWidth="6" strokeLinecap="round" strokeDasharray={rCirc} strokeDashoffset={rCirc * (1 - practiceProgress)} transform="rotate(-90 33 33)" />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center font-display text-base font-semibold text-white">{readiness}%</div>
+            <div className="absolute inset-0 flex items-center justify-center font-display text-base font-semibold text-white">{thisWeek}/7</div>
           </div>
           <div>
-            <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Readiness</div>
-            <div className="text-sm font-extrabold text-[#FFB088] mt-0.5">{rLabel}</div>
+            <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Practice days</div>
+            <div className="text-sm font-extrabold text-[#FFB088] mt-0.5">In the last seven days</div>
             <div className="text-[11.5px] font-semibold text-muted-foreground mt-0.5">{next ? `${next.daysUntil} days to first interview` : 'No date set yet'}</div>
           </div>
         </div>
         <div className="tile p-[18px]">
           <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">This week</div>
           <div className="font-display text-3xl font-semibold text-white mt-1.5">{thisWeek}</div>
-          <div className="text-[11.5px] font-bold text-muted-foreground">practice {thisWeek === 1 ? 'session' : 'sessions'}</div>
+          <div className="text-[11.5px] font-bold text-muted-foreground">active {thisWeek === 1 ? 'day' : 'days'}</div>
         </div>
         <div className="tile p-[18px]">
           <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Next interview</div>
@@ -88,7 +89,7 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         </div>
         <div className="tile p-[18px]">
           <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#7E8BA6]">Avg score</div>
-          <div className="font-display text-3xl font-semibold text-white mt-1.5">{avg}<span className="text-sm text-[#7E8BA6]"> /20</span></div>
+          <div className="font-display text-3xl font-semibold text-white mt-1.5">{hasScoredSessions ? <>{avg}<span className="text-sm text-[#7E8BA6]"> /20</span></> : <span className="text-base">Not assessed yet</span>}</div>
           {delta !== null && delta !== 0 && (
             <div className={cn('text-[11.5px] font-extrabold', delta > 0 ? 'text-emerald' : 'text-[#F87171]')}>{delta > 0 ? '↑' : '↓'} {Math.abs(delta)} since last session</div>
           )}
@@ -100,17 +101,19 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
         <h2 className="font-display text-[17px] font-semibold text-white">Recent interviews &amp; transcripts</h2>
         <span className="text-xs font-bold text-muted-foreground hidden sm:block">Tap a card to read exactly what was said</span>
       </div>
-      {rows === null ? (
+      {history.isError ? (
+        <div role="alert" className="tile p-6"><p>Interview history could not be loaded.</p><button className="mt-2 text-sky underline" onClick={() => history.refetch()}>Try again</button></div>
+      ) : rows === null ? (
         <p className="text-muted-foreground">Loading…</p>
       ) : rows.length === 0 ? (
         <p className="text-muted-foreground tile p-6 text-center">No interviews yet — they&rsquo;ll appear here after the first session.</p>
       ) : (
         <div className="grid gap-[13px] sm:grid-cols-2 lg:grid-cols-3">
           {rows.map((r) => {
-            const score = r.total_score ?? 0;
-            const b = band(score);
+            const score = r.total_score;
+            const b = typeof score === 'number' ? band(score) : { label:'Partial assessment',bg:'#475569',ring:'#AEB9D0' };
             const when = new Date(r.created_at).toLocaleString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            const skillEntries = r.scores && typeof r.scores === 'object' ? Object.entries(r.scores).slice(0, 4) : [];
+            const skillEntries = r.scores && typeof r.scores === 'object' ? Object.entries(r.scores).filter(([,value]) => typeof value === 'number').slice(0, 4) : [];
             return (
               <div key={r.id} className="tile p-[18px] flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-2">
@@ -120,7 +123,7 @@ export const GrownupView: React.FC<{ onBack?: () => void }> = ({ onBack }) => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <div className="font-display text-2xl font-semibold" style={{ color: b.ring }}>{score}<span className="text-[13px] text-[#7E8BA6]">/20</span></div>
+                  {typeof score === 'number' && <div className="font-display text-2xl font-semibold" style={{ color: b.ring }}>{score}<span className="text-[13px] text-[#7E8BA6]">/20</span></div>}
                   <span className="text-[10px] font-extrabold text-white px-2.5 py-[3px] rounded-full" style={{ background: b.bg }}>{b.label}</span>
                 </div>
                 {skillEntries.length > 0 && (

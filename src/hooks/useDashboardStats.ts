@@ -25,6 +25,7 @@ export interface UpcomingSchoolInterview {
 
 export interface DashboardStats {
   totalSessions: number;
+  scoredSessions?: number;
   averageScore: number;
   bestScore: number;
   recentTrend: { date: string; score: number }[];

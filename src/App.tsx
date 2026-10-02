@@ -42,6 +42,7 @@ const AdminUnreleasedInterviews = lazy(() => import("./pages/AdminUnreleasedInte
 const AdminMedicineInterviews = lazy(() => import("./pages/AdminMedicineInterviews"));
 const AdminMedicinePortal = lazy(() => import("./pages/AdminMedicinePortal"));
 const AdminMedicineLab = lazy(() => import("./pages/AdminMedicineLab"));
+const AdminMedicineReview = lazy(() => import("./pages/AdminMedicineReview"));
 const MedicineDesignPreview = import.meta.env.DEV ? lazy(() => import("./pages/MedicineDesignPreview")) : null;
 const AdminMedicineLandingPreview = lazy(() => import("./pages/AdminMedicineLandingPreview"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
@@ -177,6 +178,7 @@ const AppContent = () => {
               <Route path="/admin/medicine-interviews" element={<AdminMedicineInterviews />} />
               <Route path="/admin/medicine-portal" element={<AdminMedicinePortal />} />
               <Route path="/admin/medicine-lab" element={<AdminMedicineLab />} />
+              <Route path="/admin/medicine-review" element={<AdminMedicineReview />} />
               {import.meta.env.DEV && <Route path="/__dev/medicine-lab" element={<AdminMedicineLab localPreview />} />}
               {MedicineDesignPreview && <Route path="/__dev/medicine-design" element={<MedicineDesignPreview />} />}
               <Route path="/admin/medicine-landing-preview" element={<AdminMedicineLandingPreview />} />

@@ -5,6 +5,7 @@ import { censorFeedback } from '@/interview/shared/transcript';
 
 export interface ProgressSummary {
   totalSessions: number;
+  scoredSessions: number;
   averageScore: number;
   bestScore: number;
   recentTrend: { date: string; score: number }[];
@@ -56,6 +57,7 @@ export const FeedbackService = {
 
     return {
       totalSessions: records.length,
+      scoredSessions: scores.length,
       averageScore: scores.length
         ? Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10
         : 0,

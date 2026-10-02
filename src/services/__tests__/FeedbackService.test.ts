@@ -59,6 +59,18 @@ describe('FeedbackService.getUserFeedbackHistory', () => {
 });
 
 describe('FeedbackService.getProgressSummary', () => {
+  it('keeps partial assessments out of averages and score trends', async () => {
+    vi.mocked(supabase.from).mockReturnValue(mockQueryChain({data:[
+      {total_score:null,created_at:'2026-10-02'},
+      {total_score:0,created_at:'2026-10-01'},
+      {total_score:16,created_at:'2026-09-30'},
+    ],error:null}));
+    const summary=await FeedbackService.getProgressSummary('u1');
+    expect(summary.totalSessions).toBe(3);
+    expect(summary.scoredSessions).toBe(2);
+    expect(summary.averageScore).toBe(8);
+    expect(summary.recentTrend.map(point => point.score)).toEqual([16,0]);
+  });
   it('calculates average and best score correctly', async () => {
     const records = [
       { total_score: 16, created_at: '2026-01-03' },

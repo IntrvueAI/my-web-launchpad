@@ -1,6 +1,6 @@
 {
   "updatedAt": "2026-10-02",
-  "edition": "08",
+  "edition": "09",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -368,6 +368,13 @@
     }
   ],
   "updates": [
+    {
+      "id": "sourced-review-20261002",
+      "date": "2 October 2026",
+      "category": "QUESTION REVIEW & RELIABILITY",
+      "title": "24 public Medicine examples ready for editorial review.",
+      "body": "The new approval desk at /admin/medicine-review brings together 24 paraphrased public examples from eight university, NHS and medical-organisation sources. Each proposal has a source locator, verification note and release checks. Seven proposals flag overlap with existing questions. Approvals, changes and rejections save to Supabase with decision history and protection against stale edits; approval does not publish content. Oxford academic prompts remain distinct from MMI. Also corrected partial-score and practice-day reporting in the parent view and removed the browser passcode bypass from the admin dashboard. The frontend requires Lovable Publish → Update after GitHub sync. See docs/MEDICINE-SOURCED-REVIEW-2026-10-02.md for verification and release limits."
+    },
     {
       "id": "interview-quality-20261002",
       "date": "2 October 2026",

@@ -14,10 +14,11 @@ import { FeedbackSummary } from './feedback/FeedbackSummary';
 export function FeedbackVersions(props: any) {
   const { isAdmin } = useAdminStatus();
   const [v2, setV2] = useState(true);
+  const partial = typeof props.feedback?.total_score !== 'number';
   return (
     <div className="space-y-6">
-      {v2 ? <FeedbackSummary {...props} /> : <InterviewFeedback {...props} />}
-      {isAdmin && (
+      {v2 || partial ? <FeedbackSummary {...props} /> : <InterviewFeedback {...props} />}
+      {isAdmin && !partial && (
         <div className="flex flex-col items-center gap-1.5 pt-2">
           <Button variant="outline" onClick={() => setV2((x) => !x)} className="gap-2 rounded-full">
             <ArrowLeftRight className="w-4 h-4" />
