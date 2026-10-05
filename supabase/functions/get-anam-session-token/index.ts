@@ -251,7 +251,7 @@ serve(
       // Engine-driven (orchestrated) interviews are puppeteered by our interview-brain via talk().
       if (guestAllowed && currentSession) {
         const guestMinutes: Record<string, number> = {
-          'medicine-mmi': 69, 'medicine-mmi-manchester': 45,
+          'medicine-mmi': 69, 'medicine-mmi-manchester': 45, 'medicine-mmi-practice': 41,
           'medicine-ethics-practice': 7, 'medicine-roleplay-practice': 7,
           'medicine-motivation-practice': 7, 'medicine-data-practice': 7,
           'medicine-oxford-pilot': 36, 'medicine-cambridge-pilot': 36, 'medicine-imperial-pilot': 35,

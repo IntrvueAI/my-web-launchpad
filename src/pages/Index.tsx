@@ -257,7 +257,7 @@ const Index = () => {
     let pending: string | null = null;
     try { pending = sessionStorage.getItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
     const requested = params.get('medicinePractice') ?? pending;
-    if (!requested || !getMedicinePractice(requested)) return;
+    if (!requested || (!getMedicinePractice(requested) && requested !== 'medicine-mmi-practice')) return;
     if (!user) {
       try { sessionStorage.setItem('intrvue:pending-medicine-practice', requested); } catch { /* The practice picker remains available after sign-in. */ }
       setStoredProductLine('medicine');

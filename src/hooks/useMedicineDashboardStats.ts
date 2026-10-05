@@ -9,7 +9,7 @@ import { FeedbackRecord } from '@/types/interview';
 
 // Exported so every Medicine dashboard view filters/labels feedback records identically instead
 // of re-declaring its own copy (MedicineFeedback.tsx used to keep a second, easy-to-drift copy).
-export const MEDICINE_TYPES = ['medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PRACTICE_MODES.map(mode => mode.id), ...MEDICINE_PILOTS.map(pilot => pilot.interviewTypeId)];
+export const MEDICINE_TYPES = ['medicine-mmi-practice', 'medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PRACTICE_MODES.map(mode => mode.id), ...MEDICINE_PILOTS.map(pilot => pilot.interviewTypeId)];
 
 export const titleFor = (r: FeedbackRecord): string =>
   r.interview_type === 'medicine-mmi-manchester' ? 'Manchester circuit' : r.interview_type === 'medicine-mmi' ? 'Leeds circuit' : INTERVIEW_TYPES[r.interview_type ?? '']?.name ?? 'Medicine practice';

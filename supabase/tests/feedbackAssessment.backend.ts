@@ -5,6 +5,7 @@ import {
   assessmentTranscript,
   groundAssessment,
   groundedAnnotations,
+  groundAnswerCoaching,
 } from "../functions/_shared/feedbackAssessment";
 import { asksToClarifyTask } from "../../src/interview/engine/publicPrompt";
 
@@ -19,6 +20,32 @@ const assessment = () => ({
   ),
 });
 describe("Evidence-grounded feedback", () => {
+  const evidence=[{index:1,question:'How would you respond to this concern?',studentAnswer:'I would ask what matters most to them.'}];
+  const coaching=()=>({question_index:1,original_quote:'I would ask what matters most to them.',improved_answer:'What is worrying you most about this? I would listen to their answer before offering a next step.',why:'An open question makes the listening visible.',structure:['Acknowledge the concern.','Ask what matters to them.','Agree a realistic next step.']});
+  it('keeps a grounded rewrite attached to its actual station',()=>{
+    expect(groundAnswerCoaching(coaching(),evidence,transcript)).toEqual(coaching());
+    const format=assessmentResponseFormat('medicine',true);
+    expect((format.json_schema.schema.properties.detailed_feedback as any).required).toContain('answer_coaching');
+    expect((assessmentResponseFormat('elevenplus').json_schema.schema.properties.detailed_feedback as any).properties).not.toHaveProperty('answer_coaching');
+  });
+  it.each([
+    {original_quote:'I would listen carefully.'},
+    {original_quote:'I treated the patient myself.'},
+    {question_index:2},
+    {structure:['One generic tip.']},
+    {improved_answer:'x'.repeat(901)},
+  ])('discards invented, cross-station or malformed coaching %j',change=>{
+    expect(groundAnswerCoaching({...coaching(),...change},evidence,transcript)).toBeNull();
+  });
+  it('rejects a real quote from another station and masked clarification',()=>{
+    expect(groundAnswerCoaching({...coaching(),original_quote:'Then I would check with the organiser.'},evidence,transcript)).toBeNull();
+    const clarification='Sorry, what is the question?';
+    expect(groundAnswerCoaching({...coaching(),original_quote:clarification},[{...evidence[0],studentAnswer:clarification}],assessmentTranscript('Student: '+clarification,()=>true))).toBeNull();
+  });
+  it('allows a structure without pretending an unanswered question was answered',()=>{
+    const guide={...coaching(),original_quote:null,improved_answer:null};
+    expect(groundAnswerCoaching(guide,[{...evidence[0],studentAnswer:''}],'Interviewer: Your task.')).toEqual(guide);
+  });
   it("excludes clarification from assessment without changing highlight positions", () => {
     const original =
       transcript +

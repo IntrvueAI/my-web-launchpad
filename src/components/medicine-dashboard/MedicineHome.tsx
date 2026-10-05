@@ -82,7 +82,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
               <div style={{ width: 220, background: 'var(--med-bg)', borderRadius: 14, padding: 16, fontSize: 13 }}>
                 <div style={{ color: 'var(--med-tertiary)', fontWeight: 600, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 10 }}>Format</div>
                 <Row label="Stations" value={'1'} />
-                <Row label="Prep time" value={recommended.timingSeconds?.prep ? '30 seconds' : 'None'} />
+                <Row label="Prep time" value={recommended.timingSeconds?.prep ? (recommended.timingSeconds.prep % 60 === 0 ? `${recommended.timingSeconds.prep / 60} minute${recommended.timingSeconds.prep === 60 ? '' : 's'}` : `${recommended.timingSeconds.prep} seconds`) : 'None'} />
                 <Row label="Per station" value={recommended.timingSeconds ? `${recommended.timingSeconds.response / 60} min` : '—'} />
               </div>
             </div>

@@ -7,7 +7,7 @@
  */
 
 // Core interview system types
-export type InterviewType = 'medicine-ethics-practice' | 'medicine-roleplay-practice' | 'medicine-motivation-practice' | 'medicine-data-practice' | '11-plus' | '11-plus-v2' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview' | 'verbal-interview' | 'current-affairs-interview' | 'medicine-mmi' | 'medicine-mmi-manchester' | 'medicine-oxford-pilot' | 'medicine-cambridge-pilot' | 'medicine-imperial-pilot' | 'chat-with-clara';
+export type InterviewType = 'medicine-mmi-practice' | 'medicine-ethics-practice' | 'medicine-roleplay-practice' | 'medicine-motivation-practice' | 'medicine-data-practice' | '11-plus' | '11-plus-v2' | 'ielts' | 'oxbridge' | 'grammar-school' | 'scholarship' | 'logic-puzzles' | 'maths-interview' | 'verbal-interview' | 'current-affairs-interview' | 'medicine-mmi' | 'medicine-mmi-manchester' | 'medicine-oxford-pilot' | 'medicine-cambridge-pilot' | 'medicine-imperial-pilot' | 'chat-with-clara';
 export type ScoringSystem = '0-5' | '0-9' | '0-20' | '0-7';
 export type AnnotationCategory = 'strength' | 'development' | 'grammar' | 'fluency' | 'lexical';
 
@@ -114,6 +114,7 @@ export interface FeedbackScores {
  * Detailed feedback text for each section
  */
 export interface DetailedFeedback {
+  answer_coaching?: AnswerCoaching | null;
   evidence_quotes?: Record<string, string>;
   // 11-plus feedback sections
   personal_insight?: string;
@@ -136,6 +137,14 @@ export interface DetailedFeedback {
   // Common feedback
   overall: string;
   band_assessment: string;
+}
+
+export interface AnswerCoaching {
+  question_index: number;
+  original_quote: string | null;
+  improved_answer: string | null;
+  why: string;
+  structure: string[];
 }
 
 /**

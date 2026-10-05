@@ -13,9 +13,9 @@ export function spokenTaskBrief(question: BankQuestion): string {
   const rp = question.roleplay;
   return `This is a roleplay. ${rp.applicantRole} I will play ${rp.name}, ${rp.role}. Speak directly to me as that person.`;
 }
-export function spokenQuestionPrompt(question: BankQuestion): string {
+export function spokenQuestionPrompt(question: BankQuestion, reading = false): string {
   const brief = spokenTaskBrief(question);
-  return question.roleplay ? `${brief} The roleplay starts now. ${question.roleplay.openingStatement}` : brief;
+  return question.roleplay ? `${brief} ${reading ? 'Their opening words are:' : 'The roleplay starts now.'} ${question.roleplay.openingStatement}` : brief;
 }
 
 /** Narrow repair intent. A request to restate the task is not an assessed answer. */

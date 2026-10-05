@@ -33,7 +33,7 @@ const TESTER_PASSCODE = (import.meta.env.VITE_MED_TESTER_PASSCODE as string) || 
  * the full scoring model, and src/interview/engine/agent.ts's renderRoleplayStation for how a
  * roleplay station hands the interviewer's own persona to the character being played.
  */
-const MEDICINE_TYPE_IDS = ['medicine-mmi', 'medicine-mmi-manchester'] as const;
+const MEDICINE_TYPE_IDS = ['medicine-mmi-practice', 'medicine-mmi', 'medicine-mmi-manchester'] as const;
 
 const STATION_INFO = [
   { icon: Stethoscope, label: 'Roleplay stations', blurb: 'Speak to a live character — hidden information only surfaces if you ask the right way.' },

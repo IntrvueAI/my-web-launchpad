@@ -36,6 +36,7 @@ const retiredFunctions = [
 ];
 const apply = process.argv.includes("--apply");
 const allowedMigrations = new Set([
+  "20261005000001_mmi_practice_mock.sql",
   "20261002000001_question_review.sql",
   "20261002000002_question_review_conflicts.sql",
   "20261001000003_mmi_feedback_inbox.sql",

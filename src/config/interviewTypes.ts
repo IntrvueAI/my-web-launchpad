@@ -10,7 +10,7 @@
 
 import { InterviewTypeConfig, InterviewType as ModernInterviewType } from '@/types/interview';
 import { MEDICINE_PILOTS, packForMedicinePilot, sessionBudgetMinutes } from '@/interview/subjects/medicine/pilots';
-import { MEDICINE_PRACTICE_MODES, PRACTICE_TIMING, PRACTICE_SESSION_MINUTES } from '@/interview/subjects/medicine/practiceModes';
+import { MEDICINE_PRACTICE_MODES, PRACTICE_TIMING, PRACTICE_SESSION_MINUTES, FULL_MMI_MOCK } from '@/interview/subjects/medicine/practiceModes';
 import { medicinePack } from '@/interview/subjects/medicine/pack';
 
 // Keep the original interface for backward compatibility
@@ -341,10 +341,16 @@ for (const mode of MEDICINE_PRACTICE_MODES) {
     description: mode.description, adminOnly: false, duration: PRACTICE_SESSION_MINUTES,
     timingSeconds: PRACTICE_TIMING, topicPracticeEnabled: false,
     scoringCriteria: medicinePack.domains, tags: ['medicine', '5-minute practice', mode.topic],
-    preStartNote: 'One original practice station. Read for 30 seconds, then discuss your answer with Clara for up to 5 minutes. Your feedback follows immediately. You can finish early at any time.',
+    preStartNote: 'One original practice station. Read for 1 minute, then discuss your answer with Clara for up to 5 minutes. A timer alert marks the final minute. Your feedback includes a practical answer structure or a suggested improvement to your own words. You can finish early at any time.',
   };
 }
 for (const id of ['medicine-mmi', 'medicine-mmi-manchester']) INTERVIEW_TYPES[id].scoringCriteria = medicinePack.domains;
+INTERVIEW_TYPES[FULL_MMI_MOCK.id] = {
+  ...INTERVIEW_TYPES['medicine-mmi'],id:FULL_MMI_MOCK.id,name:'Full MMI practice mock',
+  description:'Six varied Medicine stations. One minute to read each brief, then five minutes to discuss your answer. A general practice format, not a university-specific circuit.',
+  timingSeconds:FULL_MMI_MOCK.timing,duration:sessionBudgetMinutes(FULL_MMI_MOCK.stations,FULL_MMI_MOCK.timing),topicPracticeEnabled:false,adminOnly:false,
+  tags:['medicine','full mock','6 stations'],preStartNote:'Six stations covering motivation, ethics, communication, healthcare and evidence. You have one minute to read each station brief and five minutes to answer, with an alert in the final minute. Select “I’m ready” to begin answering early. Feedback follows the whole mock. This is our general practice format; school-specific timings vary.',
+};
 
 export const INTERVIEW_CATEGORIES = {
   academic: {
@@ -826,6 +832,7 @@ function pilotFeedbackConfig(id: ModernInterviewType): InterviewTypeConfig {
 }
 
 export const INTERVIEW_TYPES_CONFIG: Record<ModernInterviewType, InterviewTypeConfig> = {
+  'medicine-mmi-practice': { ...MEDICINE_MMI_CONFIG, name:'Full MMI practice mock',description:'General six-station practice with one minute reading and five minutes answering per station.' },
   'medicine-ethics-practice': { ...MEDICINE_MMI_CONFIG, name: 'Ethics & judgement' },
   'medicine-roleplay-practice': { ...MEDICINE_MMI_CONFIG, name: 'Communication & empathy' },
   'medicine-motivation-practice': { ...MEDICINE_MMI_CONFIG, name: 'Motivation & reflection' },

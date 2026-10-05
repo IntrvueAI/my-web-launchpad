@@ -1,4 +1,6 @@
 import { InterviewToolbar } from './interview/InterviewToolbar';
+import { StationTimePanel } from './interview/StationTimePanel';
+import { useStationAnnouncements } from '@/hooks/useStationAnnouncements';
 import { censorTranscript } from '@/interview/shared/transcript';
 import { useQueryClient } from '@tanstack/react-query';
 import { MedicineStationBrief } from '@/components/interview/MedicineStationBrief';
@@ -147,6 +149,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     stationTimer, beginResponse
   } = useInterviewSession(videoRef, interviewType);
 
+  const medicineTimer = interviewType.category === 'medicine' && isStreaming ? stationTimer : null;
+  const stationAnnouncements = useStationAnnouncements(medicineTimer && brainUiState ? `${sessionReference}:${brainUiState.questionIndex}` : null, medicineTimer);
+
   useEffect(() => {
     onBusyChange?.(isGeneratingFeedback || ['connecting', 'connected', 'streaming'].includes(sessionStatus));
   }, [onBusyChange, isGeneratingFeedback, sessionStatus]);
@@ -270,6 +275,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     }
 
     try {
+      if (interviewType.category === 'medicine') stationAnnouncements.prepareSound();
       setReasoningNotes({});
       setFeedback(null);
       setPendingTranscript(null);
@@ -277,7 +283,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     } catch (err) {
       console.error('Failed to start interview:', err);
     }
-  }, [startInterview, user, toast, engineDriven, setupChoice]);
+  }, [startInterview, user, toast, engineDriven, setupChoice, interviewType.category, stationAnnouncements.prepareSound]);
 
   // Handle stopping the interview session and generate feedback
   const handleStopInterview = useCallback(async () => {
@@ -500,11 +506,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
   return (
     <div ref={rootRef}><MedicineTheme enabled={interviewType.category === 'medicine'} live><div className="min-h-screen bg-background text-foreground overflow-y-auto">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      {medicineTimer && !feedback && !pendingTranscript && !isGeneratingFeedback && <StationTimePanel clock={medicineTimer}
+        progress={brainUiState ? progressLabel(brainUiState).replace('Question', academic ? 'Exercise' : 'Station') : 'Current station'}
+        onBeginResponse={beginResponse} soundEnabled={stationAnnouncements.soundEnabled} onToggleSound={stationAnnouncements.toggleSound}/>}
+      <div className={`container mx-auto px-4 pb-8 max-w-6xl ${medicineTimer ? 'pt-[calc(8.5rem+env(safe-area-inset-top))]' : 'pt-8'}`}>
 
         {!feedback && !pendingTranscript && !isGeneratingFeedback && <InterviewToolbar medicine={interviewType.category === 'medicine'} title={interviewType.name} live={isStreaming}
           progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : sessionStatus === 'connecting' ? 'Connecting…' : sessionStatus === 'error' ? 'Connection needs attention' : 'Ready to begin'}
-          timer={stationTimer} onBeginResponse={beginResponse} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
+          timer={interviewType.category === 'medicine' ? null : stationTimer} onBeginResponse={beginResponse} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
           onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}/>}
         {!isStreaming && !engineDriven && (
           <p className="text-muted-foreground text-sm max-w-2xl mb-5">{interviewType.description}</p>

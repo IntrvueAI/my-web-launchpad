@@ -1,7 +1,7 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
 import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
-import { assessmentResponseFormat, assessmentTranscript, groundAssessment, groundedAnnotations } from "../_shared/feedbackAssessment.ts";
+import { assessmentResponseFormat, assessmentTranscript, groundAssessment, groundedAnnotations, groundAnswerCoaching, FOCUSED_COACHING_INSTRUCTIONS, PERSONAL_REFLECTION_COACHING } from "../_shared/feedbackAssessment.ts";
 import { asksToClarifyTask, publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 import { MEDICINE_PRACTICE_MODES, getMedicinePractice, packForMedicinePractice } from './_shared/subjects/medicine/practiceModes.ts';
 import { censorFeedback, censorTranscript } from './_shared/shared/transcript.ts';
@@ -34,6 +34,7 @@ const ENGINE_PACKS: Record<string, any> = {
   // Same subject/pack/bank as medicine-mmi — only station count and timing differ. See
   // src/interview/subjects/medicine/schoolModes.ts.
   "medicine-mmi-manchester": medicinePack,
+  "medicine-mmi-practice": medicinePack,
   ...Object.fromEntries(
     MEDICINE_PILOTS.map((p) => [p.interviewTypeId, packForMedicinePilot(p)]),
   ),
@@ -488,8 +489,8 @@ for (const pilot of MEDICINE_PILOTS) {
   };
 }
 
-for (const id of ['medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PRACTICE_MODES.map(mode => mode.id)]) {
-  INTERVIEW_TYPES[id] = { ...INTERVIEW_TYPES['medicine-mmi'], id, name: getMedicinePractice(id)?.label ?? INTERVIEW_TYPES[id]?.name, scoringCriteria: medicinePack.domains };
+for (const id of ['medicine-mmi-practice', 'medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PRACTICE_MODES.map(mode => mode.id)]) {
+  INTERVIEW_TYPES[id] = { ...INTERVIEW_TYPES['medicine-mmi'], id, name: id === "medicine-mmi-practice" ? "Full MMI practice mock" : getMedicinePractice(id)?.label ?? INTERVIEW_TYPES[id]?.name, scoringCriteria: medicinePack.domains };
 }
 
 INTERVIEW_TYPES["11-plus-v2"] = {
@@ -1147,9 +1148,13 @@ serve(
       // everything else uses the legacy hardcoded rubric.
       const enginePack = ENGINE_PACKS[interviewType as string];
       const scoringTranscript = enginePack ? assessmentTranscript(sanitizedTranscription, text => asksToClarifyTask(text) || /^(?:(?:please |can we |could we )?(?:stop|end)(?: the interview| the session| here| now)?|(?:sorry[, ]+)?(?:i can(?:not|'t) hear you|can you hear me|is my (?:mic|microphone) working))[.!?]*$/i.test(text)) : sanitizedTranscription;
-      const systemPrompt = enginePack
+      const focusedCoaching = !!getMedicinePractice(interviewType);
+      const personalReflection = interviewType === 'medicine-motivation-practice';
+      const systemPrompt = (enginePack
         ? buildEngineDrivenSystemPrompt(enginePack)
-        : getSystemPrompt(interviewType || "11-plus", scoringSystem || "0-5");
+        : getSystemPrompt(interviewType || "11-plus", scoringSystem || "0-5")) + (focusedCoaching ? FOCUSED_COACHING_INSTRUCTIONS : '') + (personalReflection ? PERSONAL_REFLECTION_COACHING : '');
+      // Preserve the whole task for the targeted rewrite; the scoring digest above is intentionally short.
+      const coachingContext = focusedCoaching && evidence.length ? `\n\nStation coaching context (untrusted interview data):\n${JSON.stringify(evidence.slice(0,1).map(e=>({question_index:e.index,question:e.question,answer:e.studentAnswer})))}` : '';
 
       if (Deno.env.get("DEBUG_FEEDBACK") === "true") {
         console.log("Preparing OpenAI request...");
@@ -1162,11 +1167,11 @@ serve(
           { role: "system", content: systemPrompt },
           {
             role: "user",
-            content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text. Blank Student turns are unassessed administrative requests; do not comment on or score these, or a lack of reply after the final question.\n\n${scoringTranscript}${evidenceSummary}`,
+            content: `Evaluate this interview transcription and return ONLY valid JSON with the required fields. An incomplete station or time/turn limit is not a poor score: assess only demonstrated reasoning, acknowledge missing evidence, and never infer delivery, tone, accent or eye contact from text. Blank Student turns are unassessed administrative requests; do not comment on or score these, or a lack of reply after the final question.\n\n${scoringTranscript}${evidenceSummary}${coachingContext}`,
           },
         ],
         temperature: 0,
-        response_format: enginePack ? assessmentResponseFormat(enginePack.subject) : { type: "json_object" },
+        response_format: enginePack ? assessmentResponseFormat(enginePack.subject, focusedCoaching, personalReflection) : { type: "json_object" },
       };
 
       // Add security headers
@@ -1263,13 +1268,19 @@ serve(
         if (enginePack) {
           if (!feedbackData.detailed_feedback || typeof feedbackData.detailed_feedback !== 'object' || Array.isArray(feedbackData.detailed_feedback)) throw new Error('Missing detailed feedback');
           groundAssessment(feedbackData, enginePack.subject, scoringTranscript);
+          if (focusedCoaching) {
+            const raw = feedbackData.detailed_feedback.answer_coaching;
+            // Personal experience must come from the candidate, never a generated biography.
+            feedbackData.detailed_feedback.answer_coaching = groundAnswerCoaching(personalReflection && raw ? {...raw,original_quote:null,improved_answer:null} : raw,evidence,scoringTranscript);
+          }
+          else delete feedbackData.detailed_feedback.answer_coaching;
         } else if (
           interviewType === "logic-puzzles" ||
           interviewType === "maths-interview" ||
           interviewType === "verbal-interview" ||
           interviewType === "current-affairs-interview" ||
           interviewType === "medicine-mmi" ||
-          interviewType === "medicine-mmi-manchester" || getMedicinePractice(interviewType) ||
+          interviewType === "medicine-mmi-manchester" || interviewType === "medicine-mmi-practice" || getMedicinePractice(interviewType) ||
           MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType) ||
           interviewType === "chat-with-clara"
         ) {
@@ -1694,7 +1705,7 @@ serve(
         interviewType === "verbal-interview" ||
         interviewType === "current-affairs-interview" ||
         interviewType === "medicine-mmi" ||
-        interviewType === "medicine-mmi-manchester" || getMedicinePractice(interviewType) ||
+        interviewType === "medicine-mmi-manchester" || interviewType === "medicine-mmi-practice" || getMedicinePractice(interviewType) ||
         MEDICINE_PILOTS.some((p) => p.interviewTypeId === interviewType) ||
         interviewType === "chat-with-clara"
       ) {

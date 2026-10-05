@@ -1,5 +1,4 @@
 import { lazy, Suspense, useState } from "react";
-import { Link } from "react-router-dom";
 import { Clock, ArrowRight } from "lucide-react";
 import { INTERVIEW_TYPES, type InterviewType } from "@/config/interviewTypes";
 import { MEDICINE_PRACTICE_MODES } from "@/interview/subjects/medicine/practiceModes";
@@ -32,7 +31,7 @@ export function MedicinePractice({
         {(
           [
             { id: "quick", label: "5-minute stations" },
-            { id: "circuit", label: "Full school circuits" },
+            { id: "circuit", label: "Full mocks" },
             { id: "solo", label: "Solo practice studio" },
           ] as const
         ).map((tab) => (
@@ -74,7 +73,7 @@ export function MedicinePractice({
                 </p>
                 <p className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
                   <Clock className="h-4 w-4" />
-                  30 seconds reading · 5 minutes answering
+                  1 minute reading · 5 minutes answering
                 </p>
                 <button
                   onClick={() => onStartInterview(INTERVIEW_TYPES[practice.id])}
@@ -89,29 +88,21 @@ export function MedicinePractice({
           <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border bg-card p-5">
             <div>
               <h2 className="font-semibold">
-                See the reasoning behind a strong answer
+                Improve the answer you just gave
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Try, compare and improve with our worked examples.
+                Your station feedback includes a practical structure or a suggested rewrite, with space to try it in your own words.
               </p>
             </div>
-            <Link
-              className="text-sm font-semibold underline underline-offset-4"
-              to="/medicine/examples"
-            >
-              Explore worked answers →
-            </Link>
           </div>
         </>
       ) : (
         <>
           <p className="text-sm text-muted-foreground">
-            Practise a complete circuit with timings guided by each school’s
-            published format. Choose a five-minute station above for focused
-            practice.
+            Choose a general mock or a school-specific format. The timer stays visible and alerts you in the final minute of each station.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
-            {["medicine-mmi", "medicine-mmi-manchester"].map((id) => {
+            {["medicine-mmi-practice", "medicine-mmi", "medicine-mmi-manchester"].map((id) => {
               const type = INTERVIEW_TYPES[id];
               return (
                 <article key={id} className="rounded-2xl border bg-card p-6">
@@ -125,7 +116,7 @@ export function MedicinePractice({
                     {type.description}
                   </p>
                   <p className="mt-4 text-sm font-medium">
-                    {id === "medicine-mmi"
+                    {id === 'medicine-mmi-practice' ? '6 stations · 1 minute reading + 5 minutes answering each' : id === "medicine-mmi"
                       ? "8 stations · 64 minutes of station time"
                       : "5 stations · 40 minutes of station time"}
                   </p>

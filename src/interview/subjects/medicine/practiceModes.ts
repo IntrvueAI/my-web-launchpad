@@ -30,8 +30,22 @@ export const MEDICINE_PRACTICE_MODES = [
   },
 ] as const;
 export type MedicinePracticeMode = (typeof MEDICINE_PRACTICE_MODES)[number];
-export const PRACTICE_TIMING = { prep: 30, response: 300 };
+export const PRACTICE_TIMING = { prep: 60, response: 300 };
 export const PRACTICE_SESSION_MINUTES = 7;
+/** General practice format, not a claim about any university's admissions circuit. */
+export const FULL_MMI_MOCK = {
+  id: "medicine-mmi-practice",
+  stations: 6,
+  timing: { prep: 60, response: 300 },
+} as const;
+export function packForFullMmiMock(): SubjectPack {
+  return {
+    ...medicinePack,
+    mockTargetQuestions: FULL_MMI_MOCK.stations,
+    stationReadingSeconds: FULL_MMI_MOCK.timing.prep,
+    speakingNotes: `${medicinePack.speakingNotes}\nThis is a general six-station practice circuit, not an official university interview. Give the full candidate brief at each new station and connect transitions clearly. The interface provides one minute to read before five minutes of discussion.`,
+  };
+}
 export function getMedicinePractice(
   id: string,
 ): MedicinePracticeMode | undefined {
@@ -43,6 +57,7 @@ export function packForMedicinePractice(
   return {
     ...medicinePack,
     focusedPractice: true,
+    stationReadingSeconds: PRACTICE_TIMING.prep,
     topics: medicinePack.topics.filter((topic) => topic.id === mode.topic),
     mockTargetQuestions: 1,
     maxStudentTurnsPerQuestion: 6,

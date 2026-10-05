@@ -179,7 +179,7 @@ export const InterviewFeedbackV2 = ({
   const isVerbalInterview = interviewType === 'verbal-interview';
   const isCurrentAffairs = interviewType === 'current-affairs-interview';
   const medicinePilot = getMedicinePilot(interviewType);
-  const isMedicineMMI = interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || !!medicinePilot || !!getMedicinePractice(interviewType);
+  const isMedicineMMI = interviewType === 'medicine-mmi-practice' || interviewType === 'medicine-mmi' || interviewType === 'medicine-mmi-manchester' || !!medicinePilot || !!getMedicinePractice(interviewType);
   const medicineDomains = medicinePilot ? packForMedicinePilot(medicinePilot).domains : medicinePack.domains;
   const isChatWithClara = interviewType === 'chat-with-clara';
 

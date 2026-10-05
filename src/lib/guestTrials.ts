@@ -4,6 +4,7 @@ export const GUEST_INTERVIEW_IDS = [
   "medicine-roleplay-practice",
   "medicine-motivation-practice",
   "medicine-data-practice",
+  "medicine-mmi-practice",
   "medicine-mmi",
   "medicine-mmi-manchester",
   "medicine-oxford-pilot",

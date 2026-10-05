@@ -16,6 +16,8 @@ import {
 } from "@/interview/shared/transcript";
 import { AnnotatedTranscript } from "@/components/AnnotatedTranscript";
 import { conciseFeedback } from "@/utils/feedbackSummary";
+import { StationAnswerCoach } from './StationAnswerCoach';
+import { getMedicinePractice } from '@/interview/subjects/medicine/practiceModes';
 
 export interface ReviewItem {
   index: number;
@@ -60,6 +62,7 @@ export function FeedbackSummary({
     assessedCount === sections.length;
   const summary = conciseFeedback(feedback, sections);
   const medicine = interviewType.startsWith("medicine-");
+  const focusedMedicine = !!getMedicinePractice(interviewType);
   const title = INTERVIEW_TYPES[interviewType]?.name ?? config.name;
   function download() {
     const url = URL.createObjectURL(
@@ -123,7 +126,7 @@ export function FeedbackSummary({
             Try next
           </h3>
           <p className="mt-3 text-sm leading-relaxed">{summary.nextStep}</p>
-          {audience === "candidate" && (
+          {audience === "candidate" && !focusedMedicine && (
             <Link
               to={`${medicine ? "/medicine/examples" : "/examples"}?interview=${encodeURIComponent(interviewType)}`}
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
@@ -134,6 +137,8 @@ export function FeedbackSummary({
           )}
         </article>
       </div>
+      {focusedMedicine && <StationAnswerCoach key={`${interviewType}:${feedback.transcription ?? ''}`} interviewType={interviewType} coaching={detail.answer_coaching}
+        question={feedback.questions_review?.find(q=>q.index === detail.answer_coaching?.question_index)?.question ?? feedback.questions_review?.[0]?.question}/>}
       <div className="rounded-2xl border bg-card p-5">
         <h3 className="font-semibold">
           {audience === "admin" ? "Skills assessed" : "Your skills"}

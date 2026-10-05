@@ -1,7 +1,7 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
 import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
-import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING } from './_shared/subjects/medicine/practiceModes.ts';
+import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING, FULL_MMI_MOCK, packForFullMmiMock } from './_shared/subjects/medicine/practiceModes.ts';
 import { publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 // Interview Brain — the LLM-driven orchestrator the client calls each time the student finishes
 // speaking. The model (Clara) drives the whole conversation; the server owns the question bank
@@ -93,6 +93,7 @@ const SUBJECT_BY_TYPE: Record<string, string> = {
   "11-plus-v2": "elevenplus",
   "medicine-mmi": "medicine",
   "medicine-mmi-manchester": "medicine",
+  "medicine-mmi-practice": "medicine",
   "chat-with-clara": "chat",
 };
 
@@ -199,7 +200,7 @@ const uiStateOf = (
     phase: pack.mixedBank ? phase : undefined,
     aboutYouCount,
     timingSeconds:
-      (getMedicinePractice(interviewType) ? PRACTICE_TIMING : undefined) ?? getSchoolMode(interviewType)?.timingSeconds ??
+      (interviewType === FULL_MMI_MOCK.id ? FULL_MMI_MOCK.timing : getMedicinePractice(interviewType) ? PRACTICE_TIMING : undefined) ?? getSchoolMode(interviewType)?.timingSeconds ??
       (getMedicinePilot(interviewType)
         ? {
             prep: getMedicinePilot(interviewType)!.circuit.prepSeconds,
@@ -316,6 +317,7 @@ serve(
           );
       }
       const practice = getMedicinePractice(interviewTypeId);
+      if (interviewTypeId === FULL_MMI_MOCK.id && (action === 'switch_topic' || body.mode === 'practice')) return json({ error: 'The full MMI mock follows a complete six-station circuit.' }, 400);
       if (practice && (action === 'switch_topic' || body.mode === 'practice')) return json({ error: 'Focused practice follows one station in the selected topic.' }, 400);
       const subject = pilot || practice ? "medicine" : SUBJECT_BY_TYPE[interviewTypeId];
       const basePack = subject ? PACKS[subject] : undefined;
@@ -324,10 +326,10 @@ serve(
       // Two Medicine interview TYPES share one subject/pack/bank but differ in station count and
       // timing — see subjects/medicine/schoolModes.ts for why (verified per-school MMI data).
       const schoolMode = getSchoolMode(interviewTypeId);
-      const pack = practice ? packForMedicinePractice(practice) : pilot
+      const pack = interviewTypeId === FULL_MMI_MOCK.id ? packForFullMmiMock() : practice ? packForMedicinePractice(practice) : pilot
         ? packForMedicinePilot(pilot)
         : schoolMode
-          ? { ...basePack, mockTargetQuestions: schoolMode.mockTargetQuestions }
+          ? { ...basePack, mockTargetQuestions: schoolMode.mockTargetQuestions, stationReadingSeconds: schoolMode.timingSeconds.prep }
           : basePack;
 
       if (body.turnId && session.engine_state?.lastTurn?.id === body.turnId) {

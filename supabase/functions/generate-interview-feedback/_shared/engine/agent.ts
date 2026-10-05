@@ -647,7 +647,9 @@ function medicineStationOpening(state: AgentState, pack: SubjectPack, opening = 
   const intro = opening
     ? `Hello, I'm Clara, your AI practice interviewer. ${pack.focusedPractice ? 'We will work through one focused station.' : `We will work through ${state.targetQuestions} ${academic ? 'exercises' : 'stations'}.`} I will introduce each task before you respond. `
     : state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. Let’s begin. ';
-  return `${bridge ? bridge + ' ' : ''}${intro}${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}. ${spokenQuestionPrompt(q)}`;
+  const prep = pack.stationReadingSeconds ?? 0;
+  const reading = prep > 0 ? `You have ${prep === 60 ? 'one minute' : prep === 120 ? 'two minutes' : `${prep} seconds`} to read the brief. Select I'm ready to start answering early. ` : '';
+  return `${bridge ? bridge + ' ' : ''}${intro}${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}. ${reading}${spokenQuestionPrompt(q, prep > 0)}`;
 }
 
 /** Explicit spoken stop requests; never match statements about stopping a treatment. */

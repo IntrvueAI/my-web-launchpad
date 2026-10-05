@@ -59,6 +59,9 @@ try {
   );
   await db.exec(betaMigration);
   await db.exec(betaMigration);
+  const mockMigration = await readFile(new URL('../supabase/migrations/20261005000001_mmi_practice_mock.sql',import.meta.url),'utf8');
+  await db.exec(mockMigration);
+  await db.exec(mockMigration);
   checks++;
   for (const role of ["anon", "authenticated"]) {
     for (const fn of [
@@ -146,6 +149,9 @@ try {
   for (let i = 0; i < 3; i++) eq((await authorize()).trial_id, trial.id);
   await reject(() => authorize(), /connection retry limit/);
   eq((await authorize("brain")).interview_type, "medicine-ethics-practice");
+  await db.query("UPDATE interview_sessions SET interview_type='medicine-mmi-practice' WHERE id=$1",[sid]);
+  eq((await authorize('brain')).interview_type,'medicine-mmi-practice');
+  eq(await value('SELECT interviews_started AS result FROM mmi_guest_trials WHERE id=$1',[trial.id]),1);
   await db.query(
     "UPDATE mmi_guest_runs SET brain_requests=120, feedback_requests=5 WHERE session_id=$1",
     [sid],
@@ -245,6 +251,8 @@ try {
     "INSERT INTO interview_sessions(user_id,interview_type) VALUES($1,'medicine-oxford-pilot')",
     [guest],
   );
+  checks++;
+  await db.query("INSERT INTO interview_sessions(user_id,interview_type) VALUES($1,'medicine-mmi-practice')",[guest]);
   checks++;
   await db.query(
     "UPDATE interview_sessions SET last_activity_at=now() WHERE id=$1",

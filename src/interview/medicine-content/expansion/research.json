@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-02",
-  "edition": "09",
+  "updatedAt": "2026-10-05",
+  "edition": "10",
   "scope": "Oxford, Cambridge and Imperial first. Original practice content; admissions formats are researched separately from practice design.",
   "baseline": {
     "stations": 122,
@@ -368,6 +368,13 @@
     }
   ],
   "updates": [
+    {
+      "id": "station-coaching-timing-20261005",
+      "date": "5 October 2026",
+      "category": "CANDIDATE FEEDBACK & STATION TIMING",
+      "title": "Visible mobile clocks, final-minute alerts and coaching beside your answer.",
+      "body": "Medicine interviews now keep a large station timer at the top of the screen, with a final-minute banner and optional chime. Focused stations have one minute to read and five minutes to answer. Their results include a three-step structure or a verified candidate excerpt with suggested stronger wording and a private retry pad. Motivation stations use structures so the system does not write a fictional personal experience. Added a general six-station MMI practice mock; school-specific timings remain separate. Supabase changes are deployed. Real Anam mobile checks covered the focused and full-mock flows, and private guests retain their two-interview limit. Frontend publication still requires Lovable Publish → Update. See docs/MMI-STATION-COACHING-2026-10-05.md for checks and limits."
+    },
     {
       "id": "sourced-review-20261002",
       "date": "2 October 2026",

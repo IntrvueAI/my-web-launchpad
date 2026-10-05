@@ -15,7 +15,10 @@ export function useStationClock({
   timing?: StationTiming;
   onTimeUp: () => void;
 }): { clock: StationClockState | null; beginResponse: () => void } {
-  const [clock, setClock] = useState<StationClockState | null>(null);
+  const [snapshot, setSnapshot] = useState<{
+    key: string;
+    clock: StationClockState;
+  } | null>(null);
   const beginRef = useRef<(() => void) | null>(null);
   const beginResponse = useCallback(() => beginRef.current?.(), []);
   const callback = useRef(onTimeUp);
@@ -24,7 +27,7 @@ export function useStationClock({
   const response = timing?.response;
   useEffect(() => {
     if (stationKey === null || prep === undefined || response === undefined) {
-      setClock(null);
+      setSnapshot(null);
       return;
     }
     let startedAt = Date.now();
@@ -32,14 +35,17 @@ export function useStationClock({
     let fired = false;
     const tick = () => {
       const value = computeStationClock(Date.now() - startedAt, stationTiming);
-      setClock(value);
+      setSnapshot({ key: stationKey, clock: value });
       if (value.expired && !fired) {
         fired = true;
         clearInterval(interval);
         callback.current();
       }
     };
-    setClock(computeStationClock(0, stationTiming));
+    setSnapshot({
+      key: stationKey,
+      clock: computeStationClock(0, stationTiming),
+    });
     const interval = setInterval(tick, 250);
     beginRef.current = () => {
       // Starting early uses the full answer budget. Repeated clicks and later answers
@@ -57,5 +63,8 @@ export function useStationClock({
       beginRef.current = null;
     };
   }, [stationKey, prep, response]);
-  return { clock, beginResponse };
+  return {
+    clock: snapshot?.key === stationKey ? snapshot.clock : null,
+    beginResponse,
+  };
 }

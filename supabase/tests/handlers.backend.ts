@@ -152,6 +152,13 @@ describe("Anam tokens", () => {
 });
 
 describe("Interview brain ownership and retries", () => {
+  it.each([{action:'start',mode:'practice'},{action:'switch_topic',mode:'mock'}])('keeps the general MMI mock as a complete circuit: %j', async body => {
+    state.resolve = () => ({data:{...session,interview_type:'medicine-mmi-practice'},error:null});
+    const response = await (await handler('interview-brain'))(req({sessionId:'S1',...body}));
+    expect(response.status).toBe(400);
+    expect(state.fetch).not.toHaveBeenCalled();
+    expect(state.queries.some(q=>q.table==='interview_sessions'&&q.operation==='update')).toBe(false);
+  });
   it("returns a retryable failure without committing a Medicine answer when the model is unavailable", async () => {
     const engineState = {
       subject: "medicine", mode: "mock", difficulty: 2, questionIndex: 0,
@@ -167,7 +174,7 @@ describe("Interview brain ownership and retries", () => {
     expect(state.queries.some(q => q.table === "interview_sessions" && q.operation === "update")).toBe(false);
     expect(engineState.currentStudentTurns).toEqual([]);
   });
-  it.each(["medicine-mmi", "medicine-mmi-manchester", "medicine-imperial-pilot"])("exposes a complete public roleplay brief in %s while keeping actor instructions private", async interviewType => {
+  it.each(["medicine-mmi", "medicine-mmi-manchester", "medicine-mmi-practice", "medicine-imperial-pilot"])("exposes a complete public roleplay brief in %s while keeping actor instructions private", async interviewType => {
     state.resolve = () => ({ data: { ...session, interview_type: interviewType, engine_state: {
       mode: "mock", difficulty: 2, questionIndex: 0, targetQuestions: 5, done: false,
       current: { id: "RP", question: "You are joking.", topic: "roleplay-stations", answer: "PRIVATE ANSWER", roleplay: { name: "Steph", role: "a parent", applicantRole: "You are a volunteer. The pool is closed.", openingStatement: "You are joking.", hiddenFacts: [{fact:"PRIVATE FACT"}], actorStateTrajectory:"PRIVATE TRAJECTORY" } },
@@ -389,6 +396,28 @@ describe("Feedback", () => {
     transcription:
       "Student: I would first listen carefully to the patient, acknowledge their concerns, and ask the appropriate team member for help.\nInterviewer: Thank you.",
   };
+  it.each([{valid:true,personal:false},{valid:false,personal:false},{valid:true,personal:true}])('persists only permitted focused-station coaching (%j)',async ({valid,personal})=>{
+    const interviewType=personal?'medicine-motivation-practice':'medicine-roleplay-practice';
+    const answer='I would first listen carefully to the patient';
+    const coaching={question_index:1,original_quote:valid?answer:'I diagnosed them with anxiety.',improved_answer:'What is worrying you most? I would listen before suggesting a next step.',why:'Ask an open question to understand their priorities.',structure:['Acknowledge the concern.','Explore their priorities.','Agree a next step within your role.']};
+    state.resolve=q=>({data:q.table==='interview_sessions'?{...session,interview_type:interviewType,evidence:[{index:1,id:'qa-roleplay',question:personal?'What did you learn from volunteering?':'Speak to the worried person.',studentAnswer:answer}]}:q.table==='feedback'&&q.operation==='insert'?{id:'f-coach'}:null,count:0,error:null});
+    const assessment={pattern_recognition_score:3,logical_deduction_score:null,mathematical_logic_score:null,clarity_of_thought_score:null,score_evidence:{pattern_recognition_score:answer},detailed_feedback:{overall:'You offered to listen.',band_assessment:'Partial',strength:'You offered support.',next_step:'Ask an open question.',answer_coaching:coaching},annotations:[]};
+    state.fetch.mockResolvedValue(new Response(JSON.stringify({choices:[{message:{content:JSON.stringify(assessment)},finish_reason:'stop'}]})));
+    const response=await (await handler('generate-interview-feedback'))(req({...body,interviewType}));
+    expect(response.status).toBe(200);
+    const stored=state.queries.find(q=>q.table==='feedback'&&q.operation==='insert')?.value as any;
+    expect(stored.detailed_feedback.answer_coaching).toEqual(personal?{...coaching,original_quote:null,improved_answer:null}:valid?coaching:null);
+    const request=JSON.parse(state.fetch.mock.calls[0][1].body);
+    expect(request.response_format.json_schema.schema.properties.detailed_feedback.required).toContain('answer_coaching');
+    expect(request.messages[0].content).toContain('Never fabricate experiences');
+    if(personal){
+      const fields=request.response_format.json_schema.schema.properties.detailed_feedback.properties.answer_coaching.anyOf[1].properties;
+      expect(fields.improved_answer).toEqual({type:'null'});
+      expect(fields.original_quote).toEqual({type:'null'});
+      expect(request.messages[0].content).toContain('answer structure ONLY');
+    }
+    expect(state.fetch).toHaveBeenCalledTimes(1);
+  });
   it.each(['refusal', 'truncated', 'empty'])('keeps the transcript and returns retryable errors for %s model output', async kind => {
     state.resolve = q => ({ data: q.table === 'interview_sessions' ? session : null, count: 0, error: null });
     state.fetch.mockResolvedValue(new Response(JSON.stringify({ choices: kind === 'empty' ? [] : [{ message: { content: '{}', refusal: kind === 'refusal' ? 'Unable to assess' : null }, finish_reason: kind === 'truncated' ? 'length' : 'stop' }] })));
@@ -519,7 +548,7 @@ describe("Feedback", () => {
     expect(state.queries.some(q => q.table === "interview_sessions" && q.operation === "update" && (q.value as any).transcript === body.transcription)).toBe(true);
     expect(state.queries.some(q => q.table === "feedback" && q.operation === "insert")).toBe(false);
   });
-  it.each(["maths-interview", "11-plus", "11-plus-v2", "medicine-mmi", "medicine-mmi-manchester", "medicine-ethics-practice", "medicine-roleplay-practice", "medicine-motivation-practice", "medicine-data-practice"])(
+  it.each(["maths-interview", "11-plus", "11-plus-v2", "medicine-mmi-practice", "medicine-mmi", "medicine-mmi-manchester", "medicine-ethics-practice", "medicine-roleplay-practice", "medicine-motivation-practice", "medicine-data-practice"])(
     "preserves successful %s feedback",
     async (interviewType) => {
       state.resolve = (q) => ({
