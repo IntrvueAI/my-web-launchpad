@@ -384,6 +384,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      school_portal: { Args: { p_action: string; p_payload?: Json }; Returns: Json }
       consume_credit: { Args: never; Returns: boolean }
       delete_user: { Args: never; Returns: undefined }
       generate_session_reference: { Args: never; Returns: string }

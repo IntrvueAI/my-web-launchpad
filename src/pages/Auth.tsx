@@ -16,11 +16,12 @@ import { sanitizeErrorMessage, authRateLimiter } from '@/utils/secureErrorHandle
 import { useSimpleAuth } from '@/hooks/useSimpleAuth';
 import { ArrowLeft } from 'lucide-react';
 import { setStoredProductLine } from '@/lib/productLine';
+import { safeAuthReturn, pendingAuthReturn, rememberAuthReturn } from '@/lib/authReturn';
 
 const Auth = () => {
   const founderReturnPath = () => {
     const path = new URLSearchParams(window.location.search).get('returnTo');
-    return path && ['/admin/guest-trials', '/admin/guest-feedback'].includes(path) ? path : '/';
+    return safeAuthReturn(path) || pendingAuthReturn() || '/';
   };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,6 +35,7 @@ const Auth = () => {
   const { handleSignIn: authSignIn, handleSignUp: authSignUp, handleResetPassword } = useSimpleAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  useEffect(() => { const path=safeAuthReturn(new URLSearchParams(window.location.search).get('returnTo')); if(path)rememberAuthReturn(path); },[]);
 
   // Capture "arrived via the Medicine landing page" before anything else runs, so it survives
   // both the plain email/password flow and a full-page Google OAuth round-trip (localStorage

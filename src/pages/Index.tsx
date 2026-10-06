@@ -558,6 +558,10 @@ const Index = () => {
                     <Palette className="w-4 h-4 mr-2" /> Switch to coral dashboard
                   </DropdownMenuItem>
                 )}
+                {productLine === '11plus' && <>
+                  <DropdownMenuItem onClick={() => navigate('/classes')}>My classes</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/schools')}>For teachers</DropdownMenuItem>
+                </>}
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" /> Sign out
                 </DropdownMenuItem>

@@ -6,6 +6,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AuthReturnResume } from './components/schools/SchoolLayout';
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PipCustomizationProvider } from "@/contexts/PipCustomizationContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
@@ -25,6 +26,11 @@ const AdminGuestFeedback = lazy(() => import('./pages/AdminGuestFeedback'));
 const MedicineTransfer = lazy(() => import('./pages/MedicineTransfer'));
 const MedicineInfo = lazy(() => import('./pages/MedicineInfo'));
 const Auth = lazy(() => import("./pages/Auth"));
+const Schools = lazy(() => import('./pages/Schools'));
+const SchoolClass = lazy(() => import('./pages/SchoolClass'));
+const SchoolStudent = lazy(() => import('./pages/SchoolStudent'));
+const MyClasses = lazy(() => import('./pages/MyClasses'));
+const JoinClass = lazy(() => import('./pages/JoinClass'));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
@@ -149,6 +155,7 @@ const AppContent = () => {
           </div>
         )}
         <BrowserRouter>
+          <AuthReturnResume />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -159,6 +166,11 @@ const AppContent = () => {
               <Route path="/admin/guest-feedback" element={<AdminGuestFeedback />} />
               <Route path="/practice" element={<MedicinePracticeStudio />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/schools" element={<Schools />} />
+              <Route path="/schools/:classId" element={<SchoolClass />} />
+              <Route path="/schools/:classId/students/:studentId" element={<SchoolStudent />} />
+              <Route path="/classes" element={<MyClasses />} />
+              <Route path="/join-class/:token" element={<JoinClass />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/about" element={isMedicineSite() ? <MedicineInfo/> : <AboutUs />} />
               <Route path="/medicine" element={<Medicine />} />

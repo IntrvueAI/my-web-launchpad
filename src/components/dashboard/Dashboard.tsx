@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { Pip } from '@/components/brand/Pip';
@@ -73,6 +74,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartInterview, onViewHi
   return (
     <div data-tour="page-dashboard" className="mx-auto max-w-[1120px] px-4 sm:px-6 py-6 space-y-[13px]">
       {/* Greeting */}
+      <section aria-label="School classes" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary/20 bg-card p-4">
+        <div><p className="text-sm font-semibold">Practising with your school?</p><p className="mt-1 text-xs text-muted-foreground">Join your class and read your teacher’s feedback.</p></div>
+        <div className="flex flex-wrap gap-2"><Link to="/classes" className="inline-flex min-h-11 items-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground">My classes</Link><Link to="/schools" className="inline-flex min-h-11 items-center rounded-xl border px-4 text-sm font-semibold hover:bg-muted">For teachers</Link></div>
+      </section>
       <div className="flex items-center gap-3">
         <Pip size={58} float className="flex-none" />
         <div>
