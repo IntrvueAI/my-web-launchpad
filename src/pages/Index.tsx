@@ -150,7 +150,11 @@ const Index = () => {
   const isMobile = useIsMobile();
 
   const handleSignOut = async () => {
-    await signOut();
+    const { error } = await signOut();
+    if (error) {
+      toast({ title: 'Could not sign out', description: error.message, variant: 'destructive' });
+      return;
+    }
     navigate('/auth');
   };
 

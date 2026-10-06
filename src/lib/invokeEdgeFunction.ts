@@ -1,6 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { logAppEvent } from './appLogger';
 import type { FunctionsError } from '@supabase/supabase-js';
+import { explainEdgeError } from './edgeFunctionError';
 
 export interface InvokeEdgeFunctionOptions {
   // Matches supabase.functions.invoke's own body type (Record<string, any>) — using `unknown`
@@ -41,13 +42,15 @@ export async function invokeEdgeFunction<T = unknown>(
   const durationMs = Math.round(performance.now() - startedAt);
 
   if (error) {
+    const failure = await explainEdgeError(error);
+    error.message = failure.message;
     logAppEvent({
       level: 'error',
       eventType: `invoke:${functionName}`,
       message: error.message || `${functionName} failed`,
       interviewSessionId: options.interviewSessionId,
       requestId,
-      metadata: { durationMs, body: options.body },
+      metadata: { durationMs, httpStatus: failure.status, body: options.body },
     }).catch(() => {});
   } else {
     logAppEvent({

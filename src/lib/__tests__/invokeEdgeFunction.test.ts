@@ -39,8 +39,18 @@ describe('invokeEdgeFunction', () => {
     const result = await invokeEdgeFunction('some-fn');
     expect(result.error).toBe(fakeError);
     expect(logAppEvent).toHaveBeenCalledWith(
-      expect.objectContaining({ level: 'error', eventType: 'invoke:some-fn', message: 'boom' }),
+      expect.objectContaining({ level: 'error', eventType: 'invoke:some-fn', message: 'Could not reach the service. Check your connection and try again.' }),
     );
+  });
+
+  it('records the HTTP status and preserves the server response for callers', async () => {
+    const context = new Response(JSON.stringify({ error: 'Active session not found' }), { status: 403 });
+    const error = { name: 'FunctionsHttpError', message: 'non-2xx', context };
+    vi.mocked(supabase.functions.invoke).mockResolvedValue({ data: null, error } as any);
+    const result = await invokeEdgeFunction('get-anam-session-token');
+    expect(result.error?.message).toContain('no longer active');
+    expect(await context.json()).toEqual({ error: 'Active session not found' });
+    expect(logAppEvent).toHaveBeenCalledWith(expect.objectContaining({ metadata: expect.objectContaining({ httpStatus: 403 }) }));
   });
 
   it('tags the log with interviewSessionId when provided', async () => {

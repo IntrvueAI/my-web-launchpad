@@ -1,6 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, clearLocalAuthSession, ACCOUNT_AUTH_STORAGE_KEY } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
+import { signOutWithRecovery } from '@/lib/authSession';
+import { clearAuthReturn } from '@/lib/authReturn';
+import { isGuestDocument } from '@/lib/site';
 
 interface AuthContextType {
   user: User | null;
@@ -30,13 +34,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [showPostSignupForm, setShowPostSignupForm] = useState(false);
+  const cache = useQueryClient();
+  const signingOut = useRef(false);
+  const signOutRequest = useRef<Promise<{ error: any }> | null>(null);
 
   useEffect(() => {
+    let active = true;
+    let authVersion = 0;
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        authVersion++;
+        if (!active || (signingOut.current && session)) return;
         setSession(session);
         setUser(session?.user ?? null);
+        if (event === 'SIGNED_OUT') {
+          setShowPostSignupForm(false);
+          cache.clear();
+        }
         
         // Show post-signup form for new signups
         if (event === 'SIGNED_IN' && session?.user) {
@@ -51,16 +66,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // Then check for existing session
+    const initialVersion = authVersion;
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!active || signingOut.current || authVersion !== initialVersion) return;
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+    }).catch(() => {
+      if (active && !signingOut.current && authVersion === initialVersion) setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
-  }, []);
+    // The SDK broadcasts successful logout. Failed server requests need the same
+    // protection in other open account tabs when fallback removes stored credentials.
+    const onStorage = (event: StorageEvent) => {
+      if (isGuestDocument() || event.storageArea !== localStorage || event.key !== ACCOUNT_AUTH_STORAGE_KEY || event.newValue !== null) return;
+      signingOut.current = true;
+      setUser(null);
+      setSession(null);
+      setShowPostSignupForm(false);
+      cache.clear();
+      void supabase.auth.stopAutoRefresh().catch(() => {});
+      clearLocalAuthSession();
+      window.location.replace('/auth');
+    };
+    window.addEventListener('storage', onStorage);
+    return () => { active = false; subscription.unsubscribe(); window.removeEventListener('storage', onStorage); };
+  }, [cache]);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
+    signingOut.current = false;
     const redirectUrl = `${window.location.origin}/`;
     
     const { error } = await supabase.auth.signUp({
@@ -77,6 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
+    signingOut.current = false;
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -85,26 +120,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/`,
-      }
-    });
-    return { error };
+    signingOut.current = false;
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        }
+      });
+      return { error };
+    } catch {
+      return { error: new Error('Google sign-in could not start. Please check your connection and try again.') };
+    }
   };
 
-  const signOut = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Sign out error:', error.message);
-      }
-      return { error };
-    } catch (err) {
-      console.error('Unexpected sign out error:', err);
-      return { error: err };
-    }
+  const signOut = () => {
+    if (signOutRequest.current) return signOutRequest.current;
+    signingOut.current = true;
+    const request = signOutWithRecovery({
+      remote: () => supabase.auth.signOut(),
+      clearStoredSession: () => {
+        void supabase.auth.stopAutoRefresh().catch(() => {});
+        clearLocalAuthSession();
+      },
+      onSignedOut: () => {
+        setUser(null);
+        setSession(null);
+        setShowPostSignupForm(false);
+        setLoading(false);
+        cache.clear();
+        clearAuthReturn();
+        try { sessionStorage.removeItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
+      },
+      reload: () => window.location.replace('/auth'),
+    }).catch(() => ({ error: new Error('Could not clear this browser’s login. Please try again.') }))
+      .finally(() => { signOutRequest.current = null; });
+    signOutRequest.current = request;
+    return request;
   };
 
   const resetPassword = async (email: string) => {

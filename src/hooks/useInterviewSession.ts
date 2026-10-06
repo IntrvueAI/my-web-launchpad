@@ -15,6 +15,8 @@ import { asksToClarifyTask } from '@/interview/engine/publicPrompt';
 import { StationControlQueue } from '@/interview/engine/controlQueue';
 import { logDebug } from '@/interview/debug/debugBus';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
+import { withSessionRefresh } from '@/lib/edgeFunctionError';
+import { supabase } from '@/integrations/supabase/client';
 
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
@@ -301,17 +303,17 @@ export const useInterviewSession = (
         personaConfig.systemPrompt = await loadSystemPrompt(interviewType.id);
       }
 
-      const { data, error } = await invokeEdgeFunction<{ sessionToken: string }>('get-anam-session-token', {
+      const { data, error } = await withSessionRefresh(() => invokeEdgeFunction<{ sessionToken: string }>('get-anam-session-token', {
         body: { personaConfig, engineDriven, sessionReference: sessionRefRef.current },
         interviewSessionId: sessionLogger.sessionId ?? undefined,
-      });
+      }), () => supabase.auth.refreshSession());
 
-      if (error) throw new Error(`Edge function error: ${error.message}`);
+      if (error) throw new Error(error.message);
       if (!data?.sessionToken) throw new Error('No session token received from server');
       return data.sessionToken;
     } catch (err) {
       console.error('Error getting session token:', err);
-      if (err instanceof Error) throw new Error(`Unable to connect to interview service: ${err.message}`);
+      if (err instanceof Error) throw err;
       throw new Error('Unable to connect to interview service. Please try again.');
     }
   };

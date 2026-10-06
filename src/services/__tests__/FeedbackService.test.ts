@@ -117,6 +117,6 @@ describe('FeedbackService.submitBugReport', () => {
 
     await expect(
       FeedbackService.submitBugReport({ subject: 'X', category: 'bug', description: 'Y', currentUrl: '' })
-    ).rejects.toThrow('Edge error');
+    ).rejects.toThrow('Could not reach the service. Check your connection and try again.');
   });
 });

@@ -2,6 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 import { isGuestDocument } from '@/lib/site';
+import { createRecoverableAuthStorage } from '@/lib/authSession';
 
 const SUPABASE_URL = "https://fjkuuzfuysemrofcmnvd.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqa3V1emZ1eXNlbXJvZmNtbnZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNDA3NzYsImV4cCI6MjA2OTcxNjc3Nn0.SPL_8BooosmHfWI-9VUdIlqqxxjUtYK5b57iIOWOUBw";
@@ -11,12 +12,17 @@ const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 
 // Guest authentication lives only in this tab and never overwrites an ordinary
 // account's localStorage session. Enter/leave /guest-session with a full navigation.
+export const ACCOUNT_AUTH_STORAGE_KEY = 'sb-fjkuuzfuysemrofcmnvd-auth-token';
+const accountStorage = createRecoverableAuthStorage(localStorage, ACCOUNT_AUTH_STORAGE_KEY);
+const trialStorage = createRecoverableAuthStorage(sessionStorage, 'mmi:guest-auth:v1');
+export const clearLocalAuthSession = () => (isGuestDocument() ? trialStorage : accountStorage).clearSession();
+
 export const guestSupabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: { storage: sessionStorage, storageKey: 'mmi:guest-auth:v1', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+  auth: { storage: trialStorage, storageKey: 'mmi:guest-auth:v1', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
 });
 export const supabase = isGuestDocument() ? guestSupabase : createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    storage: localStorage,
+    storage: accountStorage,
     persistSession: true,
     autoRefreshToken: true,
   }

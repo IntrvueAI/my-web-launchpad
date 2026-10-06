@@ -19,6 +19,7 @@ const mocks = vi.hoisted(() => ({
   create: vi.fn(),
 }));
 vi.mock("@/api/interviewBrain", () => ({ brainTurn: mocks.brain }));
+vi.mock("@/integrations/supabase/client", () => ({ supabase: { auth: { refreshSession: vi.fn(async () => ({ error: null })) } } }));
 vi.mock("@/lib/invokeEdgeFunction", () => ({
   invokeEdgeFunction: mocks.token,
 }));

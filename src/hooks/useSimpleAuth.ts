@@ -90,7 +90,8 @@ export const useSimpleAuth = () => {
 
   const handleSignOut = useCallback(async () => {
     try {
-      await signOut();
+      const { error } = await signOut();
+      if (error) throw error;
       toast({
         title: "Signed Out",
         description: "You have been signed out successfully.",
