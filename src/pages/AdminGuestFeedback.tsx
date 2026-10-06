@@ -24,7 +24,7 @@ import {
   type SummaryFeedback,
 } from "@/components/feedback/FeedbackSummary";
 import {
-  GUEST_INTERVIEW_IDS,
+  GUEST_HISTORY_INTERVIEW_IDS,
   trialApi,
   trialReviewExperience,
   type TrialInbox,
@@ -319,7 +319,7 @@ export default function AdminGuestFeedback() {
                       className={`${selectClass} mt-2`}
                     >
                       <option value="">All Medicine interviews</option>
-                      {GUEST_INTERVIEW_IDS.map((id) => (
+                      {GUEST_HISTORY_INTERVIEW_IDS.map((id) => (
                         <option key={id} value={id}>
                           {title(id)}
                         </option>

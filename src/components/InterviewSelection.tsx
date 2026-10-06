@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAllInterviewTypes, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
+import { getInterviewTypesForProduct, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
 import { cn } from '@/lib/utils';
 import { useCredits } from '@/hooks/useCredits';
 import { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, Sparkles, Clock, MessageCircle, type LucideIcon } from 'lucide-react';
@@ -7,6 +7,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 
 interface InterviewSelectionProps {
   onSelectInterview: (interviewType: InterviewType) => void;
+  productLine?: '11plus' | 'medicine';
 }
 
 const ICONS: Record<string, LucideIcon> = { GraduationCap, Brain, Calculator, Globe, Timer, BookOpen, MessageCircle };
@@ -20,14 +21,16 @@ const DIFF: Record<number, { label: string; cls: string }> = {
   3: { label: 'Advanced', cls: 'text-[#F87171]' },
 };
 
-export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProps) => {
+export const InterviewSelection = ({ onSelectInterview, productLine = '11plus' }: InterviewSelectionProps) => {
   const [category, setCategory] = useState<string | null>(null);
   const { credits } = useCredits();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [pending, setPending] = useState<InterviewType | null>(null);
-  const all = getAllInterviewTypes();
+  const all = getInterviewTypesForProduct(productLine);
+  const availableCategories = Object.entries(INTERVIEW_CATEGORIES).filter(([key])=>all.some(iv=>iv.category===key));
 
-  const filtered = all.filter((iv) => !category || iv.category === category);
+  const selectedCategory = availableCategories.some(([key])=>key===category) ? category : null;
+  const filtered = all.filter((iv) => !selectedCategory || iv.category === selectedCategory);
 
   const launch = (iv: InterviewType) => {
     const cost = iv.costCredits ?? 1;
@@ -38,15 +41,15 @@ export const InterviewSelection = ({ onSelectInterview }: InterviewSelectionProp
   return (
     <div className="mx-auto max-w-[1000px] px-4 sm:px-6 py-8">
       <div className="mb-6">
-        <h1 className="font-display text-[26px] font-semibold text-white">Choose your interview</h1>
+        <h1 className="font-display text-[26px] font-semibold text-white">{productLine==='11plus'?'Choose your 11+ practice':'Choose your Medicine practice'}</h1>
         <p className="mt-1.5 text-sm font-semibold text-muted-foreground">Pick a session to practise.</p>
       </div>
 
       {/* Category chips */}
       <div className="flex gap-2 flex-wrap mb-6">
-        <button onClick={() => setCategory(null)} className={cn('chip', category === null && 'chip-on')}>All</button>
-        {Object.entries(INTERVIEW_CATEGORIES).map(([key, c]) => (
-          <button key={key} onClick={() => setCategory(key)} className={cn('chip', category === key && 'chip-on')}>{c.name}</button>
+        <button onClick={() => setCategory(null)} className={cn('chip', selectedCategory === null && 'chip-on')}>All</button>
+        {availableCategories.map(([key, c]) => (
+          <button key={key} onClick={() => setCategory(key)} className={cn('chip', selectedCategory === key && 'chip-on')}>{c.name}</button>
         ))}
       </div>
 

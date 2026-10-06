@@ -17,7 +17,7 @@ import { Stethoscope, ExternalLink } from 'lucide-react';
 export default function AdminUnreleasedInterviews() {
   const { isAdmin, isLoading } = useAdminStatus();
 
-  const types = Object.values(INTERVIEW_TYPES).filter((iv) => iv.adminOnly && iv.id !== 'medicine-mmi');
+  const types = Object.values(INTERVIEW_TYPES).filter((iv) => iv.adminOnly && !iv.retired && iv.id !== 'medicine-mmi');
 
   if (isLoading) {
     return (

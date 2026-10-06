@@ -23,15 +23,14 @@ export function MedicinePractice({
           Your practice, your pace
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Start with one focused station. Get feedback while your answer is
-          fresh.
+          Choose a full MMI or a seven-minute mini interview, then review your feedback.
         </p>
       </header>
       <div className="flex flex-wrap gap-2" aria-label="Practice format">
         {(
           [
-            { id: "quick", label: "5-minute stations" },
-            { id: "circuit", label: "Full mocks" },
+            { id: "quick", label: "7-minute mini interviews" },
+            { id: "circuit", label: "Full MMI" },
             { id: "solo", label: "Solo practice studio" },
           ] as const
         ).map((tab) => (
@@ -73,13 +72,13 @@ export function MedicinePractice({
                 </p>
                 <p className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
                   <Clock className="h-4 w-4" />
-                  1 minute reading · 5 minutes answering
+                  7-minute session · 1 min reading + 5 min answering
                 </p>
                 <button
                   onClick={() => onStartInterview(INTERVIEW_TYPES[practice.id])}
                   className="mt-4 flex min-h-11 items-center justify-between rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground"
                 >
-                  Start station
+                    Start mini interview
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </article>
@@ -99,10 +98,10 @@ export function MedicinePractice({
       ) : (
         <>
           <p className="text-sm text-muted-foreground">
-            Choose a general mock or a school-specific format. The timer stays visible and alerts you in the final minute of each station.
+            Practise a full six-station MMI. The timer stays visible and alerts you in the final minute of each station.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
-            {["medicine-mmi-practice", "medicine-mmi", "medicine-mmi-manchester"].map((id) => {
+            {["medicine-mmi-practice"].map((id) => {
               const type = INTERVIEW_TYPES[id];
               return (
                 <article key={id} className="rounded-2xl border bg-card p-6">
@@ -116,9 +115,7 @@ export function MedicinePractice({
                     {type.description}
                   </p>
                   <p className="mt-4 text-sm font-medium">
-                    {id === 'medicine-mmi-practice' ? '6 stations · 1 minute reading + 5 minutes answering each' : id === "medicine-mmi"
-                      ? "8 stations · 64 minutes of station time"
-                      : "5 stations · 40 minutes of station time"}
+                    6 stations · 1 minute reading + 5 minutes answering each
                   </p>
                   <p className="mt-2 text-xs text-muted-foreground">
                     Allow a little extra time for introductions and transitions.

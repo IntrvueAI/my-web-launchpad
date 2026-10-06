@@ -50,7 +50,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
 
   const subline = stats.totalSessions > 0
     ? `You've done ${stats.totalSessions} Medicine ${stats.totalSessions === 1 ? 'session' : 'sessions'} so far.${nextRealInterview ? ` ${nextRealInterview.school} is ${nextRealInterview.daysUntil} day${nextRealInterview.daysUntil === 1 ? '' : 's'} away.` : ''}`
-    : "Start with one five-minute station and choose one thing to improve.";
+    : "Start with a seven-minute mini interview and choose one thing to improve.";
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -74,7 +74,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
                 <p style={{ color: 'var(--med-muted)', fontSize: 15, lineHeight: 1.6, marginTop: 10, maxWidth: 460 }}>{recommended.description}</p>
                 <div style={{ display: 'flex', gap: 12, marginTop: 22, flexWrap: 'wrap' }}>
                   <button onClick={() => onStartInterview(recommended)} style={primaryBtn}>
-                    Start a 5-minute station
+                    Start a 7-minute mini interview
                   </button>
                   <button onClick={() => onOpenTab('practice')} style={ghostBtn}>See all practice formats</button>
                 </div>

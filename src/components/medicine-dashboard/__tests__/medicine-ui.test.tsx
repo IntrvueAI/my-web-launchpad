@@ -37,6 +37,6 @@ describe('School practice descriptions',()=>{
   });
   it('does not invent reading time for an unconfirmed school',()=>{
     const school=listSchools().find(s=>s.id==='imperial-a100')!;
-    expect(recommendMode(school).label).toBe('Try both');expect(recommendMode(school).note).toContain('unconfirmed');
+    expect(recommendMode(school).label).toBe('General MMI practice');expect(recommendMode(school).note).toContain('unconfirmed');
   });
 });

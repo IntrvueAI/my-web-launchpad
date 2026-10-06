@@ -15,12 +15,6 @@ function formatField(v: string | number | boolean | null | undefined): string {
   return String(v);
 }
 
-function timedModeFor(school: SchoolRoute): InterviewType | null {
-  if (school.university.includes('Leeds')) return INTERVIEW_TYPES['medicine-mmi'];
-  if (school.university.includes('Manchester')) return INTERVIEW_TYPES['medicine-mmi-manchester'];
-  return null;
-}
-
 export function MedicineSchools({ onStartInterview }: Props) {
   const schools = useMemo(() => listSchools(), []);
   const { stats } = useDashboardStats();
@@ -87,7 +81,6 @@ export function MedicineSchools({ onStartInterview }: Props) {
 
 function SchoolCard({ school, inDiary, onStartInterview }: { school: SchoolRoute; inDiary?: boolean; onStartInterview: (type: InterviewType) => void }) {
   const rec = recommendMode(school);
-  const timedMode = timedModeFor(school);
 
   return (
     <div style={{
@@ -120,13 +113,13 @@ function SchoolCard({ school, inDiary, onStartInterview }: { school: SchoolRoute
           <p style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 8, maxWidth: 480 }}>{rec.note}</p>
         </div>
         <button
-          onClick={() => onStartInterview(timedMode ?? (rec.label === 'Manchester-style' ? INTERVIEW_TYPES['medicine-mmi-manchester'] : INTERVIEW_TYPES['medicine-mmi']))}
+          onClick={() => onStartInterview(INTERVIEW_TYPES['medicine-mmi-practice'])}
           style={{
             background: 'var(--med-action)', color: 'var(--med-card)', border: 0, borderRadius: 12,
             padding: '12px 18px', fontWeight: 600, fontSize: 14, cursor: 'pointer', minHeight: 44,
           }}
         >
-          {timedMode ? `Start ${school.university.replace('University of ', '')}-style practice` : 'Start general MMI practice'}
+          Start general MMI practice
         </button>
       </div>
     </div>

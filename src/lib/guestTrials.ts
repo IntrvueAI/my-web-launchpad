@@ -1,16 +1,7 @@
 import { guestSupabase, supabase } from "@/integrations/supabase/client";
-export const GUEST_INTERVIEW_IDS = [
-  "medicine-ethics-practice",
-  "medicine-roleplay-practice",
-  "medicine-motivation-practice",
-  "medicine-data-practice",
-  "medicine-mmi-practice",
-  "medicine-mmi",
-  "medicine-mmi-manchester",
-  "medicine-oxford-pilot",
-  "medicine-cambridge-pilot",
-  "medicine-imperial-pilot",
-] as const;
+import { MEDICINE_LIVE_INTERVIEW_IDS, RETIRED_MEDICINE_INTERVIEW_IDS } from '@/config/interviewTypes';
+export const GUEST_INTERVIEW_IDS = MEDICINE_LIVE_INTERVIEW_IDS;
+export const GUEST_HISTORY_INTERVIEW_IDS = [...GUEST_INTERVIEW_IDS, ...RETIRED_MEDICINE_INTERVIEW_IDS];
 export interface TrialInvite {
   id: string;
   label: string;

@@ -30,24 +30,6 @@ import { practiceCalendar, practiceDates } from "@/interview/studio/calendar";
 import { usePracticeProfile } from "./usePracticeProfile";
 import "./medicine-studio.css";
 
-const schoolNotes = {
-  general: {
-    name: "General medicine",
-    text: "Build transferable reasoning, reflection and communication skills across the library.",
-  },
-  oxford: {
-    name: "Oxford",
-    text: "Make your reasoning visible: explain an observation, test a hypothesis and consider what would change your mind. The studio is general solo practice; Oxford’s academic interview pilot remains in review.",
-  },
-  cambridge: {
-    name: "Cambridge",
-    text: "Practise thinking through evidence and adapting when new information appears. The studio is general solo practice; Cambridge’s academic interview pilot remains in review.",
-  },
-  imperial: {
-    name: "Imperial",
-    text: "Practise explaining your reasoning clearly and reflecting on your experiences. The school-specific MMI pilot remains in review; these solo timers are your own practice settings.",
-  },
-};
 function downloadProfile(profile: PracticeProfile) {
   const url = URL.createObjectURL(
     new Blob(
@@ -371,24 +353,6 @@ export default function MedicineStudio({
                       ))}
                     </select>
                   </label>
-                  <label>
-                    My priority
-                    <select
-                      value={profile.goal.school}
-                      onChange={(e) =>
-                        goal({
-                          school: e.target
-                            .value as PracticeProfile["goal"]["school"],
-                        })
-                      }
-                    >
-                      {Object.entries(schoolNotes).map(([id, s]) => (
-                        <option key={id} value={id}>
-                          {s.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
                 </div>
                 <p className="studio-small">
                   Your routine includes answering and reflection. Review
@@ -487,8 +451,8 @@ export default function MedicineStudio({
             <div className="studio-school-note">
               <Target size={21} />
               <div>
-                <h3>{schoolNotes[profile.goal.school].name} preparation</h3>
-                <p>{schoolNotes[profile.goal.school].text}</p>
+                <h3>MMI preparation</h3>
+                <p>Build reasoning, reflection and communication skills you can use across Medicine interviews.</p>
               </div>
             </div>
           </>

@@ -12,7 +12,7 @@ export default function MedicineInfo({ faq = false }: { faq?: boolean }) {
     ],
     [
       "Are these real university questions?",
-      "No. These are original practice scenarios informed by published admissions guidance. We are independent of the universities. Oxford, Cambridge and Imperial modes are labelled pilot previews.",
+      "No. These are original practice scenarios for skills shared across medical school interviews. We offer a general MMI and focused mini interviews, independent of any university.",
     ],
     [
       "What happens to my Intrvue account?",

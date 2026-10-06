@@ -95,11 +95,10 @@ export default function GuestWelcome() {
             </div>
             <div className="flex items-center gap-3">
               <Clock className="h-5 w-5 text-primary" />
-              <span>Start with a focused five-minute station</span>
+              <span>A full MMI or a seven-minute mini interview</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Independent practice material. University formats are simulations;
-              Oxford, Cambridge and Imperial modes are pilot previews.
+              Independent MMI practice covering skills shared across medical school interviews.
             </p>
           </section>
           <section

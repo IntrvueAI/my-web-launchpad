@@ -1,4 +1,3 @@
-import { MEDICINE_PILOTS } from '@/interview/subjects/medicine/pilots';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
@@ -7,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { INTERVIEW_TYPES, InterviewType } from '@/config/interviewTypes';
+import { INTERVIEW_TYPES, MEDICINE_LIVE_INTERVIEW_IDS, InterviewType } from '@/config/interviewTypes';
 import { pickPlatform } from '@/components/admin/AdminInterviewLauncher';
 import { ArrowLeft, Stethoscope, ListChecks, MessageCircleQuestion, KeyRound } from 'lucide-react';
 
@@ -33,7 +32,7 @@ const TESTER_PASSCODE = (import.meta.env.VITE_MED_TESTER_PASSCODE as string) || 
  * the full scoring model, and src/interview/engine/agent.ts's renderRoleplayStation for how a
  * roleplay station hands the interviewer's own persona to the character being played.
  */
-const MEDICINE_TYPE_IDS = ['medicine-mmi-practice', 'medicine-mmi', 'medicine-mmi-manchester'] as const;
+const MEDICINE_TYPE_IDS = MEDICINE_LIVE_INTERVIEW_IDS;
 
 const STATION_INFO = [
   { icon: Stethoscope, label: 'Roleplay stations', blurb: 'Speak to a live character — hidden information only surfaces if you ask the right way.' },
@@ -140,7 +139,7 @@ export default function AdminMedicineInterviews() {
               <Stethoscope className="h-6 w-6 text-primary" /> Medicine Interviews
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Medicine practice circuits and academic pilots. New school profiles are for administrator review.
+              The full MMI and seven-minute mini interviews. Shared skills, with one consistent practice format.
             </p>
           </div>
           <Link to="/admin" className="text-sm text-primary underline whitespace-nowrap">← Back to admin</Link>
@@ -168,7 +167,7 @@ export default function AdminMedicineInterviews() {
         </Card>
 
         <div className="space-y-3">
-          {[...MEDICINE_TYPE_IDS, ...(isAdmin ? MEDICINE_PILOTS.map(p=>p.interviewTypeId) : [])].map((id) => {
+          {MEDICINE_TYPE_IDS.map((id) => {
             const type: InterviewType | undefined = INTERVIEW_TYPES[id];
             if (!type) {
               return (

@@ -197,15 +197,9 @@ export default function GuestSession() {
                           className="flex flex-col rounded-2xl border bg-card p-6"
                         >
                           <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary">
-                            {id.endsWith("-pilot")
-                              ? "Pilot preview"
-                              : id.endsWith("-practice")
-                                ? "Focused station"
-                                : "Full circuit"}{" "}
-                            ·{" "}
-                            {id.endsWith("-practice")
-                              ? "5 min + 30 sec reading"
-                              : `up to ${type.duration} minutes`}
+                            {id === 'medicine-mmi-practice'
+                              ? 'Full MMI · 6 stations · 1 min reading + 5 min answering each'
+                              : '7-minute mini interview · 1 min reading + 5 min answering'}
                           </p>
                           <h2 className="text-xl font-semibold">{type.name}</h2>
                           <p className="mb-6 mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">

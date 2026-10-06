@@ -45,6 +45,8 @@ export interface InterviewType {
   provider?: 'anam' | 'anam-deepgram';
   /** When true, hidden from the normal interview picker — only reachable from an admin page. */
   adminOnly?: boolean;
+  /** Kept for saved assessments and in-progress sessions; hidden from new practice choices. */
+  retired?: boolean;
   /**
    * When false, the pre-interview setup screen skips the "Full mock / Topic practice" choice
    * entirely and goes straight into a full mock — no per-topic drilling option. Defaults to true
@@ -339,18 +341,26 @@ for (const mode of MEDICINE_PRACTICE_MODES) {
   INTERVIEW_TYPES[mode.id] = {
     ...INTERVIEW_TYPES['medicine-mmi'], id: mode.id, name: mode.label,
     description: mode.description, adminOnly: false, duration: PRACTICE_SESSION_MINUTES,
+    verifiedAgainst: undefined,
     timingSeconds: PRACTICE_TIMING, topicPracticeEnabled: false,
-    scoringCriteria: medicinePack.domains, tags: ['medicine', '5-minute practice', mode.topic],
+    scoringCriteria: medicinePack.domains, tags: ['medicine', '7-minute mini interview', mode.topic],
     preStartNote: 'One original practice station. Read for 1 minute, then discuss your answer with Clara for up to 5 minutes. A timer alert marks the final minute. Your feedback includes a practical answer structure or a suggested improvement to your own words. You can finish early at any time.',
   };
 }
 for (const id of ['medicine-mmi', 'medicine-mmi-manchester']) INTERVIEW_TYPES[id].scoringCriteria = medicinePack.domains;
 INTERVIEW_TYPES[FULL_MMI_MOCK.id] = {
   ...INTERVIEW_TYPES['medicine-mmi'],id:FULL_MMI_MOCK.id,name:'Full MMI practice mock',
+  verifiedAgainst: undefined,
   description:'Six varied Medicine stations. One minute to read each brief, then five minutes to discuss your answer. A general practice format, not a university-specific circuit.',
   timingSeconds:FULL_MMI_MOCK.timing,duration:sessionBudgetMinutes(FULL_MMI_MOCK.stations,FULL_MMI_MOCK.timing),topicPracticeEnabled:false,adminOnly:false,
   tags:['medicine','full mock','6 stations'],preStartNote:'Six stations covering motivation, ethics, communication, healthcare and evidence. You have one minute to read each station brief and five minutes to answer, with an alert in the final minute. Select “I’m ready” to begin answering early. Feedback follows the whole mock. This is our general practice format; school-specific timings vary.',
 };
+
+// New Medicine sessions use the general MMI or a focused mini interview. Preserve
+// old definitions so existing transcripts and assessments retain their original labels.
+export const MEDICINE_LIVE_INTERVIEW_IDS = [FULL_MMI_MOCK.id, ...MEDICINE_PRACTICE_MODES.map(mode=>mode.id)] as const;
+export const RETIRED_MEDICINE_INTERVIEW_IDS = ['medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PILOTS.map(p=>p.interviewTypeId)] as const;
+for (const id of RETIRED_MEDICINE_INTERVIEW_IDS) INTERVIEW_TYPES[id].retired = true;
 
 export const INTERVIEW_CATEGORIES = {
   academic: {
@@ -874,12 +884,15 @@ export const getInterviewType = (id: string): InterviewType | undefined => {
 };
 
 export const getInterviewTypesByCategory = (category: InterviewType['category']): InterviewType[] => {
-  return Object.values(INTERVIEW_TYPES).filter(type => type.category === category);
+  return getAllInterviewTypes().filter(type => type.category === category);
 };
 
 export const getAllInterviewTypes = (): InterviewType[] => {
-  return Object.values(INTERVIEW_TYPES).filter((iv) => !iv.adminOnly);
+  return Object.values(INTERVIEW_TYPES).filter((iv) => !iv.adminOnly && !iv.retired);
 };
+
+export const getInterviewTypesForProduct = (product: '11plus' | 'medicine'): InterviewType[] =>
+  getAllInterviewTypes().filter(iv => product === 'medicine' ? iv.category === 'medicine' : iv.category !== 'medicine');
 
 export const getDefaultInterviewType = (): InterviewType => {
   return INTERVIEW_TYPES['11-plus'];

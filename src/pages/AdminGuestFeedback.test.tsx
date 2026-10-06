@@ -9,7 +9,7 @@ import {
 } from "@/components/feedback/FeedbackSummary";
 // No live Supabase connection is needed to exercise the display boundary.
 vi.mock("@/lib/guestTrials", () => ({
-  GUEST_INTERVIEW_IDS: [],
+  GUEST_HISTORY_INTERVIEW_IDS: [],
   trialApi: vi.fn(),
   trialReviewExperience: { "some-issues": "I had a few issues" },
 }));

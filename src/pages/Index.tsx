@@ -155,6 +155,11 @@ const Index = () => {
   };
 
   const handleSelectInterview = async (interviewType: InterviewType) => {
+    if (interviewType.retired || (interviewType.category === 'medicine') !== (productLine === 'medicine')) {
+      toast({ title: 'Choose a current practice format', description: productLine === 'medicine' ? 'Choose the full MMI or a seven-minute mini interview.' : 'This practice area is for 11+. Open Medicine to practise MMI interviews.' });
+      setCurrentView('selection');
+      return;
+    }
     // Check and consume a credit before starting an interview
     if (!user) {
       setCurrentView('selection');
@@ -610,7 +615,7 @@ const Index = () => {
             onReplayTour={isAdmin ? handleReplayOnboarding : undefined}
           />
         ) : currentView === 'selection' ? (
-          <InterviewSelection onSelectInterview={handleSelectInterview} />
+          <InterviewSelection key={productLine} productLine={productLine} onSelectInterview={handleSelectInterview} />
         ) : currentView === 'questions' ? (
           <QuestionsHub name={(user.user_metadata?.full_name as string | undefined)?.split(' ')[0] || user.email?.split('@')[0]} onViewHistory={() => setCurrentView('history')} />
         ) : currentView === 'achievements' ? (

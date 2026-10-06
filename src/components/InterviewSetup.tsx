@@ -54,7 +54,7 @@ export const InterviewSetup: React.FC<InterviewSetupProps> = ({ topics, onConfir
         <>
           <h2 className="text-xl font-bold mb-1">Ready to begin?</h2>
           <p className="text-sm text-muted-foreground mb-6">
-            This is a full mock — no need to choose a mode.
+            Your practice format is ready. Continue to set up your interview.
           </p>
         </>
       ) : (

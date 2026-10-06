@@ -25,12 +25,12 @@ export function recommendMode(school: SchoolRoute): { label: string; note: strin
     return { label: 'General MMI practice', note: `This route describes ${school.interview_type.toLowerCase()} interviews. Our timed MMI modes can rehearse individual skills, but do not reproduce an academic, panel or group interview.` };
   }
   if (school.prep_time_min === 0) {
-    return { label: 'Manchester-style', note: 'The mapped source describes no reading time. This mode practises answering without prep; other timings and logistics may differ. Check your invitation.' };
+    return { label: 'General MMI practice', note: 'This route lists no reading time. Our general MMI practises the shared skills; use “I’m ready” to skip reading time. Check your invitation for your actual arrangements.' };
   }
   if (typeof school.prep_time_min === 'number' && school.prep_time_min > 0) {
-    return { label: 'Leeds-style', note: `This school gives ${school.prep_time_min} minute${school.prep_time_min === 1 ? '' : 's'} of reading time — closer to our Leeds-style mode than a cold start.` };
+    return { label: 'General MMI practice', note: 'Practise communication, reasoning and reflection in our general MMI or a focused mini interview. Check your invitation for the university’s own timings.' };
   }
-  return { label: 'Try both', note: 'Reading time is unconfirmed in the mapped source. Try either mode to practise the skill, and use your invitation for the actual arrangements.' };
+  return { label: 'General MMI practice', note: 'Reading time is unconfirmed in the mapped source. Practise the shared skills in our general MMI, and use your invitation for the actual arrangements.' };
 }
 
 function formatField(v: string | number | boolean | null | undefined): string {
@@ -64,7 +64,7 @@ function SchoolCard({ school, t }: { school: SchoolRoute; t: PaletteTheme }) {
           display: 'inline-flex', alignItems: 'center', padding: '5px 12px', borderRadius: 999,
           background: t.chipBg, color: t.chipColor, fontSize: 12.5, fontWeight: 700,
         }}>
-          Closest practice mode: {rec.label}
+          Practice option: {rec.label}
         </span>
       </div>
       <p style={{ color: t.muted, fontSize: 13, lineHeight: 1.6, marginTop: 10, marginBottom: 0 }}>{rec.note}</p>

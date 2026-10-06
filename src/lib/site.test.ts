@@ -41,7 +41,7 @@ describe("Domain product routing", () => {
     expect(localStorage.getItem("intrvue_product_line")).toBe("medicine");
   });
   it("offers only supported shared-engine Medicine interviews to guests", () => {
-    expect(GUEST_INTERVIEW_IDS).toHaveLength(10);
+    expect(GUEST_INTERVIEW_IDS).toHaveLength(5);
     expect(GUEST_INTERVIEW_IDS).toContain('medicine-mmi-practice');
     for (const id of GUEST_INTERVIEW_IDS) {
       expect(INTERVIEW_TYPES[id].engineDriven).toBe(true);

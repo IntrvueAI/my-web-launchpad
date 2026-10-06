@@ -10,14 +10,11 @@ import {
   CalendarDays,
 } from "lucide-react";
 import { useState } from "react";
-import { INTERVIEW_TYPES } from "@/config/interviewTypes";
+import { INTERVIEW_TYPES, MEDICINE_LIVE_INTERVIEW_IDS } from "@/config/interviewTypes";
 import { MedicineWarmup } from "./MedicineWarmup";
 import "./medicine-landing-clinical.css";
 
-const modes = [
-  INTERVIEW_TYPES["medicine-mmi"],
-  INTERVIEW_TYPES["medicine-mmi-manchester"],
-];
+const modes = MEDICINE_LIVE_INTERVIEW_IDS.map(id=>INTERVIEW_TYPES[id]);
 const paths = [
   {
     name: "Build my confidence",
@@ -49,11 +46,11 @@ const faqs = [
   ],
   [
     "Are these real university interview questions?",
-    "No. The practice prompts are original intrvue material for transferable skills. Published university information guides the available circuit timings. We are independent of the universities.",
+    "No. The practice prompts are original material for transferable MMI skills. We offer one general MMI format and focused mini interviews. We are independent of the universities.",
   ],
   [
-    "Can I practise for Oxford, Cambridge or Imperial?",
-    "You can build reasoning, reflection and communication skills in the solo studio now. Dedicated Oxford, Cambridge and Imperial interview pilots are being reviewed and are not yet part of the public offer.",
+    "Which interview formats can I practise?",
+    "Choose the full six-station MMI or a seven-minute mini interview in ethics, communication, motivation or data. Mini sessions include one minute to read and up to five minutes of discussion, with time for the introduction and close.",
   ],
   [
     "What happens to my recording?",
@@ -225,13 +222,12 @@ export function MedicineLandingClinical() {
             </h2>
             <p>
               Practise a spoken circuit with Clara, respond to follow-ups, and
-              review AI-generated written feedback. Choose from two modes guided
-              by published MMI timings.
+              review AI-generated written feedback. Choose a full MMI or a
+              seven-minute mini interview.
             </p>
             <p>
               These are original practice questions, not a reproduction of real
-              admissions questions. Manchester practice currently omits the
-              university’s between-station gaps.
+              admissions questions. Build the skills shared across MMI interviews.
             </p>
             <a className="med-landing-primary" href="/auth?mode=medicine">
               Explore live practice <ArrowRight size={17} />
@@ -242,7 +238,7 @@ export function MedicineLandingClinical() {
               <article key={m.id}>
                 <div>
                   <span className="med-landing-eyebrow">
-                    LIVE SPOKEN CIRCUIT
+                    {m.id==='medicine-mmi-practice'?'FULL MMI':'7-MINUTE MINI INTERVIEW'}
                   </span>
                   <h3>{m.name.replace("Medicine MMI — ", "")}</h3>
                 </div>
@@ -258,18 +254,14 @@ export function MedicineLandingClinical() {
                     ? "Free during early access · no credits required"
                     : `${m.costCredits} credits per circuit · balance checked before starting`}
                 </p>
-                <a
-                  href={m.verifiedAgainst!.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Published university format ↗
+                <a href={`/?medicinePractice=${m.id}`}>
+                  {m.id==='medicine-mmi-practice'?'Start full MMI':'Start mini interview'} <ArrowRight size={15}/>
                 </a>
               </article>
             ))}
             <p className="med-format-note">
-              Oxford, Cambridge and Imperial pilots are in editorial review.
-              General solo practice is available now.
+              One consistent MMI format and four focused mini interviews.
+              General solo practice is also available.
             </p>
           </div>
         </section>
