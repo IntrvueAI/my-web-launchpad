@@ -1,3 +1,4 @@
+import { MedicineDataError } from './MedicineDataError';
 import { conciseFeedback } from '@/utils/feedbackSummary';
 import { getInterviewTypeConfig } from '@/config/interviewTypes';
 import type { InterviewType as InterviewTypeId } from '@/types/interview';
@@ -25,7 +26,8 @@ const cardStyle: React.CSSProperties = {
 export function MedicineHome({ credits, onStartInterview, onOpenTab, onOpenCredits, onOpenFeedback }: Props) {
   const { user } = useAuth();
   const { stats: generalStats } = useDashboardStats();
-  const { stats, loading } = useMedicineDashboardStats();
+  const { stats, loading, error, retry } = useMedicineDashboardStats();
+  if (error) return <MedicineDataError onRetry={() => { void retry(); }} />;
   const firstName = (user?.user_metadata?.full_name as string | undefined)?.split(' ')[0] || 'there';
   return <MedicineHomeView credits={credits} onStartInterview={onStartInterview} onOpenTab={onOpenTab} onOpenCredits={onOpenCredits} onOpenFeedback={onOpenFeedback} stats={stats} loading={loading} firstName={firstName} nextRealInterview={generalStats?.upcomingSchoolInterviews?.[0]} />;
 }
@@ -34,6 +36,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
 
   const recommended = INTERVIEW_TYPES['medicine-ethics-practice'];
   const latest = stats?.records?.[0];
+  const scoredSessions = stats?.scoredSessions ?? stats?.records.filter(record => typeof record.total_score === 'number').length ?? 0;
   const latestSummary = latest ? conciseFeedback(latest, getInterviewTypeConfig(latest.interview_type as InterviewTypeId).sections) : null;
 
   if (loading || !stats) {
@@ -68,7 +71,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div style={cardStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
-              <div style={{ flex: 1, minWidth: 260 }}>
+              <div style={{ flex: '1 1 260px', minWidth: 0 }}>
                 <div style={{ color: 'var(--med-primary-dark)', fontSize: 11.5, fontWeight: 600, letterSpacing: '.14em', textTransform: 'uppercase' }}>Recommended next</div>
                 <h2 style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 25, margin: '10px 0 0' }}>{recommended.name.replace('Medicine MMI — ', '')}</h2>
                 <p style={{ color: 'var(--med-muted)', fontSize: 15, lineHeight: 1.6, marginTop: 10, maxWidth: 460 }}>{recommended.description}</p>
@@ -90,7 +93,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
 
           {latest && latestSummary && <section style={cardStyle} aria-label="Your last interview">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary">Your last interview</p>
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><h2 className="font-display text-xl font-semibold">{INTERVIEW_TYPES[latest.interview_type ?? '']?.name ?? 'Medicine practice'}</h2><strong className="text-2xl">{latest.total_score}/20</strong></div>
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><h2 className="font-display text-xl font-semibold">{INTERVIEW_TYPES[latest.interview_type ?? '']?.name ?? 'Medicine practice'}</h2><strong className="text-2xl">{latest.total_score == null ? 'Partial assessment' : `${latest.total_score}/20`}</strong></div>
             <div className="mt-4 grid gap-4 sm:grid-cols-2"><div><h3 className="text-sm font-semibold">Keep doing</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{latestSummary.strength}</p></div><div><h3 className="text-sm font-semibold">Try next</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{latestSummary.nextStep}</p></div></div>
             <button onClick={() => onOpenFeedback ? onOpenFeedback(latest.id) : onOpenTab('feedback')} className="mt-4 text-sm font-semibold underline underline-offset-4">Review this interview →</button>
           </section>}
@@ -104,7 +107,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
                 <div style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 44 }}>
                   {stats.averageScore ?? '—'}<span style={{ fontSize: 20, color: 'var(--med-tertiary)', fontWeight: 400 }}> / 20</span>
                 </div>
-                <div style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 2 }}>Average across {stats.totalSessions} session{stats.totalSessions === 1 ? '' : 's'}</div>
+                <div style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 2 }}>{scoredSessions ? `Average across ${scoredSessions} scored session${scoredSessions === 1 ? '' : 's'}` : 'No fully scored sessions yet'}</div>
                 {stats.scoreDeltaLastMonth !== null && (
                   <div style={{ color: stats.scoreDeltaLastMonth >= 0 ? 'var(--med-success)' : 'var(--med-primary-dark)', fontSize: 13, fontWeight: 600, marginTop: 6 }}>
                     {stats.scoreDeltaLastMonth >= 0 ? '+' : ''}{stats.scoreDeltaLastMonth} in the last month

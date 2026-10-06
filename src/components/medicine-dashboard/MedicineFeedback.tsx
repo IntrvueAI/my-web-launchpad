@@ -1,3 +1,4 @@
+import { MedicineDataError } from './MedicineDataError';
 import { FeedbackSummary } from '@/components/feedback/FeedbackSummary';
 import { useState } from 'react';
 import { useMedicineDashboardStats, titleFor, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
@@ -6,7 +7,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 export function MedicineFeedback({selectedFeedbackId}: {selectedFeedbackId?: string}) {
   // Same react-query cache entry Home/Progress already populate — switching to this tab doesn't
   // re-fetch (see useMedicineDashboardStats.ts's `records` field).
-  const { stats, loading } = useMedicineDashboardStats();
+  const { stats, loading, error, retry } = useMedicineDashboardStats();
+  if (error) return <MedicineDataError onRetry={() => { void retry(); }} />;
   return <MedicineFeedbackView stats={stats} loading={loading} selectedFeedbackId={selectedFeedbackId}/>;
 }
 
@@ -21,7 +23,7 @@ export function MedicineFeedbackView({stats,loading=false,selectedFeedbackId}:{s
   // Derived directly rather than synced via an effect — with data already warm in the react-query
   // cache (e.g. arriving here from Home/Progress), an effect-based default would leave the detail
   // pane empty for the first render before it runs.
-  const effectiveSelectedId = selectedId ?? records[0]?.id ?? null;
+  const effectiveSelectedId = records.some(record => record.id === selectedId) ? selectedId : records[0]?.id ?? null;
   const selected = records.find((r) => r.id === effectiveSelectedId) ?? null;
 
   return (

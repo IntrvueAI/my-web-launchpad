@@ -261,6 +261,11 @@ const Index = () => {
     const params = new URLSearchParams(window.location.search);
     let pending: string | null = null;
     try { pending = sessionStorage.getItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
+    // A saved link must never override a host dedicated to school interviews.
+    if (siteProduct() === '11plus') {
+      try { sessionStorage.removeItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
+      return;
+    }
     const requested = params.get('medicinePractice') ?? pending;
     if (!requested || (!getMedicinePractice(requested) && requested !== 'medicine-mmi-practice')) return;
     if (!user) {

@@ -1,9 +1,11 @@
+import { MedicineDataError } from './MedicineDataError';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis, YAxis } from 'recharts';
 import { useMedicineDashboardStats, type MedicineDashboardStats } from '@/hooks/useMedicineDashboardStats';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function MedicineProgress() {
-  const { stats, loading } = useMedicineDashboardStats();
+  const { stats, loading, error, retry } = useMedicineDashboardStats();
+  if (error) return <MedicineDataError onRetry={() => { void retry(); }} />;
   return <MedicineProgressView stats={stats} loading={loading}/>;
 }
 

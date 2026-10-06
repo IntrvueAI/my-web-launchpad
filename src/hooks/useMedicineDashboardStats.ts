@@ -3,7 +3,6 @@ import { MEDICINE_PRACTICE_MODES } from '@/interview/subjects/medicine/practiceM
 import { MEDICINE_PILOTS, getMedicinePilot } from '@/interview/subjects/medicine/pilots';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
 import { FeedbackService } from '@/services/FeedbackService';
 import { FeedbackRecord } from '@/types/interview';
 
@@ -33,6 +32,7 @@ export interface MedicineSkillAverage {
 
 export interface MedicineDashboardStats {
   totalSessions: number;
+  scoredSessions?: number;
   averageScore: number | null;
   scoreDeltaLastMonth: number | null;
   recentTrend: { date: string; score: number | null }[];
@@ -85,66 +85,71 @@ export const useMedicineDashboardStats = () => {
     queryKey: ['medicine-dashboard-stats', user?.id],
     queryFn: async (): Promise<MedicineDashboardStats> => {
       const history = await FeedbackService.getUserFeedbackHistory(user!.id, 200);
-      const medicineHistory = history.filter((r) => MEDICINE_TYPES.includes(r.interview_type ?? ''));
-
-      const scores = medicineHistory.map((r) => r.total_score).filter((s): s is number => typeof s === 'number');
-      const averageScore = scores.length ? Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10 : null;
-
-      const oneMonthAgo = new Date();
-      oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
-      const recentScores = medicineHistory
-        .filter((r) => new Date(r.created_at) >= oneMonthAgo)
-        .map((r) => r.total_score)
-        .filter((s): s is number => typeof s === 'number');
-      const olderScores = medicineHistory
-        .filter((r) => new Date(r.created_at) < oneMonthAgo)
-        .map((r) => r.total_score)
-        .filter((s): s is number => typeof s === 'number');
-      // Recent (last 30 days) vs. older — NOT all-time average vs. older, which would dilute the
-      // delta with the same old sessions already counted in olderAvg.
-      const recentAvg = recentScores.length ? recentScores.reduce((a, b) => a + b, 0) / recentScores.length : null;
-      const olderAvg = olderScores.length ? olderScores.reduce((a, b) => a + b, 0) / olderScores.length : null;
-      const scoreDeltaLastMonth = recentAvg !== null && olderAvg !== null
-        ? Math.round((recentAvg - olderAvg) * 10) / 10
-        : null;
-
-      const createdAtDates = medicineHistory.map((h) => h.created_at);
-
-      const byStationTypeMap = new Map<string, { count: number; scores: number[] }>();
-      for (const r of medicineHistory) {
-        const type = titleFor(r);
-        const row = byStationTypeMap.get(type) ?? { count: 0, scores: [] };
-        row.count += 1;
-        if (typeof r.total_score === 'number') row.scores.push(r.total_score);
-        byStationTypeMap.set(type, row);
-      }
-      const byStationType = Array.from(byStationTypeMap.entries()).map(([type, row]) => ({
-        type,
-        count: row.count,
-        averageScore: row.scores.length ? Math.round((row.scores.reduce((a, b) => a + b, 0) / row.scores.length) * 10) / 10 : null,
-      }));
-
-      return {
-        totalSessions: medicineHistory.length,
-        averageScore,
-        scoreDeltaLastMonth,
-        recentTrend: medicineHistory.slice(0, 12).map((r) => ({ date: r.created_at, score: r.total_score ?? null })).reverse(),
-        recentSessions: medicineHistory.slice(0, 5).map((r) => ({
-          id: r.id,
-          date: r.created_at,
-          title: titleFor(r),
-          band: r.total_score ?? null,
-        })),
-        skills: MEDICINE_SKILL_COLUMNS.map(({ key, label }) => ({ label, average: average(medicineHistory.filter(record => getMedicinePilot(record.interview_type ?? '')?.style !== 'academic'), key) })),
-        streak: computeStreak(createdAtDates),
-        weekStrip: buildWeekStrip(createdAtDates),
-        byStationType,
-        records: medicineHistory,
-      };
+      return buildMedicineDashboardStats(history);
     },
     enabled: !!user,
     staleTime: 30_000,
   });
 
-  return { stats: query.data, loading: query.isLoading };
+  return { stats: query.data, loading: query.isLoading, error: query.isError, retry: query.refetch };
 };
+
+export function buildMedicineDashboardStats(history: FeedbackRecord[]): MedicineDashboardStats {
+  const medicineHistory = history.filter((r) => MEDICINE_TYPES.includes(r.interview_type ?? ''));
+
+  const scores = medicineHistory.map((r) => r.total_score).filter((s): s is number => typeof s === 'number');
+  const averageScore = scores.length ? Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10 : null;
+
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+  const recentScores = medicineHistory
+    .filter((r) => new Date(r.created_at) >= oneMonthAgo)
+    .map((r) => r.total_score)
+    .filter((s): s is number => typeof s === 'number');
+  const olderScores = medicineHistory
+    .filter((r) => new Date(r.created_at) < oneMonthAgo)
+    .map((r) => r.total_score)
+    .filter((s): s is number => typeof s === 'number');
+  // Recent (last 30 days) vs. older — NOT all-time average vs. older, which would dilute the
+  // delta with the same old sessions already counted in olderAvg.
+  const recentAvg = recentScores.length ? recentScores.reduce((a, b) => a + b, 0) / recentScores.length : null;
+  const olderAvg = olderScores.length ? olderScores.reduce((a, b) => a + b, 0) / olderScores.length : null;
+  const scoreDeltaLastMonth = recentAvg !== null && olderAvg !== null
+    ? Math.round((recentAvg - olderAvg) * 10) / 10
+    : null;
+
+  const createdAtDates = medicineHistory.map((h) => h.created_at);
+
+  const byStationTypeMap = new Map<string, { count: number; scores: number[] }>();
+  for (const r of medicineHistory) {
+    const type = titleFor(r);
+    const row = byStationTypeMap.get(type) ?? { count: 0, scores: [] };
+    row.count += 1;
+    if (typeof r.total_score === 'number') row.scores.push(r.total_score);
+    byStationTypeMap.set(type, row);
+  }
+  const byStationType = Array.from(byStationTypeMap.entries()).map(([type, row]) => ({
+    type,
+    count: row.count,
+    averageScore: row.scores.length ? Math.round((row.scores.reduce((a, b) => a + b, 0) / row.scores.length) * 10) / 10 : null,
+  }));
+
+  return {
+    totalSessions: medicineHistory.length,
+    scoredSessions: scores.length,
+    averageScore,
+    scoreDeltaLastMonth,
+    recentTrend: medicineHistory.slice(0, 12).map((r) => ({ date: r.created_at, score: r.total_score ?? null })).reverse(),
+    recentSessions: medicineHistory.slice(0, 5).map((r) => ({
+      id: r.id,
+      date: r.created_at,
+      title: titleFor(r),
+      band: r.total_score ?? null,
+    })),
+    skills: MEDICINE_SKILL_COLUMNS.map(({ key, label }) => ({ label, average: average(medicineHistory.filter(record => getMedicinePilot(record.interview_type ?? '')?.style !== 'academic'), key) })),
+    streak: computeStreak(createdAtDates),
+    weekStrip: buildWeekStrip(createdAtDates),
+    byStationType,
+    records: medicineHistory,
+  };
+}
