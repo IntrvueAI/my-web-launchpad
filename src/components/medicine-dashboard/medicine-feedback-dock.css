@@ -1,0 +1,155 @@
+.medicine-theme.medicine-feedback-dock {
+  position: fixed;
+  right: 20px;
+  bottom: 88px;
+  z-index: 45;
+  width: min(350px, calc(100vw - 32px));
+  min-height: 0;
+  max-height: min(500px, calc(100dvh - 112px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--med-card);
+  border: 1px solid var(--med-border-strong);
+  border-radius: 16px;
+  box-shadow: var(--med-shadow-lg);
+  font-size: 14px;
+}
+.medicine-feedback-dock[data-expanded="false"] {
+  width: 216px;
+}
+.medicine-feedback-toggle {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  padding: 12px 14px;
+  background: var(--med-primary-soft);
+  color: var(--med-primary-dark);
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+}
+.medicine-feedback-toggle span {
+  flex: 1;
+}
+.medicine-feedback-body {
+  padding: 16px;
+}
+.medicine-feedback-intro {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+.medicine-feedback-rating {
+  border: 0;
+  margin: 0 0 10px;
+  padding: 0;
+}
+.medicine-feedback-rating legend,
+.medicine-feedback-body label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.medicine-feedback-rating legend span {
+  color: var(--med-muted);
+  font-weight: 400;
+}
+.medicine-feedback-rating div {
+  display: flex;
+  gap: 4px;
+}
+.medicine-feedback-rating button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--med-primary);
+  background: transparent;
+  cursor: pointer;
+}
+.medicine-feedback-rating button:hover {
+  background: var(--med-primary-soft);
+}
+.medicine-feedback-body textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 76px;
+  max-height: 150px;
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid var(--med-border-strong);
+  border-radius: 9px;
+  color: var(--med-ink);
+  background: var(--med-bg);
+  font-size: 16px;
+}
+.medicine-feedback-note {
+  margin: 7px 0 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--med-muted);
+}
+.medicine-feedback-error {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 10px;
+  color: #a52923;
+}
+.medicine-feedback-send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--med-action);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.medicine-feedback-dock button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+.medicine-feedback-thanks {
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.medicine-feedback-thanks > svg {
+  color: var(--med-success);
+}
+.medicine-feedback-again {
+  min-height: 44px;
+  border: 1px solid var(--med-border-strong);
+  border-radius: 8px;
+  background: var(--med-bg);
+  color: var(--med-primary-dark);
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .medicine-theme.medicine-feedback-dock {
+    right: 12px;
+    bottom: calc(154px + env(safe-area-inset-bottom));
+    width: min(350px, calc(100vw - 24px));
+    max-height: calc(100dvh - 176px - env(safe-area-inset-bottom));
+  }
+  .medicine-feedback-dock[data-expanded="false"] {
+    width: 216px;
+  }
+  body:has(.medicine-feedback-dock) .med-dashboard-root main {
+    padding-bottom: 230px !important;
+  }
+}

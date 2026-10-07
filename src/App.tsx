@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthReturnResume } from './components/schools/SchoolLayout';
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { MedicineFeedbackDock } from "@/components/medicine-dashboard/MedicineFeedbackDock";
 import { PipCustomizationProvider } from "@/contexts/PipCustomizationContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import { ClickSpark } from "@/components/ui/click-spark";
@@ -208,6 +209,7 @@ const AppContent = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          <MedicineFeedbackDock />
         </BrowserRouter>
       </div>
     </ClickSpark>

@@ -193,7 +193,7 @@ export default function AdminDashboard() {
           </Button>
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs defaultValue={new URLSearchParams(window.location.search).get('tab') === 'feedback' ? 'feedback' : 'overview'} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>

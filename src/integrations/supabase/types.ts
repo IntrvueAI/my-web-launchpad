@@ -343,6 +343,39 @@ export type Database = {
         }
         Relationships: []
       }
+      interview_feedback_shares: {
+        Row: {
+          id: string
+          user_id: string | null
+          user_email: string | null
+          session_reference: string | null
+          interview_type: string | null
+          rating: number | null
+          comment: string | null
+          share_transcript: boolean
+          transcript: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          user_email?: string | null
+          session_reference?: string | null
+          interview_type?: string | null
+          rating?: number | null
+          comment?: string | null
+          share_transcript?: boolean
+          transcript?: string | null
+          created_at?: string
+        }
+        Update: {
+          rating?: number | null
+          comment?: string | null
+          share_transcript?: boolean
+          transcript?: string | null
+        }
+        Relationships: []
+      }
       user_feedback: {
         Row: {
           admin_response: string | null
