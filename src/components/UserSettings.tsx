@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Trash2, Key, User, Mail, School, Calendar, X, Bug } from 'lucide-react';
+import { Loader2, Trash2, Key, User, School, Calendar, X, Bug } from 'lucide-react';
 import { BugReportDialog } from '@/components/BugReportDialog';
 import { SchoolCombobox } from '@/components/shared/SchoolCombobox';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
@@ -36,7 +37,6 @@ export const UserSettings = () => {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [resettingPassword, setResettingPassword] = useState(false);
   const [bugReportOpen, setBugReportOpen] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -198,32 +198,6 @@ export const UserSettings = () => {
       });
     } finally {
       setUpdating(false);
-    }
-  };
-
-  const handleResetPassword = async () => {
-    if (!user) return;
-
-    setResettingPassword(true);
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(user.email!, {
-        redirectTo: `${window.location.origin}/auth`
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Password reset email sent",
-        description: "Please check your email for password reset instructions.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error sending reset email",
-        description: error.message,
-        variant: "destructive"
-      });
-    } finally {
-      setResettingPassword(false);
     }
   };
 
@@ -452,24 +426,10 @@ export const UserSettings = () => {
               <div>
                 <Label>Password</Label>
                 <p className="text-sm text-muted-foreground mb-2">
-                  Reset your password by sending a reset link to your email.
+                  Set a new password while you are signed in, including if you use Google.
                 </p>
-                <Button 
-                  variant="outline" 
-                  onClick={handleResetPassword}
-                  disabled={resettingPassword}
-                >
-                  {resettingPassword ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="mr-2 h-4 w-4" />
-                      Send Password Reset Email
-                    </>
-                  )}
+                <Button asChild variant="outline">
+                  <Link to="/reset-password"><Key className="mr-2 h-4 w-4" />Change password</Link>
                 </Button>
               </div>
             </div>

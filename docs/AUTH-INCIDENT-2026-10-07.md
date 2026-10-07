@@ -4,7 +4,7 @@
 
 - Google originally returned `401 deleted_client` on both public sites. The configured OAuth client was deleted at Google. Replacement credentials have now been installed as described below; the old error no longer appears when opening the Google sign-in form.
 - Supabase's function gateway returned **401** for the reported ethics attempt `LBG4JHW0HT` at `2026-10-06T21:51:48.343Z`. The previous release's single token-refresh retry was verified against a real Anam interview. The original log does not establish why that token was rejected.
-- Authentication email delivery returns HTTP 500 with an SMTP 535 rejection. Supabase was also configured for only two authentication emails per hour.
+- Authentication email delivery originally returned HTTP 500 with an SMTP 535 rejection. A fresh password-reset request now reaches the mail service and is rejected with SMTP 550 because `intrvue.ai` is not verified. The credential repair has taken effect; DNS verification is the confirmed remaining email blocker. Supabase was also configured for only two authentication emails per hour.
 - The separate deployed Resend API key is valid, but its account had no sending domains. The existing `resend._domainkey.intrvue.ai` DNS value does not match the newly registered domain. Email delivery remains blocked.
 
 ## Applied to the backend
@@ -15,6 +15,7 @@
 - Registered `intrvue.ai` with Resend in `eu-west-1`, matching the existing MX record. Verification is pending. Click/open tracking is disabled.
 - Deployed safe error classification in `send-auth-email`, recording credential, sender-domain and provider-limit failures without message contents or keys.
 - Removed the temporary service-role-only diagnostic/repair endpoint after use. No production user passwords, credits or interview records were changed.
+- Added exact return addresses for MMI `/auth` (canonical and www) and Intrvue www root/auth/reset-password. An MMI recovery link generated with the old settings page's `/auth` destination previously fell back to `intrvue.ai/`. The repaired allowlist preserves that destination; other authentication configuration is unchanged.
 
 ## Frontend release
 
@@ -23,6 +24,14 @@
 - An email-code sign-in flow is implemented for existing accounts only, with resend cooldown, safe error messages, one-time-code autofill and correction/retry support. Supabase verifies the code; no authentication bypass is introduced.
 - Google is available by default again after installing the replacement registration and verifying the Google sign-in form. An explicit `VITE_GOOGLE_SIGN_IN_ENABLED=false` still hides the button during a provider outage. Email-dependent actions remain unavailable by default. Password sign-in remains available.
 - `VITE_EMAIL_SIGN_IN_ENABLED=true` must only be set after real email delivery is verified. These are independent switches. The sign-up page now directs users to Google while email registration is unavailable.
+
+### Password reset repair
+
+- Settings → Security → Change password now opens the password form using the user's authenticated Supabase session. This also lets a signed-in Google user set a password without depending on email delivery. Supabase still authenticates and authorizes the password update.
+- The former settings action sent recovery links to `/auth`. Recovery events now route to `/reset-password` and clear unrelated saved sign-in destinations.
+- Forgot Password is clickable during the email outage. It explains the delivery problem and offers Google sign-in with a saved return to the password form. Email sending stays disabled until delivery is verified. Once enabled, failed sends retain the form and successful sends display an account-neutral confirmation.
+- The reset form waits for authentication initialization, explains expired or reused links, allows retry after connection failures, identifies the account being changed, and applies the actual eight-character/uppercase/lowercase/number password requirements. Backend failures retain the inputs with safe errors. Successful updates show a deliberate Continue button rather than immediately redirecting an authenticated user to sign-in.
+- Real browser checks on the prepared release passed for both domains: genuine Supabase recovery links, the legacy MMI return, password update, rejection of the previous password, successful new-password login to the same account, rejected link reuse, and password changes using an existing session. Mobile layout and Google recovery return checks passed. The links were generated for temporary QA accounts through the admin API; this verifies recovery independently of blocked email delivery. All temporary accounts were removed.
 
 ## Outstanding external steps
 
@@ -59,6 +68,8 @@ Remaining verification: publish the button update, then complete an actual Googl
 ### Frontend publishing
 
 Pushes to `IntrvueAI/my-web-launchpad` main are not proof of publication. Publish the synced release through the existing Lovable project. A Lovable integration has been suggested but is not connected yet.
+
+The user published the Google repair, and live checks now reach Google's sign-in form from both public sites. The password-reset changes need a new publication after their push.
 
 ## Verification and limits
 

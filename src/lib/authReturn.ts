@@ -21,7 +21,11 @@ export function safeAuthReturn(
     if (url.origin !== "https://intrvue.ai" || url.hash) return null;
     if (
       !SCHOOL_PATH.test(url.pathname) &&
-      !["/admin/guest-trials", "/admin/guest-feedback"].includes(url.pathname)
+      ![
+        "/admin/guest-trials",
+        "/admin/guest-feedback",
+        "/reset-password",
+      ].includes(url.pathname)
     )
       return null;
     for (const [key, v] of url.searchParams) {

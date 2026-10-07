@@ -49,6 +49,7 @@ describe("Class invitation and sign-in boundaries", () => {
       `/schools/${id}/students/${id}?page=2&interview=${id}`,
       `/join-class/${token}`,
       "/admin/guest-feedback",
+      "/reset-password",
     ])
       expect(safeAuthReturn(path)).toBe(path);
   });

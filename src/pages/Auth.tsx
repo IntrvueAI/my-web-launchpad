@@ -47,8 +47,11 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(
+    () => new URLSearchParams(window.location.search).get("reset") === "1",
+  );
   const [resetEmail, setResetEmail] = useState("");
+  const [resetSent, setResetSent] = useState(false);
 
   const { user, signInWithGoogle } = useAuth();
   const {
@@ -84,9 +87,9 @@ const Auth = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate(founderReturnPath());
+      navigate(showForgotPassword ? "/reset-password" : founderReturnPath());
     }
-  }, [user, navigate]);
+  }, [user, navigate, showForgotPassword]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,6 +167,7 @@ const Auth = () => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setError(null);
+    if (showForgotPassword) rememberAuthReturn("/reset-password");
 
     const { error } = await signInWithGoogle();
     if (error) {
@@ -195,8 +199,7 @@ const Auth = () => {
       setError(authErrorMessage(result.error));
       return;
     }
-    setResetEmail("");
-    setShowForgotPassword(false);
+    setResetSent(true);
   };
 
   return (
@@ -230,8 +233,9 @@ const Auth = () => {
                     Forgot Password?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Enter your email address and we'll send you a link to reset
-                    your password.
+                    {EMAIL_SIGN_IN_AVAILABLE
+                      ? "Enter your email address and we'll send you a link to reset your password."
+                      : "Reset emails are temporarily unavailable. If your account uses Google, sign in with Google to set a new password."}
                   </p>
                 </div>
 
@@ -241,38 +245,61 @@ const Auth = () => {
                   </Alert>
                 )}
 
-                <form onSubmit={handleForgotPassword} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="reset-email">Email</Label>
-                    <Input
-                      id="reset-email"
-                      type="email"
-                      placeholder="Enter your email"
-                      value={resetEmail}
-                      onChange={(e) => setResetEmail(e.target.value)}
-                      required
-                    />
-                  </div>
+                {!EMAIL_SIGN_IN_AVAILABLE && GOOGLE_SIGN_IN_AVAILABLE && (
                   <Button
-                    type="submit"
+                    onClick={handleGoogleSignIn}
                     className="w-full min-h-[44px]"
                     disabled={loading}
                   >
-                    {loading ? "Sending..." : "Send Reset Link"}
+                    {loading ? "Signing in..." : "Continue with Google"}
                   </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="w-full"
-                    onClick={() => {
-                      setShowForgotPassword(false);
-                      setError(null);
-                      setResetEmail("");
-                    }}
-                  >
-                    Back to Sign In
-                  </Button>
-                </form>
+                )}
+                {resetSent ? (
+                  <Alert>
+                    <AlertDescription>
+                      If an account exists with that email, a reset link is on
+                      its way. Check your inbox and spam folder, then open the
+                      latest link.
+                    </AlertDescription>
+                  </Alert>
+                ) : (
+                  EMAIL_SIGN_IN_AVAILABLE && (
+                    <form onSubmit={handleForgotPassword} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="reset-email">Email</Label>
+                        <Input
+                          id="reset-email"
+                          type="email"
+                          autoComplete="email"
+                          placeholder="Enter your email"
+                          value={resetEmail}
+                          onChange={(e) => setResetEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <Button
+                        type="submit"
+                        className="w-full min-h-[44px]"
+                        disabled={loading}
+                      >
+                        {loading ? "Sending..." : "Send Reset Link"}
+                      </Button>
+                    </form>
+                  )
+                )}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => {
+                    setShowForgotPassword(false);
+                    setError(null);
+                    setResetEmail("");
+                    setResetSent(false);
+                  }}
+                >
+                  Back to Sign In
+                </Button>
               </div>
             ) : (
               <Tabs defaultValue="signin" className="space-y-4">
@@ -353,13 +380,12 @@ const Auth = () => {
                         <Label htmlFor="signin-password">Password</Label>
                         <button
                           type="button"
-                          disabled={!EMAIL_SIGN_IN_AVAILABLE}
-                          title={
-                            !EMAIL_SIGN_IN_AVAILABLE
-                              ? "Password reset emails are temporarily unavailable"
-                              : undefined
-                          }
-                          onClick={() => setShowForgotPassword(true)}
+                          onClick={() => {
+                            setError(null);
+                            setResetSent(false);
+                            setResetEmail(email);
+                            setShowForgotPassword(true);
+                          }}
                           className="text-sm text-primary hover:underline"
                         >
                           Forgot Password?

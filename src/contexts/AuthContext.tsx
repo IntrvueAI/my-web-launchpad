@@ -67,6 +67,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!active || (signingOut.current && session)) return;
       setSession(session);
       setUser(session?.user ?? null);
+      if (event === "PASSWORD_RECOVERY") {
+        setShowPostSignupForm(false);
+        clearAuthReturn();
+        // Older settings emails returned to /auth, where a newly recovered
+        // session was immediately redirected away from the password form.
+        if (window.location.pathname !== "/reset-password") {
+          window.location.replace("/reset-password");
+        }
+      }
       if (event === "SIGNED_OUT") {
         setShowPostSignupForm(false);
         cache.clear();

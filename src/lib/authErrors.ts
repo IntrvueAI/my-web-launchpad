@@ -23,3 +23,21 @@ export const GOOGLE_SIGN_IN_AVAILABLE =
 // Turn on only after a real Supabase authentication email is accepted.
 export const EMAIL_SIGN_IN_AVAILABLE =
   import.meta.env.VITE_EMAIL_SIGN_IN_ENABLED === "true";
+
+export function passwordResetErrorMessage(error: unknown): string {
+  const failure = error as { code?: string; status?: number } | null;
+  if (failure?.code === "same_password")
+    return "Choose a password you haven't used for this account before.";
+  if (failure?.code === "weak_password")
+    return "Choose a stronger password with at least 8 characters, an uppercase letter, a lowercase letter and a number.";
+  if (failure?.status === 401 || failure?.code === "session_not_found")
+    return "Your session has expired. Open a new reset link or sign in again.";
+  if (
+    failure?.code === "reauthentication_needed" ||
+    failure?.code === "reauthentication_not_valid"
+  )
+    return "Please sign out and sign in again before changing your password.";
+  if (failure?.status === 429)
+    return "Too many attempts. Wait a minute before trying again.";
+  return "Your password could not be saved. Check your connection and try again.";
+}
