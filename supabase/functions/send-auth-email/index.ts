@@ -247,11 +247,22 @@ const handler = async (req: Request): Promise<Response> => {
       html,
     });
 
-    if (emailResponse.error)
+    if (emailResponse.error) {
+      // Record a useful provider diagnosis without storing API keys or email contents.
+      const detail = emailResponse.error.message || '';
+      const reason = /api.?key|credential|unauthoriz/i.test(detail) ? 'invalid_credentials'
+        : /domain|verif/i.test(detail) ? 'sender_domain_unverified'
+        : /quota|rate|limit/i.test(detail) ? 'provider_limit' : 'provider_rejected';
+      await logAppEvent('edge:send-auth-email', {
+        level: 'error', eventType: 'email_provider_rejected',
+        message: reason, userId, requestId,
+        metadata: { provider: 'resend', providerCode: emailResponse.error.name },
+      }).catch(() => {});
       return new Response(
         JSON.stringify({ error: "Email provider rejected the request" }),
         { status: 502, headers: corsHeaders },
       );
+    }
 
     return new Response(JSON.stringify(emailResponse), {
       status: 200,

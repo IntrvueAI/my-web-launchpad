@@ -9,6 +9,8 @@ const mocks = vi.hoisted(() => ({
   signOut: vi.fn(),
   signIn: vi.fn(),
   google: vi.fn(),
+  otp: vi.fn(),
+  verify: vi.fn(),
   unsubscribe: vi.fn(),
 }));
 vi.mock("@/integrations/supabase/client", () => ({
@@ -20,6 +22,8 @@ vi.mock("@/integrations/supabase/client", () => ({
       signOut: mocks.signOut,
       signInWithPassword: mocks.signIn,
       signInWithOAuth: mocks.google,
+      signInWithOtp: mocks.otp,
+      verifyOtp: mocks.verify,
     },
   },
 }));
@@ -72,6 +76,37 @@ async function mount() {
   );
 }
 describe("Authentication state recovery", () => {
+  it("sends a code only to an existing account and returns to the current site", async () => {
+    mocks.otp.mockResolvedValue({ error: null });
+    await mount();
+    await auth.sendSignInCode("existing@example.test");
+    expect(mocks.otp).toHaveBeenCalledWith({
+      email: "existing@example.test",
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: window.location.origin + "/",
+      },
+    });
+  });
+  it("allows deliberate code sign-in after logout and verifies with Supabase", async () => {
+    mocks.verify.mockImplementation(async () => {
+      callback("SIGNED_IN", session);
+      return { error: null };
+    });
+    await mount();
+    await act(async () => {
+      await auth.signOut();
+    });
+    await act(async () => {
+      await auth.verifySignInCode("existing@example.test", "123456");
+    });
+    expect(mocks.verify).toHaveBeenCalledWith({
+      email: "existing@example.test",
+      token: "123456",
+      type: "email",
+    });
+    expect(auth.user?.id).toBe("test-user");
+  });
   it("clears private cached data and onboarding even if the SDK emits no sign-out event", async () => {
     await mount();
     cache.setQueryData(["private-feedback"], { transcript: "private" });
