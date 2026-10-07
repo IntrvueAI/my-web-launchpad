@@ -11,7 +11,7 @@
 
 - Set the authentication email allowance to **100/hour** on the existing custom SMTP service; other request limits are unchanged.
 - Prepared a sign-in email with a one-time code and a confirmation link.
-- Replaced the saved SMTP credential with the already deployed, API-verified Resend key. **A subsequent SMTP delivery check still failed; this is not a claim that email is restored.**
+- Replaced the rejected SMTP credential, then created a separate Resend key restricted to sending (`Supabase authentication 2026-10-07`, ID `e9e92dd1-6c84-4bcc-b75f-18e737f628f7`) and installed it in Supabase SMTP. The other deployed Resend key was retained. **A subsequent SMTP delivery check still failed; this is not a claim that email is restored.**
 - Registered `intrvue.ai` with Resend in `eu-west-1`, matching the existing MX record. Verification is pending. Click/open tracking is disabled.
 - Deployed safe error classification in `send-auth-email`, recording credential, sender-domain and provider-limit failures without message contents or keys.
 - Removed the temporary service-role-only diagnostic/repair endpoint after use. No production user passwords, credits or interview records were changed.
@@ -61,6 +61,6 @@ Pushes to `IntrvueAI/my-web-launchpad` main are not proof of publication. Publis
 - Email UI: delivery failure leaves a retryable form; incorrect OTP rejected; real Supabase OTP verification preserves the same account; resend is disabled during cooldown; no mobile horizontal overflow. **SMTP delivery was substituted in the browser test because the real provider is blocked.** A separate real SMTP check failed as described above.
 - Existing six-character password signs in through the updated frontend against the live backend.
 - One-time-code replay rejected by Supabase; temporary QA accounts/data removed.
-- Application suite, typecheck, build and backend checks are recorded in the release's CI run. These tests do not establish that Google login or external email delivery is restored.
+- 391 application tests and 159 backend tests pass, along with typecheck and build. The release's CI run also checks database access and all edge functions. These tests do not establish that Google login or external email delivery is restored.
 
 References: [Supabase passwordless sign-in](https://supabase.com/docs/guides/auth/auth-email-passwordless), [authentication rate limits](https://supabase.com/docs/guides/auth/rate-limits), [Google client restoration](https://support.google.com/cloud/answer/15549257?hl=en), [Resend testing addresses](https://resend.com/docs/dashboard/emails/send-test-emails).
