@@ -2,7 +2,7 @@
 
 ## Confirmed failures
 
-- Google returns `401 deleted_client` on both public sites. The configured OAuth client was deleted at Google. No replacement credentials are available in this workspace. This cannot be repaired by changing a Supabase redirect URL.
+- Google originally returned `401 deleted_client` on both public sites. The configured OAuth client was deleted at Google. Replacement credentials have now been installed as described below; the old error no longer appears when opening the Google sign-in form.
 - Supabase's function gateway returned **401** for the reported ethics attempt `LBG4JHW0HT` at `2026-10-06T21:51:48.343Z`. The previous release's single token-refresh retry was verified against a real Anam interview. The original log does not establish why that token was rejected.
 - Authentication email delivery returns HTTP 500 with an SMTP 535 rejection. Supabase was also configured for only two authentication emails per hour.
 - The separate deployed Resend API key is valid, but its account had no sending domains. The existing `resend._domainkey.intrvue.ai` DNS value does not match the newly registered domain. Email delivery remains blocked.
@@ -21,8 +21,8 @@
 - Existing passwords are checked for presence when signing in, not against the stronger policy for creating a new password. This fixes valid older passwords being rejected by the browser.
 - Failed password resets retain the form and show an error.
 - An email-code sign-in flow is implemented for existing accounts only, with resend cooldown, safe error messages, one-time-code autofill and correction/retry support. Supabase verifies the code; no authentication bypass is introduced.
-- Google and email-dependent actions are temporarily unavailable by default, with an explanation. Password sign-in remains available. This avoids inviting users into providers confirmed to be broken.
-- After their respective services are verified, set `VITE_GOOGLE_SIGN_IN_ENABLED=true` and `VITE_EMAIL_SIGN_IN_ENABLED=true` in the deployment and rebuild. They are independent switches.
+- Google is available by default again after installing the replacement registration and verifying the Google sign-in form. An explicit `VITE_GOOGLE_SIGN_IN_ENABLED=false` still hides the button during a provider outage. Email-dependent actions remain unavailable by default. Password sign-in remains available.
+- `VITE_EMAIL_SIGN_IN_ENABLED=true` must only be set after real email delivery is verified. These are independent switches. The sign-up page now directs users to Google while email registration is unavailable.
 
 ## Outstanding external steps
 
@@ -42,13 +42,19 @@ p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDs+CsQkowqsdPH73vsolMZkYt6MmIw4XkqE3TLPU
 
 ### Google login
 
-Create or restore a Google Web application OAuth client. Its authorised redirect must be:
+Installed the user-supplied replacement Google Web application OAuth client in the existing Supabase project, preserving all unrelated authentication settings. Its authorised redirect is:
 
 ```text
 https://fjkuuzfuysemrofcmnvd.supabase.co/auth/v1/callback
 ```
 
-Website origins: `https://intrvue.ai`, `https://www.intrvue.ai`, `https://mmipractice.co.uk`, `https://www.mmipractice.co.uk`. Configure its ID/secret in the existing Supabase Google provider. Downloaded client JSON can be installed from the local workspace without pasting the secret into chat. Verify the Google audience/publishing configuration and complete an actual user sign-in before enabling the button.
+Website origins verified in the downloaded registration: `https://intrvue.ai`, `https://www.intrvue.ai`, `https://mmipractice.co.uk`, `https://www.mmipractice.co.uk`. The client secret was read from the user-supplied local JSON and sent only to the intended Supabase configuration endpoint and Google's token endpoint; it is not in the repository or browser code.
+
+Both sites' backend authorization requests now redirect to Google using the replacement client and correct callback. Browser checks reach Google's email/phone sign-in form without `deleted_client`, `invalid_client`, or `redirect_uri_mismatch`. An intentionally invalid authorization code is rejected with `invalid_grant`; this is not a successful token exchange.
+
+The prepared production build was also served under each site's origin in an isolated browser: both Sign In and Sign Up buttons reached the real Google form through real Supabase requests, with the correct return-to-site parameter and no page errors (four checks). This is a local release check, not confirmation of public deployment. The 23 targeted authentication tests, typecheck and production build pass.
+
+Remaining verification: publish the button update, then complete an actual Google account sign-in and confirm return to the correct site with the existing account/interview history. Google audience restrictions and account consent cannot be established by an unauthenticated sign-in-form check.
 
 ### Frontend publishing
 

@@ -14,10 +14,10 @@ export function authErrorMessage(error: unknown): string {
   return "We could not complete sign-in. Check your connection and try again.";
 }
 
-// The Google OAuth registration currently returns deleted_client. Enable only
-// after replacement credentials have been installed and verified in Supabase.
+// Replacement credentials are installed in Supabase and Google accepts the
+// callback. Keep an explicit off switch for a future provider outage.
 export const GOOGLE_SIGN_IN_AVAILABLE =
-  import.meta.env.VITE_GOOGLE_SIGN_IN_ENABLED === "true";
+  import.meta.env.VITE_GOOGLE_SIGN_IN_ENABLED !== "false";
 
 // Email delivery remains blocked by the sender domain's DNS verification.
 // Turn on only after a real Supabase authentication email is accepted.

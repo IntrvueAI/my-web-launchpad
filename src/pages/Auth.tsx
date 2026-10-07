@@ -420,7 +420,7 @@ const Auth = () => {
                     </Button>
                   )}
 
-                  {GOOGLE_SIGN_IN_AVAILABLE && (
+                  {GOOGLE_SIGN_IN_AVAILABLE && EMAIL_SIGN_IN_AVAILABLE && (
                     <div className="relative">
                       <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t" />
@@ -486,9 +486,9 @@ const Auth = () => {
                   ) : (
                     <Alert>
                       <AlertDescription>
-                        Account confirmation emails are temporarily unavailable.
-                        Please try again later. Existing users can use Sign In
-                        with their password.
+                        {GOOGLE_SIGN_IN_AVAILABLE
+                          ? "You can create an account with Google above. Email sign-up is temporarily unavailable."
+                          : "Account confirmation emails are temporarily unavailable. Please try again later. Existing users can use Sign In with their password."}
                       </AlertDescription>
                     </Alert>
                   )}
