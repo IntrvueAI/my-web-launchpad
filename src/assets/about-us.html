@@ -31,6 +31,8 @@
   .mobile-menu a{padding:12px 8px;color:var(--muted);font-weight:500;border-radius:10px;text-decoration:none}
   .mobile-menu a:hover{background:rgba(255,255,255,.05);color:var(--ink)}
   .mobile-menu .btn{margin-top:8px;width:100%}
+  .founder-grid{max-width:800px;margin:0 auto;padding:52px 40px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+  @media(max-width:600px){.founder-grid{grid-template-columns:1fr;padding:40px 24px 0}}
   @media(max-width:960px){
     .nav-links{display:none}
     .nav-cta .btn-ghost{display:none}
@@ -52,7 +54,6 @@
         <a href="/#parents">Why intrvue</a>
         <a href="/#value">Compare</a>
         <a href="/#stories">Results</a>
-        <a href="/medicine">Medicine</a>
         <a href="/faq">FAQ</a>
         <a href="/about">About</a>
       </nav>
@@ -69,7 +70,6 @@
       <a href="/#parents">Why intrvue</a>
       <a href="/#value">Compare</a>
       <a href="/#stories">Results</a>
-      <a href="/medicine">Medicine</a>
       <a href="/faq">FAQ</a>
       <a href="/about">About</a>
       <a href="/auth" class="btn btn-ghost">Sign in</a>
@@ -129,7 +129,7 @@
     </div>
   </section>
 
-  <section style="max-width:1100px;margin:0 auto;padding:52px 40px 0;display:grid;grid-template-columns:repeat(3, 1fr);gap:26px;">
+  <section class="founder-grid" aria-label="Our founders">
 
     <div style="background:#151C2E;border:1px solid rgba(255,255,255,.09);border-radius:26px;padding:34px;display:flex;flex-direction:column;align-items:center;text-align:center;">
       <div style="width:128px;height:128px;border-radius:50%;background:#1B2438;display:flex;align-items:center;justify-content:center;overflow:hidden;">
@@ -149,28 +149,6 @@
         </svg>
       </div>
       <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:21px;margin:20px 0 2px;">Dillon</h3>
-      <span style="font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#FF8A66;">Co-founder</span>
-    </div>
-
-    <div style="background:#151C2E;border:1px solid rgba(255,255,255,.09);border-radius:26px;padding:34px;display:flex;flex-direction:column;align-items:center;text-align:center;">
-      <div style="width:128px;height:128px;border-radius:50%;background:#1B2438;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-        <svg width="98" height="98" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="44" cy="50" rx="26" ry="30" fill="#0B0F1A"/>
-          <ellipse cx="44" cy="54" rx="16" ry="22" fill="#F4F6FA"/>
-          <ellipse cx="18" cy="48" rx="7" ry="16" fill="#0B0F1A" transform="rotate(-18 18 48)"/>
-          <ellipse cx="70" cy="48" rx="7" ry="16" fill="#0B0F1A" transform="rotate(18 70 48)"/>
-          <path d="M32 78 L26 86 L36 84 Z" fill="#FFC24B"/>
-          <path d="M56 78 L52 84 L62 86 Z" fill="#FFC24B"/>
-          <rect x="31" y="36" width="11" height="8" rx="3" fill="#0B0F1A"/>
-          <rect x="46" y="36" width="11" height="8" rx="3" fill="#0B0F1A"/>
-          <rect x="42" y="38.5" width="4" height="2.5" fill="#0B0F1A"/>
-          <path d="M42 46 L46 46 L44 51 Z" fill="#FFC24B"/>
-          <path d="M22 27 Q44 -4 66 27 Z" fill="#FF5F4A"/>
-          <rect x="20" y="25" width="48" height="9" rx="4.5" fill="#FF4D5E"/>
-          <circle cx="44" cy="8" r="6" fill="#FFC24B"/>
-        </svg>
-      </div>
-      <h3 style="font-family:'Bricolage Grotesque',serif;font-weight:700;font-size:21px;margin:20px 0 2px;">Zakir</h3>
       <span style="font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#FF8A66;">Co-founder</span>
     </div>
 

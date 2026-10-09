@@ -16,7 +16,8 @@ import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft, CheckCircle, GraduationCap } from 'lucide-react';
+import { isMedicineSite, SCHOOL_ORIGIN } from '@/lib/site';
 
 export default function AdminDashboard() {
   const { isAdmin, isLoading, error, refetch } = useAdminStatus();
@@ -119,6 +120,27 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        <Card className="mb-6" id="page-previews">
+          <CardHeader>
+            <CardTitle>Page previews</CardTitle>
+            <CardDescription>Review the Medicine and Schools pages here.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-3 sm:grid-cols-2">
+            <Button variant="outline" className="min-h-12 justify-start gap-2" asChild>
+              <Link to="/medicine" target="_blank" rel="noopener noreferrer">
+                <Stethoscope className="h-4 w-4" /> Preview Medicine
+                <ExternalLink className="ml-auto h-4 w-4" />
+              </Link>
+            </Button>
+            <Button variant="outline" className="min-h-12 justify-start gap-2" asChild>
+              <a href={isMedicineSite() ? `${SCHOOL_ORIGIN}/schools` : '/schools'} target="_blank" rel="noopener noreferrer">
+                <GraduationCap className="h-4 w-4" /> Preview Schools
+                <ExternalLink className="ml-auto h-4 w-4" />
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+
         {/* TEMP: internal testing tools, admin-only, not linked anywhere public. */}
         <div className="flex flex-wrap items-center gap-2 mb-6 rounded-lg border border-dashed p-3">
           <span className="text-xs font-medium text-muted-foreground mr-1">Testing tools:</span>
@@ -158,7 +180,7 @@ export default function AdminDashboard() {
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/medicine-landing-preview" target="_blank" rel="noopener noreferrer">
-              <Stethoscope className="h-3.5 w-3.5" /> Medicine landing page
+              <Stethoscope className="h-3.5 w-3.5" /> Medicine legacy design
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
