@@ -1,6 +1,6 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
-import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
+import { fetchWithProviderRetry, providerBillingFailure, PROVIDER_BILLING_EVENT } from "../_shared/providerRetry.ts";
 import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING, FULL_MMI_MOCK, packForFullMmiMock } from './_shared/subjects/medicine/practiceModes.ts';
 import { publicQuestionPrompt, firstNameFrom } from './_shared/engine/publicPrompt.ts';
 // Interview Brain — the LLM-driven orchestrator the client calls each time the student finishes
@@ -124,6 +124,12 @@ const chat: ChatComplete = async ({ messages, tools }) => {
     }),
   }, { signal: AbortSignal.timeout(30_000), attemptTimeoutMs: 20_000 });
   if (!resp.ok) {
+    if (await providerBillingFailure(resp))
+      await logAppEvent("edge:interview-brain", {
+        eventType: PROVIDER_BILLING_EVENT,
+        message: "OpenAI credit exhausted: interview replies cannot be generated.",
+        metadata: { provider: "openai", status: resp.status },
+      });
     const detail = await resp.text();
     throw new Error(`OpenAI ${resp.status}: ${detail.slice(0, 300)}`);
   }

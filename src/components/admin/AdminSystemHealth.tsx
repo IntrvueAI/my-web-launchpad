@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Activity, Database, Users, AlertCircle, CheckCircle, Clock, Radio, CalendarIcon } from 'lucide-react';
+import { Activity, Database, Users, AlertCircle, CheckCircle, Clock, CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { LiveInterviews } from './LiveInterviews';
 
-const LIVE_WINDOW_MINUTES = 10;
 const DEFAULT_RANGE_DAYS = 30;
 const startOfDay = (d: Date) => { const c = new Date(d); c.setHours(0, 0, 0, 0); return c; };
 const endOfDay = (d: Date) => { const c = new Date(d); c.setHours(23, 59, 59, 999); return c; };
@@ -25,9 +25,7 @@ export const AdminSystemHealth = () => {
   const { data: healthData, isLoading } = useQuery({
     queryKey: ['admin-system-health', dateFrom?.toISOString() ?? 'all', dateTo.toISOString()],
     queryFn: async () => {
-      const now = new Date();
       const rangeEnd = endOfDay(dateTo);
-      const liveWindowAgo = new Date(now.getTime() - LIVE_WINDOW_MINUTES * 60 * 1000);
 
       // "Query latency" doubles as the database-health check: if this fails, everything below fails
       // too, and the real error surfaces — no more hardcoded 'Connected'.
@@ -58,23 +56,6 @@ export const AdminSystemHealth = () => {
       const totalOutcomes = Object.values(outcomes).reduce((a, b) => a + b, 0);
       const errorRatePct = totalOutcomes > 0 ? Math.round((outcomes.error / totalOutcomes) * 100) : 0;
 
-      // Genuinely live right now: status='active' AND recently touched — a stale 'active' row from an
-      // abandoned session (browser closed mid-interview) never flips to another status, so without the
-      // last_activity_at filter this would overcount indefinitely. Not affected by the date range —
-      // "live" is inherently now, not historical.
-      const { data: liveRows } = await supabase
-        .from('interview_sessions')
-        .select('id, user_id, interview_type, last_activity_at, started_at')
-        .eq('status', 'active')
-        .gte('last_activity_at', liveWindowAgo.toISOString())
-        .order('last_activity_at', { ascending: false });
-      const liveUserIds = [...new Set((liveRows ?? []).map((r: any) => r.user_id))];
-      let liveEmails: Record<string, string> = {};
-      if (liveUserIds.length > 0) {
-        const { data: profiles } = await supabase.from('profiles').select('id, email').in('id', liveUserIds);
-        liveEmails = Object.fromEntries((profiles ?? []).map((p: any) => [p.id, p.email]));
-      }
-
       const { data: dbStats } = await supabase
         .from('profiles')
         .select('created_at')
@@ -92,10 +73,9 @@ export const AdminSystemHealth = () => {
         queryLatencyMs,
         lastUserCreated,
         systemStatus,
-        liveSessions: (liveRows ?? []).map((r: any) => ({ ...r, email: liveEmails[r.user_id] || r.user_id })),
       };
     },
-    refetchInterval: 30000, // Live panel is the one thing worth refreshing faster than a minute
+    refetchInterval: 60000, // LiveInterviews refreshes itself more often
   });
 
   if (isLoading) {
@@ -212,40 +192,7 @@ export const AdminSystemHealth = () => {
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Radio className="h-4 w-4 text-emerald-500" />
-            Live right now
-          </CardTitle>
-          <CardDescription>
-            Sessions with status "active", touched in the last {LIVE_WINDOW_MINUTES} minutes — refreshes every 30s.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {!healthData?.liveSessions.length ? (
-            <p className="text-sm text-muted-foreground">Nobody mid-interview right now.</p>
-          ) : (
-            <div className="space-y-2">
-              {healthData.liveSessions.map((s: any) => (
-                <div key={s.id} className="flex items-center justify-between text-sm border-b last:border-0 py-2">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                    </span>
-                    <span className="font-medium">{s.email}</span>
-                    <Badge variant="secondary" className="text-[10px]">{s.interview_type}</Badge>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    since {new Date(s.started_at).toLocaleTimeString()}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      <LiveInterviews />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {healthMetrics.map((metric, index) => (

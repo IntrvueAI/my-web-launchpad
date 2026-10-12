@@ -13,6 +13,7 @@ import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
 import { AdminQuestions } from '@/components/admin/AdminQuestions';
 import { AdminDailyQuestions } from '@/components/admin/AdminDailyQuestions';
 import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
+import { ProviderCreditAlert } from '@/components/admin/ProviderCreditAlert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -215,6 +216,7 @@ export default function AdminDashboard() {
           </Button>
         </div>
 
+        <ProviderCreditAlert />
         <Tabs defaultValue={new URLSearchParams(window.location.search).get('tab') === 'feedback' ? 'feedback' : 'overview'} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
             <TabsTrigger value="overview">Overview</TabsTrigger>

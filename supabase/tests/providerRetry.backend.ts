@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   fetchWithProviderRetry,
+  providerBillingFailure,
   providerRetryDelay,
 } from "../functions/_shared/providerRetry";
 import { state } from "./fixtures/state";
@@ -112,5 +113,22 @@ describe("Temporary provider failures", () => {
     await vi.advanceTimersByTimeAsync(2000);
     await assertion;
     expect(state.fetch).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("Provider billing failures", () => {
+  const reply = (status: number, code?: string) =>
+    new Response(JSON.stringify({ error: { code, message: "x" } }), { status });
+  it("recognises exhausted credit without consuming the response body", async () => {
+    const response = reply(429, "insufficient_quota");
+    expect(await providerBillingFailure(response)).toBe(true);
+    expect(await providerBillingFailure(reply(429, "billing_hard_limit_reached"))).toBe(true);
+    expect((await response.json()).error.code).toBe("insufficient_quota");
+  });
+  it("does not mistake rate limits, server errors or missing responses for billing", async () => {
+    expect(await providerBillingFailure(reply(429, "rate_limit_exceeded"))).toBe(false);
+    expect(await providerBillingFailure(reply(500, "insufficient_quota"))).toBe(false);
+    expect(await providerBillingFailure(new Response("not json", { status: 429 }))).toBe(false);
+    expect(await providerBillingFailure(null)).toBe(false);
   });
 });

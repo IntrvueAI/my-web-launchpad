@@ -1,3 +1,18 @@
+const BILLING_CODES = ["insufficient_quota", "billing_hard_limit_reached"];
+/** Admin alerts read this event type from app_logs. */
+export const PROVIDER_BILLING_EVENT = "provider_credit_exhausted";
+
+/** True when the provider refused for billing (credit used up), which no retry can fix. */
+export async function providerBillingFailure(response?: Response | null): Promise<boolean> {
+  if (response?.status !== 429) return false;
+  try {
+    const data = await response.clone().json();
+    return BILLING_CODES.includes(data?.error?.code);
+  } catch {
+    return false;
+  }
+}
+
 /** The provider sometimes supplies its wait only in a 429 JSON error, without Retry-After. */
 export async function providerRetryDelay(
   response?: Response,
@@ -11,12 +26,7 @@ export async function providerRetryDelay(
   if (response?.status === 429) {
     try {
       const data = await response.clone().json();
-      if (
-        ["insufficient_quota", "billing_hard_limit_reached"].includes(
-          data?.error?.code,
-        )
-      )
-        return Infinity;
+      if (BILLING_CODES.includes(data?.error?.code)) return Infinity;
       const match =
         typeof data?.error?.message === "string" &&
         data.error.message.match(/try again in\s+(\d+(?:\.\d+)?)\s*(ms|s)\b/i);
