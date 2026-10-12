@@ -52,6 +52,7 @@ const AdminMedicineLab = lazy(() => import("./pages/AdminMedicineLab"));
 const AdminMedicineReview = lazy(() => import("./pages/AdminMedicineReview"));
 const MedicineDesignPreview = import.meta.env.DEV ? lazy(() => import("./pages/MedicineDesignPreview")) : null;
 const AdminMedicineLandingPreview = lazy(() => import("./pages/AdminMedicineLandingPreview"));
+const AdminLandingPreviews = lazy(() => import("./pages/AdminLandingPreviews"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
@@ -195,6 +196,7 @@ const AppContent = () => {
               {import.meta.env.DEV && <Route path="/__dev/medicine-lab" element={<AdminMedicineLab localPreview />} />}
               {MedicineDesignPreview && <Route path="/__dev/medicine-design" element={<MedicineDesignPreview />} />}
               <Route path="/admin/medicine-landing-preview" element={<AdminMedicineLandingPreview />} />
+              <Route path="/admin/landing-previews" element={<AdminLandingPreviews />} />
               <Route path="/admin/logs" element={<AdminLogs />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route

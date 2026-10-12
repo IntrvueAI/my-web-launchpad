@@ -180,8 +180,8 @@ export default function AdminDashboard() {
             <Link to="/admin/medicine-review"><CheckCircle className="h-3.5 w-3.5" /> Review sourced Medicine questions</Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/medicine-landing-preview" target="_blank" rel="noopener noreferrer">
-              <Stethoscope className="h-3.5 w-3.5" /> Medicine legacy design
+            <Link to="/admin/landing-previews">
+              <Stethoscope className="h-3.5 w-3.5" /> Landing page previews
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
