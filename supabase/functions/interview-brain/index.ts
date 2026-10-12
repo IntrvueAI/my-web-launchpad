@@ -2,7 +2,7 @@ import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
 import { fetchWithProviderRetry } from "../_shared/providerRetry.ts";
 import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING, FULL_MMI_MOCK, packForFullMmiMock } from './_shared/subjects/medicine/practiceModes.ts';
-import { publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
+import { publicQuestionPrompt, firstNameFrom } from './_shared/engine/publicPrompt.ts';
 // Interview Brain — the LLM-driven orchestrator the client calls each time the student finishes
 // speaking. The model (Clara) drives the whole conversation; the server owns the question bank
 // (answers never reach the client) and the evidence log via tool calls. Vendored engine is built
@@ -103,15 +103,6 @@ function safeParseArgs(s: string): Record<string, any> {
   } catch {
     return {};
   }
-}
-
-/** First name only (e.g. "Dillon Smith" -> "Dillon") — a full name read aloud mid-sentence sounds
- *  stilted, and this is looked up server-side from the account's own profile, never client input. */
-function firstNameFrom(
-  fullName: string | null | undefined,
-): string | undefined {
-  const first = (fullName || "").trim().split(/\s+/)[0];
-  return first || undefined;
 }
 
 /** OpenAI chat-completions with tool calling. gpt-4.1 is used (confirmed available on this key). */
@@ -363,10 +354,10 @@ serve(
           return json({ error: "Start the interview first" }, 409);
         const { data: profile } = await admin
           .from("profiles")
-          .select("full_name")
+          .select("full_name, email")
           .eq("id", userId)
           .maybeSingle();
-        const studentName = firstNameFrom(profile?.full_name);
+        const studentName = firstNameFrom(profile?.full_name, profile?.email ?? userData.user.email);
         if (pilot) {
           const { data: history, error: historyError } = await admin
             .from("interview_sessions")

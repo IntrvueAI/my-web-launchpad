@@ -19,7 +19,7 @@ import { makeEvidence } from './evidence';
 import { corePrinciples, CORE_SPEAKING_STYLE } from './core';
 import type { FlowGraph } from './flow';
 import { findFlowNode, pickNextFlowNode } from './flow';
-import { spokenQuestionPrompt, spokenTaskBrief, asksToClarifyTask } from './publicPrompt';
+import { spokenQuestionPrompt, spokenTaskBrief, asksToClarifyTask, asksToRepeatLastLine } from './publicPrompt';
 
 // ---- Chat LLM interface (a small slice of OpenAI's chat+tools API) ----
 
@@ -82,6 +82,8 @@ export interface AgentState {
   /** Server-assembled ordered circuit. Never supplied by a student request. */
   questionPlan?: { profileId: string; questionIds: string[]; contentStatus: 'draft' | 'reviewed' };
   lastTurn?: { id: string; say: string };
+  /** Medicine: the welcome has been spoken and the first station waits for the candidate's reply. */
+  awaitingReady?: boolean;
 }
 
 export interface AgentDeps {
@@ -639,17 +641,35 @@ export class InterviewResponseUnavailable extends Error {
   constructor() { super('Interview response temporarily unavailable. Please retry the same turn.'); }
 }
 
-function medicineStationOpening(state: AgentState, pack: SubjectPack, opening = false, bridge = ''): string {
+const spokenSeconds = (s: number) => (s === 60 ? 'one minute' : s === 120 ? 'two minutes' : `${s} seconds`);
+
+/** First turn only: a greeting the candidate answers before any station clock starts. */
+function medicineWelcome(state: AgentState, pack: SubjectPack, topic?: string): string {
+  const academic = pack.interviewStyle === 'academic';
+  const unit = academic ? 'exercise' : 'station';
+  const prep = pack.stationReadingSeconds ?? 0;
+  const plan = pack.focusedPractice
+    ? `Today we'll work through one ${unit}${topic ? ` on ${topicLabel(pack, topic).toLowerCase()}` : ''}.`
+    : `Today we'll work through ${state.targetQuestions} ${unit}s.`;
+  const pacing = prep > 0
+    ? `${pack.focusedPractice ? "You'll have" : `Each ${unit} starts with`} ${spokenSeconds(prep)} to read the scenario, then you can talk me through your thinking.`
+    : 'Take your time and talk me through your thinking.';
+  return `${state.studentName ? `Hi ${state.studentName}` : 'Hello'}, I'm Clara, your AI practice interviewer. ${plan} ${pacing} Let me know when you're ready, and I'll read you the ${pack.focusedPractice ? 'scenario' : `first ${unit}`}.`;
+}
+
+function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = ''): string {
   const q = state.current;
   if (!q) return 'That completes this practice session. Your answers are saved for review.';
   const academic = pack.interviewStyle === 'academic';
   const label = academic ? 'Exercise' : 'Station';
-  const intro = opening
-    ? `Hello, I'm Clara, your AI practice interviewer. ${pack.focusedPractice ? 'We will work through one focused station.' : `We will work through ${state.targetQuestions} ${academic ? 'exercises' : 'stations'}.`} I will introduce each task before you respond. `
-    : state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. Let’s begin. ';
+  const intro = state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. ';
+  const heading = pack.focusedPractice && state.targetQuestions <= 1
+    ? `Here is your ${academic ? 'exercise' : 'station'} on ${topicLabel(pack, q.topic).toLowerCase()}.`
+    : `${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}.`;
   const prep = pack.stationReadingSeconds ?? 0;
-  const reading = prep > 0 ? `You have ${prep === 60 ? 'one minute' : prep === 120 ? 'two minutes' : `${prep} seconds`} to read the brief. Select I'm ready to start answering early. ` : '';
-  return `${bridge ? bridge + ' ' : ''}${intro}${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}. ${reading}${spokenQuestionPrompt(q, prep > 0)}`;
+  // The on-screen "I'm ready" control is visible; reading a button label aloud is not natural speech.
+  const reading = prep > 0 ? `You have ${spokenSeconds(prep)} to read it, and you can start answering whenever you're ready. ` : '';
+  return `${bridge ? bridge + ' ' : ''}${intro}${heading} ${reading}${spokenQuestionPrompt(q, prep > 0)}`;
 }
 
 /** Explicit spoken stop requests; never match statements about stopping a treatment. */
@@ -669,19 +689,35 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   const mmi = medicine && deps.pack.interviewStyle !== 'academic';
   if (medicine && req.action === 'answer' && asksToEndInterview(req.studentText || '')) req = { ...req, action: 'end' };
   if (req.action === 'start' && (deps.pack.focusedPractice || mmi) && !state.current) {
-    executeTool({ id: 'focused-start', name: 'next_problem', args: {} }, state, deps);
-    const opened = state.current as BankQuestion | null;
-    const say = opened
-      ? medicineStationOpening(state, deps.pack, true)
+    // Greet first and wait for a reply; the station (and its clock) starts on the next turn.
+    const say = deps.bank.length
+      ? medicineWelcome(state, deps.pack, deps.bank[0]?.topic)
+      : 'There are no available stations for this topic. Please choose another practice.';
+    if (deps.bank.length) state.awaitingReady = true;
+    state.transcript.push({ role: 'assistant', content: say });
+    return { say, state, done: state.done };
+  }
+  if (state.awaitingReady && !state.current && req.action !== 'end') {
+    // Any reply to the welcome ("ready", a greeting, their name) opens the first station.
+    // Deterministic: no model call is needed to read an authored brief.
+    if (req.studentText?.trim()) state.transcript.push({ role: 'user', content: req.studentText.trim() });
+    state.awaitingReady = false;
+    executeTool({ id: 'ready-start', name: 'next_problem', args: {} }, state, deps);
+    const say = state.current
+      ? medicineStationOpening(state, deps.pack)
       : 'There are no available stations for this topic. Please choose another practice.';
     state.transcript.push({ role: 'assistant', content: say });
     return { say, state, done: state.done };
   }
 
-  if (medicine && state.current && (req.action === 'repeat' || (req.action === 'answer' && asksToClarifyTask(req.studentText || '')))) {
+  if (medicine && state.current && (req.action === 'repeat' || (req.action === 'answer' && (asksToClarifyTask(req.studentText || '') || asksToRepeatLastLine(req.studentText || ''))))) {
     // Keep clarification in the conversation, but out of scored answer evidence and turn caps.
+    // After an in-station reply, "say that again" means that reply: an actor repeats
+    // their own words in character and a follow-up is not replaced by the opening brief.
+    const lastLine = req.action === 'answer' && state.currentStudentTurns.length > 0 && asksToRepeatLastLine(req.studentText || '')
+      ? [...state.transcript].reverse().find((t) => t.role === 'assistant')?.content.trim() : '';
     if (req.studentText?.trim()) state.transcript.push({ role: 'user', content: req.studentText.trim() });
-    const say = `Let me restate the task. ${spokenTaskBrief(state.current)}`;
+    const say = lastLine || `Let me restate the task. ${spokenTaskBrief(state.current)}`;
     state.transcript.push({ role: 'assistant', content: say });
     return { say, state, done: state.done };
   }
@@ -834,7 +870,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // timer or model failure) must deliver its full public brief before the actor.
   // Never rely on a probabilistic model to remember this boundary.
   if (medicine && state.current && state.current.id !== questionBefore) {
-    say = medicineStationOpening(state, deps.pack, false, transitionBridge);
+    say = medicineStationOpening(state, deps.pack, transitionBridge);
   }
 
   // Deterministic backstop for the "one question per turn" rule (the prompt asks for it, but the

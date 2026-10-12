@@ -13,7 +13,11 @@ describe('Focused Medicine practice', () => {
     const bank:BankQuestion[]=Array.from({length:8},(_,i)=>({id:`mock-${i}`,subject:'medicine',topic:pack.topics[i%pack.topics.length].id,difficulty:2,question:`Public medical task ${i}: explain your reasoning.`,answer:'Private guidance.'}));
     const deps={pack,bank,chat:vi.fn(async()=>({content:'Thank you. Let’s move to the next station.',toolCalls:[],raw:[]}))};
     let turn=await advanceAgent(initAgentState({subject:'medicine',mode:'mock',pack,seed:1}),{action:'start'},deps);
-    expect(turn.say).toContain('one minute to read the brief');
+    expect(turn.say).toContain('work through 6 stations');
+    expect(turn.state.current).toBeNull();
+    turn=await advanceAgent(turn.state,{action:'answer',studentText:'Ready.'},deps);
+    expect(turn.say).toContain('Station 1 of 6');
+    expect(turn.say).toContain('one minute to read it');
     for(let i=0;i<6;i++){
       expect(turn.done).toBe(false);
       turn=await advanceAgent(turn.state,{action:'time_up',expectedQuestionIndex:i,studentText:'I would clarify the situation and consider the people affected.'},deps);
@@ -30,11 +34,13 @@ describe('Focused Medicine practice', () => {
     const mode = MEDICINE_PRACTICE_MODES[1];
     const pack = packForMedicinePractice(mode);
     const chat = vi.fn();
-    const opening = await advanceAgent(initAgentState({ subject:'medicine', mode:'mock', pack, seed:1 }), { action:'start' }, { pack, bank:[question], chat });
+    const welcome = await advanceAgent(initAgentState({ subject:'medicine', mode:'mock', pack, seed:1 }), { action:'start' }, { pack, bank:[question], chat });
+    expect(welcome.say).not.toContain(question.roleplay!.openingStatement);
+    const opening = await advanceAgent(welcome.state, { action:'answer', studentText:'Ready' }, { pack, bank:[question], chat });
     expect(opening.say).toContain(question.roleplay!.applicantRole);
     expect(opening.say).toContain('Speak directly to me as that person');
-    expect(opening.say).toContain('one minute to read the brief');
-    expect(opening.say).not.toContain('The roleplay starts now');
+    expect(opening.say).toContain('one minute to read it');
+    expect(opening.say).not.toMatch(/Select I'm ready|The roleplay starts now/);
     expect(opening.say).toContain(question.roleplay!.openingStatement);
     expect(publicQuestionPrompt(question)).toContain('Speak directly to Amara');
     for (const fact of question.roleplay!.hiddenFacts) {
@@ -44,15 +50,22 @@ describe('Focused Medicine practice', () => {
     expect(opening.say).not.toContain(question.rubric!.strong);
     expect(chat).not.toHaveBeenCalled();
   });
-  it.each(MEDICINE_PRACTICE_MODES)('$label opens directly on an authored station and finishes on its bell', async mode => {
+  it.each(MEDICINE_PRACTICE_MODES)('$label greets first, then opens an authored station and finishes on its bell', async mode => {
     const pack = packForMedicinePractice(mode);
     const bank: BankQuestion[] = [1,2].map(index => ({ id:`practice-${index}`, subject:'medicine', topic:mode.topic, difficulty:2, question:`Scenario ${index}: explain your reasoning.`, answer:'Private marking guidance.' }));
     const chat = vi.fn(async () => ({ content:'Could you say more?', toolCalls:[], raw:[] }));
     const deps = { pack, bank, chat };
     const state = initAgentState({ subject:'medicine', mode:'mock', pack, seed:1 });
-    const opening = await advanceAgent(state, { action:'start' }, deps);
+    const welcome = await advanceAgent({ ...state, studentName:'Dillon' }, { action:'start' }, deps);
+    expect(welcome.say).toMatch(/^Hi Dillon, I'm Clara/);
+    expect(welcome.say).toContain('one station on');
+    expect(welcome.state.current).toBeNull();
+    const opening = await advanceAgent(welcome.state, { action:'answer', studentText:'hi clara my name is dillon' }, deps);
     expect(chat).not.toHaveBeenCalled();
+    expect(opening.say).toMatch(/^Thank you\. Here is your station on /);
+    expect(opening.say).not.toContain('Station 1 of 1');
     expect(opening.say).toContain(opening.state.current!.question);
+    expect(opening.state.currentStudentTurns).toEqual([]);
     expect(opening.say).not.toContain('Private marking');
     expect(opening.state.targetQuestions).toBe(1);
     const ended = await advanceAgent(opening.state, { action:'time_up', expectedQuestionIndex:0, studentText:'I would clarify the concern and explain my reasoning.' }, deps);

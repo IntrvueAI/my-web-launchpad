@@ -6,7 +6,7 @@ import {
   type AgentState,
   type ChatResult,
 } from "../agent";
-import { publicQuestionPrompt, asksToClarifyTask } from "../publicPrompt";
+import { publicQuestionPrompt, asksToClarifyTask, firstNameFrom } from "../publicPrompt";
 import { medicinePack } from "../../subjects/medicine/pack";
 import { makeEvidence } from "../evidence";
 import { getBank } from "../../bank";
@@ -43,6 +43,10 @@ const init = () =>
     pack: medicinePack,
     seed: 0,
   });
+const startAndReady = async (state: AgentState, deps: Parameters<typeof advanceAgent>[2]) => {
+  const welcome = await advanceAgent(state, { action: "start" }, deps);
+  return { welcome, opening: await advanceAgent(welcome.state, { action: "answer", studentText: "Ready." }, deps) };
+};
 const current = (q: BankQuestion): AgentState => ({
   ...init(),
   current: q,
@@ -63,11 +67,10 @@ describe("Medicine conversation boundaries", () => {
       const chat = vi.fn(async () =>
         prose("What do you enjoy outside school?"),
       );
-      const r = await advanceAgent(
-        { ...init(), seed },
-        { action: "start" },
-        { bank, pack: medicinePack, chat },
-      );
+      const { welcome, opening: r } = await startAndReady({ ...init(), seed }, { bank, pack: medicinePack, chat });
+      expect(welcome.state.current).toBeNull();
+      expect(welcome.say).toContain("Let me know when you're ready");
+      expect(welcome.say).not.toContain("What do you enjoy outside school?");
       expect(medicinePack.openingQuestionIds).toContain(r.state.current?.id);
       expect(r.say).toContain(r.state.current!.question);
       expect(r.say).toContain("Station 1 of");
@@ -94,7 +97,7 @@ describe("Medicine conversation boundaries", () => {
         chat: async () => prose("That sounds nice."),
       },
     );
-    expect(r.say).toMatch(/^Thank you\. Let’s begin\./);
+    expect(r.say).toMatch(/^Thank you\. Station 1 of/);
     expect(r.say).toContain(pool.roleplay!.applicantRole);
     expect(r.say.indexOf(pool.roleplay!.applicantRole)).toBeLessThan(
       r.say.indexOf(pool.roleplay!.openingStatement),
@@ -239,6 +242,61 @@ describe("Medicine conversation boundaries", () => {
     },
   );
 
+  it.each([
+    ["roleplay actor", pool, "Steph: I just need someone to tell me what is going on."],
+    ["examiner follow-up", ethics, "What would change your view if the patient lacked capacity?"],
+  ] as const)(
+    'repeats the %s line, not the station brief, after "say that again"',
+    async (_label, q, lastLine) => {
+      const state: AgentState = {
+        ...current(q),
+        transcript: [
+          { role: "assistant", content: "Station 1 of 6: the full brief." },
+          { role: "user", content: "A previous substantive answer." },
+          { role: "assistant", content: lastLine },
+        ],
+      };
+      const chat = vi.fn(async () => prose("Unused."));
+      for (const text of ["Sorry, could you say that again?", "Can you repeat that please?"]) {
+        const r = await advanceAgent(state, { action: "answer", studentText: text }, { bank, pack: medicinePack, chat });
+        expect(r.say).toBe(lastLine);
+        expect(r.say).not.toContain("restate the task");
+        expect(r.state.currentStudentTurns).toEqual(state.currentStudentTurns);
+        expect(r.state.evidence).toEqual([]);
+      }
+      expect(chat).not.toHaveBeenCalled();
+    },
+  );
+
+  it("still restates the brief when asked to repeat the task itself mid-station", async () => {
+    const state: AgentState = {
+      ...current(pool),
+      transcript: [{ role: "assistant", content: "Steph: Why won't anyone help?" }],
+    };
+    const r = await advanceAgent(state, { action: "answer", studentText: "Could you repeat the scenario please?" }, { bank, pack: medicinePack, chat: async () => prose("") });
+    expect(r.say).toContain(pool.roleplay!.applicantRole);
+  });
+
+  it("greets by name, waits for a reply, and starts no station clock until the brief is read", async () => {
+    const chat = vi.fn(async () => prose("unused"));
+    const deps = { bank: [ethics], pack: medicinePack, chat };
+    const welcome = await advanceAgent({ ...init(), studentName: "Dillon" }, { action: "start" }, deps);
+    expect(welcome.say).toMatch(/^Hi Dillon, I'm Clara, your AI practice interviewer\./);
+    expect(welcome.say).not.toContain(ethics.question);
+    expect(welcome.state.current).toBeNull();
+    expect(welcome.state.questionIndex).toBe(0);
+    const opening = await advanceAgent(welcome.state, { action: "answer", studentText: "hi clara my name is dillon" }, deps);
+    expect(opening.say).toContain(ethics.question);
+    expect(opening.say).not.toContain("Select I'm ready");
+    expect(opening.state.current?.id).toBe(ethics.id);
+    expect(opening.state.currentStudentTurns).toEqual([]);
+    expect(opening.state.awaitingReady).toBe(false);
+    expect(chat).not.toHaveBeenCalled();
+    const stopped = await advanceAgent(welcome.state, { action: "end" }, { ...deps, chat: async () => prose("Thank you.") });
+    expect(stopped.done).toBe(true);
+    expect(stopped.state.evidence).toEqual([]);
+  });
+
   it("does not mistake substantive answers or a question to the actor for setup clarification", () => {
     for (const text of [
       "Could you explain what happened when you called the pool?",
@@ -265,11 +323,7 @@ describe("Medicine conversation boundaries", () => {
 
   it("gives every published roleplay its public context without revealing private actor information", async () => {
     for (const q of bank.filter((q) => q.roleplay)) {
-      const r = await advanceAgent(
-        init(),
-        { action: "start" },
-        { bank: [q], pack: medicinePack, chat: async () => prose("unused") },
-      );
+      const { opening: r } = await startAndReady(init(), { bank: [q], pack: medicinePack, chat: async () => prose("unused") });
       expect(r.say).toContain(q.roleplay!.applicantRole);
       expect(r.say).toContain(q.roleplay!.name);
       expect(publicQuestionPrompt(q)).toContain(q.roleplay!.role);
@@ -296,5 +350,18 @@ describe("Medicine conversation boundaries", () => {
     expect(prompt).not.toContain("school interviewer");
     expect(prompt).toContain("candidate’s last answer");
     expect(prompt.toLowerCase()).toContain("do not narrate");
+  });
+});
+
+describe("Spoken candidate names", () => {
+  it.each([
+    ["dillon", "guest-x@example.com", "Dillon"],
+    ["Priya Shah", "priya.shah@gmail.com", "Priya"],
+    ["Intrvue.ai", "founders@intrvue.ai", undefined],
+    ["founders", "founders@intrvue.ai", undefined],
+    ["", "someone@example.com", undefined],
+    ["user123", "x@example.com", undefined],
+  ])("%s (%s) -> %s", (full, email, expected) => {
+    expect(firstNameFrom(full, email)).toBe(expected);
   });
 });
