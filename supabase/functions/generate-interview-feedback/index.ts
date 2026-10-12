@@ -1,7 +1,6 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
 import { fetchWithProviderRetry, providerBillingFailure, PROVIDER_BILLING_EVENT } from "../_shared/providerRetry.ts";
-import { logAppEvent } from "./_shared/appLogger.ts";
 import { assessmentResponseFormat, assessmentTranscript, groundAssessment, groundedAnnotations, groundAnswerCoaching, FOCUSED_COACHING_INSTRUCTIONS, PERSONAL_REFLECTION_COACHING } from "../_shared/feedbackAssessment.ts";
 import { asksToClarifyTask, publicQuestionPrompt } from './_shared/engine/publicPrompt.ts';
 import { MEDICINE_PRACTICE_MODES, getMedicinePractice, packForMedicinePractice } from './_shared/subjects/medicine/practiceModes.ts';
