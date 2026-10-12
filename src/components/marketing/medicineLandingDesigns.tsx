@@ -25,6 +25,12 @@ export const MEDICINE_LANDING_DESIGNS: LandingDesign[] = [
     note: 'Earlier white/coral version. Preview only.',
     Component: lazy(() => import('./MedicineLandingCoralPreview').then((m) => ({ default: m.MedicineLandingCoralPreview }))),
   },
+  {
+    id: 'flow',
+    name: 'Flow (dark, continuous)',
+    note: 'Dark sections that fade into each other, scroll reveals and a ticker. Inspired by backboard.io.',
+    Component: lazy(() => import('./MedicineLandingFlow').then((m) => ({ default: m.MedicineLandingFlow }))),
+  },
 ];
 
 /** 1-based design number from ?design=, clamped to the available designs. */

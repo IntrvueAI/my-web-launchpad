@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { INTERVIEW_TYPES, MEDICINE_LIVE_INTERVIEW_IDS } from "@/config/interviewTypes";
 import { MedicineWarmup } from "./MedicineWarmup";
+import { MEDICINE_LANDING_FAQS as faqs } from "./medicineLandingContent";
 import "./medicine-landing-clinical.css";
 
 const modes = MEDICINE_LIVE_INTERVIEW_IDS.map(id=>INTERVIEW_TYPES[id]);
@@ -34,32 +35,6 @@ const paths = [
     title: "Think beyond a quick answer.",
     text: "Consider the people affected, competing priorities, and a practical next step you can justify.",
   },
-];
-const faqs = [
-  [
-    "Can I try it without an account?",
-    "Yes. The solo practice studio is free to open. Read a prompt, type or speak your answer, and save a self-reflection in your browser. Live AI interviews use a signed-in account. The current Medicine circuits are free during early access; the required credits are always shown before starting.",
-  ],
-  [
-    "Is the practice studio a live AI interview?",
-    "The solo studio uses original prompts, prewritten follow-ups and a review guide. You assess your own answer. Live spoken circuits with Clara are a separate experience that produces AI-generated written feedback.",
-  ],
-  [
-    "Are these real university interview questions?",
-    "No. The practice prompts are original material for transferable MMI skills. We offer one general MMI format and focused mini interviews. We are independent of the universities.",
-  ],
-  [
-    "Which interview formats can I practise?",
-    "Choose the full six-station MMI or a seven-minute mini interview in ethics, communication, motivation or data. Mini sessions include one minute to read and up to five minutes of discussion, with time for the introduction and close.",
-  ],
-  [
-    "What happens to my recording?",
-    "In the solo studio, microphone access starts only when you choose to record. Audio stays in your current tab and is removed when you leave the room. Download it if you want to keep it. Written reflections stay in this browser until you clear them; they do not sync between devices.",
-  ],
-  [
-    "Does a practice score predict an offer?",
-    "No. Self-reflections describe your own confidence; AI feedback supports practice. Neither is an admissions result, and universities make their own decisions.",
-  ],
 ];
 export function MedicineLandingClinical() {
   const [path, setPath] = useState(0);

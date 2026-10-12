@@ -3,6 +3,7 @@ import { Palette } from 'lucide-react';
 import './medicine-theme.css';
 
 export type MedicineColourScheme = 'clinical' | 'coral';
+export const MEDICINE_FONTS_HREF = 'https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Bricolage+Grotesque:wght@600;700&family=Inter+Tight:wght@400;500;600;700&display=swap';
 const KEY = 'intrvue:medicine-colour-scheme:v1';
 const EVENT = 'medicine-colour-scheme-changed';
 const NestedMedicineTheme = createContext(false);
@@ -28,7 +29,7 @@ export function MedicineTheme({ children, bottomNav = false, live = false, enabl
   useEffect(() => {
     if (!enabled || document.getElementById('medicine-identity-fonts')) return;
     const link = document.createElement('link'); link.id = 'medicine-identity-fonts'; link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Bricolage+Grotesque:wght@600;700&family=Inter+Tight:wght@400;500;600;700&display=swap';
+    link.href = MEDICINE_FONTS_HREF;
     document.head.appendChild(link);
   }, [enabled]);
   if (!enabled) return <>{children}</>;
