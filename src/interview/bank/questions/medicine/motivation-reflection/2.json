@@ -10,7 +10,7 @@
       "motivation",
       "reflection"
     ],
-    "question": "Why do you want to study medicine? I'd like a specific, honest answer, not the version you think I want to hear.",
+    "question": "Why do you want to study medicine?",
     "answer": "No single correct answer. Assess specificity, honesty, and genuine reflection — not the content of the reason itself. A strong answer is grounded in a concrete experience or realisation, acknowledges the difficult and unglamorous parts of the career (not just the noble parts), and doesn't rely on generic lines like 'I want to help people' as the whole answer.",
     "modelReasoningPath": "A strong candidate goes past the socially expected opening line ('I want to help people') to something specific and personally true — a particular experience, person, or moment that shaped the interest — and can explain WHY that experience mattered to them, not just describe it. They show awareness that medicine involves long hours, emotional difficulty, bureaucracy, and years of training, not just the rewarding moments, which signals they've thought realistically about the career rather than romanticised it.",
     "rubric": {
@@ -150,7 +150,7 @@
       "reflection",
       "realism"
     ],
-    "question": "Tell me about a piece of work experience, volunteering, or shadowing you've done. What did it teach you about the REALITY of a medical career, as opposed to what you expected beforehand?",
+    "question": "Tell me about a piece of work experience, volunteering or shadowing you've done. What did it teach you about the reality of a medical career, compared with what you expected beforehand?",
     "answer": "No single correct answer. Assess whether they describe a genuine shift in understanding (something they didn't expect, learned, or found harder/different than imagined) rather than simply listing what they did or restating that it 'confirmed' their existing view with no new insight.",
     "modelReasoningPath": "A strong candidate identifies a genuine gap between what they expected beforehand and what they actually observed — this shows real engagement and reflection, not just box-ticking. It could be about the emotional weight of certain conversations, the amount of non-clinical admin work, the pace and unpredictability, or the teamwork involved. A weaker candidate simply narrates what they did ('I shadowed a GP for a week') without reflecting on what it changed in their understanding.",
     "rubric": {
@@ -196,7 +196,7 @@
       "resilience",
       "reflection"
     ],
-    "question": "Medicine involves real pressure — long hours, high stakes, difficult news. Tell me about a genuinely stressful situation you've faced, and how you actually handled it.",
+    "question": "Tell me about a stressful situation you've faced. How did you handle it, and what did you learn?",
     "answer": "No single correct answer. Assess whether they give a specific, real example of stress (not a vague generalisation), describe honestly how they coped — including anything that DIDN'T work well — and show self-awareness about their own coping style rather than an idealised version of themselves.",
     "modelReasoningPath": "A strong candidate names a specific, genuinely stressful situation rather than a vague generalisation ('exams are stressful'). They describe their actual coping strategy with enough concrete detail to sound real, and — crucially — are willing to admit the coping wasn't perfect or that they're still working on it, rather than presenting an implausibly polished picture of themselves handling every pressure flawlessly.",
     "rubric": {
@@ -430,13 +430,13 @@
       "realism",
       "reflection"
     ],
-    "question": "Medical training takes at least five or six years at university, followed by many more years of postgraduate training before you're fully qualified in a specialty — often a decade or more in total. What have you actually done to understand whether that reality is right for you?",
-    "answer": "No single correct answer. Assess whether the candidate has done genuine, specific research or reflection into the length and structure of training (not just a vague awareness that 'it takes a long time'), and whether they can speak honestly about the trade-offs involved rather than only the appeal of the eventual outcome.",
+    "question": "What have you done to find out what a career in medicine is really like, and what did you learn from it?",
+    "answer": "No single correct answer. Assess whether the candidate describes specific, genuine steps they took to understand the career (for example talking to doctors or medical students, work experience, volunteering or reading), and reflects honestly on what they learned, including realities such as the length of training, rather than only the appeal of the job.",
     "modelReasoningPath": "A strong candidate goes beyond a generic acknowledgement that training is long, and describes something SPECIFIC they've done to understand it — talking to a junior doctor or medical student about their actual experience, researching the structure of postgraduate training, or reflecting on a work experience placement that gave them a realistic view. They're able to speak honestly about the trade-offs (delayed independence, delayed earning potential relative to some other paths, the demands of exams throughout training) rather than only focusing on the appeal of eventually being a doctor.",
     "rubric": {
-      "strong": "Describes specific, genuine research or experience that informed their understanding of training length and structure, and can speak honestly about real trade-offs, not just the appeal of the destination.",
-      "developing": "Shows general awareness that training is long but hasn't done much specific research, or only discusses the appeal rather than genuine trade-offs.",
-      "weak": "Gives a vague or dismissive answer ('I know it's long but I'm ready') with no specific evidence of having engaged with what that actually means."
+      "strong": "Describes specific steps they took and what each taught them, including honest reflection on realities such as the length of training, and how this shaped their decision.",
+      "developing": "Mentions some steps but stays general, or describes what they did with little reflection on what they learned.",
+      "weak": "Gives a vague or rehearsed answer with no specific evidence of having explored the career."
     },
     "commonMistakes": [
       {
@@ -450,8 +450,8 @@
     ],
     "liveProbes": [
       {
-        "probe": "What's the one part of the training pathway that concerns you the most, honestly?",
-        "goodResponse": "Names something specific and genuine, showing they've actually thought about the realistic downsides, not just the positives"
+        "probe": "What did you learn that you didn't expect?",
+        "goodResponse": "Names something specific and genuine they did not anticipate, rather than only confirming what they already believed"
       },
       {
         "probe": "Have you spoken to anyone currently going through training?",

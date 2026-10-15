@@ -100,7 +100,7 @@ export const AnnotatedTranscript: React.FC<{
                 >
                   <p className="mb-2 font-semibold capitalize">
                     {annotation.category === "development"
-                      ? "Try next"
+                      ? "Even better if"
                       : annotation.category}
                   </p>
                   <p>{annotation.explanation}</p>

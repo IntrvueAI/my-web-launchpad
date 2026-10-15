@@ -84,6 +84,8 @@ export interface AgentState {
   lastTurn?: { id: string; say: string };
   /** Medicine: the welcome has been spoken and the first station waits for the candidate's reply. */
   awaitingReady?: boolean;
+  /** The candidate ended the session themselves; late speech during shutdown stays unanswered. */
+  endRequested?: boolean;
 }
 
 export interface AgentDeps {
@@ -327,6 +329,8 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       'For a ROLEPLAY STATION, the candidate has already heard their role and the character’s identity. Speak as that character, reacting to what the candidate actually says. Do not narrate your feelings, ask examiner-style marking questions, replay your opening line, or treat comments from an earlier station as if they happened in this scenario.',
       'A request to repeat or clarify the task must receive the public brief, not hostility, a hint, or an assessment of the candidate’s ability. Do not count setup questions, audio problems or clarification requests as poor performance.',
       'If words are unclear, ask what the candidate meant. Never silently guess a clinically or ethically material fact from a speech-recognition error.',
+      'Ask follow-ups the way an experienced interviewer, often a practising doctor, would: open, neutral and realistic. Never build a question on a negative assumption about medicine, training or the candidate (for example "Given that risk..." or "Since training is so long..."). Ask openly instead, for example "How do you look after yourself when things get difficult?"',
+      'Never offer something this session cannot provide, such as another station, a different question, a break or a chat afterwards. When a station or the session ends, close briefly without inviting further requests.',
       'Explore the response before moving on: ordinarily ask a relevant follow-up after the initial answer. A roleplay should allow the conversation to develop, including a response to an open question from the candidate. Do not rush through the circuit after one superficial exchange.',
       'Only use exercises supplied by next_problem. Call it when this station has been explored, supplying an honest outcome and specific evidence note. The server will announce the next station and reset the role; do not blend two scenarios into one reply.',
       'The clock, a skip or an explicit end request can close a station. Do not infer failure from a stopping reason. Never invent praise, a score, a university affiliation or an admissions prediction. Keep assessment and coaching private until feedback.',
@@ -657,6 +661,14 @@ function medicineWelcome(state: AgentState, pack: SubjectPack, topic?: string): 
   return `${state.studentName ? `Hi ${state.studentName}` : 'Hello'}, I'm Clara, your AI practice interviewer. ${plan} ${pacing} Let me know when you're ready, and I'll read you the ${pack.focusedPractice ? 'scenario' : `first ${unit}`}.`;
 }
 
+/** Deterministic Medicine closing: never offers another station or anything else the room cannot do. */
+export function medicineClosing(state: AgentState, pack: SubjectPack): string {
+  const unit = pack.interviewStyle === 'academic' ? 'exercise' : 'station';
+  const scope = pack.focusedPractice ? `this ${unit}` : `the last ${unit}`;
+  return `That completes ${scope}. Thank you${state.studentName ? `, ${state.studentName}` : ''}. Select End interview to see your feedback. You can start another practice from the Practice page afterwards.`;
+}
+export const MEDICINE_SESSION_FINISHED = 'This practice session has finished. Select End interview to see your feedback, then choose another station from the Practice page.';
+
 function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = ''): string {
   const q = state.current;
   if (!q) return 'That completes this practice session. Your answers are saved for review.';
@@ -681,6 +693,11 @@ function asksToEndInterview(text: string): boolean {
 /** Advance one turn: build context, let the model talk + use tools, return Clara's spoken line. */
 export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: AgentDeps): Promise<AgentResult> {
   const state: AgentState = structuredCloneSafe(prev);
+  if (state.done && !state.endRequested && deps.pack.subject === 'medicine' && req.action === 'answer' && req.studentText?.trim()) {
+    // Requests after the end ("can we try another station?") get a clear answer, not silence.
+    state.transcript.push({ role: 'user', content: req.studentText.trim() }, { role: 'assistant', content: MEDICINE_SESSION_FINISHED });
+    return { say: MEDICINE_SESSION_FINISHED, state, done: true };
+  }
   if (state.done || (req.expectedQuestionIndex !== undefined && req.expectedQuestionIndex !== state.questionIndex)) {
     return { say: '', state, done: state.done };
   }
@@ -820,6 +837,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   if (reason && state.evidence[evidenceBefore]) state.evidence[evidenceBefore].completionReason = reason;
   if (req.action === 'end') {
     state.done = true;
+    state.endRequested = true;
     if (!say.trim() || state.current) say = 'Thank you for practising today. Your answers are saved for review.';
   }
 
@@ -883,6 +901,8 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   const academicFollowUp = deps.pack.interviewStyle === 'academic' && req.action === 'answer' && state.current?.id === questionBefore;
   const medicineFollowUp = medicine && !state.current?.roleplay && req.action === 'answer' && state.current?.id === questionBefore;
   if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn || academicFollowUp || medicineFollowUp) say = enforceSingleAsk(say);
+
+  if (medicine && state.done && !prev.done) say = medicineClosing(state, deps.pack);
 
   state.transcript.push({ role: 'assistant', content: say });
   return { say, state, done: state.done };

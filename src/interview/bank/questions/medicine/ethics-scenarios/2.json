@@ -59,7 +59,7 @@
       "consent",
       "gillick-competence"
     ],
-    "question": "A 15-year-old comes to see you alone and asks about getting tested for a sexually transmitted infection. She says she doesn't want her parents to know. As a doctor, what would you do?",
+    "question": "You are a GP. A 15-year-old comes to see you alone and asks about getting tested for a sexually transmitted infection. She says she doesn't want her parents to know. What would you do?",
     "answer": "Discussion question — there is no single correct verdict, though UK practice (Gillick competence / Fraser guidelines) is a relevant real-world framework a strong candidate may reach for. A strong answer weighs the patient's right to confidential healthcare and the risk that refusing it could stop her seeking care at all, against safeguarding duties if there are signs of coercion, abuse, or a much older partner — and recognises confidentiality is not absolute.",
     "modelReasoningPath": "A strong candidate recognises the central tension: respecting a young patient's autonomy and right to confidential healthcare (and the practical risk that breaking confidence could simply stop her seeking care at all) versus a safeguarding duty if the situation suggests coercion, abuse, or a significant power imbalance (e.g. a much older partner). They might reach for the idea that competence to consent isn't purely about age — a doctor would assess whether she understands what's involved — while being honest that they don't have full clinical/legal knowledge and are reasoning from principle. Confidentiality is presented as a strong default, not an absolute one.",
     "rubric": {
@@ -252,13 +252,13 @@
       "communication",
       "end-of-life"
     ],
-    "question": "A patient looks at you and asks whether they are going to die from this. You believe the honest answer is that their condition is very likely terminal. What do you say?",
-    "answer": "Discussion question — there is no single correct verdict. A strong answer values honesty as a foundation of trust and respects the patient's right to know about their own health, while showing this can be done with genuine compassion, checking what and how much the patient wants to know, and not being needlessly blunt or cold.",
+    "question": "You are a junior doctor on a hospital ward. A patient you have been looking after asks you directly whether they are going to die from their illness. The senior team believes the condition is very likely terminal, and nobody has discussed this with the patient yet. What do you say, and what would you do next?",
+    "answer": "Discussion question — there is no single correct verdict. A strong answer is honest without giving false reassurance, responds to the question with compassion, explores what the patient already understands and how much they want to know, and recognises that a junior doctor should involve the senior team promptly so the patient has a proper, planned conversation rather than having their question avoided.",
     "modelReasoningPath": "A strong candidate resists both extremes: neither lying/deflecting to avoid a hard conversation, nor delivering the truth in a cold, clinical way. They recognise patients generally have a right to know about their own condition, and that trust depends on honesty. A genuinely thoughtful answer notes that HOW you tell someone matters as much as WHAT you tell them — checking what the patient already understands or wants to know, giving them space, not overwhelming them with detail in one go, and making clear they won't be abandoned. They might also note that avoiding the truth to protect yourself from a hard conversation (rather than to protect the patient) would be dishonest for the wrong reasons.",
     "rubric": {
-      "strong": "Commits to honesty as the right general approach while showing real thought about compassionate delivery (checking readiness, pacing, not overwhelming, ongoing support) — not just declaring 'I'd tell them the truth' with no further nuance.",
-      "developing": "Says they would be honest but the answer stops there, with little thought about how to actually deliver such news well.",
-      "weak": "Says they would avoid the question, lie, or defer entirely to a superior with no engagement with the patient's right to know."
+      "strong": "Neither lies nor gives false reassurance; responds with compassion, explores the patient's understanding and wishes, and arranges a prompt, planned conversation with the senior team while acknowledging the patient's concern in the moment.",
+      "developing": "Says they would be honest or would involve a senior, but shows little thought about how to respond to the patient in the moment.",
+      "weak": "Gives false reassurance, avoids the question entirely, or delivers a terminal prognosis bluntly without involving the senior team or checking what the patient wants to know."
     },
     "commonMistakes": [
       {
@@ -432,7 +432,7 @@
       "patient-safety",
       "whistleblowing"
     ],
-    "question": "You notice a senior colleague seems to be smelling of alcohol before a shift, and their behaviour is slightly off. You have no proof, just a strong suspicion. What do you do?",
+    "question": "You are a junior doctor. Before a shift, you notice that a senior colleague seems to smell of alcohol and their behaviour is slightly off. You have no proof, just a strong suspicion. What do you do?",
     "answer": "Discussion question — there is no single correct verdict, but patient safety should be the clear priority. A strong answer raises the concern appropriately and promptly, even without certainty, rather than waiting for definitive proof, while being fair and non-accusatory given the uncertainty involved.",
     "modelReasoningPath": "A strong candidate recognises the core tension: acting on suspicion without proof feels uncomfortable and risks being wrong or unfair to a colleague, but staying silent risks patient harm if the suspicion is correct. They resolve this in favour of raising the concern — patient safety cannot wait for certainty — but describe doing so appropriately: privately, factually (describing what was observed, not accusing), and through a proper channel (e.g. a supervisor or the colleague directly, depending on context) rather than public accusation or gossip. They might note that a genuine, good-faith concern raised professionally protects the colleague too, potentially catching a problem early.",
     "rubric": {
@@ -479,7 +479,7 @@
       "professionalism",
       "boundaries"
     ],
-    "question": "After a successful treatment, a patient you've cared for wants to give you an expensive gift as a thank-you, and seems genuinely hurt when you hesitate. How would you handle it?",
+    "question": "You are a junior doctor. After a successful treatment, a patient you've cared for wants to give you an expensive gift as a thank-you, and seems genuinely hurt when you hesitate. How would you handle it?",
     "answer": "Discussion question — there is no single correct verdict, though most professional medical guidance discourages accepting expensive or ongoing gifts from patients, to preserve boundaries and avoid the appearance (even unintentional) of favouritism or influence. A strong answer balances this professional boundary with genuine warmth and tact, so the patient doesn't feel rejected or that their gratitude wasn't valued.",
     "modelReasoningPath": "A strong candidate recognises the professional reason for caution — accepting expensive gifts risks creating (or appearing to create) unequal treatment between patients, or blurring the professional relationship — while also recognising the patient's gesture comes from real gratitude and shouldn't be handled coldly or bluntly. They describe a warm, tactful way of declining or redirecting (e.g. suggesting a donation to the department or a charity instead), making clear the refusal is about professional principle, not about the patient or the relationship.",
     "rubric": {

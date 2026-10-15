@@ -36,7 +36,7 @@ export const ANNOTATION_STYLES = {
  */
 export const ANNOTATION_LEGEND = [
   { category: 'strength', label: 'Strength', colorClass: 'bg-success' },
-  { category: 'development', label: 'Try next', colorClass: 'bg-primary' },
+  { category: 'development', label: 'Even better if', colorClass: 'bg-primary' },
   { category: 'grammar', label: 'Grammar', colorClass: 'bg-destructive' },
   { category: 'fluency', label: 'Fluency', colorClass: 'bg-warning' },
   { category: 'lexical', label: 'Lexical Resource', colorClass: 'bg-primary' }

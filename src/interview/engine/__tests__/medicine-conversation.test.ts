@@ -365,3 +365,27 @@ describe("Spoken candidate names", () => {
     expect(firstNameFrom(full, email)).toBe(expected);
   });
 });
+
+describe("Finishing a Medicine session", () => {
+  it("closes with a fixed message that offers nothing the room cannot do", async () => {
+    const r = await advanceAgent(
+      { ...current(ethics), targetQuestions: 1, studentName: "Yuvraj" },
+      { action: "time_up" },
+      { bank: [ethics], pack: medicinePack, chat: async () => prose("If you'd like to try another station, just let me know.") },
+    );
+    expect(r.done).toBe(true);
+    expect(r.say).not.toMatch(/another station, just let me know|try another station/i);
+    expect(r.say).toContain("Select End interview to see your feedback");
+  });
+
+  it("answers requests made after a natural finish instead of going silent", async () => {
+    const finished = { ...current(ethics), current: null, done: true };
+    const chat = vi.fn(async () => prose("unused"));
+    for (const text of ["Can we do another question?", "Can we try another station?"]) {
+      const r = await advanceAgent(finished, { action: "answer", studentText: text }, { bank, pack: medicinePack, chat });
+      expect(r.say).toContain("This practice session has finished");
+      expect(r.state.evidence).toEqual(finished.evidence);
+    }
+    expect(chat).not.toHaveBeenCalled();
+  });
+});

@@ -1589,9 +1589,9 @@ serve(
       }
 
       // Generate overall improvement feedback
-      let overallImprovementFeedback = `Keep doing\n${feedbackData.detailed_feedback.strength || 'Review the evidence from this session.'}\n\nPractise next\n${feedbackData.detailed_feedback.next_step || 'Choose one specific skill to practise next.'}`;
+      let overallImprovementFeedback = `What went well\n${feedbackData.detailed_feedback.strength || 'Review the evidence from this session.'}\n\nEven better if\n${feedbackData.detailed_feedback.next_step || 'Choose one specific skill to practise next.'}`;
       if (!enginePack) try {
-        const improvementSystemPrompt = `Write a concise practice plan grounded only in the supplied feedback. Address the candidate directly and match the interview type. Use two headings: "Keep doing" and "Practise next". Under each, write at most two short bullet points. Total maximum 90 words. Name concrete actions, not generic encouragement. Acknowledge missing evidence and never invent strengths, delivery cues, or an admissions prediction.`;
+        const improvementSystemPrompt = `Write a concise practice plan grounded only in the supplied feedback. Address the candidate directly and match the interview type. Use two headings: "What went well" and "Even better if". Under each, write at most two short bullet points. Total maximum 90 words. Name concrete actions, not generic encouragement. Acknowledge missing evidence and never invent strengths, delivery cues, or an admissions prediction.`;
 
         const improvementRequest = {
           model: "gpt-4.1",

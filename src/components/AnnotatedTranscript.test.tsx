@@ -40,7 +40,7 @@ describe("Transcript evidence highlights", () => {
       expect(
         node.querySelector("button")?.getAttribute("aria-label"),
       ).toContain("Feedback on");
-      expect(node.textContent).toContain("Try next");
+      expect(node.textContent).toContain("Even better if");
       expect(node.textContent).not.toContain("Lexical");
     } finally {
       act(() => root.unmount());

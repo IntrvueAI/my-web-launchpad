@@ -17,6 +17,7 @@ import {
 import { AnnotatedTranscript } from "@/components/AnnotatedTranscript";
 import { conciseFeedback } from "@/utils/feedbackSummary";
 import { StationAnswerCoach } from './StationAnswerCoach';
+import { ImprovementNotes } from './ImprovementNotes';
 import { getMedicinePractice } from '@/interview/subjects/medicine/practiceModes';
 
 export interface ReviewItem {
@@ -116,14 +117,14 @@ export function FeedbackSummary({
         <article className="rounded-2xl border bg-card p-5">
           <h3 className="flex items-center gap-2 font-semibold">
             <CheckCircle2 className="h-4 w-4 text-primary" />
-            Keep doing
+            What went well
           </h3>
           <p className="mt-3 text-sm leading-relaxed">{summary.strength}</p>
         </article>
         <article className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
           <h3 className="flex items-center gap-2 font-semibold">
             <Target className="h-4 w-4 text-primary" />
-            Try next
+            Even better if
           </h3>
           <p className="mt-3 text-sm leading-relaxed">{summary.nextStep}</p>
           {audience === "candidate" && !focusedMedicine && (
@@ -259,9 +260,7 @@ export function FeedbackSummary({
           <summary className="cursor-pointer font-semibold">
             Full improvement notes
           </summary>
-          <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed">
-            {feedback.overall_improvement_feedback}
-          </p>
+          <ImprovementNotes text={feedback.overall_improvement_feedback} />
         </details>
       )}
     </section>
