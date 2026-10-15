@@ -7,7 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminOverview } from '@/components/admin/AdminOverview';
 import { AdminUserManagement } from '@/components/admin/AdminUserManagement';
 import { AdminInterviews } from '@/components/admin/AdminInterviews';
-import { AdminUserFeedback } from '@/components/admin/AdminUserFeedback';
 import { AdminSystemHealth } from '@/components/admin/AdminSystemHealth';
 import { AdminAuditLog } from '@/components/admin/AdminAuditLog';
 import { AdminQuestions } from '@/components/admin/AdminQuestions';
@@ -24,6 +23,10 @@ export default function AdminDashboard() {
   const { isAdmin, isLoading, error, refetch } = useAdminStatus();
   const { user, signOut, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  // The old dashboard Feedback tab moved to /admin/feedback.
+  React.useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('tab') === 'feedback') navigate('/admin/feedback', { replace: true });
+  }, [navigate]);
   const { toast } = useToast();
 
   const handleSignOut = async () => {
@@ -149,7 +152,7 @@ export default function AdminDashboard() {
             <Link to="/admin/guest-trials"><Stethoscope className="h-3.5 w-3.5" /> Beta testing portal</Link>
           </Button>
           <Button variant="secondary" size="sm" asChild>
-            <Link to="/admin/guest-feedback">Interview feedback</Link>
+            <Link to="/admin/feedback">Feedback</Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/stt-bakeoff" target="_blank" rel="noopener noreferrer">
@@ -217,14 +220,15 @@ export default function AdminDashboard() {
         </div>
 
         <ProviderCreditAlert />
-        <Tabs defaultValue={new URLSearchParams(window.location.search).get('tab') === 'feedback' ? 'feedback' : 'overview'} className="space-y-6">
+        <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="questions">Questions</TabsTrigger>
             <TabsTrigger value="daily">Daily Q</TabsTrigger>
             <TabsTrigger value="interviews">Interviews</TabsTrigger>
-            <TabsTrigger value="feedback">Feedback</TabsTrigger>
+            {/* Feedback lives on one dedicated page; this keeps its familiar place in the tab bar. */}
+            <Link to="/admin/feedback" className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground transition-all hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Feedback</Link>
             <TabsTrigger value="waitlist">Waitlist</TabsTrigger>
             <TabsTrigger value="system">System</TabsTrigger>
             <TabsTrigger value="audit">Audit Log</TabsTrigger>
@@ -248,10 +252,6 @@ export default function AdminDashboard() {
 
           <TabsContent value="interviews">
             <AdminInterviews />
-          </TabsContent>
-
-          <TabsContent value="feedback">
-            <AdminUserFeedback />
           </TabsContent>
 
           <TabsContent value="waitlist">

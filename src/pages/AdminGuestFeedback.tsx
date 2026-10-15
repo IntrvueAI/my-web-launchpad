@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft,
@@ -17,6 +17,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { BetaPortalNav } from "@/components/admin/BetaPortalNav";
+import { AdminUserFeedback } from "@/components/admin/AdminUserFeedback";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -52,10 +53,23 @@ const title = (value: string) =>
 const selectClass =
   "min-h-11 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary";
 
+export type FeedbackView = "comments" | "testers";
+
+/** One admin feedback hub: site comments/ratings and beta tester reviews share a page. */
+export function feedbackViewFor(pathname: string, params: URLSearchParams): FeedbackView {
+  const explicit = params.get("view");
+  if (explicit === "comments" || explicit === "testers") return explicit;
+  // Older links (/admin/guest-feedback, invitation deep links) open the tester view.
+  if (pathname === "/admin/guest-feedback" || ["invite", "trial", "interview"].some((k) => params.has(k))) return "testers";
+  return "comments";
+}
+
 export default function AdminGuestFeedback() {
   const { user, loading } = useAuth();
   const { isAdmin, isLoading } = useAdminStatus();
   const [params, setParams] = useSearchParams();
+  const { pathname } = useLocation();
+  const view = feedbackViewFor(pathname, params);
   const queryText = params.get("q") || "";
   const [search, setSearch] = useState(queryText);
   const review = params.get("review") || "all";
@@ -107,7 +121,7 @@ export default function AdminGuestFeedback() {
         inviteId,
         page,
       }),
-    enabled: !!user && isAdmin,
+    enabled: !!user && isAdmin && view === "testers",
     refetchInterval: 30000,
     retry: 1,
     gcTime: 0,
@@ -169,17 +183,17 @@ export default function AdminGuestFeedback() {
           <header className="mb-7 mt-5 flex flex-wrap items-end justify-between gap-5">
             <div>
               <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
-                Beta testing portal
+                Admin
               </p>
               <h1 className="font-display text-3xl font-semibold sm:text-4xl">
-                Interview feedback
+                Feedback
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                Review each tester’s interviews and product feedback in one
-                place.
+                Everything people tell us, in one place: website comments and
+                ratings, and each beta tester’s interviews and trial review.
               </p>
             </div>
-            {user && isAdmin && (
+            {user && isAdmin && view === "testers" && (
               <Button
                 variant="outline"
                 disabled={inbox.isFetching}
@@ -194,7 +208,23 @@ export default function AdminGuestFeedback() {
               </Button>
             )}
           </header>
-          <BetaPortalNav />
+          <nav aria-label="Feedback type" className="mb-6 flex flex-wrap gap-2 rounded-2xl border bg-card p-1.5">
+            {([
+              ["comments", "Comments & ratings", "Website panel and after-interview comments"],
+              ["testers", "Beta testers", "AI assessments and trial reviews"],
+            ] as const).map(([id, label, note]) => (
+              <Link
+                key={id}
+                to={`/admin/feedback?view=${id}`}
+                aria-current={view === id ? "page" : undefined}
+                className={`flex min-h-11 flex-1 flex-col justify-center rounded-xl px-4 py-2 text-left transition-colors ${view === id ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
+              >
+                <span className="text-sm font-semibold">{label}</span>
+                <span className={`text-xs ${view === id ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{note}</span>
+              </Link>
+            ))}
+          </nav>
+          {view === "testers" && <BetaPortalNav />}
           {loading || isLoading ? (
             <p role="status">Checking founder access…</p>
           ) : !user ? (
@@ -207,13 +237,15 @@ export default function AdminGuestFeedback() {
                 invitations.
               </p>
               <Button asChild>
-                <Link to="/auth?mode=medicine&returnTo=/admin/guest-feedback">
+                <Link to={`/auth?mode=medicine&returnTo=${view === "testers" ? "/admin/guest-feedback" : "/admin/feedback"}`}>
                   Sign into your founder account
                 </Link>
               </Button>
             </div>
           ) : !isAdmin ? (
-            <p>Founder access is required to view tester feedback.</p>
+            <p>Founder access is required to view feedback.</p>
+          ) : view === "comments" ? (
+            <AdminUserFeedback />
           ) : (
             <>
               {inbox.data && (

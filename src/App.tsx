@@ -166,6 +166,7 @@ const AppContent = () => {
               <Route path="/try" element={<GuestWelcome />} />
               <Route path="/admin/guest-trials" element={<AdminGuestTrials />} />
               <Route path="/admin/guest-feedback" element={<AdminGuestFeedback />} />
+              <Route path="/admin/feedback" element={<AdminGuestFeedback />} />
               <Route path="/practice" element={<MedicinePracticeStudio />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/schools" element={<Schools />} />

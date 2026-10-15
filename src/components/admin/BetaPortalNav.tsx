@@ -10,8 +10,8 @@ export function BetaPortalNav() {
       {[
         { to: "/admin/guest-trials", label: "Invitations", icon: Link2 },
         {
-          to: "/admin/guest-feedback",
-          label: "Interview feedback",
+          to: "/admin/feedback?view=testers",
+          label: "Tester feedback",
           icon: MessageSquareText,
         },
       ].map(({ to, label, icon: Icon }) => (
