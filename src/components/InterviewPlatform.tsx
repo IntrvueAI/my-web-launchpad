@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Play, Square, Mic, MicOff, RotateCcw, Eye, EyeOff, Keyboard, Send } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
 import { MedicineTheme } from './medicine-dashboard/MedicineTheme';
+import { usePreviewFeature } from '@/lib/previewFeatures';
 import { InterviewType, getDefaultInterviewType } from '@/config/interviewTypes';
 import { InterviewSetup, SetupChoice } from './InterviewSetup';
 import { ShareFeedbackBox } from './ShareFeedbackBox';
@@ -129,6 +130,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     isConnected,
     isStreaming,
     isThinking,
+    awaitingSend,
+    sendNow,
     repeatLastResponse,
     error,
     chatHistory,
@@ -150,6 +153,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   } = useInterviewSession(videoRef, interviewType);
 
   const medicineTimer = interviewType.category === 'medicine' && isStreaming ? stationTimer : null;
+  // Preview 'readable-room': the light Medicine theme plus 12.5% larger text while this page is open.
+  const readableRoom = usePreviewFeature('readable-room') && interviewType.category === 'medicine';
+  useEffect(() => {
+    if (!readableRoom) return;
+    const root = document.documentElement, previous = root.style.fontSize;
+    root.style.fontSize = '112.5%';
+    return () => { root.style.fontSize = previous; };
+  }, [readableRoom]);
   const stationAnnouncements = useStationAnnouncements(medicineTimer && brainUiState ? `${sessionReference}:${brainUiState.questionIndex}` : null, medicineTimer);
 
   useEffect(() => {
@@ -505,7 +516,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   }, []);
 
   return (
-    <div ref={rootRef}><MedicineTheme enabled={interviewType.category === 'medicine'} live><div className="min-h-screen bg-background text-foreground overflow-y-auto">
+    <div ref={rootRef}><MedicineTheme enabled={interviewType.category === 'medicine'} live={!readableRoom}><div className="min-h-screen bg-background text-foreground overflow-y-auto">
       {medicineTimer && !feedback && !pendingTranscript && !isGeneratingFeedback && <StationTimePanel clock={medicineTimer}
         progress={brainUiState ? progressLabel(brainUiState).replace('Question', academic ? 'Exercise' : 'Station') : 'Current station'}
         onBeginResponse={beginResponse} soundEnabled={stationAnnouncements.soundEnabled} onToggleSound={stationAnnouncements.toggleSound}/>}
@@ -551,7 +562,14 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 />
                 {sessionStatus !== 'connecting' && !isStreaming && <InterviewDeviceCheck />}
                 {isStreaming && engineDriven && <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
-                  <span role="status" className="text-muted-foreground">{isThinking ? 'Clara is considering your answer…' : 'Take your time. You can speak or type.'}</span>
+                  {awaitingSend && !isThinking ? (
+                    <span role="status" className="flex flex-wrap items-center gap-2 text-muted-foreground">
+                      Still listening. Keep going, or
+                      <Button size="sm" variant="secondary" onClick={sendNow}>Send now</Button>
+                    </span>
+                  ) : (
+                    <span role="status" className="text-muted-foreground">{isThinking ? 'Clara is considering your answer…' : 'Take your time. You can speak or type.'}</span>
+                  )}
                   <Button size="sm" variant="outline" disabled={isThinking || !chatHistory.some(m=>m.role==='assistant')} onClick={()=>void repeatLastResponse()}>Repeat last response</Button>
                 </div>}
                 {!isStreaming && chatHistory.length > 0 && <Button variant="secondary" onClick={()=>void handleStopInterview()} disabled={isGeneratingFeedback}>Save transcript and get feedback</Button>}
@@ -584,8 +602,15 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     autoPlay
                     playsInline
                     muted={false}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-[filter,opacity] duration-700 ${brainUiState?.roleplayPending ? 'opacity-30 blur-sm' : ''}`}
                   />
+                  {brainUiState?.roleplayPending && (
+                    <div className="absolute inset-0 flex items-center justify-center p-6 text-center" role="status">
+                      <p className="max-w-xs rounded-xl bg-background/85 px-4 py-3 text-sm font-medium shadow">
+                        Read your brief. The roleplay begins when reading time ends, or when you select I'm ready.
+                      </p>
+                    </div>
+                  )}
 
                   {/* Live pill (mock 1c) */}
                   {isStreaming && (

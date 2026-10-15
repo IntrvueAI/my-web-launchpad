@@ -18,6 +18,8 @@ import { AnnotatedTranscript } from "@/components/AnnotatedTranscript";
 import { conciseFeedback } from "@/utils/feedbackSummary";
 import { StationAnswerCoach } from './StationAnswerCoach';
 import { ImprovementNotes } from './ImprovementNotes';
+import { KeyConcepts } from './KeyConcepts';
+import { usePreviewFeature } from '@/lib/previewFeatures';
 import { getMedicinePractice } from '@/interview/subjects/medicine/practiceModes';
 
 export interface ReviewItem {
@@ -45,6 +47,7 @@ export function FeedbackSummary({
   audience?: "candidate" | "admin";
 }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const keyConceptsOn = usePreviewFeature("key-concepts");
   if (isLoading)
     return (
       <div className="rounded-2xl border bg-card p-6" role="status">
@@ -140,6 +143,9 @@ export function FeedbackSummary({
       </div>
       {focusedMedicine && <StationAnswerCoach key={`${interviewType}:${feedback.transcription ?? ''}`} interviewType={interviewType} coaching={detail.answer_coaching}
         question={feedback.questions_review?.find(q=>q.index === detail.answer_coaching?.question_index)?.question ?? feedback.questions_review?.[0]?.question}/>}
+      {keyConceptsOn && medicine && (
+        <KeyConcepts text={[feedback.transcription ?? "", ...(feedback.questions_review ?? []).map((q) => q.question)].join("\n")} />
+      )}
       <div className="rounded-2xl border bg-card p-5">
         <h3 className="font-semibold">
           {audience === "admin" ? "Skills assessed" : "Your skills"}

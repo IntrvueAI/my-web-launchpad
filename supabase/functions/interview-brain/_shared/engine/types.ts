@@ -212,7 +212,9 @@ export type BrainAction =
   | 'switch_topic'
   | 'set_mode'
   | 'end'
-  | 'time_up';
+  | 'time_up'
+  /** Preview 'roleplay-read-then-act': reading time is over, the actor speaks first. */
+  | 'begin_roleplay';
 
 /** Request body for the interview-brain edge function. */
 export interface BrainRequest {
@@ -224,6 +226,8 @@ export interface BrainRequest {
   /** For 'start' / 'set_mode' / 'switch_topic'. */
   mode?: Mode;
   topic?: string;
+  /** Server-relevant preview features; read only when a session starts. */
+  preview?: string[];
 }
 
 /** Response the brain returns; `say` is spoken verbatim by the avatar. */
@@ -249,5 +253,7 @@ export interface BrainResponse {
     timingSeconds?: { prep: number; response: number };
     /** Candidate-facing text only; never private answers, hints or assessment guidance. */
     exercise?: { id: string; prompt: string; topic: string };
+    /** A roleplay brief is being read silently; the actor has not spoken yet. */
+    roleplayPending?: boolean;
   };
 }

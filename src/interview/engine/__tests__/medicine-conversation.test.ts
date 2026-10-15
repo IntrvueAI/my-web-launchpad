@@ -8,6 +8,7 @@ import {
 } from "../agent";
 import { publicQuestionPrompt, asksToClarifyTask, firstNameFrom } from "../publicPrompt";
 import { medicinePack } from "../../subjects/medicine/pack";
+import { packForFullMmiMock } from "../../subjects/medicine/practiceModes";
 import { makeEvidence } from "../evidence";
 import { getBank } from "../../bank";
 import type { BankQuestion } from "../types";
@@ -387,5 +388,42 @@ describe("Finishing a Medicine session", () => {
       expect(r.state.evidence).toEqual(finished.evidence);
     }
     expect(chat).not.toHaveBeenCalled();
+  });
+});
+
+describe("Preview: station themes and roleplay reading", () => {
+  const mock = (preview: string[] = []) => ({ ...init(), preview });
+  it("announces the full MMI without the theme only when the preview is on", async () => {
+    const deps = { bank: [ethics], pack: medicinePack, chat: async () => prose("unused") };
+    const hidden = await startAndReady(mock(["hidden-station-themes"]), deps);
+    expect(hidden.opening.say).toMatch(/Station 1 of \d+\. /);
+    expect(hidden.opening.say).not.toContain("Ethics");
+    expect(buildSystemPrompt(medicinePack, hidden.opening.state)).toContain("Do not name the station theme");
+    const shown = await startAndReady(mock(), deps);
+    expect(shown.opening.say).toMatch(/Station 1 of \d+: Ethics/);
+    expect(buildSystemPrompt(medicinePack, shown.opening.state)).not.toContain("Do not name the station theme");
+  });
+
+  it("lets the candidate read a roleplay brief before the actor speaks", async () => {
+    const chat = vi.fn(async () => prose("unused"));
+    const pack = packForFullMmiMock();
+    const deps = { bank: [pool], pack, chat };
+    const { opening } = await startAndReady({ ...initAgentState({ subject: "medicine", mode: "mock", pack, seed: 0 }), preview: ["roleplay-read-then-act"] }, deps);
+    expect(opening.say).toContain("Please read your brief on screen");
+    expect(opening.say).not.toContain(pool.roleplay!.openingStatement);
+    expect(opening.state.roleplayPending).toBe(true);
+    const begun = await advanceAgent(opening.state, { action: "begin_roleplay", expectedQuestionIndex: 0 }, deps);
+    expect(begun.say).toBe(pool.roleplay!.openingStatement);
+    expect(begun.state.roleplayPending).toBe(false);
+    const again = await advanceAgent(begun.state, { action: "begin_roleplay", expectedQuestionIndex: 0 }, deps);
+    expect(again.say).toBe("");
+    expect(chat).not.toHaveBeenCalled();
+  });
+
+  it("keeps the current roleplay start when the preview is off", async () => {
+    const pack = packForFullMmiMock();
+    const { opening } = await startAndReady(initAgentState({ subject: "medicine", mode: "mock", pack, seed: 0 }), { bank: [pool], pack, chat: async () => prose("unused") });
+    expect(opening.say).toContain(pool.roleplay!.openingStatement);
+    expect(opening.state.roleplayPending).toBeFalsy();
   });
 });

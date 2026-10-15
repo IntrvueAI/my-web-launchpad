@@ -105,6 +105,8 @@ function safeParseArgs(s: string): Record<string, any> {
   }
 }
 
+const SERVER_PREVIEW_FEATURES = ["hidden-station-themes", "roleplay-read-then-act"];
+
 /** OpenAI chat-completions with tool calling. gpt-4.1 is used (confirmed available on this key). */
 const chat: ChatComplete = async ({ messages, tools }) => {
   const resp = await fetchWithProviderRetry("https://api.openai.com/v1/chat/completions", {
@@ -191,6 +193,7 @@ const uiStateOf = (
     questionIndex: s.questionIndex,
     targetQuestions: s.targetQuestions,
     onQuestion: !!s.current,
+    roleplayPending: !!s.roleplayPending,
     exercise: pack.subject === "medicine" && s.current
       ? { id: s.current.id, prompt: publicQuestionPrompt(s.current), topic: s.current.topic }
       : undefined,
@@ -236,6 +239,7 @@ serve(
           "repeat",
           "end",
           "time_up",
+          "begin_roleplay",
         ].includes(action)
       )
         return json({ error: "Valid sessionId and action are required" }, 400);
@@ -258,6 +262,10 @@ serve(
           body.expectedQuestionIndex < 0)
       )
         return json({ error: "Invalid station index" }, 400);
+      // Preview features change only this candidate's own session, so only known names are kept.
+      const preview = Array.isArray(body.preview)
+        ? [...new Set((body.preview as unknown[]).filter((v): v is string => typeof v === "string" && SERVER_PREVIEW_FEATURES.includes(v)))]
+        : [];
       if (
         body.turnId !== undefined &&
         (typeof body.turnId !== "string" ||
@@ -405,6 +413,8 @@ serve(
       } else {
         state = session.engine_state as AgentState;
       }
+      // Fixed at the start so switching a preview mid-interview cannot half-change a session.
+      if (!session.engine_state) state.preview = preview;
 
       const result = await advanceAgent(state, body as any, deps);
       if (body.turnId)

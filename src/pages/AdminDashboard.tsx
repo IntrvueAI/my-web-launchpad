@@ -16,7 +16,7 @@ import { ProviderCreditAlert } from '@/components/admin/ProviderCreditAlert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft, CheckCircle, GraduationCap } from 'lucide-react';
+import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft, CheckCircle, GraduationCap, FlaskConical } from 'lucide-react';
 import { isMedicineSite, SCHOOL_ORIGIN } from '@/lib/site';
 
 export default function AdminDashboard() {
@@ -185,6 +185,11 @@ export default function AdminDashboard() {
           <Button variant="secondary" size="sm" className="gap-2" asChild>
             <Link to="/admin/landing-previews">
               <Stethoscope className="h-3.5 w-3.5" /> Landing page previews
+            </Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/preview-features">
+              <FlaskConical className="h-3.5 w-3.5" /> Preview features
             </Link>
           </Button>
           <Button variant="secondary" size="sm" className="gap-2" asChild>

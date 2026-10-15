@@ -10,12 +10,17 @@ import {
 } from "@/components/ui/popover";
 import type { Annotation } from "@/types/interview";
 import { ANNOTATION_STYLES, ANNOTATION_LEGEND } from "@/constants/feedback";
+import { usePreviewFeature } from "@/lib/previewFeatures";
 
 /** Speaker blocks preserve multi-paragraph answers and the server's original quote offsets. */
 export const AnnotatedTranscript: React.FC<{
   transcript: string;
   annotations: Annotation[];
-}> = ({ transcript: input, annotations: raw }) => {
+  /** Message-bubble layout; defaults to the 'chat-transcript' preview setting. */
+  chat?: boolean;
+}> = ({ transcript: input, annotations: raw, chat: chatProp }) => {
+  const chatPreview = usePreviewFeature("chat-transcript");
+  const chat = chatProp ?? chatPreview;
   const transcript = censorTranscript(input);
   const annotations = censorFeedback(raw ?? []);
   const labels = [...transcript.matchAll(/^(Student|Interviewer):[ \t]*/gm)];
@@ -50,7 +55,7 @@ export const AnnotatedTranscript: React.FC<{
           </span>
         )}
       </div>
-      <div className="space-y-3 text-sm leading-relaxed text-foreground/90">
+      <div className={chat ? "flex flex-col gap-3 text-sm leading-relaxed" : "space-y-3 text-sm leading-relaxed text-foreground/90"}>
         {blocks.map((block) => {
           const spans = block.student
             ? annotations
@@ -79,20 +84,29 @@ export const AnnotatedTranscript: React.FC<{
                 .sort((a, b) => a.start - b.start || b.end - a.end)
             : [];
           const nodes: React.ReactNode[] = [];
-          let position = block.start;
+          // Bubbles name the speaker, so the "Student:" / "Interviewer:" prefix is not repeated.
+          let position = chat ? block.contentStart : block.start;
           for (const { start, end, annotation } of spans) {
             if (start < position) continue;
             nodes.push(transcript.slice(position, start));
             nodes.push(
               <Popover key={start}>
                 <PopoverTrigger asChild>
-                  <button
-                    type="button"
+                  {/* A span, unlike a button, wraps inside the sentence instead of jumping to its own line. */}
+                  <span
+                    role="button"
+                    tabIndex={0}
                     aria-label={`Feedback on: ${annotation.quote}`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        e.currentTarget.click();
+                      }
+                    }}
                     className={`${ANNOTATION_STYLES[annotation.category]} inline cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary`}
                   >
                     {transcript.slice(start, end)}
-                  </button>
+                  </span>
                 </PopoverTrigger>
                 <PopoverContent
                   className="max-w-[min(20rem,90vw)] text-sm"
@@ -115,6 +129,15 @@ export const AnnotatedTranscript: React.FC<{
             position = end;
           }
           nodes.push(transcript.slice(position, block.end).trimEnd());
+          if (chat)
+            return (
+              <div key={block.start} className={`flex max-w-[85%] flex-col gap-1 ${block.student ? "self-end items-end" : "self-start items-start"}`}>
+                <span className="px-1 text-xs font-medium text-muted-foreground">{block.student ? "You" : "Interviewer"}</span>
+                <div className={`whitespace-pre-wrap rounded-2xl px-4 py-2.5 ${block.student ? "rounded-br-md bg-primary/15 text-foreground" : "rounded-bl-md bg-muted text-foreground"}`}>
+                  {nodes}
+                </div>
+              </div>
+            );
           return (
             <div
               key={block.start}

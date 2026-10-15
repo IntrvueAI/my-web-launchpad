@@ -86,6 +86,10 @@ export interface AgentState {
   awaitingReady?: boolean;
   /** The candidate ended the session themselves; late speech during shutdown stays unanswered. */
   endRequested?: boolean;
+  /** Server-relevant preview features fixed for this session (see src/lib/previewFeatures.ts). */
+  preview?: string[];
+  /** Preview 'roleplay-read-then-act': brief shown, actor waiting for reading time to end. */
+  roleplayPending?: boolean;
 }
 
 export interface AgentDeps {
@@ -97,7 +101,7 @@ export interface AgentDeps {
 }
 
 export interface AgentRequest {
-  action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'repeat' | 'end' | 'time_up';
+  action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'repeat' | 'end' | 'time_up' | 'begin_roleplay';
   studentText?: string;
   mode?: Mode;
   topic?: string;
@@ -285,6 +289,8 @@ function renderRoleplayStation(rp: RoleplayRuntime): string {
   ].filter((l) => l !== '').join('\n');
 }
 
+const isFocusedPack = (pack: SubjectPack) => !!pack.focusedPractice;
+
 /** The system prompt is where the tutoring quality lives — persona + voice + how to run the session. */
 export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string {
   if (pack.interviewStyle === 'academic') {
@@ -335,6 +341,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       'Only use exercises supplied by next_problem. Call it when this station has been explored, supplying an honest outcome and specific evidence note. The server will announce the next station and reset the role; do not blend two scenarios into one reply.',
       'The clock, a skip or an explicit end request can close a station. Do not infer failure from a stopping reason. Never invent praise, a score, a university affiliation or an admissions prediction. Keep assessment and coaching private until feedback.',
       'Use plain spoken English, without markdown, lists or stage directions. Ask one thing and give the candidate time to respond.',
+      !isFocusedPack(pack) && state.preview?.includes('hidden-station-themes') ? 'Do not name the station theme or the skill being assessed (for example ethics, motivation, communication or data). Let the candidate interpret the task themselves.' : '',
       pack.speakingNotes || '',
       pack.guardrails,
       pack.scoringPhilosophy || '',
@@ -461,6 +468,7 @@ function logEvidence(state: AgentState, args: { outcome?: string; method_quality
     state.difficulty = nextDifficulty(state.difficulty, outcome, hintsUsed, cleanStreak) as Difficulty;
   }
   state.previousTopic = state.current.topic;
+  state.roleplayPending = false;
   state.current = null;
   state.currentStudentTurns = [];
   state.currentNodeNote = undefined;
@@ -675,10 +683,18 @@ function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = '
   const academic = pack.interviewStyle === 'academic';
   const label = academic ? 'Exercise' : 'Station';
   const intro = state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. ';
+  const hideTheme = !pack.focusedPractice && !!state.preview?.includes('hidden-station-themes');
   const heading = pack.focusedPractice && state.targetQuestions <= 1
     ? `Here is your ${academic ? 'exercise' : 'station'} on ${topicLabel(pack, q.topic).toLowerCase()}.`
-    : `${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}.`;
+    : hideTheme
+      ? `${label} ${state.questionIndex + 1} of ${state.targetQuestions}.`
+      : `${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}.`;
   const prep = pack.stationReadingSeconds ?? 0;
+  if (q.roleplay && prep > 0 && state.preview?.includes('roleplay-read-then-act')) {
+    // The candidate reads the written brief silently; the actor opens once reading time ends.
+    state.roleplayPending = true;
+    return `${bridge ? bridge + ' ' : ''}${intro}${heading} This is a roleplay. Please read your brief on screen. The roleplay will begin when the reading time ends, or when you select I'm ready.`;
+  }
   // The on-screen "I'm ready" control is visible; reading a button label aloud is not natural speech.
   const reading = prep > 0 ? `You have ${spokenSeconds(prep)} to read it, and you can start answering whenever you're ready. ` : '';
   return `${bridge ? bridge + ' ' : ''}${intro}${heading} ${reading}${spokenQuestionPrompt(q, prep > 0)}`;
@@ -704,6 +720,16 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
 
   const medicine = deps.pack.subject === 'medicine';
   const mmi = medicine && deps.pack.interviewStyle !== 'academic';
+  if (req.action === 'begin_roleplay') {
+    // Idempotent: only a roleplay whose brief is still being read gets its actor's opening line.
+    if (!state.roleplayPending || !state.current?.roleplay) return { say: '', state, done: state.done };
+    state.roleplayPending = false;
+    const say = state.current.roleplay.openingStatement;
+    state.transcript.push({ role: 'assistant', content: say });
+    return { say, state, done: state.done };
+  }
+  // A candidate who starts speaking before the actor simply begins the roleplay themselves.
+  if (state.roleplayPending && req.action === 'answer') state.roleplayPending = false;
   if (medicine && req.action === 'answer' && asksToEndInterview(req.studentText || '')) req = { ...req, action: 'end' };
   if (req.action === 'start' && (deps.pack.focusedPractice || mmi) && !state.current) {
     // Greet first and wait for a reply; the station (and its clock) starts on the next turn.

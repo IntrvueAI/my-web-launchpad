@@ -65,6 +65,7 @@ vi.mock("../useConnectionHealthCheck", () => ({
 vi.mock("../use-toast", () => ({ useToast: () => ({ toast: vi.fn() }) }));
 vi.mock("@/interview/debug/debugBus", () => ({ logDebug: vi.fn() }));
 import { useInterviewSession } from "../useInterviewSession";
+import { setPreviewFeature } from "@/lib/previewFeatures";
 import type { InterviewType } from "@/config/interviewTypes";
 const type: InterviewType = {
   id: "medicine-mmi",
@@ -160,6 +161,82 @@ describe("Live session control delivery", () => {
       expectedQuestionIndex: 0,
     });
     expect(session.brainUiState?.questionIndex).toBe(1);
+  });
+  it("preview thinking pause waits about three seconds and can be sent early", async () => {
+    setPreviewFeature("thinking-pause", true);
+    try {
+      const station = { ...response(0), uiState: { ...response(0).uiState, timingSeconds: { prep: 0, response: 300 } } };
+      mocks.brain.mockResolvedValueOnce(station).mockResolvedValue(station);
+      await act(async () => {
+        await session.startInterview("user");
+      });
+      act(() => session.sendTypedMessage("First part of my answer."));
+      await act(async () => {
+        vi.advanceTimersByTime(650);
+      });
+      expect(mocks.brain).toHaveBeenCalledTimes(1);
+      expect(session.awaitingSend).toBe(true);
+      act(() => session.sendTypedMessage("and the second part."));
+      await act(async () => {
+        vi.advanceTimersByTime(2900);
+      });
+      expect(mocks.brain).toHaveBeenCalledTimes(1);
+      await act(async () => {
+        session.sendNow();
+      });
+      expect(mocks.brain).toHaveBeenCalledTimes(2);
+      expect(mocks.brain.mock.calls[1][0].studentText).toBe("First part of my answer. and the second part.");
+      expect(session.awaitingSend).toBe(false);
+    } finally {
+      setPreviewFeature("thinking-pause", null);
+    }
+  });
+  it("preview silent reading holds answers until reading time ends", async () => {
+    const reading = { ...response(0), uiState: { ...response(0).uiState, timingSeconds: { prep: 60, response: 300 } } };
+    mocks.brain.mockResolvedValueOnce(reading).mockResolvedValue(reading);
+    await act(async () => {
+      await session.startInterview("user");
+    });
+    expect(session.stationTimer?.phase).toBe("prep");
+    setPreviewFeature("silent-reading", true);
+    try {
+      act(() => session.sendTypedMessage("Talking during reading time."));
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      expect(mocks.brain).toHaveBeenCalledTimes(1);
+      expect(session.stationTimer?.phase).toBe("prep");
+      act(() => session.sendTypedMessage("Could you repeat the scenario please?"));
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      expect(mocks.brain).toHaveBeenCalledTimes(2);
+    } finally {
+      setPreviewFeature("silent-reading", null);
+    }
+    act(() => session.sendTypedMessage("Answering with the preview off."));
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(mocks.brain).toHaveBeenCalledTimes(3);
+  });
+  it("asks the actor to begin once a roleplay's reading time ends", async () => {
+    const pending = { ...response(0), uiState: { ...response(0).uiState, roleplayPending: true, timingSeconds: { prep: 1, response: 300 } } };
+    mocks.brain.mockResolvedValueOnce(pending).mockResolvedValue({ ...pending, say: "Actor line", uiState: { ...pending.uiState, roleplayPending: false } });
+    await act(async () => {
+      await session.startInterview("user");
+    });
+    expect(session.stationTimer?.phase).toBe("prep");
+    await act(async () => {
+      vi.advanceTimersByTime(1500);
+    });
+    const begins = mocks.brain.mock.calls.filter(([body]) => body.action === "begin_roleplay");
+    expect(begins).toHaveLength(1);
+    expect(begins[0][0].expectedQuestionIndex).toBe(0);
+    await act(async () => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(mocks.brain.mock.calls.filter(([body]) => body.action === "begin_roleplay")).toHaveLength(1);
   });
   it("discards the queued bell when the answer already advances the station", async () => {
     let finishAnswer!: (r: BrainResponse) => void;

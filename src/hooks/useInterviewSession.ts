@@ -17,6 +17,7 @@ import { logDebug } from '@/interview/debug/debugBus';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { withSessionRefresh } from '@/lib/edgeFunctionError';
 import { supabase } from '@/integrations/supabase/client';
+import { isPreviewFeatureOn, serverPreviewFeatures } from '@/lib/previewFeatures';
 
 // Types for the interview session
 type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error';
@@ -24,6 +25,8 @@ type SessionStatus = 'idle' | 'connecting' | 'connected' | 'streaming' | 'error'
 // How long we wait after the student stops before sending their answer to the brain, so quick
 // consecutive bursts get merged into one turn (feels less abrupt than reacting to each fragment).
 const COALESCE_MS = 650;
+/** Preview 'thinking-pause': silence needed before an answer is sent, so a candidate can add to it. */
+export const THINKING_PAUSE_MS = 3000;
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -72,6 +75,9 @@ interface UseInterviewSessionReturn {
    * existing UIs render nothing extra by default.
    */
   stationTimer: StationClockState | null;
+  /** An answer is waiting out the thinking pause and can be sent immediately. */
+  awaitingSend: boolean;
+  sendNow: () => void;
   beginResponse: () => void;
 }
 
@@ -106,7 +112,7 @@ export const useInterviewSession = (
   const controlsRef = useRef(new StationControlQueue());
   const answerRetriesRef = useRef(0);
   type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string };
-  type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up';
+  type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up' | 'begin_roleplay';
   const turnRef = useRef<(action: TurnAction, payload?: TurnPayload) => Promise<void>>(async () => {});
   const retryTurnRef = useRef<{action:TurnAction;payload:TurnPayload}|null>(null);
 
@@ -189,7 +195,7 @@ export const useInterviewSession = (
     if (payload.expectedQuestionIndex !== undefined && payload.expectedQuestionIndex !== uiStateRef.current?.questionIndex) return;
     brainBusyRef.current = true;
     setIsThinking(true);
-    const requestBody = { sessionId, action, ...payload, interviewSessionId: sessionLogger.sessionId };
+    const requestBody = { sessionId, action, ...payload, ...(action === 'start' ? { preview: serverPreviewFeatures() } : {}), interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);
@@ -253,6 +259,18 @@ export const useInterviewSession = (
     timing: brainUiState?.timingSeconds,
     onTimeUp: () => { void runBrainTurn('time_up', { expectedQuestionIndex: brainUiState?.questionIndex }); },
   });
+  const stationPhaseRef = useRef<StationClockState['phase'] | null>(null);
+  stationPhaseRef.current = stationTimer?.phase ?? null;
+  // Preview 'roleplay-read-then-act': once reading time ends (or I'm ready), the actor speaks first.
+  const begunRoleplayRef = useRef<number | null>(null);
+  useEffect(() => {
+    const index = brainUiState?.questionIndex;
+    if (!brainUiState?.roleplayPending || stationTimer?.phase !== 'response' || isThinking || index === undefined) return;
+    if (begunRoleplayRef.current === index) return;
+    begunRoleplayRef.current = index;
+    void runBrainTurn('begin_roleplay', { expectedQuestionIndex: index });
+  }, [brainUiState?.roleplayPending, brainUiState?.questionIndex, stationTimer?.phase, isThinking, runBrainTurn]);
+  const [awaitingSend, setAwaitingSend] = useState(false);
 
   /**
    * Send the buffered student utterance(s) to the brain as one answer. Coalescing means two quick
@@ -261,6 +279,7 @@ export const useInterviewSession = (
    */
   const flushStudentBuffer = useCallback(() => {
     if (flushTimerRef.current) { clearTimeout(flushTimerRef.current); flushTimerRef.current = null; }
+    setAwaitingSend(false);
     if (brainBusyRef.current) return; // still talking — the turn's `finally` will re-schedule this
     if (retryTurnRef.current) {
       const retry = retryTurnRef.current;
@@ -324,6 +343,11 @@ export const useInterviewSession = (
    */
   const handleStudentTurn = useCallback((text: string) => {
     if (!text?.trim() || !startedRef.current) return;
+    // Preview 'silent-reading': no answers while the station's reading time is running.
+    if (stationPhaseRef.current === 'prep' && !asksToClarifyTask(text) && isPreviewFeatureOn('silent-reading')) {
+      toast({ title: 'Reading time', description: "Answers open when the clock reaches zero, or select I'm ready to begin now." });
+      return;
+    }
     if (!asksToClarifyTask(text)) beginResponse();
     pushTranscript('user', text);
     // Queue it rather than firing immediately: if Clara/the brain is mid-turn this is picked up when
@@ -333,8 +357,10 @@ export const useInterviewSession = (
     // In push-to-talk mode, don't auto-flush on a pause — wait for the explicit release flush.
     if (pushToTalkModeRef.current) return;
     if (flushTimerRef.current) clearTimeout(flushTimerRef.current);
-    flushTimerRef.current = setTimeout(() => flushRef.current(), COALESCE_MS);
-  }, [pushTranscript, beginResponse]);
+    const pause = isPreviewFeatureOn('thinking-pause') ? THINKING_PAUSE_MS : COALESCE_MS;
+    if (pause > COALESCE_MS) setAwaitingSend(true);
+    flushTimerRef.current = setTimeout(() => flushRef.current(), pause);
+  }, [pushTranscript, beginResponse, toast]);
 
   /**
    * Start the interview session.
@@ -736,5 +762,7 @@ export const useInterviewSession = (
     brainUiState,
     interviewComplete,
     stationTimer,
+    awaitingSend,
+    sendNow: () => flushRef.current(),
   };
 };
