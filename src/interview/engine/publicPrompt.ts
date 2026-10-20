@@ -24,6 +24,12 @@ export function asksToRepeatLastLine(text: string): boolean {
   return /^(?:(?:sorry|please|um|erm|wait)\s+)*(?:(?:(?:can|could|would) you (?:please )?(?:(?:repeat|rephrase) (?:that|it)|say (?:that|it) again))|(?:say (?:that|it) again))(?: please)?$/.test(clean);
 }
 
+/** "Can you repeat the question?" — for 11+ this repeats Clara's last line rather than a brief. */
+export function asksToRepeatQuestion(text: string): boolean {
+  const clean = text.toLowerCase().replace(/[’]/g, "'").replace(/[?!.…,]/g, ' ').replace(/\s+/g, ' ').trim();
+  return /^(?:(?:sorry|please|um|erm|wait)\s+)*(?:(?:can|could|would) you (?:please )?)?(?:repeat|say|read) (?:the|that) question(?: again)?(?: please)?$/.test(clean);
+}
+
 /** Narrow repair intent. A request to restate the task is not an assessed answer. */
 export function asksToClarifyTask(text: string): boolean {
   const clean = text.toLowerCase().replace(/[’]/g, "'").replace(/[?!.…,]/g, ' ').replace(/\s+/g, ' ').trim();

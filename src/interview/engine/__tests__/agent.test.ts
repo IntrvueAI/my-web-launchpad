@@ -50,7 +50,7 @@ describe('LLM-driven agent', () => {
       say('Thank you so much — please end the interview to see your feedback.'),
     ];
     const deps: AgentDeps = { bank: BANK, pack: mathsPack, chat: fakeChat(queue) };
-    let s: AgentState = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    let s: AgentState = { ...initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 }), welcomed: true };
 
     let r = await advanceAgent(s, { action: 'start' }, deps);
     expect(r.say).toContain('Clara');
@@ -94,7 +94,7 @@ describe('LLM-driven agent', () => {
       queue.push(say(`ok ${i}`));
     }
     const deps: AgentDeps = { bank, pack: elevenplusPack, chat: fakeChat(queue) };
-    let r = await advanceAgent(initAgentState({ subject: 'elevenplus', mode: 'mock', pack: elevenplusPack, seed: 7 }), { action: 'start' }, deps);
+    let r = await advanceAgent({ ...initAgentState({ subject: 'elevenplus', mode: 'mock', pack: elevenplusPack, seed: 7 }), welcomed: true }, { action: 'start' }, deps);
     for (let i = 0; i < 12 && !r.done; i++) {
       r = await advanceAgent(r.state, { action: 'answer', studentText: `answer ${i}` }, deps);
     }
@@ -126,7 +126,7 @@ describe('LLM-driven agent', () => {
       say('Nice — next one.'),
     ];
     const deps: AgentDeps = { bank: BANK, pack: mathsPack, chat: fakeChat(queue) };
-    let r = await advanceAgent(initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 3 }), { action: 'start' }, deps);
+    let r = await advanceAgent({ ...initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 3 }), welcomed: true }, { action: 'start' }, deps);
     r = await advanceAgent(r.state, { action: 'answer', studentText: 'ready' }, deps);
     const q1 = r.state.current!.id;
     expect(r.state.evidence).toHaveLength(0);
@@ -148,7 +148,7 @@ describe('LLM-driven agent', () => {
       say("No problem, here's another."),
     ];
     const deps: AgentDeps = { bank: BANK, pack: mathsPack, chat: fakeChat(queue) };
-    let s = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 2 });
+    let s = { ...initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 2 }), welcomed: true };
     let r = await advanceAgent(s, { action: 'start' }, deps);
     r = await advanceAgent(r.state, { action: 'answer', studentText: 'ready' }, deps);
     r = await advanceAgent(r.state, { action: 'skip' }, deps);
@@ -198,7 +198,7 @@ describe('LLM-driven agent', () => {
     expect(chatResult.say).not.toContain('favourite subject');
 
     const mathsDeps: AgentDeps = { bank: BANK, pack: mathsPack, chat: fakeChat([say(stackedTurn)]) };
-    const mathsState2 = initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 });
+    const mathsState2 = { ...initAgentState({ subject: 'maths', mode: 'mock', pack: mathsPack, seed: 1 }), welcomed: true };
     const mathsResult = await advanceAgent(mathsState2, { action: 'start' }, mathsDeps);
     expect(mathsResult.say).toBe(stackedTurn); // untouched — no backstop applies to this pack/phase
   });

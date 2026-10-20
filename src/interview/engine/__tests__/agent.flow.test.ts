@@ -60,7 +60,7 @@ describe('flow-driven agent (admin-built "Intrvue A/B/C" interviews)', () => {
       say('Great, next one.'),
     ];
     const depsA = makeDeps(queueA);
-    let rA = await advanceAgent(initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 1, flowId: 'flow-1' }), { action: 'start' }, depsA);
+    let rA = await advanceAgent({ ...initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 1, flowId: 'flow-1' }), welcomed: true }, { action: 'start' }, depsA);
     rA = await advanceAgent(rA.state, { action: 'answer', studentText: 'ready' }, depsA);
     expect(rA.state.current?.id).toBe('bank-q1');
     rA = await advanceAgent(rA.state, { action: 'answer', studentText: '56, seven eights are fifty-six' }, depsA);
@@ -77,7 +77,7 @@ describe('flow-driven agent (admin-built "Intrvue A/B/C" interviews)', () => {
       say('No worries, next one.'),
     ];
     const depsB = makeDeps(queueB);
-    let rB = await advanceAgent(initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 2, flowId: 'flow-1' }), { action: 'start' }, depsB);
+    let rB = await advanceAgent({ ...initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 2, flowId: 'flow-1' }), welcomed: true }, { action: 'start' }, depsB);
     rB = await advanceAgent(rB.state, { action: 'answer', studentText: 'ready' }, depsB);
     rB = await advanceAgent(rB.state, { action: 'answer', studentText: 'not sure' }, depsB);
     expect(rB.state.current?.id).toBe('bank-easy');
@@ -94,7 +94,7 @@ describe('flow-driven agent (admin-built "Intrvue A/B/C" interviews)', () => {
       say('Nice, next one.'),
     ];
     const deps = makeDeps(queue);
-    let r = await advanceAgent(initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 3, flowId: 'flow-1' }), { action: 'start' }, deps);
+    let r = await advanceAgent({ ...initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 3, flowId: 'flow-1' }), welcomed: true }, { action: 'start' }, deps);
     r = await advanceAgent(r.state, { action: 'answer', studentText: 'ready' }, deps);
     const q1 = r.state.current!.id;
     expect(r.state.evidence).toHaveLength(0);
@@ -120,7 +120,7 @@ describe('flow-driven agent (admin-built "Intrvue A/B/C" interviews)', () => {
       say("That's everything for today, thanks so much."),
     ];
     const deps = makeDeps(queue);
-    let r = await advanceAgent(initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 4, flowId: 'flow-1' }), { action: 'start' }, deps);
+    let r = await advanceAgent({ ...initAgentState({ subject: 'custom-flow', mode: 'mock', pack: mathsPack, seed: 4, flowId: 'flow-1' }), welcomed: true }, { action: 'start' }, deps);
     r = await advanceAgent(r.state, { action: 'answer', studentText: 'ready' }, deps);
     expect(r.state.current?.id).toBe('bank-q1');
     r = await advanceAgent(r.state, { action: 'answer', studentText: '56' }, deps);
