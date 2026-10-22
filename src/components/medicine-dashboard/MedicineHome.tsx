@@ -142,7 +142,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
                   <div key={s.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 py-4" style={{ borderTop: i > 0 ? '1px solid var(--med-border)' : undefined }}>
                     <div className="min-w-0"><p className="text-sm font-medium">{s.title}</p><p className="mt-1 text-xs text-muted-foreground">{new Date(s.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</p></div>
                     <div className="flex flex-col items-end gap-2">
-                      {s.band !== null && <span className="rounded-lg bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">{s.band}/20</span>}
+                      {s.band !== null && <span className="rounded-lg px-2 py-1 text-xs font-semibold" style={{ background: "var(--med-primary-soft)", color: "var(--med-primary-dark)" }}>{s.band}/20</span>}
                       <button aria-label={`View feedback for ${s.title}`} onClick={() => onOpenFeedback ? onOpenFeedback(s.id) : onOpenTab('feedback')} style={linkStyle}>View feedback</button>
                     </div>
                   </div>

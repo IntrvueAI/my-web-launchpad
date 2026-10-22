@@ -18,3 +18,12 @@
 
 /* The live toolbar reserves space for colour controls, including nested guest rooms. */
 .medicine-theme:has(.medicine-colour-inline)>.medicine-theme-switch{display:none}
+
+/* Compact colour switcher everywhere: two swatches (names in tooltips and for screen readers), so it no longer covers page content. */
+.medicine-theme-switch{padding:3px 5px;gap:2px}
+.medicine-theme-switch>svg{margin:0 3px 0 4px}
+.medicine-theme-switch button{width:40px;min-height:40px;padding:0}
+.medicine-theme-switch button span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.medicine-theme-switch i{width:14px;height:14px}
+.medicine-theme-switch button[aria-pressed=true]{outline:2px solid var(--med-primary);outline-offset:-5px}
+.medicine-live-theme .medicine-theme-switch button[aria-pressed=true]{outline-color:var(--med-on-dark-accent)}
