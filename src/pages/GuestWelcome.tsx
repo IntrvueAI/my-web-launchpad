@@ -76,6 +76,8 @@ export default function GuestWelcome() {
   }
   const product: TrialProduct = invite?.product ?? linkProduct;
   const school = product === "11plus";
+  // A link that cannot be opened at all gets its own page, not a welcome with an error underneath.
+  const unavailable = !invite && !!error;
   return (
     <MedicineTheme enabled={!school}>
       <main className="min-h-screen bg-background px-5 py-10 pb-28 text-foreground">
@@ -91,16 +93,29 @@ export default function GuestWelcome() {
               A personal invitation
             </p>
             <h1 className="font-display text-4xl leading-tight sm:text-5xl">
-              Welcome to your
-              <br />
-              {school ? "practice interview." : "practice room."}
+              {unavailable ? (
+                "This invitation link isn't working."
+              ) : (
+                <>
+                  Welcome to your{" "}
+                  <br />
+                  {school ? "practice interview." : "practice room."}
+                </>
+              )}
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Thanks for helping us test {TRIAL_BRAND[product]}. Your private invitation
-              includes {invite?.max_interviews ?? 2} interview attempts and a
-              short feedback form at the end. Enter your name to begin. No
-              email, password or signup needed.
-            </p>
+            {unavailable ? (
+              <p className="text-lg text-muted-foreground">
+                It may have expired, been closed by the person who invited you, or been copied
+                incompletely. Ask them for a fresh link. Nothing has been used from your trial.
+              </p>
+            ) : (
+              <p className="text-lg text-muted-foreground">
+                Thanks for helping us test {TRIAL_BRAND[product]}. Your private invitation
+                includes {invite ? `${invite.max_interviews} interview attempts` : "a few interview attempts"} and a
+                short feedback form at the end. Enter your name to begin. No
+                email, password or signup needed.
+              </p>
+            )}
             <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-primary" />
               <span>{school ? "Questions about you, maths, logic and current affairs" : "Ethics, communication, reasoning and more"}</span>
@@ -120,7 +135,7 @@ export default function GuestWelcome() {
             aria-label="Join your trial"
           >
             <h2 className="font-display text-2xl font-semibold">
-              Make yourself at home
+              {unavailable ? "What you can do" : "Make yourself at home"}
             </h2>
             {invite && (
               <p className="mt-2 text-sm text-muted-foreground">
@@ -150,6 +165,11 @@ export default function GuestWelcome() {
               >
                 {error}
               </p>
+            )}
+            {unavailable && (
+              <a href="/" className="inline-flex min-h-11 items-center gap-2 font-semibold text-primary underline underline-offset-4">
+                Visit {TRIAL_BRAND[product]} <ArrowRight className="h-4 w-4" aria-hidden />
+              </a>
             )}
             {invite && (
               <form onSubmit={begin} className="mt-6 space-y-5">

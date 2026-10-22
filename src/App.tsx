@@ -6,6 +6,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { RouteTitle } from "@/lib/pageTitle";
 import { AuthReturnResume } from './components/schools/SchoolLayout';
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { MedicineFeedbackDock } from "@/components/medicine-dashboard/MedicineFeedbackDock";
@@ -81,7 +82,6 @@ const ADMIN_BYPASS_EMAIL = (import.meta.env.VITE_ADMIN_BYPASS_EMAIL ?? '') as st
 const AppContent = () => {
   const { user } = useAuth();
   useEffect(() => {
-    if (isMedicineSite()) document.title = 'MMI Practice | Medicine interview preparation';
     if (['/try', '/guest-session', '/guest-feedback'].includes(window.location.pathname) || /^\/(?:medicine|11plus)\/[A-Za-z0-9_-]{22}$/.test(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
       const robots = document.createElement('meta'); robots.name = 'robots'; robots.content = 'noindex, nofollow'; document.head.appendChild(robots);
       const referrer = document.createElement('meta'); referrer.name = 'referrer'; referrer.content = 'no-referrer'; document.head.appendChild(referrer);
@@ -161,6 +161,7 @@ const AppContent = () => {
           </div>
         )}
         <BrowserRouter>
+          <RouteTitle />
           <AuthReturnResume />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
@@ -214,6 +215,7 @@ const AppContent = () => {
                 path="/minigames"
                 element={
                   <div className="container mx-auto px-4 py-8 max-w-6xl">
+                    <h1 className="sr-only">Practice minigames</h1>
                     <MinigameSection />
                   </div>
                 }

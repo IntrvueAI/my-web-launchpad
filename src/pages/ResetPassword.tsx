@@ -12,7 +12,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { validatePassword } from "@/utils/inputValidation";
@@ -116,9 +115,9 @@ export default function ResetPassword() {
                 aria-hidden="true"
               />
             )}
-            <CardTitle className="text-2xl font-bold">
+            <h1 className="text-2xl font-bold leading-none tracking-tight">
               {success ? "Password updated" : `Set your ${siteName()} password`}
-            </CardTitle>
+            </h1>
             <CardDescription>
               {success ? (
                 "Your new password is saved. Use it the next time you sign in."

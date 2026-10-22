@@ -17,7 +17,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -216,12 +215,12 @@ const Auth = () => {
             >
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
-            <CardTitle className="pt-9 text-2xl font-bold">
+            <h1 className="pt-9 text-2xl font-bold leading-none tracking-tight">
               {siteName()}
-            </CardTitle>
+            </h1>
             <CardDescription>
               {isMedicineSite()
-                ? "Sign in with your existing Intrvue account. Your saved interviews and credits are already here."
+                ? "Sign in with your existing Intrvue account. Your saved interviews are already here."
                 : "Access your personalized interview practice platform"}
             </CardDescription>
           </CardHeader>

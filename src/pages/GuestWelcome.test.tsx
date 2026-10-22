@@ -8,11 +8,12 @@ vi.mock("@/lib/guestTrials", async () => ({ ...(await vi.importActual<object>("@
 vi.mock("@/integrations/supabase/client", () => ({ guestSupabase: { auth: { setSession: vi.fn() } } }));
 import GuestWelcome from "./GuestWelcome";
 
-async function open(path: string, product: "medicine" | "11plus") {
+async function open(path: string, product: "medicine" | "11plus", failure?: Error) {
   Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
   sessionStorage.clear();
   window.history.replaceState({}, "", path);
-  trialApi.mockResolvedValue({ invite: { id: "i", label: "l", expires_at: "2099-01-01", revoked_at: null, max_guests: 1, max_interviews: 2, guest_hours: 6, product } });
+  if (failure) trialApi.mockRejectedValue(failure);
+  else trialApi.mockResolvedValue({ invite: { id: "i", label: "l", expires_at: "2099-01-01", revoked_at: null, max_guests: 1, max_interviews: 2, guest_hours: 6, product } });
   const node = document.createElement("div");
   const root = createRoot(node);
   await act(async () => root.render(
@@ -36,6 +37,17 @@ describe("Beta welcome page", () => {
       expect(node.textContent).toContain("parent or guardian");
       expect(node.textContent).not.toContain("MMI Practice");
       expect(trialApi).toHaveBeenCalledWith({ action: "inspect", code: "AbCdEfGhIjKlMnOpQrStUv" }, true);
+    } finally {
+      unmount();
+    }
+  });
+  it("explains a broken or expired link instead of welcoming the tester", async () => {
+    const { node, unmount } = await open("/medicine/AbCdEfGhIjKlMnOpQrStUv", "medicine", new Error("This trial invitation has expired or been closed"));
+    try {
+      expect(node.querySelector("h1")?.textContent).toBe("This invitation link isn't working.");
+      expect(node.querySelector('[role="alert"]')?.textContent).toContain("expired or been closed");
+      expect(node.textContent).not.toContain("Enter your name to begin");
+      expect(node.querySelector("form")).toBeNull();
     } finally {
       unmount();
     }

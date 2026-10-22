@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
+import { useEffect, useRef, useState, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
@@ -164,6 +164,29 @@ const Index = () => {
     navigate('/auth');
   };
 
+  // MMI Practice is charged by the server when the interview connects, from the Medicine balance;
+  // credits come back automatically if it cannot start. Administrators are free. Landing-page
+  // links and the dashboard both start here, so nobody reaches a paid room without the credits.
+  const startMedicineInterview = async (interviewType: InterviewType) => {
+    const cost = medicineInterviewCost(interviewType.id);
+    if (!isAdmin && typeof cost === 'number' && cost > 0) {
+      const { data: balance } = await medicineCredits.refetchCredits();
+      if ((balance ?? 0) < cost) {
+        toast({
+          title: `You need ${medicineCreditsLabel(cost)}`,
+          description: `${interviewType.name} uses ${medicineCreditsLabel(cost)}. You have ${balance ?? 0}. Top up to start.`,
+        });
+        setMedicineCreditsRequest((n) => n + 1);
+        setCurrentView('credits');
+        return;
+      }
+    }
+    setSelectedInterviewType(interviewType);
+    setCurrentView('interview');
+  };
+  const startMedicineRef = useRef(startMedicineInterview);
+  startMedicineRef.current = startMedicineInterview;
+
   const handleSelectInterview = async (interviewType: InterviewType) => {
     if (interviewType.retired || (interviewType.category === 'medicine') !== (productLine === 'medicine')) {
       toast({ title: 'Choose a current practice format', description: productLine === 'medicine' ? 'Choose the full MMI or a seven-minute mini interview.' : 'This practice area is for 11+. Open Medicine to practise MMI interviews.' });
@@ -177,23 +200,7 @@ const Index = () => {
     }
     try {
       if (interviewType.category === 'medicine') {
-        // MMI Practice is charged by the server when the interview connects, from the Medicine
-        // balance; credits come back automatically if it cannot start. Administrators are free.
-        const cost = medicineInterviewCost(interviewType.id);
-        if (!isAdmin && typeof cost === 'number' && cost > 0) {
-          const { data: balance } = await medicineCredits.refetchCredits();
-          if ((balance ?? 0) < cost) {
-            toast({
-              title: `You need ${medicineCreditsLabel(cost)}`,
-              description: `${interviewType.name} uses ${medicineCreditsLabel(cost)}. You have ${balance ?? 0}. Top up to start.`,
-            });
-            setMedicineCreditsRequest((n) => n + 1);
-            setCurrentView('credits');
-            return;
-          }
-        }
-        setSelectedInterviewType(interviewType);
-        setCurrentView('interview');
+        await startMedicineInterview(interviewType);
         return;
       }
       const cost = interviewType.costCredits ?? 1;
@@ -310,7 +317,7 @@ const Index = () => {
       if (!cancelled) {
         try { sessionStorage.removeItem('intrvue:pending-medicine-practice'); } catch { /* optional */ }
         const url = new URL(window.location.href); url.searchParams.delete('medicinePractice'); window.history.replaceState({}, '', url);
-        setSelectedInterviewType(INTERVIEW_TYPES[requested]); setCurrentView('interview');
+        void startMedicineRef.current(INTERVIEW_TYPES[requested]);
       }
     });
     return () => { cancelled = true; };
