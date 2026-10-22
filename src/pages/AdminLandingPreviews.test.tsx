@@ -14,10 +14,15 @@ vi.mock("@/components/marketing/medicineLandingDesigns", async () => {
     { id: "c", name: "Design C", note: "Third", Component: stub("Landing C") },
   ];
   const actual = await vi.importActual<typeof import("@/components/marketing/medicineLandingDesigns")>("@/components/marketing/medicineLandingDesigns");
-  return { MEDICINE_LANDING_DESIGNS: designs, designIndexFrom: (s: string) => actual.designIndexFrom(s, designs.length) };
+  return {
+    MEDICINE_LANDING_DESIGNS: designs,
+    designIndexFrom: (s: string) => actual.designIndexFrom(s, designs.length),
+    PREVIEW_DEVICES: actual.PREVIEW_DEVICES,
+    deviceFrom: actual.deviceFrom,
+  };
 });
 import AdminLandingPreviews from "./AdminLandingPreviews";
-import { designIndexFrom } from "@/components/marketing/medicineLandingDesigns";
+import { designIndexFrom, deviceFrom } from "@/components/marketing/medicineLandingDesigns";
 
 let search = "";
 const Spy = () => { search = useLocation().search; return null; };
@@ -62,6 +67,38 @@ describe("Landing page preview portal", () => {
       await act(async () => window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" })));
       await settle(node, "Landing C");
       expect(node.textContent).toContain("3. Design C");
+    } finally {
+      unmount();
+    }
+  });
+
+  it("previews a design inside a phone, tablet or desktop frame", async () => {
+    expect(deviceFrom("?device=phone")).toBe("phone");
+    expect(deviceFrom("?device=watch")).toBe("full");
+    const { node, unmount } = await render("/admin/landing-previews?design=2");
+    try {
+      await settle(node, "Landing B");
+      await act(async () => (node.querySelector('[aria-label="Phone"]') as HTMLButtonElement).click());
+      expect(search).toBe("?design=2&device=phone");
+      const frame = node.querySelector("iframe")!;
+      expect(frame.getAttribute("src")).toBe("/admin/landing-previews?design=2&bare=1");
+      expect(frame.style.width).toBe("390px");
+      expect(node.textContent).not.toContain("Landing B");
+      await act(async () => (node.querySelector('[aria-label="Next design"]') as HTMLButtonElement).click());
+      expect(search).toBe("?design=3&device=phone");
+      await act(async () => (node.querySelector('[aria-label="Full window"]') as HTMLButtonElement).click());
+      await settle(node, "Landing C");
+      expect(search).toBe("?design=3");
+    } finally {
+      unmount();
+    }
+  });
+
+  it("shows only the design, without controls, inside a device frame", async () => {
+    const { node, unmount } = await render("/admin/landing-previews?design=1&bare=1");
+    try {
+      await settle(node, "Landing A");
+      expect(node.querySelector('[aria-label="Landing page designs"]')).toBeNull();
     } finally {
       unmount();
     }

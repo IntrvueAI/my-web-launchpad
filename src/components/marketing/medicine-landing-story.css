@@ -1,0 +1,120 @@
+/* "Story" Medicine landing mock: deep ink, a sticky interview screen that follows the scroll. */
+.ms {
+  --ms-bg: #051b22;
+  --ms-bg-2: #08262f;
+  --ms-text: #eaf4f6;
+  --ms-muted: #8fb0b8;
+  --ms-line: rgba(234, 244, 246, 0.1);
+  --ms-aqua: #19b5cc;
+  --ms-paper: #fbfdfd;
+  --ms-ink: #0b1f29;
+  --ms-display: 'Sora', system-ui, sans-serif;
+  --ms-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --ms-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  min-height: 100vh;
+  background: radial-gradient(1200px 700px at 80% -10%, #0d3a46 0%, transparent 60%), var(--ms-bg);
+  color: var(--ms-text);
+  font: 16px/1.6 var(--ms-body);
+  overflow-x: clip;
+}
+.ms *, .ms *::before, .ms *::after { box-sizing: border-box; }
+.ms a { color: inherit; text-decoration: none; }
+.ms h1, .ms h2, .ms h3 { font-family: var(--ms-display); font-weight: 600; margin: 0; letter-spacing: -0.03em; }
+.ms p { margin: 0; }
+.ms :focus-visible { outline: 2px solid var(--ms-aqua); outline-offset: 3px; border-radius: 6px; }
+
+.ms-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px clamp(16px, 4vw, 48px); }
+.ms-brand { font: 600 17px var(--ms-display); }
+.ms-nav-actions { display: flex; align-items: center; gap: 18px; font-size: 14px; color: var(--ms-muted); }
+.ms-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 24px;
+  border-radius: 999px; background: var(--ms-aqua); color: #03141a !important; font-weight: 600; font-size: 15px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.ms-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 30px -12px rgba(25, 181, 204, 0.8); }
+.ms-btn-sm { min-height: 38px; padding: 0 16px; font-size: 14px; }
+.ms-link { color: var(--ms-muted); text-decoration: underline !important; text-underline-offset: 4px; font-size: 15px; }
+.ms-link:hover { color: var(--ms-text); }
+.ms-eyebrow { font: 500 12px var(--ms-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ms-aqua); }
+
+.ms-hero { max-width: 1100px; margin: 0 auto; padding: clamp(64px, 12vw, 160px) clamp(16px, 4vw, 48px) clamp(48px, 8vw, 96px); }
+.ms h1 { font-size: clamp(44px, 7.5vw, 104px); line-height: 0.98; margin-top: 18px; }
+.ms h1 span { color: var(--ms-aqua); }
+.ms-lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--ms-muted); max-width: 560px; margin-top: 26px !important; }
+.ms-scroll { display: inline-flex; align-items: center; gap: 10px; margin-top: 40px; font-size: 14px; color: var(--ms-muted); }
+.ms-scroll svg { animation: ms-bob 2s ease-in-out infinite; }
+@keyframes ms-bob { 50% { transform: translateY(5px); } }
+
+/* Story: steps scroll on the left while the screen stays put on the right. */
+.ms-story { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+.ms-step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; opacity: .35; transition: opacity .4s ease; }
+.ms-step.is-active { opacity: 1; }
+.ms-step-label { font: 500 13px var(--ms-mono); color: var(--ms-aqua); }
+.ms-step h2 { font-size: clamp(30px, 3.6vw, 48px); line-height: 1.08; margin-top: 14px; }
+.ms-step > p:not(.ms-step-label) { color: var(--ms-muted); font-size: 18px; margin-top: 16px !important; max-width: 480px; }
+.ms-inline { display: none; }
+.ms-stage { position: sticky; top: 12vh; height: 76vh; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.ms-dots { display: flex; justify-content: center; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.ms-dots li { width: 8px; height: 8px; border-radius: 50%; background: var(--ms-line); transition: background .3s ease, width .3s ease; }
+.ms-dots li.on { width: 24px; border-radius: 4px; background: var(--ms-aqua); }
+
+.ms-screen { border-radius: 22px; background: var(--ms-paper); color: var(--ms-ink); box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.8), 0 0 0 8px rgba(25, 181, 204, 0.08); overflow: hidden; }
+.ms-screen-bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid #e3ecee; font-size: 12px; color: #587079; }
+.ms-screen-bar i { width: 9px; height: 9px; border-radius: 50%; background: #d7e3e6; }
+.ms-screen-bar span { margin-left: 8px; }
+.ms-panel { min-height: 300px; padding: clamp(20px, 3vw, 32px); display: grid; align-content: start; gap: 16px; animation: ms-swap .45s ease; }
+@keyframes ms-swap { from { opacity: 0; transform: translateY(8px); } }
+.ms-tag { font: 500 12px var(--ms-mono); letter-spacing: .06em; text-transform: uppercase; color: #0a7c94; }
+.ms-tag-live::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #e2554a; margin-right: 8px; animation: ms-pulse 1.4s ease infinite; }
+@keyframes ms-pulse { 50% { opacity: .3; } }
+.ms-brief { font-size: 17px; line-height: 1.6; }
+.ms-progress { height: 6px; border-radius: 3px; background: #e6eef0; overflow: hidden; }
+.ms-progress span { display: block; height: 100%; background: #0a7c94; border-radius: 3px; }
+.ms-wave { display: flex; align-items: center; gap: 4px; height: 64px; }
+.ms-wave i { flex: 1; height: 30%; border-radius: 3px; background: #19b5cc; animation: ms-wave 1s ease-in-out infinite alternate; }
+.ms-wave i:nth-child(3n) { height: 70%; }
+.ms-wave i:nth-child(4n) { height: 50%; }
+@keyframes ms-wave { to { transform: scaleY(1.6); } }
+.ms-transcript { font-size: 16px; color: #33505a; }
+.ms-bubble { max-width: 88%; padding: 12px 16px; border-radius: 16px 16px 16px 4px; background: #e8f5f7; font-size: 15px; }
+.ms-bubble-me { justify-self: end; border-radius: 16px 16px 4px 16px; background: #0b1f29; color: #fff; }
+.ms-score { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-weight: 600; font-size: 15px; }
+.ms-bars { display: inline-flex; gap: 4px; }
+.ms-bars i { width: 20px; height: 6px; border-radius: 3px; background: #dbe7ea; }
+.ms-bars i.on { background: #0a7c94; }
+.ms-quote { padding: 10px 14px; border-left: 3px solid #19b5cc; background: #f0f8fa; border-radius: 0 10px 10px 0; font-size: 15px; }
+.ms-next { font-size: 15px; color: #33505a; }
+.ms-illustration { padding: 10px 16px; border-top: 1px solid #e3ecee; font-size: 11px; color: #7a9198; }
+
+/* Pricing and close */
+.ms-pricing { max-width: 1200px; margin: 0 auto; padding: clamp(80px, 10vw, 140px) clamp(16px, 4vw, 48px); }
+.ms-pricing-head h2 { font-size: clamp(30px, 4vw, 52px); margin-top: 12px; max-width: 760px; }
+.ms-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 40px; border-radius: 20px; overflow: hidden; background: var(--ms-line); border: 1px solid var(--ms-line); }
+.ms-plan { padding: 28px; background: var(--ms-bg-2); display: grid; align-content: start; gap: 10px; }
+.ms-plan h3 { font-size: 18px; }
+.ms-plan-price { font: 600 44px/1 var(--ms-display); letter-spacing: -0.02em; }
+.ms-plan-price small { display: block; margin-top: 8px; font: 500 12px var(--ms-mono); color: var(--ms-aqua); letter-spacing: 0; }
+.ms-plan > p:last-child { color: var(--ms-muted); font-size: 15px; }
+.ms-closing { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 40px; }
+.ms-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 24px clamp(16px, 4vw, 48px); border-top: 1px solid var(--ms-line); font-size: 12px; color: var(--ms-muted); }
+
+.ms .lr-reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.ms .lr-reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ms .lr-reveal { opacity: 1; transform: none; transition: none; }
+  .ms-panel, .ms-wave i, .ms-tag-live::before, .ms-scroll svg { animation: none; }
+  .ms-step { transition: none; }
+}
+
+/* Phones and small tablets: no sticky stage; each step carries its own screen. */
+@media (max-width: 900px) {
+  .ms-story { grid-template-columns: 1fr; }
+  .ms-stage { display: none; }
+  .ms-step { min-height: 0; opacity: 1; padding: 40px 0; border-top: 1px solid var(--ms-line); }
+  .ms-inline { display: block; margin-top: 28px; }
+  .ms-plans { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .ms-nav-actions > a:first-child { display: none; }
+  .ms-closing .ms-btn { width: 100%; }
+}

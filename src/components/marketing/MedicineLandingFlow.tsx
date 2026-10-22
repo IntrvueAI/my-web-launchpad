@@ -1,8 +1,8 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { MEDICINE_CREDIT_PACKS, formatPence } from "@/config/medicinePricing";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { MEDICINE_FONTS_HREF } from "@/components/medicine-dashboard/MedicineTheme";
-import { MEDICINE_LANDING_FAQS, MEDICINE_LANDING_FORMATS } from "./medicineLandingContent";
+import { MEDICINE_LANDING_FAQS, MEDICINE_LANDING_FORMATS, MEDICINE_LANDING_PRICES } from "./medicineLandingContent";
 import claraShot from "@/assets/landing-hero-shot.png";
 import "./medicine-landing-flow.css";
 
@@ -53,7 +53,23 @@ function Reveal({ children, as: Tag = "div", className = "" }: { children: React
   return <Tag ref={ref as never} className={`mlf-reveal ${className}`}>{children}</Tag>;
 }
 
+/** Illustrative feedback for the showcase: clearly labelled, not a real candidate. */
+const EXAMPLE_FEEDBACK = [
+  { domain: "Ethical reasoning", score: 3, quote: "I'd tell them I can't sign it, but I'd send them my notes.", note: "Keeps honesty and the friendship. Next time, name the principle at stake: probity." },
+  { domain: "Communication", score: 4, quote: "I'd say it kindly, so they don't feel judged.", note: "Shows empathy. Add the exact words you would use in the moment." },
+];
+
 export function MedicineLandingFlow() {
+  // A compact call to action follows on phones once the hero has scrolled away.
+  const heroRef = useRef<HTMLElement>(null);
+  const [pastHero, setPastHero] = useState(false);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setPastHero(!entry.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   useEffect(() => {
     if (document.getElementById("medicine-identity-fonts")) return;
     const link = document.createElement("link");
@@ -70,6 +86,7 @@ export function MedicineLandingFlow() {
         <nav aria-label="Page sections">
           <a href="#mlf-paths">Ways to practise</a>
           <a href="#mlf-station">Inside a station</a>
+          <a href="#mlf-pricing">Pricing</a>
           <a href="#mlf-faq">Questions</a>
         </nav>
         <div className="mlf-nav-actions">
@@ -79,7 +96,7 @@ export function MedicineLandingFlow() {
       </header>
 
       <main>
-        <section className="mlf-hero">
+        <section className="mlf-hero" ref={heroRef}>
           <div className="mlf-glow" aria-hidden />
           <Reveal className="mlf-hero-copy">
             <p className="mlf-label">MMI PRACTICE · FOR FUTURE DOCTORS</p>
@@ -93,6 +110,11 @@ export function MedicineLandingFlow() {
               <a className="mlf-btn-ghost" href="/medicine/practice">Try the solo studio</a>
             </div>
             <p className="mlf-note">Ethics & judgement is free. Other mini interviews {formatPence(MEDICINE_CREDIT_PACKS.single.amountPence)}; full MMI {formatPence(MEDICINE_CREDIT_PACKS.full.amountPence)}.</p>
+            <ul className="mlf-proof" aria-label="What to expect">
+              <li>Original practice questions</li>
+              <li>Feedback that quotes your words</li>
+              <li>Independent of any university</li>
+            </ul>
           </Reveal>
           <Reveal className="mlf-call">
             <div className="mlf-call-frame">
@@ -150,6 +172,37 @@ export function MedicineLandingFlow() {
           </div>
         </section>
 
+        <section className="mlf-section mlf-showcase" aria-labelledby="mlf-feedback-title">
+          <Reveal className="mlf-head">
+            <p className="mlf-label">AFTER EVERY STATION</p>
+            <h2 id="mlf-feedback-title">Feedback you can act on tonight.</h2>
+            <p className="mlf-sub">
+              Scores come with the line from your answer that earned them, and one specific thing to try next time.
+              Anything Clara could not assess is labelled as not assessed.
+            </p>
+            <a className="mlf-link" href="/medicine/examples">See example answers <ArrowUpRight size={15} aria-hidden /></a>
+          </Reveal>
+          <Reveal className="mlf-report">
+            <div className="mlf-report-head">
+              <span>Ethics & judgement · Station feedback</span>
+              <span className="mlf-mono">ILLUSTRATIVE EXAMPLE</span>
+            </div>
+            {EXAMPLE_FEEDBACK.map((f) => (
+              <div className="mlf-report-row" key={f.domain}>
+                <div className="mlf-report-score">
+                  <span>{f.domain}</span>
+                  <span className="mlf-bars" role="img" aria-label={`${f.score} out of 5`}>
+                    {[1, 2, 3, 4, 5].map((n) => <i key={n} className={n <= f.score ? "on" : ""} />)}
+                  </span>
+                </div>
+                <blockquote>“{f.quote}”</blockquote>
+                <p>{f.note}</p>
+              </div>
+            ))}
+            <p className="mlf-report-foot">Not a real candidate. Practice feedback, not an admissions prediction.</p>
+          </Reveal>
+        </section>
+
         <section className="mlf-section">
           <Reveal className="mlf-head">
             <p className="mlf-label">LIVE FORMATS</p>
@@ -168,6 +221,25 @@ export function MedicineLandingFlow() {
               </Reveal>
             ))}
           </ol>
+        </section>
+
+        <section className="mlf-section" id="mlf-pricing" aria-labelledby="mlf-pricing-title">
+          <Reveal className="mlf-head">
+            <p className="mlf-label">PRICING</p>
+            <h2 id="mlf-pricing-title">Pay per interview. No subscription.</h2>
+            <p className="mlf-sub">Buy credits only when you need them. The solo studio is always free.</p>
+          </Reveal>
+          <div className="mlf-grid mlf-grid-3">
+            {MEDICINE_LANDING_PRICES.map((p) => (
+              <Reveal as="article" className={`mlf-card mlf-plan${p.id === "full" ? " mlf-plan-best" : ""}`} key={p.id}>
+                <p className="mlf-label">{p.name.toUpperCase()}</p>
+                <p className="mlf-plan-price">{p.price}</p>
+                <p className="mlf-plan-unit">{p.unit}</p>
+                <p>{p.detail}</p>
+                <a className="mlf-link" href="/auth?mode=medicine">{p.id === "free" ? "Start free" : "Get started"} <ArrowUpRight size={15} aria-hidden /></a>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         <section className="mlf-section mlf-band">
@@ -211,6 +283,11 @@ export function MedicineLandingFlow() {
           </Reveal>
         </section>
       </main>
+
+      <div className={`mlf-sticky${pastHero ? " is-on" : ""}`} aria-hidden={!pastHero}>
+        <span>Ethics station free</span>
+        <a className="mlf-btn mlf-btn-sm" href="/auth?mode=medicine" tabIndex={pastHero ? 0 : -1}>Try it now <ArrowRight size={15} aria-hidden /></a>
+      </div>
 
       <footer className="mlf-footer">
         <span>MMI Practice</span>

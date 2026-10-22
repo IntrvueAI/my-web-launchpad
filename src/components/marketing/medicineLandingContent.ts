@@ -1,5 +1,5 @@
 import { INTERVIEW_TYPES, MEDICINE_LIVE_INTERVIEW_IDS } from "@/config/interviewTypes";
-import { medicinePriceTag } from "@/config/medicinePricing";
+import { MEDICINE_CREDIT_PACKS, formatPence, medicinePriceTag } from "@/config/medicinePricing";
 
 /** Shared, verified landing copy: the live page and every preview mock read from here. */
 export const MEDICINE_LANDING_FAQS: [string, string][] = [
@@ -44,3 +44,31 @@ export const MEDICINE_LANDING_FORMATS = MEDICINE_LIVE_INTERVIEW_IDS.map((id) => 
     href: `/?medicinePractice=${id}`,
   };
 });
+
+/** Plain prices for landing pages, from the server's price list. */
+export const MEDICINE_LANDING_PRICES = [
+  {
+    id: "free",
+    name: "Ethics & judgement",
+    price: "Free",
+    unit: "with an account",
+    detail: "One seven-minute ethics station with Clara and written feedback. No credits needed.",
+  },
+  {
+    id: "mini",
+    name: "Mini interview",
+    price: formatPence(MEDICINE_CREDIT_PACKS.single.amountPence),
+    unit: "1 Medicine credit",
+    detail: "One seven-minute station: communication & empathy, motivation & reflection, or data & prioritisation.",
+  },
+  {
+    id: "full",
+    name: "Full MMI",
+    price: formatPence(MEDICINE_CREDIT_PACKS.full.amountPence),
+    unit: `${MEDICINE_CREDIT_PACKS.full.credits} Medicine credits`,
+    detail: "Six stations in a row, each with one minute of reading time, a spoken answer and follow-ups.",
+  },
+] as const;
+
+/** Solo-published practice prompts used by the interactive landing demo. */
+export const MEDICINE_TRY_PROMPT_IDS = ["MED-E5", "MED-D6", "MED-M2"] as const;
