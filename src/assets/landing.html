@@ -462,7 +462,7 @@
     </nav>
     <div class="nav-cta">
       <!-- TEMP: direct sign-in so the team can log in; wired to /auth by LandingV2 -->
-      <a href="#signin" class="btn btn-ghost" style="display:inline-flex">Sign in</a>
+      <a href="/auth" class="btn btn-ghost" style="display:inline-flex">Sign in</a>
       <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -477,7 +477,7 @@
     <a href="/faq">FAQ</a>
     <a href="/about">About</a>
     <!-- TEMP: direct sign-in for the team -->
-    <a href="#signin" class="btn btn-ghost">Sign in</a>
+    <a href="/auth" class="btn btn-ghost">Sign in</a>
     <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
   </div>
 </header>
@@ -936,6 +936,8 @@
     burger.setAttribute('aria-expanded',String(!open));
   });
   menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.style.display='none';burger.setAttribute('aria-expanded','false')}));
+  // Escape closes the menu and returns focus to the button.
+  [burger,menu].forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.style.display==='flex'){menu.style.display='none';burger.setAttribute('aria-expanded','false');burger.focus();}}));
 
   // waitlist forms
   function wire(formId,successId,inputId){

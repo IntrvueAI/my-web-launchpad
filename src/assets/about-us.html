@@ -234,6 +234,16 @@
           burger.setAttribute('aria-expanded', 'false');
         });
       });
+      // Escape closes the menu and returns focus to the button.
+      [burger, menu].forEach(function (el) {
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && menu.style.display === 'flex') {
+            menu.style.display = 'none';
+            burger.setAttribute('aria-expanded', 'false');
+            burger.focus();
+          }
+        });
+      });
     }
 
     var form = document.getElementById('about-waitlist-form');
