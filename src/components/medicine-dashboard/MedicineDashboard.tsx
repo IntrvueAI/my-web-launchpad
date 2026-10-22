@@ -1,6 +1,6 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useCredits } from '@/hooks/useCredits';
+import { useMedicineCredits } from '@/hooks/useMedicineCredits';
 import { InterviewType } from '@/config/interviewTypes';
 import type { ProductLine } from '@/lib/productLine';
 import { MedicineDashboardShell, MedicineTab } from './MedicineDashboardShell';
@@ -23,6 +23,8 @@ interface Props {
   onStartInterview: (type: InterviewType) => void;
   onSignOut: () => void;
   onSwitchToClassic: () => void;
+  /** Increments when a start needs more Medicine credits, to open the credit store. */
+  openCreditsSignal?: number;
 }
 
 /**
@@ -31,12 +33,15 @@ interface Props {
  * sign-out are delegated back up to Index.tsx so they reuse the exact same credit-consuming
  * session-start path 11+ already uses.
  */
-export function MedicineDashboard({ initialTab = 'home', initialAccountView = null, onProductLineChange, onStartInterview, onSignOut, onSwitchToClassic }: Props) {
+export function MedicineDashboard({ initialTab = 'home', initialAccountView = null, onProductLineChange, onStartInterview, onSignOut, onSwitchToClassic, openCreditsSignal = 0 }: Props) {
   const { user } = useAuth();
-  const { credits } = useCredits();
+  const { credits } = useMedicineCredits();
   const [activeTab, setActiveTab] = useState<MedicineTab>(initialTab);
   const [feedbackId, setFeedbackId] = useState<string | undefined>();
   const [accountView, setAccountView] = useState<AccountView>(initialAccountView);
+  useEffect(() => {
+    if (openCreditsSignal) setAccountView('credits');
+  }, [openCreditsSignal]);
 
   const userInitial = ((user?.user_metadata?.full_name as string | undefined)?.[0] || user?.email?.[0] || '?').toUpperCase();
 
@@ -74,7 +79,7 @@ export function MedicineDashboard({ initialTab = 'home', initialAccountView = nu
           <button onClick={() => setAccountView(null)} style={{ background: 'none', border: 0, color: 'var(--med-primary-dark)', fontWeight: 600, fontSize: 13.5, cursor: 'pointer', marginBottom: 16, padding: 0 }}>
             ← Back to dashboard
           </button>
-          {accountView === 'credits' && <CreditsStore />}
+          {accountView === 'credits' && <CreditsStore platform="medicine" />}
           {accountView === 'settings' && <UserSettings />}
         </Suspense>
       </MedicineDashboardShell>

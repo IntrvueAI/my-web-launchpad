@@ -1,4 +1,5 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
+import { medicineInterviewCost } from '../_shared/medicinePricing.ts';
 import { withJson, HttpError } from "../_shared/http.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
@@ -320,6 +321,55 @@ serve(
         );
       }
 
+      // MMI Practice interviews are paid from the Medicine balance (separate from 11+ credits),
+      // charged here once per session before the avatar opens. Invited guests and administrators
+      // are not charged. A session that ends before Clara starts is refunded by the database.
+      let medicineCharged = false;
+      const medicineCost = currentSession && !guestAllowed ? medicineInterviewCost(currentSession.interview_type) : null;
+      if (currentSession && medicineCost !== null && medicineCost !== 0) {
+        const caller = createClient(supabaseUrl!, supabaseAnonKey!, {
+          global: { headers: { Authorization: authHeader } },
+        });
+        const { data: isAdmin, error: adminError } = await caller.rpc("is_current_user_admin");
+        if (adminError || isAdmin !== true) {
+          if (medicineCost === "unavailable")
+            return new Response(
+              JSON.stringify({ error: "This practice format is no longer available. Choose a current interview." }),
+              { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+            );
+          const { data: charge, error: chargeError } = await supabaseService.rpc("charge_medicine_session", {
+            p_session_id: currentSession.id,
+            p_cost: medicineCost,
+          });
+          if (chargeError || !charge) throw chargeError || new Error("Medicine charge returned nothing");
+          if (charge.ok !== true) {
+            const short = charge.reason === "insufficient";
+            return new Response(
+              JSON.stringify({
+                error: short
+                  ? `This interview needs ${medicineCost} Medicine credit${medicineCost === 1 ? "" : "s"}. You have ${charge.balance}.`
+                  : "This interview has already ended. Start a new one from your dashboard.",
+                code: short ? "medicine_credits_required" : "session_closed",
+                cost: medicineCost,
+                balance: charge.balance,
+              }),
+              { status: short ? 402 : 409, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+            );
+          }
+          medicineCharged = !charge.alreadyCharged;
+        }
+      }
+      // Ending the session returns a fresh charge when the avatar could not be opened.
+      const releaseCharge = async () => {
+        if (!medicineCharged || !currentSession) return;
+        await supabaseService
+          .from("interview_sessions")
+          .update({ status: "error", ended_at: new Date().toISOString() })
+          .eq("id", currentSession.id)
+          .eq("status", "active")
+          .is("engine_state", null);
+      };
+
       const response = await fetch(
         "https://api.anam.ai/v1/auth/session-token",
         {
@@ -331,9 +381,13 @@ serve(
           },
           body: JSON.stringify({ personaConfig }),
         },
-      );
+      ).catch(async (error) => {
+        await releaseCharge().catch(() => {});
+        throw error;
+      });
 
       if (!response.ok) {
+        await releaseCharge();
         const errorText = await response.text();
         console.error("Anam API error:", response.status, response.statusText);
         return new Response(
@@ -353,6 +407,7 @@ serve(
 
       const data = await response.json();
       if (typeof data.sessionToken !== "string" || !data.sessionToken) {
+        await releaseCharge();
         return new Response(
           JSON.stringify({ error: "Avatar service returned no session token" }),
           { status: 502, headers: corsHeaders },

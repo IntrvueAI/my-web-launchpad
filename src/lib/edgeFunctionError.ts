@@ -42,6 +42,14 @@ export async function explainEdgeError(
       message:
         "This interview session is no longer active. Return to your dashboard and start it again.",
     };
+  if (status === 402)
+    return {
+      status,
+      message:
+        typeof detail === "string" && detail
+          ? `${detail} Top up from your dashboard, then start again.`
+          : "This interview needs Medicine credits. Top up from your dashboard, then start again.",
+    };
   if (status === 403)
     return {
       status,

@@ -8,6 +8,7 @@
  * configuration for feedback and scoring systems.
  */
 
+import { MEDICINE_INTERVIEW_CREDITS } from './medicinePricing';
 import { InterviewTypeConfig, InterviewType as ModernInterviewType } from '@/types/interview';
 import { MEDICINE_PILOTS, packForMedicinePilot, sessionBudgetMinutes } from '@/interview/subjects/medicine/pilots';
 import { MEDICINE_PRACTICE_MODES, PRACTICE_TIMING, PRACTICE_SESSION_MINUTES, FULL_MMI_MOCK } from '@/interview/subjects/medicine/practiceModes';
@@ -359,6 +360,8 @@ INTERVIEW_TYPES[FULL_MMI_MOCK.id] = {
 // New Medicine sessions use the general MMI or a focused mini interview. Preserve
 // old definitions so existing transcripts and assessments retain their original labels.
 export const MEDICINE_LIVE_INTERVIEW_IDS = [FULL_MMI_MOCK.id, ...MEDICINE_PRACTICE_MODES.map(mode=>mode.id)] as const;
+// MMI Practice costs come from the server's price list and are paid from the Medicine balance.
+for (const id of MEDICINE_LIVE_INTERVIEW_IDS) INTERVIEW_TYPES[id].costCredits = MEDICINE_INTERVIEW_CREDITS[id] ?? 0;
 export const RETIRED_MEDICINE_INTERVIEW_IDS = ['medicine-mmi', 'medicine-mmi-manchester', ...MEDICINE_PILOTS.map(p=>p.interviewTypeId)] as const;
 for (const id of RETIRED_MEDICINE_INTERVIEW_IDS) INTERVIEW_TYPES[id].retired = true;
 

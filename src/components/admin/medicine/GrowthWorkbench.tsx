@@ -122,8 +122,8 @@ export default function GrowthWorkbench() {
         </a>
       </div>
       <p className="growth-disclosure">
-        Hypothetical monthly subscription model. Medicine circuits currently
-        cost zero credits during early access; the wider platform sells credits.
+        Hypothetical monthly subscription model. Medicine interviews are sold
+        as Medicine credits (£6.99 per mini interview, £34.99 for the full MMI; Ethics & judgement free).
         This does not introduce a subscription or change checkout. No customer,
         traffic or revenue data is connected.
       </p>

@@ -17,6 +17,7 @@ interface UserWithCredits {
   full_name: string | null;
   created_at: string;
   credits: number;
+  medicine_credits: number;
 }
 
 export const AdminUserManagement = () => {
@@ -25,6 +26,9 @@ export const AdminUserManagement = () => {
   const [creditAmount, setCreditAmount] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [actionType, setActionType] = useState<'add' | 'remove'>('add');
+  // 11+ and Medicine (MMI Practice) credits are separate balances.
+  const [platform, setPlatform] = useState<'11plus' | 'medicine'>('11plus');
+  const [note, setNote] = useState('');
 
   const { data: users, isLoading, refetch, error } = useQuery({
     queryKey: ['admin-users', searchTerm],
@@ -68,15 +72,23 @@ export const AdminUserManagement = () => {
         // Don't throw error for credits, just log it
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: medicineData, error: medicineError } = await (supabase as any)
+        .from('medicine_credit_balances')
+        .select('user_id, credits');
+      if (medicineError) console.error('Error fetching Medicine credits:', medicineError);
+
       // Map profiles with their credits
       const usersWithCredits = profilesData?.map(user => {
         const userCredits = creditsData?.find(c => c.user_id === user.id);
+        const medicineCredits = (medicineData as { user_id: string; credits: number }[] | null)?.find(c => c.user_id === user.id);
         return {
           id: user.id,
           email: user.email,
           full_name: user.full_name,
           created_at: user.created_at,
-          credits: userCredits?.credits || 0
+          credits: userCredits?.credits || 0,
+          medicine_credits: medicineCredits?.credits || 0,
         };
       }) || [];
 
@@ -106,6 +118,8 @@ export const AdminUserManagement = () => {
           action: actionType,
           amount,
           targetUserEmail: selectedUser.email,
+          platform,
+          ...(platform === 'medicine' && note.trim() ? { note: note.trim().slice(0, 300) } : {}),
         }
       });
 
@@ -115,7 +129,7 @@ export const AdminUserManagement = () => {
       }
 
       toast.success(
-        `Successfully ${actionType === 'add' ? 'added' : 'removed'} ${amount} credits ${
+        `Successfully ${actionType === 'add' ? 'added' : 'removed'} ${amount} ${platform === 'medicine' ? 'Medicine' : '11+'} credits ${
           actionType === 'add' ? 'to' : 'from'
         } ${selectedUser.email}`
       );
@@ -123,6 +137,7 @@ export const AdminUserManagement = () => {
       setIsDialogOpen(false);
       setSelectedUser(null);
       setCreditAmount('');
+      setNote('');
       refetch();
     } catch (error) {
       console.error('Error managing credits:', error);
@@ -132,6 +147,7 @@ export const AdminUserManagement = () => {
 
   const openCreditDialog = (user: UserWithCredits, action: 'add' | 'remove') => {
     setSelectedUser(user);
+    if (action === 'remove') setPlatform(user.medicine_credits > 0 && user.credits === 0 ? 'medicine' : '11plus');
     setActionType(action);
     setIsDialogOpen(true);
   };
@@ -183,7 +199,8 @@ export const AdminUserManagement = () => {
                 <TableRow>
                   <TableHead>User</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead>Credits</TableHead>
+                  <TableHead>11+ credits</TableHead>
+                  <TableHead>Medicine credits</TableHead>
                   <TableHead>Joined</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -205,6 +222,7 @@ export const AdminUserManagement = () => {
                         {user.credits}
                       </div>
                     </TableCell>
+                    <TableCell>{user.medicine_credits}</TableCell>
                     <TableCell className="text-muted-foreground">
                       {new Date(user.created_at).toLocaleDateString()}
                     </TableCell>
@@ -221,7 +239,7 @@ export const AdminUserManagement = () => {
                           size="sm"
                           variant="outline"
                           onClick={() => openCreditDialog(user, 'remove')}
-                          disabled={user.credits === 0}
+                          disabled={user.credits === 0 && user.medicine_credits === 0}
                           className="gap-1"
                         >
                           <Minus className="h-4 w-4" /> Remove
@@ -251,10 +269,21 @@ export const AdminUserManagement = () => {
             <DialogDescription>
               {actionType === 'add' ? 'Add credits to' : 'Remove credits from'} {selectedUser?.email}
               <br />
-              Current balance: {selectedUser?.credits} credits
+              Current balance: {platform === 'medicine' ? `${selectedUser?.medicine_credits} Medicine credits` : `${selectedUser?.credits} 11+ credits`}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
+            <fieldset>
+              <legend className="text-sm font-medium">Balance</legend>
+              <div className="mt-2 flex gap-4 text-sm">
+                {([['11plus', '11+ credits'], ['medicine', 'Medicine credits']] as const).map(([id, label]) => (
+                  <label key={id} className="flex items-center gap-2">
+                    <input type="radio" name="credit-platform" value={id} checked={platform === id} onChange={() => setPlatform(id)} />
+                    {label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
             <div>
               <Label htmlFor="credit-amount">
                 Number of credits to {actionType}
@@ -268,6 +297,12 @@ export const AdminUserManagement = () => {
                 placeholder="Enter credit amount"
               />
             </div>
+            {platform === 'medicine' && (
+              <div>
+                <Label htmlFor="credit-note">Reason (optional, kept in the Medicine credit history)</Label>
+                <Input id="credit-note" value={note} maxLength={300} onChange={(e) => setNote(e.target.value)} placeholder="e.g. Refund: connection dropped in station 3" />
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>

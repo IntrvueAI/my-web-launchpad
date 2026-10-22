@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import { MEDICINE_CREDIT_PACKS, formatPence } from "@/config/medicinePricing";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { MEDICINE_FONTS_HREF } from "@/components/medicine-dashboard/MedicineTheme";
 import { MEDICINE_LANDING_FAQS, MEDICINE_LANDING_FORMATS } from "./medicineLandingContent";
@@ -73,7 +74,7 @@ export function MedicineLandingFlow() {
         </nav>
         <div className="mlf-nav-actions">
           <a href="/auth?mode=medicine">Log in</a>
-          <a className="mlf-btn mlf-btn-sm" href="/auth?mode=medicine">Start free</a>
+          <a className="mlf-btn mlf-btn-sm" href="/auth?mode=medicine">Try it free</a>
         </div>
       </header>
 
@@ -88,10 +89,10 @@ export function MedicineLandingFlow() {
               Then written feedback grounded in what you actually said.
             </p>
             <div className="mlf-actions">
-              <a className="mlf-btn" href="/auth?mode=medicine">Start a free mini interview <ArrowRight size={17} aria-hidden /></a>
+              <a className="mlf-btn" href="/auth?mode=medicine">Try a free ethics station <ArrowRight size={17} aria-hidden /></a>
               <a className="mlf-btn-ghost" href="/medicine/practice">Try the solo studio</a>
             </div>
-            <p className="mlf-note">Medicine interviews are free during early access.</p>
+            <p className="mlf-note">Ethics & judgement is free. Other mini interviews {formatPence(MEDICINE_CREDIT_PACKS.single.amountPence)}; full MMI {formatPence(MEDICINE_CREDIT_PACKS.full.amountPence)}.</p>
           </Reveal>
           <Reveal className="mlf-call">
             <div className="mlf-call-frame">
@@ -204,7 +205,7 @@ export function MedicineLandingFlow() {
           <Reveal>
             <h2>Your next answer starts here.</h2>
             <div className="mlf-actions mlf-actions-center">
-              <a className="mlf-btn" href="/auth?mode=medicine">Start a free mini interview <ArrowRight size={17} aria-hidden /></a>
+              <a className="mlf-btn" href="/auth?mode=medicine">Try a free ethics station <ArrowRight size={17} aria-hidden /></a>
               <a className="mlf-btn-ghost" href="/medicine/practice">Try the solo studio</a>
             </div>
           </Reveal>

@@ -14,7 +14,7 @@ interface PaymentSuccessProps {
 export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ onGoToPractice, onGoToCredits }) => {
   const { toast } = useToast();
   const [processing, setProcessing] = React.useState(true);
-  const [result, setResult] = React.useState<{ balance?: number; added?: number } | null>(null);
+  const [result, setResult] = React.useState<{ balance?: number; added?: number; medicine?: boolean } | null>(null);
   const [verificationError, setVerificationError] = React.useState('');
   const [width, setWidth] = React.useState<number>(window.innerWidth);
   const [height, setHeight] = React.useState<number>(window.innerHeight);
@@ -45,13 +45,13 @@ export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ onGoToPractice, 
     }
 
       try {
-        const { data, error } = await invokeEdgeFunction<{ balance: number; credits_added: number }>("verify-payment", {
+        const { data, error } = await invokeEdgeFunction<{ balance: number; credits_added: number; platform?: string }>("verify-payment", {
           body: { session_id: sessionId },
         });
         if (error) throw error;
         if (!data || !Number.isFinite(data.balance) || !Number.isFinite(data.credits_added)) throw new Error('The payment service returned no confirmed balance.');
 
-        setResult({ balance: data?.balance, added: data?.credits_added });
+        setResult({ balance: data?.balance, added: data?.credits_added, medicine: data.platform === "medicine" });
         toast({
           title: "Payment successful",
           description: `Your credits have been updated.`,
@@ -88,12 +88,12 @@ export const PaymentSuccess: React.FC<PaymentSuccessProps> = ({ onGoToPractice, 
               <div className="text-sm">
                 {typeof result?.added === "number" && (
                   <p>
-                    Credits added: <span className="font-semibold">{result.added}</span>
+                    {result.medicine ? "Medicine credits added" : "Credits added"}: <span className="font-semibold">{result.added}</span>
                   </p>
                 )}
                 {typeof result?.balance === "number" && (
                   <p>
-                    New balance: <span className="font-semibold">{result.balance}</span> credits
+                    New balance: <span className="font-semibold">{result.balance}</span> {result.medicine ? "Medicine credits" : "credits"}
                   </p>
                 )}
               </div>

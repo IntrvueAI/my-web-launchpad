@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useMedicineCredits } from '@/hooks/useMedicineCredits';
+import { medicinePriceTag } from '@/config/medicinePricing';
 import { getInterviewTypesForProduct, INTERVIEW_CATEGORIES, InterviewType } from '@/config/interviewTypes';
 import { cn } from '@/lib/utils';
 import { useCredits } from '@/hooks/useCredits';
@@ -23,7 +25,11 @@ const DIFF: Record<number, { label: string; cls: string }> = {
 
 export const InterviewSelection = ({ onSelectInterview, productLine = '11plus' }: InterviewSelectionProps) => {
   const [category, setCategory] = useState<string | null>(null);
-  const { credits } = useCredits();
+  // Medicine (MMI Practice) credits are a separate balance from 11+ credits.
+  const schoolCredits = useCredits();
+  const medicineCredits = useMedicineCredits(productLine === 'medicine');
+  const credits = productLine === 'medicine' ? medicineCredits.credits : schoolCredits.credits;
+  const unit = productLine === 'medicine' ? 'Medicine credit' : 'credit';
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [pending, setPending] = useState<InterviewType | null>(null);
   const all = getInterviewTypesForProduct(productLine);
@@ -73,7 +79,7 @@ export const InterviewSelection = ({ onSelectInterview, productLine = '11plus' }
                   </div>
                 </div>
                 <span className="flex-none rounded-full bg-white/[0.06] px-2.5 py-1 text-[11px] font-extrabold text-[#DCE4F2]">
-                  {(iv.costCredits ?? 1) === 0 ? 'Free' : `${iv.costCredits ?? 1} credit${(iv.costCredits ?? 1) === 1 ? '' : 's'}`}
+                  {medicinePriceTag(iv.id) ?? ((iv.costCredits ?? 1) === 0 ? 'Free' : `${iv.costCredits ?? 1} credit${(iv.costCredits ?? 1) === 1 ? '' : 's'}`)}
                 </span>
               </div>
               <p className="text-[13px] font-semibold text-muted-foreground leading-[1.5]">{iv.description}</p>
@@ -97,9 +103,9 @@ export const InterviewSelection = ({ onSelectInterview, productLine = '11plus' }
               const cost = pending?.costCredits ?? 1;
               return (
                 <>
-                  <AlertDialogTitle className="text-lg">Use {cost} credit{cost === 1 ? '' : 's'} to start?</AlertDialogTitle>
+                  <AlertDialogTitle className="text-lg">Use {cost} {unit}{cost === 1 ? '' : 's'} to start?</AlertDialogTitle>
                   <AlertDialogDescription className="text-sm leading-relaxed">
-                    Starting this interview will deduct {cost} credit{cost === 1 ? '' : 's'}. You currently have {credits ?? 0} credit{(credits ?? 0) === 1 ? '' : 's'}.
+                    Starting this interview will deduct {cost} {unit}{cost === 1 ? '' : 's'}. You currently have {credits ?? 0} {unit}{(credits ?? 0) === 1 ? '' : 's'}.
                   </AlertDialogDescription>
                 </>
               );

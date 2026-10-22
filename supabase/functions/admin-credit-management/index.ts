@@ -84,9 +84,12 @@ serve(
       }
 
       // Parse request body
-      const { userId, action, amount, targetUserEmail } = await req.json();
+      const { userId, action, amount, targetUserEmail, platform = "11plus", note } = await req.json();
 
+      // 11+ and Medicine (MMI Practice) credits are separate balances.
       if (
+        !["11plus", "medicine"].includes(platform) ||
+        (note !== undefined && (typeof note !== "string" || note.length > 300)) ||
         !isUuid(userId) ||
         !["add", "remove"].includes(action) ||
         !Number.isSafeInteger(amount) ||
@@ -124,14 +127,19 @@ serve(
       }
 
       // Serialize adjustments with purchases and credit consumption inside PostgreSQL.
-      const { data: adjustment, error: adjustmentError } = await supabase.rpc(
-        "adjust_credits_atomic",
-        {
-          p_user_id: userId,
-          p_action: action,
-          p_amount: amount,
-        },
-      );
+      const { data: adjustment, error: adjustmentError } =
+        platform === "medicine"
+          ? await supabase.rpc("adjust_medicine_credits_atomic", {
+              p_user_id: userId,
+              p_action: action,
+              p_amount: amount,
+              p_note: note ?? null,
+            })
+          : await supabase.rpc("adjust_credits_atomic", {
+              p_user_id: userId,
+              p_action: action,
+              p_amount: amount,
+            });
       if (adjustmentError || !adjustment)
         throw adjustmentError || new Error("No balance returned");
       const newCredits = adjustment.new_balance;
@@ -142,11 +150,12 @@ serve(
         .insert({
           admin_user_id: user.id,
           admin_email: user.email!,
-          action: action === "add" ? "add_credits" : "remove_credits",
+          action: `${action === "add" ? "add" : "remove"}_${platform === "medicine" ? "medicine_" : ""}credits`,
           target_user_id: userId,
           target_user_email: targetUserEmail,
           details: {
             amount: amount,
+            platform,
             previous_balance: adjustment.previous_balance,
             new_balance: newCredits,
             timestamp: new Date().toISOString(),
@@ -168,6 +177,7 @@ serve(
           newBalance: newCredits,
           action: action,
           amount: amount,
+          platform,
         }),
         {
           status: 200,

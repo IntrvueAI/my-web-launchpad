@@ -1,4 +1,5 @@
 import { MedicineDataError } from './MedicineDataError';
+import { MEDICINE_PRICE_SUMMARY } from '@/config/medicinePricing';
 import { conciseFeedback } from '@/utils/feedbackSummary';
 import { getInterviewTypeConfig } from '@/config/interviewTypes';
 import type { InterviewType as InterviewTypeId } from '@/types/interview';
@@ -170,7 +171,7 @@ export function MedicineHomeView({ credits, onStartInterview, onOpenTab, onOpenC
               <button onClick={onOpenCredits} style={linkStyle}>Top up</button>
             </div>
             <div style={{ fontFamily: "var(--med-display)", fontWeight: 700, fontSize: 34, marginTop: 8 }}>{credits}</div>
-            <p style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 6 }}>Medicine MMI circuits are free during early access.</p>
+            <p style={{ color: 'var(--med-tertiary)', fontSize: 13, marginTop: 6 }}>{MEDICINE_PRICE_SUMMARY}</p>
           </div>
 
           <div style={cardStyle}>

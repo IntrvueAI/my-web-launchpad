@@ -1,4 +1,5 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
+import { medicineInterviewCost } from '../_shared/medicinePricing.ts';
 import { withJson, HttpError, isUuid } from "../_shared/http.ts";
 import { resolveLab, type LabDraft } from "./_shared/engine/brainVersions.ts";
 import { fetchWithProviderRetry, providerBillingFailure, PROVIDER_BILLING_EVENT } from "../_shared/providerRetry.ts";
@@ -354,6 +355,29 @@ serve(
           done: existing.done,
           uiState: uiStateOf(existing, pack, interviewTypeId),
         });
+      }
+
+      // Paid MMI Practice interviews start only once get-anam-session-token has charged this session.
+      const medicineCost = !session.engine_state && !guestAllowed ? medicineInterviewCost(interviewTypeId) : null;
+      if (medicineCost !== null && medicineCost !== 0) {
+        const { data: isAdmin, error: adminError } = await authClient.rpc("is_current_user_admin");
+        if (adminError || isAdmin !== true) {
+          if (medicineCost === "unavailable")
+            return json({ error: "This practice format is no longer available" }, 403);
+          const { data: charge, error: chargeError } = await admin
+            .from("medicine_credit_ledger")
+            .select("interview_type, refunded_at")
+            .eq("session_id", session.id)
+            .eq("reason", "interview")
+            .maybeSingle();
+          if (chargeError)
+            return json({ error: "Session service temporarily unavailable" }, 503);
+          if (!charge || charge.refunded_at || charge.interview_type !== interviewTypeId)
+            return json(
+              { error: "This interview needs Medicine credits. Start it again from your dashboard.", code: "medicine_credits_required" },
+              402,
+            );
+        }
       }
 
       const deps = {

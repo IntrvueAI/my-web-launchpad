@@ -35,6 +35,8 @@ import {
 import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, LogOut, UserCog } from 'lucide-react';
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
+import { useMedicineCredits } from '@/hooks/useMedicineCredits';
+import { medicineCreditsLabel, medicineInterviewCost } from '@/config/medicinePricing';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -145,7 +147,11 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin]);
 
-  const { credits, refetchCredits } = useCredits();
+  // 11+ and Medicine (MMI Practice) credits are separate balances; show the one for this site.
+  const schoolCredits = useCredits();
+  const medicineCredits = useMedicineCredits(productLine === 'medicine');
+  const { credits, refetchCredits } = productLine === 'medicine' ? medicineCredits : schoolCredits;
+  const [medicineCreditsRequest, setMedicineCreditsRequest] = useState(0);
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
@@ -170,6 +176,26 @@ const Index = () => {
       return;
     }
     try {
+      if (interviewType.category === 'medicine') {
+        // MMI Practice is charged by the server when the interview connects, from the Medicine
+        // balance; credits come back automatically if it cannot start. Administrators are free.
+        const cost = medicineInterviewCost(interviewType.id);
+        if (!isAdmin && typeof cost === 'number' && cost > 0) {
+          const { data: balance } = await medicineCredits.refetchCredits();
+          if ((balance ?? 0) < cost) {
+            toast({
+              title: `You need ${medicineCreditsLabel(cost)}`,
+              description: `${interviewType.name} uses ${medicineCreditsLabel(cost)}. You have ${balance ?? 0}. Top up to start.`,
+            });
+            setMedicineCreditsRequest((n) => n + 1);
+            setCurrentView('credits');
+            return;
+          }
+        }
+        setSelectedInterviewType(interviewType);
+        setCurrentView('interview');
+        return;
+      }
       const cost = interviewType.costCredits ?? 1;
 
       // Free/demo interviews: skip credit checks and consumption
@@ -350,6 +376,7 @@ const Index = () => {
         <MedicineDashboard
           initialTab={currentView === 'selection' ? 'practice' : 'home'}
           initialAccountView={currentView === 'credits' ? 'credits' : null}
+          openCreditsSignal={medicineCreditsRequest}
           onProductLineChange={handleProductLineChange}
           onStartInterview={handleSelectInterview}
           onSignOut={handleSignOut}
@@ -642,13 +669,15 @@ const Index = () => {
         ) : currentView === 'credits' ? (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
             <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">Buy Credits</h2>
-                <p className="text-muted-foreground">
-                  You currently have <span className="font-semibold">{credits ?? 0}</span> credit{(credits ?? 0) === 1 ? '' : 's'}.
-                </p>
-              </div>
-              <CreditsStore />
+              {productLine !== 'medicine' && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">Buy Credits</h2>
+                  <p className="text-muted-foreground">
+                    You currently have <span className="font-semibold">{credits ?? 0}</span> credit{(credits ?? 0) === 1 ? '' : 's'}.
+                  </p>
+                </div>
+              )}
+              <CreditsStore platform={productLine === 'medicine' ? 'medicine' : '11plus'} />
             </div>
           </div>
         ) : (

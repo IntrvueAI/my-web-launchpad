@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Activity, BookOpenCheck, ClipboardList, ExternalLink, FileSearch, FlaskConical, GitBranch, LayoutTemplate,
   Link2, ListChecks, Megaphone, MessageSquareText, Mic, Route, School, ScrollText, Sparkles, Stethoscope,
-  GraduationCap, type LucideIcon,
+  GraduationCap, Wallet, type LucideIcon,
 } from "lucide-react";
 import { SCHOOL_ORIGIN, isMedicineSite } from "@/lib/site";
 
@@ -75,6 +75,7 @@ export function adminGroups(platform: AdminPlatform): Group[] {
       title: "Operations",
       tools: [
         { label: "Live interviews & health", detail: "Who is interviewing now and system status", icon: Activity, tab: "system" },
+        { label: medicine ? "Medicine credits" : "11+ credits", detail: "Look up a user and add, remove or refund credits", icon: Wallet, tab: "users" },
         { label: "Logs", detail: "Server and app events", icon: ScrollText, to: "/admin/logs" },
         { label: "Speech-to-text comparison", detail: "Compare transcription engines", icon: Mic, to: "/admin/stt-bakeoff" },
       ],

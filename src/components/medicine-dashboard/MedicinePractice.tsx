@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState } from "react";
+import { medicinePriceTag } from "@/config/medicinePricing";
 import { Clock, ArrowRight } from "lucide-react";
 import { INTERVIEW_TYPES, type InterviewType } from "@/config/interviewTypes";
 import { MEDICINE_PRACTICE_MODES } from "@/interview/subjects/medicine/practiceModes";
@@ -23,7 +24,7 @@ export function MedicinePractice({
           Your practice, your pace
         </h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Choose a full MMI or a seven-minute mini interview, then review your feedback.
+          Choose a full MMI or a seven-minute mini interview, then review your feedback. Ethics & judgement is free.
         </p>
       </header>
       <div className="flex flex-wrap gap-2" aria-label="Practice format">
@@ -74,6 +75,7 @@ export function MedicinePractice({
                   <Clock className="h-4 w-4" />
                   7-minute session · 1 min reading + 5 min answering
                 </p>
+                <p className="mt-1 text-xs font-semibold text-foreground">{medicinePriceTag(practice.id)}</p>
                 <button
                   onClick={() => onStartInterview(INTERVIEW_TYPES[practice.id])}
                   className="mt-4 flex min-h-11 items-center justify-between rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground"
@@ -120,6 +122,7 @@ export function MedicinePractice({
                   <p className="mt-2 text-xs text-muted-foreground">
                     Allow a little extra time for introductions and transitions.
                   </p>
+                  <p className="mt-2 text-sm font-semibold">{medicinePriceTag(id)}</p>
                   <button
                     onClick={() => onStartInterview(type)}
                     className="mt-5 min-h-11 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"

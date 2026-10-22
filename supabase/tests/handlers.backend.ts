@@ -838,3 +838,119 @@ describe("Interview Lab sessions", () => {
     expect(savedState().behaviour).toBeUndefined();
   });
 });
+
+describe("Medicine credits", () => {
+  const student = (charge: unknown = { ok: true, alreadyCharged: false, charged: 1, balance: 2 }) =>
+    state.rpc.mockImplementation(async (name: string) => ({
+      data: name === "is_current_user_admin" ? false : name === "charge_medicine_session" ? charge : true,
+      error: null,
+    }));
+  const tokenFor = async (interviewType: string) => {
+    state.resolve = (q) => ({
+      data: q.table === "interview_sessions" && q.columns?.includes("interview_type") ? { ...session, interview_type: interviewType } : null,
+      count: 0,
+      error: null,
+    });
+    return (await handler("get-anam-session-token"))(req({ personaConfig: persona, sessionReference: "S1", engineDriven: true }));
+  };
+  const charges = () => state.rpc.mock.calls.filter(([name]) => name === "charge_medicine_session");
+
+  it.each([
+    ["medicine-roleplay-practice", 1],
+    ["medicine-mmi-practice", 6],
+  ])("charges %s once, on the server, before the avatar opens", async (type, cost) => {
+    student();
+    state.fetch.mockResolvedValue(new Response(JSON.stringify({ sessionToken: "token" })));
+    expect((await tokenFor(type)).status).toBe(200);
+    expect(charges()).toEqual([["charge_medicine_session", { p_session_id: session.id, p_cost: cost }]]);
+  });
+  it("refuses a short balance without opening an avatar session", async () => {
+    student({ ok: false, reason: "insufficient", balance: 0, cost: 6 });
+    const response = await tokenFor("medicine-mmi-practice");
+    expect(response.status).toBe(402);
+    expect(await response.json()).toMatchObject({ code: "medicine_credits_required", cost: 6, balance: 0 });
+    expect(state.fetch).not.toHaveBeenCalled();
+  });
+  it("keeps Ethics & judgement free and never charges administrators or 11+ interviews", async () => {
+    state.fetch.mockImplementation(async () => new Response(JSON.stringify({ sessionToken: "token" })));
+    student();
+    expect((await tokenFor("medicine-ethics-practice")).status).toBe(200);
+    expect((await tokenFor("11-plus")).status).toBe(200);
+    state.rpc.mockImplementation(async () => ({ data: true, error: null }));
+    expect((await tokenFor("medicine-mmi-practice")).status).toBe(200);
+    expect(charges()).toEqual([]);
+  });
+  it("refuses retired Medicine formats to paying users", async () => {
+    student();
+    expect((await tokenFor("medicine-mmi")).status).toBe(403);
+    expect(state.fetch).not.toHaveBeenCalled();
+  });
+  it("ends a freshly charged session when the avatar service fails, so the database refunds it", async () => {
+    student();
+    state.fetch.mockResolvedValue(new Response("down", { status: 503 }));
+    expect((await tokenFor("medicine-data-practice")).status).toBe(500);
+    const ended = state.queries.find((q) => q.table === "interview_sessions" && q.operation === "update" && (q.value as any).status === "error");
+    expect(ended?.filters).toEqual(expect.arrayContaining([["eq", ["id", session.id]], ["is", ["engine_state", null]]]));
+  });
+  it("does not end a session that was already charged by an earlier request", async () => {
+    student({ ok: true, alreadyCharged: true, charged: 1, balance: 0 });
+    state.fetch.mockResolvedValue(new Response("down", { status: 503 }));
+    await tokenFor("medicine-data-practice");
+    expect(state.queries.some((q) => q.table === "interview_sessions" && q.operation === "update" && (q.value as any).status === "error")).toBe(false);
+  });
+
+  const brainStart = async (type: string, charge: unknown) => {
+    state.resolve = (q) => ({
+      data: q.table === "interview_sessions" ? { ...session, interview_type: type } : q.table === "medicine_credit_ledger" ? charge : null,
+      error: null,
+    });
+    return (await handler("interview-brain"))(req({ sessionId: "S1", action: "start" }));
+  };
+  it.each([
+    ["no charge", null],
+    ["a refunded charge", { interview_type: "medicine-data-practice", refunded_at: "2026-10-22T10:00:00Z" }],
+    ["a charge for a cheaper interview", { interview_type: "medicine-roleplay-practice", refunded_at: null }],
+  ])("the brain will not start a paid interview with %s", async (_label, charge) => {
+    student();
+    const response = await brainStart("medicine-data-practice", charge);
+    expect(response.status).toBe(402);
+    expect(state.fetch).not.toHaveBeenCalled();
+    expect(state.queries.some((q) => q.table === "interview_sessions" && q.operation === "update")).toBe(false);
+  });
+
+  it("sells Medicine packs at server prices into the Medicine balance", async () => {
+    state.stripe.checkout.sessions.create.mockResolvedValue({ id: "cs_med", url: "https://checkout.stripe.com/med" });
+    const run = await handler("create-payment");
+    const buy = (body: unknown) => run(req(body, { authorization: "Bearer user", origin: "https://mmipractice.co.uk" }));
+    expect((await buy({ platform: "medicine", pack: "full" })).status).toBe(200);
+    const sent = state.stripe.checkout.sessions.create.mock.calls[0][0];
+    expect(sent.line_items[0].price_data.unit_amount).toBe(3499);
+    expect(sent.metadata).toEqual({ credits: "6", platform: "medicine" });
+    const order = state.queries.find((q) => q.table === "orders" && q.operation === "insert")!.value as any;
+    expect(order).toMatchObject({ amount: 3499, credits_purchased: 6, platform: "medicine" });
+    expect((await buy({ platform: "medicine", pack: "single" })).status).toBe(200);
+    expect(state.stripe.checkout.sessions.create.mock.calls[1][0].line_items[0].price_data.unit_amount).toBe(699);
+    for (const bad of [{ platform: "medicine", pack: 2 }, { platform: "medicine", pack: "constructor" }, { platform: "chess", pack: 2 }, { pack: "full" }])
+      expect((await buy(bad)).status).toBe(400);
+    expect(state.stripe.checkout.sessions.create).toHaveBeenCalledTimes(2);
+  });
+  it("keeps 11+ packs and prices unchanged", async () => {
+    state.stripe.checkout.sessions.create.mockResolvedValue({ id: "cs_11", url: "https://checkout.stripe.com/11" });
+    expect((await (await handler("create-payment"))(req({ pack: 3 }, { authorization: "Bearer user", origin: "https://intrvue.ai" }))).status).toBe(200);
+    expect(state.stripe.checkout.sessions.create.mock.calls[0][0].line_items[0].price_data.unit_amount).toBe(2999);
+    expect(state.queries.find((q) => q.table === "orders")!.value).toMatchObject({ credits_purchased: 3, platform: "11plus" });
+  });
+  it("adjusts the Medicine balance separately for administrators", async () => {
+    state.rpc.mockImplementation(async (name: string) => ({
+      data: name === "adjust_medicine_credits_atomic" ? { previous_balance: 0, new_balance: 1 } : true,
+      error: null,
+    }));
+    const response = await (await handler("admin-credit-management"))(
+      req({ userId: session.user_id, action: "add", amount: 1, platform: "medicine", note: "Dropped connection" }),
+    );
+    expect(response.status).toBe(200);
+    expect(state.rpc).toHaveBeenCalledWith("adjust_medicine_credits_atomic", { p_user_id: session.user_id, p_action: "add", p_amount: 1, p_note: "Dropped connection" });
+    expect(state.rpc).not.toHaveBeenCalledWith("adjust_credits_atomic", expect.anything());
+    expect((await (await handler("admin-credit-management"))(req({ userId: session.user_id, action: "add", amount: 1, platform: "chess" }))).status).toBe(400);
+  });
+});

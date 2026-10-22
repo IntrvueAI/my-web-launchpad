@@ -6,6 +6,7 @@ import { withJson } from "../_shared/http.ts";
  */
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createStripe } from "../_shared/payments.ts";
+import { MEDICINE_CREDIT_PACKS, type MedicineCreditPackId } from "../_shared/medicinePricing.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import { logAppEvent } from "./_shared/appLogger.ts";
 
@@ -52,12 +53,23 @@ serve(
       const authHeader = req.headers.get("Authorization") || "";
       const token = authHeader.replace("Bearer ", "");
 
-      const { pack } = await req.json().catch(() => ({}));
+      const { pack, platform = "11plus" } = await req.json().catch(() => ({}));
 
-      if (![2, 3, 5].includes(pack)) {
+      // 11+ packs are 2, 3 or 5 credits; Medicine packs are named and priced on the server.
+      const medicine = platform === "medicine";
+      const medicinePack =
+        medicine && typeof pack === "string" && Object.hasOwn(MEDICINE_CREDIT_PACKS, pack)
+          ? MEDICINE_CREDIT_PACKS[pack as MedicineCreditPackId]
+          : null;
+      if (
+        (platform !== "11plus" && !medicine) ||
+        (medicine ? !medicinePack : ![2, 3, 5].includes(pack))
+      ) {
         return cors(
           new Response(
-            JSON.stringify({ error: "Invalid pack. Use 2, 3, or 5." }),
+            JSON.stringify({
+              error: medicine ? "Invalid Medicine pack." : "Invalid pack. Use 2, 3, or 5.",
+            }),
             { status: 400 },
           ),
         );
@@ -75,8 +87,10 @@ serve(
       }
 
       userId = userData.user.id;
-      const amount = pack === 2 ? 1999 : pack === 3 ? 2999 : 4499;
-      const credits = pack;
+      const amount = medicinePack
+        ? medicinePack.amountPence
+        : pack === 2 ? 1999 : pack === 3 ? 2999 : 4499;
+      const credits = medicinePack ? medicinePack.credits : pack;
 
       const usedOrigin =
         req.headers.get("origin") ||
@@ -107,10 +121,15 @@ serve(
           {
             price_data: {
               currency: "gbp",
-              product_data: {
-                name: `Interview Credits x${credits}`,
-                description: "Cost varies by interview.",
-              },
+              product_data: medicinePack
+                ? {
+                    name: `MMI Practice: ${medicinePack.name}`,
+                    description: medicinePack.note,
+                  }
+                : {
+                    name: `Interview Credits x${credits}`,
+                    description: "Cost varies by interview.",
+                  },
               unit_amount: amount,
             },
             quantity: 1,
@@ -118,6 +137,7 @@ serve(
         ],
         metadata: {
           credits: String(credits),
+          platform: medicine ? "medicine" : "11plus",
         },
       });
 
@@ -129,6 +149,7 @@ serve(
         amount,
         currency: "gbp",
         credits_purchased: credits,
+        platform: medicine ? "medicine" : "11plus",
         status: "pending",
         metadata: { source: "checkout" } as any,
       });

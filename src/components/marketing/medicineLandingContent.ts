@@ -1,10 +1,11 @@
 import { INTERVIEW_TYPES, MEDICINE_LIVE_INTERVIEW_IDS } from "@/config/interviewTypes";
+import { medicinePriceTag } from "@/config/medicinePricing";
 
 /** Shared, verified landing copy: the live page and every preview mock read from here. */
 export const MEDICINE_LANDING_FAQS: [string, string][] = [
   [
     "Can I try it without an account?",
-    "Yes. The solo practice studio is free to open. Read a prompt, type or speak your answer, and save a self-reflection in your browser. Live AI interviews use a signed-in account. The current Medicine circuits are free during early access; the required credits are always shown before starting.",
+    "Yes. The solo practice studio is free to open. Read a prompt, type or speak your answer, and save a self-reflection in your browser. Live AI interviews use a signed-in account. Ethics & judgement is free. Other mini interviews cost one Medicine credit (£6.99) and the full six-station MMI costs £34.99. The price is always shown before you start.",
   ],
   [
     "Is the practice studio a live AI interview?",
@@ -39,7 +40,7 @@ export const MEDICINE_LANDING_FORMATS = MEDICINE_LIVE_INTERVIEW_IDS.map((id) => 
     kind: full ? "Full MMI" : "7-minute mini interview",
     readingMinutes: (type.timingSeconds?.prep ?? 0) / 60,
     answerMinutes: (type.timingSeconds?.response ?? 0) / 60,
-    price: (type.costCredits ?? 0) === 0 ? "Free during early access" : `${type.costCredits} credits`,
+    price: medicinePriceTag(id) ?? "",
     href: `/?medicinePractice=${id}`,
   };
 });

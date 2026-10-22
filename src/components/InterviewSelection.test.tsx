@@ -18,6 +18,7 @@ import {
 } from "@/lib/guestTrials";
 
 vi.mock("@/hooks/useCredits", () => ({ useCredits: () => ({ credits: 20 }) }));
+vi.mock("@/hooks/useMedicineCredits", () => ({ useMedicineCredits: () => ({ credits: 2 }) }));
 vi.mock("@/hooks/useDashboardStats", () => ({
   useDashboardStats: () => ({ stats: { upcomingSchoolInterviews: [] } }),
 }));
@@ -112,7 +113,12 @@ describe("Separate practice catalogues", () => {
       const card = [...node.querySelectorAll(".tile")].find((c) =>
         c.textContent?.includes("Full MMI practice mock"),
       )!;
+      expect(card.textContent).toContain("6 credits · £34.99");
       act(() => (card.querySelector("button") as HTMLButtonElement).click());
+      // A paid Medicine interview confirms the cost in Medicine credits, not 11+ credits.
+      expect(document.body.textContent).toContain("Use 6 Medicine credits to start?");
+      expect(document.body.textContent).toContain("You currently have 2 Medicine credits");
+      act(() => [...document.body.querySelectorAll("button")].find((b) => b.textContent?.trim() === "Continue")!.click());
       expect(launch.mock.calls[0][0].id).toBe("medicine-mmi-practice");
     } finally {
       act(() => root.unmount());

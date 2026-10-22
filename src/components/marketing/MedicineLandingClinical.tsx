@@ -1,4 +1,5 @@
 import { siteName } from '@/lib/site';
+import { medicinePriceTag } from "@/config/medicinePricing";
 import {
   ArrowRight,
   Check,
@@ -225,9 +226,9 @@ export function MedicineLandingClinical() {
                     : "no reading time"}
                 </p>
                 <p>
-                  {(m.costCredits ?? 0) === 0
-                    ? "Free during early access · no credits required"
-                    : `${m.costCredits} credits per circuit · balance checked before starting`}
+                  {medicinePriceTag(m.id) === "Free"
+                    ? "Free · no credits required"
+                    : `${medicinePriceTag(m.id)} · price shown before starting`}
                 </p>
                 <a href={`/?medicinePractice=${m.id}`}>
                   {m.id==='medicine-mmi-practice'?'Start full MMI':'Start mini interview'} <ArrowRight size={15}/>
