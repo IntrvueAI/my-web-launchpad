@@ -228,6 +228,8 @@ export interface BrainRequest {
   topic?: string;
   /** Server-relevant preview features; read only when a session starts. */
   preview?: string[];
+  /** Interview Lab (administrators only): the version or draft to run, read when a session starts. */
+  lab?: { version: string; draftId?: string };
 }
 
 /** Response the brain returns; `say` is spoken verbatim by the avatar. */

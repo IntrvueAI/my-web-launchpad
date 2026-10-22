@@ -89,9 +89,17 @@ interface UseInterviewSessionReturn {
  * - **Engine-driven (`interviewType.engineDriven`):** our interview-brain edge function drives the
  *   avatar one turn at a time via `client.talk()`, pulling questions from a server-held bank.
  */
+/** Interview Lab run settings: a dated version or founder draft, plus server previews to fix. */
+export interface LabRun {
+  version: string;
+  draftId?: string;
+  previews?: string[];
+}
+
 export const useInterviewSession = (
   videoRef: React.RefObject<HTMLVideoElement>,
-  interviewType: InterviewType
+  interviewType: InterviewType,
+  lab?: LabRun,
 ): UseInterviewSessionReturn => {
   const engineDriven = Boolean(interviewType.engineDriven);
 
@@ -110,6 +118,8 @@ export const useInterviewSession = (
   const [interviewComplete, setInterviewComplete] = useState(false);
   const uiStateRef = useRef<BrainResponse['uiState'] | null>(null);
   const controlsRef = useRef(new StationControlQueue());
+  const labRef = useRef(lab);
+  labRef.current = lab;
   const answerRetriesRef = useRef(0);
   type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string };
   type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up' | 'begin_roleplay';
@@ -195,7 +205,11 @@ export const useInterviewSession = (
     if (payload.expectedQuestionIndex !== undefined && payload.expectedQuestionIndex !== uiStateRef.current?.questionIndex) return;
     brainBusyRef.current = true;
     setIsThinking(true);
-    const requestBody = { sessionId, action, ...payload, ...(action === 'start' ? { preview: serverPreviewFeatures() } : {}), interviewSessionId: sessionLogger.sessionId };
+    const labRun = labRef.current;
+    const startSettings = action === 'start'
+      ? { preview: labRun?.previews ?? serverPreviewFeatures(), ...(labRun ? { lab: { version: labRun.version, ...(labRun.draftId ? { draftId: labRun.draftId } : {}) } } : {}) }
+      : {};
+    const requestBody = { sessionId, action, ...payload, ...startSettings, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
       const res = await brainTurn(requestBody);

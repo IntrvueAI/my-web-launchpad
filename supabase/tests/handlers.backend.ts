@@ -776,3 +776,65 @@ describe("Deployment inventory", () => {
     }
   });
 });
+
+describe("Interview Lab sessions", () => {
+  const sessionRow = { ...session, interview_type: "medicine-ethics-practice" };
+  const lab = (settings: unknown) => req({ sessionId: "S1", action: "start", lab: settings });
+  const updates = () => state.queries.filter((q) => q.table === "interview_sessions" && q.operation === "update");
+  const savedState = () => (updates()[0]?.value as { engine_state: Record<string, any> }).engine_state;
+  const asAdmin = (admin: boolean) =>
+    state.rpc.mockImplementation(async (name: string) => ({ data: name === "is_current_user_admin" ? admin : true, error: null }));
+  const resolveWith = (draft: unknown = null) => {
+    state.resolve = (q) =>
+      q.table === "interview_sessions"
+        ? { data: q.operation === "update" ? { id: "session-uuid" } : sessionRow, error: null }
+        : q.table === "interview_lab_drafts" ? { data: draft, error: null } : { data: null, error: null };
+  };
+
+  it("refuses lab settings from anyone who is not an administrator", async () => {
+    resolveWith();
+    asAdmin(false);
+    const response = await (await handler("interview-brain"))(lab({ version: "2026-10-09" }));
+    expect(response.status).toBe(403);
+    expect(updates()).toHaveLength(0);
+    expect(state.fetch).not.toHaveBeenCalled();
+  });
+
+  it("replays a dated version for an administrator and records it in the session", async () => {
+    resolveWith();
+    asAdmin(true);
+    const response = await (await handler("interview-brain"))(lab({ version: "2026-10-09" }));
+    expect(response.status).toBe(200);
+    expect((await response.json()).say).toMatch(/^Hello, I'm Clara, your AI practice interviewer\. We will work through one focused station\./);
+    expect(savedState().lab).toEqual(expect.objectContaining({ version: "2026-10-09" }));
+    expect(savedState().behaviour.medicineWelcome).toBe(false);
+  });
+
+  it("applies a founder draft loaded on the server, not from the request", async () => {
+    resolveWith({ id: "22222222-2222-4222-8222-222222222222", name: "Calmer", platform: "medicine", base_version: "2026-10-20", behaviour: {}, opening_line: "Hello {name}, take a breath. Ready when you are.", closing_line: null, extra_instructions: null });
+    asAdmin(true);
+    const response = await (await handler("interview-brain"))(lab({ version: "2026-10-20", draftId: "22222222-2222-4222-8222-222222222222", openingLine: "forged" }));
+    expect(response.status).toBe(200);
+    expect((await response.json()).say).toBe("Hello, take a breath. Ready when you are.");
+    expect(savedState().lab).toEqual(expect.objectContaining({ draftName: "Calmer", openingLine: "Hello {name}, take a breath. Ready when you are." }));
+  });
+
+  it.each([{ version: "1999-01-01" }, { version: 5 }, { version: "2026-10-20", draftId: "not-a-uuid" }, [], "2026-10-20"])(
+    "rejects malformed lab settings %j",
+    async (settings) => {
+      resolveWith();
+      asAdmin(true);
+      const response = await (await handler("interview-brain"))(lab(settings));
+      expect(response.status).toBe(400);
+      expect(updates()).toHaveLength(0);
+    },
+  );
+
+  it("leaves ordinary interviews on the live behaviour", async () => {
+    resolveWith();
+    const response = await (await handler("interview-brain"))(req({ sessionId: "S1", action: "start" }));
+    expect(response.status).toBe(200);
+    expect(savedState().lab).toBeUndefined();
+    expect(savedState().behaviour).toBeUndefined();
+  });
+});

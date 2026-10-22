@@ -11,7 +11,7 @@ import { InterviewControls } from './InterviewControls';
 import { InterviewStatus } from './InterviewStatus';
 import { FeedbackVersions } from './FeedbackVersions';
 import { ChatHistory } from './ChatHistory';
-import { useInterviewSession } from '@/hooks/useInterviewSession';
+import { useInterviewSession, type LabRun } from '@/hooks/useInterviewSession';
 import { useAuth } from '@/contexts/AuthContext';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { useToast } from '@/hooks/use-toast';
@@ -33,6 +33,10 @@ interface InterviewPlatformProps {
   selectedInterviewType?: InterviewType | null;
   onAttemptFinished?: (feedbackReady: boolean) => void;
   onBusyChange?: (busy: boolean) => void;
+  /** Interview Lab: run a dated version or draft (administrators only; enforced by the server). */
+  lab?: LabRun;
+  /** Called with the saved session's reference once it exists (used by the Interview Lab for notes). */
+  onSessionReference?: (reference: string) => void;
 }
 
 type BrainUiState = ReturnType<typeof useInterviewSession>['brainUiState'];
@@ -81,7 +85,7 @@ function phaseDots(ui: NonNullable<BrainUiState>): { count: number; idx: number 
  * Handles the complete interview preparation experience
  */
 export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({ 
-  selectedInterviewType, onAttemptFinished, onBusyChange
+  selectedInterviewType, onAttemptFinished, onBusyChange, lab, onSessionReference
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -150,7 +154,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     brainUiState,
     interviewComplete,
     stationTimer, beginResponse
-  } = useInterviewSession(videoRef, interviewType);
+  } = useInterviewSession(videoRef, interviewType, lab);
 
   const medicineTimer = interviewType.category === 'medicine' && isStreaming ? stationTimer : null;
   // Preview 'readable-room': the light Medicine theme plus 12.5% larger text while this page is open.
@@ -166,6 +170,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   useEffect(() => {
     onBusyChange?.(isGeneratingFeedback || ['connecting', 'connected', 'streaming'].includes(sessionStatus));
   }, [onBusyChange, isGeneratingFeedback, sessionStatus]);
+  useEffect(() => {
+    if (sessionReference) onSessionReference?.(sessionReference);
+  }, [sessionReference, onSessionReference]);
 
   // Engine-driven runs emit an explicit completion signal — trust it directly.
   useEffect(() => {

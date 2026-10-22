@@ -1,5 +1,6 @@
 import { authorizeGuestInterview } from '../_shared/guestTrials.ts';
-import { withJson, HttpError } from "../_shared/http.ts";
+import { withJson, HttpError, isUuid } from "../_shared/http.ts";
+import { resolveLab, type LabDraft } from "./_shared/engine/brainVersions.ts";
 import { fetchWithProviderRetry, providerBillingFailure, PROVIDER_BILLING_EVENT } from "../_shared/providerRetry.ts";
 import { getMedicinePractice, packForMedicinePractice, PRACTICE_TIMING, FULL_MMI_MOCK, packForFullMmiMock } from './_shared/subjects/medicine/practiceModes.ts';
 import { publicQuestionPrompt, firstNameFrom } from './_shared/engine/publicPrompt.ts';
@@ -415,6 +416,33 @@ serve(
       }
       // Fixed at the start so switching a preview mid-interview cannot half-change a session.
       if (!session.engine_state) state.preview = preview;
+      // Interview Lab: an administrator replays a dated version or tests a draft, fixed at the start.
+      if (!session.engine_state && body.lab !== undefined) {
+        const labRequest = body.lab;
+        if (
+          !labRequest || typeof labRequest !== "object" || Array.isArray(labRequest) ||
+          typeof labRequest.version !== "string" || labRequest.version.length > 40 ||
+          (labRequest.draftId !== undefined && !isUuid(labRequest.draftId))
+        )
+          return json({ error: "Invalid lab settings" }, 400);
+        const { data: isAdmin, error: adminError } = await authClient.rpc("is_current_user_admin");
+        if (adminError || isAdmin !== true)
+          return json({ error: "The Interview Lab requires administrator access" }, 403);
+        let draft: LabDraft | null = null;
+        if (labRequest.draftId) {
+          const { data, error } = await admin
+            .from("interview_lab_drafts")
+            .select("id,name,platform,base_version,behaviour,opening_line,closing_line,extra_instructions")
+            .eq("id", labRequest.draftId)
+            .maybeSingle();
+          if (error || !data) return json({ error: "Lab draft not found" }, 404);
+          draft = data as LabDraft;
+        }
+        const resolved = resolveLab(labRequest.version, draft);
+        if (!resolved) return json({ error: "Unknown lab version" }, 400);
+        state.behaviour = resolved.behaviour;
+        state.lab = resolved.lab;
+      }
 
       const result = await advanceAgent(state, body as any, deps);
       if (body.turnId)

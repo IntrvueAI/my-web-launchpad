@@ -20,6 +20,7 @@ import { corePrinciples, CORE_SPEAKING_STYLE } from './core.ts';
 import type { FlowGraph } from './flow.ts';
 import { findFlowNode, pickNextFlowNode } from './flow.ts';
 import { spokenQuestionPrompt, spokenTaskBrief, asksToClarifyTask, asksToRepeatLastLine, asksToRepeatQuestion } from './publicPrompt.ts';
+import { behaviourOn, fillLabLine, type BrainBehaviour, type BrainBehaviourKey, type LabSettings } from './brainVersions.ts';
 
 // ---- Chat LLM interface (a small slice of OpenAI's chat+tools API) ----
 
@@ -84,6 +85,10 @@ export interface AgentState {
   lastTurn?: { id: string; say: string };
   /** Medicine: the welcome has been spoken and the first station waits for the candidate's reply. */
   awaitingReady?: boolean;
+  /** Interview Lab only: behaviour switches of the version under test. Absent = latest behaviour. */
+  behaviour?: Partial<BrainBehaviour>;
+  /** Interview Lab only: the version or founder draft this test session runs. */
+  lab?: LabSettings;
   /** 11+: the fixed welcome has been spoken, so the model must not greet again. */
   welcomed?: boolean;
   /** The candidate ended the session themselves; late speech during shutdown stays unanswered. */
@@ -337,8 +342,8 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       'For a ROLEPLAY STATION, the candidate has already heard their role and the character’s identity. Speak as that character, reacting to what the candidate actually says. Do not narrate your feelings, ask examiner-style marking questions, replay your opening line, or treat comments from an earlier station as if they happened in this scenario.',
       'A request to repeat or clarify the task must receive the public brief, not hostility, a hint, or an assessment of the candidate’s ability. Do not count setup questions, audio problems or clarification requests as poor performance.',
       'If words are unclear, ask what the candidate meant. Never silently guess a clinically or ethically material fact from a speech-recognition error.',
-      'Ask follow-ups the way an experienced interviewer, often a practising doctor, would: open, neutral and realistic. Never build a question on a negative assumption about medicine, training or the candidate (for example "Given that risk..." or "Since training is so long..."). Ask openly instead, for example "How do you look after yourself when things get difficult?"',
-      'Never offer something this session cannot provide, such as another station, a different question, a break or a chat afterwards. When a station or the session ends, close briefly without inviting further requests.',
+      behaviourOn(state.behaviour, 'medicineNeutralFollowUps') && 'Ask follow-ups the way an experienced interviewer, often a practising doctor, would: open, neutral and realistic. Never build a question on a negative assumption about medicine, training or the candidate (for example "Given that risk..." or "Since training is so long..."). Ask openly instead, for example "How do you look after yourself when things get difficult?"',
+      behaviourOn(state.behaviour, 'medicineNeutralFollowUps') && 'Never offer something this session cannot provide, such as another station, a different question, a break or a chat afterwards. When a station or the session ends, close briefly without inviting further requests.',
       'Explore the response before moving on: ordinarily ask a relevant follow-up after the initial answer. A roleplay should allow the conversation to develop, including a response to an open question from the candidate. Do not rush through the circuit after one superficial exchange.',
       'Only use exercises supplied by next_problem. Call it when this station has been explored, supplying an honest outcome and specific evidence note. The server will announce the next station and reset the role; do not blend two scenarios into one reply.',
       'The clock, a skip or an explicit end request can close a station. Do not infer failure from a stopping reason. Never invent praise, a score, a university affiliation or an admissions prediction. Keep assessment and coaching private until feedback.',
@@ -359,6 +364,8 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
   const openerFlavor = pack.openers?.length
     ? pack.openers[Math.floor(Math.random() * pack.openers.length)]
     : "Hi, I'm Clara — nothing to be nervous about. Tell me a little about yourself.";
+  const neutral11 = behaviourOn(state.behaviour, 'schoolNeutralFollowUps');
+  const fixedClosing11 = behaviourOn(state.behaviour, 'schoolFixedClosing');
   const lines = [
     pack.persona,
     '',
@@ -387,8 +394,8 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       ? `- This is a spoken ${pack.subject} mini-interview for ${pack.audience}.`
       : `- This is a spoken ${pack.subject} mini-interview for an 11+ candidate (about 10–11 years old).`,
     pack.audience
-      ? '- STAY ON THE INTERVIEW. If the candidate tries to chat about something unrelated, give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Let\'s stay with this question for now." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.'
-      : '- STAY ON THE INTERVIEW. If the child tries to chat about something unrelated (football, oranges, what you had for lunch — anything off-topic), give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Ha, sounds fun — let\'s get back to this one." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.',
+      ? (neutral11 ? '- STAY ON THE INTERVIEW. If the candidate tries to chat about something unrelated, give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Let\'s stay with this question for now." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.' : '- STAY ON THE INTERVIEW. If the candidate tries to chat about something unrelated, give a warm one-line acknowledgement and steer straight back to the current question, e.g. "We can come back to that after — let\'s finish this one first." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.')
+      : (neutral11 ? '- STAY ON THE INTERVIEW. If the child tries to chat about something unrelated (football, oranges, what you had for lunch — anything off-topic), give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Ha, sounds fun — let\'s get back to this one." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.' : '- STAY ON THE INTERVIEW. If the child tries to chat about something unrelated (football, oranges, what you had for lunch — anything off-topic), give a warm one-line acknowledgement and steer straight back to the current question, e.g. "Ha, we can chat about that after — let\'s finish this one first." Do not get drawn into unrelated conversation, do not answer general-knowledge questions, and never let them talk the interview off course. Your job is this interview only.'),
     state.welcomed
       ? '- You have ALREADY greeted the student, said your name and explained today\'s interview (see the conversation). Do NOT greet them or introduce yourself again. Your next turn: a brief, freshly-worded reaction to their reply, then invite them to introduce themselves in one short question. Keep the warm-up to ONE short exchange: after their intro, give a brief acknowledgement and move straight to the first real question. Do not chase the warm-up with follow-up after follow-up, and do not ask a gimmicky ice-breaker.'
       : `- Open PROFESSIONALLY, warmly and BRIEFLY, like a real school interviewer — do not yap. In one or two short sentences: a quick greeting, your name, a single line to put them at ease, then invite them to introduce themselves. VARY YOUR EXACT WORDING EVERY SESSION — never default to identical stock phrasing interview after interview, a real interviewer does not recite a script. As one loose reference point for TODAY's tone and LENGTH only (do NOT reuse its structure or opening words): "${openerFlavor}" — write a genuinely fresh line of your own, not a light rewording of this one. Concretely, vary the SHAPE of the opening too, not just its synonyms — sometimes lead with your name, sometimes lead with a warm observation or a question instead; sometimes mention what today's session involves, sometimes don't; don't let "Hi, I'm Clara" become its own stock phrase even if the exact words after it change. Do NOT pile on multiple reassurances or a speech. Keep the whole warm-up to ONE short exchange: after their intro (however brief or rambling), give a brief, freshly-worded acknowledgement (vary this too — do not reuse "lovely, let's begin" every time) and move straight to the first real question. Do NOT chase the warm-up with follow-up after follow-up, and do NOT ask a gimmicky ice-breaker (no "what animal would you be"). If they ramble, gently take control and move on.`,
@@ -422,11 +429,11 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
     pack.audience
       ? '- NEVER end the interview because of a stray "bye", "see you", or "thanks" — mid-question these are almost always transcription artifacts or nerves, NOT a request to stop. If you think they might genuinely want to stop, CHECK first: "Did you want to stop there, or shall we keep going?" — and only wrap up if they confirm. Ending on a misheard "bye" while a candidate is mid-interview is a serious failure.'
       : '- NEVER end the interview because of a stray "bye", "see you", or "thanks" — mid-question these are almost always transcription artifacts or nerves, NOT a request to stop. If you think they might genuinely want to stop, CHECK first: "Did you want to stop there, or shall we keep going?" — and only wrap up if they confirm. Ending on a misheard "bye" while a child is mid-interview is a serious failure.',
-    '- If the student clearly and explicitly wants to STOP — "can we stop", "I\'m done", "end the interview", or they keep refusing to engage across several turns — do not fight it. Say a brief thank-you and call finish_interview; the app then gives the closing that explains how to see their feedback.',
+    (fixedClosing11 ? '- If the student clearly and explicitly wants to STOP — "can we stop", "I\'m done", "end the interview", or they keep refusing to engage across several turns — do not fight it. Say a brief thank-you and call finish_interview; the app then gives the closing that explains how to see their feedback.' : '- If the student clearly and explicitly wants to STOP — "can we stop", "I\'m done", "end the interview", or they keep refusing to engage across several turns — do not fight it. Give a warm, proper closing in your own words ("That\'s all I have for you today — thank you so much for your time, you did really well"), offer one genuine positive, tell them to end the interview to see their feedback, and then call finish_interview.'),
     '- Keep every turn to one or two short sentences — brevity matters more than completeness, since you can always continue next turn. The student should do most of the talking.',
-    '- To finish: say a brief thank-you and call finish_interview. The app then gives a fixed closing that explains how to see their feedback, so do not add your own.',
-    '- FOLLOW-UPS: ask them like a kind, experienced school interviewer — open, neutral and right for their age. Never build a question on a negative assumption about the student, their school, family or answer (for example "Given that you find maths hard..." or "Since you didn\'t revise..."). Ask openly instead, for example "What do you find tricky about it?"',
-    '- NEVER OFFER something this session cannot provide, such as another interview, a game, a break or a chat afterwards. When the interview ends, close briefly without inviting further requests.',
+    (fixedClosing11 ? '- To finish: say a brief thank-you and call finish_interview. The app then gives a fixed closing that explains how to see their feedback, so do not add your own.' : '- To finish: thank them warmly, give one genuine, specific positive, and tell them to end the interview to see their feedback, then call finish_interview.'),
+    neutral11 && '- FOLLOW-UPS: ask them like a kind, experienced school interviewer — open, neutral and right for their age. Never build a question on a negative assumption about the student, their school, family or answer (for example "Given that you find maths hard..." or "Since you didn\'t revise..."). Ask openly instead, for example "What do you find tricky about it?"',
+    neutral11 && '- NEVER OFFER something this session cannot provide, such as another interview, a game, a break or a chat afterwards. When the interview ends, close briefly without inviting further requests.',
     '',
     phaseLine(pack, state),
     `Progress so far: ${state.questionIndex} problem(s) done${mock ? ` of about ${state.targetQuestions}` : ''}. Current difficulty: star level ${state.difficulty} of 5 (higher = harder). The bank handles which problem to serve — just ask what next_problem gives you.`,
@@ -663,6 +670,7 @@ const spokenSeconds = (s: number) => (s === 60 ? 'one minute' : s === 120 ? 'two
 
 /** First turn only: a greeting the candidate answers before any station clock starts. */
 function medicineWelcome(state: AgentState, pack: SubjectPack, topic?: string): string {
+  if (state.lab?.openingLine) return fillLabLine(state.lab.openingLine, state.studentName);
   const academic = pack.interviewStyle === 'academic';
   const unit = academic ? 'exercise' : 'station';
   const prep = pack.stationReadingSeconds ?? 0;
@@ -682,6 +690,7 @@ const SCHOOL_SUBJECT_LABEL: Record<string, string> = { maths: 'maths', logic: 'l
 
 /** 11+ first turn: a fixed greeting the child answers before the first question. */
 export function schoolWelcome(state: AgentState, pack: SubjectPack): string {
+  if (state.lab?.openingLine) return fillLabLine(state.lab.openingLine, state.studentName);
   const hi = state.studentName ? `Hi ${state.studentName}` : 'Hi';
   const label = SCHOOL_SUBJECT_LABEL[pack.subject] ?? 'practice';
   const plan = pack.mixedBank && state.mode === 'mock'
@@ -694,26 +703,34 @@ export function schoolWelcome(state: AgentState, pack: SubjectPack): string {
 
 /** Fixed 11+ closing: thanks the child without a made-up score or praise, and explains what's next. */
 export function schoolClosing(state: AgentState): string {
+  if (state.lab?.closingLine) return fillLabLine(state.lab.closingLine, state.studentName);
   return `That's the end of our interview. Thank you${state.studentName ? `, ${state.studentName}` : ''}, it was lovely talking with you. Press End interview to see your feedback. You can choose another practice afterwards.`;
 }
 export const SCHOOL_SESSION_FINISHED = "We've finished this interview. Press End interview to see your feedback, then you can choose another practice.";
 
 /** Deterministic Medicine closing: never offers another station or anything else the room cannot do. */
 export function medicineClosing(state: AgentState, pack: SubjectPack): string {
+  if (state.lab?.closingLine) return fillLabLine(state.lab.closingLine, state.studentName);
   const unit = pack.interviewStyle === 'academic' ? 'exercise' : 'station';
   const scope = pack.focusedPractice ? `this ${unit}` : `the last ${unit}`;
   return `That completes ${scope}. Thank you${state.studentName ? `, ${state.studentName}` : ''}. Select End interview to see your feedback. You can start another practice from the Practice page afterwards.`;
 }
 export const MEDICINE_SESSION_FINISHED = 'This practice session has finished. Select End interview to see your feedback, then choose another station from the Practice page.';
 
-function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = ''): string {
+function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = '', opening = false): string {
   const q = state.current;
   if (!q) return 'That completes this practice session. Your answers are saved for review.';
   const academic = pack.interviewStyle === 'academic';
   const label = academic ? 'Exercise' : 'Station';
-  const intro = state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. ';
+  // Lab versions before 12 October: no separate greeting, so the first station carries the introduction.
+  const legacy = !behaviourOn(state.behaviour, 'medicineWelcome');
+  const intro = legacy
+    ? opening
+      ? `Hello, I'm Clara, your AI practice interviewer. ${pack.focusedPractice ? 'We will work through one focused station.' : `We will work through ${state.targetQuestions} ${academic ? 'exercises' : 'stations'}.`} I will introduce each task before you respond. `
+      : state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. Let’s begin. '
+    : state.questionIndex > 0 ? `That ${academic ? 'exercise' : 'station'} is complete. ` : 'Thank you. ';
   const hideTheme = !pack.focusedPractice && !!state.preview?.includes('hidden-station-themes');
-  const heading = pack.focusedPractice && state.targetQuestions <= 1
+  const heading = !legacy && pack.focusedPractice && state.targetQuestions <= 1
     ? `Here is your ${academic ? 'exercise' : 'station'} on ${topicLabel(pack, q.topic).toLowerCase()}.`
     : hideTheme
       ? `${label} ${state.questionIndex + 1} of ${state.targetQuestions}.`
@@ -725,7 +742,9 @@ function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = '
     return `${bridge ? bridge + ' ' : ''}${intro}${heading} This is a roleplay. Please read your brief on screen. The roleplay will begin when the reading time ends, or when you select I'm ready.`;
   }
   // The on-screen "I'm ready" control is visible; reading a button label aloud is not natural speech.
-  const reading = prep > 0 ? `You have ${spokenSeconds(prep)} to read it, and you can start answering whenever you're ready. ` : '';
+  const reading = prep <= 0 ? ''
+    : legacy ? `You have ${spokenSeconds(prep)} to read the brief. Select I'm ready to start answering early. `
+    : `You have ${spokenSeconds(prep)} to read it, and you can start answering whenever you're ready. `;
   return `${bridge ? bridge + ' ' : ''}${intro}${heading} ${reading}${spokenQuestionPrompt(q, prep > 0)}`;
 }
 
@@ -738,7 +757,9 @@ function asksToEndInterview(text: string): boolean {
 /** Advance one turn: build context, let the model talk + use tools, return Clara's spoken line. */
 export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: AgentDeps): Promise<AgentResult> {
   const state: AgentState = structuredCloneSafe(prev);
-  if (state.done && !state.endRequested && (deps.pack.subject === 'medicine' || isSchoolPack(deps.pack)) && req.action === 'answer' && req.studentText?.trim()) {
+  const on = (key: BrainBehaviourKey) => behaviourOn(state.behaviour, key);
+  const fixedClosing = deps.pack.subject === 'medicine' ? on('medicineFixedClosing') : isSchoolPack(deps.pack) && on('schoolFixedClosing');
+  if (state.done && !state.endRequested && fixedClosing && req.action === 'answer' && req.studentText?.trim()) {
     // Requests after the end ("can we try another station?") get a clear answer, not silence.
     const finished = deps.pack.subject === 'medicine' ? MEDICINE_SESSION_FINISHED : SCHOOL_SESSION_FINISHED;
     state.transcript.push({ role: 'user', content: req.studentText.trim() }, { role: 'assistant', content: finished });
@@ -762,6 +783,15 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // A candidate who starts speaking before the actor simply begins the roleplay themselves.
   if (state.roleplayPending && req.action === 'answer') state.roleplayPending = false;
   if (medicine && req.action === 'answer' && asksToEndInterview(req.studentText || '')) req = { ...req, action: 'end' };
+  if (req.action === 'start' && (deps.pack.focusedPractice || mmi) && !state.current && !on('medicineWelcome') && !state.lab?.openingLine) {
+    // Lab versions before 12 October open the first station immediately.
+    executeTool({ id: 'focused-start', name: 'next_problem', args: {} }, state, deps);
+    const say = state.current
+      ? medicineStationOpening(state, deps.pack, '', true)
+      : 'There are no available stations for this topic. Please choose another practice.';
+    state.transcript.push({ role: 'assistant', content: say });
+    return { say, state, done: state.done };
+  }
   if (req.action === 'start' && (deps.pack.focusedPractice || mmi) && !state.current) {
     // Greet first and wait for a reply; the station (and its clock) starts on the next turn.
     const say = deps.bank.length
@@ -784,11 +814,11 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     return { say, state, done: state.done };
   }
 
-  if (medicine && state.current && (req.action === 'repeat' || (req.action === 'answer' && (asksToClarifyTask(req.studentText || '') || asksToRepeatLastLine(req.studentText || ''))))) {
+  if (medicine && state.current && (req.action === 'repeat' || (req.action === 'answer' && (asksToClarifyTask(req.studentText || '') || (on('medicineRepeatLastLine') && asksToRepeatLastLine(req.studentText || '')))))) {
     // Keep clarification in the conversation, but out of scored answer evidence and turn caps.
     // After an in-station reply, "say that again" means that reply: an actor repeats
     // their own words in character and a follow-up is not replaced by the opening brief.
-    const lastLine = req.action === 'answer' && state.currentStudentTurns.length > 0 && asksToRepeatLastLine(req.studentText || '')
+    const lastLine = on('medicineRepeatLastLine') && req.action === 'answer' && state.currentStudentTurns.length > 0 && asksToRepeatLastLine(req.studentText || '')
       ? [...state.transcript].reverse().find((t) => t.role === 'assistant')?.content.trim() : '';
     if (req.studentText?.trim()) state.transcript.push({ role: 'user', content: req.studentText.trim() });
     const say = lastLine || `Let me restate the task. ${spokenTaskBrief(state.current)}`;
@@ -796,7 +826,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     return { say, state, done: state.done };
   }
 
-  if (school && req.action === 'start' && !state.current && !state.welcomed && state.questionIndex === 0) {
+  if (school && (on('schoolWelcome') || state.lab?.openingLine) && req.action === 'start' && !state.current && !state.welcomed && state.questionIndex === 0) {
     // Greet first and wait for a reply; the warm-up question follows on the next turn.
     const say = schoolWelcome(state, deps.pack);
     state.welcomed = true;
@@ -804,7 +834,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     state.transcript.push({ role: 'assistant', content: say });
     return { say, state, done: state.done };
   }
-  if (school && req.action === 'answer' && (asksToRepeatLastLine(req.studentText || '') || asksToRepeatQuestion(req.studentText || ''))) {
+  if (school && on('schoolRepeatLastLine') && req.action === 'answer' && (asksToRepeatLastLine(req.studentText || '') || asksToRepeatQuestion(req.studentText || ''))) {
     // Repeat exactly what Clara last said; not counted as an answer and no model call.
     const lastLine = [...state.transcript].reverse().find((t) => t.role === 'assistant')?.content.trim();
     if (lastLine) {
@@ -830,7 +860,10 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   }
   if (readyTurn) state.transcript.push({ role: 'user', content: "[I'm ready to begin. You have already greeted me and explained the interview, so do not greet me again. React briefly to what I just said, then ask me one light warm-up question about myself.]" });
 
-  const system = buildSystemPrompt(deps.pack, state);
+  const labNote = state.lab?.extraInstructions
+    ? `\nLAB TEST INSTRUCTIONS (a founder is testing a variation of this interview; follow these in addition to everything above): ${state.lab.extraInstructions}`
+    : '';
+  const system = buildSystemPrompt(deps.pack, state) + labNote;
   const recent = state.transcript.slice(-MAX_CONTEXT_TURNS);
   const messages: ChatMessage[] = [
     { role: 'system', content: system },
@@ -983,8 +1016,8 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn || academicFollowUp || medicineFollowUp) say = enforceSingleAsk(say);
 
   if (state.done && !prev.done) {
-    if (medicine) say = medicineClosing(state, deps.pack);
-    else if (school) say = schoolClosing(state);
+    if (medicine && (on('medicineFixedClosing') || state.lab?.closingLine)) say = medicineClosing(state, deps.pack);
+    else if (school && (on('schoolFixedClosing') || state.lab?.closingLine)) say = schoolClosing(state);
   }
 
   state.transcript.push({ role: 'assistant', content: say });

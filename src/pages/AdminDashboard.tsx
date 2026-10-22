@@ -13,16 +13,18 @@ import { AdminQuestions } from '@/components/admin/AdminQuestions';
 import { AdminDailyQuestions } from '@/components/admin/AdminDailyQuestions';
 import { AdminWaitlist } from '@/components/admin/AdminWaitlist';
 import { ProviderCreditAlert } from '@/components/admin/ProviderCreditAlert';
+import { AdminHub, useAdminPlatform } from '@/components/admin/AdminHub';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, LogOut, ExternalLink, Stethoscope, ArrowLeft, CheckCircle, GraduationCap, FlaskConical } from 'lucide-react';
-import { isMedicineSite, SCHOOL_ORIGIN } from '@/lib/site';
+import { Shield, LogOut, ArrowLeft } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { isAdmin, isLoading, error, refetch } = useAdminStatus();
   const { user, signOut, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const [platform, setPlatform] = useAdminPlatform();
+  const [tab, setTab] = React.useState('overview');
   // The old dashboard Feedback tab moved to /admin/feedback.
   React.useEffect(() => {
     if (new URLSearchParams(window.location.search).get('tab') === 'feedback') navigate('/admin/feedback', { replace: true });
@@ -111,7 +113,7 @@ export default function AdminDashboard() {
           </div>
           <div>
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-            <p className="text-muted-foreground">Manage users, credits, and system health</p>
+            <p className="text-muted-foreground">Medicine and 11+ tools, users, credits and system health</p>
           </div>
           <div className="ml-auto flex items-center gap-3">
             {user && <span className="text-sm text-muted-foreground hidden sm:inline">{user.email}</span>}
@@ -124,111 +126,10 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <Card className="mb-6" id="page-previews">
-          <CardHeader>
-            <CardTitle>Page previews</CardTitle>
-            <CardDescription>Review the Medicine and Schools pages here.</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-3 sm:grid-cols-2">
-            <Button variant="outline" className="min-h-12 justify-start gap-2" asChild>
-              <Link to="/medicine" target="_blank" rel="noopener noreferrer">
-                <Stethoscope className="h-4 w-4" /> Preview Medicine
-                <ExternalLink className="ml-auto h-4 w-4" />
-              </Link>
-            </Button>
-            <Button variant="outline" className="min-h-12 justify-start gap-2" asChild>
-              <a href={isMedicineSite() ? `${SCHOOL_ORIGIN}/schools` : '/schools'} target="_blank" rel="noopener noreferrer">
-                <GraduationCap className="h-4 w-4" /> Preview Schools
-                <ExternalLink className="ml-auto h-4 w-4" />
-              </a>
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* TEMP: internal testing tools, admin-only, not linked anywhere public. */}
-        <div className="flex flex-wrap items-center gap-2 mb-6 rounded-lg border border-dashed p-3">
-          <span className="text-xs font-medium text-muted-foreground mr-1">Testing tools:</span>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/guest-trials"><Stethoscope className="h-3.5 w-3.5" /> Medicine beta testing</Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/11plus-trials"><GraduationCap className="h-3.5 w-3.5" /> 11+ beta testing</Link>
-          </Button>
-          <Button variant="secondary" size="sm" asChild>
-            <Link to="/admin/feedback">Feedback</Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/stt-bakeoff" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> STT bake-off
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/school-finder" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> School finder
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/unreleased-interviews" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Unreleased interviews
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/medicine-interviews" target="_blank" rel="noopener noreferrer">
-              <Stethoscope className="h-3.5 w-3.5" /> Medicine interviews
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/medicine-portal" target="_blank" rel="noopener noreferrer">
-              <Stethoscope className="h-3.5 w-3.5" /> Medicine portal
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/medicine-review"><CheckCircle className="h-3.5 w-3.5" /> Review sourced Medicine questions</Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/landing-previews">
-              <Stethoscope className="h-3.5 w-3.5" /> Landing page previews
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/preview-features">
-              <FlaskConical className="h-3.5 w-3.5" /> Preview features
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/?dashboardLayout=sidebar" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Preview Dashboard 2
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/question-review" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Question review (overnight batch)
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/interview-question-review" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Interview question review (thought-provoking batch)
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/interview-flow-builder" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Interview flow builder
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/?replayOnboarding=true" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Replay onboarding flow
-            </Link>
-          </Button>
-          <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/logs" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" /> Logs
-            </Link>
-          </Button>
-        </div>
+        <AdminHub platform={platform} onPlatform={setPlatform} onOpenTab={(tab) => { setTab(tab); document.getElementById('admin-tabs')?.scrollIntoView({ behavior: 'smooth' }); }} />
 
         <ProviderCreditAlert />
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs id="admin-tabs" value={tab} onValueChange={setTab} className="scroll-mt-4 space-y-6">
           <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>

@@ -82,9 +82,10 @@ const type: InterviewType = {
   engineDriven: true,
 };
 let session: ReturnType<typeof useInterviewSession>;
+let labRun: Parameters<typeof useInterviewSession>[2];
 function Harness() {
   const video = useRef<HTMLVideoElement>(null);
-  session = useInterviewSession(video, type);
+  session = useInterviewSession(video, type, labRun);
   return <video id="interview-video" ref={video} />;
 }
 function response(index: number): BrainResponse {
@@ -237,6 +238,26 @@ describe("Live session control delivery", () => {
       vi.advanceTimersByTime(3000);
     });
     expect(mocks.brain.mock.calls.filter(([body]) => body.action === "begin_roleplay")).toHaveLength(1);
+  });
+  it("sends lab settings only when a lab run starts", async () => {
+    mocks.brain.mockResolvedValue(response(0));
+    labRun = { version: "2026-10-12", draftId: "11111111-1111-4111-8111-111111111111", previews: ["hidden-station-themes"] };
+    try {
+      act(() => root.render(<Harness />));
+      await act(async () => {
+        await session.startInterview("user");
+      });
+      expect(mocks.brain.mock.calls[0][0]).toMatchObject({
+        action: "start",
+        lab: { version: "2026-10-12", draftId: "11111111-1111-4111-8111-111111111111" },
+        preview: ["hidden-station-themes"],
+      });
+      act(() => session.sendTypedMessage("An answer."));
+      await act(async () => { vi.advanceTimersByTime(650); });
+      expect(mocks.brain.mock.calls[1][0].lab).toBeUndefined();
+    } finally {
+      labRun = undefined;
+    }
   });
   it("discards the queued bell when the answer already advances the station", async () => {
     let finishAnswer!: (r: BrainResponse) => void;

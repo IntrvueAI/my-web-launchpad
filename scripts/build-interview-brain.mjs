@@ -34,6 +34,7 @@ const FILES = [
   'engine/flow.ts',
   'engine/agent.ts',
   'engine/publicPrompt.ts',
+  'engine/brainVersions.ts',
   'bank/select.ts',
   'bank/normalize.ts',
   'subjects/types.ts',
