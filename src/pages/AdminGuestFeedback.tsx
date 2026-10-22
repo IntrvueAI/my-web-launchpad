@@ -49,7 +49,7 @@ const date = (value: string) =>
     minute: "2-digit",
   });
 const title = (value: string) =>
-  INTERVIEW_TYPES[value]?.name || "Medicine interview";
+  INTERVIEW_TYPES[value]?.name || (value.startsWith("medicine-") ? "Medicine interview" : "Interview");
 const selectClass =
   "min-h-11 w-full rounded-xl border bg-background px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary";
 
@@ -74,6 +74,8 @@ export default function AdminGuestFeedback() {
   const [search, setSearch] = useState(queryText);
   const review = params.get("review") || "all";
   const interviewType = params.get("type") || "";
+  const productParam = params.get("product");
+  const productFilter = productParam === "medicine" || productParam === "11plus" ? productParam : "";
   const inviteId = params.get("invite") || null;
   const page = Math.max(1, Number(params.get("page")) || 1);
   const selectedId = params.get("trial");
@@ -111,6 +113,7 @@ export default function AdminGuestFeedback() {
       interviewType,
       inviteId,
       page,
+      productFilter,
     ],
     queryFn: () =>
       trialApi<TrialInbox>({
@@ -120,6 +123,7 @@ export default function AdminGuestFeedback() {
         interviewType,
         inviteId,
         page,
+        ...(productFilter ? { product: productFilter } : {}),
       }),
     enabled: !!user && isAdmin && view === "testers",
     refetchInterval: 30000,
@@ -312,7 +316,7 @@ export default function AdminGuestFeedback() {
                 aria-label="Filter feedback"
                 className={`mb-6 rounded-2xl border bg-card p-4 ${selectedId ? "hidden lg:block" : ""}`}
               >
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
                   <label className="block text-xs font-medium">
                     Find a tester or invitation
                     <div className="relative mt-2">
@@ -344,14 +348,28 @@ export default function AdminGuestFeedback() {
                     </select>
                   </label>
                   <label className="block text-xs font-medium">
+                    Platform
+                    <select
+                      value={productFilter}
+                      onChange={(e) => filter("product", e.target.value)}
+                      className={`${selectClass} mt-2`}
+                    >
+                      <option value="">Medicine and 11+</option>
+                      <option value="medicine">Medicine (MMI Practice)</option>
+                      <option value="11plus">11+ (intrvue.ai)</option>
+                    </select>
+                  </label>
+                  <label className="block text-xs font-medium">
                     Interview type
                     <select
                       value={interviewType}
                       onChange={(e) => filter("type", e.target.value)}
                       className={`${selectClass} mt-2`}
                     >
-                      <option value="">All Medicine interviews</option>
-                      {GUEST_HISTORY_INTERVIEW_IDS.map((id) => (
+                      <option value="">All interviews</option>
+                      {GUEST_HISTORY_INTERVIEW_IDS.filter((id) =>
+                        !productFilter || (productFilter === "medicine") === id.startsWith("medicine-"),
+                      ).map((id) => (
                         <option key={id} value={id}>
                           {title(id)}
                         </option>

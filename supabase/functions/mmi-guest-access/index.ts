@@ -13,7 +13,16 @@ import {
 } from "../_shared/guestTrials.ts";
 
 const inviteFields =
-  "id,label,expires_at,max_guests,max_interviews,guest_hours,revoked_at,created_at,link_code";
+  "id,label,expires_at,max_guests,max_interviews,guest_hours,revoked_at,created_at,link_code,product";
+const PRODUCTS = ["medicine", "11plus"] as const;
+type Product = (typeof PRODUCTS)[number];
+/** Optional product filter or choice; anything else is rejected rather than guessed. */
+function product(value: unknown, fallback: Product | null): Product | null {
+  if (value === undefined || value === null) return fallback;
+  if (typeof value === "string" && (PRODUCTS as readonly string[]).includes(value)) return value as Product;
+  throw new HttpError(400, "Invalid product");
+}
+const SCHOOL_INTERVIEWS = ["11-plus", "maths-interview", "logic-puzzles", "current-affairs-interview"];
 const guestFields =
   "id,display_name,guest_user_id,expires_at,created_at,interviews_started,review_required_at";
 function integer(value: unknown, min: number, max: number, fallback: number) {
@@ -228,7 +237,8 @@ serve(
           !["all", "reviewed", "waiting", "issues"].includes(review) ||
           typeof interviewType !== "string" ||
           (interviewType !== "" &&
-            !/^medicine-[a-z-]{1,60}$/.test(interviewType)) ||
+            !/^medicine-[a-z-]{1,60}$/.test(interviewType) &&
+            !SCHOOL_INTERVIEWS.includes(interviewType)) ||
           (body.inviteId != null && !isUuid(body.inviteId))
         )
           throw new HttpError(400, "Invalid feedback filter");
@@ -239,6 +249,7 @@ serve(
           p_interview_type: interviewType,
           p_invite_id: body.inviteId ?? null,
           p_page: integer(body.page, 1, 100000, 1),
+          p_product: product(body.product, null),
         });
         if (error || !data)
           throw new HttpError(
@@ -266,6 +277,7 @@ serve(
               Date.now() + integer(body.days, 1, 14, 7) * 86400000,
             ).toISOString(),
             link_code: code,
+            product: product(body.product, "medicine"),
             max_guests: 1,
             max_interviews: 2,
             guest_hours: 6,
@@ -276,10 +288,13 @@ serve(
         return json({ invite: { ...invite, code } });
       }
       if (body.action === "list") {
-        const { data, error } = await service
+        const only = product(body.product, null);
+        let listQuery = service
           .from("mmi_trial_invites")
           .select(inviteFields)
-          .eq("owner_id", user.id)
+          .eq("owner_id", user.id);
+        if (only) listQuery = listQuery.eq("product", only);
+        const { data, error } = await listQuery
           .order("created_at", { ascending: false })
           .limit(100);
         if (error) throw new HttpError(503, "Unable to load invitations");

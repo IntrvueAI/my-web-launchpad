@@ -11,8 +11,7 @@ import {
   trialApi,
   trialReviewExperience,
   type TrialStatus,
-  type TrialReview,
-} from "@/lib/guestTrials";
+  type TrialReview, TRIAL_BRAND } from "@/lib/guestTrials";
 
 export default function GuestTrialFeedback() {
   const { user, loading } = useAuth();
@@ -122,11 +121,11 @@ export default function GuestTrialFeedback() {
     }
   }
   return (
-    <MedicineTheme>
+    <MedicineTheme enabled={trial?.product !== "11plus"}>
       <main className="min-h-screen bg-background px-5 py-10 pb-28 text-foreground">
         <div className="mx-auto max-w-xl">
           <p className="mb-10 font-display text-xl font-semibold">
-            MMI Practice
+            {TRIAL_BRAND[trial?.product ?? "medicine"]}
           </p>
           {loading || (!trial && !error && user) ? (
             <p role="status">Opening your feedback form…</p>
@@ -174,7 +173,7 @@ export default function GuestTrialFeedback() {
                 new invitation.
               </p>
               <Button asChild className="mt-7">
-                <a href="/">Explore MMI Practice</a>
+                <a href="/">Explore {TRIAL_BRAND[trial?.product ?? "medicine"]}</a>
               </Button>
             </section>
           ) : (
@@ -184,7 +183,7 @@ export default function GuestTrialFeedback() {
                   One final step · about 30 seconds
                 </p>
                 <h1 className="font-display text-3xl font-semibold">
-                  Help shape MMI Practice.
+                  Help shape {TRIAL_BRAND[trial?.product ?? "medicine"]}.
                 </h1>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   Thanks for testing, {trial.name}. Complete this short form to
@@ -305,7 +304,7 @@ export default function GuestTrialFeedback() {
                 >
                   <summary className="cursor-pointer font-semibold">
                     {INTERVIEW_TYPES[String(item.interview_type)]?.name ||
-                      "Medicine interview"}{" "}
+                      (trial?.product === "11plus" ? "11+ interview" : "Medicine interview")}{" "}
                     ·{" "}
                     {typeof item.total_score === "number"
                       ? `${item.total_score}/20`

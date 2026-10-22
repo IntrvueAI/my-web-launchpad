@@ -79,7 +79,7 @@ const AppContent = () => {
   const { user } = useAuth();
   useEffect(() => {
     if (isMedicineSite()) document.title = 'MMI Practice | Medicine interview preparation';
-    if (['/try', '/guest-session', '/guest-feedback'].includes(window.location.pathname) || /^\/medicine\/[A-Za-z0-9_-]{22}$/.test(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
+    if (['/try', '/guest-session', '/guest-feedback'].includes(window.location.pathname) || /^\/(?:medicine|11plus)\/[A-Za-z0-9_-]{22}$/.test(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
       const robots = document.createElement('meta'); robots.name = 'robots'; robots.content = 'noindex, nofollow'; document.head.appendChild(robots);
       const referrer = document.createElement('meta'); referrer.name = 'referrer'; referrer.content = 'no-referrer'; document.head.appendChild(referrer);
       return () => { robots.remove(); referrer.remove(); };
@@ -168,6 +168,7 @@ const AppContent = () => {
               <Route path="/admin/guest-trials" element={<AdminGuestTrials />} />
               <Route path="/admin/guest-feedback" element={<AdminGuestFeedback />} />
               <Route path="/admin/feedback" element={<AdminGuestFeedback />} />
+              <Route path="/admin/11plus-trials" element={<AdminGuestTrials product="11plus" />} />
               <Route path="/practice" element={<MedicinePracticeStudio />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/schools" element={<Schools />} />
@@ -181,6 +182,7 @@ const AppContent = () => {
               <Route path="/medicine/practice" element={<MedicinePracticeStudio />} />
               <Route path="/medicine/examples" element={<PracticeExamples />} />
               <Route path="/medicine/:code" element={<GuestWelcome />} />
+              <Route path="/11plus/:code" element={<GuestWelcome />} />
               <Route path="/examples" element={<PracticeExamples />} />
               <Route path="/faq" element={isMedicineSite() ? <MedicineInfo faq/> : <Faq />} />
               <Route path="/admin" element={<AdminDashboard />} />

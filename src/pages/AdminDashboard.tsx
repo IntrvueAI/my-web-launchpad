@@ -149,7 +149,10 @@ export default function AdminDashboard() {
         <div className="flex flex-wrap items-center gap-2 mb-6 rounded-lg border border-dashed p-3">
           <span className="text-xs font-medium text-muted-foreground mr-1">Testing tools:</span>
           <Button variant="secondary" size="sm" className="gap-2" asChild>
-            <Link to="/admin/guest-trials"><Stethoscope className="h-3.5 w-3.5" /> Beta testing portal</Link>
+            <Link to="/admin/guest-trials"><Stethoscope className="h-3.5 w-3.5" /> Medicine beta testing</Link>
+          </Button>
+          <Button variant="secondary" size="sm" className="gap-2" asChild>
+            <Link to="/admin/11plus-trials"><GraduationCap className="h-3.5 w-3.5" /> 11+ beta testing</Link>
           </Button>
           <Button variant="secondary" size="sm" asChild>
             <Link to="/admin/feedback">Feedback</Link>

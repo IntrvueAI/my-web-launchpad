@@ -1,7 +1,13 @@
 import { guestSupabase, supabase } from "@/integrations/supabase/client";
 import { MEDICINE_LIVE_INTERVIEW_IDS, RETIRED_MEDICINE_INTERVIEW_IDS } from '@/config/interviewTypes';
+/** Beta invitations exist for each product; the server enforces which interviews each may start. */
+export type TrialProduct = "medicine" | "11plus";
 export const GUEST_INTERVIEW_IDS = MEDICINE_LIVE_INTERVIEW_IDS;
-export const GUEST_HISTORY_INTERVIEW_IDS = [...GUEST_INTERVIEW_IDS, ...RETIRED_MEDICINE_INTERVIEW_IDS];
+export const SCHOOL_GUEST_INTERVIEW_IDS = ["11-plus", "maths-interview", "logic-puzzles", "current-affairs-interview"] as const;
+export const guestInterviewIds = (product: TrialProduct = "medicine"): readonly string[] =>
+  product === "11plus" ? SCHOOL_GUEST_INTERVIEW_IDS : GUEST_INTERVIEW_IDS;
+export const GUEST_HISTORY_INTERVIEW_IDS = [...GUEST_INTERVIEW_IDS, ...RETIRED_MEDICINE_INTERVIEW_IDS, ...SCHOOL_GUEST_INTERVIEW_IDS];
+export const TRIAL_BRAND: Record<TrialProduct, string> = { medicine: "MMI Practice", "11plus": "intrvue.ai" };
 export interface TrialInvite {
   id: string;
   label: string;
@@ -12,6 +18,7 @@ export interface TrialInvite {
   guest_hours: number;
   code: string;
   link_code?: string | null;
+  product?: TrialProduct;
   guest_count?: number;
   attempts_used?: number;
   review_count?: number;
@@ -25,6 +32,7 @@ export interface TrialStatus {
   interviewsStarted: number;
   phase: "practice" | "review" | "complete";
   accessClosed: boolean;
+  product?: TrialProduct;
   review: TrialReview | null;
 }
 export interface TrialGuest {
@@ -49,10 +57,11 @@ export const trialReviewExperience = {
   "could-not-complete": "I couldn't complete an interview",
 };
 export function trialInvitationPath(invite: TrialInvite): string {
-  return invite.link_code
-    ? `/medicine/${invite.link_code}`
-    : `/try#${invite.code}`;
+  if (!invite.link_code) return `/try#${invite.code}`;
+  return invite.product === "11plus" ? `/11plus/${invite.link_code}` : `/medicine/${invite.link_code}`;
 }
+/** Private invitation paths are kept out of logs, search engines and referrers. */
+export const PRIVATE_INVITATION_PATH = /^\/(?:medicine|11plus)\/[A-Za-z0-9_-]{22}$/;
 export interface TrialFeedback {
   id: string;
   user_id: string;
@@ -78,6 +87,7 @@ export interface TrialInboxEntry {
   interviews_started: number;
   invite_id: string;
   invite_label: string;
+  product?: TrialProduct;
   review: TrialReview | null;
   interviews: TrialInterviewSummary[];
 }

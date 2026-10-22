@@ -51,6 +51,7 @@ jobs:
       - run: node scripts/check-question-review-migration.mjs
       - run: node scripts/check-school-classes-migration.mjs
       - run: node scripts/check-question-wording-migration.mjs
+      - run: node scripts/check-school-guest-trial-migration.mjs
       - uses: denoland/setup-deno@v2
         with:
           deno-version: "2.9.6"

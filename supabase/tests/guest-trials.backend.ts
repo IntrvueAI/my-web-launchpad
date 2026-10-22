@@ -69,7 +69,13 @@ describe("Founder feedback inbox", () => {
       p_page: 2,
       p_invite_id: inviteId,
       p_interview_type: "medicine-oxford-pilot",
+      p_product: null,
     });
+  });
+  it("passes a platform filter and accepts 11+ interview types", async () => {
+    const response = await run("mmi-guest-access", { action: "feedback-inbox", product: "11plus", interviewType: "11-plus" });
+    expect(response.status).toBe(200);
+    expect(state.rpc).toHaveBeenCalledWith("get_mmi_feedback_inbox", expect.objectContaining({ p_product: "11plus", p_interview_type: "11-plus" }));
   });
   it("denies guests before making an inbox query", async () => {
     state.user!.app_metadata = { mmi_guest_trial: trialId };
@@ -104,7 +110,9 @@ describe("Founder feedback inbox", () => {
     { search: [] },
     { search: "a".repeat(101) },
     { review: "unknown" },
-    { interviewType: "11-plus" },
+    { interviewType: "11-plus-v2" },
+    { interviewType: "chat-with-clara" },
+    { product: "other" },
     { inviteId: "forged" },
   ])("rejects malformed filters %j", async (filter) => {
     expect(

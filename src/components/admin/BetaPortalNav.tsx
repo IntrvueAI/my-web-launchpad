@@ -1,16 +1,17 @@
 import { NavLink } from "react-router-dom";
 import { Link2, MessageSquareText } from "lucide-react";
+import type { TrialProduct } from "@/lib/guestTrials";
 
-export function BetaPortalNav() {
+export function BetaPortalNav({ product = "medicine" }: { product?: TrialProduct }) {
   return (
     <nav
       aria-label="Beta testing"
       className="mb-7 flex flex-wrap gap-2 border-b pb-4"
     >
       {[
-        { to: "/admin/guest-trials", label: "Invitations", icon: Link2 },
+        { to: product === "11plus" ? "/admin/11plus-trials" : "/admin/guest-trials", label: "Invitations", icon: Link2 },
         {
-          to: "/admin/feedback?view=testers",
+          to: `/admin/feedback?view=testers&product=${product}`,
           label: "Tester feedback",
           icon: MessageSquareText,
         },

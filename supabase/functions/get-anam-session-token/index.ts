@@ -174,7 +174,8 @@ serve(
         }
       }
       if (!currentSession) await authorizeGuestInterview(supabaseService, userData.user, null, 'token');
-      if (guestAllowed) {
+      // Medicine guests use the Medicine interviewer; 11+ guests keep the 11+ avatar sent by the page.
+      if (guestAllowed && currentSession?.interview_type.startsWith("medicine-")) {
         personaConfig.avatarId = 'bb4f5306-ffdb-4437-a837-da6fdc23cbff';
         personaConfig.voiceId = '04965b9e-ff4c-4b54-a4dc-fba6e458c760';
       }
@@ -255,6 +256,7 @@ serve(
           'medicine-ethics-practice': 7, 'medicine-roleplay-practice': 7,
           'medicine-motivation-practice': 7, 'medicine-data-practice': 7,
           'medicine-oxford-pilot': 36, 'medicine-cambridge-pilot': 36, 'medicine-imperial-pilot': 35,
+          '11-plus': 30, 'logic-puzzles': 30, 'maths-interview': 20, 'current-affairs-interview': 20,
         };
         // The guest browser cannot turn a short station into a two-hour avatar session.
         personaConfig.maxSessionLengthSeconds = Math.min(duration, (guestMinutes[currentSession.interview_type] || 7) * 60);

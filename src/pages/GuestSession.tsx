@@ -5,9 +5,10 @@ import { InterviewPlatform } from "@/components/InterviewPlatform";
 import { Button } from "@/components/ui/button";
 import { INTERVIEW_TYPES, type InterviewType } from "@/config/interviewTypes";
 import {
-  GUEST_INTERVIEW_IDS,
+  guestInterviewIds,
   trialApi,
   TrialError,
+  TRIAL_BRAND,
   type TrialStatus,
 } from "@/lib/guestTrials";
 
@@ -84,13 +85,15 @@ export default function GuestSession() {
       setError(e instanceof Error ? e.message : "Unable to check your trial");
     }
   }, []);
+  const product = trial?.product ?? "medicine";
+  const school = product === "11plus";
   return (
-    <MedicineTheme live={!!selected}>
+    <MedicineTheme live={!!selected} enabled={!school}>
       <main className="min-h-screen bg-background px-4 py-6 pb-28 text-foreground">
         <div className="mx-auto max-w-7xl">
           <header className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b pb-5">
             <span className="font-display text-xl font-semibold">
-              MMI Practice
+              {TRIAL_BRAND[product]}
             </span>
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <span>Private guest trial</span>
@@ -177,10 +180,12 @@ export default function GuestSession() {
               ) : (
                 <>
                   <p className="mb-6 max-w-2xl text-muted-foreground">
-                    Your invitation includes two attempts. Choose a focused
-                    station or a full circuit. End the interview using its End
-                    Interview button to save your transcript and receive
-                    feedback. Your host can review the saved results.
+                    {school
+                      ? "Your invitation includes two attempts. Choose the full 11+ interview or a shorter topic interview."
+                      : "Your invitation includes two attempts. Choose a focused station or a full circuit."}{" "}
+                    End the interview using its End Interview button to save
+                    your transcript and receive feedback. Your host can review
+                    the saved results.
                   </p>
                   {trial.remaining === 0 && (
                     <p role="status" className="mb-5 rounded-xl border p-4">
@@ -189,7 +194,7 @@ export default function GuestSession() {
                     </p>
                   )}
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {GUEST_INTERVIEW_IDS.map((id) => {
+                    {guestInterviewIds(product).map((id) => {
                       const type = INTERVIEW_TYPES[id];
                       return (
                         <article
@@ -197,9 +202,11 @@ export default function GuestSession() {
                           className="flex flex-col rounded-2xl border bg-card p-6"
                         >
                           <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary">
-                            {id === 'medicine-mmi-practice'
-                              ? 'Full MMI · 6 stations · 1 min reading + 5 min answering each'
-                              : '7-minute mini interview · 1 min reading + 5 min answering'}
+                            {school
+                              ? `${id === '11-plus' ? 'Full 11+ interview' : 'Topic interview'} · about ${type.duration} minutes`
+                              : id === 'medicine-mmi-practice'
+                                ? 'Full MMI · 6 stations · 1 min reading + 5 min answering each'
+                                : '7-minute mini interview · 1 min reading + 5 min answering'}
                           </p>
                           <h2 className="text-xl font-semibold">{type.name}</h2>
                           <p className="mb-6 mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">

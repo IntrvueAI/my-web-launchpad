@@ -3,12 +3,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { guestSupabase } from "@/integrations/supabase/client";
-import { trialApi, type TrialInvite } from "@/lib/guestTrials";
+import { trialApi, TRIAL_BRAND, type TrialInvite, type TrialProduct } from "@/lib/guestTrials";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
 import { useParams } from "react-router-dom";
 
 export default function GuestWelcome() {
   const { code: pathCode } = useParams();
+  // The link's path names its product before the invitation has loaded; the server's answer wins.
+  const [linkProduct] = useState<TrialProduct>(() => {
+    try {
+      const fromPath = window.location.pathname.startsWith("/11plus/") ? "11plus" : pathCode ? "medicine" : null;
+      if (fromPath) sessionStorage.setItem("mmi:trial-product", fromPath);
+      return (fromPath || sessionStorage.getItem("mmi:trial-product") || "medicine") as TrialProduct;
+    } catch {
+      return "medicine";
+    }
+  });
   const [code] = useState(() => {
     try {
       const fragment = pathCode || window.location.hash.slice(1);
@@ -64,14 +74,16 @@ export default function GuestWelcome() {
       setBusy(false);
     }
   }
+  const product: TrialProduct = invite?.product ?? linkProduct;
+  const school = product === "11plus";
   return (
-    <MedicineTheme>
+    <MedicineTheme enabled={!school}>
       <main className="min-h-screen bg-background px-5 py-10 pb-28 text-foreground">
         <a
           href="/"
           className="mx-auto block max-w-5xl font-display text-xl font-semibold"
         >
-          MMI Practice
+          {TRIAL_BRAND[product]}
         </a>
         <div className="mx-auto mt-12 grid max-w-5xl gap-10 md:grid-cols-2 md:items-center">
           <section className="space-y-5">
@@ -81,24 +93,26 @@ export default function GuestWelcome() {
             <h1 className="font-display text-4xl leading-tight sm:text-5xl">
               Welcome to your
               <br />
-              practice room.
+              {school ? "practice interview." : "practice room."}
             </h1>
             <p className="text-lg text-muted-foreground">
-              Thanks for helping us test MMI Practice. Your private invitation
+              Thanks for helping us test {TRIAL_BRAND[product]}. Your private invitation
               includes {invite?.max_interviews ?? 2} interview attempts and a
               short feedback form at the end. Enter your name to begin. No
               email, password or signup needed.
             </p>
             <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-primary" />
-              <span>Ethics, communication, reasoning and more</span>
+              <span>{school ? "Questions about you, maths, logic and current affairs" : "Ethics, communication, reasoning and more"}</span>
             </div>
             <div className="flex items-center gap-3">
               <Clock className="h-5 w-5 text-primary" />
-              <span>A full MMI or a seven-minute mini interview</span>
+              <span>{school ? "A full 11+ interview or a shorter topic interview" : "A full MMI or a seven-minute mini interview"}</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Independent MMI practice covering skills shared across medical school interviews.
+              {school
+                ? "Independent 11+ interview practice. Not affiliated with any school."
+                : "Independent MMI practice covering skills shared across medical school interviews."}
             </p>
           </section>
           <section
@@ -149,7 +163,7 @@ export default function GuestWelcome() {
                   <Input
                     id="guest-name"
                     autoComplete="given-name"
-                    placeholder="Your name or nickname"
+                    placeholder={school ? "First name or nickname" : "Your name or nickname"}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -159,10 +173,9 @@ export default function GuestWelcome() {
                   />
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Your host can see your name, interview transcript, scores and
-                  feedback to help improve the product. Your microphone is used
-                  for the live interview. Please avoid sharing patient details
-                  or other sensitive information.
+                  {school
+                    ? "Your host can see the tester's name, interview transcript, scores and feedback to help improve the product. The microphone is used for the live interview. Please avoid sharing personal details such as a full name, school or address. If the tester is under 18, a parent or guardian should read this and tick the box."
+                    : "Your host can see your name, interview transcript, scores and feedback to help improve the product. Your microphone is used for the live interview. Please avoid sharing patient details or other sensitive information."}
                 </p>
                 <label className="flex items-start gap-3 text-sm">
                   <input
@@ -174,8 +187,9 @@ export default function GuestWelcome() {
                     disabled={busy}
                   />
                   <span>
-                    I understand how my trial results will be shared with my
-                    host.
+                    {school
+                      ? "I understand how the trial results will be shared with the host (parent or guardian if the tester is under 18)."
+                      : "I understand how my trial results will be shared with my host."}
                   </span>
                 </label>
                 <Button

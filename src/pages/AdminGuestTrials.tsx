@@ -13,10 +13,16 @@ import {
   type TrialFeedback,
   type TrialReview,
   trialInvitationPath,
+  TRIAL_BRAND,
+  type TrialProduct,
 } from "@/lib/guestTrials";
-import { MEDICINE_ORIGIN } from "@/lib/site";
+import { MEDICINE_ORIGIN, SCHOOL_ORIGIN } from "@/lib/site";
 
-export default function AdminGuestTrials() {
+/** Founder invitations for one product: Medicine at /admin/guest-trials, 11+ at /admin/11plus-trials. */
+export default function AdminGuestTrials({ product = "medicine" }: { product?: TrialProduct }) {
+  const school = product === "11plus";
+  const brand = TRIAL_BRAND[product];
+  const adminPath = school ? "/admin/11plus-trials" : "/admin/guest-trials";
   const { user, loading } = useAuth();
   const { isAdmin, isLoading } = useAdminStatus();
   const [invites, setInvites] = useState<TrialInvite[]>([]);
@@ -35,12 +41,13 @@ export default function AdminGuestTrials() {
     try {
       const data = await trialApi<{ invites: TrialInvite[] }>({
         action: "list",
+        product,
       });
       setInvites(data.invites);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unable to load invitations");
     }
-  }, []);
+  }, [product]);
   useEffect(() => {
     if (!isAdmin) return;
     void load();
@@ -84,6 +91,7 @@ export default function AdminGuestTrials() {
         action: "create",
         label,
         days,
+        product,
       });
       setSelected(invite.id);
       await load();
@@ -95,7 +103,7 @@ export default function AdminGuestTrials() {
     }
   }
   const link = (invite: TrialInvite) =>
-    `${import.meta.env.DEV ? window.location.origin : MEDICINE_ORIGIN}${trialInvitationPath(invite)}`;
+    `${import.meta.env.DEV ? window.location.origin : school ? SCHOOL_ORIGIN : MEDICINE_ORIGIN}${trialInvitationPath(invite)}`;
   async function copy(invite: TrialInvite) {
     try {
       await navigator.clipboard.writeText(link(invite));
@@ -120,27 +128,28 @@ export default function AdminGuestTrials() {
     }
   }
   return (
-    <MedicineTheme>
+    <MedicineTheme enabled={!school}>
       <main className="min-h-screen bg-background px-5 py-8 pb-28 text-foreground">
         <div className="mx-auto max-w-6xl">
-          <a href="/" className="text-sm font-semibold underline">
-            ← Back to dashboard
+          <a href="/admin" className="text-sm font-semibold underline">
+            ← Back to admin
           </a>
-          <h1 className="mb-3 mt-7 font-display text-4xl font-semibold">
-            Beta testing portal
+          <p className="mt-7 text-xs font-semibold uppercase tracking-widest text-primary">{school ? "11+ · intrvue.ai" : "Medicine · MMI Practice"}</p>
+          <h1 className="mb-3 mt-2 font-display text-4xl font-semibold">
+            {school ? "11+ beta testing" : "Medicine beta testing"}
           </h1>
           <p className="mb-8 max-w-2xl text-muted-foreground">
             Create a private link for each tester. They enter their name and get
             two interviews, with no email, password or signup. Their results and
             product feedback are saved in your private feedback hub.
           </p>
-          <BetaPortalNav />
+          <BetaPortalNav product={product} />
           {loading || isLoading ? (
             <p role="status">Checking founder access…</p>
           ) : !user ? (
             <a
               className="underline"
-              href="/auth?mode=medicine&returnTo=/admin/guest-trials"
+              href={`/auth?${school ? "" : "mode=medicine&"}returnTo=${adminPath}`}
             >
               Sign into your founder account
             </a>
@@ -255,7 +264,7 @@ export default function AdminGuestTrials() {
                                 invite.max_guests && (
                                 <Button size="sm" variant="outline" asChild>
                                   <a
-                                    href={`mailto:?subject=${encodeURIComponent("Your private MMI Practice beta invitation")}&body=${encodeURIComponent(`I'd love your feedback on MMI Practice. This private link gives you two interview attempts, followed by a short feedback form. Enter your name to begin; no signup or payment needed. Please keep the link for yourself.\n\n${link(invite)}`)}`}
+                                    href={`mailto:?subject=${encodeURIComponent(`Your private ${brand} beta invitation`)}&body=${encodeURIComponent(school ? `I'd love your feedback on intrvue.ai, our 11+ interview practice. This private link gives two practice interviews, followed by a short feedback form. Enter a first name to begin; no signup or payment needed. If the tester is under 18, please read the sharing notice with them first. Please keep the link private.\n\n${link(invite)}` : `I'd love your feedback on MMI Practice. This private link gives you two interview attempts, followed by a short feedback form. Enter your name to begin; no signup or payment needed. Please keep the link for yourself.\n\n${link(invite)}`)}`}
                                   >
                                     Draft email
                                   </a>
@@ -320,7 +329,7 @@ export default function AdminGuestTrials() {
                               className="rounded-xl"
                             >
                               <Link
-                                to={`/admin/guest-feedback?invite=${selected}&trial=${guest.id}`}
+                                to={`/admin/feedback?view=testers&product=${product}&invite=${selected}&trial=${guest.id}`}
                               >
                                 View interviews & product feedback
                               </Link>

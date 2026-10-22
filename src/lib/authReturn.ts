@@ -25,6 +25,7 @@ export function safeAuthReturn(
         "/admin/guest-trials",
         "/admin/guest-feedback",
         "/admin/feedback",
+        "/admin/11plus-trials",
         "/reset-password",
       ].includes(url.pathname)
     )
