@@ -20,6 +20,8 @@ const PAGES: [RegExp, string][] = [
   [/^\/(classes|join-class)(\/|$)/, "Join your class"],
   [/^\/(try|guest-session|guest-feedback)\/?$|^\/(medicine|11plus)\/[A-Za-z0-9_-]{22}$/, "Your practice invitation"],
   [/^\/admin(\/|$)/, "Admin"],
+  [/^\/creator\/?$/, "Creator dashboard"],
+  [/^\/r\/[a-z0-9-]+\/?$/i, "You're invited"],
 ];
 
 /** The browser-tab title for a path: the page name, then the site's brand. */

@@ -6,6 +6,8 @@ const orders = vi.hoisted(() => ({ createOrder: vi.fn(), createMedicineOrder: vi
 vi.mock("@/services/OrderService", () => ({ OrderService: orders }));
 vi.mock("@/hooks/useMedicineCredits", () => ({ useMedicineCredits: () => ({ credits: 2, isLoading: false }) }));
 vi.mock("@/hooks/use-toast", () => ({ useToast: () => ({ toast: vi.fn() }) }));
+const offer = vi.hoisted(() => ({ value: null as null | { creator: string; discountPercent: number } }));
+vi.mock("@/hooks/useReferralOffer", () => ({ useReferralOffer: () => offer.value }));
 import { CreditsStore } from "./CreditsStore";
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
 
@@ -30,6 +32,15 @@ describe("Credit stores", () => {
     await act(async () => buyFull.click());
     expect(orders.createMedicineOrder).toHaveBeenCalledWith("full");
     expect(orders.createOrder).not.toHaveBeenCalled();
+  });
+  it("shows a referred customer's first-purchase discount on both stores", async () => {
+    offer.value = { creator: "Sam", discountPercent: 10 };
+    const medicine = await render("medicine");
+    expect(medicine.textContent).toContain("10% off your first purchase from Sam's link");
+    expect(medicine.textContent).toContain("£31.49");
+    const school = await render("11plus");
+    expect(school.textContent).toContain("£26.99");
+    offer.value = null;
   });
   it("keeps the 11+ packs unchanged", async () => {
     const host = await render();

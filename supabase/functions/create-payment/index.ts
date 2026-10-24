@@ -87,10 +87,27 @@ serve(
       }
 
       userId = userData.user.id;
-      const amount = medicinePack
+      const listPrice = medicinePack
         ? medicinePack.amountPence
         : pack === 2 ? 1999 : pack === 3 ? 2999 : 4499;
       const credits = medicinePack ? medicinePack.credits : pack;
+      const purchasePlatform = medicine ? "medicine" : "11plus";
+
+      // A referred customer's first purchase on this platform gets their creator's discount.
+      // If the lookup fails the customer pays the list price rather than being blocked.
+      const service = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+      const { data: offer, error: offerError } = await service.rpc("referral_offer_for", {
+        p_user_id: userId,
+        p_platform: purchasePlatform,
+      });
+      if (offerError) console.error("referral offer lookup failed", offerError.message);
+      const discountPercent =
+        !offerError && offer && Number.isInteger(offer.discountPercent) && offer.discountPercent > 0 && offer.discountPercent <= 50
+          ? offer.discountPercent
+          : 0;
+      const discount = Math.round((listPrice * discountPercent) / 100);
+      const amount = listPrice - discount;
+      const discountNote = discount ? ` Includes ${discountPercent}% off your first purchase.` : "";
 
       const usedOrigin =
         req.headers.get("origin") ||
@@ -124,11 +141,11 @@ serve(
               product_data: medicinePack
                 ? {
                     name: `MMI Practice: ${medicinePack.name}`,
-                    description: medicinePack.note,
+                    description: medicinePack.note + discountNote,
                   }
                 : {
                     name: `Interview Credits x${credits}`,
-                    description: "Cost varies by interview.",
+                    description: "Cost varies by interview." + discountNote,
                   },
               unit_amount: amount,
             },
@@ -137,21 +154,25 @@ serve(
         ],
         metadata: {
           credits: String(credits),
-          platform: medicine ? "medicine" : "11plus",
+          platform: purchasePlatform,
+          ...(discount ? { discount_pence: String(discount) } : {}),
         },
       });
 
       // Record pending order
-      const service = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       const { error: orderError } = await service.from("orders").insert({
         user_id: userId,
         stripe_session_id: session.id,
         amount,
         currency: "gbp",
         credits_purchased: credits,
-        platform: medicine ? "medicine" : "11plus",
+        platform: purchasePlatform,
         status: "pending",
-        metadata: { source: "checkout" } as any,
+        metadata: {
+          source: "checkout",
+          list_price_pence: listPrice,
+          ...(discount ? { discount_pence: discount, referral_link_id: offer.linkId } : {}),
+        } as any,
       });
       if (orderError) {
         // Do not send someone to checkout when we cannot fulfil their purchase.

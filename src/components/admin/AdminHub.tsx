@@ -49,7 +49,7 @@ export function adminGroups(platform: AdminPlatform): Group[] {
         { label: medicine ? "Medicine beta testing" : "11+ beta testing", detail: "Create private two-interview tester links", icon: Link2, to: medicine ? "/admin/guest-trials" : "/admin/11plus-trials" },
         { label: "Tester feedback", detail: "Each tester's interviews and trial review", icon: MessageSquareText, to: `/admin/feedback?view=testers&product=${platform}` },
         { label: "Comments & ratings", detail: "Website feedback and after-interview comments", icon: ClipboardList, to: "/admin/feedback?view=comments" },
-        { label: "Creator programme", detail: "Prototype: referral links, discounts and payouts", icon: Users, to: "/admin/creators" },
+        { label: "Creator programme", detail: "Creator links, discounts, payouts and margins", icon: Users, to: "/admin/creators" },
       ],
     },
     {

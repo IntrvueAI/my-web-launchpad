@@ -40,6 +40,7 @@ const persona = {
 const regular = [
   "admin-credit-management",
   "create-payment",
+  "creator-programme",
   "generate-interview-feedback",
   "get-anam-session-token",
   "interview-brain",
@@ -757,7 +758,7 @@ describe("Deployment inventory", () => {
     const directories = readdirSync("supabase/functions", {
       withFileTypes: true,
     }).filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"));
-    expect(directories).toHaveLength(14);
+    expect(directories).toHaveLength(15);
     const external = new Set([
       "mmi-guest-access",
       "stripe-webhook",
@@ -952,5 +953,129 @@ describe("Medicine credits", () => {
     expect(state.rpc).toHaveBeenCalledWith("adjust_medicine_credits_atomic", { p_user_id: session.user_id, p_action: "add", p_amount: 1, p_note: "Dropped connection" });
     expect(state.rpc).not.toHaveBeenCalledWith("adjust_credits_atomic", expect.anything());
     expect((await (await handler("admin-credit-management"))(req({ userId: session.user_id, action: "add", amount: 1, platform: "chess" }))).status).toBe(400);
+  });
+});
+
+describe("Creator programme", () => {
+  const creatorRow = { id: "c-1", email: "sam@example.test", name: "Sam", status: "active", stripe_account_id: null, payout_status: "not_connected" };
+  const run = async (body: unknown, headers: Record<string, string> = { authorization: "Bearer user-token", origin: "https://mmipractice.co.uk" }) =>
+    (await handler("creator-programme"))(req(body, headers));
+  const asCreator = (row: unknown = creatorRow) => {
+    state.resolve = (q) => ({ data: q.table === "creators" && q.operation === "select" ? row : null, error: null });
+  };
+  const updates = () => state.queries.filter((q) => q.table === "creators" && q.operation === "update");
+
+  it("refuses accounts that are not creators", async () => {
+    asCreator(null);
+    expect((await run({ action: "connect" })).status).toBe(403);
+    expect(state.stripe.accounts.create).not.toHaveBeenCalled();
+  });
+  it("creates one Express account per creator and returns Stripe's hosted onboarding page", async () => {
+    asCreator();
+    state.stripe.accounts.create.mockResolvedValue({ id: "acct_123" });
+    state.stripe.accountLinks.create.mockResolvedValue({ url: "https://connect.stripe.com/setup/e/acct_123" });
+    const response = await run({ action: "connect" });
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ url: "https://connect.stripe.com/setup/e/acct_123" });
+    expect(state.stripe.accounts.create).toHaveBeenCalledWith(
+      expect.objectContaining({ type: "express", country: "GB", email: "sam@example.test", capabilities: { transfers: { requested: true } } }),
+      { idempotencyKey: "creator-account-c-1" },
+    );
+    expect(updates()[0].value).toEqual({ stripe_account_id: "acct_123", payout_status: "pending" });
+    expect(state.stripe.accountLinks.create).toHaveBeenCalledWith(expect.objectContaining({
+      account: "acct_123",
+      return_url: "https://mmipractice.co.uk/creator?stripe=return",
+      refresh_url: "https://mmipractice.co.uk/creator?stripe=refresh",
+    }));
+  });
+  it("reuses an existing account and never returns to an unknown origin", async () => {
+    asCreator({ ...creatorRow, stripe_account_id: "acct_123", payout_status: "pending" });
+    state.stripe.accountLinks.create.mockResolvedValue({ url: "https://connect.stripe.com/x" });
+    await run({ action: "connect" }, { authorization: "Bearer user-token", origin: "https://evil.example" });
+    expect(state.stripe.accounts.create).not.toHaveBeenCalled();
+    expect(state.stripe.accountLinks.create.mock.calls[0][0].return_url).toBe("https://intrvue.ai/creator?stripe=return");
+  });
+  it("marks payouts ready only when Stripe says the account can be paid", async () => {
+    asCreator({ ...creatorRow, stripe_account_id: "acct_123", payout_status: "pending" });
+    state.stripe.accounts.retrieve.mockResolvedValue({ payouts_enabled: false, details_submitted: true, requirements: { currently_due: ["external_account"] } });
+    expect(await (await run({ action: "status" })).json()).toEqual({ payoutStatus: "pending", due: 1 });
+    expect(updates()).toHaveLength(0);
+    state.stripe.accounts.retrieve.mockResolvedValue({ payouts_enabled: true, details_submitted: true, requirements: { currently_due: [] } });
+    expect(await (await run({ action: "status" })).json()).toEqual({ payoutStatus: "verified", due: 0 });
+    expect(updates()[0].value).toEqual({ payout_status: "verified" });
+  });
+  it("opens the Stripe dashboard only for verified accounts", async () => {
+    asCreator({ ...creatorRow, stripe_account_id: "acct_123", payout_status: "pending" });
+    expect((await run({ action: "stripe_dashboard" })).status).toBe(409);
+    asCreator({ ...creatorRow, stripe_account_id: "acct_123", payout_status: "verified" });
+    state.stripe.accounts.createLoginLink.mockResolvedValue({ url: "https://connect.stripe.com/express/x" });
+    expect(await (await run({ action: "stripe_dashboard" })).json()).toEqual({ url: "https://connect.stripe.com/express/x" });
+  });
+
+  const payoutRpc = (started: unknown) => state.rpc.mockImplementation(async (name: string) => ({
+    data: name === "is_current_user_admin" ? true : name === "begin_creator_payout" ? started : null,
+    error: null,
+  }));
+  const payout = { ok: true, resumed: false, payoutId: "p-1", amountPence: 630, destination: "acct_123" };
+  const creatorId = "22222222-2222-4222-8222-222222222222";
+  it("lets only administrators pay creators", async () => {
+    state.rpc.mockImplementation(async () => ({ data: false, error: null }));
+    expect((await run({ action: "payout", creatorId })).status).toBe(403);
+    expect(state.stripe.transfers.create).not.toHaveBeenCalled();
+  });
+  it("transfers ready earnings once, keyed by the payout", async () => {
+    payoutRpc(payout);
+    state.stripe.transfers.create.mockResolvedValue({ id: "tr_1" });
+    const response = await run({ action: "payout", creatorId });
+    expect(await response.json()).toEqual({ ok: true, amountPence: 630, transferId: "tr_1", resumed: false });
+    expect(state.stripe.transfers.create).toHaveBeenCalledWith(
+      expect.objectContaining({ amount: 630, currency: "gbp", destination: "acct_123" }),
+      { idempotencyKey: "creator-payout-p-1" },
+    );
+    expect(state.rpc).toHaveBeenCalledWith("finish_creator_payout", { p_payout_id: "p-1", p_transfer_id: "tr_1", p_failure: null });
+  });
+  it("explains when nothing can be paid yet", async () => {
+    payoutRpc({ ok: false, reason: "nothing_ready" });
+    const response = await run({ action: "payout", creatorId });
+    expect(response.status).toBe(409);
+    expect((await response.json()).error).toContain("30 days");
+    expect(state.stripe.transfers.create).not.toHaveBeenCalled();
+  });
+  it("releases earnings when Stripe declines, but keeps them reserved on a network failure", async () => {
+    payoutRpc(payout);
+    state.stripe.transfers.create.mockRejectedValue(Object.assign(new Error("Insufficient funds in Stripe balance"), { type: "StripeInvalidRequestError" }));
+    expect((await run({ action: "payout", creatorId })).status).toBe(402);
+    expect(state.rpc).toHaveBeenCalledWith("finish_creator_payout", { p_payout_id: "p-1", p_transfer_id: null, p_failure: "Insufficient funds in Stripe balance" });
+    state.rpc.mockClear();
+    payoutRpc(payout);
+    state.stripe.transfers.create.mockRejectedValue(Object.assign(new Error("socket hang up"), { type: "StripeConnectionError" }));
+    expect((await run({ action: "payout", creatorId })).status).toBe(500);
+    expect(state.rpc).not.toHaveBeenCalledWith("finish_creator_payout", expect.anything());
+  });
+
+  it("applies a referred customer's first-purchase discount at checkout", async () => {
+    state.rpc.mockImplementation(async (name: string) => ({
+      data: name === "referral_offer_for" ? { linkId: "l-1", creator: "Sam", discountPercent: 10 } : true,
+      error: null,
+    }));
+    state.stripe.checkout.sessions.create.mockResolvedValue({ id: "cs_ref", url: "https://checkout.stripe.com/ref" });
+    const checkout = await handler("create-payment");
+    expect((await checkout(req({ platform: "medicine", pack: "full" }, { authorization: "Bearer user", origin: "https://mmipractice.co.uk" }))).status).toBe(200);
+    expect(state.rpc).toHaveBeenCalledWith("referral_offer_for", { p_user_id: session.user_id, p_platform: "medicine" });
+    const sent = state.stripe.checkout.sessions.create.mock.calls[0][0];
+    expect(sent.line_items[0].price_data.unit_amount).toBe(3149);
+    expect(sent.line_items[0].price_data.product_data.description).toContain("10% off your first purchase");
+    expect(sent.metadata).toEqual({ credits: "6", platform: "medicine", discount_pence: "350" });
+    expect(state.queries.find((q) => q.table === "orders")!.value).toMatchObject({
+      amount: 3149,
+      metadata: { source: "checkout", list_price_pence: 3499, discount_pence: 350, referral_link_id: "l-1" },
+    });
+  });
+  it("charges the list price when the referral lookup fails", async () => {
+    state.rpc.mockImplementation(async (name: string) => ({ data: null, error: name === "referral_offer_for" ? { message: "offline" } : null }));
+    state.stripe.checkout.sessions.create.mockResolvedValue({ id: "cs_plain", url: "https://checkout.stripe.com/plain" });
+    const checkout = await handler("create-payment");
+    expect((await checkout(req({ pack: 3 }, { authorization: "Bearer user", origin: "https://intrvue.ai" }))).status).toBe(200);
+    expect(state.stripe.checkout.sessions.create.mock.calls[0][0].line_items[0].price_data.unit_amount).toBe(2999);
   });
 });

@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { RouteTitle } from "@/lib/pageTitle";
+import { useReferralAttachment } from "@/hooks/useReferralAttachment";
 import { AuthReturnResume } from './components/schools/SchoolLayout';
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { MedicineFeedbackDock } from "@/components/medicine-dashboard/MedicineFeedbackDock";
@@ -58,6 +59,8 @@ const AdminPreviewFeatures = lazy(() => import("./pages/AdminPreviewFeatures"));
 const AdminInterviewLab = lazy(() => import("./pages/AdminInterviewLab"));
 const AdminLabRun = lazy(() => import("./pages/AdminLabRun"));
 const AdminCreators = lazy(() => import("./pages/AdminCreators"));
+const CreatorDashboard = lazy(() => import("./pages/CreatorDashboard"));
+const ReferralLanding = lazy(() => import("./pages/ReferralLanding"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
@@ -81,6 +84,7 @@ const ADMIN_BYPASS_EMAIL = (import.meta.env.VITE_ADMIN_BYPASS_EMAIL ?? '') as st
 
 const AppContent = () => {
   const { user } = useAuth();
+  useReferralAttachment();
   useEffect(() => {
     if (['/try', '/guest-session', '/guest-feedback'].includes(window.location.pathname) || /^\/(?:medicine|11plus)\/[A-Za-z0-9_-]{22}$/.test(window.location.pathname) || window.location.pathname.startsWith('/admin')) {
       const robots = document.createElement('meta'); robots.name = 'robots'; robots.content = 'noindex, nofollow'; document.head.appendChild(robots);
@@ -209,6 +213,8 @@ const AppContent = () => {
               <Route path="/admin/lab" element={<AdminInterviewLab />} />
               <Route path="/admin/lab/run" element={<AdminLabRun />} />
               <Route path="/admin/creators" element={<AdminCreators />} />
+              <Route path="/creator" element={<CreatorDashboard />} />
+              <Route path="/r/:code" element={<ReferralLanding />} />
               <Route path="/admin/logs" element={<AdminLogs />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route

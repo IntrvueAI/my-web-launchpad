@@ -26,6 +26,9 @@ verify_jwt = true
 [functions.create-payment]
 verify_jwt = true
 
+[functions.creator-programme]
+verify_jwt = true
+
 [functions.generate-interview-feedback]
 verify_jwt = true
 

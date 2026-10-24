@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { OrderService } from "@/services/OrderService";
 import { useMedicineCredits } from "@/hooks/useMedicineCredits";
+import { useReferralOffer } from "@/hooks/useReferralOffer";
 import {
   MEDICINE_CREDIT_PACKS, formatPence, medicineCreditsLabel, type MedicineCreditPackId,
 } from "@/config/medicinePricing";
@@ -38,9 +39,27 @@ const MEDICINE_OFFERS: { id: MedicineCreditPackId; title: string; detail: string
   },
 ];
 
+/** Shown to referred customers before their first purchase; the server applies the discount. */
+const OfferBanner: React.FC<{ offer: { creator: string; discountPercent: number } | null }> = ({ offer }) =>
+  offer ? (
+    <p role="status" className="rounded-xl border border-primary/40 bg-primary/5 p-4 text-sm">
+      <strong>{offer.discountPercent}% off your first purchase</strong> from {offer.creator}'s link, applied automatically at checkout.
+    </p>
+  ) : null;
+const discounted = (pence: number, offer: { discountPercent: number } | null) =>
+  offer ? pence - Math.round((pence * offer.discountPercent) / 100) : pence;
+const Price: React.FC<{ pence: number; offer: { discountPercent: number } | null }> = ({ pence, offer }) => (
+  <div className="text-3xl font-bold">
+    {offer && <span className="mr-2 text-lg font-medium text-muted-foreground line-through">{formatPence(pence)}</span>}
+    {formatPence(discounted(pence, offer))}
+    <span className="ml-1 text-sm text-muted-foreground">GBP</span>
+  </div>
+);
+
 const MedicineCreditsStore: React.FC = () => {
   const { toast } = useToast();
   const { credits, isLoading } = useMedicineCredits();
+  const offer = useReferralOffer("medicine");
   const [loadingPack, setLoadingPack] = React.useState<MedicineCreditPackId | null>(null);
   const buy = async (pack: MedicineCreditPackId) => {
     try {
@@ -62,26 +81,24 @@ const MedicineCreditsStore: React.FC = () => {
           Medicine credits are separate from 11+ credits.
         </p>
       </div>
+      <OfferBanner offer={offer} />
       <div className="grid gap-5 sm:grid-cols-2">
-        {MEDICINE_OFFERS.map((offer) => {
-          const pack = MEDICINE_CREDIT_PACKS[offer.id];
+        {MEDICINE_OFFERS.map((item) => {
+          const pack = MEDICINE_CREDIT_PACKS[item.id];
           return (
-            <Card key={offer.id} className="flex flex-col">
+            <Card key={item.id} className="flex flex-col">
               <CardHeader>
                 <div className="flex items-center justify-between gap-2">
-                  <CardTitle className="text-xl">{offer.title}</CardTitle>
-                  {offer.badge && <Badge>{offer.badge}</Badge>}
+                  <CardTitle className="text-xl">{item.title}</CardTitle>
+                  {item.badge && <Badge>{item.badge}</Badge>}
                 </div>
                 <CardDescription>{medicineCreditsLabel(pack.credits)}</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-1 flex-col gap-4">
-                <div className="text-3xl font-bold">
-                  {formatPence(pack.amountPence)}
-                  <span className="ml-1 text-sm text-muted-foreground">GBP</span>
-                </div>
-                <p className="flex-1 text-sm text-muted-foreground">{offer.detail}</p>
-                <Button className="w-full" onClick={() => void buy(offer.id)} disabled={loadingPack !== null}>
-                  {loadingPack === offer.id ? "Redirecting…" : `Buy ${medicineCreditsLabel(pack.credits).replace("Medicine ", "")}`}
+                <Price pence={pack.amountPence} offer={offer} />
+                <p className="flex-1 text-sm text-muted-foreground">{item.detail}</p>
+                <Button className="w-full" onClick={() => void buy(item.id)} disabled={loadingPack !== null}>
+                  {loadingPack === item.id ? "Redirecting…" : `Buy ${medicineCreditsLabel(pack.credits).replace("Medicine ", "")}`}
                 </Button>
               </CardContent>
             </Card>
@@ -103,6 +120,7 @@ const MedicineCreditsStore: React.FC = () => {
 
 const SchoolCreditsStore: React.FC = () => {
   const { toast } = useToast();
+  const offer = useReferralOffer("11plus");
   const [loadingPack, setLoadingPack] = React.useState<Pack | null>(null);
 
   const handleBuy = async (pack: Pack) => {
@@ -123,6 +141,7 @@ const SchoolCreditsStore: React.FC = () => {
 
   return (
     <>
+      <div className="mb-6"><OfferBanner offer={offer} /></div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {PACKS.map((p) => (
           <Card key={p.credits} className="relative">
@@ -138,10 +157,7 @@ const SchoolCreditsStore: React.FC = () => {
               <CardDescription>Cost varies by interview</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-3xl font-bold">
-                £{(p.priceCents / 100).toFixed(2)}
-                <span className="text-muted-foreground text-sm ml-1">GBP</span>
-              </div>
+              <Price pence={p.priceCents} offer={offer} />
               <Button
                 className="w-full"
                 onClick={() => handleBuy(p.credits)}

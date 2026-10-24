@@ -5,4 +5,7 @@ export default class Stripe {
   }
   checkout = state.stripe.checkout;
   webhooks = state.stripe.webhooks;
+  accounts = state.stripe.accounts;
+  accountLinks = state.stripe.accountLinks;
+  transfers = state.stripe.transfers;
 }
