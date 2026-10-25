@@ -31,7 +31,6 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Pip } from '@/components/brand/Pip';
-import { X } from 'lucide-react';
 import { IntroVideoModal } from './IntroVideoModal';
 import { WelcomeModal } from './WelcomeModal';
 
@@ -379,21 +378,12 @@ export function TourVisuals({
 }) {
   const dim = 'hsl(var(--background) / 0.82)';
 
-  // Page-kind steps: a brief "here's this page" orientation. The whole screen dims and gets a
-  // coral frame, and — since there's no one small thing to click — clicking ANYWHERE on that dim
-  // layer advances (the banner explains this instead of showing a Next button).
+  // Page-kind steps: a brief "here's this page" orientation. The page dims softly behind a card
+  // with an explicit Next button; clicking the dimmed page also moves on.
   if (isPageKind) {
     return (
-      <div className="fixed inset-0 z-[9998] cursor-pointer" style={{ background: dim, pointerEvents: 'auto' }} onClick={onNext} aria-hidden="true">
-        <div
-          className="fixed inset-3 rounded-[28px]"
-          style={{
-            border: '4px solid hsl(var(--primary))',
-            boxShadow: '0 0 0 6px hsl(var(--primary) / 0.18), 0 0 44px 8px hsl(var(--primary) / 0.25)',
-            pointerEvents: 'none',
-          }}
-        />
-        <TourBubble bubble={{ mode: 'banner' }} step={step} message={message} onSkip={onSkip} clickAnywhere />
+      <div className="fixed inset-0 z-[9998]" style={{ background: dim, pointerEvents: 'auto' }} onClick={onNext}>
+        <TourBubble bubble={{ mode: 'banner' }} step={step} message={message} onSkip={onSkip} onNext={onNext} />
       </div>
     );
   }
@@ -406,7 +396,7 @@ export function TourVisuals({
   const bubble = computeBubblePos(rect, viewport.w, viewport.h);
 
   return (
-    <div className="fixed inset-0 z-[9998]" style={{ pointerEvents: 'none' }} aria-hidden="true">
+    <div className="fixed inset-0 z-[9998]" style={{ pointerEvents: 'none' }}>
       {/* Four blocking/dimming strips tile the whole viewport EXCEPT the hole — this is what makes
           only the target clickable (box-shadow-based cutouts are purely visual and don't block
           clicks, so we use real elements here instead). */}
@@ -429,8 +419,8 @@ export function TourVisuals({
         style={{
           top: holeTop, left: holeLeft, width: holeW, height: holeH,
           borderRadius: ringRadius,
-          border: '3px solid hsl(var(--primary))',
-          boxShadow: '0 0 0 6px hsl(var(--primary) / 0.22), 0 0 26px 4px hsl(var(--primary) / 0.35)',
+          border: '2px solid hsl(var(--primary))',
+          boxShadow: '0 0 0 4px hsl(var(--primary) / 0.16)',
         }}
       />
 
@@ -440,56 +430,54 @@ export function TourVisuals({
 }
 
 export function TourBubble({
-  bubble, step, message, onSkip, onNext, clickAnywhere = false,
+  bubble, step, message, onSkip, onNext,
 }: { bubble: BubblePos; step: number; message: string; onSkip: () => void; onNext?: () => void; clickAnywhere?: boolean }) {
-  const skipButton = (
-    <button
-      onClick={(e) => { e.stopPropagation(); onSkip(); }}
-      aria-label="Skip tour"
-      title="Skip tour"
-      style={{ pointerEvents: 'auto' }}
-      className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground hover:bg-white/10 hover:text-white transition-colors"
-    >
-      <X className="h-3.5 w-3.5" />
-    </button>
-  );
-
-  const dots = (
-    <div className="flex gap-1">
-      {TOUR_STEPS.map((_, i) => (
-        <span key={i} className="h-1.5 w-1.5 rounded-full" style={{ background: i === step ? 'hsl(var(--primary))' : 'rgba(255,255,255,.18)' }} />
-      ))}
+  const isLast = step === TOUR_STEPS.length - 1;
+  const footer = (
+    <div className="mt-4 flex items-center justify-between gap-3">
+      <span className="text-xs font-semibold text-muted-foreground">{step + 1} of {TOUR_STEPS.length}</span>
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onSkip(); }}
+          style={{ pointerEvents: 'auto' }}
+          className="rounded-full px-3 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
+          Skip tour
+        </button>
+        {onNext ? (
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); onNext(); }}
+            style={{ pointerEvents: 'auto' }}
+            className="rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+          >
+            {isLast ? 'Finish' : 'Next'}
+          </button>
+        ) : (
+          <span className="pl-1 text-xs font-semibold text-primary">Click the highlighted button</span>
+        )}
+      </div>
     </div>
   );
-
-  // Page-kind steps advance on a click anywhere on the dimmed screen (there's no one small thing
-  // to click), so there's no button here — just a hint that doubles as the visual cue.
-  const nextButton = clickAnywhere ? (
-    <span className="flex-none text-[12px] font-extrabold text-primary-soft">Click anywhere →</span>
-  ) : onNext && (
-    <button
-      onClick={onNext}
-      aria-label="Next step"
-      style={{ pointerEvents: 'auto' }}
-      className="flex-none rounded-full bg-primary px-5 py-2 text-[12.5px] font-extrabold text-white shadow-lg shadow-primary/25 hover:bg-primary/90 transition-colors"
-    >
-      Next →
-    </button>
+  const body = (
+    <div className="flex items-start gap-3">
+      <Pip size={36} className="flex-none" />
+      <p className="text-sm font-medium leading-relaxed text-foreground">{message}</p>
+    </div>
   );
 
   if (bubble.mode === 'banner') {
     return (
       <div
-        className="tile fixed left-1/2 -translate-x-1/2 bottom-5 flex items-center gap-4 py-4 pl-5 pr-10 max-w-[92vw]"
+        role="dialog"
+        aria-label="Tour"
+        onClick={(e) => e.stopPropagation()}
+        className="fixed bottom-6 left-1/2 w-[min(440px,calc(100vw-24px))] -translate-x-1/2 rounded-2xl border border-border bg-card p-5 shadow-2xl"
         style={{ pointerEvents: 'auto' }}
       >
-        {skipButton}
-        <Pip size={44} className="flex-none" float />
-        <p className="text-[14px] font-semibold text-[#EAF0FA] leading-snug max-w-[420px]">{message}</p>
-        <div className="flex-none flex items-center gap-3.5 pl-2">
-          {dots}
-          {nextButton}
-        </div>
+        {body}
+        {footer}
       </div>
     );
   }
@@ -503,19 +491,14 @@ export function TourBubble({
 
   return (
     <div
-      className="tile fixed p-4 pr-9 transition-all duration-200"
+      role="dialog"
+      aria-label="Tour"
+      className="fixed rounded-2xl border border-border bg-card p-4 shadow-2xl transition-all duration-200"
       style={{ top: bubble.top, left: bubble.left, width: bubble.bw, pointerEvents: 'auto' }}
     >
       <div className={arrowBase} style={arrowStyle} />
-      {skipButton}
-      <div className="flex items-start gap-3">
-        <Pip size={40} className="flex-none" float />
-        <p className="text-[13px] font-semibold text-[#EAF0FA] leading-relaxed">{message}</p>
-      </div>
-      <div className="mt-3.5 flex items-center justify-between gap-2">
-        {dots}
-        {nextButton}
-      </div>
+      {body}
+      {footer}
     </div>
   );
 }

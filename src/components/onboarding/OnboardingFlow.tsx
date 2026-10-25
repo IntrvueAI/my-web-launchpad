@@ -1,21 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion, type Variants } from 'framer-motion';
-import Confetti from 'react-confetti';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  Flame,
-  Leaf,
-  PartyPopper,
-  Search,
-  Sparkles,
-  TrendingUp,
-  Trophy,
-  X,
-  Zap,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Flame, Leaf, Lightbulb, Search, Sparkles, TrendingUp, Trophy, X, Zap } from 'lucide-react';
 import { Pip } from '@/components/brand/Pip';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,77 +11,44 @@ import {
   buildMiniPlan,
   INTENSITY_OPTIONS,
   LEVEL_OPTIONS,
-  WEEKDAY_LABELS,
   type ExperienceLevel,
-  type MiniPlan,
   type SchoolEntry,
   type StudyIntensity,
 } from '@/data/onboarding/studyPlan';
 
 /**
- * Real post-signup onboarding: name -> schools -> experience level -> study intensity -> a
- * generated mini plan. On the last step, saves the name + chosen schools to the profile and hands
- * off to the caller (Index.tsx chains straight into the guided site tour + founder video from
- * there). Interview dates aren't collected here — schools picked here have no date yet; add one
- * later from Settings.
+ * Post-signup onboarding: name -> schools -> experience -> pace -> a generated starter plan. On
+ * the last step it saves the name and chosen schools to the profile (and level/pace to user
+ * metadata) and hands off to the caller, which continues into the guided tour. Interview dates
+ * aren't collected here; schools picked here have no date until one is added in Settings.
  */
 
 type Step = 'name' | 'schools' | 'level' | 'intensity' | 'plan';
-const STEPS: Step[] = ['name', 'schools', 'level', 'intensity', 'plan'];
-
-const PIP_LINES: Record<Step, (name: string) => string> = {
-  name: () => "Hi, I'm Pip! 🦉 What should I call you?",
-  schools: (name) => `Nice to meet you${name ? `, ${name}` : ''}! Which schools are you working towards?`,
-  level: (name) => `Got it${name ? `, ${name}` : ''}. How much interview practice have you had so far?`,
-  intensity: () => 'Perfect. How hard do you want to train?',
-  plan: (name) => `You're all set${name ? `, ${name}` : ''}! Here's your plan.`,
-};
-
-const LEVEL_ICONS: Record<ExperienceLevel, LucideIcon> = {
-  'new': Sparkles,
-  'some-practice': TrendingUp,
-  'almost-ready': Trophy,
-};
-
-const INTENSITY_ICONS: Record<StudyIntensity, LucideIcon> = {
-  light: Leaf,
-  steady: Zap,
-  intense: Flame,
-};
+const STEPS: { id: Step; label: string }[] = [
+  { id: 'name', label: 'Your name' },
+  { id: 'schools', label: 'Schools' },
+  { id: 'level', label: 'Experience' },
+  { id: 'intensity', label: 'Pace' },
+  { id: 'plan', label: 'Your plan' },
+];
+const LEVEL_ICONS: Record<ExperienceLevel, LucideIcon> = { 'new': Sparkles, 'some-practice': TrendingUp, 'almost-ready': Trophy };
+const INTENSITY_ICONS: Record<StudyIntensity, LucideIcon> = { light: Leaf, steady: Zap, intense: Flame };
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+// Disabled primary buttons read as "not yet", not as a muddy version of the brand colour.
+const PRIMARY = 'min-h-12 gap-2 rounded-full px-6 font-semibold disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100 disabled:shadow-none';
 
 function useSchoolsData() {
   const [schools, setSchools] = useState<SchoolEntry[]>([]);
-
   useEffect(() => {
     let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch('/data/uk-schools-master-list.json');
-        if (!res.ok) return;
-        const data = await res.json();
-        if (!cancelled && Array.isArray(data)) setSchools(data);
-      } catch {
-        // Search just comes back empty — not fatal.
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    fetch('/data/uk-schools-master-list.json')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => { if (!cancelled && Array.isArray(data)) setSchools(data); })
+      .catch(() => { /* Search just comes back empty — not fatal. */ });
+    return () => { cancelled = true; };
   }, []);
-
   return schools;
 }
-
-const slideVariants: Variants = {
-  enter: (dir: number) => ({ x: dir > 0 ? 32 : -32, opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? -32 : 32, opacity: 0 }),
-};
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0 },
-};
 
 export function OnboardingFlow({ userId, onComplete }: { userId: string; onComplete: () => void }) {
   const [stepIndex, setStepIndex] = useState(0);
@@ -105,48 +58,46 @@ export function OnboardingFlow({ userId, onComplete }: { userId: string; onCompl
   const [level, setLevel] = useState<ExperienceLevel | null>(null);
   const [intensity, setIntensity] = useState<StudyIntensity | null>(null);
   const [saving, setSaving] = useState(false);
-
-  const step = STEPS[stepIndex];
+  const reduceMotion = useReducedMotion();
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const schools = useSchoolsData();
+  const step = STEPS[stepIndex].id;
+  const firstName = name.trim().split(/\s+/)[0] ?? '';
 
   const canContinue =
     step === 'name' ? name.trim().length > 0 :
+    step === 'schools' ? selectedSchools.length > 0 :
     step === 'level' ? level !== null :
-    step === 'intensity' ? intensity !== null :
-    true;
+    step === 'intensity' ? intensity !== null : true;
 
-  const goNext = () => {
-    if (!canContinue) return;
-    setDirection(1);
-    setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
+  const go = (next: number) => {
+    setDirection(next > stepIndex ? 1 : -1);
+    setStepIndex(Math.max(0, Math.min(STEPS.length - 1, next)));
   };
-  const goBack = () => {
-    setDirection(-1);
-    setStepIndex((i) => Math.max(i - 1, 0));
-  };
+  const goNext = () => { if (canContinue || step === 'schools') go(stepIndex + 1); };
+
+  // Move focus to each new step's heading so keyboard and screen-reader users follow along.
+  useEffect(() => {
+    if (step !== 'name') headingRef.current?.focus({ preventScroll: true });
+  }, [step]);
 
   const finish = async () => {
     setSaving(true);
     try {
       const trimmedName = name.trim();
-      const schoolInterviews = selectedSchools.map((s) => ({ school: s.name, interview_date: null as string | null }));
       await Promise.all([
         supabase
           .from('profiles')
           .update({
             full_name: trimmedName || null,
-            school_interviews: schoolInterviews,
+            school_interviews: selectedSchools.map((s) => ({ school: s.name, interview_date: null as string | null })),
             schools: selectedSchools.length > 0 ? selectedSchools.map((s) => s.name) : null,
           })
           .eq('id', userId),
         // No profiles columns for these yet — stored in user_metadata alongside hasSeenTour,
         // read back by the Feedback page's "on target" pacing card (see studyPlan.ts).
         supabase.auth.updateUser({
-          data: {
-            ...(trimmedName ? { full_name: trimmedName } : {}),
-            study_intensity: intensity,
-            experience_level: level,
-          },
+          data: { ...(trimmedName ? { full_name: trimmedName } : {}), study_intensity: intensity, experience_level: level },
         }),
       ]);
     } catch (e) {
@@ -157,448 +108,348 @@ export function OnboardingFlow({ userId, onComplete }: { userId: string; onCompl
     }
   };
 
-  const plan = useMemo(() => {
-    if (!level || !intensity) return null;
-    return buildMiniPlan(level, intensity, selectedSchools);
-  }, [level, intensity, selectedSchools]);
+  const plan = useMemo(() => (level && intensity ? buildMiniPlan(level, intensity, selectedSchools) : null), [level, intensity, selectedSchools]);
+  const answers: Record<Step, string | null> = {
+    name: name.trim() || null,
+    schools: selectedSchools.length ? `${selectedSchools.length} school${selectedSchools.length === 1 ? '' : 's'}` : stepIndex > 1 ? 'Not sure yet' : null,
+    level: LEVEL_OPTIONS.find((o) => o.id === level)?.label ?? null,
+    intensity: INTENSITY_OPTIONS.find((o) => o.id === intensity)?.label ?? null,
+    plan: null,
+  };
+
+  const heading: Record<Step, { title: string; sub: string }> = {
+    name: { title: "Hi, I'm Pip. What's your name?", sub: "We'll use it on your dashboard and in your feedback." },
+    schools: { title: `Which schools are you applying to${firstName ? `, ${firstName}` : ''}?`, sub: 'Add as many as you like. You can change this later in Settings.' },
+    level: { title: 'How much interview practice have you had?', sub: "There's no wrong answer. It just sets where we start." },
+    intensity: { title: 'How often would you like to practise?', sub: 'Pick a pace that fits your week. You can change it any time.' },
+    plan: { title: `Your starter plan${firstName ? `, ${firstName}` : ''}`, sub: "Built from your answers. Next, a quick tour of your dashboard." },
+  };
+
+  const primary = step === 'plan' ? (
+    <Button onClick={() => void finish()} disabled={saving} className={PRIMARY}>
+      {saving ? 'Saving…' : 'Go to my dashboard'} <ArrowRight className="h-4 w-4" aria-hidden />
+    </Button>
+  ) : (
+    <Button onClick={goNext} disabled={!canContinue} className={PRIMARY}>
+      Continue <ArrowRight className="h-4 w-4" aria-hidden />
+    </Button>
+  );
+  const skipSchools = step === 'schools' && selectedSchools.length === 0 && (
+    <button type="button" onClick={() => go(stepIndex + 1)} className="min-h-11 px-2 text-sm font-semibold text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+      I'm not sure yet
+    </button>
+  );
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
-      <header className="sticky top-0 z-20 flex items-center justify-center py-4 bg-background/80 backdrop-blur border-b border-border/60">
-        <img src="/lovable-uploads/logo.png" alt="intrvue.ai" className="h-7 w-auto" />
-      </header>
-
-      <div className="relative flex items-center justify-center px-4 py-10">
-        {/* Ambient blobs — same treatment as LandingHero */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-16 left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-10 right-12 w-56 h-56 bg-sky/10 rounded-full blur-3xl animate-pulse [animation-delay:700ms]" />
-          <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-purple/10 rounded-full blur-2xl animate-pulse [animation-delay:1200ms]" />
-        </div>
-
-        {step === 'plan' && <PlanConfetti />}
-
-        <div className="relative z-10 w-full max-w-xl">
-          {/* Pip + speech bubble */}
-          <div className="flex items-end gap-3 mb-5 px-2">
-            <Pip size={56} float />
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.25 }}
-                className="relative bg-card border border-border rounded-2xl rounded-bl-sm px-4 py-2.5 shadow-sm max-w-[320px]"
-              >
-                <p className="text-sm font-medium text-foreground leading-snug">{PIP_LINES[step](name)}</p>
-              </motion.div>
-            </AnimatePresence>
+    <div className="min-h-[100dvh] bg-background text-foreground lg:grid lg:grid-cols-[minmax(300px,380px)_1fr]">
+      {/* Desktop rail: where you are, and what you've told us so far. */}
+      <aside className="hidden border-r border-border/60 bg-card/40 lg:flex lg:flex-col lg:px-10 lg:py-10" aria-label="Setup progress">
+        <img src="/lovable-uploads/logo.png" alt="intrvue.ai" className="h-7 w-auto self-start" />
+        <div className="mt-14 flex items-center gap-3">
+          <Pip size={52} float />
+          <div>
+            <p className="font-display text-lg font-semibold">Let's set you up</p>
+            <p className="text-sm text-muted-foreground">Five quick questions, about a minute.</p>
           </div>
-
-          <StepProgress current={stepIndex} total={STEPS.length} />
-
-          <div className="mt-5 rounded-[28px] border border-border bg-card shadow-xl p-6 sm:p-8 min-h-[440px] flex flex-col">
-            <div className="flex-1 overflow-hidden relative">
-              <AnimatePresence mode="wait" custom={direction} initial={false}>
-                <motion.div
-                  key={step}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: 0.28, ease: 'easeOut' }}
+        </div>
+        <ol className="mt-10 space-y-1">
+          {STEPS.map((s, i) => {
+            const done = i < stepIndex;
+            const current = i === stepIndex;
+            return (
+              <li key={s.id}>
+                <button
+                  type="button"
+                  disabled={!done}
+                  onClick={() => go(i)}
+                  aria-current={current ? 'step' : undefined}
+                  className={cn('flex w-full items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-colors', done && 'hover:bg-muted/60', current && 'bg-muted/60')}
                 >
-                  {step === 'name' && <NameStep name={name} onChange={setName} onEnter={goNext} />}
-                  {step === 'schools' && (
-                    <SchoolsStep schools={schools} selected={selectedSchools} onChange={setSelectedSchools} />
-                  )}
-                  {step === 'level' && <LevelStep value={level} onChange={setLevel} />}
-                  {step === 'intensity' && <IntensityStep value={intensity} onChange={setIntensity} />}
-                  {step === 'plan' && plan && (
-                    <PlanStep name={name} schools={selectedSchools} level={level!} intensity={intensity!} plan={plan} />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                  <span className={cn(
+                    'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-bold',
+                    done ? 'border-primary bg-primary text-primary-foreground' : current ? 'border-primary text-primary' : 'border-border text-muted-foreground',
+                  )}>
+                    {done ? <Check className="h-3.5 w-3.5" aria-hidden /> : i + 1}
+                  </span>
+                  <span className="min-w-0">
+                    <span className={cn('block text-sm font-semibold', !done && !current && 'text-muted-foreground')}>{s.label}</span>
+                    {done && answers[s.id] && <span className="block truncate text-xs text-muted-foreground">{answers[s.id]}</span>}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+        <p className="mt-auto pt-10 text-xs text-muted-foreground">You can change any of this later in Settings.</p>
+      </aside>
 
-            <div className="flex items-center justify-between pt-6 mt-2 border-t border-border/60">
-              <Button
-                variant="ghost"
-                onClick={goBack}
-                disabled={stepIndex === 0}
-                className={cn('gap-1.5', stepIndex === 0 && 'invisible')}
+      <div className="flex min-h-[100dvh] flex-col">
+        {/* Phone header: back, step count and progress. */}
+        <header className="sticky top-0 z-20 border-b border-border/60 bg-background/90 backdrop-blur lg:hidden">
+          <div className="flex h-14 items-center justify-between px-4">
+            <button type="button" onClick={() => go(stepIndex - 1)} aria-label="Back"
+              className={cn('flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted', stepIndex === 0 && 'invisible')}>
+              <ArrowLeft className="h-5 w-5" aria-hidden />
+            </button>
+            <img src="/lovable-uploads/logo.png" alt="intrvue.ai" className="h-6 w-auto" />
+            <span className="w-10 text-right text-xs font-semibold text-muted-foreground">{stepIndex + 1}/{STEPS.length}</span>
+          </div>
+          <div className="h-1 bg-muted" role="progressbar" aria-label="Setup progress" aria-valuemin={1} aria-valuemax={STEPS.length} aria-valuenow={stepIndex + 1}>
+            <div className="h-full bg-primary transition-[width] duration-300" style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
+          </div>
+        </header>
+
+        <main className="flex flex-1 flex-col px-5 pb-32 pt-8 sm:px-8 lg:items-center lg:justify-center lg:pb-16 lg:pt-16">
+          <div className="w-full max-w-xl">
+            <AnimatePresence mode="wait" custom={direction} initial={false}>
+              <motion.section
+                key={step}
+                custom={direction}
+                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * -24 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                aria-labelledby="onboarding-heading"
               >
-                <ArrowLeft className="h-4 w-4" /> Back
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary">Step {stepIndex + 1} of {STEPS.length}</p>
+                <div className="mt-3 flex items-start gap-3">
+                  {step === 'name' && <Pip size={44} className="shrink-0 lg:hidden" float />}
+                  <h1 id="onboarding-heading" ref={headingRef} tabIndex={-1} className="font-display text-[28px] font-semibold leading-tight outline-none sm:text-[34px]">
+                    {heading[step].title}
+                  </h1>
+                </div>
+                <p className="mt-3 text-base text-muted-foreground">{heading[step].sub}</p>
+
+                <div className="mt-8">
+                  {step === 'name' && <NameStep name={name} onChange={setName} onEnter={goNext} />}
+                  {step === 'schools' && <SchoolsStep schools={schools} selected={selectedSchools} onChange={setSelectedSchools} />}
+                  {step === 'level' && (
+                    <ChoiceList
+                      label="Interview experience"
+                      options={LEVEL_OPTIONS.map((o) => ({ id: o.id, label: o.label, detail: o.blurb, icon: LEVEL_ICONS[o.id] }))}
+                      value={level}
+                      onChange={(v) => setLevel(v as ExperienceLevel)}
+                      onConfirm={goNext}
+                    />
+                  )}
+                  {step === 'intensity' && (
+                    <ChoiceList
+                      label="Practice pace"
+                      options={INTENSITY_OPTIONS.map((o) => ({ id: o.id, label: o.label, detail: o.blurb, icon: INTENSITY_ICONS[o.id] }))}
+                      value={intensity}
+                      onChange={(v) => setIntensity(v as StudyIntensity)}
+                      onConfirm={goNext}
+                      columns
+                    />
+                  )}
+                  {step === 'plan' && plan && level && intensity && (
+                    <PlanStep plan={plan} schools={selectedSchools} levelLabel={answers.level!} intensityLabel={answers.intensity!} />
+                  )}
+                </div>
+              </motion.section>
+            </AnimatePresence>
+
+            {/* Desktop actions sit under the step; phones get a fixed bar at the bottom. */}
+            <div className="mt-10 hidden items-center justify-between gap-3 lg:flex">
+              <Button variant="ghost" onClick={() => go(stepIndex - 1)} className={cn('min-h-12 gap-2 rounded-full', stepIndex === 0 && 'invisible')}>
+                <ArrowLeft className="h-4 w-4" aria-hidden /> Back
               </Button>
-              {step === 'plan' ? (
-                <Button onClick={finish} disabled={saving} className="gap-1.5 rounded-full font-semibold px-6">
-                  {saving ? 'Saving…' : 'Next'} <ArrowRight className="h-4 w-4" />
-                </Button>
-              ) : (
-                <Button onClick={goNext} disabled={!canContinue} className="gap-1.5 rounded-full font-semibold px-6">
-                  {step === 'schools' && selectedSchools.length === 0 ? "I'm not sure yet" : 'Continue'}
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              )}
+              <div className="flex items-center gap-3">{skipSchools}{primary}</div>
             </div>
+          </div>
+        </main>
+
+        <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border/60 bg-background/95 px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-3 backdrop-blur lg:hidden">
+          <div className="mx-auto flex max-w-xl flex-col gap-1">
+            {primary}
+            {skipSchools && <div className="flex justify-center">{skipSchools}</div>}
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function StepProgress({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="flex gap-1.5 px-2">
-      {Array.from({ length: total }).map((_, i) => (
-        <div key={i} className="h-1.5 flex-1 rounded-full bg-secondary overflow-hidden">
-          <motion.div
-            className="h-full rounded-full bg-primary"
-            initial={{ width: '0%' }}
-            animate={{ width: i <= current ? '100%' : '0%' }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-          />
-        </div>
-      ))}
     </div>
   );
 }
 
 function NameStep({ name, onChange, onEnter }: { name: string; onChange: (v: string) => void; onEnter: () => void }) {
   return (
-    <div className="flex flex-col justify-center h-full py-8">
-      <h2 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-2">What's your name?</h2>
-      <p className="text-muted-foreground mb-6">So Pip knows what to cheer for.</p>
+    <div>
+      <label htmlFor="onboarding-name" className="sr-only">Your first name</label>
       <Input
+        id="onboarding-name"
         autoFocus
+        autoComplete="given-name"
+        maxLength={60}
         value={name}
         onChange={(e) => onChange(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') onEnter();
-        }}
-        placeholder="e.g. Amelia"
-        className="h-14 text-lg rounded-2xl px-5"
+        onKeyDown={(e) => { if (e.key === 'Enter') onEnter(); }}
+        placeholder="First name"
+        className="h-14 rounded-2xl px-5 text-lg"
       />
     </div>
   );
 }
 
-function SchoolsStep({
-  schools,
-  selected,
-  onChange,
-}: {
-  schools: SchoolEntry[];
-  selected: SchoolEntry[];
-  onChange: (schools: SchoolEntry[]) => void;
-}) {
+function SchoolsStep({ schools, selected, onChange }: { schools: SchoolEntry[]; selected: SchoolEntry[]; onChange: (s: SchoolEntry[]) => void }) {
   const [query, setQuery] = useState('');
-  const [focused, setFocused] = useState(false);
-
-  // Empty query + focused still shows the full remaining list (sorted, scrollable) rather than
-  // nothing — lets a student browse by clicking straight into the search bar without typing.
-  const filtered = useMemo(() => {
+  const matches = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const pool = schools.filter((s) => !selected.some((sel) => sel.name === s.name));
-    if (!q) return [...pool].sort((a, b) => a.name.localeCompare(b.name));
-    return pool
+    if (!q) return [];
+    return schools
+      .filter((s) => !selected.some((sel) => sel.name === s.name))
       .filter((s) => s.name.toLowerCase().includes(q) || s.region?.toLowerCase().includes(q))
       .slice(0, 6);
   }, [schools, query, selected]);
-
-  const showDropdown = focused && filtered.length > 0;
-
-  const addSchool = (s: SchoolEntry) => {
-    onChange([...selected, s]);
-    setQuery('');
-  };
-  const removeSchool = (name: string) => {
-    onChange(selected.filter((s) => s.name !== name));
-  };
+  const add = (s: SchoolEntry) => { onChange([...selected, s]); setQuery(''); };
 
   return (
-    <div className="h-full py-2">
-      <h2 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-2">Which schools?</h2>
-      <p className="text-muted-foreground mb-5">Pick as many as you like — you can always change this later.</p>
-
+    <div className="space-y-4">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+        <label htmlFor="onboarding-school" className="sr-only">Search for a school</label>
         <Input
+          id="onboarding-school"
+          autoFocus
+          role="combobox"
+          aria-expanded={matches.length > 0}
+          aria-controls="onboarding-school-results"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 150)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && filtered[0]) addSchool(filtered[0]);
-          }}
-          placeholder="Search, or click and scroll to browse…"
-          className="h-12 rounded-2xl pl-10"
+          onKeyDown={(e) => { if (e.key === 'Enter' && matches[0]) { e.preventDefault(); add(matches[0]); } }}
+          placeholder="Search by school name or town"
+          className="h-14 rounded-2xl pl-11 text-base"
         />
-        <AnimatePresence>
-          {showDropdown && (
-            <motion.div
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.15 }}
-              className="absolute z-20 mt-2 w-full max-h-72 overflow-y-auto rounded-2xl border border-border bg-card shadow-lg"
-            >
-              {filtered.map((s) => (
-                <button
-                  key={s.name}
-                  type="button"
-                  onClick={() => addSchool(s)}
-                  className="w-full text-left px-4 py-2.5 hover:bg-muted transition-colors flex items-center justify-between gap-2"
-                >
-                  <span className="text-sm font-medium">{s.name}</span>
-                  <span className="text-xs text-muted-foreground shrink-0">{s.region}</span>
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
-
-      <div className="flex flex-wrap gap-2 mt-4 min-h-[36px]">
-        <AnimatePresence>
-          {selected.map((s) => (
-            <motion.span
-              key={s.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.15 }}
-              className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 pl-3.5 pr-2 py-1.5 text-sm font-semibold"
-            >
-              {s.name}
-              <button
-                type="button"
-                onClick={() => removeSchool(s.name)}
-                className="rounded-full p-0.5 hover:bg-primary/20 transition-colors"
-                aria-label={`Remove ${s.name}`}
-              >
-                <X className="h-3.5 w-3.5" />
+      {query.trim() && (
+        <ul id="onboarding-school-results" role="listbox" aria-label="Matching schools" className="overflow-hidden rounded-2xl border border-border bg-card">
+          {matches.map((s) => (
+            <li key={s.name} role="option" aria-selected={false}>
+              <button type="button" onClick={() => add(s)} className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-muted">
+                <span className="text-sm font-semibold">{s.name}</span>
+                <span className="shrink-0 text-xs text-muted-foreground">{s.region}</span>
               </button>
-            </motion.span>
+            </li>
           ))}
-        </AnimatePresence>
-        {selected.length === 0 && (
-          <p className="text-sm text-muted-foreground italic">
-            No schools added yet — that's OK, search above or skip for now.
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function LevelStep({ value, onChange }: { value: ExperienceLevel | null; onChange: (v: ExperienceLevel) => void }) {
-  return (
-    <div className="h-full py-2">
-      <h2 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-2">
-        Where are you starting from?
-      </h2>
-      <p className="text-muted-foreground mb-5">Be honest — Pip won't judge.</p>
-      <div className="space-y-3">
-        {LEVEL_OPTIONS.map((opt) => {
-          const Icon = LEVEL_ICONS[opt.id];
-          const active = value === opt.id;
-          return (
-            <motion.button
-              key={opt.id}
-              type="button"
-              onClick={() => onChange(opt.id)}
-              whileTap={{ scale: 0.98 }}
-              className={cn(
-                'w-full flex items-center gap-4 rounded-2xl border-2 px-4 py-3.5 text-left transition-colors',
-                active ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/40 hover:bg-muted/50',
-              )}
-            >
-              <div
-                className={cn(
-                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-full',
-                  active ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground',
-                )}
-              >
-                <Icon className="h-5 w-5" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="font-semibold text-foreground">{opt.label}</div>
-                <div className="text-sm text-muted-foreground">{opt.blurb}</div>
-              </div>
-              <AnimatePresence>
-                {active && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="shrink-0 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center"
-                  >
-                    <Check className="h-3.5 w-3.5" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function IntensityStep({ value, onChange }: { value: StudyIntensity | null; onChange: (v: StudyIntensity) => void }) {
-  return (
-    <div className="h-full py-2">
-      <h2 className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-2">
-        How hard do you want to train?
-      </h2>
-      <p className="text-muted-foreground mb-5">You can always change your pace later.</p>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {INTENSITY_OPTIONS.map((opt) => {
-          const Icon = INTENSITY_ICONS[opt.id];
-          const active = value === opt.id;
-          return (
-            <motion.button
-              key={opt.id}
-              type="button"
-              onClick={() => onChange(opt.id)}
-              whileTap={{ scale: 0.97 }}
-              whileHover={{ y: -2 }}
-              className={cn(
-                'flex flex-col items-center text-center gap-2 rounded-2xl border-2 px-4 py-5 transition-colors',
-                active ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/40 hover:bg-muted/50',
-              )}
-            >
-              <div
-                className={cn(
-                  'flex h-11 w-11 items-center justify-center rounded-full',
-                  active ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground',
-                )}
-              >
-                <Icon className="h-5 w-5" />
-              </div>
-              <div className="font-semibold text-foreground">{opt.label}</div>
-              <div className="text-xs text-muted-foreground">{opt.blurb}</div>
-            </motion.button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function PlanStep({
-  name,
-  schools,
-  level,
-  intensity,
-  plan,
-}: {
-  name: string;
-  schools: SchoolEntry[];
-  level: ExperienceLevel;
-  intensity: StudyIntensity;
-  plan: MiniPlan;
-}) {
-  const levelLabel = LEVEL_OPTIONS.find((o) => o.id === level)?.label;
-  const intensityLabel = INTENSITY_OPTIONS.find((o) => o.id === intensity)?.label;
-
-  return (
-    <motion.div
-      initial="hidden"
-      animate="show"
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
-      className="h-full py-1"
-    >
-      <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl font-semibold text-foreground mb-1">
-        {name ? `Nice one, ${name}!` : 'Nice one!'}
-      </motion.h2>
-      <motion.p variants={fadeUp} className="text-muted-foreground mb-5">
-        Here's a starter plan built around how you answered.
-      </motion.p>
-
-      <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mb-5">
-        <RecapChip label={levelLabel} />
-        <RecapChip label={`${intensityLabel} · ${plan.sessionsPerWeek}/week`} />
-        <RecapChip label={schools.length ? `${schools.length} school${schools.length > 1 ? 's' : ''}` : 'Schools TBD'} />
-      </motion.div>
-
-      <motion.div variants={fadeUp} className="rounded-2xl border border-border bg-muted/40 p-4 mb-4">
-        <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3">Your week</div>
-        <div className="flex justify-between">
-          {WEEKDAY_LABELS.map((d, i) => (
-            <div
-              key={i}
-              className={cn(
-                'h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold',
-                plan.suggestedDays.includes(i)
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground/60',
-              )}
-            >
-              {d}
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      <motion.div variants={fadeUp} className="space-y-2 mb-4">
-        <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Your focus order</div>
-        {plan.focusOrder.map((item, i) => (
-          <div key={item} className="flex items-center gap-3 rounded-xl bg-card border border-border px-3 py-2.5">
-            <div className="h-6 w-6 shrink-0 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center">
-              {i + 1}
-            </div>
-            <div className="text-sm font-medium text-foreground">{item}</div>
-          </div>
-        ))}
-      </motion.div>
-
-      <motion.p variants={fadeUp} className="text-sm text-muted-foreground italic mb-2">
-        {plan.tip}
-      </motion.p>
-
-      {plan.schoolNote && (
-        <motion.div
-          variants={fadeUp}
-          className="flex items-start gap-2.5 rounded-xl bg-amber/10 border border-amber/20 px-3.5 py-3 text-sm"
-        >
-          <PartyPopper className="h-4 w-4 text-amber shrink-0 mt-0.5" />
-          <span>
-            <span className="font-semibold">{plan.schoolNote.schoolName}: </span>
-            {plan.schoolNote.note}
-          </span>
-        </motion.div>
+          {!matches.length && <li className="px-4 py-3 text-sm text-muted-foreground">No match yet. Try the town, or skip this for now.</li>}
+        </ul>
       )}
-    </motion.div>
+      {selected.length > 0 && (
+        <ul className="flex flex-wrap gap-2" aria-label="Your schools">
+          {selected.map((s) => (
+            <li key={s.name} className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 py-1.5 pl-3.5 pr-1.5 text-sm font-semibold text-primary">
+              {s.name}
+              <button type="button" onClick={() => onChange(selected.filter((x) => x.name !== s.name))} aria-label={`Remove ${s.name}`}
+                className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-primary/20">
+                <X className="h-3.5 w-3.5" aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 
-function RecapChip({ label }: { label?: string }) {
-  if (!label) return null;
-  return <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">{label}</span>;
+function ChoiceList({
+  label, options, value, onChange, onConfirm, columns = false,
+}: {
+  label: string;
+  options: { id: string; label: string; detail: string; icon: LucideIcon }[];
+  value: string | null;
+  onChange: (id: string) => void;
+  onConfirm: () => void;
+  columns?: boolean;
+}) {
+  return (
+    <div role="radiogroup" aria-label={label} className={cn('grid gap-3', columns && 'sm:grid-cols-3')}>
+      {options.map((o) => {
+        const active = value === o.id;
+        return (
+          <button
+            key={o.id}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            onClick={() => onChange(o.id)}
+            onDoubleClick={() => { onChange(o.id); onConfirm(); }}
+            className={cn(
+              'group flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+              columns && 'sm:flex-col sm:items-start sm:gap-3',
+              active ? 'border-primary bg-primary/[0.07]' : 'border-border hover:border-primary/40 hover:bg-muted/40',
+            )}
+          >
+            <span className={cn('flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors', active ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground')}>
+              <o.icon className="h-5 w-5" aria-hidden />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold">{o.label}</span>
+              <span className="mt-0.5 block text-sm text-muted-foreground">{o.detail}</span>
+            </span>
+            <span className={cn('flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors', columns && 'sm:hidden',
+              active ? 'border-primary bg-primary text-primary-foreground' : 'border-border')} aria-hidden>
+              {active && <Check className="h-3.5 w-3.5" />}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
-function PlanConfetti() {
-  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight });
-
-  useEffect(() => {
-    const onResize = () => setSize({ width: window.innerWidth, height: window.innerHeight });
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
+function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <Confetti
-      width={size.width}
-      height={size.height}
-      recycle={false}
-      numberOfPieces={260}
-      colors={['#FF7F50', '#FBBF24', '#38BDF8', '#34D399', '#8B5CF6']}
-      style={{ zIndex: 50 }}
-    />
+    <section className="rounded-2xl border border-border bg-card p-5">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{title}</h2>
+      <div className="mt-3">{children}</div>
+    </section>
+  );
+}
+
+function PlanStep({ plan, schools, levelLabel, intensityLabel }: {
+  plan: NonNullable<ReturnType<typeof buildMiniPlan>>;
+  schools: SchoolEntry[];
+  levelLabel: string;
+  intensityLabel: string;
+}) {
+  return (
+    <div className="space-y-4">
+      <ul className="flex flex-wrap gap-2" aria-label="Your answers">
+        {[levelLabel, `${intensityLabel} · ${plan.sessionsPerWeek} sessions a week`, schools.length ? `${schools.length} school${schools.length === 1 ? '' : 's'}` : 'Schools to add later']
+          .map((t) => <li key={t} className="rounded-full bg-muted px-3 py-1 text-xs font-semibold">{t}</li>)}
+      </ul>
+      <Panel title="Your week">
+        <ol className="grid grid-cols-7 gap-1.5" aria-label="Suggested practice days">
+          {DAYS.map((d, i) => {
+            const on = plan.suggestedDays.includes(i);
+            return (
+              <li key={d} className={cn('flex flex-col items-center gap-1 rounded-xl py-2 text-xs font-semibold', on ? 'bg-primary text-primary-foreground' : 'bg-muted/60 text-muted-foreground')}>
+                {d}
+                <span className={cn('h-1.5 w-1.5 rounded-full', on ? 'bg-primary-foreground' : 'bg-transparent')} aria-hidden />
+                <span className="sr-only">{on ? 'practice day' : 'rest day'}</span>
+              </li>
+            );
+          })}
+        </ol>
+      </Panel>
+      <Panel title="Focus first">
+        <ol className="space-y-2">
+          {plan.focusOrder.map((item, i) => (
+            <li key={item} className="flex items-center gap-3">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
+              <span className="text-sm font-medium">{item}</span>
+            </li>
+          ))}
+        </ol>
+      </Panel>
+      <p className="flex items-start gap-3 rounded-2xl bg-primary/[0.07] p-4 text-sm">
+        <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+        <span>{plan.tip}</span>
+      </p>
+      {plan.schoolNote && (
+        <p className="rounded-2xl border border-border p-4 text-sm">
+          <span className="font-semibold">{plan.schoolNote.schoolName}: </span>
+          <span className="text-muted-foreground">{plan.schoolNote.note}</span>
+        </p>
+      )}
+    </div>
   );
 }
