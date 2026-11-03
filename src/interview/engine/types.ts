@@ -230,6 +230,8 @@ export interface BrainRequest {
   preview?: string[];
   /** Interview Lab (administrators only): the version or draft to run, read when a session starts. */
   lab?: { version: string; draftId?: string };
+  /** 'start' on a session already under way (after a refresh or dropped connection): rejoin it. */
+  resume?: boolean;
 }
 
 /** Response the brain returns; `say` is spoken verbatim by the avatar. */
@@ -258,4 +260,7 @@ export interface BrainResponse {
     /** A roleplay brief is being read silently; the actor has not spoken yet. */
     roleplayPending?: boolean;
   };
+  /** Rejoining a session: the conversation so far, so the page can show it again. */
+  transcript?: { role: 'user' | 'assistant'; content: string }[];
+  resumed?: boolean;
 }

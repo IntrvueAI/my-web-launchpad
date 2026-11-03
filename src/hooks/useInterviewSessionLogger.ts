@@ -8,6 +8,10 @@ export interface SessionLoggerReturn {
    *  code). Needed for app_logs.interview_session_id, which is a real FK, not the display code. */
   sessionId: string | null;
   startSession: (interviewType: InterviewType, userId: string) => Promise<string>;
+  /** Rejoin a session that is still open (after a refresh or a dropped connection). */
+  resumeSession: (id: string, reference: string) => string;
+  /** The session's ids right now (the fields above are a snapshot from the last render). */
+  current: () => { id: string | null; reference: string | null };
   logEvent: (type: string, message: string, level?: 'info' | 'warn' | 'error', metadata?: Record<string, any>) => Promise<void>;
   logError: (error: string, metadata?: Record<string, any>) => Promise<void>;
   endSession: (status?: 'completed' | 'error' | 'timeout') => Promise<void>;
@@ -31,6 +35,13 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
       throw new Error('Your interview could not be saved. Please check your connection and try again.');
     }
   }, []);
+
+  const resumeSession = useCallback((id: string, reference: string): string => {
+    sessionIdRef.current = id;
+    sessionReferenceRef.current = reference;
+    return reference;
+  }, []);
+  const current = useCallback(() => ({ id: sessionIdRef.current, reference: sessionReferenceRef.current }), []);
 
   const logEvent = useCallback(async (
     type: string,
@@ -74,6 +85,8 @@ export const useInterviewSessionLogger = (): SessionLoggerReturn => {
     sessionReference: sessionReferenceRef.current,
     sessionId: sessionIdRef.current,
     startSession,
+    resumeSession,
+    current,
     logEvent,
     logError,
     updateActivity,

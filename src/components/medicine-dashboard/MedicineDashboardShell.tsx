@@ -1,4 +1,5 @@
 import { isMedicineSite, siteName, siteProduct } from '@/lib/site';
+import { CreatorBadge } from '@/components/creators/CreatorBadge';
 import { useAdminStatus } from '@/hooks/useAdminStatus';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
@@ -116,6 +117,7 @@ export function MedicineDashboardShell({
                 ))}
               </div>}
 
+              <CreatorBadge />
               <button onClick={onOpenCredits} style={{
                 display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 16,
                 border: '1px solid var(--med-border-strong)', background: 'var(--med-card)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--med-ink)',

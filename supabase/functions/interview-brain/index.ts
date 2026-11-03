@@ -350,6 +350,21 @@ serve(
       // Repeated starts must not erase an existing transcript or select a different circuit.
       if (action === "start" && session.engine_state) {
         const existing = session.engine_state as AgentState;
+        // Rejoining after a refresh or a dropped connection: return the conversation so far and
+        // recap Clara's last line. Nothing is recorded, so a rejoin never changes the interview.
+        if (body.resume === true) {
+          const transcript = (existing.transcript ?? [])
+            .filter((t) => t && (t.role === "user" || t.role === "assistant") && typeof t.content === "string" && t.content.trim() && !/^\[.*\]$/.test(t.content.trim()))
+            .slice(-120);
+          const lastClara = [...transcript].reverse().find((t) => t.role === "assistant")?.content ?? "";
+          return json({
+            say: existing.done ? "" : `Welcome back. Let's carry on from where we were. ${lastClara}`.trim(),
+            done: existing.done,
+            uiState: uiStateOf(existing, pack, interviewTypeId),
+            transcript,
+            resumed: true,
+          });
+        }
         return json({
           say: "",
           done: existing.done,

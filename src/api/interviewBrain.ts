@@ -17,6 +17,8 @@ export interface BrainTurnArgs {
   preview?: string[];
   /** Interview Lab (administrators only). */
   lab?: { version: string; draftId?: string };
+  /** Rejoin a session already under way (after a refresh or a dropped connection). */
+  resume?: boolean;
   /** The real interview_sessions.id (UUID), for tagging the durable app_logs trail — distinct
    *  from sessionId above, which is the display reference the edge function looks the row up by. */
   interviewSessionId?: string | null;

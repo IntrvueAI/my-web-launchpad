@@ -9,7 +9,7 @@ const api = vi.hoisted(() => ({
   creators: vi.fn(), overview: vi.fn(), payouts: vi.fn(), pay: vi.fn(), saveLink: vi.fn(), saveCosts: vi.fn(),
   reverseCommission: vi.fn(), recordVisit: vi.fn(), attach: vi.fn(), inviteCreator: vi.fn(), updateCreator: vi.fn(),
 }));
-const auth = vi.hoisted(() => ({ user: null as null | { id: string } }));
+const auth = vi.hoisted(() => ({ user: null as null | { id: string; user_metadata?: Record<string, unknown> } }));
 vi.mock("@/lib/creatorProgramme", async () => {
   const actual = await vi.importActual<typeof import("@/lib/creatorProgramme")>("@/lib/creatorProgramme");
   return { ...actual, creatorApi: { ...actual.creatorApi, ...api } };
@@ -184,5 +184,22 @@ describe("Referral links", () => {
     await render(<Probe />);
     expect(api.attach).toHaveBeenCalledWith("studywithsam");
     expect(programme.storedReferral()).toBeNull();
+  });
+  it("uses the code saved at sign-up when the confirmation email is opened on another device, once", async () => {
+    api.attach.mockResolvedValue({ attached: true });
+    auth.user = { id: "u3", user_metadata: { referral_code: "studywithsam" } };
+    const Probe = () => { useReferralAttachment(); return null; };
+    await render(<Probe />);
+    expect(api.attach).toHaveBeenCalledTimes(1);
+    expect(api.attach).toHaveBeenCalledWith("studywithsam");
+    document.body.innerHTML = "";
+    await render(<Probe />);
+    expect(api.attach).toHaveBeenCalledTimes(1);
+  });
+  it("ignores a malformed code saved with an account", async () => {
+    auth.user = { id: "u4", user_metadata: { referral_code: "../../admin" } };
+    const Probe = () => { useReferralAttachment(); return null; };
+    await render(<Probe />);
+    expect(api.attach).not.toHaveBeenCalled();
   });
 });

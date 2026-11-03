@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
   talk: vi.fn(async () => {}),
   stop: vi.fn(async () => {}),
   start: vi.fn(async () => "session-one"),
+  resume: vi.fn((_id: string, reference: string) => reference),
   token: vi.fn(async () => ({
     data: { sessionToken: "mock-token" },
     error: null,
@@ -47,6 +48,8 @@ vi.mock("@anam-ai/js-sdk/dist/module/types", () => ({
 vi.mock("../useInterviewSessionLogger", () => ({
   useInterviewSessionLogger: () => ({
     startSession: mocks.start,
+    resumeSession: mocks.resume,
+    current: () => ({ id: "uuid", reference: "session-one" }),
     sessionId: "uuid",
     sessionReference: "session-one",
     logEvent: mocks.logEvent,
@@ -411,7 +414,7 @@ describe("Live session control delivery", () => {
     expect(session.sessionStatus).toBe("error");
     expect(session.isStreaming).toBe(false);
   });
-  it("preserves the transcript when the provider disconnects", async () => {
+  it("keeps a dropped interview open to rejoin, and still preserves the transcript", async () => {
     mocks.brain.mockResolvedValueOnce(response(0));
     await act(async () => {
       await session.startInterview("user");
@@ -421,12 +424,47 @@ describe("Live session control delivery", () => {
       mocks.listeners.get("closed")?.("network");
     });
     expect(session.isStreaming).toBe(false);
-    expect(session.error).toContain("connection ended");
+    expect(session.error).toContain("rejoin");
+    expect(session.rejoinable).toEqual({ id: "uuid", reference: "session-one" });
+    expect(mocks.end).not.toHaveBeenCalled();
     let transcript: string | null = null;
     await act(async () => {
       transcript = await session.stopInterview();
     });
     expect(transcript).toContain("My reasoning is worth keeping.");
+    expect(session.rejoinable).toBeNull();
+  });
+  it("rejoins the same session after a drop and shows the conversation so far", async () => {
+    mocks.brain.mockResolvedValueOnce(response(0));
+    await act(async () => {
+      await session.startInterview("user");
+    });
+    await act(async () => {
+      mocks.listeners.get("closed")?.("network");
+    });
+    mocks.brain.mockResolvedValueOnce({
+      ...response(1), say: "Welcome back. Station 2", resumed: true,
+      transcript: [{ role: "assistant", content: "Station 1" }, { role: "user", content: "My answer" }],
+    });
+    await act(async () => {
+      await session.rejoin("user");
+    });
+    expect(mocks.start).toHaveBeenCalledTimes(1);
+    expect(mocks.resume).toHaveBeenCalledWith("uuid", "session-one");
+    expect(mocks.brain).toHaveBeenLastCalledWith(expect.objectContaining({ action: "start", resume: true, sessionId: "session-one" }));
+    expect(session.chatHistory.map((m) => m.content)).toEqual(["Station 1", "My answer", "Welcome back. Station 2"]);
+    expect(session.rejoinable).toBeNull();
+    expect(session.isStreaming).toBe(true);
+  });
+  it("resumes a session left open by a refresh without creating a new one", async () => {
+    mocks.brain.mockResolvedValueOnce({ ...response(2), say: "Welcome back.", resumed: true, transcript: [] });
+    await act(async () => {
+      await session.startInterview("user", { mode: "mock", resume: { id: "uuid-2", reference: "REF2" } });
+    });
+    expect(mocks.start).not.toHaveBeenCalled();
+    expect(mocks.resume).toHaveBeenCalledWith("uuid-2", "REF2");
+    expect(mocks.token).toHaveBeenCalledWith("get-anam-session-token", expect.objectContaining({ body: expect.objectContaining({ sessionReference: "REF2" }) }));
+    expect(mocks.brain).toHaveBeenCalledWith(expect.objectContaining({ action: "start", resume: true }));
   });
   it("repeats a reply without advancing or duplicating the transcript", async () => {
     mocks.brain.mockResolvedValueOnce(response(0));

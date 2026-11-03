@@ -22,6 +22,9 @@ interface InterviewControlsProps {
   /** Engine-driven practice mode only: offer mid-run topic switching. */
   topics?: TopicOption[];
   onSwitchTopic?: (topicId: string) => Promise<void>;
+  /** Overrides "Start Interview", e.g. "Rejoin interview" for an interview already under way. */
+  startLabel?: string;
+  startHint?: string;
 }
 
 /**
@@ -38,6 +41,8 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
   onSkipQuestion,
   topics,
   onSwitchTopic,
+  startLabel,
+  startHint,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSkipping, setIsSkipping] = React.useState(false);
@@ -92,7 +97,7 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
             ) : (
               <>
                 <Play className="w-5 h-5" />
-                <span>Start Interview</span>
+                <span>{startLabel ?? 'Start Interview'}</span>
               </>
             )}
           </Button>
@@ -191,7 +196,7 @@ export const InterviewControls: React.FC<InterviewControlsProps> = ({
         {!isStreaming && (
           <div className="text-center space-y-2 px-2">
             <p className="text-sm text-muted-foreground">
-              Click "Start Interview" when you're ready to begin
+              {startHint ?? `Click "Start Interview" when you're ready to begin`}
             </p>
             <p className="text-xs text-muted-foreground">
               The AI interviewer will introduce themselves and start with questions

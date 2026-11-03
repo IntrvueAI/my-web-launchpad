@@ -223,6 +223,12 @@ export const creatorApi = {
   // Creators
   claim: async (): Promise<string | null> => unwrap(await db.rpc("claim_creator_account")),
   dashboard: async (): Promise<CreatorView | null> => unwrap(await db.rpc("creator_dashboard")),
+  /** This account's creator profile (claiming an invitation sent to its email), or null. */
+  me: async (): Promise<{ id: string; name: string; status: CreatorStatus } | null> => {
+    const id = unwrap<string | null>(await db.rpc("claim_creator_account"));
+    if (!id) return null;
+    return unwrap(await db.from("creators").select("id, name, status").eq("id", id).maybeSingle());
+  },
   stripe: async (action: "connect" | "status" | "stripe_dashboard") => {
     const { data, error } = await invokeEdgeFunction<{ url?: string; payoutStatus?: PayoutStatus; due?: number }>("creator-programme", { body: { action } });
     if (error) throw error;

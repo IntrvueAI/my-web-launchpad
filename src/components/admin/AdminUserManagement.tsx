@@ -18,6 +18,7 @@ interface UserWithCredits {
   created_at: string;
   credits: number;
   medicine_credits: number;
+  creator_status: 'invited' | 'active' | 'paused' | null;
 }
 
 export const AdminUserManagement = () => {
@@ -77,6 +78,8 @@ export const AdminUserManagement = () => {
         .from('medicine_credit_balances')
         .select('user_id, credits');
       if (medicineError) console.error('Error fetching Medicine credits:', medicineError);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: creatorData } = await (supabase as any).from('creators').select('user_id, status').not('user_id', 'is', null);
 
       // Map profiles with their credits
       const usersWithCredits = profilesData?.map(user => {
@@ -89,6 +92,7 @@ export const AdminUserManagement = () => {
           created_at: user.created_at,
           credits: userCredits?.credits || 0,
           medicine_credits: medicineCredits?.credits || 0,
+          creator_status: ((creatorData as { user_id: string; status: UserWithCredits['creator_status'] }[] | null)?.find(c => c.user_id === user.id)?.status) ?? null,
         };
       }) || [];
 
@@ -209,8 +213,13 @@ export const AdminUserManagement = () => {
                 {users?.map((user) => (
                   <TableRow key={user.id}>
                     <TableCell>
-                      <div className="font-medium">
+                      <div className="flex items-center gap-2 font-medium">
                         {user.full_name || 'No name set'}
+                        {user.creator_status && (
+                          <span title="Creator (affiliate) account" className="rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">
+                            Creator{user.creator_status === 'paused' ? ' · paused' : ''}
+                          </span>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell className="text-muted-foreground">

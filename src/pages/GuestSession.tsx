@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 import { InterviewPlatform } from "@/components/InterviewPlatform";
+import { ResumeInterviewBanner } from "@/components/interview/ResumeInterviewBanner";
 import { Button } from "@/components/ui/button";
 import { INTERVIEW_TYPES, type InterviewType } from "@/config/interviewTypes";
 import {
@@ -16,6 +17,8 @@ export default function GuestSession() {
   const { user, loading } = useAuth();
   const [trial, setTrial] = useState<TrialStatus | null>(null);
   const [selected, setSelected] = useState<InterviewType | null>(null);
+  // Rejoining an interview still open after a refresh: same session, no new attempt used.
+  const [resume, setResume] = useState<{ id: string; reference: string } | null>(null);
   const [error, setError] = useState("");
   const [closed, setClosed] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -171,8 +174,9 @@ export default function GuestSession() {
                       : "Back to interviews"}
                   </Button>
                   <InterviewPlatform
-                    key={selected.id}
+                    key={`${selected.id}-${resume?.id ?? "new"}`}
                     selectedInterviewType={selected}
+                    resume={resume}
                     onAttemptFinished={(ready) => void finished(ready)}
                     onBusyChange={setBusy}
                   />
@@ -216,6 +220,7 @@ export default function GuestSession() {
                             disabled={trial.remaining < 1 || !!error}
                             onClick={() => {
                               setAttemptFinished(false);
+                              setResume(null);
                               setSelected(type);
                             }}
                           >
@@ -231,6 +236,10 @@ export default function GuestSession() {
           )}
         </div>
       </main>
+      <ResumeInterviewBanner
+        enabled={!!trial && !closed && !selected}
+        onRejoin={(type, session) => { setAttemptFinished(false); setResume(session); setSelected(type); }}
+      />
     </MedicineTheme>
   );
 }

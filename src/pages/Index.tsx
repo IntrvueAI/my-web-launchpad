@@ -1,4 +1,5 @@
 
+import { CreatorBadge } from '@/components/creators/CreatorBadge';
 import { useEffect, useRef, useState, useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -36,6 +37,7 @@ import { Home, Video, History, ArrowLeft, Settings, Wallet, ListChecks, Trophy, 
 import { InterviewType } from '@/config/interviewTypes';
 import { useCredits } from '@/hooks/useCredits';
 import { useMedicineCredits } from '@/hooks/useMedicineCredits';
+import { ResumeInterviewBanner } from '@/components/interview/ResumeInterviewBanner';
 import { medicineCreditsLabel, medicineInterviewCost } from '@/config/medicinePricing';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -152,6 +154,19 @@ const Index = () => {
   const medicineCredits = useMedicineCredits(productLine === 'medicine');
   const { credits, refetchCredits } = productLine === 'medicine' ? medicineCredits : schoolCredits;
   const [medicineCreditsRequest, setMedicineCreditsRequest] = useState(0);
+  // Rejoining an interview that is still open (after a refresh): same session, no new charge.
+  const [resumeSession, setResumeSession] = useState<{ id: string; reference: string } | null>(null);
+  const rejoinInterview = (type: InterviewType, session: { id: string; reference: string }) => {
+    if ((type.category === 'medicine') !== (productLine === 'medicine')) {
+      const line = type.category === 'medicine' ? 'medicine' : '11plus';
+      setStoredProductLine(line);
+      setProductLine(line);
+    }
+    setResumeSession(session);
+    setSelectedInterviewType(type);
+    setCurrentView('interview');
+  };
+  const resumeBanner = <ResumeInterviewBanner onRejoin={rejoinInterview} enabled={currentView !== 'interview'} />;
   const { toast } = useToast();
   const isMobile = useIsMobile();
 
@@ -168,6 +183,7 @@ const Index = () => {
   // credits come back automatically if it cannot start. Administrators are free. Landing-page
   // links and the dashboard both start here, so nobody reaches a paid room without the credits.
   const startMedicineInterview = async (interviewType: InterviewType) => {
+    setResumeSession(null);
     const cost = medicineInterviewCost(interviewType.id);
     if (!isAdmin && typeof cost === 'number' && cost > 0) {
       const { data: balance } = await medicineCredits.refetchCredits();
@@ -188,6 +204,7 @@ const Index = () => {
   startMedicineRef.current = startMedicineInterview;
 
   const handleSelectInterview = async (interviewType: InterviewType) => {
+    setResumeSession(null);
     if (interviewType.retired || (interviewType.category === 'medicine') !== (productLine === 'medicine')) {
       toast({ title: 'Choose a current practice format', description: productLine === 'medicine' ? 'Choose the full MMI or a seven-minute mini interview.' : 'This practice area is for 11+. Open Medicine to practise MMI interviews.' });
       setCurrentView('selection');
@@ -368,7 +385,7 @@ const Index = () => {
           <span className="font-display text-lg font-semibold">{siteName()}</span>
           <button className="min-h-11 text-sm font-semibold underline" onClick={() => { setSelectedInterviewType(null); setCurrentView('dashboard'); }}>Back to my dashboard</button>
         </header>
-        <Suspense fallback={<p>Opening your interview…</p>}><InterviewPlatform key={selectedInterviewType.id} selectedInterviewType={selectedInterviewType} /></Suspense>
+        <Suspense fallback={<p>Opening your interview…</p>}><InterviewPlatform key={`${selectedInterviewType.id}-${resumeSession?.id ?? 'new'}`} selectedInterviewType={selectedInterviewType} resume={resumeSession} /></Suspense>
       </div>
     </main></MedicineTheme>;
   }
@@ -380,6 +397,7 @@ const Index = () => {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#FF7F50' }} />
         </div>
       }>
+        {resumeBanner}
         <MedicineDashboard
           initialTab={currentView === 'selection' ? 'practice' : 'home'}
           initialAccountView={currentView === 'credits' ? 'credits' : null}
@@ -579,6 +597,7 @@ const Index = () => {
           
           {/* Desktop User Info — credits pill + avatar (Settings/Grown-up/Sign out live in its dropdown) */}
           <div className="hidden md:flex items-center gap-2.5">
+            <CreatorBadge />
             <button
               onClick={() => setCurrentView('credits')}
               className="px-3.5 py-[7px] rounded-full border border-foreground/15 text-[12.5px] font-semibold text-muted-foreground hover:text-foreground transition-colors"
@@ -618,7 +637,8 @@ const Index = () => {
           </div>
           
           {/* Mobile User Info - Credits Badge Only */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <CreatorBadge className="px-2.5" />
             <Badge variant="outline" className="text-xs">
               {credits ?? 0}
             </Badge>
@@ -667,7 +687,7 @@ const Index = () => {
           selectedInterviewType?.provider === 'anam-deepgram' ? (
             <InterviewPlatformV2 selectedInterviewType={selectedInterviewType} />
           ) : (
-            <InterviewPlatform selectedInterviewType={selectedInterviewType} />
+            <InterviewPlatform key={resumeSession?.id ?? 'new'} selectedInterviewType={selectedInterviewType} resume={resumeSession} />
           )
         ) : currentView === 'history' ? (
           <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -730,6 +750,7 @@ const Index = () => {
           Admin: switch to {dashboardLayout === 'topnav' ? 'Dashboard 2' : 'Dashboard 1'}
         </button>
       )}
+      {resumeBanner}
     </div>;
 };
 export default Index;

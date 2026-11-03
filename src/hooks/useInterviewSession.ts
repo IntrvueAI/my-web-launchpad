@@ -38,9 +38,14 @@ interface ChatMessage {
 export interface StartOptions {
   mode?: Mode;
   topic?: string;
+  /** Rejoin this still-open session instead of creating a new one. */
+  resume?: { id: string; reference: string };
 }
 
 interface UseInterviewSessionReturn {
+  /** An interview whose connection dropped mid-way and can be rejoined where it left off. */
+  rejoinable: { id: string; reference: string } | null;
+  rejoin: (userId: string) => Promise<void>;
   isConnected: boolean;
   isStreaming: boolean;
   isThinking: boolean;
@@ -116,12 +121,15 @@ export const useInterviewSession = (
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [brainUiState, setBrainUiState] = useState<BrainResponse['uiState'] | null>(null);
   const [interviewComplete, setInterviewComplete] = useState(false);
+  const interviewCompleteRef = useRef(false);
+  useEffect(() => { interviewCompleteRef.current = interviewComplete; }, [interviewComplete]);
+  const [rejoinable, setRejoinable] = useState<{ id: string; reference: string } | null>(null);
   const uiStateRef = useRef<BrainResponse['uiState'] | null>(null);
   const controlsRef = useRef(new StationControlQueue());
   const labRef = useRef(lab);
   labRef.current = lab;
   const answerRetriesRef = useRef(0);
-  type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string };
+  type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string; resume?: boolean };
   type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up' | 'begin_roleplay';
   const turnRef = useRef<(action: TurnAction, payload?: TurnPayload) => Promise<void>>(async () => {});
   const retryTurnRef = useRef<{action:TurnAction;payload:TurnPayload}|null>(null);
@@ -215,6 +223,11 @@ export const useInterviewSession = (
       const res = await brainTurn(requestBody);
       logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
       if (sessionRefRef.current !== sessionId) return;
+      // Rejoining: show the conversation so far before Clara recaps where we were.
+      if (res.resumed && res.transcript) {
+        transcriptRef.current = res.transcript.map((t) => `${t.role === 'user' ? 'Student' : 'Interviewer'}: ${t.content.trim()}`);
+        setChatHistory(res.transcript.map((t) => ({ role: t.role, content: t.content.trim(), timestamp: new Date() })));
+      }
       // A first greeting assigns the initial index; it is not a station change.
       // Preserve answers submitted while that first request is still running.
       const changedStation = uiStateRef.current !== null && uiStateRef.current.questionIndex !== res.uiState.questionIndex;
@@ -414,7 +427,10 @@ export const useInterviewSession = (
 
       // Start session logging — for the engine path we MUST have the session_reference before the
       // first brain call. Stop here if the database cannot create an owned session.
-      const sessionRef = await sessionLogger.startSession(interviewType, userId);
+      setRejoinable(null);
+      const sessionRef = opts.resume
+        ? sessionLogger.resumeSession(opts.resume.id, opts.resume.reference)
+        : await sessionLogger.startSession(interviewType, userId);
       if (!current()) { await sessionLogger.endSession('error'); return; }
       sessionRefRef.current = sessionRef;
       sessionLogger.logEvent('session_start', 'Interview session initialization started').catch(() => {});
@@ -469,12 +485,16 @@ export const useInterviewSession = (
         client.addListener(AnamEvent.SESSION_READY, () => {
           if (!current() || clientRef.current !== client || startedRef.current) return;
           startedRef.current = true;
-          runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic });
+          runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic, resume: !!opts.resume });
         });
       }
 
       client.addListener(AnamEvent.CONNECTION_CLOSED, () => {
         if (!current() || clientRef.current !== client) return;
+        // An engine interview that had begun stays open on the server: offer to rejoin it rather
+        // than ending it, so a dropped connection doesn't lose the interview.
+        const lost = engineDriven && startedRef.current ? sessionLogger.current() : null;
+        const canRejoin = !!(lost?.id && lost.reference && !interviewCompleteRef.current);
         generationRef.current += 1;
         sessionRefRef.current = null;
         clientRef.current = null;
@@ -487,10 +507,15 @@ export const useInterviewSession = (
         setIsStreaming(false);
         setIsThinking(false);
         setSessionStatus('error');
-        setError('The interview connection ended. Your transcript is still available below.');
         connectionHealth.stopMonitoring();
         void client.stopStreaming().catch(() => {});
-        void sessionLogger.endSession('error');
+        if (canRejoin) {
+          setRejoinable({ id: lost!.id!, reference: lost!.reference! });
+          setError('The connection dropped. Your answers so far are saved: rejoin to carry on from where you left off.');
+        } else {
+          setError('The interview connection ended. Your transcript is still available below.');
+          void sessionLogger.endSession('error');
+        }
       });
       if (!videoRef.current) throw new Error('Video element lost during initialization');
       let connectionTimer: ReturnType<typeof setTimeout> | undefined;
@@ -512,7 +537,7 @@ export const useInterviewSession = (
       // Fallback for engine path if SESSION_READY didn't fire before streaming resolved.
       if (engineDriven && !startedRef.current) {
         startedRef.current = true;
-        runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic });
+        runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic, resume: !!opts.resume });
       }
 
     } catch (err) {
@@ -620,6 +645,7 @@ export const useInterviewSession = (
    * Stop the interview session and get transcription.
    */
   const stopInterview = useCallback(async (): Promise<string | null> => {
+    setRejoinable(null);
     generationRef.current += 1;
     sessionRefRef.current = null;
     setIsThinking(false);
@@ -753,7 +779,14 @@ export const useInterviewSession = (
     }
   }, []);
 
+  const rejoin = useCallback(async (userId: string) => {
+    if (!rejoinable) return;
+    await startInterview(userId, { ...startOptsRef.current, resume: rejoinable });
+  }, [rejoinable, startInterview]);
+
   return {
+    rejoinable,
+    rejoin,
     isThinking,
     repeatLastResponse,
     isConnected,

@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Keyboard, Mic } from "lucide-react";
+import { AudioLines, Eye, EyeOff, Keyboard, Mic, Video } from "lucide-react";
 import { MedicineColourControls } from '@/components/medicine-dashboard/MedicineTheme';
 
 export function InterviewToolbar({
@@ -15,6 +15,8 @@ export function InterviewToolbar({
   onFocus,
   onBeginResponse,
   medicine = false,
+  voiceOnly = false,
+  onVoiceOnly,
 }: {
   title: string;
   live: boolean;
@@ -29,6 +31,9 @@ export function InterviewToolbar({
   onFocus: () => void;
   onBeginResponse?: () => void;
   medicine?: boolean;
+  /** Hide Clara's video and keep her voice. */
+  voiceOnly?: boolean;
+  onVoiceOnly?: () => void;
 }) {
   const seconds = Math.max(0, timer?.secondsRemaining ?? 0);
   const clock = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
@@ -71,7 +76,12 @@ export function InterviewToolbar({
             {timer?.phase === 'prep' && onBeginResponse && <button className={button} onClick={onBeginResponse}>I'm ready · start answering</button>}
           </div>
         )}
-        {medicine && !live && <MedicineColourControls />}
+        {!live && (
+          <div className="flex flex-wrap items-center gap-2">
+            {onVoiceOnly && <VoiceOnlyButton className={button} voiceOnly={voiceOnly} onClick={onVoiceOnly} />}
+            {medicine && <MedicineColourControls />}
+          </div>
+        )}
       </div>
       {live && (
         <div className="flex flex-wrap items-center justify-between gap-3 border-t px-4 py-3">
@@ -86,6 +96,7 @@ export function InterviewToolbar({
           </p>
           <div className="flex flex-wrap gap-2">
             {medicine && <MedicineColourControls />}
+            {onVoiceOnly && <VoiceOnlyButton className={button} voiceOnly={voiceOnly} onClick={onVoiceOnly} />}
             <button
               className={button}
               aria-pressed={typeMode}
@@ -121,5 +132,20 @@ export function InterviewToolbar({
         </div>
       )}
     </header>
+  );
+}
+
+function VoiceOnlyButton({ className, voiceOnly, onClick }: { className: string; voiceOnly: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      className={className}
+      aria-pressed={voiceOnly}
+      onClick={onClick}
+      title={voiceOnly ? "Show Clara's video again" : "Hide Clara's video and keep her voice"}
+    >
+      {voiceOnly ? <Video className="h-4 w-4" aria-hidden /> : <AudioLines className="h-4 w-4" aria-hidden />}
+      {voiceOnly ? "Show Clara" : "Voice only"}
+    </button>
   );
 }

@@ -1079,3 +1079,41 @@ describe("Creator programme", () => {
     expect(state.stripe.checkout.sessions.create.mock.calls[0][0].line_items[0].price_data.unit_amount).toBe(2999);
   });
 });
+
+describe("Rejoining an interview", () => {
+  const engineState = {
+    subject: "medicine", mode: "mock", difficulty: 2, questionIndex: 1, targetQuestions: 6, done: false, seed: 1, askedIds: ["M1"],
+    currentStudentTurns: [], evidence: [],
+    transcript: [
+      { role: "assistant", content: "Welcome. Station one: why medicine?" },
+      { role: "user", content: "I volunteered at a hospice." },
+      { role: "user", content: "[time_up]" },
+      { role: "assistant", content: "Station two: a colleague asks you to cover for them. What do you do?" },
+    ],
+    current: { id: "M2", subject: "medicine", difficulty: 2, topic: "ethics-scenarios", question: "Cover for a colleague?", answer: "private" },
+  };
+  it("returns the conversation so far and recaps Clara's last line, without changing the interview", async () => {
+    state.resolve = (q) => ({ data: q.table === "interview_sessions" ? { ...session, interview_type: "medicine-mmi-practice", engine_state: engineState } : null, error: null });
+    const response = await (await handler("interview-brain"))(req({ sessionId: "S1", action: "start", resume: true }));
+    expect(response.status).toBe(200);
+    const body = await response.json();
+    expect(body.resumed).toBe(true);
+    expect(body.say).toBe("Welcome back. Let's carry on from where we were. Station two: a colleague asks you to cover for them. What do you do?");
+    expect(body.transcript).toHaveLength(3);
+    expect(JSON.stringify(body.transcript)).not.toContain("[time_up]");
+    expect(JSON.stringify(body)).not.toContain("private");
+    expect(state.queries.some((q) => q.table === "interview_sessions" && q.operation === "update")).toBe(false);
+    expect(state.fetch).not.toHaveBeenCalled();
+  });
+  it("says nothing when the interview had already finished", async () => {
+    state.resolve = (q) => ({ data: q.table === "interview_sessions" ? { ...session, interview_type: "medicine-mmi-practice", engine_state: { ...engineState, done: true } } : null, error: null });
+    const body = await (await (await handler("interview-brain"))(req({ sessionId: "S1", action: "start", resume: true }))).json();
+    expect(body).toMatchObject({ say: "", done: true, resumed: true });
+  });
+  it("still answers a repeated plain start with silence", async () => {
+    state.resolve = (q) => ({ data: q.table === "interview_sessions" ? { ...session, interview_type: "medicine-mmi-practice", engine_state: engineState } : null, error: null });
+    const body = await (await (await handler("interview-brain"))(req({ sessionId: "S1", action: "start" }))).json();
+    expect(body.say).toBe("");
+    expect(body.transcript).toBeUndefined();
+  });
+});

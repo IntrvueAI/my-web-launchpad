@@ -15,7 +15,7 @@ import { useInterviewSession, type LabRun } from '@/hooks/useInterviewSession';
 import { useAuth } from '@/contexts/AuthContext';
 import { invokeEdgeFunction } from '@/lib/invokeEdgeFunction';
 import { useToast } from '@/hooks/use-toast';
-import { Play, Square, Mic, MicOff, RotateCcw, Eye, EyeOff, Keyboard, Send } from 'lucide-react';
+import { Play, Square, Mic, MicOff, RotateCcw, Eye, EyeOff, Keyboard, Send, AudioLines, RefreshCw } from 'lucide-react';
 import { InterviewTimer } from './InterviewTimer';
 import { MedicineTheme } from './medicine-dashboard/MedicineTheme';
 import { usePreviewFeature } from '@/lib/previewFeatures';
@@ -37,6 +37,8 @@ interface InterviewPlatformProps {
   lab?: LabRun;
   /** Called with the saved session's reference once it exists (used by the Interview Lab for notes). */
   onSessionReference?: (reference: string) => void;
+  /** Rejoin an interview that is still open (after a refresh), instead of starting a new one. */
+  resume?: { id: string; reference: string } | null;
 }
 
 type BrainUiState = ReturnType<typeof useInterviewSession>['brainUiState'];
@@ -85,7 +87,7 @@ function phaseDots(ui: NonNullable<BrainUiState>): { count: number; idx: number 
  * Handles the complete interview preparation experience
  */
 export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({ 
-  selectedInterviewType, onAttemptFinished, onBusyChange, lab, onSessionReference
+  selectedInterviewType, onAttemptFinished, onBusyChange, lab, onSessionReference, resume
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -105,6 +107,16 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   // Mic is muted while on so stray room noise can't interleave with typed answers.
   const [typeMode, setTypeMode] = useState(false);
   const [typedText, setTypedText] = useState('');
+  // Voice only: hide Clara's video and keep her voice. Remembered in this browser.
+  const [voiceOnly, setVoiceOnly] = useState(() => {
+    try { return localStorage.getItem('intrvue-voice-only') === '1'; } catch { return false; }
+  });
+  const toggleVoiceOnly = useCallback(() => setVoiceOnly((on) => {
+    try { localStorage.setItem('intrvue-voice-only', on ? '0' : '1'); } catch { /* Remembering is optional. */ }
+    return !on;
+  }), []);
+  // An interview opened to be rejoined (after a refresh) starts from the saved session once.
+  const [resumeTarget, setResumeTarget] = useState(resume ?? null);
   const [reasoningNotes, setReasoningNotes] = useState<Record<string, ReasoningNotes>>({});
   const [feedback, setFeedback] = useState(null);
   const [pendingTranscript, setPendingTranscript] = useState<string | null>(null);
@@ -126,7 +138,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const academic = getMedicinePilot(interviewType.id)?.style === 'academic';
 
   // Engine-driven interviews show a Practice/Mock setup gate before connecting.
-  const [setupChoice, setSetupChoice] = useState<SetupChoice | null>(null);
+  const [setupChoice, setSetupChoice] = useState<SetupChoice | null>(resume ? { mode: 'mock' } : null);
   const subjectPack = engineDriven ? getSubjectPack(interviewType.engineSubject || '') : undefined;
 
   // Custom hook to manage anam.ai interview session
@@ -153,8 +165,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     switchTopic,
     brainUiState,
     interviewComplete,
-    stationTimer, beginResponse
+    stationTimer, beginResponse, rejoinable, rejoin
   } = useInterviewSession(videoRef, interviewType, lab);
+  const rejoining = !isStreaming && !!(rejoinable || resumeTarget);
 
   const medicineTimer = interviewType.category === 'medicine' && isStreaming ? stationTimer : null;
   // Preview 'readable-room': the light Medicine theme plus 12.5% larger text while this page is open.
@@ -294,6 +307,12 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
 
     try {
       if (interviewType.category === 'medicine') stationAnnouncements.prepareSound();
+      if (rejoinable) { await rejoin(user.id); return; }
+      if (resumeTarget) {
+        setResumeTarget(null);
+        await startInterview(user.id, { mode: 'mock', resume: resumeTarget });
+        return;
+      }
       setReasoningNotes({});
       setFeedback(null);
       setPendingTranscript(null);
@@ -301,7 +320,7 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     } catch (err) {
       console.error('Failed to start interview:', err);
     }
-  }, [startInterview, user, toast, engineDriven, setupChoice, interviewType.category, stationAnnouncements.prepareSound]);
+  }, [startInterview, user, toast, engineDriven, setupChoice, interviewType.category, stationAnnouncements.prepareSound, rejoinable, rejoin, resumeTarget]);
 
   // Handle stopping the interview session and generate feedback
   const handleStopInterview = useCallback(async () => {
@@ -532,7 +551,22 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         {!feedback && !pendingTranscript && !isGeneratingFeedback && <InterviewToolbar medicine={interviewType.category === 'medicine'} title={interviewType.name} live={isStreaming}
           progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : sessionStatus === 'connecting' ? 'Connecting…' : sessionStatus === 'error' ? 'Connection needs attention' : 'Ready to begin'}
           timer={interviewType.category === 'medicine' ? null : stationTimer} onBeginResponse={beginResponse} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
-          onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}/>}
+          onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}
+          voiceOnly={voiceOnly} onVoiceOnly={toggleVoiceOnly}/>}
+        {rejoining && (
+          <div role="status" className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary/40 bg-primary/5 p-4">
+            <div className="flex items-start gap-3">
+              <RefreshCw className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />
+              <div>
+                <p className="font-semibold">Your interview is still open</p>
+                <p className="text-sm text-muted-foreground">Your answers so far are saved. Rejoin and Clara will recap where you left off.</p>
+              </div>
+            </div>
+            <Button onClick={() => void handleStartInterview()} disabled={sessionStatus === 'connecting'} className="gap-2">
+              <Play className="h-4 w-4" aria-hidden /> Rejoin interview
+            </Button>
+          </div>
+        )}
         {!isStreaming && !engineDriven && (
           <p className="text-muted-foreground text-sm max-w-2xl mb-5">{interviewType.description}</p>
         )}
@@ -609,8 +643,19 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                     autoPlay
                     playsInline
                     muted={false}
-                    className={`w-full h-full object-cover transition-[filter,opacity] duration-700 ${brainUiState?.roleplayPending ? 'opacity-30 blur-sm' : ''}`}
+                    className={`w-full h-full object-cover transition-[filter,opacity] duration-700 ${voiceOnly ? 'opacity-0' : brainUiState?.roleplayPending ? 'opacity-30 blur-sm' : ''}`}
                   />
+                  {/* Voice only: the video keeps playing (it carries Clara's voice) but stays hidden. */}
+                  {voiceOnly && isStreaming && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-muted to-background" aria-label="Clara, voice only">
+                      <span className="relative flex h-24 w-24 items-center justify-center rounded-full bg-primary/15">
+                        <span className={`absolute inset-0 rounded-full bg-primary/20 ${isThinking ? '' : 'animate-ping'} motion-reduce:animate-none`} style={{ animationDuration: '2.4s' }} aria-hidden />
+                        <AudioLines className="relative h-10 w-10 text-primary" aria-hidden />
+                      </span>
+                      <p className="text-sm font-semibold">Clara · voice only</p>
+                      <p className="text-xs text-muted-foreground">{isThinking ? 'Thinking about your answer…' : 'Listening'}</p>
+                    </div>
+                  )}
                   {brainUiState?.roleplayPending && (
                     <div className="absolute inset-0 flex items-center justify-center p-6 text-center" role="status">
                       <p className="max-w-xs rounded-xl bg-background/85 px-4 py-3 text-sm font-medium shadow">
@@ -748,6 +793,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
             <div className="mt-4 md:mt-6" ref={controlsContainerRef} id="interview-controls">
               <InterviewControls
                 isStreaming={isStreaming}
+                startLabel={rejoining ? 'Rejoin interview' : undefined}
+                startHint={rejoining ? 'Clara will recap where you left off. Your answers so far are saved.' : undefined}
                 onStartInterview={handleStartInterview}
                 onStopInterview={handleStopInterview}
                 disabled={sessionStatus === 'connecting' || isGeneratingFeedback}

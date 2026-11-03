@@ -1,4 +1,4 @@
-export type SessionStatus = 'active' | 'completed' | 'timed_out' | 'error';
+export type SessionStatus = 'active' | 'completed' | 'timed_out' | 'error' | 'abandoned';
 
 export interface InterviewSession {
   id: string;

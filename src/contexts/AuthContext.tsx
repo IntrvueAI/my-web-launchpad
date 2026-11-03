@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { storedReferral } from "@/lib/creatorProgramme";
 import { User, Session } from "@supabase/supabase-js";
 import {
   supabase,
@@ -140,6 +141,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     signingOut.current = false;
     const redirectUrl = `${window.location.origin}/`;
 
+    // A creator link this browser arrived with travels with the new account, so it still counts
+    // when the confirmation email is opened on another device.
+    const referral = storedReferral();
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -147,6 +151,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         emailRedirectTo: redirectUrl,
         data: {
           full_name: fullName,
+          ...(referral ? { referral_code: referral } : {}),
         },
       },
     });
