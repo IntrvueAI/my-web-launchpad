@@ -223,6 +223,13 @@ export const creatorApi = {
   // Creators
   claim: async (): Promise<string | null> => unwrap(await db.rpc("claim_creator_account")),
   dashboard: async (): Promise<CreatorView | null> => unwrap(await db.rpc("creator_dashboard")),
+  /** Whether this signed-in account is the creator who owns a link (admins aren't owners). */
+  ownsLink: async (code: string): Promise<boolean> => {
+    const me = await creatorApi.me();
+    if (!me) return false;
+    const link = unwrap<{ creator_id: string } | null>(await db.from("creator_links").select("creator_id").eq("code", code).maybeSingle());
+    return link?.creator_id === me.id;
+  },
   /** This account's creator profile (claiming an invitation sent to its email), or null. */
   me: async (): Promise<{ id: string; name: string; status: CreatorStatus } | null> => {
     const id = unwrap<string | null>(await db.rpc("claim_creator_account"));

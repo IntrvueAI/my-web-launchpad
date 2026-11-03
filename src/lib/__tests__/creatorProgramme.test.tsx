@@ -8,6 +8,7 @@ import type { AdminOverview, Creator, CreatorView, ProgrammeCosts } from "@/lib/
 const api = vi.hoisted(() => ({
   creators: vi.fn(), overview: vi.fn(), payouts: vi.fn(), pay: vi.fn(), saveLink: vi.fn(), saveCosts: vi.fn(),
   reverseCommission: vi.fn(), recordVisit: vi.fn(), attach: vi.fn(), inviteCreator: vi.fn(), updateCreator: vi.fn(),
+  ownsLink: vi.fn(async () => false),
 }));
 const auth = vi.hoisted(() => ({ user: null as null | { id: string; user_metadata?: Record<string, unknown> } }));
 vi.mock("@/lib/creatorProgramme", async () => {
@@ -17,7 +18,7 @@ vi.mock("@/lib/creatorProgramme", async () => {
 vi.mock("@/hooks/useAdminStatus", () => ({ useAdminStatus: () => ({ isAdmin: true, isLoading: false }) }));
 vi.mock("@/contexts/AuthContext", () => ({ useAuth: () => ({ user: auth.user, loading: false }) }));
 import AdminCreators from "@/pages/AdminCreators";
-import ReferralLanding from "@/pages/ReferralLanding";
+import ReferralLanding, { referralRedirect } from "@/pages/ReferralLanding";
 import { CreatorDashboardView } from "@/components/creators/CreatorDashboardView";
 import { useReferralAttachment } from "@/hooks/useReferralAttachment";
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
@@ -58,7 +59,7 @@ beforeEach(() => {
   api.overview.mockResolvedValue(overview);
   api.payouts.mockResolvedValue([]);
 });
-afterEach(() => { document.body.innerHTML = ""; vi.clearAllMocks(); localStorage.clear(); auth.user = null; });
+afterEach(() => { document.body.innerHTML = ""; vi.clearAllMocks(); localStorage.clear(); sessionStorage.clear(); auth.user = null; });
 
 describe("Creator programme maths", () => {
   it("splits a sale the way the server does, with our costs, margin and markup", () => {
@@ -169,6 +170,35 @@ describe("Referral links", () => {
     expect(node.querySelector("h1")?.textContent).toBe("Sam invited you to intrvue.ai");
     expect(node.textContent).toContain("10% off your first purchase");
     expect(programme.storedReferral()).toBe("studywithsam");
+  });
+  it("never redirects a link to the page it is already on (the reload loop)", () => {
+    const school = { code: "dillon", platform: "11plus" as const, creator: "Dillon", discountPercent: 10 };
+    const medicine = { ...school, platform: "medicine" as const };
+    expect(referralRedirect(school, "combined", "https://intrvue.ai/r/dillon")).toBeNull();
+    expect(referralRedirect(school, "11plus", "https://intrvue.ai/r/dillon")).toBeNull();
+    expect(referralRedirect(medicine, "combined", "https://my-app.lovable.app/r/dillon")).toBeNull();
+    expect(referralRedirect(medicine, "11plus", "https://intrvue.ai/r/dillon")).toBe("https://mmipractice.co.uk/r/dillon");
+    expect(referralRedirect(school, "medicine", "https://mmipractice.co.uk/r/dillon")).toBe("https://intrvue.ai/r/dillon");
+    expect(referralRedirect(school, "medicine", "https://intrvue.ai/r/dillon")).toBeNull();
+  });
+  it("counts a visit once per tab, even when the page is reloaded", async () => {
+    api.recordVisit.mockResolvedValue({ code: "dillon", platform: "11plus", creator: "Dillon", discountPercent: 10 });
+    const open = () => render(<Routes><Route path="/r/:code" element={<ReferralLanding />} /></Routes>, "/r/dillon");
+    await open();
+    document.body.innerHTML = "";
+    const again = await open();
+    expect(api.recordVisit).toHaveBeenCalledTimes(1);
+    expect(again.querySelector("h1")?.textContent).toBe("Dillon invited you to intrvue.ai");
+  });
+  it("shows the creator their own link instead of treating it as a referral", async () => {
+    api.recordVisit.mockResolvedValue({ code: "dillon", platform: "11plus", creator: "Dillon", discountPercent: 10 });
+    api.ownsLink.mockResolvedValue(true);
+    auth.user = { id: "creator-user" };
+    const node = await render(<Routes><Route path="/r/:code" element={<ReferralLanding />} /></Routes>, "/r/dillon");
+    expect(node.querySelector("h1")?.textContent).toBe("This is your link, Dillon");
+    expect(node.textContent).toContain("Opening it yourself doesn't count");
+    expect(node.querySelector('a[href="/creator"]')).not.toBeNull();
+    expect(programme.storedReferral()).toBeNull();
   });
   it("says so when a link is not active", async () => {
     api.recordVisit.mockResolvedValue(null);
