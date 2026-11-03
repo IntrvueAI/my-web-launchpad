@@ -4,8 +4,6 @@ import { useEffect, useRef } from 'react';
 // fonts, re-run its little vanilla script (scripts inside dangerouslySetInnerHTML don't execute),
 // and wire its "Try free demo / Get started / Sign in" CTAs into the app's auth flow.
 import rawHtml from '@/assets/landing.html?raw';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
 
 // The three screenshots the page embeds were originally inlined as base64 data URIs directly in
 // landing.html — 2.2MB of it, ~87% of the entire app's main JS bundle (gzipped), all shipped and
@@ -29,7 +27,6 @@ const FONT_HREF =
 
 export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -37,7 +34,7 @@ export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
     link.href = FONT_HREF;
     document.head.appendChild(link);
 
-    // Re-run the page's own script (nav shadow, mobile menu, waitlist success, tabs, scroll-reveal).
+    // Re-run the page's own script (nav shadow, mobile menu, tabs, scroll-reveal).
     const script = document.createElement('script');
     script.textContent = scriptJs;
     document.body.appendChild(script);
@@ -54,44 +51,10 @@ export function LandingV2({ onSignUp }: { onSignUp: () => void }) {
       }
     });
 
-    // Actually store the "Join waitlist" email (the page's own script only handles the visual
-    // hide-form/show-success toggle — it never persisted anything). Runs alongside that script
-    // rather than replacing it: we don't preventDefault or touch the DOM here, just fire the
-    // insert. Silently ignore a duplicate-email submit (unique index) — the user's already on it.
-    const waitlistCleanups: Array<() => void> = [];
-    [{ formId: 'waitlistForm', inputId: 'wlEmail' }, { formId: 'waitlistForm2', inputId: 'wlEmail2' }]
-      .forEach(({ formId, inputId }) => {
-        const form = root?.querySelector<HTMLFormElement>(`#${formId}`);
-        const input = root?.querySelector<HTMLInputElement>(`#${inputId}`);
-        if (!form || !input) return;
-        const onSubmit = () => {
-          const email = input.value.trim();
-          if (!email || !/.+@.+\..+/.test(email)) return;
-          (supabase as any).from('marketing_waitlist').insert({ email, source: 'landing_page' }).then(({ error }) => {
-            if (error && error.code !== '23505') {
-              // Not a duplicate-email conflict — a genuine failure. The static page's own script still
-              // shows its "you're on the list!" success state regardless (it isn't aware this insert
-              // exists at all), so without this the visitor would be told they're signed up when they
-              // are not. A toast is the least invasive way to surface the real failure on top of that
-              // decoupled static UI without having to reverse-engineer its own success/error toggle.
-              console.error('Failed to save waitlist email:', error.message);
-              toast({
-                title: "Something went wrong",
-                description: "We couldn't save your email just now — please try again, or email us directly.",
-                variant: 'destructive',
-              });
-            }
-          });
-        };
-        form.addEventListener('submit', onSubmit);
-        waitlistCleanups.push(() => form.removeEventListener('submit', onSubmit));
-      });
-
     return () => {
       link.remove();
       script.remove();
       wired.forEach((el) => el.removeEventListener('click', goAuth));
-      waitlistCleanups.forEach((fn) => fn());
     };
   }, [onSignUp]);
 

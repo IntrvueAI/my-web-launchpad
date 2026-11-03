@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>intrvue.ai — 11+ interview practice that actually feels like the real thing</title>
-<meta name="description" content="Realistic spoken mock interviews for the 11+ and independent school entry. Your child practises with a calm, patient interviewer, gets clear scored feedback, and walks in confident. Join the waitlist to get started." />
+<meta name="description" content="Realistic spoken mock interviews for the 11+ and independent school entry. Your child practises with a calm, patient interviewer, gets clear scored feedback, and walks in confident. Start with a free demo interview." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -106,6 +106,8 @@
   .waitlist .note{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px;color:var(--faint);font-size:14px}
   .waitlist .note b{color:var(--muted);font-weight:600}
   .waitlist .note .sep{width:4px;height:4px;border-radius:50%;background:var(--faint)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+  .cta-card .cta-row{justify-content:center}
   .form-success{display:none;align-items:center;gap:12px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);color:#c8f5e3;padding:16px 18px;border-radius:14px;font-size:15.5px}
   .form-success.show{display:flex}
   .form-success svg{width:22px;height:22px;flex:0 0 auto;color:var(--green)}
@@ -424,6 +426,7 @@
     .prob-grid,.feat-grid,.tst-grid,.gv-top,.dash-row,.why-grid,.types-grid{grid-template-columns:1fr}
     .waitlist form{flex-direction:column}
     .waitlist .btn{width:100%}
+    .cta-row .btn{width:100%;justify-content:center}
     .schools .wrap{gap:16px}
     .schools .name{font-size:15px}
     .cta-card{padding:44px 22px}
@@ -461,9 +464,8 @@
       <a href="/about">About</a>
     </nav>
     <div class="nav-cta">
-      <!-- TEMP: direct sign-in so the team can log in; wired to /auth by LandingV2 -->
-      <a href="/auth" class="btn btn-ghost" style="display:inline-flex">Sign in</a>
-      <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
+      <a href="/auth" class="btn btn-ghost">Sign in</a>
+      <a href="/auth" class="btn btn-primary">Get started free</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -476,9 +478,8 @@
     <a href="#stories">Results</a>
     <a href="/faq">FAQ</a>
     <a href="/about">About</a>
-    <!-- TEMP: direct sign-in for the team -->
     <a href="/auth" class="btn btn-ghost">Sign in</a>
-    <a href="#waitlist" class="btn btn-primary">Join waitlist</a>
+    <a href="/auth" class="btn btn-primary">Get started free</a>
   </div>
 </header>
 
@@ -490,21 +491,15 @@
     <div class="reveal">
       <span class="eyebrow">Built by former St Paul's, Westminster &amp; Eton tutors</span>
       <h1>The 11+ interview,<br>rehearsed until it<br>feels <span class="soft">easy.</span></h1>
-      <p class="hero-sub">Unlimited spoken practice, scored on what top schools actually look for — whilst showing you exactly what to improve.</p>
+      <p class="hero-sub">Spoken practice, scored on what top schools actually look for — whilst showing you exactly what to improve.</p>
 
-      <div class="waitlist" id="waitlist">
-        <form id="waitlistForm" novalidate>
-          <input type="email" id="wlEmail" name="email" placeholder="Your email address" aria-label="Email address" required />
-          <button type="submit" class="btn btn-primary">Join the waitlist
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </form>
-        <div class="form-success" id="wlSuccess" role="status">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-          You're on the list — we'll email your invite shortly.
+      <div class="waitlist" id="get-started">
+        <div class="cta-row">
+          <a href="/auth" class="btn btn-primary">Start free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#how" class="btn btn-ghost">See how it works</a>
         </div>
         <div class="note">
-          <b>Takes 10 seconds</b><span class="sep"></span><b>No card needed</b>
+          <b>Free demo interview</b><span class="sep"></span><b>No card needed</b>
         </div>
       </div>
     </div>
@@ -862,21 +857,14 @@
 <section class="cta" id="demo">
   <div class="wrap">
     <div class="cta-card reveal">
-      <span class="eyebrow" style="justify-content:center">Join the waitlist</span>
+      <span class="eyebrow" style="justify-content:center">Get started</span>
       <h2 style="margin-top:14px">Give them the practice<br>that makes the difference.</h2>
-      <p>Be first in when we open.</p>
+      <p>Start with a free demo interview today.</p>
       <div class="waitlist">
-        <form id="waitlistForm2" novalidate>
-          <input type="email" id="wlEmail2" name="email" placeholder="Your email address" aria-label="Email address" required />
-          <button type="submit" class="btn btn-primary">Join the waitlist
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </form>
-        <div class="form-success" id="wlSuccess2" role="status">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-          You're on the list — check your inbox for your invite.
+        <div class="cta-row">
+          <a href="/auth" class="btn btn-primary">Start free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-        <div class="note"><b>Takes 10 seconds</b><span class="sep"></span><b>No card needed</b><span class="sep"></span><b>Cancel anytime</b></div>
+        <div class="note"><b>Free demo interview</b><span class="sep"></span><b>No card needed</b><span class="sep"></span><b>Pay per interview, no subscription</b></div>
       </div>
     </div>
   </div>
@@ -903,7 +891,7 @@
         </div>
         <div class="ft-col">
           <h5>Get started</h5>
-          <a href="#waitlist">Join waitlist</a>
+          <a href="/auth">Get started</a>
           <a href="#stories">Results</a>
         </div>
         <div class="ft-col">
