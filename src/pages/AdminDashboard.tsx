@@ -74,7 +74,7 @@ export default function AdminDashboard() {
             <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
               <Shield className="h-6 w-6 text-primary" />
             </div>
-            <CardTitle>Admin access</CardTitle>
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">Admin access</h1>
             <CardDescription>
               {error ? 'Administrator access could not be checked. Please retry.' : 'Sign in with an authorised administrator account to continue.'}
             </CardDescription>

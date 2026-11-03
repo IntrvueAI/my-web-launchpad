@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { CreatorDashboardView, type CreatorActions } from "@/components/creators/CreatorDashboardView";
 import { creatorApi, type CreatorView } from "@/lib/creatorProgramme";
-import { siteName } from "@/lib/site";
+import { isMedicineSite, siteName } from "@/lib/site";
+import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 
 type Load = { state: "loading" } | { state: "ready"; view: CreatorView } | { state: "not_creator" } | { state: "error"; message: string };
 
@@ -61,11 +62,12 @@ export default function CreatorDashboard() {
     void stripe(from === "refresh" ? "connect" : "status");
   }, [params, load.state, setParams, stripe]);
 
+  const themed = (node: JSX.Element) => <MedicineTheme enabled={isMedicineSite()}>{node}</MedicineTheme>;
   if (loading || (user && load.state === "loading"))
     return <main className="flex min-h-screen items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" /></main>;
 
   if (!user)
-    return (
+    return themed(
       <main className="flex min-h-screen items-center justify-center px-4">
         <div className="max-w-md space-y-4 rounded-2xl border bg-card p-8 text-center">
           <h1 className="text-2xl font-bold">Creator dashboard</h1>
@@ -76,7 +78,7 @@ export default function CreatorDashboard() {
     );
 
   if (load.state === "not_creator" || load.state === "error")
-    return (
+    return themed(
       <main className="flex min-h-screen items-center justify-center px-4">
         <div className="max-w-md space-y-4 rounded-2xl border bg-card p-8 text-center">
           <h1 className="text-2xl font-bold">{load.state === "error" ? "Something went wrong" : "No creator account here"}</h1>
@@ -90,7 +92,7 @@ export default function CreatorDashboard() {
     );
 
   if (load.state !== "ready") return null;
-  return (
+  return themed(
     <main className="mx-auto max-w-6xl px-4 py-8 text-foreground">
       <CreatorDashboardView view={load.view} actions={{
         onConnect: () => void stripe("connect"),

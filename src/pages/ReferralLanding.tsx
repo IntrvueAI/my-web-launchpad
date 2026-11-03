@@ -4,7 +4,8 @@ import { ArrowRight, Gift, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { creatorApi, normaliseCode, referralUrl, rememberReferral, type CreatorPlatform } from "@/lib/creatorProgramme";
-import { siteProduct } from "@/lib/site";
+import { isMedicineSite, siteProduct } from "@/lib/site";
+import { MedicineTheme } from "@/components/medicine-dashboard/MedicineTheme";
 
 const SITE: Record<CreatorPlatform, { name: string; signUp: string; what: string }> = {
   medicine: { name: "MMI Practice", signUp: "/auth?mode=medicine", what: "Practise Medicine MMI stations with Clara, an AI interviewer, and get written feedback on what you said." },
@@ -38,11 +39,13 @@ export default function ReferralLanding() {
     return () => { cancelled = true; };
   }, [code]);
 
+  const medicine = state.state === "ready" ? state.platform === "medicine" : isMedicineSite();
+  const themed = (node: JSX.Element) => <MedicineTheme enabled={medicine}>{node}</MedicineTheme>;
   if (state.state === "loading")
     return <main className="flex min-h-screen items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" /></main>;
 
   if (state.state === "invalid")
-    return (
+    return themed(
       <main className="flex min-h-screen items-center justify-center px-4">
         <div className="max-w-md space-y-4 rounded-2xl border bg-card p-8 text-center">
           <h1 className="text-2xl font-bold">This link isn't active</h1>
@@ -53,7 +56,7 @@ export default function ReferralLanding() {
     );
 
   const site = SITE[state.platform];
-  return (
+  return themed(
     <main className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-lg space-y-6 rounded-3xl border bg-card p-8 shadow-sm">
         <p className="text-sm font-semibold uppercase tracking-widest text-primary">A personal recommendation</p>
