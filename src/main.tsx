@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { logAppEvent } from './lib/appLogger';
-import { medicineHandoverTarget } from './lib/site';
+import { domainHandoverTarget } from './lib/site';
 
 // Registered before the app mounts so failures during module load / before React is up are still
 // caught — the ErrorBoundary in App.tsx only sees errors thrown during React's own render/lifecycle.
@@ -23,6 +23,9 @@ window.addEventListener('unhandledrejection', (e) => {
   }).catch(() => {});
 });
 
-const handover = medicineHandoverTarget(new URL(window.location.href));
+// Each product lives on its own domain: a page opened on the other one is sent across first.
+let inviteStorage: Storage | null = null;
+try { inviteStorage = window.sessionStorage; } catch { /* Storage can be blocked; links still redirect. */ }
+const handover = domainHandoverTarget(new URL(window.location.href), inviteStorage);
 if (handover) window.location.replace(handover);
 else createRoot(document.getElementById("root")!).render(<App />);

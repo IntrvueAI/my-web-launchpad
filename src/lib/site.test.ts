@@ -24,8 +24,11 @@ describe("Domain product routing", () => {
   ])("locks %s to Medicine", (host) => {
     expect(site.siteProduct(host)).toBe("medicine");
   });
-  it("does not redirect the existing product before domain handover", () => {
-    expect(site.siteProduct("intrvue.ai")).toBe("combined");
+  it("keeps intrvue.ai for 11+ and previews combined, now the domains are split", () => {
+    expect(site.MEDICINE_DOMAIN_LIVE).toBe(true);
+    expect(site.siteProduct("intrvue.ai")).toBe("11plus");
+    expect(site.siteProduct("www.intrvue.ai")).toBe("11plus");
+    expect(site.siteProduct("my-web-launchpad.lovable.app")).toBe("combined");
     expect(site.siteProduct("random-mmipractice.co.uk.evil.test")).toBe(
       "combined",
     );
@@ -66,5 +69,27 @@ describe("Domain product routing", () => {
       expect(
         site.medicineHandoverTarget(new URL(`https://intrvue.ai${path}`), true),
       ).toBeNull();
+  });
+  const held = (values: Record<string, string>) => ({ getItem: (key: string) => values[key] ?? null });
+  it("keeps an 11+ tester's invitation on intrvue.ai and carries a Medicine one across", () => {
+    const tryPage = new URL("https://intrvue.ai/try");
+    expect(site.medicineHandoverTarget(tryPage, true, held({ "mmi:trial-product": "11plus", "mmi:trial-invite": "AbCdEfGhIjKlMnOpQrStUv" }))).toBeNull();
+    expect(site.medicineHandoverTarget(tryPage, true, held({}))).toBeNull();
+    expect(site.medicineHandoverTarget(tryPage, true, held({ "mmi:trial-product": "medicine", "mmi:trial-invite": "AbCdEfGhIjKlMnOpQrStUv" })))
+      .toBe("https://mmipractice.co.uk/medicine/AbCdEfGhIjKlMnOpQrStUv");
+  });
+  it("sends 11+ pages opened on mmipractice.co.uk back to intrvue.ai", () => {
+    for (const path of ["/11plus/AbCdEfGhIjKlMnOpQrStUv", "/schools", "/schools/abc/students/def", "/classes", "/join-class/token"])
+      expect(site.schoolHandoverTarget(new URL(`https://mmipractice.co.uk${path}?x=1`), true)).toBe(`https://intrvue.ai${path}?x=1`);
+    for (const path of ["/", "/auth", "/medicine/practice", "/guest-session", "/r/sam", "/creator", "/admin"])
+      expect(site.schoolHandoverTarget(new URL(`https://mmipractice.co.uk${path}`), true)).toBeNull();
+    expect(site.schoolHandoverTarget(new URL("https://mmipractice.co.uk/try"), true, held({ "mmi:trial-product": "11plus", "mmi:trial-invite": "AbCdEfGhIjKlMnOpQrStUv" })))
+      .toBe("https://intrvue.ai/11plus/AbCdEfGhIjKlMnOpQrStUv");
+    expect(site.schoolHandoverTarget(new URL("https://mmipractice.co.uk/schools"), false)).toBeNull();
+  });
+  it("leaves shared and admin pages where they are on either domain", () => {
+    for (const host of ["intrvue.ai", "mmipractice.co.uk", "my-web-launchpad.lovable.app"])
+      for (const path of ["/admin", "/admin/lab", "/creator", "/auth", "/r/sam"])
+        expect(site.domainHandoverTarget(new URL(`https://${host}${path}`))).toBeNull();
   });
 });
