@@ -61,6 +61,7 @@ const AdminLabRun = lazy(() => import("./pages/AdminLabRun"));
 const AdminCreators = lazy(() => import("./pages/AdminCreators"));
 const CreatorDashboard = lazy(() => import("./pages/CreatorDashboard"));
 const ReferralLanding = lazy(() => import("./pages/ReferralLanding"));
+const RedeemCode = lazy(() => import("./pages/RedeemCode"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const MinigameSection = lazy(() => import("@/components/MinigameSection").then((m) => ({ default: m.MinigameSection })));
@@ -215,6 +216,7 @@ const AppContent = () => {
               <Route path="/admin/creators" element={<AdminCreators />} />
               <Route path="/creator" element={<CreatorDashboard />} />
               <Route path="/r/:code" element={<ReferralLanding />} />
+              <Route path="/redeem" element={<RedeemCode />} />
               <Route path="/admin/logs" element={<AdminLogs />} />
               {/* Temporary standalone demo route for the practice minigames */}
               <Route

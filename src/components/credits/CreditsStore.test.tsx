@@ -36,7 +36,7 @@ describe("Credit stores", () => {
   it("shows a referred customer's first-purchase discount on both stores", async () => {
     offer.value = { creator: "Sam", discountPercent: 10 };
     const medicine = await render("medicine");
-    expect(medicine.textContent).toContain("10% off your first purchase from Sam's link");
+    expect(medicine.textContent).toContain("10% off your first purchase from Sam's code");
     expect(medicine.textContent).toContain("£31.49");
     const school = await render("11plus");
     expect(school.textContent).toContain("£26.99");

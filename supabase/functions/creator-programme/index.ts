@@ -13,10 +13,16 @@ import { logAppEvent } from "./_shared/appLogger.ts";
 const RETURN_ORIGIN =
   /^(https:\/\/(www\.)?(mmipractice\.co\.uk|intrvue\.ai)|https:\/\/[a-z0-9-]+\.(lovable\.app|lovableproject\.com)|http:\/\/([a-z0-9-]+\.)?localhost:\d{2,5})$/;
 const DEFINITIVE_STRIPE_ERRORS = new Set(["StripeInvalidRequestError", "StripePermissionError", "StripeCardError"]);
+// Stripe refusing a creator's setup request is a problem with our own Stripe account (Connect not
+// switched on, the platform profile unfinished, live and test keys mixed), not something the
+// creator can fix, so they get a plain message and administrators get Stripe's in the logs.
+const SETUP_STRIPE_ERRORS = new Set(["StripeInvalidRequestError", "StripePermissionError", "StripeAuthenticationError"]);
+const CREATOR_ACTIONS = new Set(["connect", "status", "stripe_dashboard"]);
 
 serve(
   withJson(async (req) => {
     let userId: string | null = null;
+    let action: unknown = null;
     try {
       const url = Deno.env.get("SUPABASE_URL")!;
       const token = req.headers.get("authorization")!.slice(7);
@@ -27,6 +33,7 @@ serve(
       if (authError || !auth?.user) return json({ error: "Unauthorized" }, 401);
       userId = auth.user.id;
       const body = (await req.json()) as { action?: unknown; creatorId?: unknown };
+      action = body.action;
       const service = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
       const origin = req.headers.get("origin") ?? "";
       const base = RETURN_ORIGIN.test(origin) ? origin : "https://intrvue.ai";
@@ -137,6 +144,21 @@ serve(
 
       return json({ error: "Unknown action" }, 400);
     } catch (error) {
+      const type = (error as { type?: string })?.type ?? "";
+      if (CREATOR_ACTIONS.has(action as string) && SETUP_STRIPE_ERRORS.has(type)) {
+        logAppEvent("edge:creator-programme", {
+          level: "error",
+          eventType: "stripe_connect_unavailable",
+          message: `${type}: ${(error as Error).message?.slice(0, 500) ?? "Stripe refused the request"}`,
+          userId,
+          requestId: req.headers.get("x-request-id"),
+          metadata: { action, stripeCode: (error as { code?: string }).code ?? null },
+        }).catch(() => {});
+        return json({
+          error: "Payout setup isn't available yet. We've been told and will let you know when you can connect your bank. Your earnings are safe in the meantime.",
+          code: "payouts_unavailable",
+        }, 503);
+      }
       logAppEvent("edge:creator-programme", {
         level: "error",
         eventType: "unhandled_exception",

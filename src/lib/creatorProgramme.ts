@@ -5,6 +5,7 @@
  */
 import { supabase } from "@/integrations/supabase/client";
 import { invokeEdgeFunction } from "@/lib/invokeEdgeFunction";
+import { edgeErrorResponse } from "@/lib/edgeFunctionError";
 import { MEDICINE_CREDIT_PACKS } from "@/config/medicinePricing";
 import { MEDICINE_ORIGIN, SCHOOL_ORIGIN } from "@/lib/site";
 
@@ -128,6 +129,7 @@ export function isValidReferralCode(code: string): boolean {
   return code.length >= CREATOR_LIMITS.codeMin && code.length <= CREATOR_LIMITS.codeMax && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(code);
 }
 export const normaliseCode = (value: string) => value.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+export const PLATFORM_SITE: Record<CreatorPlatform, string> = { medicine: "MMI Practice", "11plus": "intrvue.ai" };
 export function referralUrl(platform: CreatorPlatform, code: string): string {
   return `${platform === "medicine" ? MEDICINE_ORIGIN : SCHOOL_ORIGIN}/r/${code}`;
 }
@@ -217,7 +219,7 @@ export const creatorApi = {
     unwrap(await db.rpc("reverse_creator_commission", { p_commission_id: id, p_reason: reason })),
   pay: async (creatorId: string) => {
     const { data, error } = await invokeEdgeFunction<{ amountPence: number; transferId: string }>("creator-programme", { body: { action: "payout", creatorId } });
-    if (error) throw error;
+    if (error) throw await creatorServiceError(error);
     return data!;
   },
   // Creators
@@ -238,13 +240,16 @@ export const creatorApi = {
   },
   stripe: async (action: "connect" | "status" | "stripe_dashboard") => {
     const { data, error } = await invokeEdgeFunction<{ url?: string; payoutStatus?: PayoutStatus; due?: number }>("creator-programme", { body: { action } });
-    if (error) throw error;
+    if (error) throw await creatorServiceError(error);
     return data ?? {};
   },
   // Visitors and customers
-  recordVisit: async (code: string): Promise<{ code: string; platform: CreatorPlatform; creator: string; discountPercent: number } | null> =>
+  recordVisit: async (code: string): Promise<ReferralOffer | null> =>
     unwrap(await db.rpc("record_referral_visit", { p_code: code })),
-  attach: async (code: string): Promise<{ attached: boolean; reason?: string; creator?: string; discountPercent?: number }> =>
+  /** The same as a visit, without counting one (a typed code, or a link handed over between domains). */
+  lookup: async (code: string): Promise<ReferralOffer | null> =>
+    unwrap(await db.rpc("lookup_referral_link", { p_code: code })),
+  attach: async (code: string): Promise<AttachResult> =>
     unwrap(await db.rpc("attach_referral", { p_code: code })),
   myOffer: async (platform: CreatorPlatform): Promise<{ creator: string; discountPercent: number } | null> =>
     unwrap(await db.rpc("get_my_referral_offer", { p_platform: platform })),
@@ -275,6 +280,46 @@ export function previewView(creator: Creator, overview: AdminOverview, payouts: 
     })),
     payouts: payouts.filter((p) => p.creator_id === creator.id).map((p) => ({ date: p.created_at, amountPence: p.amount_pence, status: p.status, paidAt: p.paid_at })),
   };
+}
+
+/**
+ * The creator service writes its error messages for the person using the page (paused account,
+ * payouts not switched on yet, Stripe declining a transfer), so show those rather than a generic one.
+ */
+async function creatorServiceError(error: Error): Promise<Error> {
+  const response = edgeErrorResponse(error);
+  if (response && response.status !== 401) {
+    try {
+      const detail = (await response.clone().json())?.error;
+      if (typeof detail === "string" && detail) return new Error(detail);
+    } catch { /* Not JSON: keep the general explanation. */ }
+  }
+  return error;
+}
+
+export type ReferralOffer = { code: string; platform: CreatorPlatform; creator: string; discountPercent: number };
+export type AttachResult =
+  | { attached: true; already?: boolean; creator: string; platform: CreatorPlatform; discountPercent: number }
+  | { attached: false; reason: "already_referred" | "own_link" | "existing_customer" | "unavailable"; creator?: string; platform?: CreatorPlatform };
+
+/** What adding a creator's code did, in words for the person who added it. */
+export function attachOutcome(result: AttachResult): { ok: boolean; title: string; text: string } {
+  if (!("reason" in result)) {
+    const where = PLATFORM_SITE[result.platform];
+    return result.discountPercent > 0
+      ? { ok: true, title: `${result.discountPercent}% off your first purchase`, text: `${result.creator}'s code is on your account. The discount is applied automatically at checkout on ${where}.` }
+      : { ok: true, title: `${result.creator}'s code is on your account`, text: `Thanks for supporting ${result.creator} on ${where}.` };
+  }
+  switch (result.reason) {
+    case "already_referred":
+      return { ok: false, title: "Your account already has a creator code", text: `It's ${result.creator ?? "another creator"}'s. Each account can use one creator code.` };
+    case "own_link":
+      return { ok: false, title: "This is your own code", text: "Share it with your audience. It doesn't apply to your own account." };
+    case "existing_customer":
+      return { ok: false, title: "This code is for a first purchase", text: `This account has already bought on ${PLATFORM_SITE[result.platform ?? "11plus"]}, so the code can't be used here. Thanks for coming back.` };
+    default:
+      return { ok: false, title: "This code isn't active", text: "Check the spelling. The code may also have been paused." };
+  }
 }
 
 /** The referral code a visitor arrived with, kept in this browser for 30 days. */

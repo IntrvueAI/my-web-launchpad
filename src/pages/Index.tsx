@@ -282,6 +282,18 @@ const Index = () => {
     setSelectedInterviewType(null);
   };
 
+  // /?view=credits opens the credit store (linked from the creator code page).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('view') !== 'credits') return;
+    setCurrentView('credits');
+    setMedicineCreditsRequest((n) => n + 1);
+    params.delete('view');
+    const url = new URL(window.location.href);
+    url.search = params.toString();
+    window.history.replaceState({}, '', url.toString());
+  }, []);
+
   // Detect payment success via URL and display success page
   const showPaymentSuccess = useMemo(() => {
     if (typeof window === 'undefined') return false;

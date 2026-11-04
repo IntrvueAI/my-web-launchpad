@@ -8,8 +8,12 @@ import type { AdminOverview, Creator, CreatorView, ProgrammeCosts } from "@/lib/
 const api = vi.hoisted(() => ({
   creators: vi.fn(), overview: vi.fn(), payouts: vi.fn(), pay: vi.fn(), saveLink: vi.fn(), saveCosts: vi.fn(),
   reverseCommission: vi.fn(), recordVisit: vi.fn(), attach: vi.fn(), inviteCreator: vi.fn(), updateCreator: vi.fn(),
-  ownsLink: vi.fn(async () => false),
+  ownsLink: vi.fn(async () => false), lookup: vi.fn(),
 }));
+const toasts = vi.hoisted(() => ({ toast: vi.fn() }));
+const edge = vi.hoisted(() => ({ invoke: vi.fn() }));
+vi.mock("@/hooks/use-toast", async () => ({ ...(await vi.importActual<object>("@/hooks/use-toast")), toast: toasts.toast }));
+vi.mock("@/lib/invokeEdgeFunction", () => ({ invokeEdgeFunction: edge.invoke }));
 const auth = vi.hoisted(() => ({ user: null as null | { id: string; user_metadata?: Record<string, unknown> } }));
 vi.mock("@/lib/creatorProgramme", async () => {
   const actual = await vi.importActual<typeof import("@/lib/creatorProgramme")>("@/lib/creatorProgramme");
@@ -19,6 +23,7 @@ vi.mock("@/hooks/useAdminStatus", () => ({ useAdminStatus: () => ({ isAdmin: tru
 vi.mock("@/contexts/AuthContext", () => ({ useAuth: () => ({ user: auth.user, loading: false }) }));
 import AdminCreators from "@/pages/AdminCreators";
 import ReferralLanding, { referralRedirect } from "@/pages/ReferralLanding";
+import RedeemCode, { codeElsewhere } from "@/pages/RedeemCode";
 import { CreatorDashboardView } from "@/components/creators/CreatorDashboardView";
 import { useReferralAttachment } from "@/hooks/useReferralAttachment";
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
@@ -58,6 +63,7 @@ beforeEach(() => {
   api.creators.mockResolvedValue([creator]);
   api.overview.mockResolvedValue(overview);
   api.payouts.mockResolvedValue([]);
+  api.ownsLink.mockResolvedValue(false);
 });
 afterEach(() => { document.body.innerHTML = ""; vi.clearAllMocks(); localStorage.clear(); sessionStorage.clear(); auth.user = null; });
 
@@ -177,8 +183,8 @@ describe("Referral links", () => {
     expect(referralRedirect(school, "combined", "https://intrvue.ai/r/dillon")).toBeNull();
     expect(referralRedirect(school, "11plus", "https://intrvue.ai/r/dillon")).toBeNull();
     expect(referralRedirect(medicine, "combined", "https://my-app.lovable.app/r/dillon")).toBeNull();
-    expect(referralRedirect(medicine, "11plus", "https://intrvue.ai/r/dillon")).toBe("https://mmipractice.co.uk/r/dillon");
-    expect(referralRedirect(school, "medicine", "https://mmipractice.co.uk/r/dillon")).toBe("https://intrvue.ai/r/dillon");
+    expect(referralRedirect(medicine, "11plus", "https://intrvue.ai/r/dillon")).toBe("https://mmipractice.co.uk/r/dillon?handover=1");
+    expect(referralRedirect(school, "medicine", "https://mmipractice.co.uk/r/dillon")).toBe("https://intrvue.ai/r/dillon?handover=1");
     expect(referralRedirect(school, "medicine", "https://intrvue.ai/r/dillon")).toBeNull();
   });
   it("counts a visit once per tab, even when the page is reloaded", async () => {
@@ -206,17 +212,60 @@ describe("Referral links", () => {
     expect(node.querySelector("h1")?.textContent).toBe("This link isn't active");
     expect(programme.storedReferral()).toBeNull();
   });
-  it("attaches the stored link after sign-in and then forgets it", async () => {
+  it("attaches the stored link after sign-in, says the discount applies and then forgets it", async () => {
     programme.rememberReferral("studywithsam");
-    api.attach.mockResolvedValue({ attached: true });
+    api.attach.mockResolvedValue({ attached: true, creator: "Sam", platform: "medicine", discountPercent: 10 });
     auth.user = { id: "u2" };
     const Probe = () => { useReferralAttachment(); return null; };
     await render(<Probe />);
     expect(api.attach).toHaveBeenCalledWith("studywithsam");
     expect(programme.storedReferral()).toBeNull();
+    expect(toasts.toast).toHaveBeenCalledWith(expect.objectContaining({ title: "10% off your first purchase" }));
+  });
+  it("tells the person after sign-in when the link couldn't be used", async () => {
+    programme.rememberReferral("studywithsam");
+    api.attach.mockResolvedValue({ attached: false, reason: "already_referred", creator: "Priya" });
+    auth.user = { id: "u7" };
+    const Probe = () => { useReferralAttachment(); return null; };
+    await render(<Probe />);
+    expect(toasts.toast).toHaveBeenCalledWith({ title: "Your account already has a creator code", description: "It's Priya's. Each account can use one creator code." });
+  });
+  it("adds the link to a signed-in account straight away and says the discount applies", async () => {
+    api.recordVisit.mockResolvedValue({ code: "dillon", platform: "11plus", creator: "Dillon", discountPercent: 10 });
+    api.attach.mockResolvedValue({ attached: true, creator: "Dillon", platform: "11plus", discountPercent: 10 });
+    auth.user = { id: "u5" };
+    const node = await render(<Routes><Route path="/r/:code" element={<ReferralLanding />} /></Routes>, "/r/dillon");
+    expect(api.attach).toHaveBeenCalledWith("dillon");
+    expect(node.textContent).toContain("10% off your first purchase");
+    expect(node.textContent).toContain("Dillon's code is on your account");
+    expect(node.querySelector('a[href="/?view=credits"]')).not.toBeNull();
+    expect(programme.storedReferral()).toBeNull();
+  });
+  it("tells a signed-in customer who has already bought why the discount doesn't apply", async () => {
+    api.recordVisit.mockResolvedValue({ code: "dillon", platform: "11plus", creator: "Dillon", discountPercent: 10 });
+    api.attach.mockResolvedValue({ attached: false, reason: "existing_customer", platform: "11plus" });
+    auth.user = { id: "u6" };
+    const node = await render(<Routes><Route path="/r/:code" element={<ReferralLanding />} /></Routes>, "/r/dillon");
+    expect(node.textContent).toContain("This code is for a first purchase");
+    expect(node.textContent).toContain("already bought on intrvue.ai");
+    expect(node.querySelector('a[href="/?view=credits"]')).toBeNull();
+  });
+  it("keeps the link for later when a signed-in account can't be reached", async () => {
+    api.recordVisit.mockResolvedValue({ code: "dillon", platform: "11plus", creator: "Dillon", discountPercent: 10 });
+    api.attach.mockRejectedValue(new Error("offline"));
+    auth.user = { id: "u10" };
+    await render(<Routes><Route path="/r/:code" element={<ReferralLanding />} /></Routes>, "/r/dillon");
+    expect(programme.storedReferral()).toBe("dillon");
+  });
+  it("doesn't count a link handed over from the other domain a second time", async () => {
+    api.lookup.mockResolvedValue({ code: "dillon", platform: "11plus", creator: "Dillon", discountPercent: 10 });
+    const node = await render(<Routes><Route path="/r/:code" element={<ReferralLanding />} /></Routes>, "/r/dillon?handover=1");
+    expect(api.lookup).toHaveBeenCalledWith("dillon");
+    expect(api.recordVisit).not.toHaveBeenCalled();
+    expect(node.querySelector("h1")?.textContent).toBe("Dillon invited you to intrvue.ai");
   });
   it("uses the code saved at sign-up when the confirmation email is opened on another device, once", async () => {
-    api.attach.mockResolvedValue({ attached: true });
+    api.attach.mockResolvedValue({ attached: true, creator: "Sam", platform: "medicine", discountPercent: 10 });
     auth.user = { id: "u3", user_metadata: { referral_code: "studywithsam" } };
     const Probe = () => { useReferralAttachment(); return null; };
     await render(<Probe />);
@@ -231,5 +280,61 @@ describe("Referral links", () => {
     const Probe = () => { useReferralAttachment(); return null; };
     await render(<Probe />);
     expect(api.attach).not.toHaveBeenCalled();
+  });
+});
+
+describe("Creator code page", () => {
+  const sam = { code: "studywithsam", platform: "medicine" as const, creator: "Sam", discountPercent: 10 };
+  const page = (path = "/redeem") => render(<Routes><Route path="/redeem" element={<RedeemCode />} /></Routes>, path);
+  const submit = (node: HTMLElement) => act(async () => {
+    node.querySelector("form")!.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+  });
+  it("adds a typed code to a signed-in account without counting a link visit", async () => {
+    auth.user = { id: "u8" };
+    api.lookup.mockResolvedValue(sam);
+    api.attach.mockResolvedValue({ attached: true, creator: "Sam", platform: "medicine", discountPercent: 10 });
+    const node = await page();
+    await type(node.querySelector("input")!, "StudyWithSam ");
+    await submit(node);
+    expect(api.lookup).toHaveBeenCalledWith("studywithsam");
+    expect(api.attach).toHaveBeenCalledWith("studywithsam");
+    expect(api.recordVisit).not.toHaveBeenCalled();
+    expect(node.textContent).toContain("10% off your first purchase");
+    expect(node.querySelector('a[href="/?view=credits"]')).not.toBeNull();
+  });
+  it("keeps a signed-out visitor's code and brings them back to it after sign-in", async () => {
+    api.lookup.mockResolvedValue(sam);
+    const node = await page("/redeem?code=studywithsam");
+    expect(api.attach).not.toHaveBeenCalled();
+    expect(programme.storedReferral()).toBe("studywithsam");
+    expect(node.querySelector('a[href^="/auth?"]')?.getAttribute("href")).toContain(encodeURIComponent("/redeem?code=studywithsam"));
+  });
+  it("explains unknown and malformed codes", async () => {
+    auth.user = { id: "u9" };
+    api.lookup.mockResolvedValue(null);
+    const node = await page("/redeem?code=nobody");
+    expect(node.textContent).toContain("This code isn't active");
+    await type(node.querySelector("input")!, "!!");
+    await submit(node);
+    expect(node.querySelector('[role="alert"]')?.textContent).toBe("Codes are 3 to 24 letters, numbers or hyphens.");
+    expect(api.attach).not.toHaveBeenCalled();
+  });
+  it("sends a code for the other product to that product's site", () => {
+    expect(codeElsewhere(sam, "11plus")).toBe("https://mmipractice.co.uk/redeem?code=studywithsam");
+    expect(codeElsewhere(sam, "medicine")).toBeNull();
+    expect(codeElsewhere(sam, "combined")).toBeNull();
+  });
+});
+
+describe("Creator service errors", () => {
+  it("shows the service's own explanation, such as payouts not being switched on yet", async () => {
+    const response = new Response(JSON.stringify({ error: "Payout setup isn't available yet." }), { status: 503 });
+    edge.invoke.mockResolvedValue({ data: null, error: Object.assign(new Error("The service is temporarily unavailable."), { context: response }) });
+    await expect(programme.creatorApi.stripe("connect")).rejects.toThrow("Payout setup isn't available yet.");
+  });
+  it("keeps the general sign-in message for an expired session", async () => {
+    const response = new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+    edge.invoke.mockResolvedValue({ data: null, error: Object.assign(new Error("Your sign-in has expired."), { context: response }) });
+    await expect(programme.creatorApi.stripe("connect")).rejects.toThrow("Your sign-in has expired.");
   });
 });

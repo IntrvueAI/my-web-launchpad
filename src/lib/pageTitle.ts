@@ -22,6 +22,7 @@ const PAGES: [RegExp, string][] = [
   [/^\/admin(\/|$)/, "Admin"],
   [/^\/creator\/?$/, "Creator dashboard"],
   [/^\/r\/[a-z0-9-]+\/?$/i, "You're invited"],
+  [/^\/redeem\/?$/, "Creator code"],
 ];
 
 /** The browser-tab title for a path: the page name, then the site's brand. */

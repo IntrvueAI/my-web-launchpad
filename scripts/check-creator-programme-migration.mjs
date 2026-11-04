@@ -62,9 +62,12 @@ try {
     GRANT ALL ON ALL TABLES IN SCHEMA public TO service_role;`);
   const medicine = await readFile(new URL("../supabase/migrations/20261022000003_medicine_credits.sql", import.meta.url), "utf8");
   const sql = await readFile(new URL("../supabase/migrations/20261024000001_creator_programme.sql", import.meta.url), "utf8");
+  const codes = await readFile(new URL("../supabase/migrations/20261104000001_creator_codes.sql", import.meta.url), "utf8");
   await db.exec(medicine);
   await db.exec(sql);
   await db.exec(sql);
+  await db.exec(codes);
+  await db.exec(codes);
   checks++;
   await db.exec("GRANT ALL ON ALL TABLES IN SCHEMA public TO service_role");
 
@@ -100,19 +103,22 @@ try {
   eq(await value("SELECT record_referral_visit('STUDYWITHSAM ')"), { code: "studywithsam", platform: "medicine", creator: "Sam", discountPercent: 10 });
   eq(await value("SELECT record_referral_visit('nobody')"), null);
   await reject(() => db.query("SELECT attach_referral('studywithsam')"), /permission denied/);
+  // Looking a link up (domain hand-over, typed codes) doesn't count a visit; the dashboard below shows 1.
+  eq(await value("SELECT lookup_referral_link('STUDYWITHSAM ')"), { code: "studywithsam", platform: "medicine", creator: "Sam", discountPercent: 10 });
+  eq(await value("SELECT lookup_referral_link('nobody')"), null);
 
-  // Attribution: once, new accounts only, never the creator's own link, never existing customers.
+  // Attribution: once, never the creator's own link, never existing customers.
   await as("authenticated", creatorUser);
   eq((await value("SELECT attach_referral('studywithsam')")).reason, "own_link");
-  await as("authenticated", oldUser);
-  eq((await value("SELECT attach_referral('studywithsam')")).reason, "existing_account");
   await buy(other, "medicine", 699, 1);
   await as("authenticated", other);
-  eq((await value("SELECT attach_referral('studywithsam')")).reason, "existing_customer");
+  eq(await value("SELECT attach_referral('studywithsam')"), { attached: false, reason: "existing_customer", platform: "medicine" });
   await as("authenticated", student);
   eq(await value("SELECT get_my_referral_offer('medicine')"), null);
-  eq(await value("SELECT attach_referral('studywithsam')"), { attached: true, creator: "Sam", discountPercent: 10 });
-  eq((await value("SELECT attach_referral('sam-11')")).reason, "already_referred");
+  eq(await value("SELECT attach_referral('studywithsam')"), { attached: true, creator: "Sam", platform: "medicine", discountPercent: 10 });
+  // The same link again (another click, another device) is already in place; a different one isn't added.
+  eq(await value("SELECT attach_referral('studywithsam')"), { attached: true, already: true, creator: "Sam", platform: "medicine", discountPercent: 10 });
+  eq(await value("SELECT attach_referral('sam-11')"), { attached: false, reason: "already_referred", creator: "Sam" });
   eq(await value("SELECT get_my_referral_offer('medicine')"), { creator: "Sam", discountPercent: 10 });
   eq(await value("SELECT get_my_referral_offer('11plus')"), null);
   await reject(() => db.query("SELECT referral_offer_for($1,'medicine')", [student]), /permission denied/);
@@ -195,11 +201,20 @@ try {
   const held = await value("SELECT id FROM creator_commissions WHERE status='pending' LIMIT 1");
   eq(await value("SELECT reverse_creator_commission($1,'Refunded order')", [held]), true);
 
+  // An existing account that has never bought on the platform can still use a code.
+  await as("authenticated", oldUser);
+  eq(await value("SELECT attach_referral('sam-11')"), { attached: true, creator: "Sam", platform: "11plus", discountPercent: 10 });
+  eq(await value("SELECT get_my_referral_offer('11plus')"), { creator: "Sam", discountPercent: 10 });
+
   // Pausing a creator stops discounts, new referrals and commissions.
+  await as("authenticated", admin);
   await db.query("UPDATE creators SET status='paused'");
   await as("anon");
   eq(await value("SELECT record_referral_visit('studywithsam')"), null);
-  console.log(`PASS: ${checks} creator programme checks: admin-only management, claim by confirmed email, anonymous visits, attribution rules, discounts and commissions in settlement, private creator view, payouts, reversals, pausing, repeatable.`);
+  eq(await value("SELECT lookup_referral_link('studywithsam')"), null);
+  await as("authenticated", other);
+  eq((await value("SELECT attach_referral('sam-11')")).reason, "unavailable");
+  console.log(`PASS: ${checks} creator programme checks: admin-only management, claim by confirmed email, anonymous visits and lookups, attribution rules (existing accounts until their first purchase), discounts and commissions in settlement, private creator view, payouts, reversals, pausing, repeatable.`);
 } catch (error) {
   console.error(error);
   process.exitCode = 1;

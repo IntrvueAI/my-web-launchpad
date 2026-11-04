@@ -43,9 +43,13 @@ const MEDICINE_OFFERS: { id: MedicineCreditPackId; title: string; detail: string
 const OfferBanner: React.FC<{ offer: { creator: string; discountPercent: number } | null }> = ({ offer }) =>
   offer ? (
     <p role="status" className="rounded-xl border border-primary/40 bg-primary/5 p-4 text-sm">
-      <strong>{offer.discountPercent}% off your first purchase</strong> from {offer.creator}'s link, applied automatically at checkout.
+      <strong>{offer.discountPercent}% off your first purchase</strong> from {offer.creator}'s code, applied automatically at checkout.
     </p>
-  ) : null;
+  ) : (
+    <p className="text-sm text-muted-foreground">
+      Have a creator code? <a href="/redeem" className="font-medium text-primary underline underline-offset-2">Enter it here</a> for money off your first purchase.
+    </p>
+  );
 const discounted = (pence: number, offer: { discountPercent: number } | null) =>
   offer ? pence - Math.round((pence * offer.discountPercent) / 100) : pence;
 const Price: React.FC<{ pence: number; offer: { discountPercent: number } | null }> = ({ pence, offer }) => (
