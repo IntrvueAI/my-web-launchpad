@@ -17,6 +17,7 @@ export function InterviewToolbar({
   medicine = false,
   voiceOnly = false,
   onVoiceOnly,
+  connection,
 }: {
   title: string;
   live: boolean;
@@ -34,6 +35,8 @@ export function InterviewToolbar({
   /** Hide Clara's video and keep her voice. */
   voiceOnly?: boolean;
   onVoiceOnly?: () => void;
+  /** Live connection quality, shown as signal bars. */
+  connection?: React.ReactNode;
 }) {
   const seconds = Math.max(0, timer?.secondsRemaining ?? 0);
   const clock = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
@@ -54,6 +57,7 @@ export function InterviewToolbar({
               className={`h-2 w-2 shrink-0 rounded-full ${live ? "bg-emerald-500" : "bg-muted-foreground/40"}`}
             />
             {live ? "Live with Clara" : "Your practice session"}
+            {live && connection && <span className="ml-2 border-l pl-2">{connection}</span>}
           </p>
         </div>
         {live && (

@@ -43,6 +43,12 @@ export interface StartOptions {
 }
 
 interface UseInterviewSessionReturn {
+  /** The student's microphone as the avatar service hears it (for level checks). */
+  micStream: MediaStream | null;
+  /** The avatar's WebRTC connection, when the SDK exposes it (for connection quality). */
+  getPeerConnection: () => RTCPeerConnection | null;
+  /** How long Clara's last reply took to arrive, in ms. */
+  lastReplyMs: number | null;
   /** An interview whose connection dropped mid-way and can be rejoined where it left off. */
   rejoinable: { id: string; reference: string } | null;
   rejoin: (userId: string) => Promise<void>;
@@ -124,6 +130,8 @@ export const useInterviewSession = (
   const interviewCompleteRef = useRef(false);
   useEffect(() => { interviewCompleteRef.current = interviewComplete; }, [interviewComplete]);
   const [rejoinable, setRejoinable] = useState<{ id: string; reference: string } | null>(null);
+  const [micStream, setMicStream] = useState<MediaStream | null>(null);
+  const [lastReplyMs, setLastReplyMs] = useState<number | null>(null);
   const uiStateRef = useRef<BrainResponse['uiState'] | null>(null);
   const controlsRef = useRef(new StationControlQueue());
   const labRef = useRef(lab);
@@ -220,7 +228,9 @@ export const useInterviewSession = (
     const requestBody = { sessionId, action, ...payload, ...startSettings, interviewSessionId: sessionLogger.sessionId };
     logDebug({ source: 'brain', kind: 'request', label: `interview-brain: ${action}`, detail: requestBody });
     try {
+      const askedAt = performance.now();
       const res = await brainTurn(requestBody);
+      if (action === 'answer') setLastReplyMs(Math.round(performance.now() - askedAt));
       logDebug({ source: 'brain', kind: 'response', label: `interview-brain: ${action} → "${res.say.slice(0, 60)}${res.say.length > 60 ? '…' : ''}"`, detail: res });
       if (sessionRefRef.current !== sessionId) return;
       // Rejoining: show the conversation so far before Clara recaps where we were.
@@ -453,6 +463,11 @@ export const useInterviewSession = (
       connectingClient = client;
       clientRef.current = client;
 
+      // The microphone stream Anam listens to: used only on this device to check the level.
+      client.addListener(AnamEvent.INPUT_AUDIO_STREAM_STARTED, (stream: MediaStream) => {
+        if (current() && clientRef.current === client) setMicStream(stream);
+      });
+
       // Anam fires MESSAGE_HISTORY_UPDATED when the student finishes speaking, with the full history
       // including the new user message (the documented signal for "bring your own LLM" mode).
       client.addListener(AnamEvent.MESSAGE_HISTORY_UPDATED, (messages: AnamMessage[]) => {
@@ -506,6 +521,7 @@ export const useInterviewSession = (
         setIsConnected(false);
         setIsStreaming(false);
         setIsThinking(false);
+        setMicStream(null);
         setSessionStatus('error');
         connectionHealth.stopMonitoring();
         void client.stopStreaming().catch(() => {});
@@ -646,6 +662,7 @@ export const useInterviewSession = (
    */
   const stopInterview = useCallback(async (): Promise<string | null> => {
     setRejoinable(null);
+    setMicStream(null);
     generationRef.current += 1;
     sessionRefRef.current = null;
     setIsThinking(false);
@@ -779,12 +796,21 @@ export const useInterviewSession = (
     }
   }, []);
 
+  // The SDK keeps its peer connection internal; read it defensively so an SDK update can't break calls.
+  const getPeerConnection = useCallback((): RTCPeerConnection | null => {
+    const pc = (clientRef.current as unknown as { streamingClient?: { peerConnection?: unknown } } | null)?.streamingClient?.peerConnection;
+    return pc && typeof (pc as RTCPeerConnection).getStats === 'function' ? (pc as RTCPeerConnection) : null;
+  }, []);
+
   const rejoin = useCallback(async (userId: string) => {
     if (!rejoinable) return;
     await startInterview(userId, { ...startOptsRef.current, resume: rejoinable });
   }, [rejoinable, startInterview]);
 
   return {
+    micStream,
+    getPeerConnection,
+    lastReplyMs,
     rejoinable,
     rejoin,
     isThinking,

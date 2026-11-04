@@ -1,4 +1,8 @@
 import { InterviewToolbar } from './interview/InterviewToolbar';
+import { useCallQuality } from '@/hooks/useCallQuality';
+import { ConnectionBars } from '@/components/interview/ConnectionBars';
+import { QualityTip } from '@/components/interview/QualityTip';
+import { logAppEvent } from '@/lib/appLogger';
 import { StationTimePanel } from './interview/StationTimePanel';
 import { useStationAnnouncements } from '@/hooks/useStationAnnouncements';
 import { censorTranscript } from '@/interview/shared/transcript';
@@ -153,7 +157,6 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     chatHistory,
     sessionReference,
     sessionId,
-    connectionHealth,
     startInterview,
     stopInterview,
     sessionStatus,
@@ -165,8 +168,26 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
     switchTopic,
     brainUiState,
     interviewComplete,
-    stationTimer, beginResponse, rejoinable, rejoin
+    stationTimer, beginResponse, rejoinable, rejoin, micStream, getPeerConnection, lastReplyMs
   } = useInterviewSession(videoRef, interviewType, lab);
+  // Connection and microphone quality, measured on this device, with one suggestion at a time.
+  const quality = useCallQuality({
+    active: isStreaming,
+    videoRef,
+    getPeerConnection,
+    micStream,
+    thinking: isThinking,
+    quietExpected: stationTimer?.phase === 'prep' || !!brainUiState?.roleplayPending,
+    micListening: isAudioEnabled && !typeMode && !pushToTalk,
+    messages: chatHistory,
+    lastReplyMs,
+    typing: typeMode,
+  });
+  useEffect(() => {
+    if (!quality.tip) return;
+    void logAppEvent({ level: 'info', eventType: 'call_quality_tip', message: quality.tip, interviewSessionId: sessionId ?? undefined,
+      metadata: { connection: quality.level, ...quality.details, interviewType: interviewType.id } }).catch(() => {});
+  }, [quality.tip]); // eslint-disable-line react-hooks/exhaustive-deps
   const rejoining = !isStreaming && !!(rejoinable || resumeTarget);
 
   const medicineTimer = interviewType.category === 'medicine' && isStreaming ? stationTimer : null;
@@ -552,7 +573,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
           progress={brainUiState ? (academic ? progressLabel(brainUiState).replace('Question', 'Exercise') : interviewType.category === 'medicine' ? progressLabel(brainUiState).replace('Question', 'Station') : progressLabel(brainUiState)) : sessionStatus === 'connecting' ? 'Connecting…' : sessionStatus === 'error' ? 'Connection needs attention' : 'Ready to begin'}
           timer={interviewType.category === 'medicine' ? null : stationTimer} onBeginResponse={beginResponse} typeMode={typeMode} pushToTalk={pushToTalk} hideTranscript={hideTranscript} microphoneEnabled={isAudioEnabled}
           onTypeMode={() => setTypeMode(value => !value)} onPushToTalk={togglePushToTalk} onFocus={toggleFocusMode}
-          voiceOnly={voiceOnly} onVoiceOnly={toggleVoiceOnly}/>}
+          voiceOnly={voiceOnly} onVoiceOnly={toggleVoiceOnly}
+          connection={<ConnectionBars level={quality.level} details={quality.details} />}/>}
         {rejoining && (
           <div role="status" className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-primary/40 bg-primary/5 p-4">
             <div className="flex items-start gap-3">
@@ -591,6 +613,9 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                 onSubmit={sendTypedMessage} disabled={!isStreaming || isThinking} />
                 : <MedicineStationBrief prompt={brainUiState.exercise.prompt} />}
             </div>}
+            {isStreaming && quality.tip && (
+              <QualityTip kind={quality.tip} onDismiss={quality.dismissTip} onType={() => setTypeMode(true)} />
+            )}
             <Card className="p-4 md:p-6 shadow-medium">
               <div className="space-y-4">
                 
@@ -622,18 +647,6 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
                   </div>
                 )}
 
-                {/* Connection Health Indicator */}
-                {isStreaming && (
-                  <div className="flex items-center justify-center gap-2 text-xs">
-                    <div className={`w-2 h-2 rounded-full ${
-                      connectionHealth === 'good' ? 'bg-green-500' : 
-                      connectionHealth === 'poor' ? 'bg-yellow-500' : 'bg-red-500'
-                    }`} />
-                    <span className="text-muted-foreground">
-                      Connection: {connectionHealth}
-                    </span>
-                  </div>
-                )}
                 
                 {/* Video Element for AI Interviewer - Mobile Optimized Aspect Ratio */}
                 <div className="relative bg-muted rounded-2xl overflow-hidden aspect-video md:aspect-[16/10] lg:aspect-[16/9]">

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import palette from "tailwindcss/colors";
 
 export default {
 	darkMode: ["class"],
@@ -41,15 +42,17 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-				teal: 'hsl(var(--teal))',
+				// The bare name is the theme colour (bg-amber); numbered shades (bg-amber-500) stay
+				// Tailwind's own, which a plain string here would otherwise remove.
+				teal: { ...palette.teal, DEFAULT: 'hsl(var(--teal))' },
 				gold: 'hsl(var(--gold))',
 				ink: 'hsl(var(--ink))',
 				cream: 'hsl(var(--cream))',
-				sky: 'hsl(var(--sky))',
-				purple: 'hsl(var(--purple))',
-				rose: 'hsl(var(--rose))',
-				amber: 'hsl(var(--amber))',
-				emerald: 'hsl(var(--emerald))',
+				sky: { ...palette.sky, DEFAULT: 'hsl(var(--sky))' },
+				purple: { ...palette.purple, DEFAULT: 'hsl(var(--purple))' },
+				rose: { ...palette.rose, DEFAULT: 'hsl(var(--rose))' },
+				amber: { ...palette.amber, DEFAULT: 'hsl(var(--amber))' },
+				emerald: { ...palette.emerald, DEFAULT: 'hsl(var(--emerald))' },
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
