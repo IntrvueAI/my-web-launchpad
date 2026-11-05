@@ -35,6 +35,7 @@ const FILES = [
   'engine/agent.ts',
   'engine/publicPrompt.ts',
   'engine/brainVersions.ts',
+  'engine/setQuestions.ts',
   'bank/select.ts',
   'bank/normalize.ts',
   'subjects/types.ts',

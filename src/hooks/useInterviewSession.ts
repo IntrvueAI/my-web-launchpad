@@ -40,6 +40,8 @@ export interface StartOptions {
   topic?: string;
   /** Rejoin this still-open session instead of creating a new one. */
   resume?: { id: string; reference: string };
+  /** Medicine formats with reading time: read each brief first, or hear Clara ask it aloud. */
+  briefDelivery?: 'read' | 'aloud';
 }
 
 interface UseInterviewSessionReturn {
@@ -137,8 +139,10 @@ export const useInterviewSession = (
   const labRef = useRef(lab);
   labRef.current = lab;
   const answerRetriesRef = useRef(0);
-  type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string; resume?: boolean };
-  type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up' | 'begin_roleplay';
+  type TurnPayload = { studentText?: string; mode?: Mode; topic?: string; expectedQuestionIndex?: number; turnId?: string; resume?: boolean; briefDelivery?: 'read' | 'aloud'; stationSecondsLeft?: number };
+  type TurnAction = 'start' | 'answer' | 'skip' | 'switch_topic' | 'time_up' | 'begin_roleplay' | 'begin_station';
+  // The running answer clock, sent with each answer so set questions are only asked with time to answer.
+  const stationClockRef = useRef<StationClockState | null>(null);
   const turnRef = useRef<(action: TurnAction, payload?: TurnPayload) => Promise<void>>(async () => {});
   const retryTurnRef = useRef<{action:TurnAction;payload:TurnPayload}|null>(null);
 
@@ -205,6 +209,7 @@ export const useInterviewSession = (
     if (!sessionId) return;
     payload = { ...payload, turnId: payload.turnId ?? crypto.randomUUID() };
     if (action === 'answer') payload.expectedQuestionIndex ??= uiStateRef.current?.questionIndex;
+    if (action === 'answer' && stationClockRef.current?.phase === 'response') payload.stationSecondsLeft ??= stationClockRef.current.secondsRemaining;
     const isControl = action === 'skip' || action === 'time_up' || action === 'switch_topic';
     if (isControl) {
       payload = { ...payload, expectedQuestionIndex: payload.expectedQuestionIndex ?? uiStateRef.current?.questionIndex };
@@ -298,15 +303,18 @@ export const useInterviewSession = (
   });
   const stationPhaseRef = useRef<StationClockState['phase'] | null>(null);
   stationPhaseRef.current = stationTimer?.phase ?? null;
-  // Preview 'roleplay-read-then-act': once reading time ends (or I'm ready), the actor speaks first.
+  stationClockRef.current = stationTimer;
+  // A brief being read first: once reading time ends (or I'm ready), the actor speaks first in a
+  // roleplay, and otherwise Clara invites the answer.
   const begunRoleplayRef = useRef<number | null>(null);
   useEffect(() => {
     const index = brainUiState?.questionIndex;
-    if (!brainUiState?.roleplayPending || stationTimer?.phase !== 'response' || isThinking || index === undefined) return;
+    const begin = brainUiState?.roleplayPending ? 'begin_roleplay' : brainUiState?.briefPending ? 'begin_station' : null;
+    if (!begin || stationTimer?.phase !== 'response' || isThinking || index === undefined) return;
     if (begunRoleplayRef.current === index) return;
     begunRoleplayRef.current = index;
-    void runBrainTurn('begin_roleplay', { expectedQuestionIndex: index });
-  }, [brainUiState?.roleplayPending, brainUiState?.questionIndex, stationTimer?.phase, isThinking, runBrainTurn]);
+    void runBrainTurn(begin, { expectedQuestionIndex: index });
+  }, [brainUiState?.roleplayPending, brainUiState?.briefPending, brainUiState?.questionIndex, stationTimer?.phase, isThinking, runBrainTurn]);
   const [awaitingSend, setAwaitingSend] = useState(false);
 
   /**
@@ -500,7 +508,7 @@ export const useInterviewSession = (
         client.addListener(AnamEvent.SESSION_READY, () => {
           if (!current() || clientRef.current !== client || startedRef.current) return;
           startedRef.current = true;
-          runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic, resume: !!opts.resume });
+          runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic, resume: !!opts.resume, briefDelivery: opts.briefDelivery });
         });
       }
 
@@ -553,7 +561,7 @@ export const useInterviewSession = (
       // Fallback for engine path if SESSION_READY didn't fire before streaming resolved.
       if (engineDriven && !startedRef.current) {
         startedRef.current = true;
-        runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic, resume: !!opts.resume });
+        runBrainTurn('start', { mode: opts.mode ?? 'mock', topic: opts.topic, resume: !!opts.resume, briefDelivery: opts.briefDelivery });
       }
 
     } catch (err) {

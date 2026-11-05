@@ -18,6 +18,7 @@ import {
   InterviewResponseUnavailable,
   initAgentState,
   phaseInfo,
+  stationTimingFor,
   type AgentState,
   type ChatComplete,
 } from "./_shared/engine/agent.ts";
@@ -107,7 +108,7 @@ function safeParseArgs(s: string): Record<string, any> {
   }
 }
 
-const SERVER_PREVIEW_FEATURES = ["hidden-station-themes", "roleplay-read-then-act"];
+const SERVER_PREVIEW_FEATURES = ["hidden-station-themes", "roleplay-read-then-act", "station-sub-questions"];
 
 /** OpenAI chat-completions with tool calling. gpt-4.1 is used (confirmed available on this key). */
 const chat: ChatComplete = async ({ messages, tools }) => {
@@ -196,19 +197,20 @@ const uiStateOf = (
     targetQuestions: s.targetQuestions,
     onQuestion: !!s.current,
     roleplayPending: !!s.roleplayPending,
+    briefPending: !!s.briefPending,
     exercise: pack.subject === "medicine" && s.current
       ? { id: s.current.id, prompt: publicQuestionPrompt(s.current), topic: s.current.topic }
       : undefined,
     phase: pack.mixedBank ? phase : undefined,
     aboutYouCount,
-    timingSeconds:
+    timingSeconds: stationTimingFor(s,
       (interviewType === FULL_MMI_MOCK.id ? FULL_MMI_MOCK.timing : getMedicinePractice(interviewType) ? PRACTICE_TIMING : undefined) ?? getSchoolMode(interviewType)?.timingSeconds ??
       (getMedicinePilot(interviewType)
         ? {
             prep: getMedicinePilot(interviewType)!.circuit.prepSeconds,
             response: getMedicinePilot(interviewType)!.circuit.responseSeconds,
           }
-        : undefined),
+        : undefined)),
   };
 };
 
@@ -242,6 +244,7 @@ serve(
           "end",
           "time_up",
           "begin_roleplay",
+          "begin_station",
         ].includes(action)
       )
         return json({ error: "Valid sessionId and action are required" }, 400);
@@ -264,6 +267,19 @@ serve(
           body.expectedQuestionIndex < 0)
       )
         return json({ error: "Invalid station index" }, 400);
+      if (
+        body.stationSecondsLeft !== undefined &&
+        (!Number.isInteger(body.stationSecondsLeft) ||
+          body.stationSecondsLeft < 0 ||
+          body.stationSecondsLeft > 7200)
+      )
+        return json({ error: "Invalid station time" }, 400);
+      if (
+        body.briefDelivery !== undefined &&
+        body.briefDelivery !== "read" &&
+        body.briefDelivery !== "aloud"
+      )
+        return json({ error: "Invalid brief choice" }, 400);
       // Preview features change only this candidate's own session, so only known names are kept.
       const preview = Array.isArray(body.preview)
         ? [...new Set((body.preview as unknown[]).filter((v): v is string => typeof v === "string" && SERVER_PREVIEW_FEATURES.includes(v)))]
@@ -455,6 +471,16 @@ serve(
       }
       // Fixed at the start so switching a preview mid-interview cannot half-change a session.
       if (!session.engine_state) state.preview = preview;
+      // The candidate's choice of how station briefs are given, also fixed at the start. Only MMI
+      // formats with reading time offer it; other formats keep their own timing.
+      if (
+        !session.engine_state &&
+        body.briefDelivery &&
+        (pack.stationReadingSeconds ?? 0) > 0 &&
+        pack.subject === "medicine" &&
+        pack.interviewStyle !== "academic"
+      )
+        state.briefDelivery = body.briefDelivery;
       // Interview Lab: an administrator replays a dated version or tests a draft, fixed at the start.
       if (!session.engine_state && body.lab !== undefined) {
         const labRequest = body.lab;

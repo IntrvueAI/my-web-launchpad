@@ -24,6 +24,8 @@ export const PREVIEW_FEATURE_IDS = [
   "chat-transcript",
   "readable-room",
   "key-concepts",
+  "station-sub-questions",
+  "brief-delivery-choice",
 ] as const;
 export type PreviewFeatureId = (typeof PREVIEW_FEATURE_IDS)[number];
 
@@ -77,6 +79,21 @@ export const PREVIEW_FEATURES: PreviewFeature[] = [
     title: "Key concepts with learning links",
     change: "Feedback lists ethical concepts the station touched on (for example autonomy, consent, capacity, confidentiality) with a one-line explanation and a link to official guidance for further reading.",
     howToTest: "Complete an ethics station and look for Key concepts in the feedback.",
+    approved: false,
+  },
+  {
+    id: "station-sub-questions",
+    title: "Set questions within each station",
+    change: "In MMI stations, once the candidate has answered the main question and one follow-up, Clara asks the station's own set questions on a related, smaller topic, word for word and one at a time, instead of closing the station early. They come from each station's authored probes. Probes that depend on the candidate's answer or are spoken in character stay ordinary follow-ups. With under 45 seconds left the station closes as before, and roleplays are unchanged.",
+    howToTest: "Start an Ethics & judgement mini interview. Give a short answer and a short reply to Clara's follow-up, then check that she moves to a related set question rather than closing the station.",
+    approved: false,
+    server: true,
+  },
+  {
+    id: "brief-delivery-choice",
+    title: "Choose to read the brief or hear it",
+    change: "Before a Medicine interview with reading time, candidates choose how each station starts: read the brief on screen first (Clara stays quiet while they read, then invites their answer), or have Clara ask it aloud with no reading time, as in interviews without pre-reading.",
+    howToTest: "Open a Medicine mini interview, choose each option on the setup screen in turn and compare how the station starts.",
     approved: false,
   },
 ];

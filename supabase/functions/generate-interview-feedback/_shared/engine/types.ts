@@ -214,7 +214,9 @@ export type BrainAction =
   | 'end'
   | 'time_up'
   /** Preview 'roleplay-read-then-act': reading time is over, the actor speaks first. */
-  | 'begin_roleplay';
+  | 'begin_roleplay'
+  /** A brief read first: reading time is over, Clara invites the answer. */
+  | 'begin_station';
 
 /** Request body for the interview-brain edge function. */
 export interface BrainRequest {
@@ -232,6 +234,10 @@ export interface BrainRequest {
   lab?: { version: string; draftId?: string };
   /** 'start' on a session already under way (after a refresh or dropped connection): rejoin it. */
   resume?: boolean;
+  /** Medicine formats with reading time: read each brief first, or hear it aloud. Read at the start only. */
+  briefDelivery?: 'read' | 'aloud';
+  /** Seconds left on the running station answer clock, sent with answers. */
+  stationSecondsLeft?: number;
 }
 
 /** Response the brain returns; `say` is spoken verbatim by the avatar. */
@@ -259,6 +265,8 @@ export interface BrainResponse {
     exercise?: { id: string; prompt: string; topic: string };
     /** A roleplay brief is being read silently; the actor has not spoken yet. */
     roleplayPending?: boolean;
+    /** A station brief is being read first; Clara invites the answer when reading time ends. */
+    briefPending?: boolean;
   };
   /** Rejoining a session: the conversation so far, so the page can show it again. */
   transcript?: { role: 'user' | 'assistant'; content: string }[];

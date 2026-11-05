@@ -193,6 +193,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
   const medicineTimer = interviewType.category === 'medicine' && isStreaming ? stationTimer : null;
   // Preview 'readable-room': the light Medicine theme plus 12.5% larger text while this page is open.
   const readableRoom = usePreviewFeature('readable-room') && interviewType.category === 'medicine';
+  // Preview 'brief-delivery-choice': MMI formats with reading time let the candidate hear briefs aloud instead.
+  const offerBriefChoice = usePreviewFeature('brief-delivery-choice') && interviewType.category === 'medicine' && !academic && (interviewType.timingSeconds?.prep ?? 0) > 0;
   useEffect(() => {
     if (!readableRoom) return;
     const root = document.documentElement, previous = root.style.fontSize;
@@ -596,7 +598,8 @@ export const InterviewPlatform: React.FC<InterviewPlatformProps> = ({
         {/* Engine-driven setup gate (Practice vs Mock) — shown before connecting. */}
         {engineDriven && !setupChoice && !isStreaming && (
           <div className="mb-8">
-            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} note={interviewType.preStartNote} allowTopicPractice={interviewType.topicPracticeEnabled ?? true} />
+            <InterviewSetup topics={subjectPack?.topics ?? []} onConfirm={setSetupChoice} note={interviewType.preStartNote} allowTopicPractice={interviewType.topicPracticeEnabled ?? true}
+              briefChoice={offerBriefChoice ? { readingSeconds: interviewType.timingSeconds!.prep } : undefined} />
           </div>
         )}
 

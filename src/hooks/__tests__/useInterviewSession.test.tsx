@@ -242,6 +242,34 @@ describe("Live session control delivery", () => {
     });
     expect(mocks.brain.mock.calls.filter(([body]) => body.action === "begin_roleplay")).toHaveLength(1);
   });
+  it("invites the answer once a brief read first reaches the end of its reading time", async () => {
+    const pending = { ...response(0), uiState: { ...response(0).uiState, briefPending: true, timingSeconds: { prep: 1, response: 300 } } };
+    mocks.brain.mockResolvedValueOnce(pending).mockResolvedValue({ ...pending, say: "Over to you.", uiState: { ...pending.uiState, briefPending: false } });
+    await act(async () => {
+      await session.startInterview("user", { mode: "mock", briefDelivery: "read" });
+    });
+    expect(mocks.brain.mock.calls[0][0]).toMatchObject({ action: "start", briefDelivery: "read" });
+    await act(async () => {
+      vi.advanceTimersByTime(1500);
+    });
+    const begins = mocks.brain.mock.calls.filter(([body]) => body.action === "begin_station");
+    expect(begins).toHaveLength(1);
+    expect(begins[0][0].expectedQuestionIndex).toBe(0);
+    expect(mocks.brain.mock.calls.filter(([body]) => body.action === "begin_roleplay")).toHaveLength(0);
+  });
+  it("sends the seconds left on the answer clock with each answer", async () => {
+    const timed = { ...response(0), uiState: { ...response(0).uiState, timingSeconds: { prep: 0, response: 300 } } };
+    mocks.brain.mockResolvedValue(timed);
+    await act(async () => {
+      await session.startInterview("user");
+    });
+    await act(async () => { vi.advanceTimersByTime(20_000); });
+    act(() => session.sendTypedMessage("An answer."));
+    await act(async () => { vi.advanceTimersByTime(650); });
+    const sent = mocks.brain.mock.calls.find(([body]) => body.action === "answer")![0];
+    expect(sent.stationSecondsLeft).toBeGreaterThan(270);
+    expect(sent.stationSecondsLeft).toBeLessThanOrEqual(280);
+  });
   it("sends lab settings only when a lab run starts", async () => {
     mocks.brain.mockResolvedValue(response(0));
     labRun = { version: "2026-10-12", draftId: "11111111-1111-4111-8111-111111111111", previews: ["hidden-station-themes"] };

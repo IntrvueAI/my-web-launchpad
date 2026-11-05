@@ -10,7 +10,7 @@
  * Dependency-free except for the injected chat function, so it runs identically in the edge function
  * and in unit tests (with a fake chat).
  */
-import type { BankQuestion, Difficulty, Evidence, Mode, Outcome, RoleplayRuntime } from './types';
+import type { BankQuestion, Difficulty, Evidence, LiveProbe, Mode, Outcome, RoleplayRuntime } from './types';
 import { clampDifficulty } from './types';
 import type { SubjectPack } from '../subjects/types';
 import { selectQuestion } from '../bank/select';
@@ -21,6 +21,7 @@ import type { FlowGraph } from './flow';
 import { findFlowNode, pickNextFlowNode } from './flow';
 import { spokenQuestionPrompt, spokenTaskBrief, asksToClarifyTask, asksToRepeatLastLine, asksToRepeatQuestion } from './publicPrompt';
 import { behaviourOn, fillLabLine, type BrainBehaviour, type BrainBehaviourKey, type LabSettings } from './brainVersions';
+import { SET_QUESTIONS_PREVIEW, SET_QUESTION_MIN_SECONDS, SET_QUESTION_THREAD_ANSWERS, setQuestionLead, setQuestionsFor } from './setQuestions';
 
 // ---- Chat LLM interface (a small slice of OpenAI's chat+tools API) ----
 
@@ -97,7 +98,17 @@ export interface AgentState {
   preview?: string[];
   /** Preview 'roleplay-read-then-act': brief shown, actor waiting for reading time to end. */
   roleplayPending?: boolean;
+  /** How each station's brief is given, chosen by the candidate at the start: read on screen
+   *  first, or heard from Clara with no reading time. Absent = the format's own default. */
+  briefDelivery?: BriefDelivery;
+  /** A brief to read first is on screen; Clara invites an answer once reading time ends. */
+  briefPending?: boolean;
+  /** Preview 'station-sub-questions': set questions asked in this station, and how many answers
+   *  the candidate had given when the latest one was asked. Reset at every new station. */
+  setQuestions?: { asked: number; threadStart: number };
 }
+
+export type BriefDelivery = 'read' | 'aloud';
 
 export interface AgentDeps {
   bank: BankQuestion[];
@@ -108,11 +119,13 @@ export interface AgentDeps {
 }
 
 export interface AgentRequest {
-  action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'repeat' | 'end' | 'time_up' | 'begin_roleplay';
+  action: 'start' | 'answer' | 'skip' | 'switch_topic' | 'repeat' | 'end' | 'time_up' | 'begin_roleplay' | 'begin_station';
   studentText?: string;
   mode?: Mode;
   topic?: string;
   expectedQuestionIndex?: number;
+  /** Seconds left on the station's answer clock when this answer was sent, while it is running. */
+  stationSecondsLeft?: number;
 }
 
 export interface AgentResult {
@@ -233,7 +246,7 @@ function topicLabel(pack: SubjectPack, id?: string): string {
  * so it knows whether a bridge needs to actively signpost the shift (see the SIGNPOSTING rule in
  * buildSystemPrompt) or can just move on.
  */
-function renderCurrentProblem(q: BankQuestion | null, pack?: SubjectPack, topicChanged?: boolean): string {
+function renderCurrentProblem(q: BankQuestion | null, pack?: SubjectPack, topicChanged?: boolean, set?: { list: LiveProbe[]; asked: number }): string {
   if (!q) return 'No problem is on the table yet.';
   if (q.roleplay) return renderRoleplayStation(q.roleplay) + (q.rubric ? `\nPRIVATE assessment rubric (never read aloud): ${JSON.stringify(q.rubric)}` : '');
   const out: string[] = [
@@ -250,9 +263,13 @@ function renderCurrentProblem(q: BankQuestion | null, pack?: SubjectPack, topicC
   if (q.commonMistakes?.length) {
     out.push('Watch for these mistakes: ' + q.commonMistakes.map((m) => `${m.mistake} (reveals: ${m.reveals})`).join('; ') + '.');
   }
-  if (q.liveProbes?.length) {
-    out.push('Use these follow-up probes when useful (one at a time): ' + q.liveProbes.map((p) => `"${p.probe}"`).join(' / ') + '.');
+  // Probes asked as set questions are the system's to ask; the rest stay ordinary follow-ups.
+  const setList = set?.list ?? [];
+  const probes = (q.liveProbes ?? []).filter((p) => !setList.includes(p));
+  if (probes.length) {
+    out.push('Use these follow-up probes when useful (one at a time): ' + probes.map((p) => `"${p.probe}"`).join(' / ') + '.');
   }
+  if (set && setList.length) out.push(renderSetQuestions(setList, set.asked));
   if (q.hints?.length) {
     out.push(
       'If they are genuinely stuck, use THIS hint ladder in order, one short hint per turn (never skip to the last one): ' +
@@ -296,7 +313,36 @@ function renderRoleplayStation(rp: RoleplayRuntime): string {
   ].filter((l) => l !== '').join('\n');
 }
 
+function renderSetQuestions(list: LiveProbe[], asked: number): string {
+  const done = list.slice(0, asked);
+  const toCome = list.slice(asked);
+  return [
+    'SET QUESTIONS: this station also has set questions on related, smaller topics. The system asks each one aloud, word for word and in order, once an answer thread is finished. Never ask, paraphrase or hint at a set question yourself, and do not steer the candidate towards one.',
+    done.length ? `Already asked: ${done.map((p) => `"${p.probe}"`).join(' / ')}. Your follow-ups now respond to the answer to the latest set question.` : '',
+    toCome.length
+      ? `Still to come: ${toCome.map((p) => `"${p.probe}"`).join(' / ')}. When you would move on from the current thread, call next_problem as usual; the system asks the next set question instead of ending the station.`
+      : 'Every set question has been asked. Explore the answers with relevant follow-ups and call next_problem when the station has been explored.',
+    'What a strong answer to each set question covers (private, never read aloud): ' + list.map((p, i) => `(${i + 1}) ${p.goodResponse}`).join(' '),
+  ].filter(Boolean).join(' ');
+}
+
 const isFocusedPack = (pack: SubjectPack) => !!pack.focusedPractice;
+const isMmiPack = (pack: SubjectPack) => pack.subject === 'medicine' && pack.interviewStyle !== 'academic';
+
+/** Reading time before each station: none when the candidate chose to hear the brief aloud. */
+export function readingSecondsFor(state: Pick<AgentState, 'briefDelivery'>, pack: SubjectPack): number {
+  return state.briefDelivery === 'aloud' ? 0 : pack.stationReadingSeconds ?? 0;
+}
+
+/** The station clock the page shows: no reading time for a brief heard aloud. */
+export function stationTimingFor<T extends { prep: number; response: number }>(state: Pick<AgentState, 'briefDelivery'>, timing: T | undefined): T | undefined {
+  return timing && state.briefDelivery === 'aloud' ? { ...timing, prep: 0 } : timing;
+}
+
+/** Preview 'station-sub-questions': the current MMI station's set questions, when the preview is on. */
+export function activeSetQuestions(state: AgentState, pack: SubjectPack): LiveProbe[] {
+  return isMmiPack(pack) && state.preview?.includes(SET_QUESTIONS_PREVIEW) ? setQuestionsFor(state.current) : [];
+}
 
 /** The system prompt is where the tutoring quality lives — persona + voice + how to run the session. */
 export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string {
@@ -353,7 +399,7 @@ export function buildSystemPrompt(pack: SubjectPack, state: AgentState): string 
       pack.guardrails,
       pack.scoringPhilosophy || '',
       `Progress: ${state.questionIndex} stations completed out of ${state.targetQuestions}.`,
-      renderCurrentProblem(state.current, pack, state.previousTopic !== state.current?.topic),
+      renderCurrentProblem(state.current, pack, state.previousTopic !== state.current?.topic, { list: activeSetQuestions(state, pack), asked: state.setQuestions?.asked ?? 0 }),
       state.currentNodeNote || '',
     ].filter(Boolean).join('\n');
   }
@@ -482,6 +528,8 @@ function logEvidence(state: AgentState, args: { outcome?: string; method_quality
   }
   state.previousTopic = state.current.topic;
   state.roleplayPending = false;
+  state.briefPending = false;
+  state.setQuestions = undefined;
   state.current = null;
   state.currentStudentTurns = [];
   state.currentNodeNote = undefined;
@@ -498,6 +546,7 @@ function respondWithQuestion(state: AgentState, q: BankQuestion, customNote?: st
   state.askedIds.push(q.id);
   state.currentStudentTurns = [];
   state.currentNodeNote = customNote;
+  state.setQuestions = undefined;
   return {
     number: state.evidence.length + 1,
     topic: q.topic,
@@ -673,13 +722,15 @@ function medicineWelcome(state: AgentState, pack: SubjectPack, topic?: string): 
   if (state.lab?.openingLine) return fillLabLine(state.lab.openingLine, state.studentName);
   const academic = pack.interviewStyle === 'academic';
   const unit = academic ? 'exercise' : 'station';
-  const prep = pack.stationReadingSeconds ?? 0;
+  const prep = readingSecondsFor(state, pack);
   const plan = pack.focusedPractice
     ? `Today we'll work through one ${unit}${topic ? ` on ${topicLabel(pack, topic).toLowerCase()}` : ''}.`
     : `Today we'll work through ${state.targetQuestions} ${unit}s.`;
   const pacing = prep > 0
     ? `${pack.focusedPractice ? "You'll have" : `Each ${unit} starts with`} ${spokenSeconds(prep)} to read the scenario, then you can talk me through your thinking.`
-    : 'Take your time and talk me through your thinking.';
+    : state.briefDelivery === 'aloud'
+      ? `I'll read ${pack.focusedPractice ? 'the scenario' : `each ${unit}`} aloud, and you can answer as soon as I've finished.`
+      : 'Take your time and talk me through your thinking.';
   return `${state.studentName ? `Hi ${state.studentName}` : 'Hello'}, I'm Clara, your AI practice interviewer. ${plan} ${pacing} Let me know when you're ready, and I'll read you the ${pack.focusedPractice ? 'scenario' : `first ${unit}`}.`;
 }
 
@@ -735,11 +786,16 @@ function medicineStationOpening(state: AgentState, pack: SubjectPack, bridge = '
     : hideTheme
       ? `${label} ${state.questionIndex + 1} of ${state.targetQuestions}.`
       : `${label} ${state.questionIndex + 1} of ${state.targetQuestions}: ${topicLabel(pack, q.topic)}.`;
-  const prep = pack.stationReadingSeconds ?? 0;
-  if (q.roleplay && prep > 0 && state.preview?.includes('roleplay-read-then-act')) {
+  const prep = readingSecondsFor(state, pack);
+  if (q.roleplay && prep > 0 && (state.preview?.includes('roleplay-read-then-act') || state.briefDelivery === 'read')) {
     // The candidate reads the written brief silently; the actor opens once reading time ends.
     state.roleplayPending = true;
     return `${bridge ? bridge + ' ' : ''}${intro}${heading} This is a roleplay. Please read your brief on screen. The roleplay will begin when the reading time ends, or when you select I'm ready.`;
+  }
+  if (prep > 0 && state.briefDelivery === 'read') {
+    // Read first: Clara stays quiet while the candidate reads, then invites an answer.
+    state.briefPending = true;
+    return `${bridge ? bridge + ' ' : ''}${intro}${heading} Please read the brief on screen. You have ${spokenSeconds(prep)}, and I'll ask you to begin when the reading time is up.`;
   }
   // The on-screen "I'm ready" control is visible; reading a button label aloud is not natural speech.
   const reading = prep <= 0 ? ''
@@ -777,6 +833,14 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     if (!state.roleplayPending || !state.current?.roleplay) return { say: '', state, done: state.done };
     state.roleplayPending = false;
     const say = state.current.roleplay.openingStatement;
+    state.transcript.push({ role: 'assistant', content: say });
+    return { say, state, done: state.done };
+  }
+  if (req.action === 'begin_station') {
+    // Idempotent: only a brief still being read gets the invitation to begin.
+    if (!state.briefPending || !state.current) return { say: '', state, done: state.done };
+    state.briefPending = false;
+    const say = 'Over to you. Talk me through your thinking.';
     state.transcript.push({ role: 'assistant', content: say });
     return { say, state, done: state.done };
   }
@@ -821,11 +885,15 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     const lastLine = on('medicineRepeatLastLine') && req.action === 'answer' && state.currentStudentTurns.length > 0 && asksToRepeatLastLine(req.studentText || '')
       ? [...state.transcript].reverse().find((t) => t.role === 'assistant')?.content.trim() : '';
     if (req.studentText?.trim()) state.transcript.push({ role: 'user', content: req.studentText.trim() });
-    const say = lastLine || `Let me restate the task. ${spokenTaskBrief(state.current)}`;
+    // After a set question, the question on the table is that set question; the brief stays on screen.
+    const latestSet = state.setQuestions?.asked ? activeSetQuestions(state, deps.pack)[state.setQuestions.asked - 1] : undefined;
+    const say = lastLine || (latestSet ? `Let me repeat the question. ${latestSet.probe}` : `Let me restate the task. ${spokenTaskBrief(state.current)}`);
     state.transcript.push({ role: 'assistant', content: say });
     return { say, state, done: state.done };
   }
 
+  // A candidate who starts answering during reading time has begun the station themselves.
+  if (state.briefPending && req.action === 'answer') state.briefPending = false;
   if (school && (on('schoolWelcome') || state.lab?.openingLine) && req.action === 'start' && !state.current && !state.welcomed && state.questionIndex === 0) {
     // Greet first and wait for a reply; the warm-up question follows on the next turn.
     const say = schoolWelcome(state, deps.pack);
@@ -874,6 +942,24 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   const evidenceBefore = state.evidence.length;
   const turnLimitReached = req.action === 'answer' && !!deps.pack.maxStudentTurnsPerQuestion && state.currentStudentTurns.length >= deps.pack.maxStudentTurnsPerQuestion;
   if (turnLimitReached) messages.push({ role: 'system', content: 'This station has reached its answer-turn limit. Record the available evidence and call next_problem now. Do not ask another probe or infer an error merely because time/turns ran out.' });
+  // Preview 'station-sub-questions': once an answer thread is finished, the station's next set
+  // question is asked word for word, instead of the station ending early or one thread dragging on.
+  const setsOn = mmi && req.action === 'answer' && !!state.current && !state.current.roleplay && !!state.preview?.includes(SET_QUESTIONS_PREVIEW);
+  const setList = setsOn ? activeSetQuestions(state, deps.pack) : [];
+  const setProgress = state.setQuestions ?? { asked: 0, threadStart: 0 };
+  const nextSet = setList[setProgress.asked];
+  const threadAnswers = state.currentStudentTurns.length - setProgress.threadStart;
+  const setDue = !!nextSet && !turnLimitReached && threadAnswers >= 1 &&
+    (req.stationSecondsLeft === undefined || req.stationSecondsLeft >= SET_QUESTION_MIN_SECONDS);
+  const setForced = setDue && threadAnswers >= SET_QUESTION_THREAD_ANSWERS;
+  if (setForced) messages.push({ role: 'system', content: "This answer thread is finished. Reply with ONE short, neutral sentence acknowledging the candidate's last answer, without praise and without asking anything. Do not call a tool: the system asks the station's next set question straight after your sentence." });
+  if (setsOn && req.stationSecondsLeft !== undefined && !turnLimitReached) {
+    const minutes = Math.max(1, Math.round(req.stationSecondsLeft / 60));
+    const keepGoing = !nextSet && req.stationSecondsLeft >= 90 ? '. Unless the candidate has clearly finished, keep exploring with a relevant follow-up rather than moving on' : '';
+    messages.push({ role: 'system', content: `About ${minutes} minute${minutes === 1 ? '' : 's'} of this station remain${keepGoing}.` });
+  }
+  let askSet = false;
+  let setBridge = '';
   let say = '';
   let transitionBridge = '';
   // One fresh question per turn, max. Without this the model sometimes pulled a question, read it,
@@ -900,7 +986,14 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
           }
           const prematureMove = mmi && req.action === 'answer' && state.current &&
             state.currentStudentTurns.length < 2 && (call.name === 'next_problem' || call.name === 'finish_interview');
-          const result = prematureMove
+          const takeSet = setDue && !prematureMove && (call.name === 'next_problem' || call.name === 'finish_interview');
+          if (takeSet) {
+            askSet = true;
+            setBridge = res.content?.trim() || '';
+          }
+          const result = takeSet
+            ? { rejected: "The system is asking this station's next set question now." }
+            : prematureMove
             ? { rejected: 'The candidate has given only their first answer. Respond to that answer and ask one relevant follow-up in this same station before moving on. In roleplay, respond as the character to what they said.' }
             : (call.name === 'next_problem' || call.name === 'finish_interview') && fetchedThisTurn
             ? { rejected: 'You already have a fresh problem on the table this turn. Ask it and WAIT for the student to answer — never ask two problems at once.' }
@@ -921,6 +1014,8 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
           }
           messages.push({ role: 'tool', tool_call_id: call.id, name: call.name, content: JSON.stringify(result) });
         }
+        // The set question is asked below, word for word; another model call cannot improve it.
+        if (askSet) break;
         if ((!medicine || acceptedTool) && res.content?.trim()) say = say ? `${say} ${res.content.trim()}` : res.content.trim();
         // The public Medicine brief is rendered below; another model call cannot
         // improve it and could skip facts or start a second scenario prematurely.
@@ -932,6 +1027,16 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
     }
   } catch (err) {
     console.error('agent chat loop failed:', (err as Error)?.message || err);
+  }
+
+  let askedSet = false;
+  if ((askSet || setForced) && nextSet && state.current && state.current.id === questionBefore && !state.done) {
+    // A short neutral acknowledgement may lead in; anything asking a question of its own is dropped.
+    const ack = (askSet ? setBridge : say).trim();
+    const lead = ack && !ack.includes('?') && ack.split(/\s+/).length <= 30 ? ack : '';
+    say = [lead, setQuestionLead(setProgress.asked), nextSet.probe].filter(Boolean).join(' ');
+    state.setQuestions = { asked: setProgress.asked + 1, threadStart: state.currentStudentTurns.length };
+    askedSet = true;
   }
 
   // Controls must work even if the model ignores them, fails, or returns prose without a tool call.
@@ -1012,7 +1117,7 @@ export async function advanceAgent(prev: AgentState, req: AgentRequest, deps: Ag
   // especially) legitimately contain two "?" as ONE question that must be read in full, and a blind
   // truncation there would silently drop authored content.
   const academicFollowUp = deps.pack.interviewStyle === 'academic' && req.action === 'answer' && state.current?.id === questionBefore;
-  const medicineFollowUp = medicine && !state.current?.roleplay && req.action === 'answer' && state.current?.id === questionBefore;
+  const medicineFollowUp = medicine && !askedSet && !state.current?.roleplay && req.action === 'answer' && state.current?.id === questionBefore;
   if (phaseInfo(deps.pack, state).phase === 'about-you' || deps.pack.singleQuestionPerTurn || academicFollowUp || medicineFollowUp) say = enforceSingleAsk(say);
 
   if (state.done && !prev.done) {
